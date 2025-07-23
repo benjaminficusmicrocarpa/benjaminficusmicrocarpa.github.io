@@ -13,3 +13,5 @@ Every notes I have taken
 [20250629 The Sticky Stuff: Resentment](iecc/20250629 The Sticky Stuff Resentment_zQiEzRfnV3U.html)
 
 [20250706 The Sticky Stuff: Spiritual Imbalance](iecc/20250706 The Sticky Stuff Spiritual Imbalance_UqU5KSFL-34.html)
+
+[20250713 The Sticky Stuff: Annoyance](iecc/20250713 The Sticky Stuff Annoyance_o2xvXLu0S38.html)
