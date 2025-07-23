@@ -3,4 +3,4 @@ Every notes I have taken
 
 Island ECC Sermon
 
-[20250511](/iecc/20250511 Known Jehovah Rapha The Lord Who Heal..._oXCQR1i_lOw.html)
+[20250511](/iecc/20250511 Known Jehovah Rapha The Lord Who Heal..._oXCQR1i_lOw)
