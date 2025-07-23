@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sticky Stuff: Spiritual Imbalance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 30px;
+        }
+        
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .city-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #e74c3c;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .city-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .city-features {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .city-features li {
+            padding: 8px 0;
+            font-size: 1.1em;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .principle-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            margin-bottom: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 6px solid #f39c12;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .principle-number {
+            background: #e67e22;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            float: left;
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+        
+        .principle-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .principle-posture {
+            background: rgba(255,255,255,0.7);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-style: italic;
+            margin: 10px 0;
+            border-left: 3px solid #e67e22;
+        }
+        
+        .scripture-ref {
+            background: #34495e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .scripture-section {
+            background: #ecf0f1;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .scripture-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .verse-ref {
+            font-weight: bold;
+            color: #8e44ad;
+            margin-bottom: 8px;
+        }
+        
+        .verse-text {
+            font-style: italic;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .verse-application {
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .principle-number {
+                float: none;
+                margin: 0 auto 15px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">🏗️ The Sticky Stuff: Spiritual Imbalance</div>
+            <div class="subtitle">📍 Island ECC • 👨‍💼 Pastor Eric</div>
+            <div class="subtitle">🗓️ Series: Navigating Messy Relationships with Grace</div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">🏙️ Tale of Two Cities</h2>
+                <div class="comparison">
+                    <div class="city-card">
+                        <h3>🏛️ Ancient Corinth</h3>
+                        <ul class="city-features">
+                            <li>🌍 Culturally &amp; religiously diverse</li>
+                            <li>⚓ Major port city &amp; trade hub</li>
+                            <li>🏢 Highly urbanized</li>
+                            <li>⚖️ Politically complex</li>
+                            <li>💰 Multiple social classes</li>
+                            <li>🚢 Ships crossed 6km isthmus</li>
+                            <li>⛩️ Temple of Aphrodite</li>
+                        </ul>
+                    </div>
+                    <div class="city-card">
+                        <h3>🇭🇰 Modern Hong Kong</h3>
+                        <ul class="city-features">
+                            <li>🌏 International melting pot</li>
+                            <li>🚢 Global shipping &amp; finance hub</li>
+                            <li>🏙️ Dense urban environment</li>
+                            <li>🏛️ Complex governance</li>
+                            <li>📊 Wide wealth spectrum</li>
+                            <li>✈️ Gateway between East &amp; West</li>
+                            <li>🎯 Modern opportunities &amp; vices</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="text-align: center; font-style: italic; color: #7f8c8d;">Paul's ministry context mirrors our modern challenges! 🎯</p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">💝 Paul's Heart for Ministry</h2>
+                <div style="background: #d5f4e6; padding: 20px; border-radius: 10px; border-left: 5px solid #27ae60;">
+                    <p style="font-size: 1.1em; font-style: italic;">"For though I am free from all, I have made myself a servant to all... I do it all for the sake of the gospel that I may share with them in its blessings." 💖</p>
+                    <div class="scripture-ref">1 Corinthians 9:19, 22-23</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">🎯 Four Principles for Spiritual Imbalance</h2>
+                
+                <div class="principle-card">
+                    <div class="principle-number">1</div>
+                    <div class="principle-title">💬 Open Up Your Heart</div>
+                    <div class="principle-posture">🎭 Posture: "I am for you"</div>
+                    <p>Healthy relationships require vulnerable conversations. Share both joys and struggles. Move beyond surface level to build trust and prevent defensiveness.</p>
+                    <div class="scripture-ref">2 Corinthians 6:11, 13 &amp; 2 Corinthians 7:8-9</div>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-number">2</div>
+                    <div class="principle-title">🤐 Close Your Mouth</div>
+                    <div class="principle-posture">🙏 Posture: "I am not God"</div>
+                    <p>After sharing your heart, practice restraint. Don't nag or try to force change. Be an ambassador, not a rescuer. Trust God's timing and sovereignty.</p>
+                    <div class="scripture-ref">Psalm 46:10 &amp; Proverbs (nagging wife references)</div>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-number">3</div>
+                    <div class="principle-title">🎁 Use Your Freedom Wisely</div>
+                    <div class="principle-posture">🤝 Posture: "My freedom is a gift to others"</div>
+                    <p>Your spiritual maturity should serve others, not trip them up. Be sensitive to backgrounds and weaknesses. Use freedom to bless and protect.</p>
+                    <div class="scripture-ref">1 Corinthians 8:1-2, 9</div>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-number">4</div>
+                    <div class="principle-title">🎉 Celebrate Different Growth</div>
+                    <div class="principle-posture">🔍 Posture: "Look for God at work everywhere"</div>
+                    <p>God works in people differently. Don't expect uniformity. Practice relational generosity by celebrating any signs of spiritual growth, even if unfamiliar.</p>
+                    <div class="scripture-ref">1 Corinthians 1:12-13 &amp; 1 Corinthians 12:4-6, 11</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">🤔 Key Reflection Question</h2>
+                <div style="background: #fff3cd; padding: 25px; border-radius: 10px; border-left: 5px solid #ffc107; text-align: center;">
+                    <p style="font-size: 1.3em; font-weight: bold; color: #856404;">What do my posture and actions communicate about who God is? 🪞</p>
+                </div>
+            </div>
+            
+            <div class="scripture-section">
+                <h2 class="section-title">📖 Scripture References &amp; Applications</h2>
+                
+                <div class="scripture-item">
+                    <div class="verse-ref">📜 1 Corinthians 9:19, 22-23</div>
+                    <div class="verse-text">"For though I am free from all, I have made myself a servant to all... I do it all for the sake of the gospel"</div>
+                    <div class="verse-application">💝 Foundation: Paul's heart of humble service motivates all relationship principles</div>
+                </div>
+                
+                <div class="scripture-item">
+                    <div class="verse-ref">📜 2 Corinthians 6:11, 13</div>
+                    <div class="verse-text">"We have spoken freely to you, Corinthians; our heart is wide open"</div>
+                    <div class="verse-application">💬 Opening Hearts: Models vulnerability and emotional availability in relationships</div>
+                </div>
+                
+                <div class="scripture-item">
+                    <div class="verse-ref">📜 2 Corinthians 7:8-9</div>
+                    <div class="verse-text">"For even if I made you grieve with my letter, I do not regret it"</div>
+                    <div class="verse-application">💔 Difficult Conversations: Sometimes love requires hard conversations that initially cause grief</div>
+                </div>
+                
+                <div class="scripture-item">
+                    <div class="verse-ref">📜 Psalm 46:10</div>
+                    <div class="verse-text">"Be still, and know that I am God"</div>
+                    <div class="verse-application">🤐 Divine Control: Reminds us to trust God's sovereignty rather than trying to control others</div>
+                </div>
+                
+                <div class="scripture-item">
+                    <div class="verse-ref">📜 2 Corinthians 6:14</div>
+                    <div class="verse-text">"Do not be unequally yoked with unbelievers"</div>
+                    <div class="verse-application">⚖️ Relationship Wisdom: Guidance for evaluating relationship trajectories and spiritual compatibility</div>
+                </div>
+                
+                <div class="scripture-item">
+                    <div class="verse-ref">📜 Matthew 10:37</div>
+                    <div class="verse-text">"Anyone who loves their father or mother more than me..."</div>
+                    <div class="verse-application">❤️ Ultimate Relationship: All relationships should point us toward our relationship with God</div>
+                </div>
+                
+                <div class="scripture-item">
+                    <div class="verse-ref">📜 1 Corinthians 8:1-2, 9</div>
+                    <div class="verse-text">"Knowledge puffs up, but love builds up... take care that this right of yours does not become a stumbling block"</div>
+                    <div class="verse-application">🎁 Sacrificial Love: Use spiritual freedom to serve others rather than assert superiority</div>
+                </div>
+                
+                <div class="scripture-item">
+                    <div class="verse-ref">📜 1 Corinthians 1:12-13</div>
+                    <div class="verse-text">"Each one of you says, 'I follow Paul,' or 'I follow Apollos'... Is Christ divided?"</div>
+                    <div class="verse-application">🤝 Unity in Diversity: Warns against division over different spiritual expressions and leaders</div>
+                </div>
+                
+                <div class="scripture-item">
+                    <div class="verse-ref">📜 1 Corinthians 12:4-6, 11</div>
+                    <div class="verse-text">"Now there are varieties of gifts, but the same Spirit... it is the same God who empowers them all"</div>
+                    <div class="verse-application">🎉 Diverse Gifts: Celebrates different ways God works in people's lives and spiritual journeys</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
+                <h3>🏗️ Remember: Relationships are messy, but they're worth it! 💪</h3>
+                <p>Stick together through the sticky stuff with God's grace and heart behind us. 🙏❤️</p>
+            </div>
+        </div>
+    </div>
+
+
+</body></html>
