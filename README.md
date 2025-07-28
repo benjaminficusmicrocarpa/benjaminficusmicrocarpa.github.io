@@ -5,4 +5,4 @@ Every notes I have taken
 [🏝️ benjaminficusmicrocarpa's Island ECC Sermon Infographics 📖](index_iecc.html)
 
 ### Urban Forestry Notes
-[Urban Forestry Notes](uf_notes.md)
+[benjaminficusmicrocarpa's Urban Forestry Notes](uf_notes.md)
