@@ -67,6 +67,41 @@
             width: 100%;
         }
 
+        .play-pause-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 20;
+        }
+
+        .play-pause-btn {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            width: clamp(40px, 8vw, 60px);
+            height: clamp(40px, 8vw, 60px);
+            color: #ffd700;
+            font-size: clamp(16px, 4vw, 24px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            user-select: none;
+        }
+
+        .play-pause-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #fff;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .play-pause-btn:active {
+            transform: scale(0.95);
+        }
+
         .disclaimer {
             position: absolute;
             bottom: 5px;
@@ -432,6 +467,26 @@
             content: '⚪ ';
         }
 
+        .paused-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(40px, 10vw, 80px);
+            color: rgba(255, 215, 0, 0.8);
+            z-index: 15;
+            backdrop-filter: blur(2px);
+        }
+
+        .paused-overlay.visible {
+            display: flex;
+        }
+
         /* Desktop layout for larger screens */
         @media (min-width: 1024px) {
             .main-content {
@@ -522,6 +577,11 @@
             .subtitle {
                 margin-bottom: 15px;
             }
+
+            .play-pause-container {
+                top: 8px;
+                right: 8px;
+            }
         }
 
         /* Ultra-small mobile adjustments */
@@ -544,6 +604,11 @@
                 font-size: 0.55rem;
                 max-width: 55vw;
             }
+
+            .play-pause-container {
+                top: 5px;
+                right: 5px;
+            }
         }
 
         /* Touch-friendly adjustments */
@@ -555,6 +620,11 @@
             .control-group select, .control-group input {
                 min-height: 40px;
                 padding: 8px;
+            }
+
+            .play-pause-btn {
+                min-width: 50px;
+                min-height: 50px;
             }
         }
 
@@ -582,6 +652,10 @@
         <div class="main-content">
             <div class="animation-section">
                 <div class="animation-container">
+                    <div class="play-pause-container">
+                        <button class="play-pause-btn" id="playPauseBtn" title="Play/Pause Animation">⏸️</button>
+                    </div>
+                    <div class="paused-overlay" id="pausedOverlay">⏸️</div>
                     <div class="planet" id="planet"></div>
                     <div class="velocity-arrow" id="arrow"></div>
                     <div class="earth"></div>
@@ -761,6 +835,7 @@
         let speed = 1;
         let colorIntensity = 1.5;
         let animationId;
+        let isPlaying = true; // Animation starts playing
 
         // Object type configurations
         const objectTypes = {
@@ -795,6 +870,10 @@
         const intensitySlider = document.getElementById('intensitySlider');
         const intensityValue = document.getElementById('intensityValue');
         
+        // Play/Pause elements
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const pausedOverlay = document.getElementById('pausedOverlay');
+        
         // Wavelength display elements
         const restWavelength = document.getElementById('restWavelength');
         const observedWavelength = document.getElementById('observedWavelength');
@@ -817,6 +896,24 @@
             const containerWidth = container.offsetWidth;
             centerX = containerWidth * 0.4; // Adjust center based on container width
             amplitude = Math.min(containerWidth * 0.25, 200); // Limit amplitude based on container size
+        }
+
+        function togglePlayPause() {
+            isPlaying = !isPlaying;
+            
+            if (isPlaying) {
+                playPauseBtn.textContent = '⏸️';
+                playPauseBtn.title = 'Pause Animation';
+                pausedOverlay.classList.remove('visible');
+                animate(); // Resume animation
+            } else {
+                playPauseBtn.textContent = '▶️';
+                playPauseBtn.title = 'Play Animation';
+                pausedOverlay.classList.add('visible');
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                }
+            }
         }
 
         function updateSpectralInfo() {
@@ -931,6 +1028,8 @@
         }
 
         function animate() {
+            if (!isPlaying) return; // Exit if paused
+            
             time += 0.01 * speed;
             
             // Get current object type and max velocity
@@ -1018,6 +1117,16 @@
         }
 
         // Event listeners
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlayPause();
+            }
+        });
+
         objectTypeSelect.addEventListener('change', updateSpectralInfo);
         spectralLineSelect.addEventListener('change', updateSpectralInfo);
 
