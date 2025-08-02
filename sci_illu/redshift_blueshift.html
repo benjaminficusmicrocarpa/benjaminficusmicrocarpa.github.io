@@ -6,38 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔴🔵 Redshift and Blueshift - Wavelength Analysis 🌌</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
             color: white;
             font-family: 'Arial', sans-serif;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
             text-align: center;
+            width: 100%;
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             margin-bottom: 10px;
             background: linear-gradient(45deg, #ff4444, #4444ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.2;
         }
 
         .subtitle {
-            font-size: 1.2em;
-            margin-bottom: 30px;
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            margin-bottom: 20px;
             opacity: 0.8;
+            padding: 0 10px;
         }
 
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 350px;
+            grid-template-columns: 1fr;
             gap: 20px;
             align-items: start;
         }
@@ -45,39 +53,42 @@
         .animation-section {
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
 
         .animation-container {
             position: relative;
-            height: 400px;
+            height: clamp(250px, 40vw, 400px);
             background: radial-gradient(ellipse at center, #1a1a2e, #0a0a0a);
             border-radius: 15px;
             overflow: hidden;
-            margin: 20px 0;
+            margin: 15px 0;
             border: 2px solid #333;
+            width: 100%;
         }
 
         .disclaimer {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.8em;
+            bottom: 5px;
+            left: 5px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: clamp(0.6rem, 1.8vw, 0.8rem);
             color: #ffd700;
             border: 1px solid rgba(255, 215, 0, 0.3);
-            max-width: 280px;
+            max-width: min(280px, 70vw);
             text-align: left;
+            line-height: 1.2;
         }
 
         .earth {
             position: absolute;
-            right: 80px;
+            right: min(80px, 15vw);
             top: 50%;
             transform: translateY(-50%);
-            width: 80px;
-            height: 80px;
+            width: clamp(50px, 12vw, 80px);
+            height: clamp(50px, 12vw, 80px);
             background: radial-gradient(circle at 30% 30%, #4a90e2, #2171b5, #1e3a8a);
             border-radius: 50%;
             box-shadow: 
@@ -92,15 +103,15 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 50px;
+            font-size: clamp(30px, 8vw, 50px);
         }
 
         .planet {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
+            width: clamp(40px, 10vw, 60px);
+            height: clamp(40px, 10vw, 60px);
             border-radius: 50%;
             transition: all 0.1s ease;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
@@ -112,28 +123,28 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 40px;
+            font-size: clamp(25px, 6vw, 40px);
         }
 
         .velocity-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 24px;
+            font-size: clamp(18px, 4vw, 24px);
             transition: all 0.1s ease;
             font-weight: bold;
         }
 
         .spectrum-container {
-            margin: 20px 0;
-            padding: 20px;
+            margin: 15px 0;
+            padding: clamp(10px, 3vw, 20px);
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .spectrum-title {
-            font-size: 1.1em;
+            font-size: clamp(0.9rem, 2.2vw, 1.1rem);
             margin-bottom: 15px;
             color: #ffd700;
         }
@@ -144,7 +155,7 @@
 
         .wavelength-indicator {
             font-family: 'Courier New', monospace;
-            font-size: 1.2em;
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
             font-weight: bold;
             margin-bottom: 10px;
             padding: 8px;
@@ -155,7 +166,7 @@
 
         .spectrum-bar {
             position: relative;
-            height: 50px;
+            height: clamp(30px, 8vw, 50px);
             background: linear-gradient(to right, 
                 #2D1B69 0%,     /* Deep UV (200nm) */
                 #4B0082 12.5%,  /* UV-A (320nm) */
@@ -180,22 +191,22 @@
 
         .wavelength-pointer {
             position: absolute;
-            top: -10px;
+            top: -8px;
             width: 0;
             height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 15px solid #ffd700;
-            transform: translateX(-10px);
+            border-left: clamp(6px, 2vw, 10px) solid transparent;
+            border-right: clamp(6px, 2vw, 10px) solid transparent;
+            border-top: clamp(10px, 3vw, 15px) solid #ffd700;
+            transform: translateX(calc(-1 * clamp(6px, 2vw, 10px)));
             transition: left 0.1s ease;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
         }
 
         .spectrum-labels {
             display: grid;
-            grid-template-columns: repeat(9, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
             gap: 2px;
-            font-size: 0.75em;
+            font-size: clamp(0.6rem, 1.5vw, 0.75rem);
             margin-top: 8px;
             color: #ccc;
             text-align: center;
@@ -217,9 +228,10 @@
             display: grid;
             grid-template-columns: 22.5% 35% 42.5%;
             margin-top: 5px;
-            font-size: 0.8em;
+            font-size: clamp(0.6rem, 1.8vw, 0.8rem);
             font-weight: bold;
             text-align: center;
+            gap: 5px;
         }
 
         .uv-region { color: #8B00FF; }
@@ -231,11 +243,17 @@
 
         .wavelength-panel {
             background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
+            padding: clamp(10px, 3vw, 20px);
             border-radius: 15px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: left;
+            margin-top: 20px;
+        }
+
+        .wavelength-panel h3 {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            margin-bottom: 15px;
         }
 
         .wavelength-panel h3::before {
@@ -244,10 +262,15 @@
 
         .formulas-section {
             background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
+            padding: clamp(10px, 2.5vw, 15px);
             border-radius: 10px;
             margin: 15px 0;
             border-left: 4px solid #4ecdc4;
+        }
+
+        .formulas-section h4 {
+            font-size: clamp(0.9rem, 2.2vw, 1rem);
+            margin-bottom: 10px;
         }
 
         .formulas-section h4::before {
@@ -257,18 +280,19 @@
         .formula {
             font-family: 'Courier New', monospace;
             background: rgba(0, 0, 0, 0.3);
-            padding: 8px;
+            padding: clamp(6px, 1.5vw, 8px);
             border-radius: 5px;
             margin: 8px 0;
-            font-size: 0.9em;
+            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
             color: #e8e8e8;
+            overflow-x: auto;
         }
 
         .controls {
-            margin: 20px 0;
+            margin: 15px 0;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(min(200px, 45vw), 1fr));
+            gap: clamp(10px, 2.5vw, 15px);
         }
 
         .control-group {
@@ -277,16 +301,23 @@
             gap: 5px;
         }
 
+        .control-group label {
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            font-weight: bold;
+        }
+
         .control-group label::before {
             content: '⚙️ ';
         }
 
         .control-group input, .control-group select {
-            padding: 5px;
+            padding: clamp(4px, 1vw, 8px);
             border-radius: 5px;
             border: 1px solid #555;
             background: rgba(255, 255, 255, 0.1);
             color: white;
+            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            width: 100%;
         }
 
         .control-group select option {
@@ -297,10 +328,11 @@
         .wavelength-display {
             font-family: 'Courier New', monospace;
             background: rgba(0, 0, 0, 0.4);
-            padding: 15px;
+            padding: clamp(10px, 2.5vw, 15px);
             border-radius: 10px;
             margin: 10px 0;
             border-left: 4px solid #ffd700;
+            overflow-x: auto;
         }
 
         .wavelength-row {
@@ -309,6 +341,10 @@
             margin: 8px 0;
             padding: 5px;
             border-radius: 3px;
+            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
         }
 
         .wavelength-row.nominal {
@@ -341,12 +377,14 @@
 
         .motion-info {
             font-family: monospace;
-            font-size: 1.1em;
+            font-size: clamp(0.8rem, 2vw, 1rem);
             margin: 15px 0;
-            padding: 15px;
+            padding: clamp(10px, 2.5vw, 15px);
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             border-left: 4px solid #ffd700;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .motion-info::before {
@@ -355,10 +393,12 @@
 
         .spectral-info {
             background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
+            padding: clamp(10px, 2.5vw, 15px);
             border-radius: 10px;
             margin: 15px 0;
             text-align: left;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            line-height: 1.4;
         }
 
         .object-type-selector {
@@ -392,51 +432,144 @@
             content: '⚪ ';
         }
 
-        @media (max-width: 1024px) {
+        /* Desktop layout for larger screens */
+        @media (min-width: 1024px) {
             .main-content {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 400px;
             }
             
             .controls {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 768px) {
-            .animation-container {
-                height: 300px;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-            
-            .earth {
-                width: 60px;
-                height: 60px;
-                right: 60px;
-            }
-            
-            .planet {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .spectrum-container {
+        /* Tablet specific adjustments */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            body {
                 padding: 15px;
             }
             
-            .wavelength-indicator {
-                font-size: 1em;
+            .controls {
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .spectrum-labels {
                 grid-template-columns: repeat(5, 1fr);
-                font-size: 0.7em;
+            }
+            
+            .animation-container {
+                height: clamp(300px, 35vw, 350px);
+            }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 767px) {
+            body {
+                padding: 8px;
+            }
+            
+            .animation-container {
+                height: clamp(200px, 50vw, 280px);
+                margin: 10px 0;
+            }
+            
+            .earth {
+                right: min(50px, 12vw);
+                width: clamp(40px, 10vw, 60px);
+                height: clamp(40px, 10vw, 60px);
+            }
+            
+            .planet {
+                width: clamp(30px, 8vw, 45px);
+                height: clamp(30px, 8vw, 45px);
+            }
+            
+            .spectrum-container {
+                padding: 10px;
+                margin: 10px 0;
+            }
+            
+            .spectrum-labels {
+                grid-template-columns: repeat(3, 1fr);
+                font-size: 0.6rem;
             }
             
             .spectrum-region-labels {
-                font-size: 0.7em;
+                font-size: 0.65rem;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .wavelength-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2px;
+            }
+            
+            .disclaimer {
+                font-size: 0.6rem;
+                max-width: 60vw;
+                padding: 4px 6px;
+            }
+            
+            h1 {
+                margin-bottom: 5px;
+            }
+            
+            .subtitle {
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Ultra-small mobile adjustments */
+        @media (max-width: 360px) {
+            .animation-container {
+                height: clamp(180px, 55vw, 220px);
+            }
+            
+            .spectrum-labels {
+                grid-template-columns: repeat(2, 1fr);
+                font-size: 0.55rem;
+            }
+            
+            .formula {
+                font-size: 0.65rem;
+                padding: 4px;
+            }
+            
+            .disclaimer {
+                font-size: 0.55rem;
+                max-width: 55vw;
+            }
+        }
+
+        /* Touch-friendly adjustments */
+        @media (hover: none) and (pointer: coarse) {
+            .control-group input[type="range"] {
+                height: 40px;
+            }
+            
+            .control-group select, .control-group input {
+                min-height: 40px;
+                padding: 8px;
+            }
+        }
+
+        /* Landscape mobile orientation */
+        @media (max-width: 767px) and (orientation: landscape) {
+            .animation-container {
+                height: clamp(150px, 35vh, 200px);
+            }
+            
+            .main-content {
+                gap: 15px;
+            }
+            
+            .controls {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -612,8 +745,8 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 20px; font-size: 0.9em;">
-                    <h4>🔭 Observational Methods &amp; Instruments:</h4>
+                <div style="margin-top: 20px; font-size: clamp(0.7rem, 1.8vw, 0.9rem);">
+                    <h4 style="font-size: clamp(0.9rem, 2.2vw, 1rem);">🔭 Observational Methods &amp; Instruments:</h4>
                     <div id="detectionInfo">
                         <p><strong>📡 Radial Velocity:</strong> Measures periodic Doppler shifts in stellar spectra to detect orbiting planets.</p>
                         <p><strong>🎯 Precision:</strong> Modern spectrographs can detect velocity changes as small as 1 m/s.</p>
@@ -670,15 +803,21 @@
         const redshiftZ = document.getElementById('redshiftZ');
         const detectionInfo = document.getElementById('detectionInfo');
 
-        // Animation constants
-        const centerX = 300;
-        const amplitude = 200;
+        // Animation constants - make responsive
+        let centerX, amplitude;
         const baseColor = 150;
         const c = 299792458; // Speed of light in m/s
 
         // Extended spectrum bar constants
         const spectrumMin = 200; // nm (UV-C)
         const spectrumMax = 1000; // nm (Near-IR)
+
+        function updateAnimationDimensions() {
+            const container = document.querySelector('.animation-container');
+            const containerWidth = container.offsetWidth;
+            centerX = containerWidth * 0.4; // Adjust center based on container width
+            amplitude = Math.min(containerWidth * 0.25, 200); // Limit amplitude based on container size
+        }
 
         function updateSpectralInfo() {
             const selectedLine = parseFloat(spectralLineSelect.value);
@@ -892,7 +1031,13 @@
             intensityValue.textContent = colorIntensity.toFixed(1) + 'x';
         });
 
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            updateAnimationDimensions();
+        });
+
         // Initialize
+        updateAnimationDimensions();
         updateSpectralInfo();
         animate();
     </script>
