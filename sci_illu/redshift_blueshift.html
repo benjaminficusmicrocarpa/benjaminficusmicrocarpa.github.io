@@ -1,0 +1,840 @@
+
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redshift and Blueshift - Wavelength Analysis</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff4444, #4444ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .animation-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .animation-container {
+            position: relative;
+            height: 400px;
+            background: radial-gradient(ellipse at center, #1a1a2e, #0a0a0a);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 2px solid #333;
+        }
+
+        .disclaimer {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8em;
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            max-width: 280px;
+            text-align: left;
+        }
+
+        .earth {
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #4a90e2, #2171b5, #1e3a8a);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 30px rgba(74, 144, 226, 0.5),
+                inset -10px -10px 20px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .earth::after {
+            content: '🌍';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+        }
+
+        .planet {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            transition: all 0.1s ease;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .velocity-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            transition: all 0.1s ease;
+            font-weight: bold;
+        }
+
+        .spectrum-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .spectrum-title {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .wavelength-indicator {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            border: 1px solid #ffd700;
+        }
+
+        .spectrum-bar {
+            position: relative;
+            height: 50px;
+            background: linear-gradient(to right, 
+                #2D1B69 0%,     /* Deep UV (200nm) */
+                #4B0082 12.5%,  /* UV-A (320nm) */
+                #8B00FF 22.5%,  /* Violet (380nm) */
+                #4B0082 27.5%,  /* Indigo (420nm) */
+                #0000FF 32.5%,  /* Blue (450nm) */
+                #00BFFF 37.5%,  /* Light Blue (480nm) */
+                #00FF7F 42.5%,  /* Green (520nm) */
+                #FFFF00 47.5%,  /* Yellow (570nm) */
+                #FFA500 52.5%,  /* Orange (600nm) */
+                #FF4500 57.5%,  /* Red-Orange (650nm) */
+                #FF0000 62.5%,  /* Red (700nm) */
+                #8B0000 72.5%,  /* Deep Red (800nm) */
+                #654321 82.5%,  /* Near-IR (900nm) */
+                #2F4F4F 100%    /* IR (1000nm) */
+            );
+            border-radius: 8px;
+            border: 2px solid #333;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .wavelength-pointer {
+            position: absolute;
+            top: -10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #ffd700;
+            transform: translateX(-10px);
+            transition: left 0.1s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        .spectrum-labels {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 2px;
+            font-size: 0.75em;
+            margin-top: 8px;
+            color: #ccc;
+            text-align: center;
+        }
+
+        .spectrum-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2px;
+        }
+
+        .spectrum-label.major {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .spectrum-region-labels {
+            display: grid;
+            grid-template-columns: 22.5% 35% 42.5%;
+            margin-top: 5px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .uv-region { color: #8B00FF; }
+        .visible-region { color: #00FF7F; }
+        .ir-region { color: #FF4500; }
+
+        .wavelength-panel {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
+
+        .formulas-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #4ecdc4;
+        }
+
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            border-radius: 5px;
+            margin: 8px 0;
+            font-size: 0.9em;
+            color: #e8e8e8;
+        }
+
+        .controls {
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-group input, .control-group select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .control-group select option {
+            background: #2a2a2a;
+            color: white;
+        }
+
+        .wavelength-display {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        .wavelength-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .wavelength-row.nominal {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .wavelength-row.shifted {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .wavelength-row.delta {
+            background: rgba(255, 100, 100, 0.1);
+            font-weight: bold;
+        }
+
+        .motion-info {
+            font-family: monospace;
+            font-size: 1.1em;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .spectral-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .object-type-selector {
+            margin: 15px 0;
+        }
+
+        .redshift-indicator {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .blueshift-indicator {
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+
+        .neutral-indicator {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .animation-container {
+                height: 300px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .earth {
+                width: 60px;
+                height: 60px;
+                right: 60px;
+            }
+            
+            .planet {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .spectrum-container {
+                padding: 15px;
+            }
+            
+            .wavelength-indicator {
+                font-size: 1em;
+            }
+            
+            .spectrum-labels {
+                grid-template-columns: repeat(5, 1fr);
+                font-size: 0.7em;
+            }
+            
+            .spectrum-region-labels {
+                font-size: 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Redshift &amp; Blueshift - Wavelength Analysis</h1>
+        <p class="subtitle">Doppler Effect with Realistic Wavelength Calculations</p>
+        
+        <div class="main-content">
+            <div class="animation-section">
+                <div class="animation-container">
+                    <div class="planet" id="planet"></div>
+                    <div class="velocity-arrow" id="arrow"></div>
+                    <div class="earth"></div>
+                    <div class="disclaimer">
+                        ⚠️ <strong>Note:</strong> Planet colors are exaggerated for visualization. Real wavelength shifts are typically parts per million.
+                    </div>
+                </div>
+
+                <div class="spectrum-container">
+                    <div class="spectrum-title">Electromagnetic Spectrum Position (200-1000 nm)</div>
+                    <div class="wavelength-indicator" id="wavelengthIndicator">
+                        656.300 nm
+                    </div>
+                    <div class="spectrum-bar">
+                        <div class="wavelength-pointer" id="wavelengthPointer"></div>
+                    </div>
+                    <div class="spectrum-labels">
+                        <div class="spectrum-label major">
+                            <span>200nm</span>
+                            <span>UV-C</span>
+                        </div>
+                        <div class="spectrum-label">
+                            <span>320nm</span>
+                            <span>UV-A</span>
+                        </div>
+                        <div class="spectrum-label major">
+                            <span>380nm</span>
+                            <span>Violet</span>
+                        </div>
+                        <div class="spectrum-label">
+                            <span>450nm</span>
+                            <span>Blue</span>
+                        </div>
+                        <div class="spectrum-label major">
+                            <span>520nm</span>
+                            <span>Green</span>
+                        </div>
+                        <div class="spectrum-label">
+                            <span>580nm</span>
+                            <span>Yellow</span>
+                        </div>
+                        <div class="spectrum-label major">
+                            <span>650nm</span>
+                            <span>Red</span>
+                        </div>
+                        <div class="spectrum-label">
+                            <span>800nm</span>
+                            <span>Near-IR</span>
+                        </div>
+                        <div class="spectrum-label major">
+                            <span>1000nm</span>
+                            <span>IR</span>
+                        </div>
+                    </div>
+                    <div class="spectrum-region-labels">
+                        <div class="uv-region">Ultraviolet</div>
+                        <div class="visible-region">Visible Light</div>
+                        <div class="ir-region">Infrared</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Object Type:</label>
+                        <select id="objectType">
+                            <option value="planet">Exoplanet (few km/s)</option>
+                            <option value="hypervelocity">Hypervelocity System (540 km/s)</option>
+                            <option value="galaxy">Galaxy Motion (100,000 km/s)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Spectral Line:</label>
+                        <select id="spectralLine">
+                            <option value="656.3">Hydrogen Alpha (656.3 nm)</option>
+                            <option value="486.1">Hydrogen Beta (486.1 nm)</option>
+                            <option value="589.0">Sodium D (589.0 nm)</option>
+                            <option value="393.4">Calcium H (393.4 nm)</option>
+                            <option value="396.8">Calcium K (396.8 nm)</option>
+                            <option value="518.4">Magnesium (518.4 nm)</option>
+                            <option value="630.0">Oxygen (630.0 nm)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Animation Speed:</label>
+                        <input type="range" id="speedSlider" min="0.2" max="2" step="0.1" value="1">
+                        <span id="speedValue">1.0x</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Color Intensity:</label>
+                        <input type="range" id="intensitySlider" min="0.5" max="3" step="0.1" value="1.5">
+                        <span id="intensityValue">1.5x</span>
+                    </div>
+                </div>
+
+                <div class="motion-info" id="motionInfo">
+                    Velocity: 0 km/s | Phase: At turning point | Shift: Neutral
+                </div>
+
+                <div class="spectral-info" id="spectralInfo">
+                    <strong>Current Selection:</strong> Hydrogen Alpha line used in exoplanet detection via radial velocity method.
+                </div>
+            </div>
+
+            <div class="wavelength-panel">
+                <h3>Wavelength Analysis</h3>
+                
+                <div class="wavelength-display" id="wavelengthDisplay">
+                    <div class="wavelength-row nominal">
+                        <span>Rest Wavelength (λ₀):</span>
+                        <span id="restWavelength">656.300 nm</span>
+                    </div>
+                    <div class="wavelength-row shifted">
+                        <span>Observed Wavelength (λ):</span>
+                        <span id="observedWavelength">656.300 nm</span>
+                    </div>
+                    <div class="wavelength-row delta">
+                        <span>Δλ (Change):</span>
+                        <span id="deltaWavelength">+0.000 nm</span>
+                    </div>
+                    <div class="wavelength-row delta">
+                        <span>Percentage Change:</span>
+                        <span id="percentageChange">0.000%</span>
+                    </div>
+                    <div class="wavelength-row delta">
+                        <span>Redshift (z):</span>
+                        <span id="redshiftZ">0.00000</span>
+                    </div>
+                </div>
+
+                <div class="formulas-section">
+                    <h4>Formulas Used:</h4>
+                    
+                    <div class="formula">
+                        <strong>Classical Doppler (|v| &lt;&lt; c):</strong><br>
+                        λ = λ₀(1 + v/c)<br>
+                        where v &gt; 0 = approaching (blueshift)
+                    </div>
+                    
+                    <div class="formula">
+                        <strong>Relativistic Doppler (high v):</strong><br>
+                        λ = λ₀√[(1 + β)/(1 - β)]<br>
+                        where β = v/c
+                    </div>
+                    
+                    <div class="formula">
+                        <strong>Redshift Parameter:</strong><br>
+                        z = (λ - λ₀)/λ₀ = Δλ/λ₀
+                    </div>
+                    
+                    <div class="formula">
+                        <strong>Percentage Change:</strong><br>
+                        % = (Δλ/λ₀) × 100% = z × 100%
+                    </div>
+                    
+                    <div class="formula">
+                        <strong>Constants:</strong><br>
+                        c = 299,792,458 m/s (speed of light)
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; font-size: 0.9em;">
+                    <h4>Observational Methods &amp; Instruments:</h4>
+                    <div id="detectionInfo">
+                        <p><strong>Radial Velocity:</strong> Measures periodic Doppler shifts in stellar spectra to detect orbiting planets.</p>
+                        <p><strong>Precision:</strong> Modern spectrographs can detect velocity changes as small as 1 m/s.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let time = 0;
+        let speed = 1;
+        let colorIntensity = 1.5;
+        let animationId;
+
+        // Object type configurations
+        const objectTypes = {
+            planet: { maxVelocity: 30, name: "Exoplanet", description: "Typical exoplanet radial velocity detection" },
+            hypervelocity: { maxVelocity: 540, name: "Hypervelocity System", description: "Extreme stellar system moving through galaxy" },
+            galaxy: { maxVelocity: 100000, name: "Galaxy Motion", description: "Galactic recession velocity" }
+        };
+
+        // Spectral line information
+        const spectralLines = {
+            656.3: { name: "Hydrogen Alpha", element: "H", use: "Most common line for exoplanet detection" },
+            486.1: { name: "Hydrogen Beta", element: "H", use: "Secondary hydrogen line for verification" },
+            589.0: { name: "Sodium D", element: "Na", use: "Stellar atmosphere studies" },
+            393.4: { name: "Calcium H", element: "Ca", use: "Stellar classification and velocity" },
+            396.8: { name: "Calcium K", element: "Ca", use: "Stellar activity monitoring" },
+            518.4: { name: "Magnesium", element: "Mg", use: "Stellar composition analysis" },
+            630.0: { name: "Oxygen", element: "O", use: "Atmospheric studies" }
+        };
+
+        const planet = document.getElementById('planet');
+        const arrow = document.getElementById('arrow');
+        const motionInfo = document.getElementById('motionInfo');
+        const spectralInfo = document.getElementById('spectralInfo');
+        const wavelengthIndicator = document.getElementById('wavelengthIndicator');
+        const wavelengthPointer = document.getElementById('wavelengthPointer');
+        
+        // Control elements
+        const objectTypeSelect = document.getElementById('objectType');
+        const spectralLineSelect = document.getElementById('spectralLine');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValue = document.getElementById('speedValue');
+        const intensitySlider = document.getElementById('intensitySlider');
+        const intensityValue = document.getElementById('intensityValue');
+        
+        // Wavelength display elements
+        const restWavelength = document.getElementById('restWavelength');
+        const observedWavelength = document.getElementById('observedWavelength');
+        const deltaWavelength = document.getElementById('deltaWavelength');
+        const percentageChange = document.getElementById('percentageChange');
+        const redshiftZ = document.getElementById('redshiftZ');
+        const detectionInfo = document.getElementById('detectionInfo');
+
+        // Animation constants
+        const centerX = 300;
+        const amplitude = 200;
+        const baseColor = 150;
+        const c = 299792458; // Speed of light in m/s
+
+        // Extended spectrum bar constants
+        const spectrumMin = 200; // nm (UV-C)
+        const spectrumMax = 1000; // nm (Near-IR)
+
+        function updateSpectralInfo() {
+            const selectedLine = parseFloat(spectralLineSelect.value);
+            const lineInfo = spectralLines[selectedLine];
+            const objectType = objectTypes[objectTypeSelect.value];
+            
+            spectralInfo.innerHTML = `
+                <strong>Current Selection:</strong> ${lineInfo.name} (${lineInfo.element}) - ${lineInfo.use}<br>
+                <strong>Object Type:</strong> ${objectType.name} - ${objectType.description}
+            `;
+            
+            restWavelength.textContent = selectedLine.toFixed(3) + ' nm';
+            
+            // Update detection info based on object type
+            let detectionText = '';
+            switch(objectTypeSelect.value) {
+                case 'planet':
+                    detectionText = `
+                        <p><strong>Radial Velocity Spectroscopy:</strong> High-resolution spectrographs measure Doppler shifts in stellar absorption lines.</p>
+                        <p><strong>Key Instruments:</strong> HARPS (ESO), HIRES (Keck), ESPRESSO (VLT), NEID (WIYN)</p>
+                        <p><strong>Precision:</strong> Modern instruments achieve ~1 m/s velocity precision using laser frequency combs and thorium-argon lamps for calibration.</p>
+                        <p><strong>Technique:</strong> Cross-correlation of stellar spectra with stellar templates to measure line shifts.</p>
+                    `;
+                    break;
+                case 'hypervelocity':
+                    detectionText = `
+                        <p><strong>Proper Motion + Spectroscopy:</strong> Combination of astrometric measurements and radial velocity from spectral lines.</p>
+                        <p><strong>Key Instruments:</strong> Gaia (ESA) for proper motion, ground-based spectrographs for radial velocity</p>
+                        <p><strong>Discovery Method:</strong> Large proper motion detected by Gaia, followed by spectroscopic confirmation of high radial velocity.</p>
+                        <p><strong>Multi-epoch Observations:</strong> Multiple observations over years to confirm trajectory and rule out binary motion.</p>
+                    `;
+                    break;
+                case 'galaxy':
+                    detectionText = `
+                        <p><strong>Long-slit Spectroscopy:</strong> Multi-object spectrographs measure redshift of galaxy emission/absorption lines.</p>
+                        <p><strong>Key Instruments:</strong> SDSS (Sloan), DESI, Euclid, JWST/NIRSpec, HST/STIS, VLT/MUSE</p>
+                        <p><strong>Technique:</strong> Measure redshift of known emission lines (Lyman-α, [OII], Hα) or absorption features (4000Å break).</p>
+                        <p><strong>Surveys:</strong> Large sky surveys like SDSS, 2dFGRS measure thousands of galaxy redshifts simultaneously.</p>
+                    `;
+                    break;
+            }
+            detectionInfo.innerHTML = detectionText;
+        }
+
+        function calculateWavelengthShift(velocity, restWave) {
+            // Classical Doppler formula for small velocities: λ = λ₀(1 + v/c)
+            // For high velocities, use relativistic formula
+            const beta = velocity * 1000 / c; // Convert km/s to m/s, then to β = v/c
+            
+            let observedWave;
+            if (Math.abs(beta) < 0.1) {
+                // Classical approximation: λ = λ₀(1 + v/c)
+                observedWave = restWave * (1 + beta);
+            } else {
+                // Relativistic Doppler formula: λ = λ₀√[(1 + β)/(1 - β)]
+                observedWave = restWave * Math.sqrt((1 + beta) / (1 - beta));
+            }
+            
+            const deltaWave = observedWave - restWave;
+            const percentChange = (deltaWave / restWave) * 100;
+            const z = deltaWave / restWave; // Redshift parameter
+            
+            return { observedWave, deltaWave, percentChange, z };
+        }
+
+        function getWavelengthRegion(wavelength) {
+            if (wavelength < 280) return { region: 'UV-C', color: '#2D1B69' };
+            if (wavelength < 315) return { region: 'UV-B', color: '#4B0082' };
+            if (wavelength < 380) return { region: 'UV-A', color: '#6A0DAD' };
+            if (wavelength < 450) return { region: 'Violet', color: '#8B00FF' };
+            if (wavelength < 495) return { region: 'Blue', color: '#0000FF' };
+            if (wavelength < 570) return { region: 'Green', color: '#00FF00' };
+            if (wavelength < 590) return { region: 'Yellow', color: '#FFFF00' };
+            if (wavelength < 620) return { region: 'Orange', color: '#FFA500' };
+            if (wavelength < 750) return { region: 'Red', color: '#FF0000' };
+            if (wavelength < 1000) return { region: 'Near-IR', color: '#8B0000' };
+            return { region: 'IR', color: '#2F4F4F' };
+        }
+
+        function updateSpectrumBar(wavelength) {
+            const regionInfo = getWavelengthRegion(wavelength);
+            
+            // Update wavelength indicator with region info
+            wavelengthIndicator.innerHTML = `
+                ${wavelength.toFixed(6)} nm<br>
+                <span style="font-size: 0.8em; opacity: 0.8;">${regionInfo.region}</span>
+            `;
+            
+            // Calculate position on spectrum bar (200-1000 nm range)
+            const clampedWavelength = Math.max(spectrumMin, Math.min(spectrumMax, wavelength));
+            const position = ((clampedWavelength - spectrumMin) / (spectrumMax - spectrumMin)) * 100;
+            
+            // Update pointer position
+            wavelengthPointer.style.left = position + '%';
+            
+            // Color the indicator based on wavelength shift
+            let indicatorColor = '#ffd700'; // Default gold
+            const restWave = parseFloat(spectralLineSelect.value);
+            
+            if (wavelength < restWave * 0.999) {
+                indicatorColor = '#4ecdc4'; // Blueshift color
+            } else if (wavelength > restWave * 1.001) {
+                indicatorColor = '#ff6b6b'; // Redshift color
+            }
+            
+            wavelengthIndicator.style.color = indicatorColor;
+            wavelengthIndicator.style.borderColor = indicatorColor;
+            
+            // Update pointer color to match
+            wavelengthPointer.style.borderTopColor = indicatorColor;
+        }
+
+        function animate() {
+            time += 0.01 * speed;
+            
+            // Get current object type and max velocity
+            const currentObjectType = objectTypes[objectTypeSelect.value];
+            const maxVel = currentObjectType.maxVelocity;
+            
+            // Harmonic motion with realistic velocity scaling
+            const position = amplitude * Math.sin(time);
+            const velocity = maxVel * Math.cos(time); // Velocity in km/s
+            
+            // Calculate planet position
+            const planetX = centerX + position;
+            planet.style.left = planetX + 'px';
+            
+            // Calculate wavelength shift
+            const selectedWavelength = parseFloat(spectralLineSelect.value);
+            const wavelengthData = calculateWavelengthShift(velocity, selectedWavelength);
+            
+            // Update spectrum bar
+            updateSpectrumBar(wavelengthData.observedWave);
+            
+            // Update wavelength display
+            observedWavelength.textContent = wavelengthData.observedWave.toFixed(6) + ' nm';
+            
+            const deltaSign = wavelengthData.deltaWave >= 0 ? '+' : '';
+            deltaWavelength.textContent = deltaSign + wavelengthData.deltaWave.toFixed(6) + ' nm';
+            
+            const percentSign = wavelengthData.percentChange >= 0 ? '+' : '';
+            percentageChange.textContent = percentSign + wavelengthData.percentChange.toFixed(6) + '%';
+            
+            redshiftZ.textContent = wavelengthData.z.toFixed(8);
+            
+            // Color calculation for visualization (exaggerated)
+            const normalizedVelocity = velocity / maxVel;
+            const redIntensity = Math.max(0, -normalizedVelocity) * colorIntensity;
+            const blueIntensity = Math.max(0, normalizedVelocity) * colorIntensity;
+            
+            const red = Math.min(255, baseColor + redIntensity * 105);
+            const green = Math.max(50, baseColor - Math.abs(normalizedVelocity) * colorIntensity * 80);
+            const blue = Math.min(255, baseColor + blueIntensity * 105);
+            
+            // Apply color to planet
+            planet.style.background = `radial-gradient(circle at 30% 30%, 
+                rgb(${red}, ${green}, ${blue}), 
+                rgb(${red * 0.7}, ${green * 0.7}, ${blue * 0.7}), 
+                rgb(${red * 0.4}, ${green * 0.4}, ${blue * 0.4}))`;
+            
+            // Update velocity arrow
+            const arrowX = planetX + 30;
+            arrow.style.left = arrowX + 'px';
+            
+            let shiftType, shiftClass;
+            if (Math.abs(velocity) < 0.1) {
+                arrow.textContent = '⏸️';
+                arrow.style.color = '#ffd700';
+                shiftType = 'Neutral';
+                shiftClass = 'neutral-indicator';
+            } else if (velocity > 0) {
+                arrow.textContent = '→';
+                arrow.style.color = `rgb(${Math.min(255, 100 + blueIntensity * 155)}, 
+                                         ${100}, 
+                                         ${Math.min(255, 200 + blueIntensity * 55)})`;
+                shiftType = `Blueshift (z = ${wavelengthData.z.toFixed(6)})`;
+                shiftClass = 'blueshift-indicator';
+            } else {
+                arrow.textContent = '←';
+                arrow.style.color = `rgb(${Math.min(255, 200 + redIntensity * 55)}, 
+                                         ${100}, 
+                                         ${Math.min(255, 100 + redIntensity * 155)})`;
+                shiftType = `Redshift (z = ${wavelengthData.z.toFixed(6)})`;
+                shiftClass = 'redshift-indicator';
+            }
+            
+            // Update motion info
+            const phase = velocity > 0.1 ? 'Approaching Earth' : 
+                         velocity < -0.1 ? 'Receding from Earth' : 'At turning point';
+            
+            motionInfo.innerHTML = `
+                Velocity: ${velocity.toFixed(3)} km/s | 
+                Phase: ${phase} | 
+                Shift: <span class="${shiftClass}">${shiftType}</span>
+            `;
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // Event listeners
+        objectTypeSelect.addEventListener('change', updateSpectralInfo);
+        spectralLineSelect.addEventListener('change', updateSpectralInfo);
+
+        speedSlider.addEventListener('input', (e) => {
+            speed = parseFloat(e.target.value);
+            speedValue.textContent = speed.toFixed(1) + 'x';
+        });
+
+        intensitySlider.addEventListener('input', (e) => {
+            colorIntensity = parseFloat(e.target.value);
+            intensityValue.textContent = colorIntensity.toFixed(1) + 'x';
+        });
+
+        // Initialize
+        updateSpectralInfo();
+        animate();
+    </script>
+
+
+</body></html>
