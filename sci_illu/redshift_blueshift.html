@@ -1,8 +1,10 @@
-
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redshift and Blueshift - Wavelength Analysis</title>
+    <title>🔴🔵 Redshift and Blueshift - Wavelength Analysis 🌌</title>
     <style>
         body {
             margin: 0;
@@ -104,6 +106,15 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
+        .planet::after {
+            content: '🪐';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+        }
+
         .velocity-arrow {
             position: absolute;
             top: 50%;
@@ -125,6 +136,10 @@
             font-size: 1.1em;
             margin-bottom: 15px;
             color: #ffd700;
+        }
+
+        .spectrum-title::before {
+            content: '🌈 ';
         }
 
         .wavelength-indicator {
@@ -208,8 +223,11 @@
         }
 
         .uv-region { color: #8B00FF; }
+        .uv-region::before { content: '☀️ '; }
         .visible-region { color: #00FF7F; }
+        .visible-region::before { content: '👁️ '; }
         .ir-region { color: #FF4500; }
+        .ir-region::before { content: '🔥 '; }
 
         .wavelength-panel {
             background: rgba(255, 255, 255, 0.1);
@@ -220,12 +238,20 @@
             text-align: left;
         }
 
+        .wavelength-panel h3::before {
+            content: '📊 ';
+        }
+
         .formulas-section {
             background: rgba(255, 255, 255, 0.05);
             padding: 15px;
             border-radius: 10px;
             margin: 15px 0;
             border-left: 4px solid #4ecdc4;
+        }
+
+        .formulas-section h4::before {
+            content: '📐 ';
         }
 
         .formula {
@@ -249,6 +275,10 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+        }
+
+        .control-group label::before {
+            content: '⚙️ ';
         }
 
         .control-group input, .control-group select {
@@ -285,13 +315,28 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+        .wavelength-row.nominal::before {
+            content: '📏 ';
+            margin-right: 5px;
+        }
+
         .wavelength-row.shifted {
             background: rgba(255, 215, 0, 0.1);
+        }
+
+        .wavelength-row.shifted::before {
+            content: '🔍 ';
+            margin-right: 5px;
         }
 
         .wavelength-row.delta {
             background: rgba(255, 100, 100, 0.1);
             font-weight: bold;
+        }
+
+        .wavelength-row.delta::before {
+            content: '📈 ';
+            margin-right: 5px;
         }
 
         .motion-info {
@@ -302,6 +347,10 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             border-left: 4px solid #ffd700;
+        }
+
+        .motion-info::before {
+            content: '🚀 ';
         }
 
         .spectral-info {
@@ -321,14 +370,26 @@
             font-weight: bold;
         }
 
+        .redshift-indicator::before {
+            content: '🔴 ';
+        }
+
         .blueshift-indicator {
             color: #4ecdc4;
             font-weight: bold;
         }
 
+        .blueshift-indicator::before {
+            content: '🔵 ';
+        }
+
         .neutral-indicator {
             color: #ffd700;
             font-weight: bold;
+        }
+
+        .neutral-indicator::before {
+            content: '⚪ ';
         }
 
         @media (max-width: 1024px) {
@@ -382,8 +443,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Redshift &amp; Blueshift - Wavelength Analysis</h1>
-        <p class="subtitle">Doppler Effect with Realistic Wavelength Calculations</p>
+        <h1>🔴🔵 Redshift &amp; Blueshift - Wavelength Analysis 🌌</h1>
+        <p class="subtitle">📡 Doppler Effect with Realistic Wavelength Calculations ⚗️</p>
         
         <div class="main-content">
             <div class="animation-section">
@@ -453,22 +514,22 @@
                     <div class="control-group">
                         <label>Object Type:</label>
                         <select id="objectType">
-                            <option value="planet">Exoplanet (few km/s)</option>
-                            <option value="hypervelocity">Hypervelocity System (540 km/s)</option>
-                            <option value="galaxy">Galaxy Motion (100,000 km/s)</option>
+                            <option value="planet">🪐 Exoplanet (few km/s)</option>
+                            <option value="hypervelocity">💫 Hypervelocity System (540 km/s)</option>
+                            <option value="galaxy">🌌 Galaxy Motion (100,000 km/s)</option>
                         </select>
                     </div>
                     
                     <div class="control-group">
                         <label>Spectral Line:</label>
                         <select id="spectralLine">
-                            <option value="656.3">Hydrogen Alpha (656.3 nm)</option>
-                            <option value="486.1">Hydrogen Beta (486.1 nm)</option>
-                            <option value="589.0">Sodium D (589.0 nm)</option>
-                            <option value="393.4">Calcium H (393.4 nm)</option>
-                            <option value="396.8">Calcium K (396.8 nm)</option>
-                            <option value="518.4">Magnesium (518.4 nm)</option>
-                            <option value="630.0">Oxygen (630.0 nm)</option>
+                            <option value="656.3">🔴 Hydrogen Alpha (656.3 nm)</option>
+                            <option value="486.1">🔵 Hydrogen Beta (486.1 nm)</option>
+                            <option value="589.0">🟡 Sodium D (589.0 nm)</option>
+                            <option value="393.4">🟣 Calcium H (393.4 nm)</option>
+                            <option value="396.8">🟣 Calcium K (396.8 nm)</option>
+                            <option value="518.4">🟢 Magnesium (518.4 nm)</option>
+                            <option value="630.0">🟠 Oxygen (630.0 nm)</option>
                         </select>
                     </div>
                     
@@ -490,7 +551,7 @@
                 </div>
 
                 <div class="spectral-info" id="spectralInfo">
-                    <strong>Current Selection:</strong> Hydrogen Alpha line used in exoplanet detection via radial velocity method.
+                    <strong>🔬 Current Selection:</strong> Hydrogen Alpha line used in exoplanet detection via radial velocity method.
                 </div>
             </div>
 
@@ -524,38 +585,38 @@
                     <h4>Formulas Used:</h4>
                     
                     <div class="formula">
-                        <strong>Classical Doppler (|v| &lt;&lt; c):</strong><br>
+                        <strong>🧮 Classical Doppler (|v| &lt;&lt; c):</strong><br>
                         λ = λ₀(1 + v/c)<br>
                         where v &gt; 0 = approaching (blueshift)
                     </div>
                     
                     <div class="formula">
-                        <strong>Relativistic Doppler (high v):</strong><br>
+                        <strong>⚡ Relativistic Doppler (high v):</strong><br>
                         λ = λ₀√[(1 + β)/(1 - β)]<br>
                         where β = v/c
                     </div>
                     
                     <div class="formula">
-                        <strong>Redshift Parameter:</strong><br>
+                        <strong>📉 Redshift Parameter:</strong><br>
                         z = (λ - λ₀)/λ₀ = Δλ/λ₀
                     </div>
                     
                     <div class="formula">
-                        <strong>Percentage Change:</strong><br>
+                        <strong>📊 Percentage Change:</strong><br>
                         % = (Δλ/λ₀) × 100% = z × 100%
                     </div>
                     
                     <div class="formula">
-                        <strong>Constants:</strong><br>
+                        <strong>🌟 Constants:</strong><br>
                         c = 299,792,458 m/s (speed of light)
                     </div>
                 </div>
 
                 <div style="margin-top: 20px; font-size: 0.9em;">
-                    <h4>Observational Methods &amp; Instruments:</h4>
+                    <h4>🔭 Observational Methods &amp; Instruments:</h4>
                     <div id="detectionInfo">
-                        <p><strong>Radial Velocity:</strong> Measures periodic Doppler shifts in stellar spectra to detect orbiting planets.</p>
-                        <p><strong>Precision:</strong> Modern spectrographs can detect velocity changes as small as 1 m/s.</p>
+                        <p><strong>📡 Radial Velocity:</strong> Measures periodic Doppler shifts in stellar spectra to detect orbiting planets.</p>
+                        <p><strong>🎯 Precision:</strong> Modern spectrographs can detect velocity changes as small as 1 m/s.</p>
                     </div>
                 </div>
             </div>
@@ -570,20 +631,20 @@
 
         // Object type configurations
         const objectTypes = {
-            planet: { maxVelocity: 30, name: "Exoplanet", description: "Typical exoplanet radial velocity detection" },
-            hypervelocity: { maxVelocity: 540, name: "Hypervelocity System", description: "Extreme stellar system moving through galaxy" },
-            galaxy: { maxVelocity: 100000, name: "Galaxy Motion", description: "Galactic recession velocity" }
+            planet: { maxVelocity: 30, name: "🪐 Exoplanet", description: "Typical exoplanet radial velocity detection" },
+            hypervelocity: { maxVelocity: 540, name: "💫 Hypervelocity System", description: "Extreme stellar system moving through galaxy" },
+            galaxy: { maxVelocity: 100000, name: "🌌 Galaxy Motion", description: "Galactic recession velocity" }
         };
 
         // Spectral line information
         const spectralLines = {
-            656.3: { name: "Hydrogen Alpha", element: "H", use: "Most common line for exoplanet detection" },
-            486.1: { name: "Hydrogen Beta", element: "H", use: "Secondary hydrogen line for verification" },
-            589.0: { name: "Sodium D", element: "Na", use: "Stellar atmosphere studies" },
-            393.4: { name: "Calcium H", element: "Ca", use: "Stellar classification and velocity" },
-            396.8: { name: "Calcium K", element: "Ca", use: "Stellar activity monitoring" },
-            518.4: { name: "Magnesium", element: "Mg", use: "Stellar composition analysis" },
-            630.0: { name: "Oxygen", element: "O", use: "Atmospheric studies" }
+            656.3: { name: "🔴 Hydrogen Alpha", element: "H", use: "Most common line for exoplanet detection" },
+            486.1: { name: "🔵 Hydrogen Beta", element: "H", use: "Secondary hydrogen line for verification" },
+            589.0: { name: "🟡 Sodium D", element: "Na", use: "Stellar atmosphere studies" },
+            393.4: { name: "🟣 Calcium H", element: "Ca", use: "Stellar classification and velocity" },
+            396.8: { name: "🟣 Calcium K", element: "Ca", use: "Stellar activity monitoring" },
+            518.4: { name: "🟢 Magnesium", element: "Mg", use: "Stellar composition analysis" },
+            630.0: { name: "🟠 Oxygen", element: "O", use: "Atmospheric studies" }
         };
 
         const planet = document.getElementById('planet');
@@ -625,8 +686,8 @@
             const objectType = objectTypes[objectTypeSelect.value];
             
             spectralInfo.innerHTML = `
-                <strong>Current Selection:</strong> ${lineInfo.name} (${lineInfo.element}) - ${lineInfo.use}<br>
-                <strong>Object Type:</strong> ${objectType.name} - ${objectType.description}
+                <strong>🔬 Current Selection:</strong> ${lineInfo.name} (${lineInfo.element}) - ${lineInfo.use}<br>
+                <strong>🚀 Object Type:</strong> ${objectType.name} - ${objectType.description}
             `;
             
             restWavelength.textContent = selectedLine.toFixed(3) + ' nm';
@@ -636,26 +697,26 @@
             switch(objectTypeSelect.value) {
                 case 'planet':
                     detectionText = `
-                        <p><strong>Radial Velocity Spectroscopy:</strong> High-resolution spectrographs measure Doppler shifts in stellar absorption lines.</p>
-                        <p><strong>Key Instruments:</strong> HARPS (ESO), HIRES (Keck), ESPRESSO (VLT), NEID (WIYN)</p>
-                        <p><strong>Precision:</strong> Modern instruments achieve ~1 m/s velocity precision using laser frequency combs and thorium-argon lamps for calibration.</p>
-                        <p><strong>Technique:</strong> Cross-correlation of stellar spectra with stellar templates to measure line shifts.</p>
+                        <p><strong>📡 Radial Velocity Spectroscopy:</strong> High-resolution spectrographs measure Doppler shifts in stellar absorption lines.</p>
+                        <p><strong>🔬 Key Instruments:</strong> HARPS (ESO), HIRES (Keck), ESPRESSO (VLT), NEID (WIYN)</p>
+                        <p><strong>🎯 Precision:</strong> Modern instruments achieve ~1 m/s velocity precision using laser frequency combs and thorium-argon lamps for calibration.</p>
+                        <p><strong>⚗️ Technique:</strong> Cross-correlation of stellar spectra with stellar templates to measure line shifts.</p>
                     `;
                     break;
                 case 'hypervelocity':
                     detectionText = `
-                        <p><strong>Proper Motion + Spectroscopy:</strong> Combination of astrometric measurements and radial velocity from spectral lines.</p>
-                        <p><strong>Key Instruments:</strong> Gaia (ESA) for proper motion, ground-based spectrographs for radial velocity</p>
-                        <p><strong>Discovery Method:</strong> Large proper motion detected by Gaia, followed by spectroscopic confirmation of high radial velocity.</p>
-                        <p><strong>Multi-epoch Observations:</strong> Multiple observations over years to confirm trajectory and rule out binary motion.</p>
+                        <p><strong>🛰️ Proper Motion + Spectroscopy:</strong> Combination of astrometric measurements and radial velocity from spectral lines.</p>
+                        <p><strong>🔭 Key Instruments:</strong> Gaia (ESA) for proper motion, ground-based spectrographs for radial velocity</p>
+                        <p><strong>🎯 Discovery Method:</strong> Large proper motion detected by Gaia, followed by spectroscopic confirmation of high radial velocity.</p>
+                        <p><strong>📅 Multi-epoch Observations:</strong> Multiple observations over years to confirm trajectory and rule out binary motion.</p>
                     `;
                     break;
                 case 'galaxy':
                     detectionText = `
-                        <p><strong>Long-slit Spectroscopy:</strong> Multi-object spectrographs measure redshift of galaxy emission/absorption lines.</p>
-                        <p><strong>Key Instruments:</strong> SDSS (Sloan), DESI, Euclid, JWST/NIRSpec, HST/STIS, VLT/MUSE</p>
-                        <p><strong>Technique:</strong> Measure redshift of known emission lines (Lyman-α, [OII], Hα) or absorption features (4000Å break).</p>
-                        <p><strong>Surveys:</strong> Large sky surveys like SDSS, 2dFGRS measure thousands of galaxy redshifts simultaneously.</p>
+                        <p><strong>🌌 Long-slit Spectroscopy:</strong> Multi-object spectrographs measure redshift of galaxy emission/absorption lines.</p>
+                        <p><strong>🔭 Key Instruments:</strong> SDSS (Sloan), DESI, Euclid, JWST/NIRSpec, HST/STIS, VLT/MUSE</p>
+                        <p><strong>⚗️ Technique:</strong> Measure redshift of known emission lines (Lyman-α, [OII], Hα) or absorption features (4000Å break).</p>
+                        <p><strong>🗺️ Surveys:</strong> Large sky surveys like SDSS, 2dFGRS measure thousands of galaxy redshifts simultaneously.</p>
                     `;
                     break;
             }
@@ -684,17 +745,17 @@
         }
 
         function getWavelengthRegion(wavelength) {
-            if (wavelength < 280) return { region: 'UV-C', color: '#2D1B69' };
-            if (wavelength < 315) return { region: 'UV-B', color: '#4B0082' };
-            if (wavelength < 380) return { region: 'UV-A', color: '#6A0DAD' };
-            if (wavelength < 450) return { region: 'Violet', color: '#8B00FF' };
-            if (wavelength < 495) return { region: 'Blue', color: '#0000FF' };
-            if (wavelength < 570) return { region: 'Green', color: '#00FF00' };
-            if (wavelength < 590) return { region: 'Yellow', color: '#FFFF00' };
-            if (wavelength < 620) return { region: 'Orange', color: '#FFA500' };
-            if (wavelength < 750) return { region: 'Red', color: '#FF0000' };
-            if (wavelength < 1000) return { region: 'Near-IR', color: '#8B0000' };
-            return { region: 'IR', color: '#2F4F4F' };
+            if (wavelength < 280) return { region: '☢️ UV-C', color: '#2D1B69' };
+            if (wavelength < 315) return { region: '☀️ UV-B', color: '#4B0082' };
+            if (wavelength < 380) return { region: '🌞 UV-A', color: '#6A0DAD' };
+            if (wavelength < 450) return { region: '🟣 Violet', color: '#8B00FF' };
+            if (wavelength < 495) return { region: '🔵 Blue', color: '#0000FF' };
+            if (wavelength < 570) return { region: '🟢 Green', color: '#00FF00' };
+            if (wavelength < 590) return { region: '🟡 Yellow', color: '#FFFF00' };
+            if (wavelength < 620) return { region: '🟠 Orange', color: '#FFA500' };
+            if (wavelength < 750) return { region: '🔴 Red', color: '#FF0000' };
+            if (wavelength < 1000) return { region: '🔥 Near-IR', color: '#8B0000' };
+            return { region: '♨️ IR', color: '#2F4F4F' };
         }
 
         function updateSpectrumBar(wavelength) {
@@ -789,14 +850,14 @@
                 shiftType = 'Neutral';
                 shiftClass = 'neutral-indicator';
             } else if (velocity > 0) {
-                arrow.textContent = '→';
+                arrow.textContent = '➡️';
                 arrow.style.color = `rgb(${Math.min(255, 100 + blueIntensity * 155)}, 
                                          ${100}, 
                                          ${Math.min(255, 200 + blueIntensity * 55)})`;
                 shiftType = `Blueshift (z = ${wavelengthData.z.toFixed(6)})`;
                 shiftClass = 'blueshift-indicator';
             } else {
-                arrow.textContent = '←';
+                arrow.textContent = '⬅️';
                 arrow.style.color = `rgb(${Math.min(255, 200 + redIntensity * 55)}, 
                                          ${100}, 
                                          ${Math.min(255, 100 + redIntensity * 155)})`;
@@ -805,8 +866,8 @@
             }
             
             // Update motion info
-            const phase = velocity > 0.1 ? 'Approaching Earth' : 
-                         velocity < -0.1 ? 'Receding from Earth' : 'At turning point';
+            const phase = velocity > 0.1 ? '🚀 Approaching Earth' : 
+                         velocity < -0.1 ? '🌌 Receding from Earth' : '⏸️ At turning point';
             
             motionInfo.innerHTML = `
                 Velocity: ${velocity.toFixed(3)} km/s | 
@@ -836,5 +897,5 @@
         animate();
     </script>
 
-
-</body></html>
+</body>
+</html>
