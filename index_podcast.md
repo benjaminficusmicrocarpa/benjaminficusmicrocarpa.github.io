@@ -6,4 +6,4 @@
 [🧠 Optimal Study Protocols](podcast/optimal_study_protocols_andrew_huberman.html)
 
 ### Joe Rogan Experience
-[🤖 JRE #2345 - Roman Yampolskiy 🚨](podcast/jre_2345_roman_roman_yampolskiy.html)
+[🤖 JRE #2345 - Roman Yampolskiy 🚨 - AI Safety Expert Warns Humanity](podcast/jre_2345_roman_roman_yampolskiy.html)
