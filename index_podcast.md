@@ -9,3 +9,7 @@
 [📜 JRE #2252: Wesley Huff - 🎓 Biblical Scholar & Ancient Manuscript Expert | 🕊️ Christian Apologist](podcast/jre_2252_wesley_huff.html)
 
 [🤖 JRE #2345 - Roman Yampolskiy 🚨 - AI Safety Expert Warns Humanity](podcast/jre_2345_roman_roman_yampolskiy.html)
+
+### Melissa Dougherty
+
+(🏰 Robert Schuller & The Movement That Rebranded Church)[podcast/melissa_dougherty_robert_h_schuller.html]
