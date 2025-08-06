@@ -12,4 +12,4 @@
 
 ### Melissa Dougherty
 
-(🏰 Robert Schuller & The Movement That Rebranded Church)[podcast/melissa_dougherty_robert_h_schuller.html]
+[🏰 Robert Schuller & The Movement That Rebranded Church](podcast/melissa_dougherty_robert_h_schuller.html)
