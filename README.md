@@ -8,3 +8,5 @@ Every notes I have taken
 ### [Podcast Notes](index_podcast.md)
 
 ### [Scientific Illustration](index_sci_ill.md)
+
+### [Programming](programming.md)
