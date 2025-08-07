@@ -5,6 +5,10 @@
 
 [🧠 Optimal Study Protocols](podcast/optimal_study_protocols_andrew_huberman.html)
 
+### Chris Williamson
+
+[🎧 How To Live Freely In A Goal-Obsessed World](podcast/chris_williamson_anne_laure_le_cunff.html)
+
 ### Joe Rogan Experience
 [📜 JRE #2252: Wesley Huff - 🎓 Biblical Scholar & Ancient Manuscript Expert | 🕊️ Christian Apologist](podcast/jre_2252_wesley_huff.html)
 
