@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Schuller & The Seeker Movement: A Deep Dive</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .attribution {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .attribution a {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+        
+        .section {
+            background: white;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-header {
+            background: linear-gradient(45deg, #4a5568, #2d3748);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section-content.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .section-content.always-visible {
+            display: block;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            background: #e9ecef;
+            border: none;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .tab.active {
+            background: #007bff;
+            color: white;
+        }
+        
+        .tab-content {
+            padding: 20px;
+            background: white;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 20px 0 20px 60px;
+            border-left: 3px solid #007bff;
+            margin-left: 20px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 25px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #007bff;
+        }
+        
+        .timeline-year {
+            background: #007bff;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .scripture-box {
+            background: #f8f4e6;
+            border-left: 4px solid #b8860b;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .scripture-reference {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: normal;
+            font-weight: bold;
+        }
+        
+        .scripture-verse {
+            background: #f8f4e6;
+            border-left: 4px solid #b8860b;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .verse-reference {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 8px;
+            font-style: normal;
+            font-weight: bold;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .pros {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .cons {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .influence-tree {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .influence-node {
+            background: #f8f9fa;
+            border: 2px solid #007bff;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .influence-node:hover {
+            transform: scale(1.05);
+        }
+        
+        .influence-arrow {
+            font-size: 24px;
+            color: #007bff;
+            margin: 0 10px;
+        }
+        
+        .quote-box {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .quote-box::before {
+            content: '"';
+            font-size: 60px;
+            color: #007bff;
+            position: absolute;
+            top: -10px;
+            left: 15px;
+        }
+        
+        .collapsible-list {
+            margin: 15px 0;
+        }
+        
+        .collapsible-item {
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            margin: 5px 0;
+        }
+        
+        .collapsible-header {
+            background: #f8f9fa;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .collapsible-content {
+            padding: 15px;
+            display: none;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .collapsible-content.active {
+            display: block;
+        }
+        
+        .button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .button:hover {
+            background: #0056b3;
+        }
+        
+        .button.scripture-button {
+            background: #b8860b;
+            color: white;
+        }
+        
+        .button.scripture-button:hover {
+            background: #996f00;
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .influence-node {
+                display: block;
+                margin: 20px 0;
+            }
+            
+            .influence-arrow {
+                display: block;
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [activeSection, setActiveSection] = useState(null);
+            const [activeTab, setActiveTab] = useState({});
+            const [activeModal, setActiveModal] = useState(null);
+            const [collapsedItems, setCollapsedItems] = useState({});
+
+            const toggleSection = (sectionId) => {
+                setActiveSection(activeSection === sectionId ? null : sectionId);
+            };
+
+            const toggleTab = (sectionId, tabId) => {
+                setActiveTab(prev => ({
+                    ...prev,
+                    [sectionId]: prev[sectionId] === tabId ? null : tabId
+                }));
+            };
+
+            const toggleCollapsible = (itemId) => {
+                setCollapsedItems(prev => ({
+                    ...prev,
+                    [itemId]: !prev[itemId]
+                }));
+            };
+
+            const openModal = (modalId) => {
+                setActiveModal(modalId);
+            };
+
+            const closeModal = () => {
+                setActiveModal(null);
+            };
+
+            return (
+                <div className="container">
+                    <div className="header">
+                        <h1>🏛️ Robert Schuller & The Seeker Movement</h1>
+                        <h2>📚 A Deep Dive by Melissa Dougherty</h2>
+                        <p>📅 Understanding the theological foundations and lasting impact of the seeker-sensitive church movement</p>
+                        <div className="attribution">
+                            Generated using LLM with supervision and polishing by <a href="https://benjaminficusmicrocarpa.github.io/">benjaminficusmicrocarpa</a> | 
+                            Original: <a href="https://www.youtube.com/watch?v=2TLek_QPi1M" target="_blank">Robert Schuller and the Movement that Rebranded Church: A Deep Dive</a>
+                        </div>
+                    </div>
+
+                    {/* Modal for Important Concepts */}
+                    <div className={`modal ${activeModal ? 'active' : ''}`} onClick={closeModal}>
+                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                            <button className="modal-close" onClick={closeModal}>×</button>
+                            {activeModal === 'new-thought' && (
+                                <div>
+                                    <h2>🔮 Understanding New Thought Movement</h2>
+                                    <p><strong>Definition:</strong> New Thought is a spiritual movement that emphasizes the power of positive thinking and the divine potential within every person. It's NOT New Age, but it looks and sounds Christian while being fundamentally different.</p>
+                                    
+                                    <h3>🚨 Key Dangers:</h3>
+                                    <ul>
+                                        <li><strong>Mind Power:</strong> Teaches that thoughts literally create reality</li>
+                                        <li><strong>Redefines Scripture:</strong> Takes Bible verses out of context</li>
+                                        <li><strong>Removes Gospel Offense:</strong> Sin becomes "negative thinking"</li>
+                                        <li><strong>Self-Deification:</strong> Elevates humanity to God's level</li>
+                                    </ul>
+
+                                    <div className="scripture-box">
+                                        "See to it that no one takes you captive through hollow and deceptive philosophy, which depends on human tradition and the elemental spiritual forces of this world rather than on Christ."
+                                        <div className="scripture-reference">- Colossians 2:8 (NIV)</div>
+                                    </div>
+                                </div>
+                            )}
+                            
+                            {activeModal === 'it-works-trap' && (
+                                <div>
+                                    <h2>⚠️ The "It Works" Trap</h2>
+                                    <p><strong>Definition:</strong> The dangerous assumption that if something produces results, it must be true or from God.</p>
+                                    
+                                    <h3>📖 Biblical Warning:</h3>
+                                    <div className="scripture-box">
+                                        "If a prophet, or one who foretells by dreams, appears among you and announces to you a sign or wonder, and if the sign or wonder spoken of takes place, and the prophet says, 'Let us follow other gods' (gods you have not known) 'and let us worship them,' you must not listen to the words of that prophet or dreamer."
+                                        <div className="scripture-reference">- Deuteronomy 13:1-3 (NIV)</div>
+                                    </div>
+
+                                    <h3>🎯 How It Works:</h3>
+                                    <ol>
+                                        <li>Something genuinely helps you (like positive thinking improving church growth)</li>
+                                        <li>You assume the underlying philosophy must be true</li>
+                                        <li>You adopt beliefs you didn't realize came with the "solution"</li>
+                                        <li>Your theology becomes contaminated with false teachings</li>
+                                    </ol>
+
+                                    <p><strong>Remember:</strong> Test everything against Scripture, not results!</p>
+                                </div>
+                            )}
+
+                            {activeModal === 'seeker-sensitive' && (
+                                <div>
+                                    <h2>🎯 Seeker-Sensitive vs. Seeker-Centered</h2>
+                                    
+                                    <h3>✅ Biblical Seeker-Sensitive:</h3>
+                                    <ul>
+                                        <li>Primary audience: Believers (church members)</li>
+                                        <li>Secondary audience: Seekers (visitors)</li>
+                                        <li>Welcomes newcomers warmly</li>
+                                        <li>Explains theological terms clearly</li>
+                                        <li>Maintains biblical content and gospel truth</li>
+                                    </ul>
+
+                                    <h3>⚠️ Problematic Seeker-Centered:</h3>
+                                    <ul>
+                                        <li>Primary audience: Unbelievers</li>
+                                        <li>Secondary audience: Christians</li>
+                                        <li>Removes "offensive" biblical truths</li>
+                                        <li>Prioritizes comfort over conviction</li>
+                                        <li>Entertainment over edification</li>
+                                    </ul>
+
+                                    <div className="scripture-box">
+                                        "All Scripture is God-breathed and is useful for teaching, rebuking, correcting and training in righteousness, so that the servant of God may be thoroughly equipped for every good work."
+                                        <div className="scripture-reference">- 2 Timothy 3:16-17 (NIV)</div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeModal === 'church-purpose' && (
+                                <div>
+                                    <h2>📖 What Scripture Says About Church Purpose</h2>
+                                    <p>God's design for the church is clearly outlined in Scripture. Here are the five primary purposes with the actual verses:</p>
+                                    
+                                    <div className="scripture-verse">
+                                        <h3>🙏 1. Prayer and Worship</h3>
+                                        "They devoted themselves to the apostles' teaching and to fellowship, to the breaking of bread and to prayer."
+                                        <div className="verse-reference">- Acts 2:42 (NIV)</div>
+                                    </div>
+
+                                    <div className="scripture-verse">
+                                        <h3>📚 2. Teaching Biblical Doctrine</h3>
+                                        "So Christ himself gave the apostles, the prophets, the evangelists, the pastors and teachers, to equip his people for works of service, so that the body of Christ may be built up."
+                                        <div className="verse-reference">- Ephesians 4:11-12 (NIV)</div>
+                                    </div>
+
+                                    <div className="scripture-verse">
+                                        <h3>👥 3. Fellowship and Community</h3>
+                                        "Therefore encourage one another and build each other up, just as in fact you are doing."
+                                        <div className="verse-reference">- 1 Thessalonians 5:11 (NIV)</div>
+                                    </div>
+
+                                    <div className="scripture-verse">
+                                        <h3>❤️ 4. Helping Those in Need</h3>
+                                        "Religion that God our Father accepts as pure and faultless is this: to look after orphans and widows in their distress and to keep oneself from being polluted by the world."
+                                        <div className="verse-reference">- James 1:27 (NIV)</div>
+                                    </div>
+
+                                    <div className="scripture-verse">
+                                        <h3>📢 5. Spreading the Gospel</h3>
+                                        "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age."
+                                        <div className="verse-reference">- Matthew 28:19-20 (NIV)</div>
+                                    </div>
+
+                                    <div className="info-box">
+                                        <h3>🎯 Key Insight</h3>
+                                        <p>Notice that Scripture prioritizes <strong>teaching</strong>, <strong>equipping believers</strong>, and <strong>making disciples</strong> - not attracting unbelievers through entertainment or by removing biblical content they might find offensive.</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Part 1: Biography */}
+                    <div className="section">
+                        <div className="section-header">
+                            <span>📖 Part 1: Who is Robert H. Schuller?</span>
+                        </div>
+                        <div className="section-content always-visible">
+                            <div className="timeline">
+                                <div className="timeline-item">
+                                    <div className="timeline-year">1926</div>
+                                    <h3>🍼 Early Life</h3>
+                                    <p>Born in Iowa to Dutch immigrants, youngest of five children. Showed early drive and speaking ability. From age 4, wanted to be a minister.</p>
+                                </div>
+                                <div className="timeline-item">
+                                    <div className="timeline-year">1947-1950</div>
+                                    <h3>🎓 Reformed Theological Training</h3>
+                                    <p>Received Bachelor of Arts (1947), then Master of Divinity from Western Theological Seminary (1950). Ordained in Reformed Church in America (RCA) - a historically orthodox, Calvinist denomination.</p>
+                                </div>
+                                <div className="timeline-item">
+                                    <div className="timeline-year">1950-1955</div>
+                                    <h3>⛪ Early Ministry Success</h3>
+                                    <p>Pastored small RCA congregation that grew from 40 to 400 people in 5 years. Showed exceptional ability to attract and grow churches.</p>
+                                </div>
+                                <div className="timeline-item">
+                                    <div className="timeline-year">1955</div>
+                                    <h3>🚗 The Turning Point</h3>
+                                    <p>RCA asked him to start new church in Garden Grove, California with only $500 budget. This decision changed everything.</p>
+                                </div>
+                                <div className="timeline-item">
+                                    <div className="timeline-year">1955</div>
+                                    <h3>💡 Drive-In Innovation</h3>
+                                    <p>Started church at drive-in theater (idea borrowed from Florida pastor). First sermon to 100 people in 30 cars on Matthew 17:20 about moving mountains with faith.</p>
+                                </div>
+                                <div className="timeline-item">
+                                    <div className="timeline-year">1970</div>
+                                    <h3>📺 Media Empire</h3>
+                                    <p>Launched "Hour of Power" television ministry. Also started Institute for Successful Church Leadership - where he would train thousands of pastors.</p>
+                                </div>
+                                <div className="timeline-item">
+                                    <div className="timeline-year">1980</div>
+                                    <h3>💎 Crystal Cathedral</h3>
+                                    <p>Opened iconic all-glass cathedral for 2,700 people. Tellingly dedicated "to the glory of man for the greater glory of God."</p>
+                                </div>
+                                <div className="timeline-item">
+                                    <div className="timeline-year">2006-2012</div>
+                                    <h3>💔 The Collapse</h3>
+                                    <p>Son Robert A. Schuller tried to bring biblical teaching, was removed by father (2008). Bankruptcy (2010), family conflicts, Crystal Cathedral sold to Catholic Church (2012).</p>
+                                </div>
+                                <div className="timeline-item">
+                                    <div className="timeline-year">2015</div>
+                                    <h3>⚰️ Death and Forgotten Legacy</h3>
+                                    <p>Died at 88, largely forgotten despite massive influence. His books are out of print, his methods live on through disciples.</p>
+                                </div>
+                            </div>
+
+                            <div className="info-box">
+                                <h3>🔍 The Theological Turning Point</h3>
+                                <p>Schuller's theology dramatically shifted after reading Dale Carnegie ("How to Win Friends and Influence People") and Norman Vincent Peale ("The Power of Positive Thinking"). This marked his journey from Reformed orthodoxy to New Thought philosophy - the foundation of everything that followed.</p>
+                            </div>
+
+                            <div className="warning-box">
+                                <h3>👨‍👩‍👧‍👦 Family Name Confusion</h3>
+                                <p><strong>Robert H. Schuller</strong> (Senior) - The focus of this study</p>
+                                <p><strong>Robert A. Schuller</strong> (Son) - Tried to bring biblical teaching, was removed by father due to theological differences</p>
+                                <p><strong>Bobby Schuller</strong> (Grandson) - Currently runs Hour of Power</p>
+                                <p>The theological conflict between father and son reveals the fundamental problems with Schuller Sr.'s approach.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Part 2: Theology */}
+                    <div className="section">
+                        <div className="section-header">
+                            <span>🧠 Part 2: The Secret Theology - New Thought Influence</span>
+                        </div>
+                        <div className="section-content always-visible">
+                            <div className="warning-box">
+                                <h3>🚨 Critical Foundation</h3>
+                                <p>Understanding Schuller's New Thought theology is crucial because it informed his methods for church growth. This wasn't just about making church more appealing - it was about redefining Christianity itself.</p>
+                                <button className="button" onClick={() => openModal('new-thought')}>
+                                    📖 Learn About New Thought
+                                </button>
+                            </div>
+
+                            <h3>🔮 The New Thought Influence Chain</h3>
+                            <div className="influence-tree">
+                                <div className="influence-node" onClick={() => openModal('new-thought')}>
+                                    <h4>🏛️ Ernest Holmes</h4>
+                                    <p><strong>Religious Science Founder</strong></p>
+                                    <p>Created "I AM" affirmations, mind power theology</p>
+                                </div>
+                                <span className="influence-arrow">➡️</span>
+                                <div className="influence-node">
+                                    <h4>🌟 Emmett Fox</h4>
+                                    <p><strong>Popular New Thought Author</strong></p>
+                                    <p>Influenced both Peale and mainstream Christianity</p>
+                                </div>
+                                <span className="influence-arrow">➡️</span>
+                                <div className="influence-node">
+                                    <h4>⚡ Norman Vincent Peale</h4>
+                                    <p><strong>"Power of Positive Thinking"</strong></p>
+                                    <p>Made New Thought acceptable to Christians</p>
+                                </div>
+                                <span className="influence-arrow">➡️</span>
+                                <div className="influence-node">
+                                    <h4>⛪ Robert Schuller</h4>
+                                    <p><strong>Self-Esteem Theology</strong></p>
+                                    <p>Applied it to church growth and pastoral training</p>
+                                </div>
+                            </div>
+
+                            <h3>💪 Schuller's "Self-Esteem: The New Reformation"</h3>
+                            <div className="quote-box">
+                                Sin is any act or thought that robs myself or another human being of his or her self-esteem... Hell is the loss of pride... Self-esteem is the single greatest need facing the human race today.
+                                <cite>- Robert Schuller</cite>
+                            </div>
+
+                            <div className="scripture-box">
+                                "Pride goes before destruction, a haughty spirit before a fall."
+                                <div className="scripture-reference">- Proverbs 16:18 (NIV)</div>
+                                <p><strong>Exegesis:</strong> This proverb warns against the very thing Schuller promoted as salvation. Biblical wisdom consistently warns that pride leads to spiritual destruction, not spiritual health.</p>
+                            </div>
+
+                            <h3>⚠️ How Schuller Redefined Core Christian Doctrines</h3>
+                            <ul>
+                                <li><strong>🔄 Sin:</strong> Not rebellion against God, but "low self-esteem" or "lack of trust"</li>
+                                <li><strong>🔥 Hell:</strong> "The loss of pride" and "loss of self-esteem"</li>
+                                <li><strong>✝️ Salvation:</strong> Not forgiveness from sin, but restoration of self-worth</li>
+                                <li><strong>📖 Gospel:</strong> Not Christ's death for sinners, but affirmation of human dignity</li>
+                                <li><strong>📜 Scripture Authority:</strong> "Christ is Lord over the scriptures. The scriptures are not lord over Christ."</li>
+                            </ul>
+
+                            <div className="scripture-box">
+                                "But even if we or an angel from heaven should preach a gospel other than the one we preached to you, let them be under God's curse!"
+                                <div className="scripture-reference">- Galatians 1:8 (NIV)</div>
+                                <p><strong>Exegesis:</strong> Paul's strong warning applies directly to Schuller's redefinition of the gospel. Any message that changes the fundamental nature of sin, salvation, and human need contradicts the biblical gospel.</p>
+                            </div>
+
+                            <h3>✨ Possibility Thinking: The Practical Application</h3>
+                            <p>Schuller's "Possibility Thinking" was essentially New Thought mind power repackaged with Christian terminology:</p>
+                            <ol>
+                                <li><strong>🤗 Believe in Yourself:</strong> Faith = self-confidence, not trust in Christ</li>
+                                <li><strong>🚫 Remove Negative Thinking:</strong> Eliminate thoughts of sin, guilt, failure</li>
+                                <li><strong>👁️ Visualize Success:</strong> Mental imaging to "create" reality</li>
+                                <li><strong>🎯 God Wants You to Succeed:</strong> Success equals God's blessing</li>
+                                <li><strong>💫 Faith is Possibility Thinking:</strong> Refusing to accept any limits</li>
+                                <li><strong>💪 Rebrand Christianity:</strong> Remove "negative" doctrines for self-esteem</li>
+                            </ol>
+
+                            <div className="quote-box">
+                                I believe in positive thinking. It is almost as important as the resurrection of Jesus Christ.
+                                <cite>- Robert Schuller</cite>
+                            </div>
+
+                            <div className="warning-box">
+                                <h3>🎯 The "It Works" Trap in Action</h3>
+                                <p>Schuller fell into pragmatism: because positive thinking methods helped him grow his church, he assumed the underlying philosophy must be true. This is precisely the trap many fall into today.</p>
+                                <button className="button" onClick={() => openModal('it-works-trap')}>
+                                    ⚠️ Understand the Trap
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Part 3: Seeker Movement */}
+                    <div className="section">
+                        <div className="section-header">
+                            <span>🎯 Part 3: The Seeker-Sensitive Movement</span>
+                        </div>
+                        <div className="section-content always-visible">
+                            <div className="info-box">
+                                <h3>📖 Definition and Distinction</h3>
+                                <p>It's crucial to distinguish between biblical "seeker-sensitive" ministry and problematic "seeker-centered" approaches.</p>
+                                <button className="button" onClick={() => openModal('seeker-sensitive')}>
+                                    🎯 Learn the Difference
+                                </button>
+                            </div>
+
+                            <h3>👥 The Four Architects of Church Growth</h3>
+                            <div className="influence-tree">
+                                <div className="influence-node">
+                                    <h4>🏢 Peter Drucker</h4>
+                                    <p><strong>The Business Mind</strong></p>
+                                    <p>Brought corporate structure and marketing strategies to church management</p>
+                                </div>
+                                
+                                <div className="influence-node">
+                                    <h4>🌍 Donald McGavran</h4>
+                                    <p><strong>The Strategist</strong></p>
+                                    <p>Founded School of World Mission at Fuller Seminary. Emphasized data tracking and demographics</p>
+                                </div>
+                                
+                                <div className="influence-node">
+                                    <h4>⚔️ C. Peter Wagner</h4>
+                                    <p><strong>The Warrior</strong></p>
+                                    <p>Added spiritual warfare element. Founded NAR. Dominion theology - taking over "seven mountains"</p>
+                                </div>
+                                
+                                <div className="influence-node">
+                                    <h4>🎭 Robert Schuller</h4>
+                                    <p><strong>The Performer</strong></p>
+                                    <p>Brought psychology, style, New Thought spirituality. Made it marketable to masses</p>
+                                </div>
+                            </div>
+
+                            <h3>🛠️ Schuller's Revolutionary Methods</h3>
+                            <div className="info-box">
+                                <h4>🚪 The Door-to-Door Survey Strategy</h4>
+                                <p>Schuller pioneered surveying unbelievers about what they wanted in a church, then designing services around their preferences. This method was copied by Bill Hybels, Rick Warren, and thousands of others.</p>
+                                
+                                <p><strong>The Process:</strong></p>
+                                <ol>
+                                    <li>Survey non-churchgoers about their objections to church</li>
+                                    <li>Design worship services to address those objections</li>
+                                    <li>Remove anything they found offensive or boring</li>
+                                    <li>Market the "customer-friendly" result</li>
+                                </ol>
+                            </div>
+
+                            <div className="warning-box">
+                                <h3>❓ The Wrong Question</h3>
+                                <p>They asked: <em>"Why don't you go to church?"</em></p>
+                                <p>They should have asked: <em>"Why don't you believe the gospel?"</em></p>
+                                <p>This treats symptoms rather than the real issue - the human heart's rebellion against God.</p>
+                            </div>
+
+                            <h3>🎯 Schuller's Five Core Applications</h3>
+                            <ol>
+                                <li><strong>✨ Impress the Unchurched:</strong> Focus on non-Christians with impressive buildings, marketing, emotional messages</li>
+                                <li><strong>🚫 Don't Be Controversial:</strong> Avoid sin, hell, wrath - anything "negative"</li>
+                                <li><strong>😇 Humans Aren't Rebellious:</strong> People are just "mistrusting" - emphasis on human innocence</li>
+                                <li><strong>💪 Self-Esteem Messages:</strong> Tell people they're awesome, work the emotions, avoid conviction</li>
+                                <li><strong>🎯 Mission Not Church:</strong> Avoid theological accountability by calling it a "mission"</li>
+                            </ol>
+
+                            <div className="quote-box">
+                                We have never been interested, nor have we felt divinely called to create a place for a lot of Christians to get together and praise the Lord... rather, we are called to build a mission to impress the unchurched people.
+                                <cite>- Robert Schuller</cite>
+                            </div>
+
+                            <div className="scripture-box">
+                                "And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together, as some are in the habit of doing, but encouraging one another—and all the more as you see the Day approaching."
+                                <div className="scripture-reference">- Hebrews 10:24-25 (NIV)</div>
+                                <p><strong>Exegesis:</strong> Scripture clearly shows that gathering believers together for mutual encouragement and growth is a primary purpose of church assembly. Schuller's rejection of this biblical mandate reveals his departure from scriptural priorities.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Part 4: The Influence */}
+                    <div className="section">
+                        <div className="section-header">
+                            <span>🌊 Part 4: The Influence - Mentoring Modern Megachurch Pastors</span>
+                        </div>
+                        <div className="section-content always-visible">
+                            <div className="info-box">
+                                <h3>🏫 Institute for Successful Church Leadership (1969)</h3>
+                                <p>Schuller's training center where he taught thousands of pastors his growth methods. The influence spread far beyond what most people realize.</p>
+                            </div>
+
+                            <h3>🏢 Bill Hybels - Willow Creek Church</h3>
+                            <p><strong>The Architect:</strong> Built Willow Creek to 25,000 weekend attendance at peak using Schuller's methods.</p>
+                            <ul>
+                                <li>🚪 Used Schuller's door-to-door survey method</li>
+                                <li>❌ Removed crosses to avoid offense</li>
+                                <li>📺 Focused on topical, life-application messages over biblical exposition</li>
+                                <li>💼 Credited Schuller as divine inspiration for church growth approach</li>
+                                <li>⚠️ Later fell from grace due to sexual misconduct accusations</li>
+                            </ul>
+
+                            <h3>📖 Rick Warren - Saddleback Church</h3>
+                            <p><strong>The Pragmatist:</strong> Created the manual for Schuller's methods through "Purpose Driven Church."</p>
+                            <ul>
+                                <li>📚 Wrote "Purpose Driven Church" - used by thousands of pastors worldwide</li>
+                                <li>✅ Book was endorsed by Schuller himself</li>
+                                <li>🚪 Also used door-to-door survey methodology</li>
+                                <li>💑 Wife Kay said Schuller had "profound influence" on Rick</li>
+                            </ul>
+
+                            <div className="quote-box">
+                                We were captivated by his positive appeal to non-believers. I never looked back.
+                                <cite>- Kay Warren</cite>
+                            </div>
+
+                            <h3>💼 John C. Maxwell - The Most Problematic</h3>
+                            <p><strong>The Leadership Guru:</strong> Popular in both Christian circles and MLM culture.</p>
+                            <div className="warning-box">
+                                <h4>🚩 Red Flags with Maxwell:</h4>
+                                <ul>
+                                    <li>🔴 Still openly credits Schuller as mentor today (unlike others who distance themselves)</li>
+                                    <li>⚡ Actively teaches Schuller's "Possibility Thinking" (2019 blog posts)</li>
+                                    <li>📚 Recommends Napoleon Hill's "Think and Grow Rich" to Christians</li>
+                                    <li>🔮 Regularly quotes Norman Vincent Peale and other New Thought authors</li>
+                                    <li>🌟 Cites Emmett Fox (major New Thought teacher)</li>
+                                    <li>💭 Promotes "As a Man Thinketh" by James Allen (classic New Thought)</li>
+                                    <li>📈 Quotes progressive Christian Brené Brown on shame</li>
+                                </ul>
+                            </div>
+
+                            <h3>🎭 Stephen Furtick - The Final Evolution</h3>
+                            <p><strong>The Ultimate Result:</strong> If you took every characteristic of the seeker model and amplified it through social media and celebrity culture, you get Stephen Furtick.</p>
+                            <ul>
+                                <li>🎪 Extreme theatrical displays and emotional manipulation</li>
+                                <li>📱 Social media savvy with celebrity connections</li>
+                                <li>💪 Heavy self-empowerment messaging</li>
+                                <li>📖 Scripture used as props for motivational talks</li>
+                                <li>🏢 Multi-million dollar church corporation</li>
+                                <li>🤔 Same theological contradiction: Conservative seminary education but prosperity-style preaching</li>
+                            </ul>
+
+                            <div className="quote-box">
+                                It would not be overreaching to say that without Schuller and the Crystal Cathedral, there would likely be no Willow Creek Community Church, no Saddleback Community Church, or the thousands of other seeker-oriented churches around the country.
+                                <cite>- Christianity Today Leadership Journal, 1997</cite>
+                            </div>
+
+                            <div className="scripture-box">
+                                "For the time will come when people will not put up with sound doctrine. Instead, to suit their own desires, they will gather around them a great number of teachers to say what their itching ears want to hear."
+                                <div className="scripture-reference">- 2 Timothy 4:3 (NIV)</div>
+                                <p><strong>Exegesis:</strong> Paul's warning describes exactly what the seeker model produces - churches that prioritize what people want to hear over what they need to hear from God's Word.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Part 5: Pros and Cons */}
+                    <div className="section">
+                        <div className="section-header">
+                            <span>⚖️ Part 5: Pros and Cons of the Seeker Movement</span>
+                        </div>
+                        <div className="section-content always-visible">
+                            <div className="info-box">
+                                <h3>🎯 Balanced Perspective Needed</h3>
+                                <p>This is not black and white. We must honestly assess both strengths and weaknesses while maintaining biblical standards.</p>
+                            </div>
+
+                            <div className="pros-cons">
+                                <div className="pros">
+                                    <h4>✅ Genuine Strengths</h4>
+                                    <ul>
+                                        <li>❤️ <strong>Heart for Evangelism:</strong> Many pastors genuinely love God and want to reach the lost</li>
+                                        <li>🚪 <strong>Welcoming Environment:</strong> Creates non-threatening atmosphere for newcomers</li>
+                                        <li>💬 <strong>Clear Communication:</strong> Explains complex concepts in understandable language</li>
+                                        <li>✝️ <strong>Real Salvations:</strong> People genuinely get saved and show good fruit</li>
+                                        <li>🎨 <strong>Creativity Encouraged:</strong> Church doesn't have to be boring</li>
+                                        <li>👥 <strong>Strong Community:</strong> Often excellent fellowship and volunteer networks</li>
+                                        <li>🏥 <strong>Healing for Wounded:</strong> Can help those hurt by legalistic churches</li>
+                                    </ul>
+                                </div>
+                                <div className="cons">
+                                    <h4>⚠️ Serious Challenges</h4>
+                                    <ul>
+                                        <li>👶 <strong>Perpetual Spiritual Infancy:</strong> High turnover, low biblical literacy</li>
+                                        <li>🎯 <strong>Wrong Priorities:</strong> Numbers over spiritual maturity</li>
+                                        <li>🎭 <strong>Entertainment Focus:</strong> Emotional manipulation over biblical teaching</li>
+                                        <li>🛒 <strong>Consumer Mentality:</strong> Church as vendor, attendees as customers</li>
+                                        <li>⭐ <strong>Excellence Obsession:</strong> Impossible standards causing burnout</li>
+                                        <li>👑 <strong>Celebrity Pastors:</strong> Lack of accountability, moral failures</li>
+                                        <li>🎟️ <strong>Invitation ≠ Gospel:</strong> Confusing church attendance with evangelism</li>
+                                        <li>❓ <strong>False Converts:</strong> Many never understand true gospel</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className="scripture-box">
+                                "All Scripture is God-breathed and is useful for teaching, rebuking, correcting and training in righteousness, so that the servant of God may be thoroughly equipped for every good work."
+                                <div className="scripture-reference">- 2 Timothy 3:16-17 (NIV)</div>
+                                <p><strong>Exegesis:</strong> Notice that Scripture includes "rebuking" and "correcting" - the very elements seeker-centered models often remove. A complete biblical diet requires both comfort and challenge.</p>
+                            </div>
+
+                            <h3>📖 What Scripture Says About Church Purpose</h3>
+                            <div className="info-box">
+                                <p>God's design for the church involves five primary purposes:</p>
+                                <ol>
+                                    <li><strong>🙏 Prayer and Worship</strong> (Acts 2:42)</li>
+                                    <li><strong>📚 Teaching Biblical Doctrine</strong> (Ephesians 4:11-12)</li>
+                                    <li><strong>👥 Fellowship and Community</strong> (1 Thessalonians 5:11)</li>
+                                    <li><strong>❤️ Helping Those in Need</strong> (James 1:27)</li>
+                                    <li><strong>📢 Spreading the Gospel</strong> (Matthew 28:19-20)</li>
+                                </ol>
+                                <button className="button scripture-button" onClick={() => openModal('church-purpose')}>
+                                    📖 Read the Full Verses
+                                </button>
+                            </div>
+
+                            <div className="warning-box">
+                                <h3>❓ Key Questions for Evaluation</h3>
+                                <p><strong>For Your Church:</strong></p>
+                                <ul>
+                                    <li>📖 Is the congregation getting solid biblical teaching?</li>
+                                    <li>✝️ Can members accurately explain the gospel?</li>
+                                    <li>📚 Does your church prioritize discipleship and biblical exposition?</li>
+                                    <li>🤔 Can you defend what you believe and why?</li>
+                                    <li>❤️ Are you staying for community AND theology? (Should be both!)</li>
+                                </ul>
+                            </div>
+
+                            <div className="quote-box">
+                                Your credibility as a pastor isn't measured by how packed your service is. Your credibility as a pastor is measured by whether you actually teach the word of God.
+                                <cite>- Melissa Dougherty</cite>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Conclusion */}
+                    <div className="section">
+                        <div className="section-header">
+                            <span>🎯 Conclusion: The Glass Cathedral Legacy</span>
+                        </div>
+                        <div className="section-content always-visible">
+                            <div className="warning-box">
+                                <h3>🏗️ The Allegory of Glass vs. Rock</h3>
+                                <p>The Crystal Cathedral wasn't made of crystal or diamond - it was made of <strong>glass</strong>. It looked pretty and attracted people, but it was fragile and shallow.</p>
+                                <p>Scripture says Jesus is the <strong>Rock</strong> - the firm foundation of our faith. When you build your faith out of glass, it might look fancy and attract people, but all it takes is one hard truth, one real rock, to shatter the whole thing.</p>
+                                <p><strong>Christ is that Rock.</strong> Schuller preferred glass over the Rock.</p>
+                            </div>
+
+                            <div className="scripture-box">
+                                "Therefore everyone who hears these words of mine and puts them into practice is like a wise man who built his house on the rock. The rain came down, the streams rose, and the winds blew and beat against that house; yet it did not fall, because it had its foundation on the rock."
+                                <div className="scripture-reference">- Matthew 7:24-25 (NIV)</div>
+                                <p><strong>Exegesis:</strong> Jesus emphasizes that hearing AND obeying His words creates an unshakeable foundation. Schuller's approach removed the very words that challenged people, leaving them with an attractive but unstable foundation.</p>
+                            </div>
+
+                            <h3>🤯 The Forgotten Legacy</h3>
+                            <p>It's remarkable that Robert Schuller has been largely forgotten just 10 years after his death, despite:</p>
+                            <ul>
+                                <li>📺 Reaching tens of millions through Hour of Power</li>
+                                <li>📚 Multiple bestselling books</li>
+                                <li>🏛️ Building one of the most impressive religious buildings on earth</li>
+                                <li>🌊 Influencing the entire church growth movement</li>
+                                <li>👨‍🏫 Training thousands of pastors</li>
+                            </ul>
+
+                            <div className="collapsible-list">
+                                <div className="collapsible-item">
+                                    <div className="collapsible-header" onClick={() => toggleCollapsible('lessons-learned')}>
+                                        <span>📝 Key Lessons for Today's Church</span>
+                                        <span>{collapsedItems['lessons-learned'] ? '▼' : '▶'}</span>
+                                    </div>
+                                    <div className={`collapsible-content ${collapsedItems['lessons-learned'] ? 'active' : ''}`}>
+                                        <h4>🔍 For Discernment:</h4>
+                                        <ul>
+                                            <li>⚠️ Beware the "It Works" trap - effectiveness doesn't equal truth</li>
+                                            <li>🔍 New Thought teachings can masquerade as Christianity</li>
+                                            <li>📖 Always test teachings against Scripture, not results</li>
+                                            <li>🌊 Dangerous influence spreads through methods even when theology is rejected</li>
+                                        </ul>
+
+                                        <h4>🏗️ For Church Building:</h4>
+                                        <ul>
+                                            <li>🗿 Build on the Rock (Christ), not glass (human appeal)</li>
+                                            <li>📖 Let the church be the church - follow Scripture's design</li>
+                                            <li>👥 Prioritize discipleship over attendance numbers</li>
+                                            <li>⚖️ Balance creativity with biblical depth</li>
+                                        </ul>
+
+                                        <h4>🎯 For Ministry:</h4>
+                                        <ul>
+                                            <li>✝️ The gospel is sufficient - don't remove its offense</li>
+                                            <li>👑 Pastors should be shepherds, not CEOs or celebrities</li>
+                                            <li>📊 Success is measured by faithfulness, not numbers</li>
+                                            <li>🛡️ Proper accountability structures are essential</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="quote-box">
+                                When comfortable Christianity replaces conviction, and if persecution or challenges to faith come, it can collapse under pressure. People end up trading the God who saved them for one they made themselves.
+                                <cite>- Final Warning</cite>
+                            </div>
+
+                            <div className="scripture-box">
+                                "But we preach Christ crucified: a stumbling block to Jews and foolishness to Gentiles, but to those whom God has called, both Jews and Greeks, Christ the power of God and the wisdom of God."
+                                <div className="scripture-reference">- 1 Corinthians 1:23-24 (NIV)</div>
+                                <p><strong>Exegesis:</strong> Paul embraced the offense of the cross because it reveals God's power. When we remove what the world finds offensive about the gospel, we may also remove its power to truly transform lives.</p>
+                            </div>
+
+                            <div className="info-box">
+                                <h3>🙏 Final Reflection</h3>
+                                <p>This study isn't about attacking people or churches, but about education and discernment. When we know better, we do better. May we build on the Rock, not on glass, and may our churches be places where people encounter the true and living God through His Word.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="header" style={{marginTop: '40px'}}>
+                        <h3>🙏 Thank You for Reading</h3>
+                        <p>📝 This deep dive was based on extensive research by Melissa Dougherty</p>
+                        <p>💡 The goal is education, discernment, and faithful church practice</p>
+                        <p>📖 "Let's build on the Rock, not on glass"</p>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
