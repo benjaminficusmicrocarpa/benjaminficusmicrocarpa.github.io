@@ -19,3 +19,6 @@
 [🏰 Robert Schuller & The Movement That Rebranded Church](podcast/melissa_dougherty_robert_h_schuller2.html) [(without React)](podcast/melissa_dougherty_robert_h_schuller.html)
 
 [🎯 The Truth About "I AM" Affirmations - Understanding the Origins, Theology, and Biblical Response](podcast/melissa_dougherty_i_am_affirmation.html)
+
+### Mike Winger
+[🚨 Understanding Spiritual Abuse](podcast/mike_winger_spiritual_abuse.html)
