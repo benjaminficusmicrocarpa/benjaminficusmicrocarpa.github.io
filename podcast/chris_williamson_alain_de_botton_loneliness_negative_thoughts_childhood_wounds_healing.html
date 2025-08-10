@@ -1,0 +1,936 @@
+
+<!DOCTYPE html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta http-equiv="x-dns-prefetch-control" content="off"><meta name="x-poe-datastore-behavior" content="disabled"><meta name="x-poe-allow-downloads" content="true"><script src="https://puc.poecdn.net/standard.3ef2c256959faf5a756d.js"></script>
+    <meta charset="utf-8">
+    <title>Poe</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://puc.poecdn.net/disableWebRTC.9710cebe07429a9e8e06.js"></script><script src="https://puc.poecdn.net/tw.b9024aecac666455e183.js"></script><script src="https://puc.poecdn.net/deps.faccd16000d314dc16d5.js"></script><script src="https://puc.poecdn.net/exports.b0f0f482cdeb5302b0b9.js"></script><script src="https://puc.poecdn.net/renderer.75c73ae6b4235f62945a.js"></script><script>Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _lucidereact = require('lucide-react');
+
+function PodcastInfographic() {
+  const [activeTab, setActiveTab] = _react.useState.call(void 0, 'origins');
+  const [expandedSections, setExpandedSections] = _react.useState.call(void 0, {});
+  const [showModal, setShowModal] = _react.useState.call(void 0, null);
+
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
+  const Modal = ({ isOpen, onClose, title, children }) => {
+    if (!isOpen) return null;
+    
+    return (
+      _react2.default.createElement('div', { className: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"        ,}
+        , _react2.default.createElement('div', { className: "bg-white rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto p-6"      ,}
+          , _react2.default.createElement('div', { className: "flex justify-between items-center mb-4"   ,}
+            , _react2.default.createElement('h3', { className: "text-xl font-bold" ,}, title)
+            , _react2.default.createElement('button', { onClick: onClose, className: "text-gray-500 hover:text-gray-700 text-2xl"  ,}, "×")
+          )
+          , children
+        )
+      )
+    );
+  };
+
+  const Tooltip = ({ content, children }) => (
+    _react2.default.createElement('div', { className: "relative group" ,}
+      , children
+      , _react2.default.createElement('div', { className: "absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"               ,}
+        , content
+      )
+    )
+  );
+
+  const ModalButton = ({ modalKey, children, className = "" }) => (
+    _react2.default.createElement('button', {
+      onClick: () => setShowModal(modalKey),
+      className: `inline-flex items-center text-blue-600 hover:text-blue-800 underline decoration-dotted ${className}`,}
+
+      , children
+      , _react2.default.createElement(_lucidereact.Info, { className: "w-3 h-3 ml-1"  ,} )
+    )
+  );
+
+  const modalContent = {
+    attachmentStyle: {
+      title: "🔗 Attachment Styles Explained",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Attachment styles are patterns of how we connect with others, formed in early childhood based on our relationships with caregivers."                   )
+
+          , _react2.default.createElement('div', { className: "space-y-3",}
+            , _react2.default.createElement('div', { className: "bg-green-50 p-3 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold text-green-800" ,}, "🌟 Secure (60-70% of people)"    )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Comfortable with intimacy and independence. Had consistent, responsive caregivers."        )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-blue-50 p-3 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold text-blue-800" ,}, "😰 Anxious (15-20%)"  )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Craves closeness but fears abandonment. Had inconsistent caregiving - sometimes loving, sometimes unavailable."            )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-purple-50 p-3 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold text-purple-800" ,}, "🛡️ Avoidant (20-25%)"  )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Values independence, uncomfortable with too much closeness. Had emotionally distant or rejecting caregivers."            )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-red-50 p-3 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold text-red-800" ,}, "🌪️ Disorganized (5-10%)"  )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Inconsistent behavior in relationships. Often results from trauma or very chaotic early experiences."            )
+            )
+          )
+
+          , _react2.default.createElement('p', { className: "text-sm text-gray-600 italic"  ,}, "These patterns aren't permanent - they can change with awareness and healthy relationships!"            )
+        )
+      )
+    },
+    
+    gutBacteria: {
+      title: "🦠 The Gut Bacteria Metaphor",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Alain uses gut bacteria as a powerful metaphor for how our identity isn't as separate and individual as we think."                   )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🔬 The Science"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Your gut contains trillions of bacteria that are technically \"not you\" but are essential for your health, digestion, mood, and even decision-making. You can't survive without them."                          )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🧠 The Metaphor"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Just like gut bacteria, our thoughts, language, and emotional patterns come from outside sources (parents, culture, society) but become part of who we are. We're not self-contained individuals but interconnected beings shaped by countless external influences."                                   )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "💡 The Insight"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "This challenges the Western notion of the \"rugged individual.\" We're more like ecosystems than isolated entities, which can be both humbling and liberating."                      )
+          )
+        )
+      )
+    },
+    
+    selfAuthorship: {
+      title: "✍️ Self-Authorship: Writing Your Own Story",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Self-authorship is the process of consciously choosing which parts of your inherited programming to keep and which to change."                  )
+
+          , _react2.default.createElement('div', { className: "bg-purple-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "📚 The Editing Process"   )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Like an editor reviewing a manuscript, you examine your beliefs, behaviors, and emotional patterns to decide what serves your values and what doesn't."                      )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎯 Examples in Practice"   )
+            , _react2.default.createElement('ul', { className: "text-sm text-gray-700 space-y-1"  ,}
+              , _react2.default.createElement('li', null, "• \"My family values workaholism, but I choose work-life balance\""         )
+              , _react2.default.createElement('li', null, "• \"I inherited anxiety patterns, but I'm learning healthier coping\""         )
+              , _react2.default.createElement('li', null, "• \"My culture says men don't cry, but I choose emotional openness\""           )
+            )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "⚖️ The Balance"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "You can't (and shouldn't) reinvent everything. Choose the areas that matter most to you for conscious change - maybe relationships but not fashion, or career but not cooking habits."                            )
+          )
+        )
+      )
+    },
+    
+    picasso: {
+      title: "🎨 Picasso's Journey: From Skill to Simplicity",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Pablo Picasso's famous quote reveals a profound truth about authenticity and mastery."           )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🖼️ The Quote"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700 italic"  ,}, "\"When I was seven, I could paint like Raphael. It's taken me all my life to learn how to paint like a child again.\""                       )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "📈 The Journey"  )
+            , _react2.default.createElement('div', { className: "text-sm text-gray-700" ,}
+              , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Childhood:"), " Natural, unconscious authenticity"   )
+              , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Training:"), " Learning technical mastery and social conventions"      )
+              , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Mastery:"), " Consciously returning to simplicity with deep understanding"       )
+            )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🧠 The Psychological Parallel"   )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Like Picasso, we start authentic as children, learn social rules and defenses, then hopefully return to authenticity as mature adults - but now it's conscious choice rather than innocent impulse."                             )
+          )
+        )
+      )
+    },
+    
+    emotionalAvalanches: {
+      title: "❄️ Emotional Avalanches",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Emotional avalanches happen when we have emotions about our emotions, creating cascading reactions that bury the original feeling."                 )
+
+          , _react2.default.createElement('div', { className: "bg-red-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🔄 The Cascade Pattern"   )
+            , _react2.default.createElement('div', { className: "text-sm text-gray-700 space-y-2"  ,}
+              , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "1st Order:" ), " \"I feel agitated\" (original emotion)"     )
+              , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "2nd Order:" ), " \"I'm stressed about being agitated\" (emotion about emotion)"        )
+              , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "3rd Order:" ), " \"I'm resentful about being stressed\" (emotion about emotion about emotion)"          )
+              , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "4th Order:" ), " \"I'm anxious about my resentment\" (and so on...)"        )
+            )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎯 Real Example"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "You're disappointed a dinner was boring → You feel guilty for being ungrateful → You're angry at yourself for feeling guilty → You're ashamed of your anger → Now you're dealing with shame instead of simple disappointment!"                                    )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🛑 The Solution"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Stop at the first emotion. \"I'm disappointed, and that's okay.\" Don't judge the feeling - just feel it and let it pass naturally."                      )
+          )
+        )
+      )
+    },
+    
+    dissociation: {
+      title: "👻 Dissociation: When We Disconnect",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Dissociation is when we mentally disconnect from our emotions, thoughts, or physical sensations as a protective mechanism."                )
+
+          , _react2.default.createElement('div', { className: "bg-purple-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🧠 What It Looks Like"    )
+            , _react2.default.createElement('ul', { className: "text-sm text-gray-700 space-y-1"  ,}
+              , _react2.default.createElement('li', null, "• Feeling \"numb\" or emotionally flat"     )
+              , _react2.default.createElement('li', null, "• Going through motions without really \"being there\""       )
+              , _react2.default.createElement('li', null, "• Feeling like you're watching yourself from outside"       )
+              , _react2.default.createElement('li', null, "• Unable to access emotions you know you \"should\" feel"         )
+            )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🛡️ Why It Happens"   )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "It's often a survival mechanism from childhood - if emotions were too overwhelming or dangerous to feel (abusive household, trauma), the mind learns to \"turn off\" feeling as protection."                            )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "⚖️ The Double Edge"   )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Sometimes we NEED to dissociate to function (during crisis, overwhelming stress). The problem comes when it becomes our default mode and we can't access emotions when it's safe to do so."                              )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🌱 Healing Path"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Therapy can help you learn when it's safe to feel again, starting small and building tolerance for emotional experience."                  )
+          )
+        )
+      )
+    },
+    
+    titration: {
+      title: "💊 Titration: Love in Small Doses",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Titration means giving someone small, manageable doses of something rather than overwhelming them with too much at once."                 )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🔬 Medical Origins"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "In chemistry/medicine, titration means gradually adding small amounts of a substance until you reach the right concentration. Too much too fast can be dangerous."                       )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-purple-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "💕 Emotional Titration"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "For someone with avoidant attachment who lived on an \"emotional starvation diet,\" sudden intense love feels overwhelming. They need gradual, consistent smaller doses of affection to build tolerance."                           )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎯 What It Looks Like"    )
+            , _react2.default.createElement('ul', { className: "text-sm text-gray-700 space-y-1"  ,}
+              , _react2.default.createElement('li', null, "• \"I love you\" once a week instead of 10 times a day"            )
+              , _react2.default.createElement('li', null, "• Quality time in 2-hour chunks, not full weekends"        )
+              , _react2.default.createElement('li', null, "• Expressing appreciation gradually, not overwhelming praise"      )
+              , _react2.default.createElement('li', null, "• Respecting their need for space between intimate moments"        )
+            )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🔑 The Key"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "It's not about loving less - it's about loving in a way the person can actually receive and metabolize."                  )
+          )
+        )
+      )
+    },
+    
+    editing: {
+      title: "✂️ Emotional Editing in Relationships",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Editing yourself doesn't mean being fake - it means choosing kindness and timing in how you express your authentic thoughts and feelings."                     )
+
+          , _react2.default.createElement('div', { className: "bg-red-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "❌ The \"Be Yourself\" Myth"    )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Complete unfiltered authenticity can be destructive. Your stream of consciousness includes momentary irritations, petty thoughts, and emotional reactions that might hurt others unnecessarily."                      )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎭 Healthy Editing Examples"   )
+            , _react2.default.createElement('ul', { className: "text-sm text-gray-700 space-y-1"  ,}
+              , _react2.default.createElement('li', null, "• Not bringing up relationship issues when partner is exhausted"         )
+              , _react2.default.createElement('li', null, "• Choosing the right moment for difficult conversations"       )
+              , _react2.default.createElement('li', null, "• Not sharing every fleeting attraction to others"       )
+              , _react2.default.createElement('li', null, "• Moderating criticism when someone is already vulnerable"       )
+            )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎯 The Goal"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Express your authentic self while considering the impact on others. It's about strategic kindness, not deception."               )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "⚖️ Finding Balance"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Some people need to edit less (express more), others need to edit more (consider impact). Know which direction you need to grow."                     )
+          )
+        )
+      )
+    },
+    
+    kintsugi: {
+      title: "🏺 Kintsugi: Beauty in Broken Places",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Kintsugi is the Japanese art of repairing broken pottery with golden lacquer, making the repair more beautiful than the original."                   )
+
+          , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎨 The Practice"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Instead of hiding cracks or throwing away broken pottery, kintsugi highlights the breaks with precious metals, creating something more valuable and beautiful than before."                       )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-purple-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🧠 The Philosophy"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Breakage and repair are part of the object's history, not something to disguise. The cracks become the most beautiful part because they show resilience and transformation."                         )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "💕 Relationship Kintsugi"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "When couples fight and repair, the relationship becomes stronger. The \"golden scars\" are the deeper understanding, forgiveness, and intimacy that come from working through conflict together."                         )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🌱 Personal Application"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Your traumas, mistakes, and broken places - when healed consciously - become sources of wisdom, empathy, and strength. They're not flaws to hide but part of your unique beauty."                            )
+          )
+        )
+      )
+    },
+    
+    ensoCircle: {
+      title: "⭕ Enso Circle: The Art of Simplicity",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "An Enso is a circle drawn in one or two strokes in Zen Buddhist practice, representing enlightenment, strength, and the universe."                    )
+
+          , _react2.default.createElement('div', { className: "bg-purple-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎨 The Practice"  )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "A master calligrapher draws a single circle with a brush in one fluid motion. It looks simple but requires years of practice and deep presence to execute beautifully."                           )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🧠 Eastern vs Western Understanding"    )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Westerners might say \"That's just a circle - a child could do that!\" But Eastern philosophy says the depth comes from the collaboration between the work and the observer. You bring your understanding to complete the meaning."                                    )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "💡 The Wisdom Parallel"   )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "True wisdom often sounds simple on the surface but requires deep experience to fully understand. \"Be present,\" \"Love yourself,\" \"Accept what is\" - simple words, profound implications."                          )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🔄 Why We Return to Basics"     )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "After years of complex learning, we often rediscover that the simple truths we knew at the beginning are the most profound - but now we understand them with depth."                            )
+          )
+        )
+      )
+    },
+    
+    seneca: {
+      title: "🏛️ Seneca: The Stoic Who Made Suffering Beautiful",
+      content: (
+        _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('p', { className: "text-gray-700",}, "Lucius Annaeus Seneca (4 BC - 65 AD) was a Roman Stoic philosopher, advisor to emperors, and master of finding wisdom in life's difficulties."                       )
+
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "👤 Who He Was"   )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "A wealthy statesman who experienced exile, political intrigue, and ultimately forced suicide by Emperor Nero. His life was full of the very suffering he wrote about."                         )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-purple-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "💭 The Famous Quote"   )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700 italic"  ,}, "\"What need is there to weep over parts of life? The whole of it calls for tears.\""                )
+            , _react2.default.createElement('p', { className: "text-xs text-gray-600 mt-1"  ,}, "This sounds incredibly dark but somehow makes people smile with relief."          )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "😊 Why Dark Humor Helps"    )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "When someone acknowledges that life is fundamentally difficult, it removes the pressure to be constantly happy. You think \"Oh good, it's not just me!\" and paradoxically feel lighter."                           )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🧠 The Stoic Insight"   )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Seneca taught that suffering is inevitable, but our response to it is our choice. By accepting difficulty as normal, we stop fighting reality and can actually find peace within struggle."                             )
+          )
+        )
+      )
+    }
+  };
+
+  const tabContent = {
+    origins: (
+      _react2.default.createElement('div', { className: "space-y-6",}
+        , _react2.default.createElement('div', { className: "bg-blue-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "🗣️ Where Bad Inner Voices Come From"
+
+          )
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-blue-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "💭 The Core Principle"   )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "\"An inner voice is always an outer voice that got internalized. The way in which we're spoken to becomes the way in which we speak to ourselves.\""                          )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-green-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🧠 The Language Analogy"   )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "Just as we unconsciously learn language by age 3-7, we simultaneously learn an \"emotional language\" - patterns of how to relate, what to expect from others, and how to respond to vulnerability."                               )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-yellow-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "⚡ The Difficulty of Change"    )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "Changing emotional patterns is like learning a foreign language as an adult - possible but requiring immense patience and realistic expectations."                    )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-purple-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "📝 Sentence Completion Exercises"
+
+          )
+          , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-4"  ,}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🔍 Detection Method"  )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-600 mb-2"  ,}, "Complete these without thinking:"   )
+              , _react2.default.createElement('ul', { className: "space-y-1 text-sm" ,}
+                , _react2.default.createElement('li', null, "• \"Men are...\""  )
+                , _react2.default.createElement('li', null, "• \"Women are...\""  )
+                , _react2.default.createElement('li', null, "• \"Life is...\""  )
+                , _react2.default.createElement('li', null, "• \"I am...\""  )
+                , _react2.default.createElement('li', null, "• \"When I meet someone...\""    )
+              )
+            )
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "💡 What This Reveals"   )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Your automatic responses often reveal inherited beliefs from childhood that may no longer serve you."              )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-600 mt-2"  ,}, "These patterns are often related to your"
+                      , ' '
+                , _react2.default.createElement(ModalButton, { modalKey: "attachmentStyle",}, "attachment style" )
+                , ' ', "formed in early relationships."
+              )
+            )
+          )
+        )
+      )
+    ),
+
+    identity: (
+      _react2.default.createElement('div', { className: "space-y-6",}
+        , _react2.default.createElement('div', { className: "bg-orange-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "🎭 Who Are You Really?"
+
+          )
+
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-orange-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🌊 We Are Penetrated by Society"     )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "Every word we speak was created by generations before us. Our"
+                          , ' '
+                , _react2.default.createElement(ModalButton, { modalKey: "gutBacteria",}, "gut bacteria" )
+                , ' ', "is both us and not us. We are not isolated entities but interconnected beings shaped by history, biology, and society."
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-red-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "✂️ The Editing Process"   )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "Maturity involves conscious"
+                  , ' '
+                , _react2.default.createElement(ModalButton, { modalKey: "selfAuthorship",}, "self-authorship")
+                , ' ', "- choosing which inherited patterns to keep and which to release based on your considered values."
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-blue-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎨 The Picasso Parallel"   )
+              , _react2.default.createElement('p', { className: "text-gray-700",}
+                , _react2.default.createElement(ModalButton, { modalKey: "picasso",}, "\"When I was seven, I could paint like Raphael. It's taken me all my life to learn how to paint like a child again.\""                       )
+                , ' ', "- Adult authenticity requires going through sophistication to return to simplicity."
+              )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-green-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "📚 The Arc of Authenticity"
+
+          )
+          , _react2.default.createElement('div', { className: "flex flex-col md:flex-row gap-4"   ,}
+            , _react2.default.createElement('div', { className: "flex-1 bg-white p-4 rounded text-center"    ,}
+              , _react2.default.createElement('div', { className: "text-2xl mb-2" ,}, "👶")
+              , _react2.default.createElement('h4', { className: "font-semibold",}, "Early Childhood" )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "Naturally authentic but impractical"   )
+            )
+            , _react2.default.createElement(_lucidereact.ArrowRight, { className: "hidden md:block text-gray-400 self-center"   ,} )
+            , _react2.default.createElement('div', { className: "flex-1 bg-white p-4 rounded text-center"    ,}
+              , _react2.default.createElement('div', { className: "text-2xl mb-2" ,}, "😰")
+              , _react2.default.createElement('h4', { className: "font-semibold",}, "Age 14-15" )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "Desperate conformity" )
+            )
+            , _react2.default.createElement(_lucidereact.ArrowRight, { className: "hidden md:block text-gray-400 self-center"   ,} )
+            , _react2.default.createElement('div', { className: "flex-1 bg-white p-4 rounded text-center"    ,}
+              , _react2.default.createElement('div', { className: "text-2xl mb-2" ,}, "🎯")
+              , _react2.default.createElement('h4', { className: "font-semibold",}, "Adulthood")
+              , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "Conscious individuation in chosen areas"    )
+            )
+          )
+        )
+      )
+    ),
+
+    emotions: (
+      _react2.default.createElement('div', { className: "space-y-6",}
+        , _react2.default.createElement('div', { className: "bg-pink-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "💔 Why We Struggle with Emotions"
+
+          )
+
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-pink-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "😱 Emotions Are Terrifying"   )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "\"We are as assiduous in our escape from love as we are in our pursuit, perhaps more so.\" Positive emotions can be as scary as negative ones if our early experiences were disrupted."                                )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-purple-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🔄 Second & Third Order Emotions"     )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "We become stressed about our agitation, then resentful about our stress, then anxious about our resentment - creating"
+                                 , ' '
+                , _react2.default.createElement(ModalButton, { modalKey: "emotionalAvalanches",}, "emotional avalanches" )
+                , ' ', "from simple triggers."
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-indigo-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🏠 Signature Emotions"  )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "Unsatisfactory but familiar emotions often feel safer than novel, potentially happier ones. We prefer the prison we know."                 )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-yellow-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "📖 Language & Emotional Healing"
+
+          )
+
+          , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-4"  ,}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2 flex items-center"   ,}
+                , _react2.default.createElement(_lucidereact.Lightbulb, { className: "w-4 h-4 mr-2"  ,} ), "Why Words Matter"
+
+              )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Having vocabulary for emotions helps us \"tame, contain, and narrow the spread\" of difficult feelings. Journaling works because it forces translation of feeling into language."                        )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2 flex items-center"   ,}
+                , _react2.default.createElement(_lucidereact.Eye, { className: "w-4 h-4 mr-2"  ,} ), "Disassociation vs Association"
+
+              )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Sometimes we need to"
+                   , ' '
+                , _react2.default.createElement(ModalButton, { modalKey: "dissociation",}, "disassociate")
+                , ' ', "from overwhelming feelings to survive. The goal is finding balance - neither drowning in emotion nor completely disconnected."
+              )
+            )
+          )
+        )
+      )
+    ),
+
+    relationships: (
+      _react2.default.createElement('div', { className: "space-y-6",}
+        , _react2.default.createElement('div', { className: "bg-red-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "💕 Attachment Styles in Action"
+
+          )
+
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-red-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🛡️ The Avoidant Person"   )
+              , _react2.default.createElement('div', { className: "space-y-2 text-sm text-gray-700"  ,}
+                , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Origin:"), " Emotional calorie-controlled diet in childhood"     )
+                , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Pattern:"), " Feels engulfed by love, runs away when overwhelmed"        )
+                , _react2.default.createElement('p', null
+                  , _react2.default.createElement('strong', null, "Needs:"), " " , ' '
+                  , _react2.default.createElement(ModalButton, { modalKey: "titration",}, "Titrated love" )
+                  , ' ', "- smaller, manageable doses of affection"
+                )
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-blue-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "😰 The Anxious Person"   )
+              , _react2.default.createElement('div', { className: "space-y-2 text-sm text-gray-700"  ,}
+                , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Origin:"), " Experienced love but also loss/disruption"     )
+                , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Pattern:"), " Tests love through creating drama"     )
+                , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Key Quote:" ), " \"The catastrophe you fear will happen has already happened - it's been forgotten.\""             )
+              )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-green-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "⚖️ Transparency vs Kindness"
+
+          )
+
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎭 The Role of Politeness"    )
+              , _react2.default.createElement('p', { className: "text-gray-700 mb-2" ,}, "\"Being yourself\" completely can be destructive. Sometimes"
+                      , ' '
+                , _react2.default.createElement(ModalButton, { modalKey: "editing",}, "editing yourself" )
+                , ' ', "is an act of love."
+              )
+              , _react2.default.createElement('div', { className: "text-sm text-gray-600" ,}
+                , _react2.default.createElement('p', null, "Examples of healthy editing:"   )
+                , _react2.default.createElement('ul', { className: "list-disc list-inside mt-2 space-y-1"   ,}
+                  , _react2.default.createElement('li', null, "Not bringing up issues when partner is exhausted"       )
+                  , _react2.default.createElement('li', null, "Choosing timing for difficult conversations"    )
+                  , _react2.default.createElement('li', null, "Maintaining some mystery and boundaries"    )
+                )
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-yellow-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "💰 The Therapy Exception"   )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "Therapy allows complete honesty because you're paying for attention - there's no obligation to be kind to the therapist, freeing you to explore your full emotional range."                          )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-indigo-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "💔 Breaking Up & Staying Together"
+
+          )
+
+          , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-4"  ,}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🔨 Rupture & Repair"   )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Good relationships involve regular breaking and fixing - like"
+                        , ' '
+                , _react2.default.createElement(ModalButton, { modalKey: "kintsugi",}, "Japanese kintsugi" ), ", the breaks become beautiful with golden lacquer."
+
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎯 Why We Choose Difficult Partners"     )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "We're drawn to people who carry similar challenges to our caregivers - not for masochism, but for the possibility of a different, healing ending."                       )
+            )
+          )
+        )
+      )
+    ),
+
+    wisdom: (
+      _react2.default.createElement('div', { className: "space-y-6",}
+        , _react2.default.createElement('div', { className: "bg-purple-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "🧠 Intellectual vs Emotional Knowing"
+
+          )
+
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-purple-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "📚 The Danger of Intellectualizing"    )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "Smart people often use intellectual understanding as a defense against feeling. Reading about emotions isn't the same as experiencing and processing them."                     )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded border-l-4 border-orange-500"    ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎨 The Eastern Approach"   )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "Like an"
+                 , ' '
+                , _react2.default.createElement(ModalButton, { modalKey: "ensoCircle",}, "Enso circle" )
+                , ' ', "- simple on the surface but requiring deep meditation to truly understand. Wisdom isn't complex language but simple truths deeply felt."
+              )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-gray-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "😊 The Medicine of Pessimism"
+
+          )
+
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎭 Melancholy as Tragedy Well-Handled"    )
+              , _react2.default.createElement('p', { className: "text-gray-700 mb-3" ,}, "Dark humor and acknowledging life's difficulties can be more healing than forced positivity."            )
+
+              , _react2.default.createElement('div', { className: "bg-gray-100 p-3 rounded italic"   ,}
+                , _react2.default.createElement('p', { className: "text-sm",}
+                  , _react2.default.createElement(ModalButton, { modalKey: "seneca",}, "\"What need is there to weep over parts of life? The whole of it calls for tears.\" - Seneca"                  )
+                )
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🌧️ The British Understanding"   )
+              , _react2.default.createElement('p', { className: "text-gray-700",}, "There's relief in shared acknowledgment of life's absurdity and difficulty. \"At least it's not just me.\""               )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-blue-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 flex items-center"    ,}, "🔄 The Circular Journey"
+
+          )
+
+          , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🏠 Returning to the Beginning"    )
+            , _react2.default.createElement('p', { className: "text-gray-700 mb-3" ,}, "T.S. Eliot: \"We return to the place where we started.\" The same core challenges keep appearing, but with deeper understanding each time."                     )
+
+            , _react2.default.createElement('div', { className: "bg-blue-100 p-3 rounded"  ,}
+              , _react2.default.createElement('p', { className: "text-sm font-medium" ,}, "The Confidence Secret:"  )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "\"What makes me confident? When someone says it's okay to be a total idiot. Not just me - we're all idiots. That makes me ready to play.\""                          )
+            )
+          )
+        )
+      )
+    )
+  };
+
+  return (
+    _react2.default.createElement('div', { className: "max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen"    ,}
+      /* Header */
+      , _react2.default.createElement('div', { className: "bg-white rounded-lg shadow-lg p-8 mb-8"    ,}
+        , _react2.default.createElement('h1', { className: "text-4xl font-bold text-center mb-4 text-gray-800"    ,}, "🧠 Understanding Ourselves: A Journey Through Inner Voices"
+
+        )
+        , _react2.default.createElement('div', { className: "text-center text-gray-600 mb-6"  ,}
+          , _react2.default.createElement('p', { className: "text-lg",}, "Key insights from Alain de Botton on loneliness, childhood wounds, and emotional healing"            )
+        )
+
+        /* Stats Grid */
+        , _react2.default.createElement('div', { className: "grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"    ,}
+          , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded-lg text-center"   ,}
+            , _react2.default.createElement('div', { className: "text-2xl font-bold text-blue-600"  ,}, "🗣️")
+            , _react2.default.createElement('div', { className: "text-sm font-semibold" ,}, "Inner Voices" )
+            , _react2.default.createElement('div', { className: "text-xs text-gray-600" ,}, "Always outer voices internalized"   )
+          )
+          , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded-lg text-center"   ,}
+            , _react2.default.createElement('div', { className: "text-2xl font-bold text-green-600"  ,}, "💕")
+            , _react2.default.createElement('div', { className: "text-sm font-semibold" ,}, "Attachment")
+            , _react2.default.createElement('div', { className: "text-xs text-gray-600" ,}, "Patterns from early relationships"   )
+          )
+          , _react2.default.createElement('div', { className: "bg-purple-50 p-4 rounded-lg text-center"   ,}
+            , _react2.default.createElement('div', { className: "text-2xl font-bold text-purple-600"  ,}, "🎭")
+            , _react2.default.createElement('div', { className: "text-sm font-semibold" ,}, "Authenticity")
+            , _react2.default.createElement('div', { className: "text-xs text-gray-600" ,}, "Conscious self-authorship" )
+          )
+          , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded-lg text-center"   ,}
+            , _react2.default.createElement('div', { className: "text-2xl font-bold text-yellow-600"  ,}, "😊")
+            , _react2.default.createElement('div', { className: "text-sm font-semibold" ,}, "Wisdom")
+            , _react2.default.createElement('div', { className: "text-xs text-gray-600" ,}, "Embracing human folly"  )
+          )
+        )
+      )
+
+      /* Tab Navigation */
+      , _react2.default.createElement('div', { className: "bg-white rounded-lg shadow-lg mb-8"   ,}
+        , _react2.default.createElement('div', { className: "flex flex-wrap border-b"  ,}
+          , Object.keys(tabContent).map((tab) => (
+            _react2.default.createElement('button', {
+              key: tab,
+              onClick: () => setActiveTab(tab),
+              className: `px-6 py-4 font-semibold border-b-2 transition-colors ${
+                activeTab === tab
+                  ? 'border-blue-500 text-blue-600 bg-blue-50'
+                  : 'border-transparent text-gray-600 hover:text-gray-800'
+              }`,}
+
+              , tab === 'origins' && '🌱 Origins of Inner Voice'
+              , tab === 'identity' && '🎭 Identity & Self-Authorship'
+              , tab === 'emotions' && '💭 Emotions & Language'
+              , tab === 'relationships' && '💕 Relationships & Attachment'
+              , tab === 'wisdom' && '🧠 Wisdom & Growth'
+            )
+          ))
+        )
+
+        , _react2.default.createElement('div', { className: "p-8",}
+          , tabContent[activeTab]
+        )
+      )
+
+      /* Practical Exercises Section */
+      , _react2.default.createElement('div', { className: "bg-white rounded-lg shadow-lg p-8 mb-8"    ,}
+        , _react2.default.createElement('h2', { className: "text-2xl font-bold mb-6 flex items-center"    ,}, "🛠️ Practical Exercises & Tools"
+
+        )
+
+        , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-6"  ,}
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded-lg"  ,}
+              , _react2.default.createElement('h3', { className: "font-semibold mb-2 flex items-center"   ,}
+                , _react2.default.createElement(_lucidereact.Brain, { className: "w-5 h-5 mr-2"  ,} ), "Daily Self-Investigation"
+
+              )
+              , _react2.default.createElement('ul', { className: "space-y-2 text-sm text-gray-700"  ,}
+                , _react2.default.createElement('li', null, "• Complete sentences without thinking: \"I am...\", \"Life is...\", \"When I meet someone...\""            )
+                , _react2.default.createElement('li', null, "• Ask: \"If I weren't doing X (cleaning, scrolling, working), what would I need to think about?\""                )
+                , _react2.default.createElement('li', null, "• Notice signature emotions - which feelings feel like \"home base\"?"          )
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded-lg"  ,}
+              , _react2.default.createElement('h3', { className: "font-semibold mb-2 flex items-center"   ,}
+                , _react2.default.createElement(_lucidereact.Heart, { className: "w-5 h-5 mr-2"  ,} ), "Relationship Awareness"
+
+              )
+              , _react2.default.createElement('ul', { className: "space-y-2 text-sm text-gray-700"  ,}
+                , _react2.default.createElement('li', null, "• Identify your attachment style and patterns"      )
+                , _react2.default.createElement('li', null, "• Practice explaining your emotional needs clearly"      )
+                , _react2.default.createElement('li', null, "• Balance transparency with kindness in communication"      )
+              )
+            )
+          )
+
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-purple-50 p-4 rounded-lg"  ,}
+              , _react2.default.createElement('h3', { className: "font-semibold mb-2 flex items-center"   ,}
+                , _react2.default.createElement(_lucidereact.BookOpen, { className: "w-5 h-5 mr-2"  ,} ), "Childhood Pattern Recognition"
+
+              )
+              , _react2.default.createElement('ul', { className: "space-y-2 text-sm text-gray-700"  ,}
+                , _react2.default.createElement('li', null, "• Ask: \"When did this current behavior once make sense?\""         )
+                , _react2.default.createElement('li', null, "• Thank your younger self for survival strategies"       )
+                , _react2.default.createElement('li', null, "• Identify which patterns to keep vs. release"       )
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded-lg"  ,}
+              , _react2.default.createElement('h3', { className: "font-semibold mb-2 flex items-center"   ,}
+                , _react2.default.createElement(_lucidereact.Target, { className: "w-5 h-5 mr-2"  ,} ), "Emotional Regulation"
+
+              )
+              , _react2.default.createElement('ul', { className: "space-y-2 text-sm text-gray-700"  ,}
+                , _react2.default.createElement('li', null, "• Practice \"association\" - staying present with difficult feelings"        )
+                , _react2.default.createElement('li', null, "• Use language to \"tame and contain\" overwhelming emotions"        )
+                , _react2.default.createElement('li', null, "• Find balance between feeling everything and feeling nothing"        )
+              )
+            )
+          )
+        )
+      )
+
+      /* Key Quotes Section */
+      , _react2.default.createElement('div', { className: "bg-white rounded-lg shadow-lg p-8 mb-8"    ,}
+        , _react2.default.createElement('h2', { className: "text-2xl font-bold mb-6 flex items-center"    ,}, "💬 Memorable Insights"
+
+        )
+
+        , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-6"  ,}
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border-l-4 border-blue-500"      ,}
+              , _react2.default.createElement('p', { className: "text-gray-700 italic mb-2"  ,}, "\"An inner voice is always an outer voice that got internalized.\""          )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "- On the origins of self-talk"     )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-lg border-l-4 border-green-500"      ,}
+              , _react2.default.createElement('p', { className: "text-gray-700 italic mb-2"  ,}, "\"We are as assiduous in our escape from love as we are in our pursuit.\""              )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "- On the paradox of seeking connection"      )
+            )
+          )
+
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border-l-4 border-yellow-500"      ,}
+              , _react2.default.createElement('p', { className: "text-gray-700 italic mb-2"  ,}, "\"The catastrophe you fear will happen has already happened - it's been forgotten.\""            )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "- Donald Winnicott on anxiety"    )
+            )
+
+            , _react2.default.createElement('div', { className: "bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg border-l-4 border-purple-500"      ,}
+              , _react2.default.createElement('p', { className: "text-gray-700 italic mb-2"  ,}, "\"In the minds of geniuses, we find our own neglected thoughts.\""          )
+              , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "- Emerson on the universality of insight"      )
+            )
+          )
+        )
+      )
+
+      /* Action Steps */
+      , _react2.default.createElement('div', { className: "bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg shadow-lg p-8"     ,}
+        , _react2.default.createElement('h2', { className: "text-2xl font-bold mb-6 text-center"   ,}, "🚀 Your Journey Forward"
+
+        )
+
+        , _react2.default.createElement('div', { className: "grid md:grid-cols-3 gap-6"  ,}
+          , _react2.default.createElement('div', { className: "bg-white p-6 rounded-lg text-center"   ,}
+            , _react2.default.createElement('div', { className: "text-3xl mb-4" ,}, "🔍")
+            , _react2.default.createElement('h3', { className: "font-bold mb-2" ,}, "Investigate")
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Use sentence completion exercises to uncover your internalized voices and patterns."          )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-white p-6 rounded-lg text-center"   ,}
+            , _react2.default.createElement('div', { className: "text-3xl mb-4" ,}, "🤝")
+            , _react2.default.createElement('h3', { className: "font-bold mb-2" ,}, "Connect")
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Practice conscious communication in relationships, balancing transparency with kindness."        )
+          )
+
+          , _react2.default.createElement('div', { className: "bg-white p-6 rounded-lg text-center"   ,}
+            , _react2.default.createElement('div', { className: "text-3xl mb-4" ,}, "😊")
+            , _react2.default.createElement('h3', { className: "font-bold mb-2" ,}, "Accept")
+            , _react2.default.createElement('p', { className: "text-sm text-gray-700" ,}, "Embrace the beautiful absurdity of being human - \"we're all idiots, and that's okay.\""             )
+          )
+        )
+      )
+
+      /* Modals */
+      , Object.entries(modalContent).map(([key, modal]) => (
+        _react2.default.createElement(Modal, {
+          key: key,
+          isOpen: showModal === key,
+          onClose: () => setShowModal(null),
+          title: modal.title,}
+
+          , modal.content
+        )
+      ))
+
+      /* Attribution */
+      , _react2.default.createElement('div', { className: "attribution mt-8 text-center text-sm text-gray-600 bg-white p-4 rounded-lg"       ,}, "Generated using LLM with supervision and polishing by"
+               , ' '
+        , _react2.default.createElement('a', { href: "https://benjaminficusmicrocarpa.github.io/", className: "text-blue-600 hover:underline" ,}, "benjaminficusmicrocarpa"
+
+        ), ' ', "| Original:"
+         , ' '
+        , _react2.default.createElement('a', { href: "https://www.youtube.com/watch?v=BQHo-z-pA8E", target: "_blank", rel: "noopener noreferrer" , className: "text-blue-600 hover:underline" ,}, "Loneliness, Negative Thoughts, Childhood Wounds & Healing - Alain de Botton (4K)"
+
+        )
+      )
+    )
+  );
+}
+
+exports. default = PodcastInfographic;
+</script></head>
+  <body>
+  
+
+<div id="preview-app"></div></body></html>
