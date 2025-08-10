@@ -9,6 +9,8 @@
 
 [🎧 How To Live Freely In A Goal-Obsessed World](podcast/chris_williamson_anne_laure_le_cunff.html)
 
+[🧠 Understanding Ourselves: A Journey Through Inner Voices](podcast/chris_williamson_alain_de_botton_loneliness_negative_thoughts_childhood_wounds_healing.html)
+
 ### Joe Rogan Experience
 [📜 JRE #2252: Wesley Huff - 🎓 Biblical Scholar & Ancient Manuscript Expert | 🕊️ Christian Apologist](podcast/jre_2252_wesley_huff.html)
 
