@@ -1,0 +1,1110 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta http-equiv="x-dns-prefetch-control" content="off"><meta name="x-poe-datastore-behavior" content="disabled"><meta name="x-poe-allow-downloads" content="true"><script src="https://puc.poecdn.net/standard.3ef2c256959faf5a756d.js"></script>
+    <meta charset="utf-8">
+    <title>Poe</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://puc.poecdn.net/disableWebRTC.9710cebe07429a9e8e06.js"></script><script src="https://puc.poecdn.net/tw.b9024aecac666455e183.js"></script><script src="https://puc.poecdn.net/deps.faccd16000d314dc16d5.js"></script><script src="https://puc.poecdn.net/exports.b0f0f482cdeb5302b0b9.js"></script><script src="https://puc.poecdn.net/renderer.75c73ae6b4235f62945a.js"></script><script>Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _lucidereact = require('lucide-react');
+
+const SermonInfographic = () => {
+  const [activeTab, setActiveTab] = _react.useState.call(void 0, 'main');
+  const [openAccordions, setOpenAccordions] = _react.useState.call(void 0, {});
+  const [openModal, setOpenModal] = _react.useState.call(void 0, null);
+  const [fasterPosition, setFasterPosition] = _react.useState.call(void 0, 'restoration');
+  const [currentVerseIndex, setCurrentVerseIndex] = _react.useState.call(void 0, 0);
+  
+  // Reflection answers state
+  const [reflectionAnswers, setReflectionAnswers] = _react.useState.call(void 0, {
+    fasterPosition: '',
+    vulnerability: '',
+    distances: '',
+    accountability: '',
+    scripture: '',
+    scriptureReason: '',
+    victoryDeclaration: ''
+  });
+
+  const updateReflectionAnswer = (key, value) => {
+    setReflectionAnswers(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
+  const downloadReflectionAnswers = () => {
+    const currentDate = new Date().toLocaleDateString();
+    const currentTime = new Date().toLocaleTimeString();
+    
+    const content = `
+SPIRITUAL BATTLE PLAN REFLECTION
+Temptation's Triple Threat: Your Battle Plan
+Date: ${currentDate} at ${currentTime}
+Source: Pastor Daniel, Island ECC
+==================================================
+
+PERSONAL ASSESSMENT
+==================================================
+
+1. Where are you on the F.A.S.T.E.R. scale today and why?
+
+${reflectionAnswers.fasterPosition || '[No answer provided]'}
+
+---
+
+2. What is your greatest area of vulnerability to temptation?
+
+${reflectionAnswers.vulnerability || '[No answer provided]'}
+
+---
+
+BATTLE PLAN DEVELOPMENT
+==================================================
+
+3. What specific "distances" do you need to keep?
+
+${reflectionAnswers.distances || '[No answer provided]'}
+
+---
+
+4. Who can you call for accountability when you're slipping on the F.A.S.T.E.R. scale?
+
+${reflectionAnswers.accountability || '[No answer provided]'}
+
+---
+
+SCRIPTURE MEMORIZATION
+==================================================
+
+5. Which verse will you memorize as your "sword of the spirit"?
+
+Selected verse: ${reflectionAnswers.scripture || '[No verse selected]'}
+
+Why this verse speaks to your current spiritual battle:
+
+${reflectionAnswers.scriptureReason || '[No reason provided]'}
+
+---
+
+VICTORY DECLARATION
+==================================================
+
+Your Personal Victory Declaration:
+
+${reflectionAnswers.victoryDeclaration || '[No declaration written]'}
+
+---
+
+RECOMMENDED NEXT STEPS
+==================================================
+
+□ Memorize your chosen scripture verse
+□ Share this reflection with your accountability partner
+□ Download the official F.A.S.T.E.R. scale PDF from Pure Desire
+□ Schedule regular check-ins using the K.P.I. framework
+□ Implement specific "distance keeping" strategies
+□ Practice speaking truth out loud when temptation comes
+
+RESOURCES
+==================================================
+
+• Sermon: "Temptation's Triple Threat: Your Battle Plan" - Pastor Daniel, Island ECC
+• F.A.S.T.E.R. Scale: https://puredesire.org/wp-content/uploads/2020/04/faster-scale-check-in-2017-1.pdf
+• Key Scripture: Matthew 4:1-11 (Jesus' temptation and victory)
+
+REMEMBER: "We are not victims. We are victors. We are equipped to fight back. 
+We are armored by God's power. We proclaim victory in His name because we are 
+the beloved, and God has already set us free!" - Pastor Daniel
+
+Generated on ${currentDate} at ${currentTime}
+`;
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `spiritual-battle-plan-reflection-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const toggleAccordion = (id) => {
+    setOpenAccordions(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const openModalHandler = (content) => {
+    setOpenModal(content);
+  };
+
+  const closeModal = () => {
+    setOpenModal(null);
+  };
+
+  // Bible verses data with full content
+  const bibleVerses = [
+    {
+      reference: "Matthew 4:1-4",
+      fullText: "Then Jesus was led up by the Spirit into the wilderness to be tempted by the devil. And after fasting forty days and forty nights, he was hungry. And the tempter came and said to him, 'If you are the Son of God, command these stones to become loaves of bread.' But he answered, 'It is written, Man shall not live by bread alone, but by every word that comes from the mouth of the Lord.'",
+      context: "The First Temptation - The Flesh",
+      theme: "flesh"
+    },
+    {
+      reference: "Matthew 4:5-7",
+      fullText: "Then the devil took him to the holy city and set him on the pinnacle of the temple and said to him, 'If you are the Son of God, throw yourself down, for it is written, He will command his angels concerning you, and their hands will bear you up, lest you strike your foot against a stone.' Jesus said to him, 'Again it is written, You shall not put the Lord your God to test.'",
+      context: "The Second Temptation - Twisted Scripture",
+      theme: "accusation"
+    },
+    {
+      reference: "Matthew 4:8-10",
+      fullText: "Again, the devil took him to a very high mountain and showed him all the kingdoms of the world and their glory and said to him, 'All these I will give to you, if you will fall down and worship me.' Then Jesus said to him, 'Be gone, Satan! For it is written, You shall worship the Lord your God and him only shall you serve.'",
+      context: "The Third Temptation - The World",
+      theme: "world"
+    },
+    {
+      reference: "James 1:13-15",
+      fullText: "When tempted, let no one say, 'God is tempting me,' for God cannot be tempted by evil, nor does he tempt anyone. But when each person is tempted, they are dragged away by their own evil desires and enticed. Then after that desire has conceived, it gives birth to sin. And sin, when it's fully grown, it gives birth to death.",
+      context: "Understanding Temptation's Progression",
+      theme: "progression"
+    },
+    {
+      reference: "1 Corinthians 10:13",
+      fullText: "No temptation has overtaken you that is not common to man. God is faithful and he will not let you be tempted beyond your ability. But with the temptation, you will always, not sometimes, maybe another day, delay it, always provides a way out of escape.",
+      context: "God's Faithful Promise",
+      theme: "promise"
+    },
+    {
+      reference: "1 Thessalonians 5:22",
+      fullText: "Abstain from every form of evil.",
+      context: "Keep Your Distance - No Negotiation",
+      theme: "distance"
+    }
+  ];
+
+  // Pastor quotes
+  const pastorQuotes = [
+    {
+      pastor: "Pastor Daniel",
+      quote: "Temptation doesn't come off the rack. It's tailor-made to exploit what is most vulnerable to you and what is most vulnerable in you.",
+      context: "Understanding Satan's Strategy"
+    },
+    {
+      pastor: "Pastor Daniel", 
+      quote: "We're not sitting here like a duck ready to be shot down by Satan's temptation. We're equipped to fight back. We are armored by God's power. We are not victims. We are victors.",
+      context: "Victory Declaration"
+    },
+    {
+      pastor: "Pastor Daniel",
+      quote: "Evil never announces its arrival. It creeps in through our unguarded routines.",
+      context: "The Subtlety of Temptation"
+    },
+    {
+      pastor: "Pastor Daniel",
+      quote: "You always become what you worship. Look at your timetable. Look at your checkbook. The time and energy and money that you spend the most, perhaps that's what you are worshiping.",
+      context: "Identifying True Worship"
+    },
+    {
+      pastor: "Pastor Brett",
+      quote: "I do not think that the enemy of our soul has any mysterious capacity to infect sin into the life of a believer through a generational sin. To give more weight to generational sin is to live a life of paranoia and fear as opposed to faith.",
+      context: "Freedom from Generational Fear"
+    },
+    {
+      pastor: "Pastor Brett",
+      quote: "The power of Christ is greater than any sin from their background. Greater is he who lives within you and me.",
+      context: "Christ's Superior Power"
+    }
+  ];
+
+  // Author quotes
+  const authorQuotes = [
+    {
+      author: "D.A. Carson",
+      quote: "The world in this context is the world in active rebellion against God. Not the physical planet, but the system that opposes his value.",
+      context: "Understanding 'The World'"
+    },
+    {
+      author: "Dallas Willard",
+      book: "The Divine Conspiracy",
+      quote: "Jesus saw through Satan's offer because he knew a simple truth. You always become what you worship.",
+      context: "The Wilderness Temptation"
+    }
+  ];
+
+  // Detailed F.A.S.T.E.R. Scale from Pure Desire
+  const fasterScaleData = [
+    {
+      level: 'restoration',
+      label: 'RESTORATION',
+      subtitle: 'Accepting life on God\'s terms, with trust, vulnerability, and gratitude',
+      color: 'green',
+      behaviors: [
+        'No current secrets',
+        'Working to resolve problems, identifying fears/feelings',
+        'Keeping commitments to meetings, prayer, family, church, people, goals, and self',
+        'Being open and honest, making eye contact',
+        'Reaching out to others',
+        'Increasing in relationships with God and others',
+        'True accountability'
+      ]
+    },
+    {
+      level: 'forgetting',
+      label: 'FORGETTING PRIORITIES',
+      subtitle: 'Start believing the present circumstances and start moving away from trusting God',
+      color: 'yellow',
+      behaviors: [
+        'Secrets',
+        'Less time/energy for God, meetings, church',
+        'Avoiding support and accountability people',
+        'Superficial conversations',
+        'Sarcasm, Isolating',
+        'Changes in goals, Obsessed with relationships',
+        'Breaking promises and commitments',
+        'Neglecting family',
+        'Preoccupation with material things: TV, computers, other entertainment',
+        'Procrastination, Lying',
+        'Over-confidence, Bored',
+        'Hiding money'
+      ]
+    },
+    {
+      level: 'anxiety',
+      label: 'ANXIETY',
+      subtitle: 'A growing background noise of undefined fear; getting energy from emotions',
+      color: 'orange',
+      behaviors: [
+        'Worry, using profanity, being fearful',
+        'Being resentful',
+        'Replaying old negative thoughts',
+        'Perfectionism',
+        'Judging other\'s motives',
+        'Making unrealistic goals and to-do lists',
+        'Mind-reading',
+        'Fantasy, co-dependent rescuing',
+        'Sleep problems, trouble concentrating, seeking drama',
+        'Gossip',
+        'Using OTC medication for pain/sleep/weight control',
+        'Flirting'
+      ]
+    },
+    {
+      level: 'speeding',
+      label: 'SPEEDING UP',
+      subtitle: 'Trying to outrun the anxiety, which is usually the first sign of depression',
+      color: 'red',
+      behaviors: [
+        'Super busy and always in a hurry (finding good reason to justify the busyness)',
+        'Workaholic, can\'t relax',
+        'Avoiding slowing down',
+        'Feeling driven',
+        'Can\'t turn off thoughts',
+        'Skipping meals',
+        'Binge eating (usually at night)',
+        'Overspending',
+        'Can\'t identify own feelings/needs',
+        'Repetitive negative thoughts',
+        'Irritable, Dramatic mood swings',
+        'Too much caffeine',
+        'Over-exercising, Nervousness',
+        'Difficulty being alone &/or with people',
+        'Difficulty listening to others',
+        'Making excuses for having to "do it all"'
+      ]
+    },
+    {
+      level: 'ticked',
+      label: 'TICKED OFF',
+      subtitle: 'Getting adrenaline high from anger and aggression',
+      color: 'purple',
+      behaviors: [
+        'Procrastination causing crisis in money, work, relationships',
+        'Increasing sarcasm',
+        'Black and white (all or nothing) thinking',
+        'Feeling alone',
+        'Nobody understands',
+        'Overreacting, road rage',
+        'Constant resentments',
+        'Pushing others away',
+        'Increasing isolation',
+        'Blaming, Arguing',
+        'Irrational thinking',
+        'Can\'t take criticism',
+        'Defensive',
+        'People avoiding you',
+        'Needing to be right',
+        'Digestive problems, Headaches',
+        'Obsessive (stuck) thoughts',
+        'Can\'t forgive',
+        'Feeling superior',
+        'Using intimidation'
+      ]
+    },
+    {
+      level: 'exhausted',
+      label: 'EXHAUSTED',
+      subtitle: 'Loss of physical and emotional energy; coming off the adrenaline high, onset of depression',
+      color: 'gray',
+      behaviors: [
+        'Depressed, Panicked, Confused',
+        'Hopelessness',
+        'Sleeping too much or too little',
+        'Can\'t cope, Overwhelmed',
+        'Crying for "no reason"',
+        'Can\'t think, Forgetful',
+        'Pessimistic, Helpless',
+        'Tired, Numb',
+        'Wanting to run',
+        'Constant cravings for old coping behaviors',
+        'Thinking of using sex, drugs, or alcohol',
+        'Seeking old unhealthy people & places',
+        'Really isolating',
+        'People angry with you',
+        'Self abuse, Suicidal thoughts',
+        'Spontaneous crying',
+        'No goals, Survival mode',
+        'Not returning phone calls',
+        'Missing work, Irritability',
+        'No appetite'
+      ]
+    },
+    {
+      level: 'relapse',
+      label: 'RELAPSE',
+      subtitle: 'Returning to the place you swore you would never go again',
+      color: 'black',
+      behaviors: [
+        'Giving up and giving in',
+        'Out of control',
+        'Lost in your addiction',
+        'Lying to yourself and others',
+        'Feeling you just can\'t manage without your coping behaviors, at least for now',
+        'Result is reinforcement of shame, guilt, and condemnation, and feelings of abandonment and being alone'
+      ]
+    }
+  ];
+
+  const nextVerse = () => {
+    setCurrentVerseIndex((prev) => (prev + 1) % bibleVerses.length);
+  };
+
+  const prevVerse = () => {
+    setCurrentVerseIndex((prev) => (prev - 1 + bibleVerses.length) % bibleVerses.length);
+  };
+
+  const ModalComponent = ({ content, onClose }) => (
+    _react2.default.createElement('div', { className: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"        ,}
+      , _react2.default.createElement('div', { className: "bg-white rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto"     ,}
+        , _react2.default.createElement('div', { className: "p-6",}
+          , _react2.default.createElement('div', { className: "flex justify-between items-start mb-4"   ,}
+            , _react2.default.createElement('h3', { className: "text-xl font-bold text-gray-900"  ,}, content.title)
+            , _react2.default.createElement('button', { onClick: onClose, className: "text-gray-400 hover:text-gray-600" ,}
+              , _react2.default.createElement(_lucidereact.X, { size: 24,} )
+            )
+          )
+          , _react2.default.createElement('div', { className: "text-gray-700",}
+            , content.body
+          )
+        )
+      )
+    )
+  );
+
+  return (
+    _react2.default.createElement('div', { className: "min-h-screen bg-gradient-to-br from-blue-50 to-purple-50"   ,}
+      /* Header */
+      , _react2.default.createElement('header', { className: "bg-white shadow-lg border-b-4 border-blue-600"   ,}
+        , _react2.default.createElement('div', { className: "max-w-6xl mx-auto px-4 py-6"   ,}
+          , _react2.default.createElement('div', { className: "text-center",}
+            , _react2.default.createElement('h1', { className: "text-3xl md:text-4xl font-bold text-gray-900 mb-2"    ,}, "⚔️ Temptation's Triple Threat: Your Battle Plan"
+
+            )
+            , _react2.default.createElement('p', { className: "text-lg text-gray-600 mb-4"  ,}, "When it comes to temptation, do you have a battle plan? We are not victims, but victors in Christ! 🏆"
+
+            )
+            , _react2.default.createElement('div', { className: "text-sm text-gray-500" ,}, "Pastor Daniel | Island ECC | August 10, 2025"
+
+            )
+          )
+        )
+      )
+
+      /* Navigation Tabs */
+      , _react2.default.createElement('div', { className: "max-w-6xl mx-auto px-4 mt-6"   ,}
+        , _react2.default.createElement('div', { className: "flex flex-wrap gap-2 mb-6"   ,}
+          , [
+            { id: 'main', label: '🎯 Main Sermon', icon: _lucidereact.Target },
+            { id: 'bible', label: '📖 Bible Verses', icon: _lucidereact.Book },
+            { id: 'practical', label: '🛠️ Practical Steps', icon: _lucidereact.CheckCircle },
+            { id: 'reflection', label: '💭 Reflection', icon: _lucidereact.Heart }
+          ].map(tab => (
+            _react2.default.createElement('button', {
+              key: tab.id,
+              onClick: () => setActiveTab(tab.id),
+              className: `flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                activeTab === tab.id 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`,}
+
+              , _react2.default.createElement(tab.icon, { size: 18,} )
+              , tab.label
+            )
+          ))
+        )
+      )
+
+      /* Main Content */
+      , _react2.default.createElement('div', { className: "max-w-6xl mx-auto px-4 pb-12"   ,}
+        , activeTab === 'main' && (
+          _react2.default.createElement('div', { className: "space-y-8",}
+            /* Lucy Santana Intro */
+            , _react2.default.createElement('div', { className: "bg-red-50 border-l-4 border-red-500 p-6 rounded-lg"    ,}
+              , _react2.default.createElement('div', { className: "flex items-start gap-3"  ,}
+                , _react2.default.createElement(_lucidereact.AlertTriangle, { className: "text-red-500 mt-1" , size: 24,} )
+                , _react2.default.createElement('div', null
+                  , _react2.default.createElement('h3', { className: "text-xl font-bold text-red-800 mb-3"   ,}, "⚠️ The Enemy's Clickbait Strategy"    )
+                  , _react2.default.createElement('div', { className: "bg-white p-4 rounded-lg border border-red-200 mb-4"     ,}
+                    , _react2.default.createElement('p', { className: "italic text-gray-700 mb-2"  ,}, "\"Hey y'all, it's your girl Lucy, back with the truth they don't want you to hear. Welcome to Clickbait... don't fight temptation, vibe with it. Let's be real, life is stressful, boundaries exhausting, discipline overrated. Self-control is just another word for self-denial.\""
+
+
+
+                    )
+                    , _react2.default.createElement('p', { className: "text-sm text-red-600 font-medium"  ,}, "- \"Lucy Santana\" (parody character representing Satan's lies)"
+
+                    )
+                  )
+                  , _react2.default.createElement('p', { className: "text-red-700",}
+                    , _react2.default.createElement('strong', null, "Remember:"), " It's the reverse. Don't do what Lucy Santana is asking you to do. Temptation doesn't come off the rack - it's tailor-made to exploit what is most vulnerable in you. 🎯"
+
+                  )
+                )
+              )
+            )
+
+            /* Key Pastor Quotes */
+            , _react2.default.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6"   ,}
+              , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900 mb-6 text-center"    ,}, "💬 Key Insights from Our Pastors"     )
+              , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-6"   ,}
+                , pastorQuotes.map((quote, index) => (
+                  _react2.default.createElement('div', { key: index, className: "bg-gradient-to-br from-blue-50 to-purple-50 p-5 rounded-lg border border-gray-200"      ,}
+                    , _react2.default.createElement('div', { className: "flex items-start gap-3"  ,}
+                      , _react2.default.createElement('div', { className: "bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold"         ,}
+                        , quote.pastor === 'Pastor Daniel' ? 'D' : 'B'
+                      )
+                      , _react2.default.createElement('div', { className: "flex-1",}
+                        , _react2.default.createElement('p', { className: "text-gray-800 italic mb-2"  ,}, "\"", quote.quote, "\"")
+                        , _react2.default.createElement('div', { className: "text-sm",}
+                          , _react2.default.createElement('p', { className: "font-medium text-blue-700" ,}, quote.pastor)
+                          , _react2.default.createElement('p', { className: "text-gray-600",}, quote.context)
+                        )
+                      )
+                    )
+                  )
+                ))
+              )
+            )
+
+            /* Three Frontal Attacks */
+            , _react2.default.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6"   ,}
+              , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900 mb-6 text-center"    ,}, "⚔️ Satan's Three Frontal Attacks"    )
+              , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-3 gap-6"   ,}
+                , [
+                  {
+                    title: "1. The Flesh 🥖",
+                    scripture: "Matthew 4:3-4",
+                    description: "Attack on basic human needs",
+                    example: "Hunger, loneliness, security",
+                    lie: "'God doesn't care about your needs'",
+                    response: "'Man shall not live by bread alone, but by every word from God's mouth'"
+                  },
+                  {
+                    title: "2. The World 🌍",
+                    scripture: "Matthew 4:8-10", 
+                    description: "System in rebellion against God",
+                    example: "Greed as ambition, lust as love, pride as leadership",
+                    lie: "'You can have it all right now'",
+                    response: "'Worship the Lord your God and him only shall you serve'"
+                  },
+                  {
+                    title: "3. Accusation 📜",
+                    scripture: "Matthew 4:5-7",
+                    description: "Twisted scripture and false accusations",
+                    example: "Using half-truths and partial verses",
+                    lie: "'You're not good enough, you'll never change'",
+                    response: "'You shall not put the Lord your God to test'"
+                  }
+                ].map((attack, index) => (
+                  _react2.default.createElement('div', { key: index, className: "bg-gradient-to-br from-blue-50 to-purple-50 p-5 rounded-lg border border-gray-200"      ,}
+                    , _react2.default.createElement('h3', { className: "text-lg font-bold text-gray-900 mb-3"   ,}, attack.title)
+                    , _react2.default.createElement('div', { className: "space-y-2 text-sm" ,}
+                      , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Scripture:"), " " , attack.scripture)
+                      , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Target:"), " " , attack.description)
+                      , _react2.default.createElement('p', null, _react2.default.createElement('strong', null, "Example:"), " " , attack.example)
+                      , _react2.default.createElement('div', { className: "bg-red-100 p-2 rounded border-l-4 border-red-400"    ,}
+                        , _react2.default.createElement('p', { className: "text-red-700",}, _react2.default.createElement('strong', null, "Satan's Lie:" ), " " , attack.lie)
+                      )
+                      , _react2.default.createElement('div', { className: "bg-green-100 p-2 rounded border-l-4 border-green-400"    ,}
+                        , _react2.default.createElement('p', { className: "text-green-700",}, _react2.default.createElement('strong', null, "Jesus' Response:" ), " " , attack.response)
+                      )
+                    )
+                  )
+                ))
+              )
+            )
+
+            /* Official F.A.S.T.E.R. Scale */
+            , _react2.default.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6"   ,}
+              , _react2.default.createElement('div', { className: "flex items-center justify-between mb-6"   ,}
+                , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900"  ,}, "📊 Official F.A.S.T.E.R. Relapse Awareness Scale"     )
+                , _react2.default.createElement('a', { 
+                  href: "https://puredesire.org/wp-content/uploads/2020/04/faster-scale-check-in-2017-1.pdf",
+                  target: "_blank",
+                  rel: "noopener noreferrer" ,
+                  className: "flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"         ,}
+
+                  , _react2.default.createElement(_lucidereact.Download, { size: 16,} ), "Download PDF"
+
+                )
+              )
+              , _react2.default.createElement('p', { className: "text-gray-600 text-center mb-6"  ,}, "Adapted from The Genesis Process by Michael Dye | Source: Pure Desire Ministries"
+
+              )
+
+              , _react2.default.createElement('div', { className: "space-y-4",}
+                , fasterScaleData.map((level, index) => {
+                  const isSelected = fasterPosition === level.level;
+                  const colorClasses = {
+                    green: 'bg-green-100 border-green-400 text-green-800',
+                    yellow: 'bg-yellow-100 border-yellow-400 text-yellow-800',
+                    orange: 'bg-orange-100 border-orange-400 text-orange-800',
+                    red: 'bg-red-100 border-red-400 text-red-800',
+                    purple: 'bg-purple-100 border-purple-400 text-purple-800',
+                    gray: 'bg-gray-100 border-gray-400 text-gray-800',
+                    black: 'bg-gray-900 border-gray-900 text-white'
+                  };
+                  
+                  return (
+                    _react2.default.createElement('div', { key: level.level,}
+                      , _react2.default.createElement('div', { 
+                        className: `p-4 rounded-lg border-l-4 cursor-pointer transition-all ${
+                          isSelected ? 'ring-2 ring-blue-500 ' + colorClasses[level.color] : colorClasses[level.color]
+                        }`,
+                        onClick: () => setFasterPosition(level.level),}
+
+                        , _react2.default.createElement('div', { className: "flex items-start justify-between"  ,}
+                          , _react2.default.createElement('div', { className: "flex-1",}
+                            , _react2.default.createElement('h3', { className: "font-bold text-lg" ,}, level.label)
+                            , _react2.default.createElement('p', { className: "text-sm opacity-80 mb-3"  ,}, level.subtitle)
+                            , isSelected && (
+                              _react2.default.createElement('div', { className: "mt-3",}
+                                , _react2.default.createElement('h4', { className: "font-medium mb-2" ,}, "Behaviors & Symptoms:"  )
+                                , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-1"   ,}
+                                  , level.behaviors.map((behavior, idx) => (
+                                    _react2.default.createElement('div', { key: idx, className: "text-sm opacity-90 flex items-start gap-2"    ,}
+                                      , _react2.default.createElement('span', { className: "mt-1",}, "•")
+                                      , _react2.default.createElement('span', null, behavior)
+                                    )
+                                  ))
+                                )
+                              )
+                            )
+                          )
+                          , isSelected && _react2.default.createElement(_lucidereact.CheckCircle, { size: 24,} )
+                        )
+                      )
+                      , index < fasterScaleData.length - 1 && (
+                        _react2.default.createElement('div', { className: "flex justify-center my-2"  ,}
+                          , _react2.default.createElement('div', { className: "text-gray-400 text-sm" ,}, "↓ leads to"  )
+                        )
+                      )
+                    )
+                  );
+                })
+              )
+
+              , _react2.default.createElement('div', { className: "mt-6 p-4 bg-blue-50 rounded-lg"   ,}
+                , _react2.default.createElement('p', { className: "text-blue-800 text-center" ,}
+                  , _react2.default.createElement('strong', null, "Where are you today?"   ), " Click on your current position to see detailed behaviors. Remember: The goal is always to return to restoration through K.P.I."
+
+                )
+              )
+            )
+
+            /* K.P.I. Triangle Framework */
+            , _react2.default.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6"   ,}
+              , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900 mb-6 text-center"    ,}, "🛡️ K.P.I. - Your Everyday Carry Tools"      )
+
+              /* Triangle Layout */
+              , _react2.default.createElement('div', { className: "flex flex-col items-center space-y-6"   ,}
+                /* Top Point - Keep Distance */
+                , _react2.default.createElement('div', { className: "w-full max-w-md" ,}
+                  , _react2.default.createElement('div', { className: "bg-gradient-to-br from-green-50 to-blue-50 p-6 rounded-lg border border-gray-200 text-center"       ,}
+                    , _react2.default.createElement('div', { className: "w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4"           ,}, "K"
+
+                    )
+                    , _react2.default.createElement('h3', { className: "text-xl font-bold text-gray-900 mb-2"   ,}, "Keep Your Distance"  )
+                    , _react2.default.createElement('p', { className: "text-sm text-gray-600 italic mb-3"   ,}, "1 Thessalonians 5:22"  )
+                    , _react2.default.createElement('p', { className: "text-gray-700 mb-3" ,}, "\"Abstain from every form of evil\""     )
+                    , _react2.default.createElement('div', { className: "text-sm text-gray-600 space-y-1"  ,}
+                      , _react2.default.createElement('p', null, "• Use different routes to avoid tempting places"       )
+                      , _react2.default.createElement('p', null, "• Delete apps that lead to compromise"      )
+                      , _react2.default.createElement('p', null, "• Find new lunch groups away from toxic influences"        )
+                    )
+                  )
+                )
+
+                /* Bottom Left - Project */
+                , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-6 w-full"    ,}
+                  , _react2.default.createElement('div', { className: "bg-gradient-to-br from-yellow-50 to-orange-50 p-6 rounded-lg border border-gray-200 text-center"       ,}
+                    , _react2.default.createElement('div', { className: "w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4"           ,}, "P"
+
+                    )
+                    , _react2.default.createElement('h3', { className: "text-xl font-bold text-gray-900 mb-2"   ,}, "Project Consequences" )
+                    , _react2.default.createElement('p', { className: "text-sm text-gray-600 italic mb-3"   ,}, "Ask three crucial questions"   )
+                    , _react2.default.createElement('div', { className: "text-sm text-gray-600 space-y-1"  ,}
+                      , _react2.default.createElement('p', null, "• What are the consequences?"    )
+                      , _react2.default.createElement('p', null, "• Who gets hurt along the way?"      )
+                      , _react2.default.createElement('p', null, "• How does this even benefit me?"      )
+                      , _react2.default.createElement('p', null, "• 5 minutes of relief for 5 days of guilt?"         )
+                    )
+                  )
+
+                  /* Bottom Right - Invite */
+                  , _react2.default.createElement('div', { className: "bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-lg border border-gray-200 text-center"       ,}
+                    , _react2.default.createElement('div', { className: "w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4"           ,}, "I"
+
+                    )
+                    , _react2.default.createElement('h3', { className: "text-xl font-bold text-gray-900 mb-2"   ,}, "Invite God's Power"  )
+                    , _react2.default.createElement('p', { className: "text-sm text-gray-600 italic mb-3"   ,}, "2 Corinthians 12:9"  )
+                    , _react2.default.createElement('p', { className: "text-gray-700 mb-3" ,}, "\"My grace is sufficient for you\""     )
+                    , _react2.default.createElement('div', { className: "text-sm text-gray-600 space-y-1"  ,}
+                      , _react2.default.createElement('p', null, "• Constant prayer (Romans 12)"    )
+                      , _react2.default.createElement('p', null, "• Bless those who persecute you"     )
+                      , _react2.default.createElement('p', null, "• Call trusted brothers and sisters"     )
+                    )
+                  )
+                )
+              )
+
+              , _react2.default.createElement('div', { className: "mt-8 p-4 bg-blue-50 rounded-lg text-center"    ,}
+                , _react2.default.createElement('p', { className: "text-blue-800 font-medium" ,}, "🔺 "
+                   , _react2.default.createElement('strong', null, "The K.P.I. Triangle:"  ), " Three interconnected tools that work together. Keep distance from temptation, project the real consequences, and invite God's power into your weakness."
+
+                )
+              )
+            )
+
+            /* Author Quotes */
+            , _react2.default.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6"   ,}
+              , _react2.default.createElement('h2', { className: "text-xl font-bold text-gray-900 mb-4"   ,}, "📚 Theological Insights"  )
+              , _react2.default.createElement('div', { className: "space-y-4",}
+                , authorQuotes.map((quote, index) => (
+                  _react2.default.createElement('div', { key: index, className: "bg-gray-50 p-4 rounded-lg border border-gray-200"    ,}
+                    , _react2.default.createElement('blockquote', { className: "italic text-gray-700 mb-2"  ,}, "\""
+                      , quote.quote, "\""
+                    )
+                    , _react2.default.createElement('div', { className: "text-sm",}
+                      , _react2.default.createElement('p', { className: "font-medium text-gray-900" ,}, "- "
+                         , quote.author, quote.book && `, ${quote.book}`
+                      )
+                      , _react2.default.createElement('p', { className: "text-gray-600",}, quote.context)
+                    )
+                  )
+                ))
+              )
+            )
+
+            /* Generational Sin Clarification */
+            , _react2.default.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6"   ,}
+              , _react2.default.createElement('button', {
+                onClick: () => toggleAccordion('generational'),
+                className: "w-full flex items-center justify-between text-left"    ,}
+
+                , _react2.default.createElement('h2', { className: "text-xl font-bold text-gray-900"  ,}, "🔗 Generational Sin: Breaking the Chains"     )
+                , openAccordions['generational'] ? _react2.default.createElement(_lucidereact.ChevronDown, { size: 24,} ) : _react2.default.createElement(_lucidereact.ChevronRight, { size: 24,} )
+              )
+
+              , openAccordions['generational'] && (
+                _react2.default.createElement('div', { className: "mt-4 space-y-4" ,}
+                  , _react2.default.createElement('p', { className: "text-gray-700",}, "Pastor Brett clarifies three categories regarding generational influence:"
+
+                  )
+
+                  , _react2.default.createElement('div', { className: "space-y-4",}
+                    , _react2.default.createElement('div', { className: "bg-red-50 p-4 rounded-lg border-l-4 border-red-400"    ,}
+                      , _react2.default.createElement('h4', { className: "font-bold text-red-800 mb-2"  ,}, "1. Generational Curse"  )
+                      , _react2.default.createElement('p', { className: "text-red-700 text-sm mb-2"  ,}
+                        , _react2.default.createElement('strong', null, "Romans 5:12:" ), " \"Just as sin entered the world through one man and death through sin, in this way, death came to all people because all have sinned.\""
+
+                      )
+                      , _react2.default.createElement('p', { className: "text-red-700 text-sm" ,}, "We inherit a sinful nature, but "
+                              , _react2.default.createElement('strong', null, "Christ has redeemed us from the curse"      ), " (Galatians)."
+                      )
+                    )
+
+                    , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400"    ,}
+                      , _react2.default.createElement('h4', { className: "font-bold text-yellow-800 mb-2"  ,}, "2. Sinful Influence"  )
+                      , _react2.default.createElement('p', { className: "text-yellow-700 text-sm" ,}, "Environmental and genetic influences from family patterns (anger, anxiety, etc.) are real but not deterministic."
+
+
+                      )
+                    )
+
+                    , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded-lg border-l-4 border-green-400"    ,}
+                      , _react2.default.createElement('h4', { className: "font-bold text-green-800 mb-2"  ,}, "3. Individual Responsibility"  )
+                      , _react2.default.createElement('p', { className: "text-green-700 text-sm" ,}
+                        , _react2.default.createElement('strong', null, "Ezekiel 18:" ), " \"The one who sins is the one who will die. The child will not share the guilt of the parent.\" We are individually responsible for our sins, not our ancestors'."
+
+                      )
+                    )
+                  )
+
+                  , _react2.default.createElement('div', { className: "bg-blue-50 p-4 rounded-lg"  ,}
+                    , _react2.default.createElement('p', { className: "text-blue-800 font-medium" ,}, "🏆 "
+                       , _react2.default.createElement('strong', null, "Victory Declaration:" ), " The power of Christ is greater than any sin from our background. We don't live in paranoia but in faith, knowing that greater is He who lives within us!"
+
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+
+        , activeTab === 'bible' && (
+          _react2.default.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6"   ,}
+            , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900 mb-6 text-center"    ,}, "📖 Key Bible Verses"   )
+
+            /* Circular Carousel */
+            , _react2.default.createElement('div', { className: "relative",}
+              , _react2.default.createElement('div', { className: "bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-lg border border-gray-200 min-h-96"       ,}
+                , _react2.default.createElement('div', { className: "text-center mb-4" ,}
+                  , _react2.default.createElement('div', { className: "flex items-center justify-center gap-4 mb-4"    ,}
+                    , _react2.default.createElement('button', { 
+                      onClick: prevVerse,
+                      className: "bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors"     ,}
+
+                      , _react2.default.createElement(_lucidereact.ChevronLeft, { size: 20,} )
+                    )
+                    , _react2.default.createElement('h3', { className: "text-xl font-bold text-blue-600"  ,}
+                      , bibleVerses[currentVerseIndex].reference
+                    )
+                    , _react2.default.createElement('button', { 
+                      onClick: nextVerse,
+                      className: "bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors"     ,}
+
+                      , _react2.default.createElement(_lucidereact.ChevronRight, { size: 20,} )
+                    )
+                  )
+                  , _react2.default.createElement('p', { className: "text-gray-600 mb-6" ,}, bibleVerses[currentVerseIndex].context)
+                )
+
+                , _react2.default.createElement('blockquote', { className: "text-gray-800 text-lg leading-relaxed italic text-center border-l-4 border-blue-400 pl-6 bg-white p-6 rounded"          ,}, "\""
+                  , bibleVerses[currentVerseIndex].fullText, "\""
+                )
+
+                , _react2.default.createElement('div', { className: "flex justify-center mt-6"  ,}
+                  , _react2.default.createElement('div', { className: "flex space-x-2" ,}
+                    , bibleVerses.map((_, index) => (
+                      _react2.default.createElement('button', {
+                        key: index,
+                        onClick: () => setCurrentVerseIndex(index),
+                        className: `w-3 h-3 rounded-full transition-colors ${
+                          index === currentVerseIndex ? 'bg-blue-600' : 'bg-gray-300'
+                        }`,}
+                      )
+                    ))
+                  )
+                )
+              )
+            )
+
+            /* All Verses Grid */
+            , _react2.default.createElement('div', { className: "mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"     ,}
+              , bibleVerses.map((verse, index) => (
+                _react2.default.createElement('button', {
+                  key: index,
+                  onClick: () => setCurrentVerseIndex(index),
+                  className: `p-4 rounded-lg border text-left transition-all ${
+                    index === currentVerseIndex 
+                      ? 'border-blue-500 bg-blue-50' 
+                      : 'border-gray-200 bg-gray-50 hover:bg-gray-100'
+                  }`,}
+
+                  , _react2.default.createElement('h4', { className: "font-bold text-gray-900 mb-1"  ,}, verse.reference)
+                  , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, verse.context)
+                )
+              ))
+            )
+          )
+        )
+
+        , activeTab === 'practical' && (
+          _react2.default.createElement('div', { className: "space-y-6",}
+            , _react2.default.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6"   ,}
+              , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900 mb-6"   ,}, "🛠️ Practical Battle Steps"   )
+
+              , _react2.default.createElement('div', { className: "space-y-6",}
+                , _react2.default.createElement('div', { className: "bg-blue-50 p-5 rounded-lg"  ,}
+                  , _react2.default.createElement('h3', { className: "text-xl font-bold text-blue-800 mb-3"   ,}, "⚔️ Jesus' Battle Plan: \"It Is Written\""      )
+                  , _react2.default.createElement('p', { className: "text-blue-700 mb-3" ,}, "Three times Jesus fought back with the sword of the spirit - God's word. The sword has been given to you!"
+
+                  )
+                  , _react2.default.createElement('div', { className: "bg-white p-3 rounded border-l-4 border-blue-400"    ,}
+                    , _react2.default.createElement('p', { className: "text-gray-700 text-sm" ,}
+                      , _react2.default.createElement('strong', null, "Key Pattern:" ), " Recognize the legitimate need → Reject the distorted solution → Receive God's true provision"
+                    )
+                  )
+                )
+
+                , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-6"   ,}
+                  , _react2.default.createElement('div', { className: "bg-green-50 p-5 rounded-lg"  ,}
+                    , _react2.default.createElement('h4', { className: "font-bold text-green-800 mb-3"  ,}, "✅ What TO Do"   )
+                    , _react2.default.createElement('ul', { className: "space-y-2 text-sm text-green-700"  ,}
+                      , _react2.default.createElement('li', null, "• Memorize key verses as weapons"     )
+                      , _react2.default.createElement('li', null, "• Call trusted friends when struggling"     )
+                      , _react2.default.createElement('li', null, "• Create accountability systems"   )
+                      , _react2.default.createElement('li', null, "• Sync calendars for important relationships"     )
+                      , _react2.default.createElement('li', null, "• Buy souvenirs for difficult people (overcome evil with good)"         )
+                      , _react2.default.createElement('li', null, "• Use alternative routes to avoid triggers"      )
+                      , _react2.default.createElement('li', null, "• Bless those who persecute you"     )
+                      , _react2.default.createElement('li', null, "• Speak truth out loud: \"Be gone, Satan!\""       )
+                      , _react2.default.createElement('li', null, "• Use the F.A.S.T.E.R. scale daily for awareness"       )
+                    )
+                  )
+
+                  , _react2.default.createElement('div', { className: "bg-red-50 p-5 rounded-lg"  ,}
+                    , _react2.default.createElement('h4', { className: "font-bold text-red-800 mb-3"  ,}, "❌ What NOT To Do"    )
+                    , _react2.default.createElement('ul', { className: "space-y-2 text-sm text-red-700"  ,}
+                      , _react2.default.createElement('li', null, "• Don't walk through Lang Kwai Fong if tempted by drinks"          )
+                      , _react2.default.createElement('li', null, "• Don't try to fight alone - isolation kills"        )
+                      , _react2.default.createElement('li', null, "• Don't negotiate with temptation"    )
+                      , _react2.default.createElement('li', null, "• Don't manage sin - abstain from it completely"        )
+                      , _react2.default.createElement('li', null, "• Don't believe Satan's half-truths and twisted scriptures"       )
+                      , _react2.default.createElement('li', null, "• Don't curse or condemn others"     )
+                      , _react2.default.createElement('li', null, "• Don't overestimate your strength (pride before fall)"       )
+                      , _react2.default.createElement('li', null, "• Don't keep secrets - they lead to forgetting priorities"         )
+                    )
+                  )
+                )
+
+                , _react2.default.createElement('div', { className: "bg-yellow-50 p-5 rounded-lg border-l-4 border-yellow-400"    ,}
+                  , _react2.default.createElement('h4', { className: "font-bold text-yellow-800 mb-3"  ,}, "🎯 Daily Spiritual KPI Checkup"    )
+                  , _react2.default.createElement('p', { className: "text-yellow-700 mb-3" ,}, "Check yourself daily with this framework:"     )
+                  , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-3 gap-4"   ,}
+                    , _react2.default.createElement('div', { className: "bg-white p-3 rounded"  ,}
+                      , _react2.default.createElement('h5', { className: "font-medium text-gray-900" ,}, "Morning")
+                      , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "Where am I on F.A.S.T.E.R. scale?"     )
+                    )
+                    , _react2.default.createElement('div', { className: "bg-white p-3 rounded"  ,}
+                      , _react2.default.createElement('h5', { className: "font-medium text-gray-900" ,}, "Midday")
+                      , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "Am I keeping distance from slopes?"     )
+                    )
+                    , _react2.default.createElement('div', { className: "bg-white p-3 rounded"  ,}
+                      , _react2.default.createElement('h5', { className: "font-medium text-gray-900" ,}, "Evening")
+                      , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "Did I invite God's power today?"     )
+                    )
+                  )
+                )
+
+                /* Weekly Pure Desire Check-in Questions */
+                , _react2.default.createElement('div', { className: "bg-purple-50 p-5 rounded-lg border-l-4 border-purple-400"    ,}
+                  , _react2.default.createElement('h4', { className: "font-bold text-purple-800 mb-3"  ,}, "📋 Weekly Accountability Questions"   )
+                  , _react2.default.createElement('p', { className: "text-purple-700 mb-3" ,}, "From Pure Desire Group Check-in:"    )
+                  , _react2.default.createElement('ol', { className: "space-y-2 text-sm text-purple-700"  ,}
+                    , _react2.default.createElement('li', null, "1. What is the lowest level you reached on the F.A.S.T.E.R. Scale this week?"             )
+                    , _react2.default.createElement('li', null, "2. What was the Double Bind you were dealing with?"         )
+                    , _react2.default.createElement('li', null, "3. Where are you on your Commitment to Change?"        )
+                    , _react2.default.createElement('li', null, "4. Have you lied to anyone this week either directly or indirectly?"           )
+                    , _react2.default.createElement('li', null, "5. If married, what have you done to improve your relationship this week?"            )
+                    , _react2.default.createElement('li', null, "6. What area do you need to change or challenge are you facing next week?"              )
+                    , _react2.default.createElement('li', null, "7. Who will keep you accountable to this commitment?"        )
+                  )
+                )
+              )
+            )
+          )
+        )
+
+        , activeTab === 'reflection' && (
+          _react2.default.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6"   ,}
+            , _react2.default.createElement('div', { className: "flex items-center justify-between mb-6"   ,}
+              , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900"  ,}, "💭 Reflection Questions"  )
+              , _react2.default.createElement('button', {
+                onClick: downloadReflectionAnswers,
+                className: "flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"         ,}
+
+                , _react2.default.createElement(_lucidereact.FileText, { size: 16,} ), "Download My Reflection"
+
+              )
+            )
+
+            , _react2.default.createElement('div', { className: "space-y-6",}
+              , _react2.default.createElement('div', { className: "bg-blue-50 p-5 rounded-lg border-l-4 border-blue-400"    ,}
+                , _react2.default.createElement('h3', { className: "font-bold text-blue-800 mb-3"  ,}, "🎯 Personal Assessment"  )
+                , _react2.default.createElement('div', { className: "space-y-4",}
+                  , _react2.default.createElement('div', null
+                    , _react2.default.createElement('h4', { className: "font-medium text-blue-700 mb-2"  ,}, "1. Where are you on the F.A.S.T.E.R. scale today and why?"          )
+                    , _react2.default.createElement('textarea', { 
+                      className: "w-full p-3 border border-gray-300 rounded-lg resize-none h-24"      ,
+                      placeholder: "Reflect honestly on your current spiritual position using the official Pure Desire scale. What specific behaviors are you experiencing?"                  ,
+                      value: reflectionAnswers.fasterPosition,
+                      onChange: (e) => updateReflectionAnswer('fasterPosition', e.target.value),}
+                    )
+                  )
+
+                  , _react2.default.createElement('div', null
+                    , _react2.default.createElement('h4', { className: "font-medium text-blue-700 mb-2"  ,}, "2. What is your greatest area of vulnerability to temptation?"         )
+                    , _react2.default.createElement('textarea', { 
+                      className: "w-full p-3 border border-gray-300 rounded-lg resize-none h-24"      ,
+                      placeholder: "In which area of life are you most vulnerable? How can you use K.P.I. to prepare and fight back? Be specific about your battle plan."                        ,
+                      value: reflectionAnswers.vulnerability,
+                      onChange: (e) => updateReflectionAnswer('vulnerability', e.target.value),}
+                    )
+                  )
+                )
+              )
+
+              , _react2.default.createElement('div', { className: "bg-green-50 p-5 rounded-lg border-l-4 border-green-400"    ,}
+                , _react2.default.createElement('h3', { className: "font-bold text-green-800 mb-3"  ,}, "⚔️ Battle Plan Development"   )
+                , _react2.default.createElement('div', { className: "space-y-4",}
+                  , _react2.default.createElement('div', null
+                    , _react2.default.createElement('h4', { className: "font-medium text-green-700 mb-2"  ,}, "3. What specific \"distances\" do you need to keep?"        )
+                    , _react2.default.createElement('textarea', { 
+                      className: "w-full p-3 border border-gray-300 rounded-lg resize-none h-20"      ,
+                      placeholder: "List specific apps, places, situations, routes, or people you need to avoid or approach differently. Be practical and specific."                  ,
+                      value: reflectionAnswers.distances,
+                      onChange: (e) => updateReflectionAnswer('distances', e.target.value),}
+                    )
+                  )
+
+                  , _react2.default.createElement('div', null
+                    , _react2.default.createElement('h4', { className: "font-medium text-green-700 mb-2"  ,}, "4. Who can you call for accountability when you're slipping on the F.A.S.T.E.R. scale?"             )
+                    , _react2.default.createElement('textarea', { 
+                      className: "w-full p-3 border border-gray-300 rounded-lg resize-none h-20"      ,
+                      placeholder: "Name specific people with phone numbers. What questions should they ask you? Remember: isolation kills, community heals."                ,
+                      value: reflectionAnswers.accountability,
+                      onChange: (e) => updateReflectionAnswer('accountability', e.target.value),}
+                    )
+                  )
+                )
+              )
+
+              , _react2.default.createElement('div', { className: "bg-purple-50 p-5 rounded-lg border-l-4 border-purple-400"    ,}
+                , _react2.default.createElement('h3', { className: "font-bold text-purple-800 mb-3"  ,}, "🛡️ Scripture Memorization"  )
+                , _react2.default.createElement('div', null
+                  , _react2.default.createElement('h4', { className: "font-medium text-purple-700 mb-2"  ,}, "5. Which verse will you memorize as your \"sword of the spirit\"?"           )
+                  , _react2.default.createElement('select', { 
+                    className: "w-full p-3 border border-gray-300 rounded-lg mb-3"     ,
+                    value: reflectionAnswers.scripture,
+                    onChange: (e) => updateReflectionAnswer('scripture', e.target.value),}
+
+                    , _react2.default.createElement('option', { value: "",}, "Choose a verse to memorize this week..."      )
+                    , _react2.default.createElement('option', { value: "Matthew 4:4 - 'Man shall not live by bread alone, but by every word that comes from the mouth of the Lord.'"                     ,}, "Matthew 4:4 - \"Man shall not live by bread alone...\""         )
+                    , _react2.default.createElement('option', { value: "1 Corinthians 10:13 - 'No temptation has overtaken you that is not common to man. God is faithful and he will not let you be tempted beyond your ability. But with the temptation, he will also provide a way out of escape.'"                                         ,}, "1 Corinthians 10:13 - \"God is faithful and provides a way out...\""           )
+                    , _react2.default.createElement('option', { value: "1 Thessalonians 5:22 - 'Abstain from every form of evil.'"         ,}, "1 Thessalonians 5:22 - \"Abstain from every form of evil\""         )
+                    , _react2.default.createElement('option', { value: "2 Corinthians 12:9 - 'My grace is sufficient for you, for my power is made perfect in weakness.'"                 ,}, "2 Corinthians 12:9 - \"My grace is sufficient for you...\""         )
+                    , _react2.default.createElement('option', { value: "Matthew 4:10 - 'Be gone, Satan! For it is written, You shall worship the Lord your God and him only shall you serve.'"                      ,}, "Matthew 4:10 - \"Worship the Lord your God and him only serve\""           )
+                  )
+                  , _react2.default.createElement('textarea', { 
+                    className: "w-full p-3 border border-gray-300 rounded-lg resize-none h-16"      ,
+                    placeholder: "Write out the full verse and explain why this specific verse speaks to your current spiritual battle..."                ,
+                    value: reflectionAnswers.scriptureReason,
+                    onChange: (e) => updateReflectionAnswer('scriptureReason', e.target.value),}
+                  )
+                )
+              )
+
+              , _react2.default.createElement('div', { className: "bg-yellow-50 p-5 rounded-lg border-l-4 border-yellow-400 text-center"     ,}
+                , _react2.default.createElement('h3', { className: "font-bold text-yellow-800 mb-2"  ,}, "🏆 Victory Declaration"  )
+                , _react2.default.createElement('p', { className: "text-yellow-700 italic text-lg"  ,}, "\"We are not victims. We are victors. This isn't about survival - we're equipped to fight back. We are armored by God's power. We proclaim victory in His name because we are the beloved, and God has already set us free!\""
+
+
+
+                )
+                , _react2.default.createElement('p', { className: "text-yellow-600 text-sm mt-2"  ,}, "- Pastor Daniel"  )
+
+                , _react2.default.createElement('div', { className: "mt-4 p-3 bg-white rounded"   ,}
+                  , _react2.default.createElement('p', { className: "text-yellow-800 font-medium" ,}, "📝 "
+                     , _react2.default.createElement('strong', null, "Your Personal Victory Declaration:"   )
+                  )
+                  , _react2.default.createElement('textarea', { 
+                    className: "w-full p-3 border border-gray-300 rounded-lg resize-none h-16 mt-2"       ,
+                    placeholder: "Write your own victory declaration. What truth about your identity in Christ will you speak over the lies of the enemy?"                    ,
+                    value: reflectionAnswers.victoryDeclaration,
+                    onChange: (e) => updateReflectionAnswer('victoryDeclaration', e.target.value),}
+                  )
+                )
+              )
+
+              , _react2.default.createElement('div', { className: "bg-gray-50 p-4 rounded-lg border border-gray-300 text-center"     ,}
+                , _react2.default.createElement('p', { className: "text-gray-700 mb-3" ,}
+                  , _react2.default.createElement('strong', null, "📄 Download Your Complete Reflection"    )
+                )
+                , _react2.default.createElement('p', { className: "text-sm text-gray-600 mb-4"  ,}, "Save your answers as a text file for personal review, sharing with accountability partners, or future reference. The file includes all questions, your answers, next steps, and key resources."
+
+
+                )
+                , _react2.default.createElement('button', {
+                  onClick: downloadReflectionAnswers,
+                  className: "flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors mx-auto"          ,}
+
+                  , _react2.default.createElement(_lucidereact.FileText, { size: 18,} ), "Download My Spiritual Battle Plan Reflection"
+
+                )
+              )
+            )
+          )
+        )
+      )
+
+      /* Modal */
+      , openModal && _react2.default.createElement(ModalComponent, { content: openModal, onClose: closeModal,} )
+
+      /* Attribution */
+      , _react2.default.createElement('footer', { className: "bg-gray-800 text-white py-6 mt-12"   ,}
+        , _react2.default.createElement('div', { className: "max-w-6xl mx-auto px-4"  ,}
+          , _react2.default.createElement('div', { className: "attribution text-center text-sm"  ,}, "Generated using LLM with supervision and polishing by"
+                   , ' '
+            , _react2.default.createElement('a', { 
+              href: "https://benjaminficusmicrocarpa.github.io/", 
+              target: "_blank", 
+              rel: "noopener noreferrer" ,
+              className: "text-blue-400 hover:text-blue-300" ,}
+, "benjaminficusmicrocarpa"
+
+            )
+            , ' ', " | Original:"  , ' '
+            , _react2.default.createElement('a', { 
+              href: "https://www.youtube.com/watch?v=mV-aOjwN12Y", 
+              target: "_blank", 
+              rel: "noopener noreferrer" ,
+              className: "text-blue-400 hover:text-blue-300 inline-flex items-center gap-1"    ,}
+, "10 August 2025 | Clickbait: Temptation's Triple Threat: Your Battle Plan"
+
+              , _react2.default.createElement(_lucidereact.ExternalLink, { size: 14,} )
+            )
+            , ' ', " | F.A.S.T.E.R. Scale:"   , ' '
+            , _react2.default.createElement('a', { 
+              href: "https://puredesire.org/wp-content/uploads/2020/04/faster-scale-check-in-2017-1.pdf", 
+              target: "_blank", 
+              rel: "noopener noreferrer" ,
+              className: "text-blue-400 hover:text-blue-300" ,}
+, "Pure Desire Ministries"
+
+            )
+          )
+        )
+      )
+    )
+  );
+};
+
+exports. default = SermonInfographic;
+</script></head>
+  <body>
+  
+
+<div id="preview-app"></div></body></html>
