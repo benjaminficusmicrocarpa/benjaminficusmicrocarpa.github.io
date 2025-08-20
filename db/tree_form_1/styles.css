@@ -1,3 +1,4 @@
+/* CSS variables for consistent colors throughout the site */
 :root {
     --primary-color: #2563eb;
     --secondary-color: #64748b;
@@ -5,14 +6,17 @@
     --border-color: #e2e8f0;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
+    --table-stripe: #fafbfc; /* Light grey for alternating table rows */
 }
 
+/* Reset all browser default margins and padding */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Main body styling */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
@@ -20,6 +24,7 @@ body {
     background-color: #ffffff;
 }
 
+/* Header section with gradient background */
 .header {
     background: linear-gradient(135deg, var(--primary-color), #3b82f6);
     color: white;
@@ -28,12 +33,14 @@ body {
     position: relative;
 }
 
+/* Main title styling */
 .header h1 {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
+/* Subtitle with link styling */
 .header h2 {
     font-size: 1.1rem;
     font-weight: 400;
@@ -42,6 +49,18 @@ body {
     margin: 0 auto 1rem auto;
 }
 
+/* Link in header that points to official TRAM page */
+.header-link {
+    color: white;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.header-link:hover {
+    opacity: 0.8;
+}
+
+/* Button to open the information modal */
 .info-button {
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -58,7 +77,7 @@ body {
     transform: translateY(-1px);
 }
 
-/* Modal styles */
+/* Modal overlay that covers the entire screen */
 .modal {
     display: none;
     position: fixed;
@@ -71,6 +90,7 @@ body {
     animation: fadeIn 0.3s ease;
 }
 
+/* Modal content box */
 .modal-content {
     background-color: white;
     margin: 2% auto;
@@ -84,6 +104,7 @@ body {
     animation: slideIn 0.3s ease;
 }
 
+/* Modal header with close button */
 .modal-header {
     background: linear-gradient(135deg, var(--primary-color), #3b82f6);
     color: white;
@@ -98,6 +119,7 @@ body {
     font-size: 1.5rem;
 }
 
+/* Close button (×) in modal */
 .close {
     color: white;
     font-size: 2rem;
@@ -111,12 +133,14 @@ body {
     opacity: 0.7;
 }
 
+/* Scrollable content area of modal */
 .modal-body {
     padding: 2rem;
     max-height: calc(90vh - 100px);
     overflow-y: auto;
 }
 
+/* Styling for headings inside modal */
 .modal-body h3 {
     color: var(--primary-color);
     margin: 1.5rem 0 0.5rem 0;
@@ -139,6 +163,7 @@ body {
     margin-bottom: 0.5rem;
 }
 
+/* Code formatting inside modal */
 .modal-body code {
     background: #f1f5f9;
     padding: 0.2rem 0.4rem;
@@ -156,6 +181,7 @@ body {
     text-decoration: underline;
 }
 
+/* Highlighted result box in modal */
 .result-box {
     background: var(--accent-color);
     padding: 1.5rem;
@@ -169,6 +195,7 @@ body {
     color: var(--text-primary);
 }
 
+/* Animation keyframes for modal appearance */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -179,17 +206,20 @@ body {
     to { transform: translateY(0); opacity: 1; }
 }
 
+/* Main content container - reduced width for more compact layout */
 .container {
-    max-width: 1200px;
+    max-width: 900px; /* Reduced from 1200px to 900px for more compact layout */
     margin: 0 auto;
     padding: 2rem 1rem;
 }
 
+/* Search input container */
 .search-container {
     position: relative;
     margin-bottom: 2rem;
 }
 
+/* The main search input field */
 .search-input {
     width: 100%;
     padding: 1rem 1rem 1rem 3rem;
@@ -206,6 +236,7 @@ body {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
+/* Search icon (magnifying glass) inside search box */
 .search-icon {
     position: absolute;
     left: 1rem;
@@ -215,6 +246,7 @@ body {
     font-size: 1.2rem;
 }
 
+/* Dropdown suggestions that appear when typing */
 .suggestions {
     position: absolute;
     top: 100%;
@@ -229,6 +261,7 @@ body {
     display: none;
 }
 
+/* Individual suggestion items in dropdown */
 .suggestion-item {
     padding: 0.75rem 1rem;
     cursor: pointer;
@@ -241,6 +274,14 @@ body {
     background-color: var(--accent-color);
 }
 
+/* Combined scientific and Chinese name display in suggestions */
+.suggestion-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: baseline;
+}
+
 .suggestion-scientific {
     font-weight: 600;
     color: var(--text-primary);
@@ -249,9 +290,9 @@ body {
 .suggestion-chinese {
     font-size: 0.9rem;
     color: var(--text-secondary);
-    margin-top: 0.25rem;
 }
 
+/* Statistics cards showing counts */
 .stats {
     display: flex;
     justify-content: center;
@@ -280,6 +321,7 @@ body {
     margin-top: 0.5rem;
 }
 
+/* Container for the table with rounded corners and shadow */
 .table-container {
     background: white;
     border-radius: 12px;
@@ -288,11 +330,20 @@ body {
     border: 1px solid var(--border-color);
 }
 
+/* Wrapper to enable horizontal scrolling on mobile devices */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Main table styling */
 table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 600px; /* Minimum width to ensure horizontal scroll works */
 }
 
+/* Table header styling */
 th {
     background: var(--accent-color);
     padding: 1rem;
@@ -303,18 +354,66 @@ th {
     position: sticky;
     top: 0;
     z-index: 10;
+    white-space: nowrap; /* Prevent header text from wrapping */
 }
 
+/* Table cell styling */
 td {
     padding: 1rem;
     border-bottom: 1px solid #f1f5f9;
     vertical-align: top;
 }
 
-tbody tr:hover {
-    background-color: #fafbfc;
+/* Alternating row colors (zebra striping) */
+tbody tr:nth-child(even) {
+    background-color: var(--table-stripe);
 }
 
+tbody tr:hover {
+    background-color: #e2e8f0; /* Darker highlight on hover */
+}
+
+/* Tooltip functionality for column headers */
+.tooltip-header {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 1001;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Arrow pointing down from tooltip */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #333;
+}
+
+/* Show tooltip on hover */
+.tooltip-header:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Styling for different types of content in table cells */
 .scientific-name {
     font-weight: 500;
 }
@@ -328,12 +427,13 @@ tbody tr:hover {
     font-size: 0.9rem;
 }
 
-/* POWO and WFO column styles */
+/* POWO and WFO column styling */
 .powo-column, .wfo-column {
     text-align: center;
     width: 50px;
 }
 
+/* Links to external databases */
 .powo-link, .wfo-link {
     display: inline-block;
     padding: 0.5rem;
@@ -349,18 +449,21 @@ tbody tr:hover {
     transform: scale(1.1);
 }
 
+/* WFO icon sizing */
 .wfo-icon {
     width: 16px;
     height: 15px;
     display: inline-block;
 }
 
+/* Message shown when no search results found */
 .no-results {
     text-align: center;
     padding: 3rem 1rem;
     color: var(--text-secondary);
 }
 
+/* Footer attribution */
 .attribution {
     text-align: center;
     margin-top: 3rem;
@@ -380,6 +483,7 @@ tbody tr:hover {
     text-decoration: underline;
 }
 
+/* Responsive design for mobile devices */
 @media (max-width: 768px) {
     .header h1 {
         font-size: 2rem;
@@ -389,6 +493,7 @@ tbody tr:hover {
         font-size: 1rem;
     }
 
+    /* Adjust modal for mobile screens */
     .modal-content {
         width: 95%;
         margin: 5% auto;
@@ -406,6 +511,7 @@ tbody tr:hover {
         padding: 1.5rem;
     }
 
+    /* Adjust stats cards for mobile */
     .stats {
         gap: 1rem;
     }
@@ -416,6 +522,13 @@ tbody tr:hover {
         min-width: 120px;
     }
 
+    /* Reduce container width for mobile */
+    .container {
+        max-width: 100%;
+        padding: 1rem 0.5rem;
+    }
+
+    /* Adjust table for mobile */
     table {
         font-size: 0.9rem;
     }
@@ -424,6 +537,7 @@ tbody tr:hover {
         padding: 0.75rem 0.5rem;
     }
 
+    /* Smaller external link columns on mobile */
     .powo-column, .wfo-column {
         width: 40px;
     }
@@ -436,5 +550,11 @@ tbody tr:hover {
     .wfo-icon {
         width: 14px;
         height: 13px;
+    }
+
+    /* Make tooltips work better on mobile */
+    .tooltip {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
     }
 }
