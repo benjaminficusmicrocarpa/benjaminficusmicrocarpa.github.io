@@ -1,222 +1,285 @@
-class TreeSpeciesDatabase {
-    constructor() {
-        this.data = [];
-        this.filteredData = [];
-        this.currentSuggestionIndex = -1;
-        this.init();
-    }
-
-    async init() {
-        await this.loadData();
-        this.setupEventListeners();
-        this.renderTable(this.data);
-        this.updateStats();
-    }
-
-    async loadData() {
-        try {
-            const response = await fetch('tree-database.json');
-            const jsonData = await response.json();
-            this.data = jsonData.species;
-            this.filteredData = [...this.data];
-        } catch (error) {
-            console.error('Error loading tree data:', error);
-            // Fallback to embedded data if needed
-        }
-    }
-
-    setupEventListeners() {
-        const searchInput = document.getElementById('searchInput');
-        const suggestions = document.getElementById('suggestions');
-
-        searchInput.addEventListener('input', (e) => {
-            this.handleSearch(e.target.value);
-        });
-
-        searchInput.addEventListener('keydown', (e) => {
-            this.handleKeyNavigation(e);
-        });
-
-        searchInput.addEventListener('blur', () => {
-            setTimeout(() => {
-                suggestions.style.display = 'none';
-            }, 200);
-        });
-
-        searchInput.addEventListener('focus', (e) => {
-            if (e.target.value) {
-                this.showSuggestions(e.target.value);
-            }
-        });
-    }
-
-    handleSearch(query) {
-        const trimmedQuery = query.trim().toLowerCase();
-        
-        if (trimmedQuery === '') {
-            this.filteredData = [...this.data];
-            this.hideSuggestions();
-        } else {
-            this.filteredData = this.data.filter(species => 
-                this.matchesQuery(species, trimmedQuery)
-            );
-            this.showSuggestions(trimmedQuery);
-        }
-
-        this.renderTable(this.filteredData);
-        this.updateStats();
-    }
-
-    matchesQuery(species, query) {
-        // Strip HTML tags for searching but preserve original formatting
-        const stripHtml = (html) => {
-            const div = document.createElement('div');
-            div.innerHTML = html;
-            return div.textContent || div.innerText || '';
-        };
-
-        const searchableText = [
-            stripHtml(species.scientific),
-            species.chinese,
-            species.alternative
-        ].join(' ').toLowerCase();
-
-        return searchableText.includes(query);
-    }
-
-    showSuggestions(query) {
-        const suggestions = document.getElementById('suggestions');
-        const matchingSpecies = this.data
-            .filter(species => this.matchesQuery(species, query))
-            .slice(0, 8); // Limit to 8 suggestions
-
-        if (matchingSpecies.length === 0) {
-            this.hideSuggestions();
-            return;
-        }
-
-        const suggestionsHTML = matchingSpecies.map((species, index) => {
-            // Strip HTML for search highlighting, but preserve original for display
-            const stripHtml = (html) => {
-                const div = document.createElement('div');
-                div.innerHTML = html;
-                return div.textContent || div.innerText || '';
-            };
-            
-            const plainScientific = stripHtml(species.scientific);
-            const highlightedScientific = this.highlightMatch(plainScientific, query);
-            
-            return `
-                <div class="suggestion-item" data-index="${index}" onclick="app.selectSuggestion('${plainScientific.replace(/'/g, "\\'")}')">
-                    <div class="suggestion-scientific">${highlightedScientific}</div>
-                    <div class="suggestion-chinese">
-                        ${species.chinese}${species.alternative ? ' • ' + species.alternative : ''}
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        suggestions.innerHTML = suggestionsHTML;
-        suggestions.style.display = 'block';
-        this.currentSuggestionIndex = -1;
-    }
-
-    hideSuggestions() {
-        document.getElementById('suggestions').style.display = 'none';
-        this.currentSuggestionIndex = -1;
-    }
-
-    highlightMatch(text, query) {
-        if (!query) return text;
-        const regex = new RegExp(`(${query})`, 'gi');
-        return text.replace(regex, '<strong>$1</strong>');
-    }
-
-    handleKeyNavigation(e) {
-        const suggestions = document.getElementById('suggestions');
-        const suggestionItems = suggestions.querySelectorAll('.suggestion-item');
-
-        if (suggestions.style.display === 'none' || suggestionItems.length === 0) {
-            return;
-        }
-
-        switch (e.key) {
-            case 'ArrowDown':
-                e.preventDefault();
-                this.currentSuggestionIndex = Math.min(
-                    this.currentSuggestionIndex + 1,
-                    suggestionItems.length - 1
-                );
-                this.updateSuggestionHighlight(suggestionItems);
-                break;
-
-            case 'ArrowUp':
-                e.preventDefault();
-                this.currentSuggestionIndex = Math.max(
-                    this.currentSuggestionIndex - 1,
-                    -1
-                );
-                this.updateSuggestionHighlight(suggestionItems);
-                break;
-
-            case 'Enter':
-                e.preventDefault();
-                if (this.currentSuggestionIndex >= 0) {
-                    const selectedItem = suggestionItems[this.currentSuggestionIndex];
-                    const scientificName = selectedItem.querySelector('.suggestion-scientific').textContent;
-                    this.selectSuggestion(scientificName);
-                }
-                break;
-
-            case 'Escape':
-                this.hideSuggestions();
-                document.getElementById('searchInput').blur();
-                break;
-        }
-    }
-
-    updateSuggestionHighlight(suggestionItems) {
-        suggestionItems.forEach((item, index) => {
-            item.classList.toggle('active', index === this.currentSuggestionIndex);
-        });
-    }
-
-    selectSuggestion(scientificName) {
-        document.getElementById('searchInput').value = scientificName;
-        this.hideSuggestions();
-        this.handleSearch(scientificName);
-    }
-
-    renderTable(data) {
-        const tableBody = document.getElementById('tableBody');
-        const noResults = document.getElementById('noResults');
-
-        if (data.length === 0) {
-            tableBody.style.display = 'none';
-            noResults.style.display = 'block';
-            return;
-        }
-
-        tableBody.style.display = '';
-        noResults.style.display = 'none';
-
-        const rows = data.map(species => `
-            <tr>
-                <td>${species.id}</td>
-                <td class="scientific-name">${species.scientific}</td>
-                <td class="chinese-name">${species.chinese}</td>
-                <td class="alternative-name">${species.alternative || ''}</td>
-            </tr>
-        `).join('');
-
-        tableBody.innerHTML = rows;
-    }
-
-    updateStats() {
-        document.getElementById('totalCount').textContent = this.data.length;
-        document.getElementById('visibleCount').textContent = this.filteredData.length;
-    }
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #64748b;
+    --accent-color: #f8fafc;
+    --border-color: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
 }
 
-// Initialize the application
-const app = new TreeSpeciesDatabase();
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: #ffffff;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.header h2 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.search-container {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    font-size: 1.1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.search-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+}
+
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 12px 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.2s;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+    background-color: var(--accent-color);
+}
+
+.suggestion-scientific {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.suggestion-chinese {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: var(--accent-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.table-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: var(--accent-color);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top;
+}
+
+tbody tr:hover {
+    background-color: #fafbfc;
+}
+
+.scientific-name {
+    font-weight: 500;
+}
+
+.chinese-name {
+    font-weight: 600;
+}
+
+.alternative-name {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* New POWO column styles */
+.powo-column {
+    text-align: center;
+    width: 60px;
+}
+
+.powo-link {
+    display: inline-block;
+    padding: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+}
+
+.powo-link:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.powo-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+}
+
+.attribution {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.attribution a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.attribution a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .header h2 {
+        font-size: 1rem;
+    }
+
+    .stats {
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+        flex: 1;
+        min-width: 120px;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    th, td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .powo-column {
+        width: 50px;
+    }
+
+    .powo-link {
+        padding: 0.25rem;
+        font-size: 1rem;
+    }
+
+    .powo-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
