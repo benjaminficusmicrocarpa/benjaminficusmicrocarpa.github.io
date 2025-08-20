@@ -234,7 +234,7 @@ class TreeSpeciesDatabase {
         }
 
         // Skip if contains cultivar indicators
-        if (name.includes("'") || name.includes("cv") || name.includes("var.")) {
+        if (name.includes("'") || name.includes("cv")) {
             return true;
         }
 
