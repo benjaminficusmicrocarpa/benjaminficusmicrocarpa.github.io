@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="x-poe-datastore-behavior" content="local_only">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com https://powo.science.kew.org; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com https://powo.science.kew.org https://worldfloraonline.org; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tree Species Database - TRAM 10th Version</title>
@@ -12,7 +12,81 @@
     <header class="header">
         <h1>Tree Species Database from Form 1 of TRAM 10th Version</h1>
         <h2>Guidelines for Tree Risk Assessment and Management Arrangement (10th version) by Tree Management Office, Hong Kong Government</h2>
+        <button class="info-button" onclick="openModal()">ℹ️ How this was created</button>
     </header>
+
+    <!-- Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>How the Website Was Created (Step‑by‑Step)</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Here's a simple walk‑through of the process, written so anyone (not just techies) can follow along.</p>
+                
+                <h3>Step 1 -- Download the form</h3>
+                <p>Go to the Tree Management Office website and download the Form 1 of Tree Risk Assessment:</p>
+                <p>👉 <a href="https://www.greening.gov.hk/filemanager/greening/en/content_20/DEVBTMCP_Form_1_(Sep_2023).xlsm" target="_blank" rel="noopener noreferrer">Form 1 (Excel Macro-Enabled Workbook)</a></p>
+                <p>This file is in <strong>Excel <code>.xlsm</code> format</strong>.</p>
+
+                <h3>Step 2 -- Change the file extension</h3>
+                <ul>
+                    <li>Normally, the file ends in <code>.xlsm</code>.</li>
+                    <li>Rename it so the ending is <code>.zip</code>.</li>
+                    <li>Example: change <code>Form_1.xlsm</code> → <code>Form_1.zip</code>.</li>
+                </ul>
+                <p>Why? Because Excel files are actually special <strong>zip archives</strong> containing many smaller files inside.</p>
+
+                <h3>Step 3 -- Extract the contents</h3>
+                <ul>
+                    <li>Unzip (extract) the <code>.zip</code> file into a folder on your computer.</li>
+                    <li>Inside, you'll see several subfolders and files.</li>
+                </ul>
+
+                <h3>Step 4 -- Find the species data</h3>
+                <ul>
+                    <li>Open the folder called <strong><code>xl</code></strong>.</li>
+                    <li>Inside, look for a file named <strong><code>sharedStrings.xml</code></strong>.</li>
+                    <li>Open this file with a text editor (e.g., Notepad).</li>
+                </ul>
+                <p>This file contains all the words and labels used in the form -- including the <strong>tree species list</strong> with their <strong>scientific names</strong> and <strong>Chinese names</strong>.</p>
+
+                <h3>Step 5 -- Use an AI tool to sort the data</h3>
+                <ul>
+                    <li>Copy everything from <code>sharedStrings.xml</code>.</li>
+                    <li>Paste it into an AI tool like <strong>Claude (on Poe)</strong>.</li>
+                    <li>Ask it: <em>"Based on the XML, sort out the tree species names in table form, including scientific name and Chinese name."</em></li>
+                </ul>
+                <p>The AI will filter out everything else and give you a neat table of species.</p>
+
+                <h3>Step 6 -- Turn the table into a website</h3>
+                <p>In follow‑up prompts, the AI was asked to:</p>
+                <ol>
+                    <li>Clean up the formatting.</li>
+                    <li>Add a <strong>search function</strong> so people can quickly find species.</li>
+                    <li>Separate the website's code into proper files:
+                        <ul>
+                            <li><strong>HTML</strong> (structure)</li>
+                            <li><strong>CSS</strong> (styling)</li>
+                            <li><strong>JavaScript</strong> (functions)</li>
+                        </ul>
+                    </li>
+                    <li>Store the species data in a <strong>JSON file</strong> (a web‑friendly format that's easier to update later).</li>
+                </ol>
+
+                <div class="result-box">
+                    <h3>✅ The Result</h3>
+                    <p>The outcome is a simple, user‑friendly website where visitors can:</p>
+                    <ul>
+                        <li>Browse all tree species.</li>
+                        <li>Search by scientific name or Chinese name.</li>
+                        <li>Enjoy fast, clean, and easy access to the data.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <div class="search-container">
@@ -37,10 +111,11 @@
                 <thead>
                     <tr>
                         <th style="width: 60px;">No.</th>
-                        <th style="width: 35%;">Scientific Name</th>
-                        <th style="width: 22%;">Chinese Name</th>
-                        <th style="width: 22%;">Alternative Chinese Names</th>
-                        <th style="width: 60px;">POWO</th>
+                        <th style="width: 30%;">Scientific Name</th>
+                        <th style="width: 20%;">Chinese Name</th>
+                        <th style="width: 20%;">Alternative Chinese Names</th>
+                        <th style="width: 50px;" title="Plants of the World Online (Royal Botanic Gardens, Kew)">POWO</th>
+                        <th style="width: 50px;" title="World Flora Online">WFO</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
