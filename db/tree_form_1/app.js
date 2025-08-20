@@ -48,6 +48,20 @@ class TreeSpeciesDatabase {
                 this.showSuggestions(e.target.value);
             }
         });
+
+        // Modal event listeners
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('infoModal');
+            if (e.target === modal) {
+                this.closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.closeModal();
+            }
+        });
     }
 
     handleSearch(query) {
@@ -187,7 +201,18 @@ class TreeSpeciesDatabase {
         this.handleSearch(scientificName);
     }
 
-    // New method to generate POWO link
+    // Modal functions
+    openModal() {
+        document.getElementById('infoModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeModal() {
+        document.getElementById('infoModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Method to generate POWO link
     generatePowoLink(species) {
         // Strip HTML tags from scientific name
         const stripHtml = (html) => {
@@ -199,7 +224,7 @@ class TreeSpeciesDatabase {
         const plainScientific = stripHtml(species.scientific);
 
         // Check for cases that should not have POWO links
-        if (this.shouldSkipPowoLink(plainScientific)) {
+        if (this.shouldSkipExternalLink(plainScientific)) {
             return '';
         }
 
@@ -224,8 +249,45 @@ class TreeSpeciesDatabase {
         `;
     }
 
-    // Helper method to determine if POWO link should be skipped
-    shouldSkipPowoLink(scientificName) {
+    // Method to generate WFO link
+    generateWfoLink(species) {
+        // Strip HTML tags from scientific name
+        const stripHtml = (html) => {
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            return div.textContent || div.innerText || '';
+        };
+
+        const plainScientific = stripHtml(species.scientific);
+
+        // Check for cases that should not have WFO links
+        if (this.shouldSkipExternalLink(plainScientific)) {
+            return '';
+        }
+
+        // Process the scientific name for WFO URL
+        let searchTerm = plainScientific;
+
+        // Remove " spp." suffix if present
+        searchTerm = searchTerm.replace(/\s+spp\.?\s*$/i, '');
+
+        // Encode the search term for URL
+        const encodedTerm = encodeURIComponent(searchTerm.trim());
+
+        // Return the WFO link HTML
+        return `
+            <a href="https://worldfloraonline.org/search?query=${encodedTerm}" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="wfo-link"
+               title="View in World Flora Online">
+                <img src="WFOIcon.png" alt="WFO" class="wfo-icon">
+            </a>
+        `;
+    }
+
+    // Helper method to determine if external links should be skipped
+    shouldSkipExternalLink(scientificName) {
         const name = scientificName.toLowerCase().trim();
 
         // Skip special cases
@@ -234,7 +296,7 @@ class TreeSpeciesDatabase {
         }
 
         // Skip if contains cultivar indicators
-        if (name.includes("'") || name.includes("cv")) {
+        if (name.includes("'") || name.includes("cv") || name.includes("var.")) {
             return true;
         }
 
@@ -266,6 +328,7 @@ class TreeSpeciesDatabase {
                 <td class="chinese-name">${species.chinese}</td>
                 <td class="alternative-name">${species.alternative || ''}</td>
                 <td class="powo-column">${this.generatePowoLink(species)}</td>
+                <td class="wfo-column">${this.generateWfoLink(species)}</td>
             </tr>
         `).join('');
 
@@ -276,6 +339,15 @@ class TreeSpeciesDatabase {
         document.getElementById('totalCount').textContent = this.data.length;
         document.getElementById('visibleCount').textContent = this.filteredData.length;
     }
+}
+
+// Global functions for modal (called from HTML onclick)
+function openModal() {
+    app.openModal();
+}
+
+function closeModal() {
+    app.closeModal();
 }
 
 // Initialize the application
