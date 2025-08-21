@@ -325,7 +325,7 @@ body {
 .table-container {
     background: white;
     border-radius: 12px;
-    overflow: visible; /* Changed from hidden to visible */
+    overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border-color);
 }
@@ -333,8 +333,7 @@ body {
 /* Wrapper to enable horizontal scrolling on mobile devices */
 .table-wrapper {
     overflow-x: auto;
-    overflow-y: visible; /* Added to ensure tooltips aren't clipped vertically */
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 /* Main table styling */
@@ -347,7 +346,7 @@ table {
 /* Table header styling */
 th {
     background: var(--accent-color);
-    padding: 0.75rem 1rem; /* Reduced from 1rem to 0.75rem vertical padding */
+    padding: 0.75rem;
     text-align: left;
     font-weight: 600;
     color: var(--text-primary);
@@ -355,12 +354,12 @@ th {
     position: sticky;
     top: 0;
     z-index: 10;
-    white-space: nowrap;
+    white-space: nowrap; /* Prevent header text from wrapping */
 }
 
-/* Table cell styling */
+/* Table cell styling - REDUCED PADDING FOR TIGHTER ROWS */
 td {
-    padding: 0.5rem 1rem; /* Reduced from 1rem to 0.5rem vertical padding */
+    padding: 0.5rem;
     border-bottom: 1px solid #f1f5f9;
     vertical-align: top;
 }
@@ -374,7 +373,7 @@ tbody tr:hover {
     background-color: #e2e8f0; /* Darker highlight on hover */
 }
 
-/* Tooltip functionality for column headers */
+/* Tooltip functionality for column headers - FIXED Z-INDEX */
 .tooltip-header {
     position: relative;
     cursor: help;
@@ -383,17 +382,17 @@ tbody tr:hover {
 .tooltip {
     visibility: hidden;
     opacity: 0;
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed; /* Changed from absolute to fixed */
+    bottom: auto;
+    left: auto;
+    transform: none;
     background-color: #333;
     color: white;
     padding: 0.5rem;
     border-radius: 6px;
     font-size: 0.8rem;
     white-space: nowrap;
-    z-index: 9999; /* Increased from 1001 to 9999 */
+    z-index: 9999; /* Much higher z-index */
     transition: opacity 0.3s ease, visibility 0.3s ease;
     pointer-events: none; /* Prevent tooltip from interfering with mouse events */
 }
@@ -536,7 +535,7 @@ tbody tr:hover {
     }
 
     th, td {
-        padding: 0.5rem 0.5rem;
+        padding: 0.5rem 0.25rem; /* Even more compact on mobile */
     }
 
     /* Smaller external link columns on mobile */
