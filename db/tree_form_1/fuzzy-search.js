@@ -295,93 +295,6 @@ class FuzzySearchEngine {
     }
 
     /**
-     * Get search suggestions with fuzzy matching
-     */
-/**
- * Get search suggestions with hybrid matching approach
- */
-    getSuggestions(species, query) {
-        if (!query || query.trim().length === 0) {
-            return species.slice(0, this.options.maxResults).map(sp => ({
-                species: sp,
-                highlightedScientific: sp.scientific,
-                relevanceIndicator: 'exact'
-            }));
-        }
-    
-        const queryNorm = this.normalizeString(query);
-        
-        // Categorize matches
-        const exactFullMatches = [];
-        const partialExactMatches = [];
-        const fuzzyMatches = [];
-    
-        species.forEach(sp => {
-            const scientificNorm = this.normalizeString(sp.scientific);
-            const chineseNorm = this.normalizeString(sp.chinese);
-            const alternativeNorm = this.normalizeString(sp.alternative || '');
-    
-            // Check for exact full matches
-            if (scientificNorm === queryNorm || 
-                chineseNorm === queryNorm || 
-                alternativeNorm === queryNorm) {
-                exactFullMatches.push(sp);
-                return;
-            }
-    
-            // Check for partial exact matches (substring or prefix)
-            const isPartialExact = 
-                scientificNorm.includes(queryNorm) || 
-                chineseNorm.includes(queryNorm) || 
-                alternativeNorm.includes(queryNorm) ||
-                scientificNorm.startsWith(queryNorm) || 
-                chineseNorm.startsWith(queryNorm) || 
-                alternativeNorm.startsWith(queryNorm);
-    
-            if (isPartialExact) {
-                partialExactMatches.push(sp);
-                return;
-            }
-    
-            // Otherwise, calculate fuzzy score
-            const score = this.calculateFuzzyScore(sp, query);
-            if (score >= this.options.minSimilarity) {
-                fuzzyMatches.push({ species: sp, score: score });
-            }
-        });
-    
-        // Sort fuzzy matches by score
-        fuzzyMatches.sort((a, b) => b.score - a.score);
-    
-        // Determine result set based on hybrid approach
-        let results = [];
-        
-        if (exactFullMatches.length > 0) {
-            // Case 1: Full exact matches - show only these
-            results = exactFullMatches.slice(0, 1); // Only show first exact match
-        } else if (partialExactMatches.length > 0) {
-            // Case 2: Partial exact matches + limited fuzzy matches
-            const maxPartialExact = Math.min(partialExactMatches.length, 6);
-            const remainingSlots = Math.max(0, 8 - maxPartialExact);
-            
-            results = [
-                ...partialExactMatches.slice(0, maxPartialExact),
-                ...fuzzyMatches.slice(0, remainingSlots).map(fm => fm.species)
-            ];
-        } else {
-            // Case 3: Only fuzzy matches - show full 8
-            results = fuzzyMatches.slice(0, 8).map(fm => fm.species);
-        }
-    
-        // Convert to suggestion format with highlighting and relevance
-        return results.map(sp => ({
-            species: sp,
-            highlightedScientific: this.highlightMatch(sp.scientific, query),
-            relevanceIndicator: this.getRelevanceIndicator(sp, query)
-        }));
-    }
-
-    /**
      * Get search suggestions with hybrid matching approach
      */
     getSuggestions(species, query) {
@@ -424,40 +337,70 @@ class FuzzySearchEngine {
     
             if (isPartialExact) {
                 partialExactMatches.push(sp);
-                return;
-            }
-    
-            // Otherwise, calculate fuzzy score
-            const score = this.calculateFuzzyScore(sp, query);
-            if (score >= this.options.minSimilarity) {
-                fuzzyMatches.push({ species: sp, score: score });
+            } else {
+                // Calculate fuzzy score for non-exact matches
+                const score = this.calculateFuzzyScore(sp, query);
+                if (score >= this.options.minSimilarity) {
+                    fuzzyMatches.push({ species: sp, score: score });
+                }
             }
         });
     
-        // Sort fuzzy matches by score
+        // Sort fuzzy matches by score (highest first)
         fuzzyMatches.sort((a, b) => b.score - a.score);
     
         // Determine result set based on hybrid approach
         let results = [];
         
         if (exactFullMatches.length > 0) {
-            // Case 1: Full exact matches - show only these
-            results = exactFullMatches.slice(0, 1); // Only show first exact match
+            // Case 1: Full exact matches - show only one
+            results = exactFullMatches.slice(0, 1);
         } else if (partialExactMatches.length > 0) {
-            // Case 2: Partial exact matches + limited fuzzy matches
-            const maxPartialExact = Math.min(partialExactMatches.length, 6);
-            const remainingSlots = Math.max(0, 8 - maxPartialExact);
+            // Case 2: Show ALL partial exact matches + fuzzy matches based on quality
+            results = [...partialExactMatches]; // Show ALL exact matches, no limit
+            
+            // Add fuzzy matches based on their quality and the number of exact matches
+            const exactCount = partialExactMatches.length;
+            let fuzzyToAdd = [];
+            
+            if (exactCount <= 3) {
+                // Few exact matches - add high and medium quality fuzzy matches
+                fuzzyToAdd = fuzzyMatches.filter(fm => fm.score >= 0.65);
+            } else if (exactCount <= 6) {
+                // Moderate exact matches - add only high quality fuzzy matches
+                fuzzyToAdd = fuzzyMatches.filter(fm => fm.score >= 0.75);
+            } else {
+                // Many exact matches - add only very high quality fuzzy matches
+                fuzzyToAdd = fuzzyMatches.filter(fm => fm.score >= 0.85);
+            }
             
             results = [
-                ...partialExactMatches.slice(0, maxPartialExact),
-                ...fuzzyMatches.slice(0, remainingSlots).map(fm => fm.species)
+                ...results,
+                ...fuzzyToAdd.map(fm => fm.species)
             ];
         } else {
-            // Case 3: Only fuzzy matches - show full 8
-            results = fuzzyMatches.slice(0, 8).map(fm => fm.species);
+            // Case 3: Only fuzzy matches - show based on score quality, no artificial limit
+            // Use score thresholds to determine how many to show
+            const excellentMatches = fuzzyMatches.filter(fm => fm.score >= 0.8);
+            const goodMatches = fuzzyMatches.filter(fm => fm.score >= 0.7);
+            const okMatches = fuzzyMatches.filter(fm => fm.score >= 0.6);
+            
+            if (excellentMatches.length > 0) {
+                // Show all excellent matches
+                results = excellentMatches.map(fm => fm.species);
+            } else if (goodMatches.length > 0) {
+                // Show all good matches
+                results = goodMatches.map(fm => fm.species);
+            } else if (okMatches.length > 0) {
+                // Show OK matches, but limit to prevent too many low-quality results
+                results = okMatches.slice(0, 6).map(fm => fm.species);
+            } else {
+                // Show a few of the best available matches
+                results = fuzzyMatches.slice(0, 4).map(fm => fm.species);
+            }
         }
     
-        // Convert to suggestion format with highlighting and relevance
+        // Convert to suggestion format
         return results.map(sp => ({
             species: sp,
             highlightedScientific: this.highlightMatch(sp.scientific, query),
