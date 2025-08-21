@@ -3,6 +3,17 @@ class TreeSpeciesDatabase {
         this.data = []; // Array to store all tree species data
         this.filteredData = []; // Array to store filtered search results
         this.currentSuggestionIndex = -1; // Track which suggestion is highlighted
+        this.currentMatches = []; // Store current suggestion matches
+        
+        // Initialize fuzzy search engine
+        this.fuzzyEngine = new FuzzySearchEngine({
+            minSimilarity: 0.4, // Lower threshold for more forgiving search
+            maxResults: 8,
+            scientificWeight: 1.2, // Slightly favor scientific names
+            chineseWeight: 1.0,
+            alternativeWeight: 0.8
+        });
+        
         this.init(); // Start the application
     }
 
@@ -86,17 +97,15 @@ class TreeSpeciesDatabase {
 
     // Handle search functionality when user types
     handleSearch(query) {
-        const trimmedQuery = query.trim().toLowerCase();
+        const trimmedQuery = query.trim();
         
         if (trimmedQuery === '') {
             // If search is empty, show all species
             this.filteredData = [...this.data];
             this.hideSuggestions();
         } else {
-            // Filter species based on search query
-            this.filteredData = this.data.filter(species => 
-                this.matchesQuery(species, trimmedQuery)
-            );
+            // Use fuzzy search for filtering
+            this.filteredData = this.fuzzyEngine.search(this.data, trimmedQuery);
             this.showSuggestions(trimmedQuery);
         }
 
@@ -105,46 +114,27 @@ class TreeSpeciesDatabase {
         this.updateStats();
     }
 
-    // Check if a species matches the search query
-    matchesQuery(species, query) {
-        // Function to remove HTML tags from text for searching
-        const stripHtml = (html) => {
-            const div = document.createElement('div');
-            div.innerHTML = html;
-            return div.textContent || div.innerText || '';
-        };
-
-        // Combine all searchable text into one string
-        const searchableText = [
-            stripHtml(species.scientific), // Scientific name without HTML
-            species.chinese, // Chinese name
-            species.alternative // Alternative Chinese name
-        ].join(' ').toLowerCase();
-
-        // Check if the query appears anywhere in the searchable text
-        return searchableText.includes(query);
-    }
-
-    // Show dropdown suggestions while user is typing
+    // Show dropdown suggestions while user is typing (now with fuzzy matching)
     showSuggestions(query) {
         const suggestions = document.getElementById('suggestions');
-        const matchingSpecies = this.data
-            .filter(species => this.matchesQuery(species, query))
-            .slice(0, 8); // Show only first 8 matches to keep dropdown manageable
+        
+        // Get fuzzy search suggestions
+        const suggestionResults = this.fuzzyEngine.getSuggestions(this.data, query);
 
-        if (matchingSpecies.length === 0) {
+        if (suggestionResults.length === 0) {
             this.hideSuggestions();
             return;
         }
 
-        // Create HTML for each suggestion item
-        const suggestionsHTML = matchingSpecies.map((species, index) => {
-            // Keep the HTML formatting for display but create safe onclick
-            const highlightedScientific = this.highlightMatch(species.scientific, query);
+        // Create HTML for each suggestion item with relevance indicators
+        const suggestionsHTML = suggestionResults.map((result, index) => {
+            const { species, highlightedScientific, relevanceIndicator } = result;
             
-            // Create a safe identifier for onclick - store index instead of name
+            // Add relevance indicator styling
+            const relevanceClass = `relevance-${relevanceIndicator}`;
+            
             return `
-                <div class="suggestion-item" data-index="${index}" data-species-id="${species.id}" onclick="app.selectSuggestionByIndex(${index}, ${matchingSpecies.findIndex(s => s.id === species.id)})">
+                <div class="suggestion-item ${relevanceClass}" data-index="${index}" onclick="app.selectSuggestionByIndex(${index})">
                     <div class="suggestion-content">
                         <span class="suggestion-scientific">${highlightedScientific}</span>
                         <span class="suggestion-chinese">
@@ -160,7 +150,7 @@ class TreeSpeciesDatabase {
         this.currentSuggestionIndex = -1; // Reset selection
         
         // Store current matching species for selection
-        this.currentMatches = matchingSpecies;
+        this.currentMatches = suggestionResults.map(r => r.species);
     }
 
     // Hide the suggestions dropdown
@@ -168,41 +158,6 @@ class TreeSpeciesDatabase {
         document.getElementById('suggestions').style.display = 'none';
         this.currentSuggestionIndex = -1;
         this.currentMatches = [];
-    }
-
-    // Highlight matching text in suggestions (simplified version)
-    highlightMatch(scientificHtml, query) {
-        if (!query) return scientificHtml;
-
-        // First, let's work with the HTML as is and try to highlight within it
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = scientificHtml;
-        const textContent = tempDiv.textContent || tempDiv.innerText || '';
-        
-        // Check if query matches
-        const regex = new RegExp(`(${this.escapeRegex(query)})`, 'gi');
-        if (!regex.test(textContent)) {
-            return scientificHtml;
-        }
-
-        // Simple approach: if it's italicized, highlight within the italic tags
-        if (scientificHtml.includes('<i>') && scientificHtml.includes('</i>')) {
-            return scientificHtml.replace(
-                /(<i>)(.*?)(<\/i>)/gi,
-                (match, openTag, content, closeTag) => {
-                    const highlightedContent = content.replace(regex, '<strong>$1</strong>');
-                    return openTag + highlightedContent + closeTag;
-                }
-            );
-        } else {
-            // No italic tags, just highlight normally
-            return scientificHtml.replace(regex, '<strong>$1</strong>');
-        }
-    }
-
-    // Escape special regex characters
-    escapeRegex(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
     // Handle keyboard navigation in suggestion dropdown
@@ -259,9 +214,9 @@ class TreeSpeciesDatabase {
     }
 
     // Select suggestion by index (for onclick)
-    selectSuggestionByIndex(displayIndex, dataIndex) {
-        if (this.currentMatches && this.currentMatches[displayIndex]) {
-            this.selectSuggestionBySpecies(this.currentMatches[displayIndex]);
+    selectSuggestionByIndex(index) {
+        if (this.currentMatches && this.currentMatches[index]) {
+            this.selectSuggestionBySpecies(this.currentMatches[index]);
         }
     }
 
@@ -275,21 +230,6 @@ class TreeSpeciesDatabase {
         };
         
         const plainScientificName = stripHtml(species.scientific);
-        document.getElementById('searchInput').value = plainScientificName;
-        this.hideSuggestions();
-        this.handleSearch(plainScientificName);
-    }
-
-    // When user selects a suggestion, fill search box and search (legacy method)
-    selectSuggestion(scientificNameHtml) {
-        // Strip HTML tags for the search input
-        const stripHtml = (html) => {
-            const div = document.createElement('div');
-            div.innerHTML = html;
-            return div.textContent || div.innerText || '';
-        };
-        
-        const plainScientificName = stripHtml(scientificNameHtml);
         document.getElementById('searchInput').value = plainScientificName;
         this.hideSuggestions();
         this.handleSearch(plainScientificName);
