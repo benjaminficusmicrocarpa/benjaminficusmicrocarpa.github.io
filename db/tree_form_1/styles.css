@@ -325,7 +325,7 @@ body {
 .table-container {
     background: white;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to visible */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border-color);
 }
@@ -333,7 +333,8 @@ body {
 /* Wrapper to enable horizontal scrolling on mobile devices */
 .table-wrapper {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    overflow-y: visible; /* Added to ensure tooltips aren't clipped vertically */
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Main table styling */
@@ -346,7 +347,7 @@ table {
 /* Table header styling */
 th {
     background: var(--accent-color);
-    padding: 1rem;
+    padding: 0.75rem 1rem; /* Reduced from 1rem to 0.75rem vertical padding */
     text-align: left;
     font-weight: 600;
     color: var(--text-primary);
@@ -354,12 +355,12 @@ th {
     position: sticky;
     top: 0;
     z-index: 10;
-    white-space: nowrap; /* Prevent header text from wrapping */
+    white-space: nowrap;
 }
 
 /* Table cell styling */
 td {
-    padding: 1rem;
+    padding: 0.5rem 1rem; /* Reduced from 1rem to 0.5rem vertical padding */
     border-bottom: 1px solid #f1f5f9;
     vertical-align: top;
 }
@@ -392,8 +393,9 @@ tbody tr:hover {
     border-radius: 6px;
     font-size: 0.8rem;
     white-space: nowrap;
-    z-index: 1001;
+    z-index: 9999; /* Increased from 1001 to 9999 */
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none; /* Prevent tooltip from interfering with mouse events */
 }
 
 /* Arrow pointing down from tooltip */
@@ -534,7 +536,7 @@ tbody tr:hover {
     }
 
     th, td {
-        padding: 0.75rem 0.5rem;
+        padding: 0.5rem 0.5rem;
     }
 
     /* Smaller external link columns on mobile */
