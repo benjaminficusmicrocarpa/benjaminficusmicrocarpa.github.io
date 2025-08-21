@@ -77,8 +77,8 @@ class TreeSpeciesDatabase {
                 const tooltip = e.target.querySelector('.tooltip');
                 if (tooltip) {
                     const rect = e.target.getBoundingClientRect();
-                    tooltip.style.left = rect.left + rect.width / 2 - tooltip.offsetWidth / 2 + 'px';
-                    tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
+                    tooltip.style.left = (rect.left + rect.width / 2 - tooltip.offsetWidth / 2) + 'px';
+                    tooltip.style.top = (rect.top - tooltip.offsetHeight - 10) + 'px';
                 }
             }
         });
@@ -139,15 +139,12 @@ class TreeSpeciesDatabase {
 
         // Create HTML for each suggestion item
         const suggestionsHTML = matchingSpecies.map((species, index) => {
-            // Preserve HTML formatting in scientific names
-            const highlightedScientific = this.highlightMatchInHtml(species.scientific, query);
+            // Keep the HTML formatting for display but create safe onclick
+            const highlightedScientific = this.highlightMatch(species.scientific, query);
             
-            // Create a safe identifier for onclick
-            const safeScientific = species.scientific.replace(/'/g, "\\'").replace(/"/g, '\\"');
-            
-            // Put scientific and Chinese names on same line
+            // Create a safe identifier for onclick - store index instead of name
             return `
-                <div class="suggestion-item" data-index="${index}" onclick="app.selectSuggestion(\`${safeScientific}\`)">
+                <div class="suggestion-item" data-index="${index}" data-species-id="${species.id}" onclick="app.selectSuggestionByIndex(${index}, ${matchingSpecies.findIndex(s => s.id === species.id)})">
                     <div class="suggestion-content">
                         <span class="suggestion-scientific">${highlightedScientific}</span>
                         <span class="suggestion-chinese">
@@ -161,50 +158,51 @@ class TreeSpeciesDatabase {
         suggestions.innerHTML = suggestionsHTML;
         suggestions.style.display = 'block';
         this.currentSuggestionIndex = -1; // Reset selection
+        
+        // Store current matching species for selection
+        this.currentMatches = matchingSpecies;
     }
 
     // Hide the suggestions dropdown
     hideSuggestions() {
         document.getElementById('suggestions').style.display = 'none';
         this.currentSuggestionIndex = -1;
+        this.currentMatches = [];
     }
 
-    // Highlight matching text while preserving HTML formatting
-    highlightMatchInHtml(htmlText, query) {
-        if (!query) return htmlText;
+    // Highlight matching text in suggestions (simplified version)
+    highlightMatch(scientificHtml, query) {
+        if (!query) return scientificHtml;
 
-        // Function to strip HTML for searching
-        const stripHtml = (html) => {
-            const div = document.createElement('div');
-            div.innerHTML = html;
-            return div.textContent || div.innerText || '';
-        };
-
-        const plainText = stripHtml(htmlText);
-        const regex = new RegExp(`(${query})`, 'gi');
+        // First, let's work with the HTML as is and try to highlight within it
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = scientificHtml;
+        const textContent = tempDiv.textContent || tempDiv.innerText || '';
         
-        // Check if the query matches in the plain text
-        if (!regex.test(plainText)) {
-            return htmlText;
+        // Check if query matches
+        const regex = new RegExp(`(${this.escapeRegex(query)})`, 'gi');
+        if (!regex.test(textContent)) {
+            return scientificHtml;
         }
 
-        // If it matches, we need to carefully highlight within the HTML
-        // For now, let's do a simple approach that works with italic tags
-        const highlightedPlain = plainText.replace(regex, '<strong>$1</strong>');
-        
-        // Replace the content inside italic tags if present
-        if (htmlText.includes('<i>') && htmlText.includes('</i>')) {
-            return htmlText.replace(
+        // Simple approach: if it's italicized, highlight within the italic tags
+        if (scientificHtml.includes('<i>') && scientificHtml.includes('</i>')) {
+            return scientificHtml.replace(
                 /(<i>)(.*?)(<\/i>)/gi,
                 (match, openTag, content, closeTag) => {
                     const highlightedContent = content.replace(regex, '<strong>$1</strong>');
                     return openTag + highlightedContent + closeTag;
                 }
             );
+        } else {
+            // No italic tags, just highlight normally
+            return scientificHtml.replace(regex, '<strong>$1</strong>');
         }
-        
-        // If no italic tags, just highlight the whole thing
-        return htmlText.replace(regex, '<strong>$1</strong>');
+    }
+
+    // Escape special regex characters
+    escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
     // Handle keyboard navigation in suggestion dropdown
@@ -238,12 +236,11 @@ class TreeSpeciesDatabase {
 
             case 'Enter':
                 e.preventDefault();
-                if (this.currentSuggestionIndex >= 0) {
-                    // Select the highlighted suggestion
-                    const selectedItem = suggestionItems[this.currentSuggestionIndex];
-                    const scientificElement = selectedItem.querySelector('.suggestion-scientific');
-                    const scientificName = scientificElement.textContent || scientificElement.innerText;
-                    this.selectSuggestion(scientificName);
+                if (this.currentSuggestionIndex >= 0 && this.currentMatches) {
+                    const selectedSpecies = this.currentMatches[this.currentSuggestionIndex];
+                    if (selectedSpecies) {
+                        this.selectSuggestionBySpecies(selectedSpecies);
+                    }
                 }
                 break;
 
@@ -261,7 +258,29 @@ class TreeSpeciesDatabase {
         });
     }
 
-    // When user selects a suggestion, fill search box and search
+    // Select suggestion by index (for onclick)
+    selectSuggestionByIndex(displayIndex, dataIndex) {
+        if (this.currentMatches && this.currentMatches[displayIndex]) {
+            this.selectSuggestionBySpecies(this.currentMatches[displayIndex]);
+        }
+    }
+
+    // Select suggestion by species object
+    selectSuggestionBySpecies(species) {
+        // Strip HTML tags for the search input
+        const stripHtml = (html) => {
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            return div.textContent || div.innerText || '';
+        };
+        
+        const plainScientificName = stripHtml(species.scientific);
+        document.getElementById('searchInput').value = plainScientificName;
+        this.hideSuggestions();
+        this.handleSearch(plainScientificName);
+    }
+
+    // When user selects a suggestion, fill search box and search (legacy method)
     selectSuggestion(scientificNameHtml) {
         // Strip HTML tags for the search input
         const stripHtml = (html) => {
