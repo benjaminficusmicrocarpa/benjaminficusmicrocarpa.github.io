@@ -346,7 +346,7 @@ table {
 /* Table header styling */
 th {
     background: var(--accent-color);
-    padding: 0.75rem;
+    padding: 0.5rem 0.75rem;
     text-align: left;
     font-weight: 600;
     color: var(--text-primary);
@@ -355,13 +355,23 @@ th {
     top: 0;
     z-index: 10;
     white-space: nowrap; /* Prevent header text from wrapping */
+    height: 40px; /* Fixed header height */
 }
 
-/* Table cell styling - REDUCED PADDING FOR TIGHTER ROWS */
+/* Table rows - RADICAL SPACING REDUCTION */
+tbody tr {
+    height: 24px; /* Fixed row height - very tight spacing */
+}
+
+/* Table cell styling - MINIMAL PADDING FOR ULTRA-TIGHT ROWS */
 td {
-    padding: 3px 6px;
+    padding: 2px 6px; /* Minimal padding - 2px vertical, 6px horizontal */
     border-bottom: 1px solid #f1f5f9;
-    vertical-align: top;
+    vertical-align: middle; /* Changed from top to middle for better alignment */
+    font-size: 14px; /* Slightly smaller font to fit in tight rows */
+    line-height: 1.2; /* Tighter line height */
+    overflow: hidden; /* Prevent content overflow */
+    text-overflow: ellipsis; /* Add ellipsis for very long content */
 }
 
 /* Alternating row colors (zebra striping) */
@@ -437,12 +447,12 @@ tbody tr:hover {
 /* Links to external databases */
 .powo-link, .wfo-link {
     display: inline-block;
-    padding: 0.5rem;
+    padding: 0.25rem; /* Reduced padding for tighter rows */
     color: var(--primary-color);
     text-decoration: none;
     border-radius: 6px;
     transition: all 0.2s ease;
-    font-size: 1.2rem;
+    font-size: 1rem; /* Slightly smaller font size */
 }
 
 .powo-link:hover, .wfo-link:hover {
@@ -452,8 +462,8 @@ tbody tr:hover {
 
 /* WFO icon sizing */
 .wfo-icon {
-    width: 16px;
-    height: 15px;
+    width: 14px; /* Smaller icon for tighter rows */
+    height: 13px;
     display: inline-block;
 }
 
@@ -546,28 +556,39 @@ tbody tr:hover {
         padding: 1rem 0.5rem;
     }
 
-    /* Adjust table for mobile */
+    /* MOBILE TABLE - EVEN TIGHTER SPACING */
     table {
-        font-size: 0.9rem;
+        font-size: 12px; /* Smaller font on mobile */
     }
 
-    th, td {
-        padding: 2px 4px;  /* Very compact on mobile */
+    tbody tr {
+        height: 20px; /* Even tighter row height on mobile */
+    }
+
+    th {
+        padding: 0.25rem 0.5rem; /* Reduced header padding */
+        font-size: 12px;
+        height: 32px; /* Smaller header height */
+    }
+
+    td {
+        padding: 1px 4px; /* Ultra-minimal padding on mobile */
+        font-size: 12px;
     }
 
     /* Smaller external link columns on mobile */
     .powo-column, .wfo-column {
-        width: 40px;
+        width: 35px;
     }
 
     .powo-link, .wfo-link {
-        padding: 0.25rem;
-        font-size: 1rem;
+        padding: 0.125rem; /* Very minimal padding */
+        font-size: 0.9rem;
     }
 
     .wfo-icon {
-        width: 14px;
-        height: 13px;
+        width: 12px;
+        height: 11px;
     }
 
     /* Make tooltips work better on mobile */
