@@ -119,11 +119,78 @@ class TreeSpeciesDatabase {
         const matchingSpecies = this.data
             .filter(species => this.matchesQuery(species, query))
             .slice(0, 8); // Show only first 8 matches to keep dropdown manageable
-
+    
         if (matchingSpecies.length === 0) {
             this.hideSuggestions();
             return;
         }
+    
+        // Create HTML for each suggestion item
+        const suggestionsHTML = matchingSpecies.map((species, index) => {
+            // Preserve HTML formatting for scientific names
+            const scientificNameForDisplay = species.scientific;
+            
+            // For search and selection, we still need the plain text version
+            const stripHtml = (html) => {
+                const div = document.createElement('div');
+                div.innerHTML = html;
+                return div.textContent || div.innerText || '';
+            };
+            
+            const plainScientific = stripHtml(species.scientific);
+            
+            // Highlight matches in the HTML version while preserving formatting
+            const highlightedScientific = this.highlightMatchInHtml(scientificNameForDisplay, query);
+            
+            // Put scientific and Chinese names on same line
+            return `
+                <div class="suggestion-item" data-index="${index}" onclick="app.selectSuggestion('${plainScientific.replace(/'/g, "\\'")}')">
+                    <div class="suggestion-content">
+                        <span class="suggestion-scientific">${highlightedScientific}</span>
+                        <span class="suggestion-chinese">
+                            ${species.chinese}${species.alternative ? ' • ' + species.alternative : ''}
+                        </span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    
+        suggestions.innerHTML = suggestionsHTML;
+        suggestions.style.display = 'block';
+        this.currentSuggestionIndex = -1; // Reset selection
+    }
+
+    // New method to highlight matches while preserving HTML formatting
+    highlightMatchInHtml(htmlText, query) {
+    if (!query) return htmlText;
+    
+    // Create a temporary div to work with the HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlText;
+    
+    // Function to highlight text in text nodes only
+    const highlightInTextNode = (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent;
+            const regex = new RegExp(`(${query})`, 'gi');
+            if (regex.test(text)) {
+                const highlightedText = text.replace(regex, '<strong>$1</strong>');
+                const wrapper = document.createElement('span');
+                wrapper.innerHTML = highlightedText;
+                node.parentNode.replaceChild(wrapper, node);
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            // Recursively process child nodes
+            const children = Array.from(node.childNodes);
+            children.forEach(child => highlightInTextNode(child));
+        }
+    };
+    
+    // Process all nodes in the temp div
+    Array.from(tempDiv.childNodes).forEach(child => highlightInTextNode(child));
+    
+    return tempDiv.innerHTML;
+}
 
         // Create HTML for each suggestion item
         const suggestionsHTML = matchingSpecies.map((species, index) => {
