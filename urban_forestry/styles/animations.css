@@ -1,0 +1,102 @@
+/* ===== ANIMATIONS ===== */
+@keyframes heatWave {
+    0%, 100% { 
+        transform: scale(0) rotate(0deg); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: scale(1) rotate(180deg); 
+        opacity: 1; 
+    }
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalZoomIn {
+    from { 
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ===== LOADING ANIMATIONS ===== */
+.screenshot-image-loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.screenshot-placeholder::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255,255,255,0.1) 10px,
+        rgba(255,255,255,0.1) 20px
+    );
+    animation: shimmer 2s linear infinite;
+}
+
+/* ===== HOVER EFFECTS ===== */
+.screenshot-card {
+    transition: 
+        transform var(--transition-fast), 
+        box-shadow var(--transition-fast);
+}
+
+.stat-card {
+    transition: transform var(--transition-fast);
+}
+
+.attribution a {
+    transition: 
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        text-shadow var(--transition-fast);
+}
+
+.screenshot-image {
+    transition: transform var(--transition-fast);
+}
+
+.zoom-hint {
+    transition: opacity var(--transition-fast);
+}
+
+/* ===== STAGGER ANIMATIONS ===== */
+.screenshot-card:nth-child(1) { animation-delay: 0.1s; }
+.screenshot-card:nth-child(2) { animation-delay: 0.2s; }
+.screenshot-card:nth-child(3) { animation-delay: 0.3s; }
+.screenshot-card:nth-child(4) { animation-delay: 0.4s; }
