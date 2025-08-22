@@ -8,6 +8,8 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/charts.css">
+    <link rel="stylesheet" href="styles/bento.css">
     <link rel="stylesheet" href="styles/modal.css">
     <link rel="stylesheet" href="styles/animations.css">
     <link rel="stylesheet" href="styles/responsive.css">
@@ -63,1058 +65,503 @@
         </header>
         
         <main class="content">
-            <!-- 気候変動ダッシュボード -->
+            <!-- 気候変動インパクトダッシュボード -->
             <section class="section problem-section">
-                <h2>🌡️ 気候変動インパクト ダッシュボード</h2>
+                <h2>🌡️ 気候変動が農業に与える深刻な影響</h2>
                 
-                <!-- クライメート メトリクス パネル -->
-                <div class="climate-metrics-panel">
-                    <div class="metric-card temperature-card">
-                        <div class="metric-icon">🌡️</div>
-                        <div class="metric-content">
-                            <div class="metric-value">+2.1°C</div>
-                            <div class="metric-label">平均気温上昇</div>
-                            <div class="metric-trend">📈 +0.3°C/decade</div>
-                        </div>
-                        <div class="metric-chart">
-                            <div class="temperature-bars">
-                                <div class="temp-bar" style="height: 30%;" data-year="1980"></div>
-                                <div class="temp-bar" style="height: 45%;" data-year="1990"></div>
-                                <div class="temp-bar" style="height: 60%;" data-year="2000"></div>
-                                <div class="temp-bar" style="height: 75%;" data-year="2010"></div>
-                                <div class="temp-bar" style="height: 90%;" data-year="2020"></div>
-                                <div class="temp-bar active" style="height: 100%;" data-year="2025"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="metric-card damage-card">
-                        <div class="metric-icon">💰</div>
-                        <div class="metric-content">
-                            <div class="metric-value">¥3兆円</div>
-                            <div class="metric-label">年間農業損失</div>
-                            <div class="metric-trend">📊 40%が高温被害</div>
-                        </div>
-                        <div class="damage-breakdown">
-                            <div class="damage-item">
-                                <span class="damage-type">高温障害</span>
-                                <div class="damage-bar">
-                                    <div class="damage-fill" style="width: 40%;"></div>
+                <!-- Climate Impact Bento Grid -->
+                <div class="bento-grid climate-impact">
+                    <!-- 温度上昇トレンド -->
+                    <div class="bento-item temperature-trend">
+                        <h3>🌡️ 温度上昇トレンド</h3>
+                        <div class="temperature-chart">
+                            <div class="temperature-scale">
+                                <div class="temp-bar" data-temp="1980">
+                                    <span class="temp-year">1980</span>
+                                    <div class="temp-value">28.5°C</div>
                                 </div>
-                                <span class="damage-percent">40%</span>
-                            </div>
-                            <div class="damage-item">
-                                <span class="damage-type">干ばつ</span>
-                                <div class="damage-bar">
-                                    <div class="damage-fill" style="width: 35%;"></div>
+                                <div class="temp-bar" data-temp="2000">
+                                    <span class="temp-year">2000</span>
+                                    <div class="temp-value">29.2°C</div>
                                 </div>
-                                <span class="damage-percent">35%</span>
-                            </div>
-                            <div class="damage-item">
-                                <span class="damage-type">その他</span>
-                                <div class="damage-bar">
-                                    <div class="damage-fill" style="width: 25%;"></div>
+                                <div class="temp-bar" data-temp="2023">
+                                    <span class="temp-year">2023</span>
+                                    <div class="temp-value">30.6°C</div>
                                 </div>
-                                <span class="damage-percent">25%</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="metric-card frequency-card">
-                        <div class="metric-icon">⏰</div>
-                        <div class="metric-content">
-                            <div class="metric-value">45日</div>
-                            <div class="metric-label">年間猛暑日数</div>
-                            <div class="metric-trend">⬆️ +30日 (1980年比)</div>
-                        </div>
-                        <div class="frequency-chart">
-                            <div class="heatwave-calendar">
-                                <div class="month-block jun">
-                                    <div class="month-label">6月</div>
-                                    <div class="heat-days">🔥🔥🔥</div>
-                                </div>
-                                <div class="month-block jul">
-                                    <div class="month-label">7月</div>
-                                    <div class="heat-days">🔥🔥🔥🔥🔥🔥</div>
-                                </div>
-                                <div class="month-block aug">
-                                    <div class="month-label">8月</div>
-                                    <div class="heat-days">🔥🔥🔥🔥🔥🔥🔥</div>
-                                </div>
-                                <div class="month-block sep">
-                                    <div class="month-label">9月</div>
-                                    <div class="heat-days">🔥🔥🔥🔥</div>
+                                <div class="temp-projection">
+                                    <span class="projection-label">2030予測</span>
+                                    <div class="projection-value">32.1°C</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- 被害実例ギャラリー -->
-                <div class="damage-gallery">
-                    <h3>📸 高温被害の実例証拠</h3>
-                    <div class="evidence-grid">
-                        <article class="evidence-card">
-                            <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/01.webp" data-modal-title="高温被害実例 #1" data-modal-description="立川市で猛暑により枯れて干からびたキュウリを手に持ち、農作物被害の深刻さを伝える場面">
-                                <img src="agriculture_ethanol_image/01.webp" alt="キュウリ高温被害" class="screenshot-image" loading="lazy">
-                                <div class="screenshot-image-loading">🥒</div>
-                                <div class="zoom-hint">🔍 拡大</div>
-                            </div>
-                            <div class="evidence-analysis">
-                                <div class="damage-type-badge heat-stress">高温ストレス</div>
-                                <h4>細胞壁破綻</h4>
-                                <div class="scientific-details">
-                                    <div class="detail-item">
-                                        <span class="detail-label">水分損失率</span>
-                                        <span class="detail-value">85%</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">細胞活力</span>
-                                        <span class="detail-value">15%</span>
-                                    </div>
+                    <!-- 被害統計 -->
+                    <div class="bento-item damage-stats">
+                        <h3>📊 高温被害統計</h3>
+                        <div class="damage-meter-container">
+                            <div class="damage-meter">
+                                <div class="meter-arc">
+                                    <div class="meter-fill" data-percentage="89"></div>
+                                </div>
+                                <div class="meter-center">
+                                    <span class="meter-value">89%</span>
+                                    <span class="meter-label">被害軽減率<br>（エタノール農法）</span>
                                 </div>
                             </div>
-                        </article>
-
-                        <article class="evidence-card">
-                            <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/02.webp" data-modal-title="高温被害実例 #2" data-modal-description="ゴーヤの実が高温障害で枯れ、約160種類の野菜のうち4割が出荷停止になった農家の現状">
-                                <img src="agriculture_ethanol_image/02.webp" alt="ゴーヤ高温被害" class="screenshot-image" loading="lazy">
-                                <div class="screenshot-image-loading">🍃</div>
-                                <div class="zoom-hint">🔍 拡大</div>
-                            </div>
-                            <div class="evidence-analysis">
-                                <div class="damage-type-badge photosynthesis-failure">光合成阻害</div>
-                                <h4>代謝機能停止</h4>
-                                <div class="scientific-details">
-                                    <div class="detail-item">
-                                        <span class="detail-label">光合成効率</span>
-                                        <span class="detail-value">20%</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">クロロフィル</span>
-                                        <span class="detail-value">-70%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="evidence-card">
-                            <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/04.webp" data-modal-title="高温被害実例 #3" data-modal-description="八王子で36.3℃、4日連続猛暑日となり、ナスが腐敗して被害を受けた様子">
-                                <img src="agriculture_ethanol_image/04.webp" alt="ナス腐敗被害" class="screenshot-image" loading="lazy">
-                                <div class="screenshot-image-loading">🍆</div>
-                                <div class="zoom-hint">🔍 拡大</div>
-                            </div>
-                            <div class="evidence-analysis">
-                                <div class="damage-type-badge membrane-damage">膜破綻</div>
-                                <h4>脂質過酸化</h4>
-                                <div class="scientific-details">
-                                    <div class="detail-item">
-                                        <span class="detail-label">膜完整性</span>
-                                        <span class="detail-value">30%</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">酸化レベル</span>
-                                        <span class="detail-value">+400%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="evidence-card">
-                            <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/05.webp" data-modal-title="農家インタビュー" data-modal-description="農園の代表が、枯れて変色したナスを前に「作物も大きなダメージを受けた」と語るインタビュー場面">
-                                <img src="agriculture_ethanol_image/05.webp" alt="農家インタビュー" class="screenshot-image" loading="lazy">
-                                <div class="screenshot-image-loading">🎤</div>
-                                <div class="zoom-hint">🔍 拡大</div>
-                            </div>
-                            <div class="evidence-analysis">
-                                <div class="damage-type-badge economic-impact">経済的損失</div>
-                                <h4>現場の証言</h4>
-                                <div class="economic-impact-data">
-                                    <div class="impact-stat">
-                                        <span class="stat-number">160</span>
-                                        <span class="stat-unit">品目</span>
-                                    </div>
-                                    <div class="impact-stat">
-                                        <span class="stat-number">40%</span>
-                                        <span class="stat-unit">出荷停止</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 生理学的影響フローチャート -->
-                <div class="physiology-flowchart">
-                    <h3>⚡ 高温ストレス → 生理的破綻の連鎖反応</h3>
-                    <div class="flow-diagram">
-                        <div class="flow-step initial">
-                            <div class="step-icon">🌡️</div>
-                            <div class="step-content">
-                                <h4>35°C+</h4>
-                                <p>臨界温度突破</p>
+                    <!-- 経済損失 -->
+                    <div class="bento-item economic-loss">
+                        <h3>💰 経済損失推移</h3>
+                        <div class="loss-bars">
+                            <div class="loss-bar">
+                                <div class="loss-amount">1.2兆円</div>
+                                <div class="loss-year">2020</div>
+                            </div>
+                            <div class="loss-bar">
+                                <div class="loss-amount">2.1兆円</div>
+                                <div class="loss-year">2022</div>
+                            </div>
+                            <div class="loss-bar active">
+                                <div class="loss-amount">3.0兆円</div>
+                                <div class="loss-year">2023</div>
+                            </div>
+                            <div class="loss-bar projection">
+                                <div class="loss-amount">4.8兆円</div>
+                                <div class="loss-year">2025予測</div>
                             </div>
                         </div>
-                        <div class="flow-arrow">→</div>
-                        <div class="flow-step">
-                            <div class="step-icon">🔬</div>
-                            <div class="step-content">
-                                <h4>酵素失活</h4>
-                                <p>RuBisCO -70%</p>
+                    </div>
+
+                    <!-- 実際の被害画像 -->
+                    <div class="bento-item damage-gallery">
+                        <h3>📸 実際の被害状況</h3>
+                        <div class="damage-image-grid">
+                            <div class="damage-image-item" data-modal-image="agriculture_ethanol_image/01.webp" data-modal-title="キュウリ被害" data-modal-description="立川市で猛暑により枯れて干からびたキュウリ">
+                                <img src="agriculture_ethanol_image/01.webp" alt="キュウリ被害" loading="lazy">
+                                <div class="damage-label">細胞壁破綻</div>
+                            </div>
+                            <div class="damage-image-item" data-modal-image="agriculture_ethanol_image/02.webp" data-modal-title="ゴーヤ被害" data-modal-description="高温障害で枯れたゴーヤ">
+                                <img src="agriculture_ethanol_image/02.webp" alt="ゴーヤ被害" loading="lazy">
+                                <div class="damage-label">光合成停止</div>
+                            </div>
+                            <div class="damage-image-item" data-modal-image="agriculture_ethanol_image/04.webp" data-modal-title="ナス被害" data-modal-description="36.3℃の連続猛暑で腐敗したナス">
+                                <img src="agriculture_ethanol_image/04.webp" alt="ナス被害" loading="lazy">
+                                <div class="damage-label">脂質過酸化</div>
+                            </div>
+                            <div class="damage-image-item" data-modal-image="agriculture_ethanol_image/05.webp" data-modal-title="農家の証言" data-modal-description="現場で被害を説明する農家">
+                                <img src="agriculture_ethanol_image/05.webp" alt="農家証言" loading="lazy">
+                                <div class="damage-label">現場の声</div>
                             </div>
                         </div>
-                        <div class="flow-arrow">→</div>
-                        <div class="flow-step">
-                            <div class="step-icon">⚡</div>
-                            <div class="step-content">
-                                <h4>ATP生産停止</h4>
-                                <p>エネルギー枯渇</p>
+                    </div>
+
+                    <!-- 分子レベルの損傷メカニズム -->
+                    <div class="bento-item molecular-damage">
+                        <h3>🔬 分子レベル損傷</h3>
+                        <div class="damage-pathway">
+                            <div class="damage-step">
+                                <div class="step-icon">🌡️</div>
+                                <div class="step-info">
+                                    <div class="step-title">35°C+</div>
+                                    <div class="step-desc">酵素失活開始</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flow-arrow">→</div>
-                        <div class="flow-step">
-                            <div class="step-icon">💧</div>
-                            <div class="step-content">
-                                <h4>水分バランス崩壊</h4>
-                                <p>気孔強制閉鎖</p>
+                            <div class="pathway-arrow">↓</div>
+                            <div class="damage-step">
+                                <div class="step-icon">⚡</div>
+                                <div class="step-info">
+                                    <div class="step-title">ATP↓70%</div>
+                                    <div class="step-desc">エネルギー枯渇</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flow-arrow">→</div>
-                        <div class="flow-step critical">
-                            <div class="step-icon">💀</div>
-                            <div class="step-content">
-                                <h4>細胞死</h4>
-                                <p>不可逆的損傷</p>
+                            <div class="pathway-arrow">↓</div>
+                            <div class="damage-step">
+                                <div class="step-icon">💧</div>
+                                <div class="step-info">
+                                    <div class="step-title">-2.0MPa</div>
+                                    <div class="step-desc">水分ストレス</div>
+                                </div>
+                            </div>
+                            <div class="pathway-arrow">↓</div>
+                            <div class="damage-step critical">
+                                <div class="step-icon">💀</div>
+                                <div class="step-info">
+                                    <div class="step-title">細胞死</div>
+                                    <div class="step-desc">回復不能</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
             
-            <!-- エタノール技術革新セクション -->
+            <!-- エタノール農法科学技術ダッシュボード -->
             <section class="section solution-section">
-                <h2>🧪 エタノール農法：革新技術の全貌</h2>
+                <h2>🧪 エタノール農法：分子レベルの革新技術</h2>
                 
-                <!-- 研究開発プロセス -->
-                <div class="research-showcase">
-                    <h3>🔬 科学的発見から実用化まで</h3>
-                    <div class="research-timeline">
-                        <article class="research-milestone">
-                            <div class="milestone-image">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/03.webp" data-modal-title="研究材料" data-modal-description="理化学研究所横浜キャンパスで撮影されたエタノール試薬瓶（99.5%）のクローズアップ">
-                                    <img src="agriculture_ethanol_image/03.webp" alt="エタノール試薬" class="screenshot-image" loading="lazy">
-                                    <div class="screenshot-image-loading">🧪</div>
-                                    <div class="zoom-hint">🔍 拡大</div>
-                                </div>
+                <!-- Science & Technology Bento Grid -->
+                <div class="bento-grid science-tech">
+                    <!-- 研究施設と実験 -->
+                    <div class="bento-item research-facility">
+                        <h3>🏛️ 理化学研究所</h3>
+                        <div class="facility-showcase">
+                            <div class="facility-image" data-modal-image="agriculture_ethanol_image/03.webp" data-modal-title="エタノール試薬" data-modal-description="99.5%高純度エタノール試薬瓶">
+                                <img src="agriculture_ethanol_image/03.webp" alt="エタノール試薬" loading="lazy">
+                                <div class="facility-badge">横浜キャンパス</div>
                             </div>
-                            <div class="milestone-content">
-                                <div class="milestone-phase">Phase 1</div>
-                                <h4>基礎研究</h4>
-                                <div class="milestone-details">
-                                    <div class="detail-grid">
-                                        <div class="detail-item">
-                                            <span class="detail-icon">🧪</span>
-                                            <span class="detail-text">純度99.5%から最適濃度探索</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">📊</span>
-                                            <span class="detail-text">0.1%-10%の範囲で効果測定</span>
-                                        </div>
+                            <div class="facility-info">
+                                <div class="research-stats">
+                                    <div class="stat-item">
+                                        <span class="stat-number">99.5%</span>
+                                        <span class="stat-label">試薬純度</span>
                                     </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="research-milestone">
-                            <div class="milestone-image">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/06.webp" data-modal-title="実験環境" data-modal-description="横浜市の研究者が白衣姿で苗の実験棚を前に立ち、エタノールを使った高温障害対策研究を説明">
-                                    <img src="agriculture_ethanol_image/06.webp" alt="研究者と実験" class="screenshot-image" loading="lazy">
-                                    <div class="screenshot-image-loading">👨‍🔬</div>
-                                    <div class="zoom-hint">🔍 拡大</div>
-                                </div>
-                            </div>
-                            <div class="milestone-content">
-                                <div class="milestone-phase">Phase 2</div>
-                                <h4>制御実験</h4>
-                                <div class="milestone-details">
-                                    <div class="detail-grid">
-                                        <div class="detail-item">
-                                            <span class="detail-icon">🌡️</span>
-                                            <span class="detail-text">25-45°C温度勾配での評価</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">📈</span>
-                                            <span class="detail-text">生理パラメータ定量測定</span>
-                                        </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number">0.1-8%</span>
+                                        <span class="stat-label">希釈範囲</span>
                                     </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="research-milestone">
-                            <div class="milestone-image">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/07.webp" data-modal-title="比較実験結果" data-modal-description="「水のみ」で枯れた苗と「エタノール0.1%」で青々と保たれた苗を並べて比較した実験結果">
-                                    <img src="agriculture_ethanol_image/07.webp" alt="比較実験" class="screenshot-image" loading="lazy">
-                                    <div class="screenshot-image-loading">🌱</div>
-                                    <div class="zoom-hint">🔍 拡大</div>
-                                </div>
-                            </div>
-                            <div class="milestone-content">
-                                <div class="milestone-phase">Phase 3</div>
-                                <h4>効果実証</h4>
-                                <div class="milestone-details">
-                                    <div class="comparison-results">
-                                        <div class="result-item negative">
-                                            <span class="result-label">水のみ</span>
-                                            <span class="result-value">生存率 15%</span>
-                                        </div>
-                                        <div class="result-item positive">
-                                            <span class="result-label">エタノール0.1%</span>
-                                            <span class="result-value">生存率 92%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-
-                <!-- 分子メカニズム インフォグラフィック -->
-                <div class="molecular-mechanism-infographic">
-                    <h3>🧬 分子レベルでの作用メカニズム</h3>
-                    <div class="mechanism-visual-grid">
-                        <div class="mechanism-panel normal-state">
-                            <div class="panel-header">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/08.webp" data-modal-title="正常な光合成" data-modal-description="図解アニメーション①：通常の光合成の仕組み（でんぷん生成、CO₂吸収、O₂放出）を説明">
-                                    <img src="agriculture_ethanol_image/08.webp" alt="正常な光合成" class="screenshot-image" loading="lazy">
-                                    <div class="zoom-hint">🔍 拡大</div>
-                                </div>
-                                <h4>🌿 正常状態</h4>
-                            </div>
-                            <div class="molecular-metrics">
-                                <div class="metric-gauge">
-                                    <div class="gauge-label">ATP生産</div>
-                                    <div class="gauge-visual">
-                                        <div class="gauge-fill" style="width: 100%;" data-value="100"></div>
-                                    </div>
-                                    <div class="gauge-value">100%</div>
-                                </div>
-                                <div class="metric-gauge">
-                                    <div class="gauge-label">光合成効率</div>
-                                    <div class="gauge-visual">
-                                        <div class="gauge-fill" style="width: 100%;" data-value="100"></div>
-                                    </div>
-                                    <div class="gauge-value">100%</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mechanism-panel heat-stress">
-                            <div class="panel-header">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/09.webp" data-modal-title="高温ストレス" data-modal-description="図解アニメーション②：高温で気孔がダメージを受け、成長が阻害される様子を解説">
-                                    <img src="agriculture_ethanol_image/09.webp" alt="高温ストレス" class="screenshot-image" loading="lazy">
-                                    <div class="zoom-hint">🔍 拡大</div>
-                                </div>
-                                <h4>🔥 高温ストレス</h4>
-                            </div>
-                            <div class="molecular-metrics">
-                                <div class="metric-gauge danger">
-                                    <div class="gauge-label">ATP生産</div>
-                                    <div class="gauge-visual">
-                                        <div class="gauge-fill danger" style="width: 25%;" data-value="25"></div>
-                                    </div>
-                                    <div class="gauge-value">25%</div>
-                                </div>
-                                <div class="metric-gauge danger">
-                                    <div class="gauge-label">光合成効率</div>
-                                    <div class="gauge-visual">
-                                        <div class="gauge-fill danger" style="width: 30%;" data-value="30"></div>
-                                    </div>
-                                    <div class="gauge-value">30%</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mechanism-panel ethanol-protection">
-                            <div class="panel-header">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/10.webp" data-modal-title="エタノール保護" data-modal-description="図解アニメーション③：エタノールが細胞を守るタンパク質を働かせ、成長阻害を防ぐ仕組みを説明">
-                                    <img src="agriculture_ethanol_image/10.webp" alt="エタノール保護" class="screenshot-image" loading="lazy">
-                                    <div class="zoom-hint">🔍 拡大</div>
-                                </div>
-                                <h4>🛡️ エタノール保護</h4>
-                            </div>
-                            <div class="molecular-metrics">
-                                <div class="metric-gauge warning">
-                                    <div class="gauge-label">HSP70発現</div>
-                                    <div class="gauge-visual">
-                                        <div class="gauge-fill warning" style="width: 85%;" data-value="300"></div>
-                                    </div>
-                                    <div class="gauge-value">+300%</div>
-                                </div>
-                                <div class="metric-gauge success">
-                                    <div class="gauge-label">膜安定性</div>
-                                    <div class="gauge-visual">
-                                        <div class="gauge-fill success" style="width: 80%;" data-value="80"></div>
-                                    </div>
-                                    <div class="gauge-value">80%</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mechanism-panel recovery">
-                            <div class="panel-header">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/11.webp" data-modal-title="機能回復" data-modal-description="エタノールを与えられた植物が糖を作り、高温に耐えるエネルギーを生み出す仕組みを実験映像で示す場面">
-                                    <img src="agriculture_ethanol_image/11.webp" alt="機能回復" class="screenshot-image" loading="lazy">
-                                    <div class="zoom-hint">🔍 拡大</div>
-                                </div>
-                                <h4>⚡ 機能回復</h4>
-                            </div>
-                            <div class="molecular-metrics">
-                                <div class="metric-gauge success">
-                                    <div class="gauge-label">ATP生産</div>
-                                    <div class="gauge-visual">
-                                        <div class="gauge-fill success" style="width: 85%;" data-value="85"></div>
-                                    </div>
-                                    <div class="gauge-value">85%</div>
-                                </div>
-                                <div class="metric-gauge success">
-                                    <div class="gauge-label">光合成効率</div>
-                                    <div class="gauge-visual">
-                                        <div class="gauge-fill success" style="width: 78%;" data-value="78"></div>
-                                    </div>
-                                    <div class="gauge-value">78%</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- 生化学パスウェイ ダイアグラム -->
-                <div class="biochemical-pathway-diagram">
-                    <h3>🔬 エタノール → 細胞保護の生化学的経路</h3>
-                    <div class="pathway-flow">
-                        <div class="pathway-stage">
-                            <div class="stage-number">1</div>
-                            <div class="stage-content">
-                                <h4>エタノール吸収</h4>
-                                <div class="molecular-formula">C₂H₅OH</div>
-                                <div class="stage-details">
-                                    <span class="detail-tag">葉面・根部</span>
-                                    <span class="detail-tag">0.1-8%濃度</span>
-                                </div>
+                    <!-- 比較実験結果 -->
+                    <div class="bento-item experiment-results">
+                        <h3>🧪 比較実験結果</h3>
+                        <div class="experiment-comparison">
+                            <div class="experiment-image" data-modal-image="agriculture_ethanol_image/07.webp" data-modal-title="実験比較" data-modal-description="水のみ vs エタノール0.1%処理後の苗比較">
+                                <img src="agriculture_ethanol_image/07.webp" alt="実験比較" loading="lazy">
                             </div>
-                        </div>
-                        <div class="pathway-connector">
-                            <div class="connector-line"></div>
-                            <div class="connector-label">ADH酵素</div>
-                        </div>
-                        <div class="pathway-stage">
-                            <div class="stage-number">2</div>
-                            <div class="stage-content">
-                                <h4>代謝変換</h4>
-                                <div class="molecular-formula">CH₃CHO</div>
-                                <div class="stage-details">
-                                    <span class="detail-tag">アセトアルデヒド</span>
-                                    <span class="detail-tag">NAD+ → NADH</span>
+                            <div class="survival-rate-chart">
+                                <div class="survival-bar">
+                                    <div class="survival-label">水のみ</div>
+                                    <div class="survival-progress">
+                                        <div class="progress-fill" data-percentage="15" style="background: #ff6b6b;"></div>
+                                    </div>
+                                    <div class="survival-value">15%</div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="pathway-connector">
-                            <div class="connector-line"></div>
-                            <div class="connector-label">シグナル伝達</div>
-                        </div>
-                        <div class="pathway-stage">
-                            <div class="stage-number">3</div>
-                            <div class="stage-content">
-                                <h4>遺伝子発現</h4>
-                                <div class="molecular-formula">HSP↑</div>
-                                <div class="stage-details">
-                                    <span class="detail-tag">HSP70/90</span>
-                                    <span class="detail-tag">3倍発現増加</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pathway-connector">
-                            <div class="connector-line"></div>
-                            <div class="connector-label">タンパク質保護</div>
-                        </div>
-                        <div class="pathway-stage">
-                            <div class="stage-number">4</div>
-                            <div class="stage-content">
-                                <h4>細胞保護</h4>
-                                <div class="molecular-formula">ROS↓</div>
-                                <div class="stage-details">
-                                    <span class="detail-tag">抗酸化活性</span>
-                                    <span class="detail-tag">膜安定化</span>
+                                <div class="survival-bar">
+                                    <div class="survival-label">エタノール0.1%</div>
+                                    <div class="survival-progress">
+                                        <div class="progress-fill" data-percentage="92" style="background: #4caf50;"></div>
+                                    </div>
+                                    <div class="survival-value">92%</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- 技術仕様チャート -->
-                <div class="technical-specs-dashboard">
-                    <h3>⚙️ 技術仕様 & 最適化パラメータ</h3>
-                    <div class="specs-chart-grid">
-                        <div class="spec-chart-card">
-                            <h4>📊 濃度最適化</h4>
-                            <div class="concentration-chart">
-                                <div class="chart-axis">
-                                    <div class="axis-label">効果(%)</div>
-                                    <div class="y-axis">
-                                        <span>100</span>
-                                        <span>75</span>
-                                        <span>50</span>
-                                        <span>25</span>
-                                        <span>0</span>
-                                    </div>
+                    <!-- 分子メカニズムフロー -->
+                    <div class="bento-item molecular-mechanism">
+                        <h3>🔬 分子作用メカニズム</h3>
+                        <div class="mechanism-flow">
+                            <div class="mechanism-gallery">
+                                <div class="mechanism-item" data-modal-image="agriculture_ethanol_image/08.webp" data-modal-title="正常光合成" data-modal-description="通常の光合成メカニズム">
+                                    <img src="agriculture_ethanol_image/08.webp" alt="正常光合成" loading="lazy">
+                                    <div class="mechanism-label">ATP: 100%</div>
                                 </div>
-                                <div class="chart-bars">
-                                    <div class="concentration-bar">
-                                        <div class="bar-fill" style="height: 20%;" data-concentration="0.1%"></div>
-                                        <div class="bar-label">0.1%</div>
-                                    </div>
-                                    <div class="concentration-bar">
-                                        <div class="bar-fill optimal" style="height: 85%;" data-concentration="0.5%"></div>
-                                        <div class="bar-label">0.5%</div>
-                                    </div>
-                                    <div class="concentration-bar">
-                                        <div class="bar-fill" style="height: 95%;" data-concentration="1.0%"></div>
-                                        <div class="bar-label">1.0%</div>
-                                    </div>
-                                    <div class="concentration-bar">
-                                        <div class="bar-fill" style="height: 70%;" data-concentration="3.0%"></div>
-                                        <div class="bar-label">3.0%</div>
-                                    </div>
-                                    <div class="concentration-bar">
-                                        <div class="bar-fill" style="height: 40%;" data-concentration="8.0%"></div>
-                                        <div class="bar-label">8.0%</div>
-                                    </div>
+                                <div class="mechanism-item" data-modal-image="agriculture_ethanol_image/09.webp" data-modal-title="高温損傷" data-modal-description="高温による気孔損傷">
+                                    <img src="agriculture_ethanol_image/09.webp" alt="高温損傷" loading="lazy">
+                                    <div class="mechanism-label">ATP: 30%</div>
                                 </div>
-                            </div>
-                            <div class="optimal-badge">最適: 0.5-1.0%</div>
-                        </div>
-
-                        <div class="spec-chart-card">
-                            <h4>⏰ 施用タイミング</h4>
-                            <div class="timing-timeline">
-                                <div class="timeline-header">
-                                    <span class="time-marker">-24h</span>
-                                    <span class="time-marker">0h</span>
-                                    <span class="time-marker">+6h</span>
-                                    <span class="time-marker">+48h</span>
+                                <div class="mechanism-item" data-modal-image="agriculture_ethanol_image/10.webp" data-modal-title="エタノール保護" data-modal-description="エタノールによる細胞保護">
+                                    <img src="agriculture_ethanol_image/10.webp" alt="エタノール保護" loading="lazy">
+                                    <div class="mechanism-label">HSP70: +300%</div>
                                 </div>
-                                <div class="timeline-track">
-                                    <div class="timing-zone preventive">
-                                        <span class="zone-label">予防的施用</span>
-                                    </div>
-                                    <div class="timing-zone critical">
-                                        <span class="zone-label">高温発生</span>
-                                    </div>
-                                    <div class="timing-zone therapeutic">
-                                        <span class="zone-label">治療的施用</span>
-                                    </div>
-                                    <div class="timing-zone maintenance">
-                                        <span class="zone-label">維持期間</span>
-                                    </div>
+                                <div class="mechanism-item" data-modal-image="agriculture_ethanol_image/11.webp" data-modal-title="機能回復" data-modal-description="エネルギー生産回復">
+                                    <img src="agriculture_ethanol_image/11.webp" alt="機能回復" loading="lazy">
+                                    <div class="mechanism-label">ATP: 85%回復</div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="spec-chart-card">
-                            <h4>🌡️ 温度耐性向上</h4>
-                            <div class="temperature-tolerance-chart">
-                                <div class="temp-scale">
-                                    <div class="temp-range normal">
-                                        <span class="temp-value">25-30°C</span>
-                                        <span class="temp-label">正常範囲</span>
-                                        <div class="survival-rate">95%</div>
-                                    </div>
-                                    <div class="temp-range stress">
-                                        <span class="temp-value">30-35°C</span>
-                                        <span class="temp-label">軽度ストレス</span>
-                                        <div class="survival-rate">78%</div>
-                                    </div>
-                                    <div class="temp-range severe">
-                                        <span class="temp-value">35-40°C</span>
-                                        <span class="temp-label">重度ストレス</span>
-                                        <div class="survival-rate">45%</div>
-                                    </div>
-                                    <div class="temp-range lethal">
-                                        <span class="temp-value">40°C+</span>
-                                        <span class="temp-label">致死レベル</span>
-                                        <div class="survival-rate">15%</div>
-                                    </div>
+                    <!-- 生化学反応経路 -->
+                    <div class="bento-item biochemical-pathway">
+                        <h3>⚗️ 生化学反応経路</h3>
+                        <div class="reaction-steps">
+                            <div class="reaction-step">
+                                <div class="reaction-number">1</div>
+                                <div class="reaction-content">
+                                    <div class="reaction-title">エタノール吸収</div>
+                                    <div class="reaction-formula">C₂H₅OH + ADH → CH₃CHO + NADH</div>
                                 </div>
-                                <div class="tolerance-improvement">
-                                    <div class="improvement-arrow">⬆️ +5°C耐性向上</div>
+                            </div>
+                            <div class="reaction-arrow">→</div>
+                            <div class="reaction-step">
+                                <div class="reaction-number">2</div>
+                                <div class="reaction-content">
+                                    <div class="reaction-title">シャペロン活性化</div>
+                                    <div class="reaction-formula">HSP70↑ HSP90↑</div>
                                 </div>
+                            </div>
+                            <div class="reaction-arrow">→</div>
+                            <div class="reaction-step">
+                                <div class="reaction-number">3</div>
+                                <div class="reaction-content">
+                                    <div class="reaction-title">抗酸化強化</div>
+                                    <div class="reaction-formula">SOD↑ CAT↑ ROS↓</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 研究者インタビュー -->
+                    <div class="bento-item researcher-interview">
+                        <h3>👨‍🔬 研究現場から</h3>
+                        <div class="interview-content" data-modal-image="agriculture_ethanol_image/06.webp" data-modal-title="研究者" data-modal-description="理化学研究所の研究者による説明">
+                            <img src="agriculture_ethanol_image/06.webp" alt="研究者" loading="lazy">
+                            <div class="interview-overlay">
+                                <div class="interview-quote">
+                                    "分子レベルでの保護機構が実証された"
+                                </div>
+                                <div class="interview-author">理化学研究所 研究員</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 技術仕様チャート -->
+                    <div class="bento-item tech-specs">
+                        <h3>⚙️ 技術仕様</h3>
+                        <div class="specs-radar">
+                            <div class="spec-category">
+                                <div class="spec-name">濃度精度</div>
+                                <div class="spec-meter">
+                                    <div class="spec-fill" data-percentage="98"></div>
+                                </div>
+                                <div class="spec-value">98%</div>
+                            </div>
+                            <div class="spec-category">
+                                <div class="spec-name">効果持続</div>
+                                <div class="spec-meter">
+                                    <div class="spec-fill" data-percentage="85"></div>
+                                </div>
+                                <div class="spec-value">72-96h</div>
+                            </div>
+                            <div class="spec-category">
+                                <div class="spec-name">安全性</div>
+                                <div class="spec-meter">
+                                    <div class="spec-fill" data-percentage="100"></div>
+                                </div>
+                                <div class="spec-value">100%</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
             
-            <!-- 実証データと実装戦略 -->
+            <!-- 実証実験と社会実装ダッシュボード -->
             <section class="section result-section">
-                <h2>📈 実証データ & 社会実装戦略</h2>
+                <h2>📈 実証データと社会実装への道筋</h2>
                 
-                <!-- 実証実験のプロセス -->
-                <div class="field-trials-showcase">
-                    <h3>🚁 大規模圃場実証実験</h3>
-                    <div class="trials-process-grid">
-                        <article class="trial-stage">
-                            <div class="stage-visual">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/12.webp" data-modal-title="実証実験準備" data-modal-description="静岡県掛川市で、農業用ドローンにエタノール溶液を注入し、圃場実証実験を行う準備場面">
-                                    <img src="agriculture_ethanol_image/12.webp" alt="ドローン実証準備" class="screenshot-image" loading="lazy">
-                                    <div class="screenshot-image-loading">🚁</div>
-                                    <div class="zoom-hint">🔍 拡大</div>
+                <!-- Results & Implementation Bento Grid -->
+                <div class="bento-grid results-implementation">
+                    <!-- フィールド実証実験 -->
+                    <div class="bento-item field-trials">
+                        <h3>🚁 フィールド実証実験</h3>
+                        <div class="trial-showcase">
+                            <div class="trial-gallery">
+                                <div class="trial-image" data-modal-image="agriculture_ethanol_image/12.webp" data-modal-title="ドローン準備" data-modal-description="農業用ドローンへのエタノール溶液注入">
+                                    <img src="agriculture_ethanol_image/12.webp" alt="ドローン準備" loading="lazy">
+                                    <div class="trial-badge">静岡県掛川市</div>
+                                </div>
+                                <div class="trial-image" data-modal-image="agriculture_ethanol_image/13.webp" data-modal-title="溶液調製" data-modal-description="7-8%エタノール溶液の調製">
+                                    <img src="agriculture_ethanol_image/13.webp" alt="溶液調製" loading="lazy">
+                                    <div class="trial-badge">現場調製</div>
+                                </div>
+                                <div class="trial-image" data-modal-image="agriculture_ethanol_image/14.webp" data-modal-title="散布実施" data-modal-description="ドローンによる自動散布">
+                                    <img src="agriculture_ethanol_image/14.webp" alt="散布実施" loading="lazy">
+                                    <div class="trial-badge">自動散布</div>
                                 </div>
                             </div>
-                            <div class="stage-info">
-                                <div class="stage-badge prep">準備段階</div>
-                                <h4>精密農業技術統合</h4>
-                                <div class="tech-specs">
-                                    <div class="spec-item">
-                                        <span class="spec-icon">🛰️</span>
-                                        <span class="spec-text">GPS誘導システム</span>
-                                    </div>
-                                    <div class="spec-item">
-                                        <span class="spec-icon">📊</span>
-                                        <span class="spec-text">リアルタイム監視</span>
-                                    </div>
-                                    <div class="spec-item">
-                                        <span class="spec-icon">⚖️</span>
-                                        <span class="spec-text">精密濃度調整</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="trial-stage">
-                            <div class="stage-visual">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/13.webp" data-modal-title="現場適用" data-modal-description="農家が「7～8％に希釈したエタノール溶液を散布する」と説明する場面。バケツに溶液が映る">
-                                    <img src="agriculture_ethanol_image/13.webp" alt="エタノール溶液調整" class="screenshot-image" loading="lazy">
-                                    <div class="screenshot-image-loading">🪣</div>
-                                    <div class="zoom-hint">🔍 拡大</div>
-                                </div>
-                            </div>
-                            <div class="stage-info">
-                                <div class="stage-badge application">実施段階</div>
-                                <h4>農家主導プロトコル</h4>
-                                <div class="protocol-details">
-                                    <div class="protocol-step">
-                                        <span class="step-num">1</span>
-                                        <span class="step-desc">7-8%希釈調整</span>
-                                    </div>
-                                    <div class="protocol-step">
-                                        <span class="step-num">2</span>
-                                        <span class="step-desc">土壌灌注実施</span>
-                                    </div>
-                                    <div class="protocol-step">
-                                        <span class="step-num">3</span>
-                                        <span class="step-desc">効果監視開始</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="trial-stage">
-                            <div class="stage-visual">
-                                <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/14.webp" data-modal-title="自動散布システム" data-modal-description="農業用ドローンが畑の上を飛び、エタノール溶液を散布する実証実験。「エタノール農法」と紹介される場面">
-                                    <img src="agriculture_ethanol_image/14.webp" alt="ドローン自動散布" class="screenshot-image" loading="lazy">
-                                    <div class="screenshot-image-loading">🌾</div>
-                                    <div class="zoom-hint">🔍 拡大</div>
-                                </div>
-                            </div>
-                            <div class="stage-info">
-                                <div class="stage-badge automation">自動化段階</div>
-                                <h4>AI制御散布システム</h4>
-                                <div class="automation-features">
-                                    <div class="feature-item">
-                                        <span class="feature-icon">🤖</span>
-                                        <span class="feature-text">AI最適化ルート</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <span class="feature-icon">📱</span>
-                                        <span class="feature-text">スマート制御</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <span class="feature-icon">🎯</span>
-                                        <span class="feature-text">精密施用技術</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 定量的成果ダッシュボード -->
-                <div class="quantitative-results-dashboard">
-                    <h3>📊 定量的効果分析 - 統計的有意性</h3>
-                    
-                    <!-- メイン成果スクリーンショット -->
-                    <article class="main-result-showcase">
-                        <div class="result-image">
-                            <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/15.webp" data-modal-title="収量比較結果" data-modal-description="枝豆の収量比較。エタノール無＝364kgに対し、エタノール有＝732kgとほぼ2倍の収穫量を示す場面">
-                                <img src="agriculture_ethanol_image/15.webp" alt="収量比較データ" class="screenshot-image" loading="lazy">
-                                <div class="screenshot-image-loading">📊</div>
-                                <div class="zoom-hint">🔍 拡大</div>
-                            </div>
+                    <!-- 収量比較結果 -->
+                    <div class="bento-item yield-comparison">
+                        <h3>🫘 収量比較結果</h3>
+                        <div class="yield-data" data-modal-image="agriculture_ethanol_image/15.webp" data-modal-title="収量データ" data-modal-description="枝豆収量比較：364kg vs 732kg">
+                            <img src="agriculture_ethanol_image/15.webp" alt="収量データ" loading="lazy">
                         </div>
-                        <div class="result-analysis">
-                            <div class="statistical-badge">p < 0.001</div>
-                            <h4>🫘 枝豆収量の劇的改善</h4>
-                            <div class="yield-comparison-chart">
-                                <div class="comparison-bars">
-                                    <div class="yield-bar control">
-                                        <div class="bar-label">無処理</div>
-                                        <div class="bar-visual">
-                                            <div class="bar-fill" style="height: 50%;"></div>
-                                        </div>
-                                        <div class="bar-value">364kg</div>
-                                    </div>
-                                    <div class="yield-bar treatment">
-                                        <div class="bar-label">エタノール処理</div>
-                                        <div class="bar-visual">
-                                            <div class="bar-fill" style="height: 100%;"></div>
-                                        </div>
-                                        <div class="bar-value">732kg</div>
-                                    </div>
+                        <div class="yield-chart">
+                            <div class="yield-bar-container">
+                                <div class="yield-bar without-ethanol">
+                                    <div class="yield-value">364kg</div>
+                                    <div class="yield-bar-fill" data-yield="364"></div>
+                                    <div class="yield-label">エタノール無し</div>
                                 </div>
-                                <div class="improvement-indicator">
-                                    <span class="improvement-text">+101% 増収</span>
-                                    <span class="confidence-interval">95% CI: [89%, 113%]</span>
+                                <div class="yield-bar with-ethanol">
+                                    <div class="yield-value">732kg</div>
+                                    <div class="yield-bar-fill" data-yield="732"></div>
+                                    <div class="yield-label">エタノール有り</div>
                                 </div>
                             </div>
+                            <div class="yield-improvement">
+                                <div class="improvement-percentage">+101%</div>
+                                <div class="improvement-label">収量向上率</div>
+                            </div>
                         </div>
-                    </article>
+                    </div>
 
                     <!-- 多角的効果分析 -->
-                    <div class="multi-metrics-analysis">
-                        <div class="metrics-category physiological">
-                            <h4>🧬 生理指標改善</h4>
-                            <div class="metric-items">
-                                <div class="metric-item">
-                                    <div class="metric-icon">⚡</div>
-                                    <div class="metric-content">
-                                        <span class="metric-name">光合成効率</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill physiological" style="width: 87%;" data-value="187"></div>
-                                        </div>
-                                        <span class="metric-value">+187%</span>
-                                    </div>
-                                </div>
-                                <div class="metric-item">
-                                    <div class="metric-icon">🍃</div>
-                                    <div class="metric-content">
-                                        <span class="metric-name">葉緑素含量</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill physiological" style="width: 78%;" data-value="156"></div>
-                                        </div>
-                                        <span class="metric-value">+156%</span>
-                                    </div>
-                                </div>
-                                <div class="metric-item">
-                                    <div class="metric-icon">🌿</div>
-                                    <div class="metric-content">
-                                        <span class="metric-name">根系活力</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill physiological" style="width: 72%;" data-value="143"></div>
-                                        </div>
-                                        <span class="metric-value">+143%</span>
-                                    </div>
-                                </div>
+                    <div class="bento-item multi-effect-analysis">
+                        <h3>📊 多角的効果分析</h3>
+                        <div class="effect-pentagon">
+                            <div class="pentagon-chart">
+                                <div class="pentagon-axis" data-category="光合成効率" data-value="187"></div>
+                                <div class="pentagon-axis" data-category="葉緑素含量" data-value="156"></div>
+                                <div class="pentagon-axis" data-category="根系活力" data-value="143"></div>
+                                <div class="pentagon-axis" data-category="糖度向上" data-value="123"></div>
+                                <div class="pentagon-axis" data-category="日持ち性" data-value="167"></div>
                             </div>
                         </div>
-
-                        <div class="metrics-category quality">
-                            <h4>🎯 品質・収量向上</h4>
-                            <div class="metric-items">
-                                <div class="metric-item">
-                                    <div class="metric-icon">🌾</div>
-                                    <div class="metric-content">
-                                        <span class="metric-name">総収量</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill quality" style="width: 100%;" data-value="101"></div>
-                                        </div>
-                                        <span class="metric-value">+101%</span>
-                                    </div>
-                                </div>
-                                <div class="metric-item">
-                                    <div class="metric-icon">🍯</div>
-                                    <div class="metric-content">
-                                        <span class="metric-name">糖度</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill quality" style="width: 46%;" data-value="23"></div>
-                                        </div>
-                                        <span class="metric-value">+23%</span>
-                                    </div>
-                                </div>
-                                <div class="metric-item">
-                                    <div class="metric-icon">📦</div>
-                                    <div class="metric-content">
-                                        <span class="metric-name">日持ち性</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill quality" style="width: 67%;" data-value="67"></div>
-                                        </div>
-                                        <span class="metric-value">+67%</span>
-                                    </div>
-                                </div>
+                        <div class="effect-legend">
+                            <div class="legend-item">
+                                <div class="legend-color photosynthesis"></div>
+                                <span>光合成効率 +87%</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color chlorophyll"></div>
+                                <span>葉緑素含量 +56%</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color root-vitality"></div>
+                                <span>根系活力 +43%</span>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="metrics-category economic">
-                            <h4>💰 経済効果</h4>
-                            <div class="metric-items">
-                                <div class="metric-item">
-                                    <div class="metric-icon">📈</div>
-                                    <div class="metric-content">
-                                        <span class="metric-name">費用対効果</span>
-                                        <div class="metric-display-special">
-                                            <span class="ratio-value">1:15.3</span>
-                                        </div>
+                    <!-- 経済効果インパクト -->
+                    <div class="bento-item economic-impact">
+                        <h3>💰 経済効果インパクト</h3>
+                        <div class="roi-dashboard">
+                            <div class="roi-main">
+                                <div class="roi-ratio">1:15.3</div>
+                                <div class="roi-label">費用対効果</div>
+                            </div>
+                            <div class="roi-breakdown">
+                                <div class="roi-item">
+                                    <div class="roi-icon">💸</div>
+                                    <div class="roi-data">
+                                        <div class="roi-number">¥12,000</div>
+                                        <div class="roi-desc">10a当たり投資額</div>
                                     </div>
                                 </div>
-                                <div class="metric-item">
-                                    <div class="metric-icon">📉</div>
-                                    <div class="metric-content">
-                                        <span class="metric-name">損失軽減</span>
-                                        <div class="metric-bar">
-                                            <div class="metric-fill economic" style="width: 89%;" data-value="89"></div>
-                                        </div>
-                                        <span class="metric-value">-89%</span>
+                                <div class="roi-item">
+                                    <div class="roi-icon">💎</div>
+                                    <div class="roi-data">
+                                        <div class="roi-number">¥184,000</div>
+                                        <div class="roi-desc">10a当たり増収益</div>
                                     </div>
                                 </div>
-                                <div class="metric-item">
-                                    <div class="metric-icon">⏱️</div>
-                                    <div class="metric-content">
-                                        <span class="metric-name">投資回収期間</span>
-                                        <div class="metric-display-special">
-                                            <span class="period-value">2.3年</span>
-                                        </div>
+                                <div class="roi-item">
+                                    <div class="roi-icon">⏱️</div>
+                                    <div class="roi-data">
+                                        <div class="roi-number">2.3年</div>
+                                        <div class="roi-desc">投資回収期間</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- 社会実装ロードマップ -->
-                <div class="implementation-roadmap-visual">
-                    <h3>🛣️ 社会実装ロードマップ - 2025-2030</h3>
-                    <div class="roadmap-timeline">
-                        <div class="timeline-track">
-                            <div class="milestone-marker" data-year="2025">
-                                <div class="marker-dot"></div>
-                                <div class="milestone-content">
-                                    <div class="milestone-year">2025</div>
-                                    <div class="milestone-phase">技術標準化</div>
-                                    <div class="milestone-targets">
-                                        <div class="target-item">
-                                            <span class="target-icon">📚</span>
-                                            <span class="target-text">作物別データベース完成</span>
-                                        </div>
-                                        <div class="target-item">
-                                            <span class="target-icon">✅</span>
-                                            <span class="target-text">JAS有機認証適合</span>
-                                        </div>
-                                        <div class="target-item">
-                                            <span class="target-icon">🗾</span>
-                                            <span class="target-text">10都道府県実証</span>
-                                        </div>
+                    <!-- 実装ロードマップ -->
+                    <div class="bento-item implementation-roadmap">
+                        <h3>🛣️ 実装ロードマップ</h3>
+                        <div class="roadmap-timeline">
+                            <div class="roadmap-year current">
+                                <div class="year-marker">2025</div>
+                                <div class="year-content">
+                                    <div class="milestone">技術標準化</div>
+                                    <div class="progress-ring">
+                                        <div class="ring-fill" data-progress="75"></div>
+                                        <div class="ring-text">75%</div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="milestone-marker" data-year="2026">
-                                <div class="marker-dot"></div>
-                                <div class="milestone-content">
-                                    <div class="milestone-year">2026</div>
-                                    <div class="milestone-phase">商業化準備</div>
-                                    <div class="milestone-targets">
-                                        <div class="target-item">
-                                            <span class="target-icon">📋</span>
-                                            <span class="target-text">農薬登録承認</span>
-                                        </div>
-                                        <div class="target-item">
-                                            <span class="target-icon">🏭</span>
-                                            <span class="target-text">専用装置製品化</span>
-                                        </div>
-                                        <div class="target-item">
-                                            <span class="target-icon">👨‍🏫</span>
-                                            <span class="target-text">指導員研修開始</span>
-                                        </div>
+                            <div class="roadmap-year">
+                                <div class="year-marker">2026</div>
+                                <div class="year-content">
+                                    <div class="milestone">商業化準備</div>
+                                    <div class="progress-ring">
+                                        <div class="ring-fill" data-progress="45"></div>
+                                        <div class="ring-text">45%</div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="milestone-marker" data-year="2027">
-                                <div class="marker-dot"></div>
-                                <div class="milestone-content">
-                                    <div class="milestone-year">2027</div>
-                                    <div class="milestone-phase">本格普及</div>
-                                    <div class="milestone-targets">
-                                        <div class="target-item">
-                                            <span class="target-icon">🌾</span>
-                                            <span class="target-text">1,000農家導入</span>
-                                        </div>
-                                        <div class="target-item">
-                                            <span class="target-icon">📱</span>
-                                            <span class="target-text">スマート農業統合</span>
-                                        </div>
-                                        <div class="target-item">
-                                            <span class="target-icon">🌏</span>
-                                            <span class="target-text">輸出農産物展開</span>
-                                        </div>
+                            <div class="roadmap-year">
+                                <div class="year-marker">2027</div>
+                                <div class="year-content">
+                                    <div class="milestone">本格普及</div>
+                                    <div class="progress-ring">
+                                        <div class="ring-fill" data-progress="20"></div>
+                                        <div class="ring-text">20%</div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="milestone-marker" data-year="2030">
-                                <div class="marker-dot"></div>
-                                <div class="milestone-content">
-                                    <div class="milestone-year">2030</div>
-                                    <div class="milestone-phase">グローバル展開</div>
-                                    <div class="milestone-targets">
-                                        <div class="target-item">
-                                            <span class="target-icon">🌍</span>
-                                            <span class="target-text">国際技術移転</span>
-                                        </div>
-                                        <div class="target-item">
-                                            <span class="target-icon">📏</span>
-                                            <span class="target-text">国際標準化</span>
-                                        </div>
-                                        <div class="target-item">
-                                            <span class="target-icon">🌱</span>
-                                            <span class="target-text">100万tCO₂削減</span>
-                                        </div>
+                            <div class="roadmap-year">
+                                <div class="year-marker">2030</div>
+                                <div class="year-content">
+                                    <div class="milestone">グローバル展開</div>
+                                    <div class="progress-ring">
+                                        <div class="ring-fill" data-progress="5"></div>
+                                        <div class="ring-text">5%</div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="progress-indicator">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 25%;"></div>
-                            </div>
-                            <div class="progress-text">現在進行中: 25% 完了</div>
                         </div>
                     </div>
-                </div>
 
-                <!-- 研究者インタビューと将来展望 -->
-                <div class="future-vision-section">
-                    <article class="researcher-interview">
-                        <div class="interview-media">
-                            <div class="screenshot-image-container" data-modal-image="agriculture_ethanol_image/16.webp" data-modal-title="研究者インタビュー" data-modal-description="理化学研究所の研究者がインタビューに答え、研究の課題や今後の展望について語る締めの場面">
-                                <img src="agriculture_ethanol_image/16.webp" alt="研究者インタビュー" class="screenshot-image" loading="lazy">
-                                <div class="screenshot-image-loading">🎤</div>
-                                <div class="zoom-hint">🔍 拡大</div>
+                    <!-- 未来展望 -->
+                    <div class="bento-item future-vision">
+                        <h3>🔮 未来展望</h3>
+                        <div class="vision-content" data-modal-image="agriculture_ethanol_image/16.webp" data-modal-title="研究者展望" data-modal-description="理化学研究所研究者の今後の展望">
+                            <img src="agriculture_ethanol_image/16.webp" alt="研究者展望" loading="lazy">
+                        </div>
+                        <div class="vision-metrics">
+                            <div class="vision-item">
+                                <div class="vision-icon">🌾</div>
+                                <div class="vision-stat">+15%</div>
+                                <div class="vision-label">世界穀物生産増</div>
+                            </div>
+                            <div class="vision-item">
+                                <div class="vision-icon">🌍</div>
+                                <div class="vision-stat">5兆円</div>
+                                <div class="vision-label">2030年市場規模</div>
+                            </div>
+                            <div class="vision-item">
+                                <div class="vision-icon">🌡️</div>
+                                <div class="vision-stat">+2°C</div>
+                                <div class="vision-label">温暖化適応限界</div>
                             </div>
                         </div>
-                        <div class="interview-content">
-                            <div class="researcher-badge">理化学研究所</div>
-                            <h4>🔬 関原明チームディレクターからのメッセージ</h4>
-                            <blockquote class="research-quote">
-                                「色々試してもらうことによって、問題点とかどうすればいいかが分かってくるので、データは多ければ多いほど技術開発するうえでプラスになる」
-                            </blockquote>
-                            <div class="research-priorities">
-                                <div class="priority-item">
-                                    <span class="priority-icon">🧬</span>
-                                    <span class="priority-text">分子育種との融合研究</span>
-                                </div>
-                                <div class="priority-item">
-                                    <span class="priority-icon">🌐</span>
-                                    <span class="priority-text">ビッグデータ活用システム</span>
-                                </div>
-                                <div class="priority-item">
-                                    <span class="priority-icon">🔄</span>
-                                    <span class="priority-text">循環型農業モデル開発</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+                    </div>
 
-                <!-- グローバルインパクト予測 -->
-                <div class="global-impact-forecast">
-                    <h3>🌍 世界規模でのインパクト予測 - 2030年目標</h3>
-                    <div class="impact-metrics-grid">
-                        <div class="impact-metric-card food-security">
-                            <div class="metric-header">
-                                <div class="metric-icon">🌾</div>
-                                <h4>食料安全保障</h4>
+                    <!-- 研究開発パイプライン -->
+                    <div class="bento-item rd-pipeline">
+                        <h3>🧬 R&D パイプライン</h3>
+                        <div class="pipeline-stages">
+                            <div class="stage basic-research completed">
+                                <div class="stage-icon">🔬</div>
+                                <div class="stage-name">基礎研究</div>
+                                <div class="stage-status">完了</div>
                             </div>
-                            <div class="metric-visualization">
-                                <div class="circular-progress" data-percentage="15">
-                                    <div class="circle-bg"></div>
-                                    <div class="circle-fill" style="--percentage: 15;"></div>
-                                    <div class="circle-text">+15%</div>
-                                </div>
+                            <div class="stage applied-research current">
+                                <div class="stage-icon">🧪</div>
+                                <div class="stage-name">応用研究</div>
+                                <div class="stage-status">進行中</div>
                             </div>
-                            <div class="metric-description">
-                                <span class="metric-target">世界穀物生産量増加</span>
-                                <span class="metric-detail">約3億トン増産見込み</span>
+                            <div class="stage field-trials">
+                                <div class="stage-icon">🌾</div>
+                                <div class="stage-name">圃場試験</div>
+                                <div class="stage-status">準備中</div>
                             </div>
-                        </div>
-
-                        <div class="impact-metric-card economic-value">
-                            <div class="metric-header">
-                                <div class="metric-icon">💰</div>
-                                <h4>経済効果</h4>
-                            </div>
-                            <div class="metric-visualization">
-                                <div class="value-stack">
-                                    <div class="value-layer" style="height: 20%;">2025</div>
-                                    <div class="value-layer" style="height: 45%;">2027</div>
-                                    <div class="value-layer" style="height: 100%;">2030</div>
-                                </div>
-                                <div class="value-target">5兆円</div>
-                            </div>
-                            <div class="metric-description">
-                                <span class="metric-target">グローバル市場規模</span>
-                                <span class="metric-detail">年率85%成長継続</span>
-                            </div>
-                        </div>
-
-                        <div class="impact-metric-card climate-adaptation">
-                            <div class="metric-header">
-                                <div class="metric-icon">🌡️</div>
-                                <h4>気候適応能力</h4>
-                            </div>
-                            <div class="metric-visualization">
-                                <div class="temperature-scale">
-                                    <div class="temp-marker current">現在</div>
-                                    <div class="temp-scale-bar">
-                                        <div class="temp-progress" style="width: 100%;"></div>
-                                    </div>
-                                    <div class="temp-marker future">+2°C対応</div>
-                                </div>
-                            </div>
-                            <div class="metric-description">
-                                <span class="metric-target">温暖化耐性向上</span>
-                                <span class="metric-detail">IPCC 1.5°Cシナリオ対応</span>
-                            </div>
-                        </div>
-
-                        <div class="impact-metric-card innovation-index">
-                            <div class="metric-header">
-                                <div class="metric-icon">🧪</div>
-                                <h4>技術革新指数</h4>
-                            </div>
-                            <div class="metric-visualization">
-                                <div class="innovation-counter">
-                                    <div class="counter-display">
-                                        <span class="counter-number">200</span>
-                                        <span class="counter-unit">件/年</span>
-                                    </div>
-                                    <div class="counter-trend">📈 +350%</div>
-                                </div>
-                            </div>
-                            <div class="metric-description">
-                                <span class="metric-target">関連特許出願ペース</span>
-                                <span class="metric-detail">技術エコシステム拡大</span>
+                            <div class="stage commercialization">
+                                <div class="stage-icon">🏭</div>
+                                <div class="stage-name">事業化</div>
+                                <div class="stage-status">計画中</div>
                             </div>
                         </div>
                     </div>
@@ -1126,6 +573,7 @@
     <!-- JavaScript Files -->
     <script src="scripts/modal.js"></script>
     <script src="scripts/animations.js"></script>
+    <script src="scripts/charts.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 </html>
