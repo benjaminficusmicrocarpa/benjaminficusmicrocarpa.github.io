@@ -1,1576 +1,499 @@
-/* ===== INFOGRAPHIC COMPONENTS ===== */
+/* ===== SECTIONS ===== */
+.section {
+    margin-bottom: var(--spacing-huge);
+    padding: 35px;
+    border-radius: var(--radius-lg);
+    background: var(--color-background);
+    border-left: 6px solid var(--color-primary);
+    position: relative;
+}
 
-/* Climate Metrics Panel */
-.climate-metrics-panel {
+.problem-section {
+    background: var(--problem-gradient);
+    border-left-color: var(--color-danger);
+}
+
+.solution-section {
+    background: var(--solution-gradient);
+    border-left-color: var(--color-success);
+}
+
+.result-section {
+    background: var(--result-gradient);
+    border-left-color: var(--color-info);
+}
+
+/* ===== SCREENSHOT COMPONENTS ===== */
+.screenshot-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--spacing-xl);
     margin: var(--spacing-xxl) 0;
 }
 
-.metric-card {
-    background: linear-gradient(135deg, #ffffff, #f8f9fa);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid rgba(255,255,255,0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-.metric-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-}
-
-.temperature-card::before { background: linear-gradient(90deg, #ff6b6b, #ff8e8e); }
-.damage-card::before { background: linear-gradient(90deg, #ffa500, #ffb347); }
-.frequency-card::before { background: linear-gradient(90deg, #ff4757, #ff6b7a); }
-
-.metric-icon {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-md);
-    display: inline-block;
-}
-
-.metric-content {
-    margin-bottom: var(--spacing-lg);
-}
-
-.metric-value {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: var(--color-primary);
-    display: block;
-    margin-bottom: var(--spacing-xs);
-}
-
-.metric-label {
-    font-size: 1rem;
-    color: var(--color-text);
-    font-weight: 500;
-}
-
-.metric-trend {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-    margin-top: var(--spacing-xs);
-}
-
-/* Temperature Chart */
-.temperature-bars {
-    display: flex;
-    align-items: end;
-    gap: var(--spacing-xs);
-    height: 60px;
-    padding: var(--spacing-sm) 0;
-}
-
-.temp-bar {
-    flex: 1;
-    background: linear-gradient(to top, #ff6b6b, #ff8e8e);
-    border-radius: 3px 3px 0 0;
-    position: relative;
-    min-height: 10px;
-    transition: all 0.3s ease;
-}
-
-.temp-bar.active {
-    background: linear-gradient(to top, #ff4757, #ff6b7a);
-    box-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
-}
-
-.temp-bar::after {
-    content: attr(data-year);
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.7rem;
-    color: var(--color-text-light);
-}
-
-/* Damage Breakdown */
-.damage-breakdown {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-.damage-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    font-size: 0.9rem;
-}
-
-.damage-type {
-    width: 80px;
-    font-size: 0.8rem;
-    color: var(--color-text-light);
-}
-
-.damage-bar {
-    flex: 1;
-    height: 8px;
-    background: #e0e0e0;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.damage-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #ff6b6b, #ffa500);
-    border-radius: 4px;
-    transition: width 0.8s ease;
-}
-
-.damage-percent {
-    width: 40px;
-    text-align: right;
-    font-weight: bold;
-    color: var(--color-primary);
-}
-
-/* Frequency Chart */
-.heatwave-calendar {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-xs);
-    margin-top: var(--spacing-sm);
-}
-
-.month-block {
-    text-align: center;
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-sm);
-    background: rgba(255, 107, 107, 0.1);
-}
-
-.month-label {
-    font-size: 0.8rem;
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-xs);
-}
-
-.heat-days {
-    font-size: 0.8rem;
-    line-height: 1.2;
-}
-
-/* Evidence Gallery */
-.damage-gallery {
-    margin: var(--spacing-xxxl) 0;
-    background: linear-gradient(135deg, #fff5f5, #fff8f8);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-}
-
-.evidence-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
-}
-
-.evidence-card {
+.screenshot-card {
     background: var(--color-white);
     border-radius: var(--radius-md);
     overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s ease;
+    box-shadow: var(--shadow-lg);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.evidence-card:hover {
+.screenshot-card:hover {
     transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
 
-.evidence-analysis {
-    padding: var(--spacing-lg);
-}
-
-.damage-type-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: var(--spacing-sm);
-}
-
-.heat-stress { background: #ff6b6b; }
-.photosynthesis-failure { background: #ffa500; }
-.membrane-damage { background: #ff4757; }
-.economic-impact { background: #5f27cd; }
-
-.evidence-analysis h4 {
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-    font-size: 1.1rem;
-}
-
-.scientific-details {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-.detail-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    background: var(--color-background);
-    border-radius: var(--radius-sm);
-}
-
-.detail-label {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-.detail-value {
-    font-weight: bold;
-    color: var(--color-primary);
-}
-
-.economic-impact-data {
-    display: flex;
-    gap: var(--spacing-lg);
-    justify-content: center;
-}
-
-.impact-stat {
-    text-align: center;
-}
-
-.stat-number {
-    display: block;
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--color-primary);
-}
-
-.stat-unit {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-/* Physiology Flowchart */
-.physiology-flowchart {
-    margin: var(--spacing-xxxl) 0;
-    background: linear-gradient(135deg, #f8f9fa, #ffffff);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-}
-
-.flow-diagram {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-xl);
-}
-
-.flow-step {
-    flex: 1;
-    min-width: 140px;
-    text-align: center;
-    padding: var(--spacing-lg);
-    background: var(--color-white);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    border: 2px solid #e0e0e0;
-    transition: all 0.3s ease;
-}
-
-.flow-step.initial {
-    border-color: var(--color-warning);
-    background: linear-gradient(135deg, #fff9c4, #ffffff);
-}
-
-.flow-step.critical {
-    border-color: var(--color-danger);
-    background: linear-gradient(135deg, #ffebee, #ffffff);
-}
-
-.flow-step:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-}
-
-.step-icon {
-    font-size: 2rem;
-    margin-bottom: var(--spacing-sm);
-}
-
-.step-content h4 {
-    font-size: 1rem;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-xs);
-}
-
-.step-content p {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-.flow-arrow {
-    font-size: 2rem;
-    color: var(--color-primary);
-    font-weight: bold;
-}
-
-/* Research Timeline */
-.research-showcase {
-    margin: var(--spacing-xxxl) 0;
-}
-
-.research-timeline {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
-}
-
-.research-milestone {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: var(--spacing-xl);
-    align-items: center;
-    background: var(--color-white);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-}
-
-.milestone-image {
-    height: 200px;
-    overflow: hidden;
-}
-
-.milestone-image .screenshot-image-container {
-    height: 100%;
-}
-
-.milestone-content {
-    padding: var(--spacing-xl);
-}
-
-.milestone-phase {
-    display: inline-block;
-    background: var(--color-success);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-bottom: var(--spacing-md);
-}
-
-.milestone-content h4 {
-    font-size: 1.3rem;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-}
-
-.detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-md);
-}
-
-.detail-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    background: var(--color-background);
-    border-radius: var(--radius-sm);
-}
-
-.detail-icon {
-    font-size: 1.2rem;
-}
-
-.detail-text {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-.comparison-results {
-    display: flex;
-    gap: var(--spacing-lg);
-    justify-content: center;
-    margin-top: var(--spacing-md);
-}
-
-.result-item {
-    text-align: center;
-    padding: var(--spacing-md);
-    border-radius: var(--radius-sm);
-}
-
-.result-item.negative {
-    background: linear-gradient(135deg, #ffebee, #fff5f5);
-    border: 2px solid #ff6b6b;
-}
-
-.result-item.positive {
-    background: linear-gradient(135deg, #e8f5e8, #f0fff0);
-    border: 2px solid #4caf50;
-}
-
-.result-label {
-    display: block;
-    font-size: 0.9rem;
-    margin-bottom: var(--spacing-xs);
-    color: var(--color-text-light);
-}
-
-.result-value {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.result-item.negative .result-value { color: #ff6b6b; }
-.result-item.positive .result-value { color: #4caf50; }
-
-/* Molecular Mechanism Infographic */
-.molecular-mechanism-infographic {
-    margin: var(--spacing-xxxl) 0;
-    background: linear-gradient(135deg, #f0f8ff, #ffffff);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-}
-
-.mechanism-visual-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
-}
-
-.mechanism-panel {
-    background: var(--color-white);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-lg);
-    box-shadow: var(--shadow-md);
-    border: 3px solid #e0e0e0;
-}
-
-.mechanism-panel.normal-state { border-color: #4caf50; }
-.mechanism-panel.heat-stress { border-color: #ff6b6b; }
-.mechanism-panel.ethanol-protection { border-color: #ffa500; }
-.mechanism-panel.recovery { border-color: #9c27b0; }
-
-.panel-header {
-    text-align: center;
-    margin-bottom: var(--spacing-lg);
-}
-
-.panel-header .screenshot-image-container {
-    margin-bottom: var(--spacing-md);
-    height: 120px;
-}
-
-.panel-header h4 {
-    font-size: 1.1rem;
-    color: var(--color-text);
-}
-
-.molecular-metrics {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-}
-
-.metric-gauge {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-}
-
-.gauge-label {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-    font-weight: 500;
-}
-
-.gauge-visual {
-    height: 12px;
-    background: #e0e0e0;
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.gauge-fill {
-    height: 100%;
-    border-radius: 6px;
-    transition: width 1s ease;
-    background: #4caf50;
-}
-
-.gauge-fill.danger { background: #ff6b6b; }
-.gauge-fill.warning { background: #ffa500; }
-.gauge-fill.success { background: #4caf50; }
-
-.gauge-value {
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-align: right;
-    color: var(--color-text);
-}
-
-/* Biochemical Pathway */
-.biochemical-pathway-diagram {
-    margin: var(--spacing-xxxl) 0;
-    background: linear-gradient(135deg, #ffffff, #f8f9fa);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-    border: 1px solid #e0e0e0;
-}
-
-.pathway-flow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-xl);
-}
-
-.pathway-stage {
-    flex: 1;
-    min-width: 200px;
-    text-align: center;
+.screenshot-image-container {
     position: relative;
-}
-
-.stage-number {
-    width: 40px;
-    height: 40px;
-    background: var(--color-success);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    margin: 0 auto var(--spacing-md);
-    font-size: 1.2rem;
-    box-shadow: var(--shadow-sm);
-}
-
-.stage-content h4 {
-    font-size: 1.1rem;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
-}
-
-.molecular-formula {
-    font-family: 'Courier New', monospace;
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: var(--color-primary);
-    margin: var(--spacing-sm) 0;
-}
-
-.stage-details {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-    margin-top: var(--spacing-sm);
-}
-
-.detail-tag {
-    background: var(--color-background);
-    color: var(--color-text-light);
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    border: 1px solid #e0e0e0;
-}
-
-.pathway-connector {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-xs);
-}
-
-.connector-line {
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-success), var(--color-primary));
-    border-radius: 2px;
-    position: relative;
-}
-
-.connector-line::after {
-    content: '→';
-    position: absolute;
-    right: -10px;
-    top: -8px;
-    font-size: 1.2rem;
-    color: var(--color-primary);
-}
-
-.connector-label {
-    font-size: 0.8rem;
-    color: var(--color-text-light);
-    text-align: center;
-}
-
-/* Technical Specs Dashboard */
-.technical-specs-dashboard {
-    margin: var(--spacing-xxxl) 0;
-    background: linear-gradient(135deg, #f8f9fa, #ffffff);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-}
-
-.specs-chart-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
-}
-
-.spec-chart-card {
-    background: var(--color-white);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-xl);
-    box-shadow: var(--shadow-md);
-}
-
-.spec-chart-card h4 {
-    color: var(--color-text);
-    margin-bottom: var(--spacing-lg);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-/* Concentration Chart */
-.concentration-chart {
-    display: flex;
-    gap: var(--spacing-md);
-    height: 200px;
-}
-
-.chart-axis {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 60px;
-}
-
-.axis-label {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-.y-axis {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 150px;
-    font-size: 0.8rem;
-    color: var(--color-text-light);
-}
-
-.chart-bars {
-    flex: 1;
-    display: flex;
-    align-items: end;
-    gap: var(--spacing-sm);
-    height: 150px;
-    padding-bottom: 20px;
-}
-
-.concentration-bar {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-}
-
-.bar-fill {
     width: 100%;
-    background: linear-gradient(to top, var(--color-primary), var(--color-secondary));
-    border-radius: 4px 4px 0 0;
-    transition: height 0.8s ease;
-    min-height: 10px;
-}
-
-.bar-fill.optimal {
-    background: linear-gradient(to top, var(--color-success), #66bb6a);
-    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-}
-
-.bar-label {
-    margin-top: var(--spacing-xs);
-    font-size: 0.8rem;
-    color: var(--color-text-light);
-    text-align: center;
-}
-
-.optimal-badge {
-    background: var(--color-success);
-    color: white;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: 20px;
-    font-size: 0.8rem;
-    text-align: center;
-    margin-top: var(--spacing-md);
-}
-
-/* Timing Timeline */
-.timing-timeline {
-    margin-top: var(--spacing-lg);
-}
-
-.timeline-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: var(--spacing-sm);
-}
-
-.time-marker {
-    font-size: 0.8rem;
-    color: var(--color-text-light);
-    font-weight: bold;
-}
-
-.timeline-track {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 2fr;
-    height: 60px;
-    border-radius: var(--radius-sm);
+    aspect-ratio: 16/9;
     overflow: hidden;
-    border: 2px solid #e0e0e0;
+    background: #f0f0f0;
+    cursor: pointer;
 }
 
-.timing-zone {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-align: center;
-    padding: var(--spacing-sm);
-}
-
-.timing-zone.preventive { background: #4caf50; }
-.timing-zone.critical { background: #ff6b6b; }
-.timing-zone.therapeutic { background: #ffa500; }
-.timing-zone.maintenance { background: #9c27b0; }
-
-/* Temperature Tolerance Chart */
-.temperature-tolerance-chart {
-    margin-top: var(--spacing-lg);
-}
-
-.temp-scale {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-.temp-range {
-    display: grid;
-    grid-template-columns: 100px 1fr 80px;
-    align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    border: 2px solid #e0e0e0;
-}
-
-.temp-range.normal { border-color: #4caf50; background: rgba(76, 175, 80, 0.1); }
-.temp-range.stress { border-color: #ffa500; background: rgba(255, 165, 0, 0.1); }
-.temp-range.severe { border-color: #ff6b6b; background: rgba(255, 107, 107, 0.1); }
-.temp-range.lethal { border-color: #ff4757; background: rgba(255, 71, 87, 0.1); }
-
-.temp-value {
-    font-weight: bold;
-    color: var(--color-text);
-}
-
-.temp-label {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-.survival-rate {
-    font-weight: bold;
-    text-align: center;
-    padding: 4px 8px;
-    border-radius: 12px;
-    color: white;
-    background: var(--color-primary);
-}
-
-.tolerance-improvement {
-    text-align: center;
-    margin-top: var(--spacing-lg);
-    padding: var(--spacing-md);
-    background: var(--color-background);
-    border-radius: var(--radius-sm);
-}
-
-.improvement-arrow {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--color-success);
-}
-
-/* Field Trials Showcase */
-.field-trials-showcase {
-    margin: var(--spacing-xxxl) 0;
-}
-
-.trials-process-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
-}
-
-.trial-stage {
-    background: var(--color-white);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s ease;
-}
-
-.trial-stage:hover {
-    transform: translateY(-8px);
-}
-
-.stage-visual {
-    height: 200px;
-    overflow: hidden;
-}
-
-.stage-visual .screenshot-image-container {
-    height: 100%;
-}
-
-.stage-info {
-    padding: var(--spacing-xl);
-}
-
-.stage-badge {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: var(--spacing-md);
-}
-
-.stage-badge.prep { background: #4caf50; }
-.stage-badge.application { background: #ffa500; }
-.stage-badge.automation { background: #9c27b0; }
-
-.stage-info h4 {
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-    font-size: 1.2rem;
-}
-
-.tech-specs,
-.protocol-details,
-.automation-features {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-.spec-item,
-.protocol-step,
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    background: var(--color-background);
-    border-radius: var(--radius-sm);
-}
-
-.spec-icon,
-.feature-icon {
-    font-size: 1.2rem;
-}
-
-.step-num {
-    width: 24px;
-    height: 24px;
-    background: var(--color-primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-.spec-text,
-.step-desc,
-.feature-text {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-/* Quantitative Results Dashboard */
-.quantitative-results-dashboard {
-    margin: var(--spacing-xxxl) 0;
-    background: linear-gradient(135deg, #f0fff0, #ffffff);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-}
-
-.main-result-showcase {
-    display: grid;
-    grid-template-columns: 400px 1fr;
-    gap: var(--spacing-xl);
-    align-items: center;
-    background: var(--color-white);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-    margin-bottom: var(--spacing-xxl);
-}
-
-.result-image {
-    height: 300px;
-    overflow: hidden;
-}
-
-.result-image .screenshot-image-container {
-    height: 100%;
-}
-
-.result-analysis {
-    padding: var(--spacing-xl);
-}
-
-.statistical-badge {
-    background: var(--color-success);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin-bottom: var(--spacing-md);
-    display: inline-block;
-}
-
-.result-analysis h4 {
-    color: var(--color-text);
-    margin-bottom: var(--spacing-lg);
-    font-size: 1.3rem;
-}
-
-.yield-comparison-chart {
-    background: var(--color-background);
-    padding: var(--spacing-lg);
-    border-radius: var(--radius-md);
-}
-
-.comparison-bars {
-    display: flex;
-    gap: var(--spacing-xl);
-    justify-content: center;
-    margin-bottom: var(--spacing-lg);
-}
-
-.yield-bar {
-    text-align: center;
-    min-width: 120px;
-}
-
-.bar-label {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-sm);
-}
-
-.bar-visual {
-    height: 150px;
-    width: 60px;
-    background: #e0e0e0;
-    border-radius: var(--radius-sm);
-    margin: 0 auto var(--spacing-sm);
-    position: relative;
-    overflow: hidden;
-}
-
-.yield-bar.control .bar-fill {
-    background: linear-gradient(to top, #ff6b6b, #ff8e8e);
-}
-
-.yield-bar.treatment .bar-fill {
-    background: linear-gradient(to top, #4caf50, #66bb6a);
-}
-
-.bar-fill {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    border-radius: var(--radius-sm);
-    transition: height 1s ease;
-}
-
-.bar-value {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--color-text);
-}
-
-.improvement-indicator {
-    text-align: center;
-    padding: var(--spacing-md);
-    background: linear-gradient(135deg, #e8f5e8, #f0fff0);
-    border-radius: var(--radius-sm);
-}
-
-.improvement-text {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--color-success);
-    margin-bottom: var(--spacing-xs);
-}
-
-.confidence-interval {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-/* Multi-Metrics Analysis */
-.multi-metrics-analysis {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
-}
-
-.metrics-category {
-    background: var(--color-white);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-xl);
-    box-shadow: var(--shadow-md);
-}
-
-.metrics-category h4 {
-    color: var(--color-text);
-    margin-bottom: var(--spacing-lg);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    font-size: 1.1rem;
-}
-
-.metric-items {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
-}
-
-.metric-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-}
-
-.metric-icon {
-    font-size: 1.5rem;
-    width: 40px;
-    text-align: center;
-}
-
-.metric-content {
-    flex: 1;
-}
-
-.metric-name {
-    display: block;
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-xs);
-}
-
-.metric-bar {
-    height: 8px;
-    background: #e0e0e0;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: var(--spacing-xs);
-}
-
-.metric-fill {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 1s ease;
-}
-
-.metric-fill.physiological { background: linear-gradient(90deg, #4caf50, #66bb6a); }
-.metric-fill.quality { background: linear-gradient(90deg, #9c27b0, #ba68c8); }
-.metric-fill.economic { background: linear-gradient(90deg, #ffa500, #ffb347); }
-
-.metric-value {
-    font-size: 1rem;
-    font-weight: bold;
-    color: var(--color-primary);
-}
-
-.metric-display-special {
-    text-align: center;
-    padding: var(--spacing-md);
-    background: var(--color-background);
-    border-radius: var(--radius-sm);
-}
-
-.ratio-value,
-.period-value {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--color-primary);
-}
-
-/* Implementation Roadmap */
-.implementation-roadmap-visual {
-    margin: var(--spacing-xxxl) 0;
-    background: linear-gradient(135deg, #f8f9fa, #ffffff);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-}
-
-.roadmap-timeline {
-    margin-top: var(--spacing-xl);
-}
-
-.timeline-track {
-    position: relative;
-    padding: var(--spacing-xl) 0;
-}
-
-.timeline-track::before {
-    content: '';
-    position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--color-success), var(--color-primary), var(--color-warning), var(--color-info));
-    border-radius: 2px;
-}
-
-.milestone-marker {
-    position: relative;
-    display: inline-block;
-    width: 25%;
-    vertical-align: top;
-}
-
-.marker-dot {
-    width: 20px;
-    height: 20px;
-    background: var(--color-primary);
-    border-radius: 50%;
-    margin: 50px auto var(--spacing-lg);
-    box-shadow: 0 0 0 4px white, 0 0 0 6px var(--color-primary);
-    position: relative;
-    z-index: 2;
-}
-
-.milestone-content {
-    background: var(--color-white);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-lg);
-    box-shadow: var(--shadow-md);
-    margin-top: var(--spacing-lg);
-}
-
-.milestone-year {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-xs);
-}
-
-.milestone-phase {
-    font-size: 1rem;
-    color: var(--color-text);
-    font-weight: 600;
-    margin-bottom: var(--spacing-md);
-}
-
-.milestone-targets {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-.target-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    background: var(--color-background);
-    border-radius: var(--radius-sm);
-}
-
-.target-icon {
-    font-size: 1.1rem;
-}
-
-.target-text {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-.progress-indicator {
-    margin-top: var(--spacing-xl);
-    text-align: center;
-}
-
-.progress-bar {
-    height: 12px;
-    background: #e0e0e0;
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: var(--spacing-sm);
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--color-success), var(--color-primary));
-    border-radius: 6px;
-    transition: width 1s ease;
-}
-
-.progress-text {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-/* Future Vision Section */
-.future-vision-section {
-    margin: var(--spacing-xxxl) 0;
-}
-
-.researcher-interview {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: var(--spacing-xl);
-    background: var(--color-white);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-    margin-bottom: var(--spacing-xl);
-}
-
-.interview-media {
-    height: 300px;
-    overflow: hidden;
-}
-
-.interview-media .screenshot-image-container {
-    height: 100%;
-}
-
-.interview-content {
-    padding: var(--spacing-xl);
-}
-
-.researcher-badge {
-    background: var(--color-info);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-bottom: var(--spacing-md);
-    display: inline-block;
-}
-
-.interview-content h4 {
-    color: var(--color-text);
-    margin-bottom: var(--spacing-lg);
-    font-size: 1.2rem;
-}
-
-.research-quote {
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--color-text-light);
-    line-height: 1.6;
-    margin: var(--spacing-lg) 0;
-    padding: var(--spacing-lg);
-    background: var(--color-background);
-    border-left: 4px solid var(--color-info);
-    border-radius: var(--radius-sm);
-}
-
-.research-priorities {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-lg);
-}
-
-.priority-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    background: var(--color-background);
-    border-radius: var(--radius-sm);
-    border-left: 3px solid var(--color-info);
-}
-
-.priority-icon {
-    font-size: 1.2rem;
-}
-
-.priority-text {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
-
-/* Global Impact Forecast */
-.global-impact-forecast {
-    margin: var(--spacing-xxxl) 0;
-    background: linear-gradient(135deg, #f0f8ff, #ffffff);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-}
-
-.impact-metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
-}
-
-.impact-metric-card {
-    background: var(--color-white);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-xl);
-    box-shadow: var(--shadow-md);
-    text-align: center;
-}
-
-.impact-metric-card.food-security { border-top: 4px solid #4caf50; }
-.impact-metric-card.economic-value { border-top: 4px solid #ffa500; }
-.impact-metric-card.climate-adaptation { border-top: 4px solid #ff6b6b; }
-.impact-metric-card.innovation-index { border-top: 4px solid #9c27b0; }
-
-.metric-header {
-    margin-bottom: var(--spacing-lg);
-}
-
-.metric-header .metric-icon {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-sm);
-}
-
-.metric-header h4 {
-    color: var(--color-text);
-    font-size: 1.1rem;
-}
-
-.metric-visualization {
-    margin: var(--spacing-xl) 0;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Circular Progress */
-.circular-progress {
-    position: relative;
-    width: 100px;
-    height: 100px;
-}
-
-.circle-bg {
+.screenshot-image {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    background: conic-gradient(#4caf50 calc(var(--percentage) * 1%), #e0e0e0 0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    object-fit: cover;
+    object-position: center;
+    transition: transform var(--transition-fast);
 }
 
-.circle-bg::before {
-    content: '';
-    width: 70%;
-    height: 70%;
-    background: white;
-    border-radius: 50%;
+.screenshot-card:hover .screenshot-image {
+    transform: scale(1.05);
 }
 
-.circle-text {
+.screenshot-image-loading {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--color-success);
+    font-size: 2rem;
+    color: #999;
+    z-index: 1;
 }
 
-/* Value Stack */
-.value-stack {
-    display: flex;
-    align-items: end;
-    gap: var(--spacing-sm);
-    height: 80px;
+.screenshot-image-loaded + .screenshot-image-loading {
+    display: none;
+}
+
+.screenshot-info {
+    padding: var(--spacing-lg);
+}
+
+.screenshot-serial {
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: inline-block;
     margin-bottom: var(--spacing-sm);
 }
 
-.value-layer {
-    flex: 1;
-    background: linear-gradient(to top, #ffa500, #ffb347);
-    border-radius: 4px 4px 0 0;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    color: white;
+.zoom-hint {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background: rgba(0,0,0,0.7);
+    color: var(--color-white);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
     font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.screenshot-image-container:hover .zoom-hint {
+    opacity: 1;
+}
+
+.large-screenshot {
+    max-width: 800px;
+    margin: var(--spacing-xxl) auto;
+}
+
+/* ===== STATS COMPONENTS ===== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+    margin: var(--spacing-xxl) 0;
+}
+
+.stat-card {
+    background: var(--color-white);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-md);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-fast);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2.8rem;
     font-weight: bold;
-    padding-bottom: 4px;
-    min-height: 20px;
+    color: var(--color-primary);
+    margin: var(--spacing-md) 0;
 }
 
-.value-target {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--color-warning);
+/* ===== COMPARISON COMPONENTS ===== */
+.comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xxl);
+    margin: var(--spacing-xxxl) 0;
 }
 
-/* Temperature Scale */
-.temperature-scale {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    width: 100%;
+.comparison-item {
+    background: var(--color-white);
+    padding: var(--spacing-xxl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-md);
 }
 
-.temp-marker {
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--color-text);
+.before {
+    border: 4px solid var(--color-danger);
 }
 
-.temp-scale-bar {
-    flex: 1;
-    height: 12px;
-    background: #e0e0e0;
-    border-radius: 6px;
-    overflow: hidden;
+.after {
+    border: 4px solid var(--color-success);
 }
 
-.temp-progress {
-    height: 100%;
-    background: linear-gradient(90deg, #4caf50, #ff6b6b);
-    border-radius: 6px;
-    transition: width 1s ease;
-}
-
-/* Innovation Counter */
-.innovation-counter {
+/* ===== HIGHLIGHT BOX ===== */
+.highlight-box {
+    background: var(--highlight-gradient);
+    border: 3px dashed var(--color-warning);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xl);
+    margin: var(--spacing-xl) 0;
     text-align: center;
 }
 
-.counter-display {
-    margin-bottom: var(--spacing-sm);
+/* ===== MECHANISM DIAGRAM ===== */
+.mechanism-diagram {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xxl);
+    margin: var(--spacing-xxl) 0;
+    box-shadow: var(--shadow-lg);
 }
 
-.counter-number {
-    font-size: 2.5rem;
+.diagram-step {
+    display: flex;
+    align-items: center;
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-lg);
+    background: var(--color-background);
+    border-radius: var(--radius-md);
+    border-left: 5px solid var(--color-success);
+}
+
+.mechanism-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.mechanism-image-card {
+    background: var(--color-white);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.mechanism-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.mechanism-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mechanism-image-label {
+    padding: var(--spacing-sm);
+    text-align: center;
+    font-size: var(--font-size-sm);
     font-weight: bold;
-    color: var(--color-info);
-}
-
-.counter-unit {
-    font-size: 1rem;
     color: var(--color-text-light);
 }
 
-.counter-trend {
-    font-size: 1.1rem;
+/* ===== HARVEST COMPARISON ===== */
+.harvest-comparison {
+    background: var(--harvest-gradient);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xxl);
+    margin: var(--spacing-xxl) 0;
+    text-align: center;
+}
+
+.harvest-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: var(--spacing-lg) 0;
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.harvest-bar-fill {
+    height: 30px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    font-weight: bold;
+    margin: 0 var(--spacing-lg);
+    flex: 1;
+}
+
+.without-ethanol {
+    background: var(--color-primary);
+    width: 50%;
+}
+
+.with-ethanol {
+    background: var(--color-success);
+    width: 100%;
+}
+
+/* ===== PROCESS FLOW ===== */
+.process-flow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--spacing-xxxl) 0;
+}
+
+.process-step {
+    flex: 1;
+    min-width: 220px;
+    text-align: center;
+    padding: var(--spacing-xl);
+    margin: var(--spacing-md);
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.process-arrow {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin: 0 var(--spacing-md);
+}
+
+/* 新規コンポーネント用スタイル */
+.scientific-analysis,
+.molecular-mechanism,
+.technical-specifications,
+.quantitative-results,
+.implementation-roadmap,
+.global-impact {
+    margin: var(--spacing-xxl) 0;
+}
+
+.mechanism-grid,
+.specs-grid,
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.mechanism-item,
+.spec-item,
+.result-category {
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.mechanism-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.biochemical-pathway {
+    background: var(--color-white);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.pathway-steps {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.pathway-step {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+}
+
+.step-number {
+    background: var(--color-success);
+    color: var(--color-white);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.pathway-arrow {
+    font-size: 1.5rem;
     color: var(--color-success);
     font-weight: bold;
 }
 
-.metric-description {
+.metrics {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-sm);
 }
 
-.metric-target {
+.metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    background: var(--color-background);
+    border-radius: var(--radius-sm);
+}
+
+.metric-value {
     font-weight: bold;
+    color: var(--color-success);
+    font-size: 1.1rem;
+}
+
+.timeline {
+    position: relative;
+    padding: var(--spacing-lg) 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--color-primary);
+}
+
+.timeline-item {
+    display: flex;
+    margin: var(--spacing-xl) 0;
+    position: relative;
+}
+
+.timeline-year {
+    width: 100px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline-content {
+    flex: 1;
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    margin-left: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.timeline-content ul {
+    margin-top: var(--spacing-sm);
+    padding-left: var(--spacing-lg);
+}
+
+.timeline-content li {
+    margin: var(--spacing-xs) 0;
+}
+
+.future-research {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.research-direction {
+    background: var(--color-background);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-info);
+}
+
+.impact-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.impact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.impact-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.impact-data h4 {
+    margin-bottom: var(--spacing-xs);
     color: var(--color-text);
 }
 
-.metric-detail {
+.spec-details p {
+    margin: var(--spacing-xs) 0;
     font-size: 0.9rem;
-    color: var(--color-text-light);
 }
 
-/* Responsive Design for Components */
-@media (max-width: 768px) {
-    .research-milestone,
-    .main-result-showcase,
-    .researcher-interview {
-        grid-template-columns: 1fr;
-    }
-
-    .flow-diagram,
-    .pathway-flow {
-        flex-direction: column;
-    }
-
-    .flow-arrow,
-    .pathway-connector {
-        transform: rotate(90deg);
-    }
-
-    .comparison-bars {
-        gap: var(--spacing-md);
-    }
-
-    .timeline-track::before {
-        display: none;
-    }
-
-    .milestone-marker {
-        width: 100%;
-        margin-bottom: var(--spacing-xl);
-    }
+.spec-details strong {
+    color: var(--color-primary);
 }
