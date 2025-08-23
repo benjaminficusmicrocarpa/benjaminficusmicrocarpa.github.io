@@ -4,6 +4,7 @@ class TreeSpeciesDatabase {
         this.filteredData = []; // Array to store filtered search results
         this.currentSuggestionIndex = -1; // Track which suggestion is highlighted
         this.currentMatches = []; // Store current suggestion matches
+        this.speciesImages = {}; // Store species image configuration
         
         // Initialize fuzzy search engine
         this.fuzzyEngine = new FuzzySearchEngine({
@@ -20,6 +21,7 @@ class TreeSpeciesDatabase {
     // Initialize the application by loading data and setting up functionality
     async init() {
         await this.loadData(); // Load tree species data from JSON file
+        await this.loadImageConfiguration(); // Load species image configuration
         this.setupEventListeners(); // Set up user interaction handlers
         this.renderTable(this.data); // Display all data initially
         this.updateStats(); // Update the statistics display
@@ -35,6 +37,25 @@ class TreeSpeciesDatabase {
         } catch (error) {
             console.error('Error loading tree data:', error);
             // Fallback: could load embedded data here if JSON file fails
+        }
+    }
+
+    // Load species image configuration from JSON file
+    async loadImageConfiguration() {
+        try {
+            const response = await fetch('species_images.json');
+            const imageConfig = await response.json();
+            
+            // Create a lookup object for quick access
+            this.speciesImages = {};
+            imageConfig.speciesWithImages.forEach(species => {
+                this.speciesImages[species.id] = species;
+            });
+            
+            console.log('Loaded image configuration for', Object.keys(this.speciesImages).length, 'species');
+        } catch (error) {
+            console.error('Error loading image configuration:', error);
+            this.speciesImages = {};
         }
     }
 
@@ -70,8 +91,12 @@ class TreeSpeciesDatabase {
         // Close modal when clicking outside of it
         window.addEventListener('click', (e) => {
             const modal = document.getElementById('infoModal');
+            const carouselModal = document.getElementById('carouselModal');
             if (e.target === modal) {
                 this.closeModal();
+            }
+            if (e.target === carouselModal) {
+                this.closeCarouselModal();
             }
         });
 
@@ -79,6 +104,19 @@ class TreeSpeciesDatabase {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.closeModal();
+                this.closeCarouselModal();
+            }
+            
+            // Carousel keyboard navigation
+            const carouselModal = document.getElementById('carouselModal');
+            if (carouselModal.style.display === 'block') {
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    this.previousImage();
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    this.nextImage();
+                }
             }
         });
 
@@ -354,25 +392,257 @@ class TreeSpeciesDatabase {
         noResults.style.display = 'none';
 
         // Generate HTML for each species row
-        const rows = data.map(species => `
-            <tr>
-                <td>${species.id}</td>
-                <td class="scientific-name">${species.scientific}</td>
-                <td class="chinese-name">${species.chinese}</td>
-                <td class="alternative-name">${species.alternative || ''}</td>
-                <td class="powo-column">${this.generatePowoLink(species)}</td>
-                <td class="wfo-column">${this.generateWfoLink(species)}</td>
-            </tr>
-        `).join('');
+        const rows = data.map(species => {
+            const hasImages = this.speciesImages[species.id];
+            const clickableClass = hasImages ? 'scientific-name clickable' : 'scientific-name';
+            const clickHandler = hasImages ? `onclick="app.openCarousel(${JSON.stringify(species).replace(/"/g, '&quot;')})"` : '';
+            
+            return `
+                <tr>
+                    <td>${species.id}</td>
+                    <td class="${clickableClass}" data-species-id="${species.id}" ${clickHandler}>${species.scientific}</td>
+                    <td class="chinese-name">${species.chinese}</td>
+                    <td class="alternative-name">${species.alternative || ''}</td>
+                    <td class="powo-column">${this.generatePowoLink(species)}</td>
+                    <td class="wfo-column">${this.generateWfoLink(species)}</td>
+                </tr>
+            `;
+        }).join('');
 
         // Insert all rows into table body
         tableBody.innerHTML = rows;
+        
+        console.log('Table rendered with', data.length, 'rows');
+        console.log('First row scientific name:', data[0]?.scientific);
+        console.log('Species with images:', Object.keys(this.speciesImages).length);
     }
 
     // Update the statistics display (total count and visible count)
     updateStats() {
         document.getElementById('totalCount').textContent = this.data.length;
         document.getElementById('visibleCount').textContent = this.filteredData.length;
+    }
+
+
+
+    // Carousel functionality
+    carouselData = {
+        images: [],
+        currentIndex: 0,
+        speciesName: ''
+    };
+
+    // Open carousel modal for a specific species
+    openCarousel(species) {
+        console.log('openCarousel called with species:', species);
+        
+        // Extract plain scientific name without HTML tags
+        const stripHtml = (html) => {
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            return div.textContent || div.innerText || '';
+        };
+
+        const scientificName = stripHtml(species.scientific);
+        console.log('Scientific name (cleaned):', scientificName);
+        this.carouselData.speciesName = scientificName;
+        
+        // Convert scientific name to folder name format
+        const folderName = this.convertToFolderName(scientificName);
+        console.log('Folder name:', folderName);
+        
+        // Check if images exist for this species
+        this.loadSpeciesImages(folderName, scientificName);
+    }
+
+    // Convert scientific name to folder name format
+    convertToFolderName(scientificName) {
+        return scientificName.toLowerCase().replace(/\s+/g, '_');
+    }
+
+    // Load images for a species
+    async loadSpeciesImages(folderName, scientificName) {
+        // Find the species in our image configuration
+        const speciesConfig = Object.values(this.speciesImages).find(species => 
+            species.folderName === folderName || 
+            species.scientificName.toLowerCase() === scientificName.toLowerCase()
+        );
+        
+        if (!speciesConfig) {
+            console.error('No image configuration found for:', scientificName);
+            return;
+        }
+        
+        const images = speciesConfig.images.map(imageName => 
+            this.getImageUrl(speciesConfig.folderName, imageName)
+        );
+
+        this.carouselData.images = images;
+        this.carouselData.currentIndex = 0;
+        
+        // Update modal title with properly formatted scientific name
+        const formattedTitle = this.formatScientificName(scientificName);
+        document.getElementById('carouselTitle').innerHTML = `${formattedTitle} - Images`;
+        
+        // Show the modal
+        document.getElementById('carouselModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Load first image and thumbnails
+        this.loadCurrentImage();
+        this.loadThumbnails();
+        
+        // Update license information from configuration
+        this.updateLicenseInfo();
+    }
+
+    // Update license information from configuration
+    updateLicenseInfo() {
+        if (CONFIG.carousel.showLicense) {
+            const ccLicense = document.getElementById('ccLicense');
+            const ccIcon = ccLicense.querySelector('.cc-icon');
+            
+            if (ccIcon) {
+                ccIcon.src = CONFIG.license.icon;
+                ccIcon.alt = CONFIG.license.type;
+            }
+            
+            if (ccLicense) {
+                ccLicense.setAttribute('data-tooltip', CONFIG.license.tooltip);
+            }
+        }
+    }
+
+    // Get image URL - configurable for future CDN migration
+    getImageUrl(folderName, imageName) {
+        // Use configuration for easy CDN migration
+        const baseUrl = CONFIG.images.baseUrl;
+        return `${baseUrl}/${folderName}/${imageName}`;
+    }
+
+    // Format scientific name with HTML tags (same as in tree-database.json)
+    formatScientificName(scientificName) {
+        // Convert plain text to HTML formatted scientific name
+        // This matches the format used in tree-database.json
+        return scientificName
+            .replace(/^([A-Z][a-z]+)\s+([a-z]+)/, '<i>$1 $2</i>') // Genus + species
+            .replace(/\s+var\.\s+([a-z]+)/g, ' var. <i>$1</i>') // Variety
+            .replace(/\s+subsp\.\s+([a-z]+)/g, ' subsp. <i>$1</i>') // Subspecies
+            .replace(/\s+×\s+([a-z]+)/g, ' × <i>$1</i>') // Hybrid
+            .replace(/\s+spp\./g, ' spp.') // Species plural
+            .replace(/\s+cv\.\s+([^<]+)/g, ' cv. $1') // Cultivar
+            .replace(/'([^']+)'/g, "'$1'"); // Cultivar names in quotes
+    }
+
+    // Load the current image in the carousel
+    loadCurrentImage() {
+        const { images, currentIndex } = this.carouselData;
+        const carouselImage = document.getElementById('carouselImage');
+        const currentImageIndex = document.getElementById('currentImageIndex');
+        const totalImages = document.getElementById('totalImages');
+        
+        if (images.length > 0 && images[currentIndex]) {
+            carouselImage.src = images[currentIndex];
+            carouselImage.onload = () => {
+                // Image loaded successfully
+                currentImageIndex.textContent = currentIndex + 1;
+                totalImages.textContent = images.length;
+                this.updateCarouselButtons();
+                this.updateThumbnailSelection();
+            };
+            carouselImage.onerror = () => {
+                // Image failed to load, try next one
+                if (currentIndex < images.length - 1) {
+                    this.carouselData.currentIndex++;
+                    this.loadCurrentImage();
+                } else {
+                    // No images found, show placeholder
+                    carouselImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOWZhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlcyBhdmFpbGFibGU8L3RleHQ+PC9zdmc+';
+                    currentImageIndex.textContent = '0';
+                    totalImages.textContent = '0';
+                    this.updateCarouselButtons();
+                    this.updateThumbnailSelection();
+                }
+            };
+        } else {
+            // No images available
+            carouselImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOWZhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlcyBhdmFpbGFibGU8L3RleHQ+PC9zdmc+';
+            currentImageIndex.textContent = '0';
+            totalImages.textContent = '0';
+            this.updateCarouselButtons();
+            this.updateThumbnailSelection();
+        }
+    }
+
+    // Load thumbnails for the carousel
+    loadThumbnails() {
+        const { images } = this.carouselData;
+        const thumbnailsContainer = document.getElementById('carouselThumbnails');
+        
+        if (images.length === 0) {
+            thumbnailsContainer.innerHTML = '<p style="text-align: center; color: #666;">No images available</p>';
+            return;
+        }
+
+        const thumbnailsHTML = images.map((imagePath, index) => `
+            <img src="${imagePath}" 
+                 alt="Thumbnail ${index + 1}" 
+                 class="thumbnail ${index === 0 ? 'active' : ''}" 
+                 onclick="app.selectThumbnail(${index})"
+                 onerror="this.style.display='none'">
+        `).join('');
+
+        thumbnailsContainer.innerHTML = thumbnailsHTML;
+    }
+
+    // Select a thumbnail
+    selectThumbnail(index) {
+        this.carouselData.currentIndex = index;
+        this.loadCurrentImage();
+    }
+
+    // Update thumbnail selection
+    updateThumbnailSelection() {
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        thumbnails.forEach((thumb, index) => {
+            thumb.classList.toggle('active', index === this.carouselData.currentIndex);
+        });
+    }
+
+    // Update carousel navigation buttons (circular - no disabled state)
+    updateCarouselButtons() {
+        // For circular carousel, buttons are never disabled
+        const prevButton = document.querySelector('.carousel-button.prev');
+        const nextButton = document.querySelector('.carousel-button.next');
+        
+        if (prevButton) prevButton.disabled = false;
+        if (nextButton) nextButton.disabled = false;
+    }
+
+    // Navigate to previous image (circular)
+    previousImage() {
+        const { images, currentIndex } = this.carouselData;
+        if (images.length > 0) {
+            this.carouselData.currentIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
+            this.loadCurrentImage();
+        }
+    }
+
+    // Navigate to next image (circular)
+    nextImage() {
+        const { images, currentIndex } = this.carouselData;
+        if (images.length > 0) {
+            this.carouselData.currentIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
+            this.loadCurrentImage();
+        }
+    }
+
+    // Close carousel modal
+    closeCarouselModal() {
+        document.getElementById('carouselModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        this.carouselData.images = [];
+        this.carouselData.currentIndex = 0;
     }
 }
 
@@ -384,6 +654,21 @@ function openModal() {
 function closeModal() {
     app.closeModal();
 }
+
+// Carousel global functions
+function closeCarouselModal() {
+    app.closeCarouselModal();
+}
+
+function previousImage() {
+    app.previousImage();
+}
+
+function nextImage() {
+    app.nextImage();
+}
+
+
 
 // Start the application when page loads
 const app = new TreeSpeciesDatabase();

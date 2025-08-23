@@ -1,0 +1,846 @@
+/* CSS variables for consistent colors throughout the site */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #64748b;
+    --accent-color: #f8fafc;
+    --border-color: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --table-stripe: #fafbfc; /* Light grey for alternating table rows */
+}
+
+/* Reset all browser default margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main body styling */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: #ffffff;
+}
+
+/* Header section with gradient background */
+.header {
+    background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    position: relative;
+}
+
+/* Main title styling */
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* Subtitle with link styling */
+.header h2 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto 1rem auto;
+}
+
+/* Link in header that points to official TRAM page */
+.header-link {
+    color: white;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.header-link:hover {
+    opacity: 0.8;
+}
+
+/* Button to open the information modal */
+.info-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.info-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Modal overlay that covers the entire screen */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+/* Modal content box */
+.modal-content {
+    background-color: white;
+    margin: 2% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease;
+}
+
+/* Modal header with close button */
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Close button (×) in modal */
+.close {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+}
+
+.close:hover {
+    opacity: 0.7;
+}
+
+/* Scrollable content area of modal */
+.modal-body {
+    padding: 2rem;
+    max-height: calc(90vh - 100px);
+    overflow-y: auto;
+}
+
+/* Styling for headings inside modal */
+.modal-body h3 {
+    color: var(--primary-color);
+    margin: 1.5rem 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.modal-body h3:first-child {
+    margin-top: 0;
+}
+
+.modal-body p {
+    margin-bottom: 1rem;
+}
+
+.modal-body ul, .modal-body ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+}
+
+.modal-body li {
+    margin-bottom: 0.5rem;
+}
+
+/* Code formatting inside modal */
+.modal-body code {
+    background: #f1f5f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.modal-body a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.modal-body a:hover {
+    text-decoration: underline;
+}
+
+/* Highlighted result box in modal */
+.result-box {
+    background: var(--accent-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+    margin-top: 1.5rem;
+}
+
+.result-box h3 {
+    margin-top: 0;
+    color: var(--text-primary);
+}
+
+/* Animation keyframes for modal appearance */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Main content container - reduced width for more compact layout */
+.container {
+    max-width: 900px; /* Reduced from 1200px to 900px for more compact layout */
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Search input container */
+.search-container {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+/* The main search input field */
+.search-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    font-size: 1.1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.search-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Search icon (magnifying glass) inside search box */
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+}
+
+/* Dropdown suggestions that appear when typing */
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 12px 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+/* Individual suggestion items in dropdown */
+.suggestion-item {
+    padding: 2px 8px; /* Minimal padding like table cells */
+    height: 24px; /* Fixed height like table rows */
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.2s;
+    display: flex; /* Use flex for better alignment */
+    align-items: center; /* Center content vertically */
+    font-size: 14px; /* Match table font size */
+    line-height: 1.2; /* Tighter line height */
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+    background-color: var(--accent-color);
+}
+
+/* Combined scientific and Chinese name display in suggestions */
+.suggestion-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: baseline;
+}
+
+.suggestion-scientific {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.suggestion-chinese {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Statistics cards showing counts */
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: var(--accent-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+/* Container for the table with rounded corners and shadow */
+.table-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+/* Wrapper to enable horizontal scrolling on mobile devices */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Main table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Minimum width to ensure horizontal scroll works */
+}
+
+/* Table header styling */
+th {
+    background: var(--accent-color);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap; /* Prevent header text from wrapping */
+    height: 40px; /* Fixed header height */
+}
+
+/* Table rows - RADICAL SPACING REDUCTION */
+tbody tr {
+    height: 24px; /* Fixed row height - very tight spacing */
+}
+
+/* Table cell styling - MINIMAL PADDING FOR ULTRA-TIGHT ROWS */
+td {
+    padding: 2px 6px; /* Minimal padding - 2px vertical, 6px horizontal */
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle; /* Changed from top to middle for better alignment */
+    font-size: 14px; /* Slightly smaller font to fit in tight rows */
+    line-height: 1.2; /* Tighter line height */
+    overflow: hidden; /* Prevent content overflow */
+    text-overflow: ellipsis; /* Add ellipsis for very long content */
+}
+
+/* Alternating row colors (zebra striping) */
+tbody tr:nth-child(even) {
+    background-color: var(--table-stripe);
+}
+
+tbody tr:hover {
+    background-color: #e2e8f0; /* Darker highlight on hover */
+}
+
+/* Tooltip functionality for column headers - FIXED Z-INDEX */
+.tooltip-header {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: fixed; /* Changed from absolute to fixed */
+    bottom: auto;
+    left: auto;
+    transform: none;
+    background-color: #333;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 9999; /* Much higher z-index */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none; /* Prevent tooltip from interfering with mouse events */
+}
+
+/* Arrow pointing down from tooltip */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #333;
+}
+
+/* Show tooltip on hover */
+.tooltip-header:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Styling for different types of content in table cells */
+.scientific-name {
+    font-weight: 500;
+}
+
+.chinese-name {
+    font-weight: 600;
+}
+
+.alternative-name {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* POWO and WFO column styling */
+.powo-column, .wfo-column {
+    text-align: center;
+    width: 50px;
+}
+
+/* Links to external databases */
+.powo-link, .wfo-link {
+    display: inline-block;
+    padding: 0.25rem; /* Reduced padding for tighter rows */
+    color: var(--primary-color);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-size: 1rem; /* Slightly smaller font size */
+}
+
+.powo-link:hover, .wfo-link:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+/* WFO icon sizing */
+.wfo-icon {
+    width: 14px; /* Smaller icon for tighter rows */
+    height: 13px;
+    display: inline-block;
+}
+
+/* Message shown when no search results found */
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+}
+
+/* Footer attribution */
+.attribution {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.attribution a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.attribution a:hover {
+    text-decoration: underline;
+}
+
+/* Relevance indicators for fuzzy search results */
+.suggestion-item.relevance-exact {
+    border-left: 3px solid #22c55e; /* Green for exact matches */
+}
+
+.suggestion-item.relevance-high {
+    border-left: 3px solid #3b82f6; /* Blue for high relevance */
+}
+
+.suggestion-item.relevance-medium {
+    border-left: 3px solid #f59e0b; /* Orange for medium relevance */
+}
+
+.suggestion-item.relevance-low {
+    border-left: 3px solid #6b7280; /* Gray for low relevance */
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .header h2 {
+        font-size: 1rem;
+    }
+
+    /* Adjust modal for mobile screens */
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
+
+    .modal-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .modal-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    /* Adjust stats cards for mobile */
+    .stats {
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+        flex: 1;
+        min-width: 120px;
+    }
+
+    /* Reduce container width for mobile */
+    .container {
+        max-width: 100%;
+        padding: 1rem 0.5rem;
+    }
+
+    /* MOBILE TABLE - EVEN TIGHTER SPACING */
+    table {
+        font-size: 12px; /* Smaller font on mobile */
+    }
+
+    tbody tr {
+        height: 20px; /* Even tighter row height on mobile */
+    }
+
+    th {
+        padding: 0.25rem 0.5rem; /* Reduced header padding */
+        font-size: 12px;
+        height: 32px; /* Smaller header height */
+    }
+
+    td {
+        padding: 1px 4px; /* Ultra-minimal padding on mobile */
+        font-size: 12px;
+    }
+
+    /* Smaller external link columns on mobile */
+    .powo-column, .wfo-column {
+        width: 35px;
+    }
+
+    .powo-link, .wfo-link {
+        padding: 0.125rem; /* Very minimal padding */
+        font-size: 0.9rem;
+    }
+
+    .wfo-icon {
+        width: 12px;
+        height: 11px;
+    }
+
+    /* Make tooltips work better on mobile */
+    .tooltip {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .suggestion-item {
+        height: 20px; /* Match mobile table row height */
+        padding: 1px 6px; /* Match mobile table padding */
+        font-size: 12px; /* Match mobile table font */
+    }
+}
+
+/* Carousel Modal Styles */
+.carousel-modal {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: 800px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    position: relative;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.carousel-image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    max-height: 400px;
+}
+
+.carousel-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.carousel-button:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-button.prev {
+    left: 20px;
+}
+
+.carousel-button.next {
+    right: 20px;
+}
+
+.carousel-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.image-counter {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.cc-license {
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border-top: 1px solid var(--border-color);
+    z-index: 20; /* Ensure it's above other elements */
+}
+
+.cc-icon {
+    width: 88px;
+    height: 31px;
+    display: block;
+    cursor: help;
+    /* Maintain aspect ratio */
+    object-fit: contain;
+}
+
+/* Custom tooltip for CC license */
+.cc-license {
+    position: relative;
+}
+
+.cc-license::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000; /* Very high z-index to ensure it's above everything */
+    pointer-events: none;
+}
+
+.cc-license::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.cc-license:hover::after,
+.cc-license:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.carousel-thumbnails {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 1rem;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.thumbnail:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.thumbnail.active {
+    border-color: var(--primary-color);
+    opacity: 1;
+}
+
+/* Base species name styling */
+.scientific-name {
+    transition: all 0.3s ease;
+    position: relative;
+    user-select: none; /* Prevent text selection */
+}
+
+/* Only make clickable species interactive */
+.scientific-name.clickable {
+    cursor: pointer !important;
+    padding-right: 20px; /* Space for the camera icon */
+}
+
+.scientific-name.clickable:hover {
+    color: var(--primary-color) !important;
+    background-color: rgba(37, 99, 235, 0.1) !important;
+    border-radius: 4px;
+}
+
+.scientific-name.clickable:hover::after {
+    content: "📷";
+    font-size: 0.9em;
+    opacity: 0.8;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Prevent icon from interfering with clicks */
+}
+
+/* Responsive design for carousel */
+@media (max-width: 768px) {
+    .carousel-modal {
+        width: 95vw;
+        height: 80vh;
+    }
+    
+    .carousel-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .carousel-button.prev {
+        left: 10px;
+    }
+    
+    .carousel-button.next {
+        right: 10px;
+    }
+    
+    .thumbnail {
+        width: 60px;
+        height: 45px;
+    }
+}

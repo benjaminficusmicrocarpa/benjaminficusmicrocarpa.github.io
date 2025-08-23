@@ -1,0 +1,748 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta http-equiv="x-dns-prefetch-control" content="off"><meta name="x-poe-allow-downloads" content="true"><script src="https://puc.poecdn.net/authenticated_preview_page/standard.3ef2c256959faf5a756d.js"></script>
+    <meta charset="utf-8">
+    <title>⚔️ Clickbait: Outwitting Satan</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://puc.poecdn.net/authenticated_preview_page/disableWebRTC.9710cebe07429a9e8e06.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/tw.b9024aecac666455e183.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/deps.faccd16000d314dc16d5.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/exports.b0f0f482cdeb5302b0b9.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/renderer.75c73ae6b4235f62945a.js"></script><script>Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _lucidereact = require('lucide-react');
+
+const SermonInfographic = () => {
+  const [activeTab, setActiveTab] = _react.useState.call(void 0, 'main');
+  const [expandedSections, setExpandedSections] = _react.useState.call(void 0, {});
+  const [modalContent, setModalContent] = _react.useState.call(void 0, null);
+  const [tooltipVisible, setTooltipVisible] = _react.useState.call(void 0, null);
+
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
+  const openModal = (content) => {
+    setModalContent(content);
+  };
+
+  const closeModal = () => {
+    setModalContent(null);
+  };
+
+  const Tooltip = ({ children, content, id }) => (
+    _react2.default.createElement('div', { className: "relative inline-block" ,}
+      , _react2.default.createElement('span', {
+        className: "cursor-help border-b border-dotted border-blue-500 text-blue-600"    ,
+        onMouseEnter: () => setTooltipVisible(id),
+        onMouseLeave: () => setTooltipVisible(null),}
+
+        , children
+      )
+      , tooltipVisible === id && (
+        _react2.default.createElement('div', { className: "absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 text-sm text-white bg-gray-800 rounded-lg shadow-lg z-50 max-w-xs"              ,}
+          , content
+          , _react2.default.createElement('div', { className: "absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-800"       ,})
+        )
+      )
+    )
+  );
+
+  const Modal = ({ content, onClose }) => {
+    if (!content) return null;
+
+    return (
+      _react2.default.createElement('div', { className: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"        ,}
+        , _react2.default.createElement('div', { className: "bg-white rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto"     ,}
+          , _react2.default.createElement('div', { className: "flex justify-between items-center p-4 border-b"    ,}
+            , _react2.default.createElement('h3', { className: "text-lg font-semibold" ,}, content.title)
+            , _react2.default.createElement('button', { onClick: onClose, className: "text-gray-500 hover:text-gray-700" ,}
+              , _react2.default.createElement(_lucidereact.X, { size: 20,} )
+            )
+          )
+          , _react2.default.createElement('div', { className: "p-4",}
+            , content.body
+          )
+        )
+      )
+    );
+  };
+
+  const TabButton = ({ id, label, isActive, onClick }) => (
+    _react2.default.createElement('button', {
+      onClick: () => onClick(id),
+      className: `px-4 py-2 rounded-t-lg font-medium transition-colors ${
+        isActive 
+          ? 'bg-blue-600 text-white' 
+          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+      }`,}
+
+      , label
+    )
+  );
+
+  const QuoteCard = ({ quote, author, context, bgColor = "gray" }) => (
+    _react2.default.createElement('div', { className: `bg-${bgColor}-50 border-l-4 border-${bgColor}-400 p-4 rounded-r-lg`,}
+      , _react2.default.createElement('blockquote', { className: `text-${bgColor}-800 font-medium mb-2 italic`,}
+        , _react2.default.createElement(_lucidereact.Quote, { className: "inline w-4 h-4 mr-1"   ,} ), "\""
+        , quote, "\""
+      )
+      , _react2.default.createElement('div', { className: `text-${bgColor}-600 text-sm`,}
+        , _react2.default.createElement('strong', null, "— " , author)
+        , context && _react2.default.createElement('div', { className: "text-xs mt-1" ,}, context)
+      )
+    )
+  );
+
+  const temptationDevices = [
+    {
+      title: "Show the Bait, Hide the Hook",
+      description: "The enemy shows what's enticing about sin while hiding negative consequences",
+      example: "\"No one's getting hurt. It's just a little fun.\"",
+      icon: "🎣"
+    },
+    {
+      title: "Rationalize Sin as Virtue",
+      description: "Making wrong choices appear virtuous or spiritual",
+      example: "\"I'm not gossiping, I just want to pray specifically.\"",
+      icon: "🎭"
+    },
+    {
+      title: "Bitter Over Suffering",
+      description: "Using hardship to justify seeking relief in wrong places",
+      example: "\"My job is so stressful. I deserve some relief.\"",
+      icon: "😤"
+    },
+    {
+      title: "Bad People, Great Lives",
+      description: "Pointing to immoral people who seem to prosper",
+      example: "\"They get away with everything. Why shouldn't I?\"",
+      icon: "💰"
+    },
+    {
+      title: "Compare Life Areas",
+      description: "Using strength in one area to justify weakness in another",
+      example: "\"Nobody's perfect. I'm amazing at this, so I can mess up here.\"",
+      icon: "⚖️"
+    }
+  ];
+
+  const accusationDevices = [
+    {
+      title: "Focus on Sin, Not Savior",
+      description: "Fixating on repeated failures rather than Christ's redemption",
+      example: "\"That's just who I am. God's not going to change me.\"",
+      icon: "🔍"
+    },
+    {
+      title: "Obsess Over Past Sins",
+      description: "Dwelling on irreversible damage while minimizing God's forgiveness",
+      example: "\"Remember when you did that? You can't fix it.\"",
+      icon: "⏰"
+    },
+    {
+      title: "Struggle Equals Punishment",
+      description: "Believing difficulties are God's punishment for wrongdoing",
+      example: "\"God is upset with you. You deserve this struggle.\"",
+      icon: "⚡"
+    },
+    {
+      title: "Your Struggle is Unique",
+      description: "Making believers feel isolated in their spiritual battles",
+      example: "\"If they knew about you, you wouldn't belong here.\"",
+      icon: "🏝️"
+    }
+  ];
+
+  const bibleVerses = [
+    {
+      reference: "2 Corinthians 2:11",
+      text: "in order that Satan might not outwit us. For we are not unaware of his schemes.",
+      context: "Paul's instruction about forgiveness and spiritual awareness"
+    },
+    {
+      reference: "1 Peter 5:8",
+      text: "Be alert and of sober mind. Your enemy the devil prowls around like a roaring lion looking for someone to devour.",
+      context: "Peter's warning about spiritual vigilance"
+    },
+    {
+      reference: "Matthew 10:16",
+      text: "I am sending you out like sheep among wolves. Therefore be as shrewd as snakes and as innocent as doves.",
+      context: "Jesus instructing disciples about wisdom in ministry"
+    },
+    {
+      reference: "John 8:44",
+      text: "He was a murderer from the beginning, not holding to the truth, for there is no truth in him. When he lies, he speaks his native language, for he is a liar and the father of lies.",
+      context: "Jesus describing Satan's character"
+    },
+    {
+      reference: "John 4:23-24",
+      text: "Yet a time is coming and has now come when the true worshipers will worship the Father in the Spirit and in truth, for they are the kind of worshipers the Father seeks. God is spirit, and his worshipers must worship in the Spirit and in truth.",
+      context: "Jesus teaching about true worship"
+    }
+  ];
+
+  const MainContent = () => (
+    _react2.default.createElement('div', { className: "space-y-6",}
+      /* Opening Contrast */
+      , _react2.default.createElement('div', { className: "bg-red-50 border-l-4 border-red-400 p-4 rounded"    ,}
+        , _react2.default.createElement('h3', { className: "font-bold text-red-800 mb-2"  ,}, "🎭 The Clickbait Challenge"   )
+        , _react2.default.createElement('p', { className: "text-red-700 mb-3" ,}, "Lucy's video dismisses spiritual warfare as \"imaginary kitty\" drama, claiming there's no enemy targeting us. But what does Scripture actually teach?"
+
+
+        )
+        , _react2.default.createElement(QuoteCard, { 
+          quote: "First of all, trash any thought that there's some force or enemy out there that cares enough about you to spend all their time trying to influence you. What a waste of time. Just toss your imaginary kitty a toy and move on with your life."                                             ,
+          author: "Lucy (Clickbait Video)"  ,
+          bgColor: "red",}
+        )
+      )
+
+      /* Survivor Analogy */
+      , _react2.default.createElement('div', { className: "bg-gradient-to-r from-green-100 to-blue-100 p-6 rounded-lg"    ,}
+        , _react2.default.createElement('h3', { className: "text-xl font-bold mb-3 text-center"   ,}, "🏝️ Spiritual Survivor Strategy"   )
+        , _react2.default.createElement('div', { className: "grid md:grid-cols-3 gap-4 text-center"   ,}
+          , _react2.default.createElement('div', { className: "bg-white p-4 rounded shadow"   ,}
+            , _react2.default.createElement('div', { className: "text-2xl mb-2" ,}, "🧠")
+            , _react2.default.createElement('h4', { className: "font-semibold",}, "OUTWIT")
+            , _react2.default.createElement('p', { className: "text-sm",}, "Be shrewd as snakes"   )
+          )
+          , _react2.default.createElement('div', { className: "bg-white p-4 rounded shadow"   ,}
+            , _react2.default.createElement('div', { className: "text-2xl mb-2" ,}, "⚔️")
+            , _react2.default.createElement('h4', { className: "font-semibold",}, "OUTPLAY")
+            , _react2.default.createElement('p', { className: "text-sm",}, "Strategic spiritual warfare"  )
+          )
+          , _react2.default.createElement('div', { className: "bg-white p-4 rounded shadow"   ,}
+            , _react2.default.createElement('div', { className: "text-2xl mb-2" ,}, "🏆")
+            , _react2.default.createElement('h4', { className: "font-semibold",}, "OUTLAST")
+            , _react2.default.createElement('p', { className: "text-sm",}, "Victory through Christ"  )
+          )
+        )
+      )
+
+      /* Enemy's Two-Pronged Attack */
+      , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-6"  ,}
+        , _react2.default.createElement('div', { className: "bg-orange-50 p-4 rounded-lg border border-orange-200"    ,}
+          , _react2.default.createElement('h3', { className: "font-bold text-orange-800 mb-3 flex items-center"    ,}
+            , _react2.default.createElement(_lucidereact.Target, { className: "mr-2", size: 20,} ), "TEMPTATION"
+
+          )
+          , _react2.default.createElement('p', { className: "text-orange-700 mb-2" ,}
+            , _react2.default.createElement(Tooltip, { content: "Satan's role as one who entices toward sin"       , id: "tempter",}, "The Tempter"
+
+            ), " distorts God's word and makes sin appear attractive."
+          )
+          , _react2.default.createElement('button', { 
+            onClick: () => openModal({
+              title: "1 Thessalonians 3:5",
+              body: _react2.default.createElement('div', { className: "text-gray-700",}, "\"For this reason, when I could stand it no longer, I sent to find out about your faith. I was afraid that in some way the tempter might have tempted you and that our labors might have been in vain.\""                                       )
+            }),
+            className: "text-blue-600 hover:text-blue-800 text-sm flex items-center"    ,}
+
+            , _react2.default.createElement(_lucidereact.BookOpen, { size: 16, className: "mr-1",} ), "See Scripture"
+
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-red-50 p-4 rounded-lg border border-red-200"    ,}
+          , _react2.default.createElement('h3', { className: "font-bold text-red-800 mb-3 flex items-center"    ,}
+            , _react2.default.createElement(_lucidereact.Eye, { className: "mr-2", size: 20,} ), "ACCUSATION"
+
+          )
+          , _react2.default.createElement('p', { className: "text-red-700 mb-2" ,}
+            , _react2.default.createElement(Tooltip, { content: "Lying is Satan's native language - what he naturally speaks"         , id: "lies",}, "The Father of Lies"
+
+            ), " accuses and condemns to create shame and despair."
+          )
+          , _react2.default.createElement('button', { 
+            onClick: () => openModal({
+              title: "John 8:44",
+              body: _react2.default.createElement('div', { className: "text-gray-700",}, "\"You belong to your father, the devil, and you want to carry out your father's desires. He was a murderer from the beginning, not holding to the truth, for there is no truth in him. When he lies, he speaks his native language, for he is a liar and the father of lies.\""                                                    )
+            }),
+            className: "text-blue-600 hover:text-blue-800 text-sm flex items-center"    ,}
+
+            , _react2.default.createElement(_lucidereact.BookOpen, { size: 16, className: "mr-1",} ), "See Scripture"
+
+          )
+        )
+      )
+
+      /* Pastor Brett on Alertness */
+      , _react2.default.createElement(QuoteCard, { 
+        quote: "We are to be sober-minded, as Peter tells us, being sober-minded, watchful, because your adversary, the devil, prowls around like a roaring lion seeking someone to devour. So as Christians, as followers of Christ, we are not to be passive, not to be laissez-faire, but to be watchful, attentive, not paranoid, fearful, filled with faith, but also alert."                                                         ,
+        author: "Pastor Brett" ,
+        context: "On the Christian's disposition toward spiritual warfare"      ,
+        bgColor: "blue",}
+      )
+
+      /* Baxter's Four Categories */
+      , _react2.default.createElement('div', { className: "bg-gray-50 p-6 rounded-lg"  ,}
+        , _react2.default.createElement('h3', { className: "text-lg font-bold mb-4 text-center"   ,}, "📚 Richard Baxter's Analysis of \"Excessive Sorrow\""
+
+        )
+        , _react2.default.createElement('p', { className: "text-gray-600 text-center mb-4 text-sm italic"    ,}, "The Cure of Melancholy and Excessive Sorrow (1600s)"
+
+        )
+        , _react2.default.createElement('div', { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-4"   ,}
+          , [
+            { title: "Physical", icon: "💪", desc: "Diet, sleep, exercise, hormones" },
+            { title: "Psychological", icon: "🧠", desc: "Need for love, affirmation, community" },
+            { title: "Moral", icon: "⚖️", desc: "Consequences of moral decisions" },
+            { title: "Demonic", icon: "👹", desc: "Spiritual warfare aspect" }
+          ].map((category, index) => (
+            _react2.default.createElement('div', { key: index, className: "bg-white p-4 rounded text-center shadow-sm"    ,}
+              , _react2.default.createElement('div', { className: "text-2xl mb-2" ,}, category.icon)
+              , _react2.default.createElement('h4', { className: "font-semibold mb-1" ,}, category.title)
+              , _react2.default.createElement('p', { className: "text-xs text-gray-600" ,}, category.desc)
+            )
+          ))
+        )
+      )
+
+      /* Brooks' Devices */
+      , _react2.default.createElement('div', { className: "space-y-6",}
+        , _react2.default.createElement('div', null
+          , _react2.default.createElement('h3', { className: "text-xl font-bold mb-4 text-center"   ,}, "⚔️ Thomas Brooks' Battle Manual"
+
+          )
+          , _react2.default.createElement('p', { className: "text-center text-gray-600 mb-6 italic"   ,}, "Precious Remedies Against Satan's Devices (17th century)"
+
+          )
+
+          /* Temptation Devices */
+          , _react2.default.createElement('div', { className: "mb-8",}
+            , _react2.default.createElement('button', {
+              onClick: () => toggleSection('temptation'),
+              className: "w-full flex items-center justify-between p-4 bg-orange-100 rounded-lg font-semibold text-orange-800 hover:bg-orange-200 transition-colors"          ,}
+
+              , _react2.default.createElement('span', { className: "flex items-center" ,}
+                , _react2.default.createElement(_lucidereact.Target, { className: "mr-2", size: 20,} ), "5 Devices of Temptation"
+
+              )
+              , expandedSections.temptation ? _react2.default.createElement(_lucidereact.ChevronDown, { size: 20,} ) : _react2.default.createElement(_lucidereact.ChevronRight, { size: 20,} )
+            )
+
+            , expandedSections.temptation && (
+              _react2.default.createElement('div', { className: "mt-4 grid gap-4"  ,}
+                , temptationDevices.map((device, index) => (
+                  _react2.default.createElement('div', { key: index, className: "bg-white p-4 rounded-lg border border-orange-200"    ,}
+                    , _react2.default.createElement('h4', { className: "font-semibold text-orange-800 mb-2 flex items-center"    ,}
+                      , _react2.default.createElement('span', { className: "mr-2 text-lg" ,}, device.icon)
+                      , device.title
+                    )
+                    , _react2.default.createElement('p', { className: "text-gray-700 mb-2" ,}, device.description)
+                    , _react2.default.createElement('div', { className: "bg-orange-50 p-2 rounded text-sm italic text-orange-700"     ,}, "Example: "
+                       , device.example
+                    )
+                  )
+                ))
+              )
+            )
+          )
+
+          /* Accusation Devices */
+          , _react2.default.createElement('div', null
+            , _react2.default.createElement('button', {
+              onClick: () => toggleSection('accusation'),
+              className: "w-full flex items-center justify-between p-4 bg-red-100 rounded-lg font-semibold text-red-800 hover:bg-red-200 transition-colors"          ,}
+
+              , _react2.default.createElement('span', { className: "flex items-center" ,}
+                , _react2.default.createElement(_lucidereact.Eye, { className: "mr-2", size: 20,} ), "4 Devices of Accusation"
+
+              )
+              , expandedSections.accusation ? _react2.default.createElement(_lucidereact.ChevronDown, { size: 20,} ) : _react2.default.createElement(_lucidereact.ChevronRight, { size: 20,} )
+            )
+
+            , expandedSections.accusation && (
+              _react2.default.createElement('div', { className: "mt-4 grid gap-4"  ,}
+                , accusationDevices.map((device, index) => (
+                  _react2.default.createElement('div', { key: index, className: "bg-white p-4 rounded-lg border border-red-200"    ,}
+                    , _react2.default.createElement('h4', { className: "font-semibold text-red-800 mb-2 flex items-center"    ,}
+                      , _react2.default.createElement('span', { className: "mr-2 text-lg" ,}, device.icon)
+                      , device.title
+                    )
+                    , _react2.default.createElement('p', { className: "text-gray-700 mb-2" ,}, device.description)
+                    , _react2.default.createElement('div', { className: "bg-red-50 p-2 rounded text-sm italic text-red-700"     ,}, "Example: "
+                       , device.example
+                    )
+                  )
+                ))
+              )
+            )
+          )
+        )
+      )
+
+      /* Grace Quote from Pastor Brett */
+      , _react2.default.createElement(QuoteCard, { 
+        quote: "Can you imagine? Paul murdered people and wrote the majority of the New Testament. He found grace. Do you think you could?"                     ,
+        author: "Pastor Brett" ,
+        context: "On God's grace surpassing our failures"     ,
+        bgColor: "green",}
+      )
+
+      /* Church as Hospital Quote */
+      , _react2.default.createElement(QuoteCard, { 
+        quote: "And we, as a church, we're a hospital. We welcome people who are broken and hobbling. None of us is completely healthy. This isn't a gathering of saints. This is a hospital for sick people of which all of us are."                                        ,
+        author: "Pastor Brett" ,
+        context: "On the nature of Christian community"     ,
+        bgColor: "purple",}
+      )
+
+      /* Worship as Warfare */
+      , _react2.default.createElement('div', { className: "bg-purple-50 p-6 rounded-lg border border-purple-200"    ,}
+        , _react2.default.createElement('h3', { className: "text-lg font-bold text-purple-800 mb-4 flex items-center"     ,}
+          , _react2.default.createElement(_lucidereact.Heart, { className: "mr-2", size: 20,} ), "Worship as Warfare"
+
+        )
+
+        /* Kwen's Definition */
+        , _react2.default.createElement('div', { className: "mb-4",}
+          , _react2.default.createElement(QuoteCard, { 
+            quote: "To worship is to prize someone above everything else. And so to worship God means to prize Him above everything in our life. It is to give Him our deepest affection. It is to give him our highest honor."                                      ,
+            author: "Kwen",
+            context: "On the definition of worship"    ,
+            bgColor: "purple",}
+          )
+        )
+
+        /* What Enemy Wars For */
+        , _react2.default.createElement('div', { className: "mb-4",}
+          , _react2.default.createElement(QuoteCard, { 
+            quote: "So what is the enemy warring for? He is warring for our heart and our soul. He is warring to put distance between us and God. He is warring to dampen that love, that closeness with God."                                    ,
+            author: "Kwen",
+            context: "On spiritual warfare's target"   ,
+            bgColor: "red",}
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "🎵 Corporate Worship"  )
+            , _react2.default.createElement('p', { className: "text-gray-700 text-sm" ,}, "Singing together reminds us of God's truth and our identity in Christ. \"Those who sing, pray twice.\" - St. Augustine"
+
+
+            )
+          )
+          , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "✅ Daily Yes"  )
+            , _react2.default.createElement('p', { className: "text-gray-700 text-sm" ,}, "Saying yes to prayer, Scripture, forgiveness, and kingdom priorities."
+
+            )
+          )
+          , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "❌ Daily No"  )
+            , _react2.default.createElement('p', { className: "text-gray-700 text-sm mb-2"  ,}, "Saying no to temptation, laziness, and anything that distances us from God."
+
+            )
+            , _react2.default.createElement(QuoteCard, { 
+              quote: "Worship is also saying no daily to all the things that take us further away from him. The temptations of the enemy, the pull of our flesh."                          ,
+              author: "Kwen",
+              bgColor: "purple",}
+            )
+          )
+        )
+      )
+
+      /* True Worship Test */
+      , _react2.default.createElement(QuoteCard, { 
+        quote: "But the test of real worship is not just how loud you sing or how high you raise a hand... but maybe how you worship on a Wednesday morning, on a Thursday afternoon, in a boardroom, in a meeting with colleagues and being at home with your kids."                                               ,
+        author: "Pastor Brett" ,
+        context: "On authentic worship beyond Sunday"    ,
+        bgColor: "green",}
+      )
+
+      /* Victory Declaration */
+      , _react2.default.createElement('div', { className: "bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-lg text-center"      ,}
+        , _react2.default.createElement('h3', { className: "text-xl font-bold mb-3"  ,}, "🏆 Our Victory Position"   )
+        , _react2.default.createElement('p', { className: "mb-4",}, "\"Thanks be to God! He gives us the victory through our Lord Jesus Christ.\""
+
+          , _react2.default.createElement('span', { className: "text-sm opacity-90 block mt-1"   ,}, "- 1 Corinthians 15:57"   )
+        )
+        , _react2.default.createElement('div', { className: "text-sm opacity-90" ,}, "We don't fight FOR victory; we fight FROM victory! 🎉"
+
+        )
+      )
+    )
+  );
+
+  const BibleTab = () => (
+    _react2.default.createElement('div', { className: "space-y-6",}
+      , _react2.default.createElement('h2', { className: "text-2xl font-bold text-center mb-6"   ,}, "📖 Scripture Foundation"  )
+      , _react2.default.createElement('div', { className: "grid gap-4" ,}
+        , bibleVerses.map((verse, index) => (
+          _react2.default.createElement('div', { key: index, className: "bg-blue-50 p-4 rounded-lg border border-blue-200"    ,}
+            , _react2.default.createElement('h3', { className: "font-bold text-blue-800 mb-2"  ,}, verse.reference)
+            , _react2.default.createElement('blockquote', { className: "text-gray-700 italic mb-2 border-l-4 border-blue-400 pl-4"     ,}, "\""
+              , verse.text, "\""
+            )
+            , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, verse.context)
+          )
+        ))
+      )
+
+      , _react2.default.createElement('div', { className: "bg-yellow-50 p-4 rounded-lg border border-yellow-300"    ,}
+        , _react2.default.createElement('h3', { className: "font-bold text-yellow-800 mb-2"  ,}, "🔑 Key Themes"  )
+        , _react2.default.createElement('ul', { className: "space-y-2 text-gray-700" ,}
+          , _react2.default.createElement('li', null, "• " , _react2.default.createElement('strong', null, "Awareness:"), " \"We are not unaware of his schemes\""       )
+          , _react2.default.createElement('li', null, "• " , _react2.default.createElement('strong', null, "Vigilance:"), " \"Be alert and of sober mind\""      )
+          , _react2.default.createElement('li', null, "• " , _react2.default.createElement('strong', null, "Shrewdness:"), " \"Be as shrewd as snakes\""     )
+          , _react2.default.createElement('li', null, "• " , _react2.default.createElement('strong', null, "Truth:"), " Satan is \"the father of lies\""      )
+          , _react2.default.createElement('li', null, "• " , _react2.default.createElement('strong', null, "Worship:"), " \"In spirit and in truth\""     )
+        )
+      )
+    )
+  );
+
+  const PracticalTab = () => (
+    _react2.default.createElement('div', { className: "space-y-6",}
+      , _react2.default.createElement('h2', { className: "text-2xl font-bold text-center mb-6"   ,}, "⚡ Battle Plan"  )
+
+      , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-6"  ,}
+        , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "font-bold text-green-800 mb-3 flex items-center"    ,}
+            , _react2.default.createElement(_lucidereact.Shield, { className: "mr-2", size: 20,} ), "Defensive Strategies"
+
+          )
+          , _react2.default.createElement('ul', { className: "space-y-2 text-green-700" ,}
+            , _react2.default.createElement('li', null, "✓ Regular Scripture reading and memorization"     )
+            , _react2.default.createElement('li', null, "✓ Corporate worship and community involvement"     )
+            , _react2.default.createElement('li', null, "✓ Accountability relationships in care groups"     )
+            , _react2.default.createElement('li', null, "✓ Prayer and dependence on the Holy Spirit"       )
+            , _react2.default.createElement('li', null, "✓ Understanding your particular vulnerabilities"    )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-red-50 p-4 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "font-bold text-red-800 mb-3 flex items-center"    ,}
+            , _react2.default.createElement(_lucidereact.Sword, { className: "mr-2", size: 20,} ), "Offensive Strategies"
+
+          )
+          , _react2.default.createElement('ul', { className: "space-y-2 text-red-700" ,}
+            , _react2.default.createElement('li', null, "⚔️ Worship as lifestyle warfare"    )
+            , _react2.default.createElement('li', null, "⚔️ Speaking truth against lies"    )
+            , _react2.default.createElement('li', null, "⚔️ Serving others and advancing God's kingdom"      )
+            , _react2.default.createElement('li', null, "⚔️ Forgiveness and grace-filled living"    )
+            , _react2.default.createElement('li', null, "⚔️ Bearing witness to Christ's victory"     )
+          )
+        )
+      )
+
+      , _react2.default.createElement('div', { className: "bg-purple-50 p-6 rounded-lg"  ,}
+        , _react2.default.createElement('h3', { className: "font-bold text-purple-800 mb-4"  ,}, "🎯 Personal Assessment"  )
+        , _react2.default.createElement('div', { className: "space-y-4",}
+          , _react2.default.createElement('div', null
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "Which temptation devices affect you most?"     )
+            , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-2 text-sm"   ,}
+              , temptationDevices.map((device, index) => (
+                _react2.default.createElement('label', { key: index, className: "flex items-center space-x-2 bg-white p-2 rounded"     ,}
+                  , _react2.default.createElement('input', { type: "checkbox", className: "rounded",} )
+                  , _react2.default.createElement('span', null, device.icon, " " , device.title)
+                )
+              ))
+            )
+          )
+
+          , _react2.default.createElement('div', null
+            , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "Which accusation devices do you recognize?"     )
+            , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-2 text-sm"   ,}
+              , accusationDevices.map((device, index) => (
+                _react2.default.createElement('label', { key: index, className: "flex items-center space-x-2 bg-white p-2 rounded"     ,}
+                  , _react2.default.createElement('input', { type: "checkbox", className: "rounded",} )
+                  , _react2.default.createElement('span', null, device.icon, " " , device.title)
+                )
+              ))
+            )
+          )
+        )
+      )
+
+      , _react2.default.createElement('div', { className: "bg-gray-50 p-4 rounded-lg"  ,}
+        , _react2.default.createElement('h3', { className: "font-bold text-gray-800 mb-3"  ,}, "📅 Daily Worship Checklist"   )
+        , _react2.default.createElement('div', { className: "grid md:grid-cols-2 gap-4 text-sm"   ,}
+          , _react2.default.createElement('div', null
+            , _react2.default.createElement('h4', { className: "font-semibold text-green-700 mb-2"  ,}, "Say YES to:"  )
+            , _react2.default.createElement('ul', { className: "space-y-1 text-gray-700" ,}
+              , _react2.default.createElement('li', null, "☐ Morning prayer/devotion"  )
+              , _react2.default.createElement('li', null, "☐ Scripture reading"  )
+              , _react2.default.createElement('li', null, "☐ Serving others"  )
+              , _react2.default.createElement('li', null, "☐ Gratitude practice"  )
+              , _react2.default.createElement('li', null, "☐ Fellowship/community" )
+            )
+          )
+          , _react2.default.createElement('div', null
+            , _react2.default.createElement('h4', { className: "font-semibold text-red-700 mb-2"  ,}, "Say NO to:"  )
+            , _react2.default.createElement('ul', { className: "space-y-1 text-gray-700" ,}
+              , _react2.default.createElement('li', null, "☐ Destructive media consumption"   )
+              , _react2.default.createElement('li', null, "☐ Gossip and criticism"   )
+              , _react2.default.createElement('li', null, "☐ Self-condemnation" )
+              , _react2.default.createElement('li', null, "☐ Isolation from believers"   )
+              , _react2.default.createElement('li', null, "☐ Spiritual laziness"  )
+            )
+          )
+        )
+      )
+    )
+  );
+
+  const ReflectionTab = () => (
+    _react2.default.createElement('div', { className: "space-y-6",}
+      , _react2.default.createElement('h2', { className: "text-2xl font-bold text-center mb-6"   ,}, "🤔 Personal Reflection"  )
+
+      , _react2.default.createElement('div', { className: "space-y-6",}
+        , _react2.default.createElement('div', { className: "bg-blue-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "font-bold text-blue-800 mb-4 flex items-center"    ,}
+            , _react2.default.createElement(_lucidereact.Lightbulb, { className: "mr-2", size: 20,} ), "Sermon Reflection Questions"
+
+          )
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "1. What strategies would Satan most likely use on you to be effective?"            )
+              , _react2.default.createElement('textarea', { 
+                className: "w-full p-3 border rounded-lg h-24 text-gray-700"     , 
+                placeholder: "Consider your specific vulnerabilities, past patterns, and current life circumstances..."         ,}
+              )
+            )
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "2. What lies do you notice the enemy whispering to you?"          )
+              , _react2.default.createElement('textarea', { 
+                className: "w-full p-3 border rounded-lg h-24 text-gray-700"     , 
+                placeholder: "Think about negative thoughts, discouraging messages, or false beliefs you struggle with..."           ,}
+              )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-yellow-50 p-6 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "font-bold text-yellow-800 mb-4"  ,}, "💭 Additional Reflection"  )
+          , _react2.default.createElement('div', { className: "space-y-4",}
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "How has worship been \"warfare\" in your experience?"       )
+              , _react2.default.createElement('textarea', { 
+                className: "w-full p-3 border rounded-lg h-20 text-gray-700"     , 
+                placeholder: "Reflect on times when worship, prayer, or Scripture changed your perspective..."          ,}
+              )
+            )
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "Where do you need to grow in spiritual alertness?"        )
+              , _react2.default.createElement('textarea', { 
+                className: "w-full p-3 border rounded-lg h-20 text-gray-700"     , 
+                placeholder: "Consider areas where you've been spiritually naive or passive..."        ,}
+              )
+            )
+            , _react2.default.createElement('div', { className: "bg-white p-4 rounded"  ,}
+              , _react2.default.createElement('h4', { className: "font-semibold mb-2" ,}, "What's one practical step you can take this week?"        )
+              , _react2.default.createElement('textarea', { 
+                className: "w-full p-3 border rounded-lg h-20 text-gray-700"     , 
+                placeholder: "Choose one specific action to strengthen your spiritual defenses..."        ,}
+              )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "bg-green-50 p-4 rounded-lg"  ,}
+          , _react2.default.createElement('h3', { className: "font-bold text-green-800 mb-3"  ,}, "🙏 Prayer Points"  )
+          , _react2.default.createElement('ul', { className: "space-y-2 text-green-700" ,}
+            , _react2.default.createElement('li', null, "• Ask for wisdom to recognize the enemy's schemes"        )
+            , _react2.default.createElement('li', null, "• Pray for strength to resist temptation"      )
+            , _react2.default.createElement('li', null, "• Request freedom from lies and accusations"      )
+            , _react2.default.createElement('li', null, "• Seek grace to worship authentically in daily life"        )
+            , _react2.default.createElement('li', null, "• Pray for your care group and church community"        )
+          )
+        )
+      )
+    )
+  );
+
+  return (
+    _react2.default.createElement('div', { className: "max-w-6xl mx-auto p-4 bg-white min-h-screen"    ,}
+      /* Header */
+      , _react2.default.createElement('header', { className: "text-center mb-8" ,}
+        , _react2.default.createElement('h1', { className: "text-3xl md:text-4xl font-bold text-gray-800 mb-2"    ,}, "⚔️ Clickbait: Outwitting Satan"
+
+        )
+        , _react2.default.createElement('p', { className: "text-gray-600 mb-4" ,}, "Island ECC • August 17, 2025 • Interactive Sermon Guide"
+
+        )
+        , _react2.default.createElement('div', { className: "bg-blue-100 p-4 rounded-lg text-blue-800 max-w-2xl mx-auto"     ,}
+          , _react2.default.createElement('p', { className: "font-medium",}, "\"Outwit, Outplay, Outlast\" - The Christian's strategy for spiritual warfare"
+
+          )
+        )
+      )
+
+      /* Tabs Navigation */
+      , _react2.default.createElement('div', { className: "mb-6",}
+        , _react2.default.createElement('div', { className: "flex flex-wrap gap-2 border-b"   ,}
+          , _react2.default.createElement(TabButton, { 
+            id: "main", 
+            label: "🏠 Main Sermon"  , 
+            isActive: activeTab === 'main', 
+            onClick: setActiveTab,} 
+          )
+          , _react2.default.createElement(TabButton, { 
+            id: "bible", 
+            label: "📖 Bible Verses"  , 
+            isActive: activeTab === 'bible', 
+            onClick: setActiveTab,} 
+          )
+          , _react2.default.createElement(TabButton, { 
+            id: "practical", 
+            label: "⚡ Practical Steps"  , 
+            isActive: activeTab === 'practical', 
+            onClick: setActiveTab,} 
+          )
+          , _react2.default.createElement(TabButton, { 
+            id: "reflection", 
+            label: "🤔 Reflection" , 
+            isActive: activeTab === 'reflection', 
+            onClick: setActiveTab,} 
+          )
+        )
+      )
+
+      /* Tab Content */
+      , _react2.default.createElement('div', { className: "mb-8",}
+        , activeTab === 'main' && _react2.default.createElement(MainContent, null )
+        , activeTab === 'bible' && _react2.default.createElement(BibleTab, null )
+        , activeTab === 'practical' && _react2.default.createElement(PracticalTab, null )
+        , activeTab === 'reflection' && _react2.default.createElement(ReflectionTab, null )
+      )
+
+      /* Footer */
+      , _react2.default.createElement('footer', { className: "border-t pt-6 text-center text-sm text-gray-600"    ,}
+        , _react2.default.createElement('div', { className: "attribution",}, "Generated using LLM with supervision and polishing by"
+                 , ' '
+          , _react2.default.createElement('a', { 
+            href: "https://benjaminficusmicrocarpa.github.io/", 
+            target: "_blank", 
+            rel: "noopener noreferrer" ,
+            className: "text-blue-600 hover:text-blue-800" ,}
+, "benjaminficusmicrocarpa"
+
+          )
+          , ' | ', "Original:"
+          , ' '
+          , _react2.default.createElement('a', { 
+            href: "https://www.youtube.com/watch?v=KwFlYd_4WrQ", 
+            target: "_blank", 
+            rel: "noopener noreferrer" ,
+            className: "text-blue-600 hover:text-blue-800 flex items-center justify-center gap-1 mt-2"      ,}
+
+            , _react2.default.createElement(_lucidereact.ExternalLink, { size: 16,} ), "17 August 2025 | Clickbait: Outwitting Satan"
+
+          )
+        )
+        , _react2.default.createElement('p', { className: "mt-4 text-xs" ,}, "\"Be alert and of sober mind. Your enemy the devil prowls around like a roaring lion looking for someone to devour.\" - 1 Peter 5:8"
+
+        )
+      )
+
+      /* Modal */
+      , _react2.default.createElement(Modal, { content: modalContent, onClose: closeModal,} )
+    )
+  );
+};
+
+exports. default = SermonInfographic;
+</script></head>
+  <body>
+  
+
+<div id="preview-app"></div></body></html>
