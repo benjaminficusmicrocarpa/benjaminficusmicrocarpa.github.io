@@ -14,6 +14,7 @@ class FuzzySearchEngine {
             scientificWeight: options.scientificWeight || 1.0,
             chineseWeight: options.chineseWeight || 0.8,
             alternativeWeight: options.alternativeWeight || 0.6,
+            latin29Weight: options.latin29Weight || 0.9,
             
             // Search behavior
             maxResults: options.maxResults || 8,
@@ -204,10 +205,12 @@ class FuzzySearchEngine {
         const scientificNorm = this.normalizeString(species.scientific);
         const chineseNorm = this.normalizeString(species.chinese);
         const alternativeNorm = this.normalizeString(species.alternative || '');
+        const latin29Norm = this.normalizeString(species.latin29_id || '');
         
         const scientificTokens = this.tokenize(species.scientific);
         const chineseTokens = this.tokenize(species.chinese);
         const alternativeTokens = this.tokenize(species.alternative || '');
+        const latin29Tokens = this.tokenize(species.latin29_id || '');
         
         // Calculate different types of matches
         const scores = {
@@ -215,11 +218,13 @@ class FuzzySearchEngine {
             scientificExact: scientificNorm.includes(queryNorm) ? 1.0 : 0,
             chineseExact: chineseNorm.includes(queryNorm) ? 1.0 : 0,
             alternativeExact: alternativeNorm.includes(queryNorm) ? 1.0 : 0,
+            latin29Exact: latin29Norm.includes(queryNorm) ? 1.0 : 0,
             
             // Prefix matches (high priority)
             scientificPrefix: scientificNorm.startsWith(queryNorm) ? 1.0 : 0,
             chinesePrefix: chineseNorm.startsWith(queryNorm) ? 1.0 : 0,
             alternativePrefix: alternativeNorm.startsWith(queryNorm) ? 1.0 : 0,
+            latin29Prefix: latin29Norm.startsWith(queryNorm) ? 1.0 : 0,
             
             // Fuzzy string similarity
             scientificFuzzy: Math.max(
@@ -234,11 +239,16 @@ class FuzzySearchEngine {
                 this.calculateSimilarity(alternativeNorm, queryNorm),
                 this.jaroWinklerSimilarity(alternativeNorm, queryNorm)
             ),
+            latin29Fuzzy: Math.max(
+                this.calculateSimilarity(latin29Norm, queryNorm),
+                this.jaroWinklerSimilarity(latin29Norm, queryNorm)
+            ),
             
             // Token-based similarity
             scientificTokens: this.tokenSimilarity(queryTokens, scientificTokens),
             chineseTokens: this.tokenSimilarity(queryTokens, chineseTokens),
-            alternativeTokens: this.tokenSimilarity(queryTokens, alternativeTokens)
+            alternativeTokens: this.tokenSimilarity(queryTokens, alternativeTokens),
+            latin29Tokens: this.tokenSimilarity(queryTokens, latin29Tokens)
         };
         
         // Calculate weighted final score
@@ -263,11 +273,19 @@ class FuzzySearchEngine {
             scores.alternativeTokens
         );
         
+        const latin29Score = Math.max(
+            scores.latin29Exact + this.options.exactMatchBonus,
+            scores.latin29Prefix + this.options.prefixBonus,
+            scores.latin29Fuzzy,
+            scores.latin29Tokens
+        );
+        
         const finalScore = (
             scientificScore * this.options.scientificWeight +
             chineseScore * this.options.chineseWeight +
-            alternativeScore * this.options.alternativeWeight
-        ) / (this.options.scientificWeight + this.options.chineseWeight + this.options.alternativeWeight);
+            alternativeScore * this.options.alternativeWeight +
+            latin29Score * this.options.latin29Weight
+        ) / (this.options.scientificWeight + this.options.chineseWeight + this.options.alternativeWeight + this.options.latin29Weight);
         
         return Math.min(finalScore, 1.0); // Cap at 1.0
     }
@@ -317,11 +335,13 @@ class FuzzySearchEngine {
             const scientificNorm = this.normalizeString(sp.scientific);
             const chineseNorm = this.normalizeString(sp.chinese);
             const alternativeNorm = this.normalizeString(sp.alternative || '');
+            const latin29Norm = this.normalizeString(sp.latin29_id || '');
     
             // Check for exact full matches
             if (scientificNorm === queryNorm || 
                 chineseNorm === queryNorm || 
-                alternativeNorm === queryNorm) {
+                alternativeNorm === queryNorm ||
+                latin29Norm === queryNorm) {
                 exactFullMatches.push(sp);
                 return;
             }
@@ -331,9 +351,11 @@ class FuzzySearchEngine {
                 scientificNorm.includes(queryNorm) || 
                 chineseNorm.includes(queryNorm) || 
                 alternativeNorm.includes(queryNorm) ||
+                latin29Norm.includes(queryNorm) ||
                 scientificNorm.startsWith(queryNorm) || 
                 chineseNorm.startsWith(queryNorm) || 
-                alternativeNorm.startsWith(queryNorm);
+                alternativeNorm.startsWith(queryNorm) ||
+                latin29Norm.startsWith(queryNorm);
     
             if (isPartialExact) {
                 partialExactMatches.push(sp);

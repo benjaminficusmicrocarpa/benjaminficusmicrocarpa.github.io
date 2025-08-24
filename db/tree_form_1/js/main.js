@@ -30,7 +30,7 @@ class TreeSpeciesDatabase {
     // Load tree species data from the JSON file
     async loadData() {
         try {
-            const response = await fetch('tree-database.json');
+            const response = await fetch('tree-database-with-ids.json');
             const jsonData = await response.json();
             this.data = jsonData.species; // Store the species array
             this.filteredData = [...this.data]; // Copy all data to filtered array initially
@@ -204,6 +204,8 @@ class TreeSpeciesDatabase {
                     <td class="${clickableClass}" data-species-id="${species.id}" ${clickHandler}>${species.scientific}</td>
                     <td class="chinese-name">${species.chinese}</td>
                     <td class="alternative-name">${species.alternative || ''}</td>
+                    <td class="latin29-id">${species.latin29_id || ''}</td>
+                    <td class="gbif-column">${this.generateGbifLink(species)}</td>
                     <td class="powo-column">${this.generatePowoLink(species)}</td>
                     <td class="wfo-column">${this.generateWfoLink(species)}</td>
                 </tr>

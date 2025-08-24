@@ -86,14 +86,39 @@
                     <li>Store the species data in a <strong>JSON file</strong> (a web‑friendly format that's easier to update later).</li>
                 </ol>
 
+                <h3>Step 7 -- Enhanced with visual features</h3>
+                <p>Additional features were later added to make the database more comprehensive:</p>
+                <ol>
+                    <li><strong>Species Photography</strong>: High-quality photos were collected for selected tree species, showing different aspects like leaves, bark, flowers, and overall form.</li>
+                    <li><strong>Interactive Image Carousel</strong>: A modal popup with navigation controls that allows users to browse through multiple photos of each species.</li>
+                    <li><strong>Thumbnail Navigation</strong>: Small preview images at the bottom of the carousel for quick navigation between photos.</li>
+                    <li><strong>Photo Filtering</strong>: A toggle option to show only species that have photos available.</li>
+                    <li><strong>Statistics Dashboard</strong>: Real-time counters showing total species, currently displayed species, and species with photos.</li>
+                    <li><strong>Responsive Design</strong>: The website works seamlessly on desktop, tablet, and mobile devices.</li>
+                    <li><strong>Latin29 ID System</strong>: Implemented a unique identifier system for species using Latin29 encoding, replacing species names as folder names for better organization.</li>
+                    <li><strong>Expanded Photo Database</strong>: Increased from 10 to 60 species with photos, significantly expanding the visual database.</li>
+                    <li><strong>External Database Links</strong>: Integrated links to GBIF (Global Biodiversity Information Facility), POWO (Plants of the World Online), and WFO (World Flora Online) for additional species information.</li>
+                    <li><strong>Comprehensive Documentation</strong>: Created detailed technical documentation for developers and maintainers.</li>
+                </ol>
+
                 <div class="result-box">
-                    <h3>✅ The Result</h3>
-                    <p>The outcome is a simple, user‑friendly website where visitors can:</p>
+                    <h3>✅ The Enhanced Result</h3>
+                    <p>The outcome is a comprehensive, user‑friendly website where visitors can:</p>
                     <ul>
-                        <li>Browse all tree species.</li>
-                        <li>Search by scientific name or Chinese name with fuzzy matching capability.</li>
-                        <li>Enjoy fast, clean, and easy access to the data.</li>
+                        <li>Browse all tree species with real-time statistics.</li>
+                        <li>Search by scientific name, Chinese name, alternative names, or Latin29 ID with fuzzy matching capability.</li>
+                        <li>Filter to show only species with available photos.</li>
+                        <li>View high-quality photos of tree species through an interactive carousel.</li>
+                        <li>Navigate through multiple photos per species with thumbnail previews.</li>
+                        <li>Access external resources like GBIF (Global Biodiversity Information Facility), POWO (Plants of the World Online), and WFO (World Flora Online) for additional information.</li>
+                        <li>Enjoy fast, clean, and easy access to the data on any device.</li>
+                        <li>Reference species using the standardized Latin29 ID system for future database expansions.</li>
                     </ul>
+                </div>
+
+                <div class="result-box">
+                    <h3>📸 Photo Credits</h3>
+                    <p>All photos are licensed under <strong><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-ShareAlike 4.0 International License</a></strong> and were carefully selected to show the distinctive features of each tree species. The images help users identify trees by their leaves, bark, flowers, and overall form.</p>
                 </div>
             </div>
         </div>
@@ -109,7 +134,9 @@
                 </div>
                 <div class="carousel-header-right">
                     <div class="cc-license" id="ccLicense" data-tooltip="Creative Commons Attribution-ShareAlike 4.0 International License">
-                        <img src="by-sa.svg" alt="CC BY-SA" class="cc-icon">
+                        <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" rel="noopener noreferrer">
+                            <img src="by-sa.svg" alt="CC BY-SA" class="cc-icon">
+                        </a>
                     </div>
                     <span class="close" onclick="closeCarouselModal()">&times;</span>
                 </div>
@@ -135,7 +162,7 @@
         <!-- Search input section -->
         <div class="search-container">
             <div class="search-icon">🔍</div>
-            <input type="text" class="search-input" id="searchInput" placeholder="Search by scientific name, Chinese name, or alternative name..." autocomplete="off">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search by scientific name, Chinese name, alternative name, or Latin29 ID..." autocomplete="off">
             <!-- Dropdown suggestions that appear when typing -->
             <div class="suggestions" id="suggestions"></div>
         </div>
@@ -173,9 +200,15 @@
                     <thead>
                         <tr>
                             <th style="width: 60px;">No.</th>
-                            <th style="width: 30%;">Scientific Name</th>
-                            <th style="width: 20%;">Chinese Name</th>
-                            <th style="width: 20%;">Alternative Chinese Names</th>
+                            <th style="width: 25%;">Scientific Name</th>
+                            <th style="width: 15%;">Chinese Name</th>
+                            <th style="width: 15%;">Alternative Chinese Names</th>
+                            <th style="width: 80px;">Latin29 ID</th>
+                            <!-- Tooltip explains what GBIF stands for -->
+                            <th style="width: 50px;" class="tooltip-header">
+                                GBIF
+                                <span class="tooltip">Global Biodiversity Information Facility</span>
+                            </th>
                             <!-- Tooltip explains what POWO stands for -->
                             <th style="width: 50px;" class="tooltip-header">
                                 POWO
@@ -204,6 +237,13 @@
             Generated using LLM with supervision and polishing by 
             <a href="https://benjaminficusmicrocarpa.github.io/" target="_blank" rel="noopener noreferrer">
                 benjaminficusmicrocarpa
+            </a>
+        </div>
+        
+        <!-- MIT License link -->
+        <div class="license-link">
+            <a href="../../license.html" target="_blank" rel="noopener noreferrer" style="color: #7f8c8d; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-top: 1rem;">
+                📄 MIT License
             </a>
         </div>
     </div>

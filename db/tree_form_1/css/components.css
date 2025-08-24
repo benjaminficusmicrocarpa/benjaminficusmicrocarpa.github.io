@@ -349,13 +349,14 @@ tbody tr:hover {
     font-weight: 500;
     transition: all 0.3s ease;
     position: relative;
-    user-select: none; /* Prevent text selection */
+    user-select: text; /* Allow text selection */
 }
 
 /* Only make clickable species interactive */
 .scientific-name.clickable {
     cursor: pointer !important;
     padding-right: 20px; /* Space for the camera icon */
+    user-select: text; /* Allow text selection for all scientific names */
 }
 
 .scientific-name.clickable:hover {
@@ -384,14 +385,23 @@ tbody tr:hover {
     font-size: 0.9rem;
 }
 
-/* POWO and WFO column styling */
-.powo-column, .wfo-column {
+/* Latin29 ID column styling */
+.latin29-id {
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+/* GBIF, POWO and WFO column styling */
+.gbif-column, .powo-column, .wfo-column {
     text-align: center;
     width: 50px;
 }
 
 /* Links to external databases */
-.powo-link, .wfo-link {
+.gbif-link, .powo-link, .wfo-link {
     display: inline-block;
     padding: 0.25rem; /* Reduced padding for tighter rows */
     color: var(--primary-color);
@@ -401,13 +411,13 @@ tbody tr:hover {
     font-size: 1rem; /* Slightly smaller font size */
 }
 
-.powo-link:hover, .wfo-link:hover {
+.gbif-link:hover, .powo-link:hover, .wfo-link:hover {
     background-color: var(--accent-color);
     transform: scale(1.1);
 }
 
-/* WFO icon sizing */
-.wfo-icon {
+/* GBIF and WFO icon sizing */
+.gbif-icon, .wfo-icon {
     width: 14px; /* Smaller icon for tighter rows */
     height: 13px;
     display: inline-block;
@@ -462,16 +472,21 @@ tbody tr:hover {
     }
 
     /* Smaller external link columns on mobile */
-    .powo-column, .wfo-column {
+    .latin29-id {
+        font-size: 0.8rem;
+        padding: 1px 2px;
+    }
+    
+    .gbif-column, .powo-column, .wfo-column {
         width: 35px;
     }
 
-    .powo-link, .wfo-link {
+    .gbif-link, .powo-link, .wfo-link {
         padding: 0.125rem; /* Very minimal padding */
         font-size: 0.9rem;
     }
 
-    .wfo-icon {
+    .gbif-icon, .wfo-icon {
         width: 12px;
         height: 11px;
     }
