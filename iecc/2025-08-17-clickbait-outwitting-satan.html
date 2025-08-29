@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickbait: Outwitting Satan - Interactive Sermon Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal {
+            display: none;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .expandable-content {
+            display: none;
+        }
+        .expandable-content.expanded {
+            display: block;
+        }
+        .cursor-help {
+            cursor: help;
+        }
+        .border-dotted {
+            border-style: dotted;
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen">
+    <div class="max-w-6xl mx-auto p-4 pb-24"> <!--pb-24 for padding for attributiion badge-->
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+                ⚔️ Clickbait: Outwitting Satan
+            </h1>
+            <p class="text-gray-600 mb-4">
+                Island ECC • 17 August, 2025 • Interactive Sermon Guide
+            </p>
+            <div class="bg-blue-100 p-4 rounded-lg text-blue-800 max-w-2xl mx-auto">
+                <p class="font-medium">
+                    "Outwit, Outplay, Outlast" - The Christian's strategy for spiritual warfare
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-3 mt-3">
+                <a href="https://www.youtube.com/watch?v=KwFlYd_4WrQ" 
+                   class="inline-flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    <span>Watch Original Sermon</span>
+                </a>
+                <a href="index.html" 
+                   class="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                    <span>View All Sermons</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <div class="mb-6">
+            <div class="flex flex-wrap gap-2 border-b" id="tab-navigation">
+                <button class="tab-button px-4 py-2 rounded-t-lg font-medium transition-colors bg-blue-600 text-white" data-tab="main">
+                    🏠 Main Sermon
+                </button>
+                <button class="tab-button px-4 py-2 rounded-t-lg font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300" data-tab="bible">
+                    📖 Bible Verses
+                </button>
+                <button class="tab-button px-4 py-2 rounded-t-lg font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300" data-tab="practical">
+                    ⚡ Practical Steps
+                </button>
+                <button class="tab-button px-4 py-2 rounded-t-lg font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300" data-tab="reflection">
+                    🤔 Reflection
+                </button>
+            </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="mb-8">
+            <!-- Main Content Tab -->
+            <div id="main-content" class="tab-content active space-y-6">
+                <!-- Opening Contrast -->
+                <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded">
+                    <h3 class="font-bold text-red-800 mb-2">🎭 The Clickbait Challenge</h3>
+                    <p class="text-red-700 mb-3">
+                        Lucy's video dismisses spiritual warfare as "imaginary kitty" drama, claiming there's no enemy targeting us. 
+                        But what does Scripture actually teach?
+                    </p>
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-r-lg">
+                        <blockquote class="text-red-800 font-medium mb-2 italic">
+                            <svg class="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            "First of all, trash any thought that there's some force or enemy out there that cares enough about you to spend all their time trying to influence you. What a waste of time. Just toss your imaginary kitty a toy and move on with your life."
+                        </blockquote>
+                        <div class="text-red-600 text-sm">
+                            <strong>-- Lucy (Clickbait Video)</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Survivor Analogy -->
+                <div class="bg-gradient-to-r from-green-100 to-blue-100 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-3 text-center">🏝️ Spiritual Survivor Strategy</h3>
+                    <div class="grid md:grid-cols-3 gap-4 text-center">
+                        <div class="bg-white p-4 rounded shadow">
+                            <div class="text-2xl mb-2">🧠</div>
+                            <h4 class="font-semibold">OUTWIT</h4>
+                            <p class="text-sm">Be shrewd as snakes</p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow">
+                            <div class="text-2xl mb-2">⚔️</div>
+                            <h4 class="font-semibold">OUTPLAY</h4>
+                            <p class="text-sm">Strategic spiritual warfare</p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow">
+                            <div class="text-2xl mb-2">🏆</div>
+                            <h4 class="font-semibold">OUTLAST</h4>
+                            <p class="text-sm">Victory through Christ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enemy's Two-Pronged Attack -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                        <h3 class="font-bold text-orange-800 mb-3 flex items-center">
+                            <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            TEMPTATION
+                        </h3>
+                        <p class="text-orange-700 mb-2">
+                            <span class="cursor-help border-b border-dotted border-blue-500 text-blue-600 tooltip-trigger" data-tooltip="Satan's role as one who entices toward sin">
+                                The Tempter
+                            </span> distorts God's word and makes sin appear attractive.
+                        </p>
+                        <button class="modal-trigger text-blue-600 hover:text-blue-800 text-sm flex items-center" data-modal-title="1 Thessalonians 3:5" data-modal-content="For this reason, when I could stand it no longer, I sent to find out about your faith. I was afraid that in some way the tempter might have tempted you and that our labors might have been in vain.">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                            </svg>
+                            See Scripture
+                        </button>
+                    </div>
+
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                        <h3 class="font-bold text-red-800 mb-3 flex items-center">
+                            <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            ACCUSATION
+                        </h3>
+                        <p class="text-red-700 mb-2">
+                            <span class="cursor-help border-b border-dotted border-blue-500 text-blue-600 tooltip-trigger" data-tooltip="Lying is Satan's native language - what he naturally speaks">
+                                The Father of Lies
+                            </span> accuses and condemns to create shame and despair.
+                        </p>
+                        <button class="modal-trigger text-blue-600 hover:text-blue-800 text-sm flex items-center" data-modal-title="John 8:44" data-modal-content="You belong to your father, the devil, and you want to carry out your father's desires. He was a murderer from the beginning, not holding to the truth, for there is no truth in him. When he lies, he speaks his native language, for he is a liar and the father of lies.">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                            </svg>
+                            See Scripture
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pastor Brett Quote -->
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg">
+                    <blockquote class="text-blue-800 font-medium mb-2 italic">
+                        <svg class="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        "We are to be sober-minded, as Peter tells us, being sober-minded, watchful, because your adversary, the devil, prowls around like a roaring lion seeking someone to devour. So as Christians, as followers of Christ, we are not to be passive, not to be laissez-faire, but to be watchful, attentive, not paranoid, fearful, filled with faith, but also alert."
+                    </blockquote>
+                    <div class="text-blue-600 text-sm">
+                        <strong>-- Pastor Brett</strong>
+                        <div class="text-xs mt-1">On the Christian's disposition toward spiritual warfare</div>
+                    </div>
+                </div>
+
+                <!-- Baxter's Four Categories -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4 text-center">
+                        📚 Richard Baxter's Analysis of "Excessive Sorrow"
+                    </h3>
+                    <p class="text-gray-600 text-center mb-4 text-sm italic">
+                        The Cure of Melancholy and Excessive Sorrow (1600s)
+                    </p>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white p-4 rounded text-center shadow-sm">
+                            <div class="text-2xl mb-2">💪</div>
+                            <h4 class="font-semibold mb-1">Physical</h4>
+                            <p class="text-xs text-gray-600">Diet, sleep, exercise, hormones</p>
+                        </div>
+                        <div class="bg-white p-4 rounded text-center shadow-sm">
+                            <div class="text-2xl mb-2">🧠</div>
+                            <h4 class="font-semibold mb-1">Psychological</h4>
+                            <p class="text-xs text-gray-600">Need for love, affirmation, community</p>
+                        </div>
+                        <div class="bg-white p-4 rounded text-center shadow-sm">
+                            <div class="text-2xl mb-2">⚖️</div>
+                            <h4 class="font-semibold mb-1">Moral</h4>
+                            <p class="text-xs text-gray-600">Consequences of moral decisions</p>
+                        </div>
+                        <div class="bg-white p-4 rounded text-center shadow-sm">
+                            <div class="text-2xl mb-2">👹</div>
+                            <h4 class="font-semibold mb-1">Demonic</h4>
+                            <p class="text-xs text-gray-600">Spiritual warfare aspect</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brooks' Devices -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold mb-4 text-center">
+                        ⚔️ Thomas Brooks' Battle Manual
+                    </h3>
+                    <p class="text-center text-gray-600 mb-6 italic">
+                        Precious Remedies Against Satan's Devices (17th century)
+                    </p>
+                    
+                    <!-- Temptation Devices -->
+                    <div class="mb-8">
+                        <button class="expandable-trigger w-full flex items-center justify-between p-4 bg-orange-100 rounded-lg font-semibold text-orange-800 hover:bg-orange-200 transition-colors" data-target="temptation-devices">
+                            <span class="flex items-center">
+                                <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                                5 Devices of Temptation
+                            </span>
+                            <svg class="chevron w-5 h-5 transform transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        
+                        <div id="temptation-devices" class="expandable-content mt-4 grid gap-4">
+                            <div class="bg-white p-4 rounded-lg border border-orange-200">
+                                <h4 class="font-semibold text-orange-800 mb-2 flex items-center">
+                                    <span class="mr-2 text-lg">🎣</span>
+                                    Show the Bait, Hide the Hook
+                                </h4>
+                                <p class="text-gray-700 mb-2">The enemy shows what's enticing about sin while hiding negative consequences</p>
+                                <div class="bg-orange-50 p-2 rounded text-sm italic text-orange-700">
+                                    Example: "No one's getting hurt. It's just a little fun."
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border border-orange-200">
+                                <h4 class="font-semibold text-orange-800 mb-2 flex items-center">
+                                    <span class="mr-2 text-lg">🎭</span>
+                                    Rationalize Sin as Virtue
+                                </h4>
+                                <p class="text-gray-700 mb-2">Making wrong choices appear virtuous or spiritual</p>
+                                <div class="bg-orange-50 p-2 rounded text-sm italic text-orange-700">
+                                    Example: "I'm not gossiping, I just want to pray specifically."
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border border-orange-200">
+                                <h4 class="font-semibold text-orange-800 mb-2 flex items-center">
+                                    <span class="mr-2 text-lg">😤</span>
+                                    Bitter Over Suffering
+                                </h4>
+                                <p class="text-gray-700 mb-2">Using hardship to justify seeking relief in wrong places</p>
+                                <div class="bg-orange-50 p-2 rounded text-sm italic text-orange-700">
+                                    Example: "My job is so stressful. I deserve some relief."
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border border-orange-200">
+                                <h4 class="font-semibold text-orange-800 mb-2 flex items-center">
+                                    <span class="mr-2 text-lg">💰</span>
+                                    Bad People, Great Lives
+                                </h4>
+                                <p class="text-gray-700 mb-2">Pointing to immoral people who seem to prosper</p>
+                                <div class="bg-orange-50 p-2 rounded text-sm italic text-orange-700">
+                                    Example: "They get away with everything. Why shouldn't I?"
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border border-orange-200">
+                                <h4 class="font-semibold text-orange-800 mb-2 flex items-center">
+                                    <span class="mr-2 text-lg">⚖️</span>
+                                    Compare Life Areas
+                                </h4>
+                                <p class="text-gray-700 mb-2">Using strength in one area to justify weakness in another</p>
+                                <div class="bg-orange-50 p-2 rounded text-sm italic text-orange-700">
+                                    Example: "Nobody's perfect. I'm amazing at this, so I can mess up here."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accusation Devices -->
+                    <div>
+                        <button class="expandable-trigger w-full flex items-center justify-between p-4 bg-red-100 rounded-lg font-semibold text-red-800 hover:bg-red-200 transition-colors" data-target="accusation-devices">
+                            <span class="flex items-center">
+                                <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                4 Devices of Accusation
+                            </span>
+                            <svg class="chevron w-5 h-5 transform transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        
+                        <div id="accusation-devices" class="expandable-content mt-4 grid gap-4">
+                            <div class="bg-white p-4 rounded-lg border border-red-200">
+                                <h4 class="font-semibold text-red-800 mb-2 flex items-center">
+                                    <span class="mr-2 text-lg">🔍</span>
+                                    Focus on Sin, Not Savior
+                                </h4>
+                                <p class="text-gray-700 mb-2">Fixating on repeated failures rather than Christ's redemption</p>
+                                <div class="bg-red-50 p-2 rounded text-sm italic text-red-700">
+                                    Example: "That's just who I am. God's not going to change me."
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border border-red-200">
+                                <h4 class="font-semibold text-red-800 mb-2 flex items-center">
+                                    <span class="mr-2 text-lg">⏰</span>
+                                    Obsess Over Past Sins
+                                </h4>
+                                <p class="text-gray-700 mb-2">Dwelling on irreversible damage while minimizing God's forgiveness</p>
+                                <div class="bg-red-50 p-2 rounded text-sm italic text-red-700">
+                                    Example: "Remember when you did that? You can't fix it."
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border border-red-200">
+                                <h4 class="font-semibold text-red-800 mb-2 flex items-center">
+                                    <span class="mr-2 text-lg">⚡</span>
+                                    Struggle Equals Punishment
+                                </h4>
+                                <p class="text-gray-700 mb-2">Believing difficulties are God's punishment for wrongdoing</p>
+                                <div class="bg-red-50 p-2 rounded text-sm italic text-red-700">
+                                    Example: "God is upset with you. You deserve this struggle."
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border border-red-200">
+                                <h4 class="font-semibold text-red-800 mb-2 flex items-center">
+                                    <span class="mr-2 text-lg">🏝️</span>
+                                    Your Struggle is Unique
+                                </h4>
+                                <p class="text-gray-700 mb-2">Making believers feel isolated in their spiritual battles</p>
+                                <div class="bg-red-50 p-2 rounded text-sm italic text-red-700">
+                                    Example: "If they knew about you, you wouldn't belong here."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More Quotes -->
+                <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
+                    <blockquote class="text-green-800 font-medium mb-2 italic">
+                        <svg class="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        "Can you imagine? Paul murdered people and wrote the majority of the New Testament. He found grace. Do you think you could?"
+                    </blockquote>
+                    <div class="text-green-600 text-sm">
+                        <strong>-- Pastor Brett</strong>
+                        <div class="text-xs mt-1">On God's grace surpassing our failures</div>
+                    </div>
+                </div>
+
+                <!-- Victory Declaration -->
+                <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-lg text-center">
+                    <h3 class="text-xl font-bold mb-3">🏆 Our Victory Position</h3>
+                    <p class="mb-4">
+                        "Thanks be to God! He gives us the victory through our Lord Jesus Christ." 
+                        <span class="text-sm opacity-90 block mt-1">- 1 Corinthians 15:57</span>
+                    </p>
+                    <div class="text-sm opacity-90">
+                        We don't fight FOR victory; we fight FROM victory! 🎉
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bible Verses Tab -->
+            <div id="bible-content" class="tab-content space-y-6">
+                <h2 class="text-2xl font-bold text-center mb-6">📖 Scripture Foundation</h2>
+                <div class="grid gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h3 class="font-bold text-blue-800 mb-2">2 Corinthians 2:11</h3>
+                        <blockquote class="text-gray-700 italic mb-2 border-l-4 border-blue-400 pl-4">
+                            "in order that Satan might not outwit us. For we are not unaware of his schemes."
+                        </blockquote>
+                        <p class="text-sm text-gray-600">Paul's instruction about forgiveness and spiritual awareness</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h3 class="font-bold text-blue-800 mb-2">1 Peter 5:8</h3>
+                        <blockquote class="text-gray-700 italic mb-2 border-l-4 border-blue-400 pl-4">
+                            "Be alert and of sober mind. Your enemy the devil prowls around like a roaring lion looking for someone to devour."
+                        </blockquote>
+                        <p class="text-sm text-gray-600">Peter's warning about spiritual vigilance</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h3 class="font-bold text-blue-800 mb-2">Matthew 10:16</h3>
+                        <blockquote class="text-gray-700 italic mb-2 border-l-4 border-blue-400 pl-4">
+                            "I am sending you out like sheep among wolves. Therefore be as shrewd as snakes and as innocent as doves."
+                        </blockquote>
+                        <p class="text-sm text-gray-600">Jesus instructing disciples about wisdom in ministry</p>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-300">
+                    <h3 class="font-bold text-yellow-800 mb-2">🔑 Key Themes</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>• <strong>Awareness:</strong> "We are not unaware of his schemes"</li>
+                        <li>• <strong>Vigilance:</strong> "Be alert and of sober mind"</li>
+                        <li>• <strong>Shrewdness:</strong> "Be as shrewd as snakes"</li>
+                        <li>• <strong>Truth:</strong> Satan is "the father of lies"</li>
+                        <li>• <strong>Worship:</strong> "In spirit and in truth"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Practical Steps Tab -->
+            <div id="practical-content" class="tab-content space-y-6">
+                <h2 class="text-2xl font-bold text-center mb-6">⚡ Battle Plan</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-green-800 mb-3 flex items-center">
+                            <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            </svg>
+                            Defensive Strategies
+                        </h3>
+                        <ul class="space-y-2 text-green-700">
+                            <li>✓ Regular Scripture reading and memorization</li>
+                            <li>✓ Corporate worship and community involvement</li>
+                            <li>✓ Accountability relationships in care groups</li>
+                            <li>✓ Prayer and dependence on the Holy Spirit</li>
+                            <li>✓ Understanding your particular vulnerabilities</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-red-800 mb-3 flex items-center">
+                            <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" clip-rule="evenodd"></path>
+                            </svg>
+                            Offensive Strategies
+                        </h3>
+                        <ul class="space-y-2 text-red-700">
+                            <li>⚔️ Worship as lifestyle warfare</li>
+                            <li>⚔️ Speaking truth against lies</li>
+                            <li>⚔️ Serving others and advancing God's kingdom</li>
+                            <li>⚔️ Forgiveness and grace-filled living</li>
+                            <li>⚔️ Bearing witness to Christ's victory</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-gray-800 mb-3">📅 Daily Worship Checklist</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <h4 class="font-semibold text-green-700 mb-2">Say YES to:</h4>
+                            <ul class="space-y-1 text-gray-700">
+                                <li>☐ Morning prayer/devotion</li>
+                                <li>☐ Scripture reading</li>
+                                <li>☐ Serving others</li>
+                                <li>☐ Gratitude practice</li>
+                                <li>☐ Fellowship/community</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-red-700 mb-2">Say NO to:</h4>
+                            <ul class="space-y-1 text-gray-700">
+                                <li>☐ Destructive media consumption</li>
+                                <li>☐ Gossip and criticism</li>
+                                <li>☐ Self-condemnation</li>
+                                <li>☐ Isolation from believers</li>
+                                <li>☐ Spiritual laziness</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reflection Tab -->
+            <div id="reflection-content" class="tab-content space-y-6">
+                <h2 class="text-2xl font-bold text-center mb-6">🤔 Personal Reflection</h2>
+                
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-4 flex items-center">
+                        <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.477.859h4z"></path>
+                        </svg>
+                        Sermon Reflection Questions
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-semibold mb-2">1. What strategies would Satan most likely use on you to be effective?</h4>
+                            <textarea class="w-full p-3 border rounded-lg h-24 text-gray-700" placeholder="Consider your specific vulnerabilities, past patterns, and current life circumstances..."></textarea>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-semibold mb-2">2. What lies do you notice the enemy whispering to you?</h4>
+                            <textarea class="w-full p-3 border rounded-lg h-24 text-gray-700" placeholder="Think about negative thoughts, discouraging messages, or false beliefs you struggle with..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-3">🙏 Prayer Points</h3>
+                    <ul class="space-y-2 text-green-700">
+                        <li>• Ask for wisdom to recognize the enemy's schemes</li>
+                        <li>• Pray for strength to resist temptation</li>
+                        <li>• Request freedom from lies and accusations</li>
+                        <li>• Seek grace to worship authentically in daily life</li>
+                        <li>• Pray for your care group and church community</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="border-t pt-6 text-center text-sm text-gray-600">
+            <p class="mt-4 text-xs">
+                "Be alert and of sober mind. Your enemy the devil prowls around like a roaring lion looking for someone to devour." - 1 Peter 5:8
+            </p>
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 id="modal-title" class="text-lg font-semibold"></h3>
+                <button id="modal-close" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="modal-content" class="p-4"></div>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip absolute bg-gray-800 text-white text-sm px-3 py-2 rounded-lg shadow-lg max-w-xs z-50">
+        <div id="tooltip-content"></div>
+        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
+    </div>
+
+    <!-- Attribution badge to display at the bottom right-->
+    <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.95); color: #374151; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.2); max-width: 300px; word-wrap: break-word; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+        <div style="margin-bottom: 4px; font-weight: bold; color: #2563eb; line-height: 1.3;">
+            Generated using LLM with supervision and polishing by 
+            <a href="../index.html" style="color: #2563eb; text-decoration: none; border-bottom: 1px dotted #2563eb;" target="_blank">
+                benjaminficusmicrocarpa
+            </a>
+        </div>
+        <div>
+            <a href="../license.html" style="color: #dc2626; text-decoration: none; font-size: 0.75rem;" target="_blank">
+                Released under the MIT License
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Application State
+        const state = {
+            activeTab: 'main',
+            expandedSections: {},
+            tooltipVisible: null
+        };
+
+        // DOM Elements
+        const elements = {
+            tabButtons: document.querySelectorAll('.tab-button'),
+            tabContents: document.querySelectorAll('.tab-content'),
+            expandableTriggers: document.querySelectorAll('.expandable-trigger'),
+            modalTriggers: document.querySelectorAll('.modal-trigger'),
+            tooltipTriggers: document.querySelectorAll('.tooltip-trigger'),
+            modal: document.getElementById('modal'),
+            modalTitle: document.getElementById('modal-title'),
+            modalContent: document.getElementById('modal-content'),
+            modalClose: document.getElementById('modal-close'),
+            tooltip: document.getElementById('tooltip'),
+            tooltipContent: document.getElementById('tooltip-content')
+        };
+
+        // Tab Management
+        function switchTab(tabId) {
+            state.activeTab = tabId;
+            
+            // Update tab buttons
+            elements.tabButtons.forEach(button => {
+                if (button.dataset.tab === tabId) {
+                    button.className = 'tab-button px-4 py-2 rounded-t-lg font-medium transition-colors bg-blue-600 text-white';
+                } else {
+                    button.className = 'tab-button px-4 py-2 rounded-t-lg font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300';
+                }
+            });
+
+            // Update tab content
+            elements.tabContents.forEach(content => {
+                if (content.id === `${tabId}-content`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+
+        // Expandable Sections
+        function toggleExpandable(targetId) {
+            const target = document.getElementById(targetId);
+            const trigger = document.querySelector(`[data-target="${targetId}"]`);
+            const chevron = trigger.querySelector('.chevron');
+            
+            if (state.expandedSections[targetId]) {
+                target.classList.remove('expanded');
+                chevron.classList.remove('rotate-180');
+                state.expandedSections[targetId] = false;
+            } else {
+                target.classList.add('expanded');
+                chevron.classList.add('rotate-180');
+                state.expandedSections[targetId] = true;
+            }
+        }
+
+        // Modal Management
+        function openModal(title, content) {
+            elements.modalTitle.textContent = title;
+            elements.modalContent.innerHTML = `<div class="text-gray-700">"${content}"</div>`;
+            elements.modal.classList.add('active');
+        }
+
+        function closeModal() {
+            elements.modal.classList.remove('active');
+        }
+
+        // Tooltip Management
+        function showTooltip(element, content) {
+            const rect = element.getBoundingClientRect();
+            elements.tooltipContent.textContent = content;
+            elements.tooltip.style.left = `${rect.left + rect.width / 2}px`;
+            elements.tooltip.style.top = `${rect.top - 10}px`;
+            elements.tooltip.style.transform = 'translateX(-50%) translateY(-100%)';
+            elements.tooltip.classList.add('visible');
+        }
+
+        function hideTooltip() {
+            elements.tooltip.classList.remove('visible');
+        }
+
+        // Event Listeners
+        function initializeEventListeners() {
+            // Tab buttons
+            elements.tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    switchTab(button.dataset.tab);
+                });
+            });
+
+            // Expandable triggers
+            elements.expandableTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    toggleExpandable(trigger.dataset.target);
+                });
+            });
+
+            // Modal triggers
+            elements.modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    openModal(trigger.dataset.modalTitle, trigger.dataset.modalContent);
+                });
+            });
+
+            // Modal close
+            elements.modalClose.addEventListener('click', closeModal);
+            elements.modal.addEventListener('click', (e) => {
+                if (e.target === elements.modal) {
+                    closeModal();
+                }
+            });
+
+            // Escape key to close modal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+            // Tooltip triggers
+            elements.tooltipTriggers.forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => {
+                    showTooltip(trigger, trigger.dataset.tooltip);
+                });
+                trigger.addEventListener('mouseleave', hideTooltip);
+            });
+        }
+
+        // Initialize the application
+        function init() {
+            initializeEventListeners();
+            console.log('Sermon Infographic initialized');
+        }
+
+        // Start the application when DOM is loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>

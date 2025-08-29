@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temptation's Triple Threat: Your Battle Plan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background: linear-gradient(135deg, #dbeafe 0%, #faf5ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-bottom: 4px solid #2563eb;
+            padding: 1.5rem 0;
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .header-meta {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+            color: #374151;
+        }
+
+        .nav-tab:hover {
+            background: #f9fafb;
+        }
+
+        .nav-tab.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Grid layouts */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+        @media (min-width: 768px) {
+            .md\\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+            .md\\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Alert boxes */
+        .alert {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-red {
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+
+        .alert-blue {
+            background: #dbeafe;
+            border-color: #3b82f6;
+        }
+
+        .alert-green {
+            background: #dcfce7;
+            border-color: #22c55e;
+        }
+
+        .alert-yellow {
+            background: #fefce8;
+            border-color: #eab308;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-green {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background: #15803d;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 0.5rem;
+            max-width: 42rem;
+            width: 100%;
+            max-height: 24rem;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #9ca3af;
+        }
+
+        .modal-close:hover {
+            color: #4b5563;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 6rem;
+        }
+
+        /* Tab content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Accordion */
+        .accordion-button {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #111827;
+            cursor: pointer;
+            text-align: left;
+            padding: 0;
+        }
+
+        .accordion-content {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .accordion-content.open {
+            display: block;
+        }
+
+        /* Bible verse carousel */
+        .verse-carousel {
+            background: linear-gradient(135deg, #dbeafe 0%, #faf5ff 100%);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            min-height: 24rem;
+            position: relative;
+        }
+
+        .verse-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .verse-nav button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .verse-nav button:hover {
+            background: #1d4ed8;
+        }
+
+        .verse-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #3b82f6;
+            font-style: italic;
+            font-size: 1.125rem;
+            line-height: 1.75;
+            text-align: center;
+        }
+
+        .verse-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .verse-indicator {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background: #d1d5db;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .verse-indicator.active {
+            background: #2563eb;
+        }
+
+        /* FASTER scale */
+        .faster-level {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .faster-level.selected {
+            box-shadow: 0 0 0 2px #3b82f6;
+        }
+
+        .faster-restoration { background: #dcfce7; border-color: #22c55e; color: #166534; }
+        .faster-forgetting { background: #fefce8; border-color: #eab308; color: #a16207; }
+        .faster-anxiety { background: #fed7aa; border-color: #f97316; color: #c2410c; }
+        .faster-speeding { background: #fecaca; border-color: #ef4444; color: #dc2626; }
+        .faster-ticked { background: #f3e8ff; border-color: #a855f7; color: #7c3aed; }
+        .faster-exhausted { background: #f3f4f6; border-color: #6b7280; color: #374151; }
+        .faster-relapse { background: #111827; border-color: #111827; color: white; }
+
+        /* KPI Triangle */
+        .kpi-triangle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .kpi-item {
+            background: linear-gradient(135deg, #dbeafe 0%, #faf5ff 100%);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+            width: 100%;
+            max-width: 28rem;
+        }
+
+        .kpi-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 1rem;
+        }
+
+        .kpi-blue { background: #2563eb; }
+        .kpi-orange { background: #ea580c; }
+        .kpi-purple { background: #9333ea; }
+
+        /* Utility classes */
+        .hidden { display: none; }
+        .text-center { text-align: center; }
+        .font-bold { font-weight: bold; }
+        .text-sm { font-size: 0.875rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mt-3 { margin-top: 0.75rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .space-y-6 > * + * { margin-top: 1.5rem; }
+        .flex { display: flex; }
+        .flex-wrap { flex-wrap: wrap; }
+        .gap-3 { gap: 0.75rem; }
+        .justify-center { justify-content: center; }
+        .inline-flex { display: inline-flex; }
+        .items-center { align-items: center; }
+        .space-x-2 > * + * { margin-left: 0.5rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .pb-24 { padding-bottom: 6rem; }
+        .bg-red-600 { background-color: #dc2626; }
+        .bg-red-700 { background-color: #b91c1c; }
+        .bg-blue-600 { background-color: #2563eb; }
+        .bg-blue-700 { background-color: #1d4ed8; }
+        .text-white { color: white; }
+        .font-medium { font-weight: 500; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; }
+        .duration-200 { transition-duration: 200ms; }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .hover\:shadow-xl:hover { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .transform { transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)); }
+        .hover\:scale-105:hover { --tw-scale-x: 1.05; --tw-scale-y: 1.05; }
+        .hover\:bg-red-700:hover { background-color: #b91c1c; }
+        .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
+        .w-5 { width: 1.25rem; }
+        .h-5 { height: 1.25rem; }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .grid-cols-2, .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .kpi-triangle {
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>⚔️ Temptation's Triple Threat: Your Battle Plan</h1>
+                <p>When it comes to temptation, do you have a battle plan? We are not victims, but victors in Christ! 🏆</p>
+                <div class="header-meta">Pastor Daniel | Island ECC | August 10, 2025</div>
+                <div class="flex flex-wrap gap-3 mt-3 justify-center">
+                    <a href="https://www.youtube.com/watch?v=mV-aOjwN12Y" 
+                       class="inline-flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        <span>Watch Original Sermon</span>
+                    </a>
+                    <a href="index.html" 
+                       class="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        <span>View All Sermons</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <div class="container pb-24">
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="main">🎯 Main Sermon</button>
+            <button class="nav-tab" data-tab="bible">📖 Bible Verses</button>
+            <button class="nav-tab" data-tab="practical">🛠️ Practical Steps</button>
+            <button class="nav-tab" data-tab="reflection">💭 Reflection</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="tab-content active" id="main-tab">
+            <!-- Lucy Santana Intro -->
+            <div class="alert alert-red">
+                <h3 class="text-xl font-bold mb-3">⚠️ The Enemy's Clickbait Strategy</h3>
+                <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #fca5a5; margin-bottom: 1rem;">
+                    <p style="font-style: italic; color: #374151; margin-bottom: 0.5rem;">
+                        "Hey y'all, it's your girl Lucy, back with the truth they don't want you to hear. Welcome to Clickbait... don't fight temptation, vibe with it. Let's be real, life is stressful, boundaries exhausting, discipline overrated. Self-control is just another word for self-denial."
+                    </p>
+                    <p style="font-size: 0.875rem; color: #dc2626; font-weight: 500;">
+                        - "Lucy Santana" (parody character representing Satan's lies)
+                    </p>
+                </div>
+                <p style="color: #b91c1c;">
+                    <strong>Remember:</strong> It's the reverse. Don't do what Lucy Santana is asking you to do. Temptation doesn't come off the rack - it's tailor-made to exploit what is most vulnerable in you. 🎯
+                </p>
+            </div>
+
+            <!-- Key Pastor Quotes -->
+            <div class="card">
+                <h2 class="card-title">💬 Key Insights from Our Pastors</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2" id="pastor-quotes"></div>
+            </div>
+
+            <!-- Three Frontal Attacks -->
+            <div class="card">
+                <h2 class="card-title">⚔️ Satan's Three Frontal Attacks</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3" id="three-attacks"></div>
+            </div>
+
+            <!-- F.A.S.T.E.R. Scale -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="text-2xl font-bold">📊 Official F.A.S.T.E.R. Relapse Awareness Scale</h2>
+                    <a href="https://puredesire.org/wp-content/uploads/2020/04/faster-scale-check-in-2017-1.pdf" 
+                       target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        📥 Download PDF
+                    </a>
+                </div>
+                <p class="text-center mb-6" style="color: #6b7280;">
+                    Adapted from The Genesis Process by Michael Dye | Source: Pure Desire Ministries
+                </p>
+                <div id="faster-scale"></div>
+                <div class="alert alert-blue" style="margin-top: 1.5rem;">
+                    <p class="text-center">
+                        <strong>Where are you today?</strong> Click on your current position to see detailed behaviors. Remember: The goal is always to return to restoration through K.P.I.
+                    </p>
+                </div>
+            </div>
+
+            <!-- K.P.I. Framework -->
+            <div class="card">
+                <h2 class="card-title">🛡️ K.P.I. - Your Everyday Carry Tools</h2>
+                <div class="kpi-triangle">
+                    <div class="kpi-item">
+                        <div class="kpi-icon kpi-blue">K</div>
+                        <h3 class="text-xl font-bold mb-2">Keep Your Distance</h3>
+                        <p class="text-sm mb-3" style="color: #6b7280; font-style: italic;">1 Thessalonians 5:22</p>
+                        <p class="mb-3">"Abstain from every form of evil"</p>
+                        <div class="text-sm space-y-1" style="color: #6b7280;">
+                            <p>• Use different routes to avoid tempting places</p>
+                            <p>• Delete apps that lead to compromise</p>
+                            <p>• Find new lunch groups away from toxic influences</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2" style="width: 100%; gap: 1.5rem;">
+                        <div class="kpi-item">
+                            <div class="kpi-icon kpi-orange">P</div>
+                            <h3 class="text-xl font-bold mb-2">Project Consequences</h3>
+                            <p class="text-sm mb-3" style="color: #6b7280; font-style: italic;">Ask three crucial questions</p>
+                            <div class="text-sm space-y-1" style="color: #6b7280;">
+                                <p>• What are the consequences?</p>
+                                <p>• Who gets hurt along the way?</p>
+                                <p>• How does this even benefit me?</p>
+                                <p>• 5 minutes of relief for 5 days of guilt?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="kpi-item">
+                            <div class="kpi-icon kpi-purple">I</div>
+                            <h3 class="text-xl font-bold mb-2">Invite God's Power</h3>
+                            <p class="text-sm mb-3" style="color: #6b7280; font-style: italic;">2 Corinthians 12:9</p>
+                            <p class="mb-3">"My grace is sufficient for you"</p>
+                            <div class="text-sm space-y-1" style="color: #6b7280;">
+                                <p>• Constant prayer (Romans 12)</p>
+                                <p>• Bless those who persecute you</p>
+                                <p>• Call trusted brothers and sisters</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-blue" style="margin-top: 2rem;">
+                    <p class="text-center">
+                        🔺 <strong>The K.P.I. Triangle:</strong> Three interconnected tools that work together. Keep distance from temptation, project the real consequences, and invite God's power into your weakness.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div class="tab-content" id="bible-tab">
+            <div class="card">
+                <h2 class="card-title">📖 Key Bible Verses</h2>
+                <div class="verse-carousel">
+                    <div class="text-center mb-4">
+                        <div class="verse-nav">
+                            <button id="prev-verse">‹</button>
+                            <h3 class="text-xl font-bold" style="color: #2563eb;" id="verse-reference"></h3>
+                            <button id="next-verse">›</button>
+                        </div>
+                        <p style="color: #6b7280; margin-bottom: 1.5rem;" id="verse-context"></p>
+                    </div>
+                    <blockquote class="verse-content" id="verse-text"></blockquote>
+                    <div class="verse-indicators" id="verse-indicators"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 grid-cols-3" style="margin-top: 2rem;" id="verse-grid"></div>
+            </div>
+        </div>
+
+        <!-- Practical Steps Tab -->
+        <div class="tab-content" id="practical-tab">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-6">🛠️ Practical Battle Steps</h2>
+                <div class="space-y-6">
+                    <div class="alert alert-blue">
+                        <h3 class="text-xl font-bold mb-3">⚔️ Jesus' Battle Plan: "It Is Written"</h3>
+                        <p class="mb-3">Three times Jesus fought back with the sword of the spirit - God's word. The sword has been given to you!</p>
+                        <div style="background: white; padding: 0.75rem; border-radius: 0.25rem; border-left: 4px solid #3b82f6;">
+                            <p class="text-sm">
+                                <strong>Key Pattern:</strong> Recognize the legitimate need → Reject the distorted solution → Receive God's true provision
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        <div class="alert alert-green">
+                            <h4 class="font-bold mb-3">✅ What TO Do</h4>
+                            <ul class="text-sm space-y-2">
+                                <li>• Memorize key verses as weapons</li>
+                                <li>• Call trusted friends when struggling</li>
+                                <li>• Create accountability systems</li>
+                                <li>• Sync calendars for important relationships</li>
+                                <li>• Buy souvenirs for difficult people (overcome evil with good)</li>
+                                <li>• Use alternative routes to avoid triggers</li>
+                                <li>• Bless those who persecute you</li>
+                                <li>• Speak truth out loud: "Be gone, Satan!"</li>
+                                <li>• Use the F.A.S.T.E.R. scale daily for awareness</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert alert-red">
+                            <h4 class="font-bold mb-3">❌ What NOT To Do</h4>
+                            <ul class="text-sm space-y-2">
+                                <li>• Don't walk through Lang Kwai Fong if tempted by drinks</li>
+                                <li>• Don't try to fight alone - isolation kills</li>
+                                <li>• Don't negotiate with temptation</li>
+                                <li>• Don't manage sin - abstain from it completely</li>
+                                <li>• Don't believe Satan's half-truths and twisted scriptures</li>
+                                <li>• Don't curse or condemn others</li>
+                                <li>• Don't overestimate your strength (pride before fall)</li>
+                                <li>• Don't keep secrets - they lead to forgetting priorities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-yellow">
+                        <h4 class="font-bold mb-3">🎯 Daily Spiritual KPI Checkup</h4>
+                        <p class="mb-3">Check yourself daily with this framework:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3">
+                            <div style="background: white; padding: 0.75rem; border-radius: 0.25rem;">
+                                <h5 class="font-bold">Morning</h5>
+                                <p class="text-sm">Where am I on F.A.S.T.E.R. scale?</p>
+                            </div>
+                            <div style="background: white; padding: 0.75rem; border-radius: 0.25rem;">
+                                <h5 class="font-bold">Midday</h5>
+                                <p class="text-sm">Am I keeping distance from slopes?</p>
+                            </div>
+                            <div style="background: white; padding: 0.75rem; border-radius: 0.25rem;">
+                                <h5 class="font-bold">Evening</h5>
+                                <p class="text-sm">Did I invite God's power today?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div class="tab-content" id="reflection-tab">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="text-2xl font-bold">💭 Reflection Questions</h2>
+                    <button class="btn btn-green" id="download-reflection">📄 Download My Reflection</button>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="alert alert-blue">
+                        <h3 class="font-bold mb-3">🎯 Personal Assessment</h3>
+                        <div class="space-y-4">
+                            <div class="form-group">
+                                <label class="form-label">1. Where are you on the F.A.S.T.E.R. scale today and why?</label>
+                                <textarea class="form-textarea" 
+                                         placeholder="Reflect honestly on your current spiritual position using the official Pure Desire scale. What specific behaviors are you experiencing?"
+                                         id="faster-position"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">2. What is your greatest area of vulnerability to temptation?</label>
+                                <textarea class="form-textarea" 
+                                         placeholder="In which area of life are you most vulnerable? How can you use K.P.I. to prepare and fight back? Be specific about your battle plan."
+                                         id="vulnerability"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-green">
+                        <h3 class="font-bold mb-3">⚔️ Battle Plan Development</h3>
+                        <div class="space-y-4">
+                            <div class="form-group">
+                                <label class="form-label">3. What specific "distances" do you need to keep?</label>
+                                <textarea class="form-textarea" 
+                                         placeholder="List specific apps, places, situations, routes, or people you need to avoid or approach differently. Be practical and specific."
+                                         id="distances"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">4. Who can you call for accountability when you're slipping on the F.A.S.T.E.R. scale?</label>
+                                <textarea class="form-textarea" 
+                                         placeholder="Name specific people with phone numbers. What questions should they ask you? Remember: isolation kills, community heals."
+                                         id="accountability"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #faf5ff; padding: 1.25rem; border-radius: 0.5rem; border-left: 4px solid #a855f7;">
+                        <h3 class="font-bold mb-3" style="color: #7c3aed;">🛡️ Scripture Memorization</h3>
+                        <div class="form-group">
+                            <label class="form-label" style="color: #7c3aed;">5. Which verse will you memorize as your "sword of the spirit"?</label>
+                            <select class="form-select" id="scripture-select">
+                                <option value="">Choose a verse to memorize this week...</option>
+                                <option value="Matthew 4:4">Matthew 4:4 - "Man shall not live by bread alone..."</option>
+                                <option value="1 Corinthians 10:13">1 Corinthians 10:13 - "God is faithful and provides a way out..."</option>
+                                <option value="1 Thessalonians 5:22">1 Thessalonians 5:22 - "Abstain from every form of evil"</option>
+                                <option value="2 Corinthians 12:9">2 Corinthians 12:9 - "My grace is sufficient for you..."</option>
+                                <option value="Matthew 4:10">Matthew 4:10 - "Worship the Lord your God and him only serve"</option>
+                            </select>
+                            <textarea class="form-textarea" style="margin-top: 0.75rem;"
+                                     placeholder="Write out the full verse and explain why this specific verse speaks to your current spiritual battle..."
+                                     id="scripture-reason"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-yellow text-center">
+                        <h3 class="font-bold mb-2">🏆 Victory Declaration</h3>
+                        <p style="font-style: italic; font-size: 1.125rem; color: #a16207;">
+                            "We are not victims. We are victors. This isn't about survival - we're equipped to fight back. We are armored by God's power. We proclaim victory in His name because we are the beloved, and God has already set us free!"
+                        </p>
+                        <p class="text-sm" style="color: #92400e; margin-top: 0.5rem;">- Pastor Daniel</p>
+
+                        <div style="margin-top: 1rem; padding: 0.75rem; background: white; border-radius: 0.25rem;">
+                            <p class="font-bold mb-2">📝 Your Personal Victory Declaration:</p>
+                            <textarea class="form-textarea" 
+                                     placeholder="Write your own victory declaration. What truth about your identity in Christ will you speak over the lies of the enemy?"
+                                     id="victory-declaration"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution badge to display at the bottom right-->
+    <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.95); color: #374151; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.2); max-width: 300px; word-wrap: break-word; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+        <div style="margin-bottom: 4px; font-weight: bold; color: #2563eb; line-height: 1.3;">
+            Generated using LLM with supervision and polishing by 
+            <a href="../index.html" style="color: #2563eb; text-decoration: none; border-bottom: 1px dotted #2563eb;" target="_blank">
+                benjaminficusmicrocarpa
+            </a>
+        </div>
+        <div style="margin-bottom: 4px; font-size: 0.75rem; color: #6b7280;">
+            F.A.S.T.E.R. Scale: <a href="https://puredesire.org/wp-content/uploads/2020/04/faster-scale-check-in-2017-1.pdf" style="color: #2563eb; text-decoration: none;" target="_blank">Pure Desire Ministries</a>
+        </div>
+        <div>
+            <a href="../license.html" style="color: #dc2626; text-decoration: none; font-size: 0.75rem;" target="_blank">
+                Released under the MIT License
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const pastorQuotes = [
+            {
+                pastor: "Pastor Daniel",
+                quote: "Temptation doesn't come off the rack. It's tailor-made to exploit what is most vulnerable to you and what is most vulnerable in you.",
+                context: "Understanding Satan's Strategy"
+            },
+            {
+                pastor: "Pastor Daniel", 
+                quote: "We're not sitting here like a duck ready to be shot down by Satan's temptation. We're equipped to fight back. We are armored by God's power. We are not victims. We are victors.",
+                context: "Victory Declaration"
+            },
+            {
+                pastor: "Pastor Daniel",
+                quote: "Evil never announces its arrival. It creeps in through our unguarded routines.",
+                context: "The Subtlety of Temptation"
+            },
+            {
+                pastor: "Pastor Daniel",
+                quote: "You always become what you worship. Look at your timetable. Look at your checkbook. The time and energy and money that you spend the most, perhaps that's what you are worshiping.",
+                context: "Identifying True Worship"
+            },
+            {
+                pastor: "Pastor Brett",
+                quote: "I do not think that the enemy of our soul has any mysterious capacity to infect sin into the life of a believer through a generational sin. To give more weight to generational sin is to live a life of paranoia and fear as opposed to faith.",
+                context: "Freedom from Generational Fear"
+            },
+            {
+                pastor: "Pastor Brett",
+                quote: "The power of Christ is greater than any sin from their background. Greater is he who lives within you and me.",
+                context: "Christ's Superior Power"
+            }
+        ];
+
+        const threeAttacks = [
+            {
+                title: "1. The Flesh 🥖",
+                scripture: "Matthew 4:3-4",
+                description: "Attack on basic human needs",
+                example: "Hunger, loneliness, security",
+                lie: "'God doesn't care about your needs'",
+                response: "'Man shall not live by bread alone, but by every word from God's mouth'"
+            },
+            {
+                title: "2. The World 🌍",
+                scripture: "Matthew 4:8-10", 
+                description: "System in rebellion against God",
+                example: "Greed as ambition, lust as love, pride as leadership",
+                lie: "'You can have it all right now'",
+                response: "'Worship the Lord your God and him only shall you serve'"
+            },
+            {
+                title: "3. Accusation 📜",
+                scripture: "Matthew 4:5-7",
+                description: "Twisted scripture and false accusations",
+                example: "Using half-truths and partial verses",
+                lie: "'You're not good enough, you'll never change'",
+                response: "'You shall not put the Lord your God to test'"
+            }
+        ];
+
+        const bibleVerses = [
+            {
+                reference: "Matthew 4:1-4",
+                fullText: "Then Jesus was led up by the Spirit into the wilderness to be tempted by the devil. And after fasting forty days and forty nights, he was hungry. And the tempter came and said to him, 'If you are the Son of God, command these stones to become loaves of bread.' But he answered, 'It is written, Man shall not live by bread alone, but by every word that comes from the mouth of the Lord.'",
+                context: "The First Temptation - The Flesh"
+            },
+            {
+                reference: "Matthew 4:5-7",
+                fullText: "Then the devil took him to the holy city and set him on the pinnacle of the temple and said to him, 'If you are the Son of God, throw yourself down, for it is written, He will command his angels concerning you, and their hands will bear you up, lest you strike your foot against a stone.' Jesus said to him, 'Again it is written, You shall not put the Lord your God to test.'",
+                context: "The Second Temptation - Twisted Scripture"
+            },
+            {
+                reference: "Matthew 4:8-10",
+                fullText: "Again, the devil took him to a very high mountain and showed him all the kingdoms of the world and their glory and said to him, 'All these I will give to you, if you will fall down and worship me.' Then Jesus said to him, 'Be gone, Satan! For it is written, You shall worship the Lord your God and him only shall you serve.'",
+                context: "The Third Temptation - The World"
+            },
+            {
+                reference: "James 1:13-15",
+                fullText: "When tempted, let no one say, 'God is tempting me,' for God cannot be tempted by evil, nor does he tempt anyone. But when each person is tempted, they are dragged away by their own evil desires and enticed. Then after that desire has conceived, it gives birth to sin. And sin, when it's fully grown, it gives birth to death.",
+                context: "Understanding Temptation's Progression"
+            },
+            {
+                reference: "1 Corinthians 10:13",
+                fullText: "No temptation has overtaken you that is not common to man. God is faithful and he will not let you be tempted beyond your ability. But with the temptation, you will always, not sometimes, maybe another day, delay it, always provides a way out of escape.",
+                context: "God's Faithful Promise"
+            },
+            {
+                reference: "1 Thessalonians 5:22",
+                fullText: "Abstain from every form of evil.",
+                context: "Keep Your Distance - No Negotiation"
+            }
+        ];
+
+        const fasterScaleData = [
+            {
+                level: 'restoration',
+                label: 'RESTORATION',
+                subtitle: 'Accepting life on God\'s terms, with trust, vulnerability, and gratitude',
+                color: 'restoration',
+                behaviors: [
+                    'No current secrets',
+                    'Working to resolve problems, identifying fears/feelings',
+                    'Keeping commitments to meetings, prayer, family, church, people, goals, and self',
+                    'Being open and honest, making eye contact',
+                    'Reaching out to others',
+                    'Increasing in relationships with God and others',
+                    'True accountability'
+                ]
+            },
+            {
+                level: 'forgetting',
+                label: 'FORGETTING PRIORITIES',
+                subtitle: 'Start believing the present circumstances and start moving away from trusting God',
+                color: 'forgetting',
+                behaviors: [
+                    'Secrets',
+                    'Less time/energy for God, meetings, church',
+                    'Avoiding support and accountability people',
+                    'Superficial conversations',
+                    'Sarcasm, Isolating',
+                    'Changes in goals, Obsessed with relationships',
+                    'Breaking promises and commitments',
+                    'Neglecting family',
+                    'Preoccupation with material things: TV, computers, other entertainment',
+                    'Procrastination, Lying',
+                    'Over-confidence, Bored',
+                    'Hiding money'
+                ]
+            },
+            {
+                level: 'anxiety',
+                label: 'ANXIETY',
+                subtitle: 'A growing background noise of undefined fear; getting energy from emotions',
+                color: 'anxiety',
+                behaviors: [
+                    'Worry, using profanity, being fearful',
+                    'Being resentful',
+                    'Replaying old negative thoughts',
+                    'Perfectionism',
+                    'Judging other\'s motives',
+                    'Making unrealistic goals and to-do lists',
+                    'Mind-reading',
+                    'Fantasy, co-dependent rescuing',
+                    'Sleep problems, trouble concentrating, seeking drama',
+                    'Gossip',
+                    'Using OTC medication for pain/sleep/weight control',
+                    'Flirting'
+                ]
+            },
+            {
+                level: 'speeding',
+                label: 'SPEEDING UP',
+                subtitle: 'Trying to outrun the anxiety, which is usually the first sign of depression',
+                color: 'speeding',
+                behaviors: [
+                    'Super busy and always in a hurry (finding good reason to justify the busyness)',
+                    'Workaholic, can\'t relax',
+                    'Avoiding slowing down',
+                    'Feeling driven',
+                    'Can\'t turn off thoughts',
+                    'Skipping meals',
+                    'Binge eating (usually at night)',
+                    'Overspending',
+                    'Can\'t identify own feelings/needs',
+                    'Repetitive negative thoughts',
+                    'Irritable, Dramatic mood swings',
+                    'Too much caffeine',
+                    'Over-exercising, Nervousness',
+                    'Difficulty being alone &/or with people',
+                    'Difficulty listening to others',
+                    'Making excuses for having to "do it all"'
+                ]
+            },
+            {
+                level: 'ticked',
+                label: 'TICKED OFF',
+                subtitle: 'Getting adrenaline high from anger and aggression',
+                color: 'ticked',
+                behaviors: [
+                    'Procrastination causing crisis in money, work, relationships',
+                    'Increasing sarcasm',
+                    'Black and white (all or nothing) thinking',
+                    'Feeling alone',
+                    'Nobody understands',
+                    'Overreacting, road rage',
+                    'Constant resentments',
+                    'Pushing others away',
+                    'Increasing isolation',
+                    'Blaming, Arguing',
+                    'Irrational thinking',
+                    'Can\'t take criticism',
+                    'Defensive',
+                    'People avoiding you',
+                    'Needing to be right',
+                    'Digestive problems, Headaches',
+                    'Obsessive (stuck) thoughts',
+                    'Can\'t forgive',
+                    'Feeling superior',
+                    'Using intimidation'
+                ]
+            },
+            {
+                level: 'exhausted',
+                label: 'EXHAUSTED',
+                subtitle: 'Loss of physical and emotional energy; coming off the adrenaline high, onset of depression',
+                color: 'exhausted',
+                behaviors: [
+                    'Depressed, Panicked, Confused',
+                    'Hopelessness',
+                    'Sleeping too much or too little',
+                    'Can\'t cope, Overwhelmed',
+                    'Crying for "no reason"',
+                    'Can\'t think, Forgetful',
+                    'Pessimistic, Helpless',
+                    'Tired, Numb',
+                    'Wanting to run',
+                    'Constant cravings for old coping behaviors',
+                    'Thinking of using sex, drugs, or alcohol',
+                    'Seeking old unhealthy people & places',
+                    'Really isolating',
+                    'People angry with you',
+                    'Self abuse, Suicidal thoughts',
+                    'Spontaneous crying',
+                    'No goals, Survival mode',
+                    'Not returning phone calls',
+                    'Missing work, Irritability',
+                    'No appetite'
+                ]
+            },
+            {
+                level: 'relapse',
+                label: 'RELAPSE',
+                subtitle: 'Returning to the place you swore you would never go again',
+                color: 'relapse',
+                behaviors: [
+                    'Giving up and giving in',
+                    'Out of control',
+                    'Lost in your addiction',
+                    'Lying to yourself and others',
+                    'Feeling you just can\'t manage without your coping behaviors, at least for now',
+                    'Result is reinforcement of shame, guilt, and condemnation, and feelings of abandonment and being alone'
+                ]
+            }
+        ];
+
+        // State
+        let activeTab = 'main';
+        let currentVerseIndex = 0;
+        let selectedFasterLevel = 'restoration';
+        let reflectionAnswers = {
+            fasterPosition: '',
+            vulnerability: '',
+            distances: '',
+            accountability: '',
+            scripture: '',
+            scriptureReason: '',
+            victoryDeclaration: ''
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTabs();
+            initializePastorQuotes();
+            initializeThreeAttacks();
+            initializeFasterScale();
+            initializeBibleVerses();
+            initializeReflection();
+        });
+
+        // Tab functionality
+        function initializeTabs() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetTab = tab.dataset.tab;
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Update content
+                    contents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === targetTab + '-tab') {
+                            content.classList.add('active');
+                        }
+                    });
+                    
+                    activeTab = targetTab;
+                });
+            });
+        }
+
+        // Pastor quotes
+        function initializePastorQuotes() {
+            const container = document.getElementById('pastor-quotes');
+            container.innerHTML = pastorQuotes.map(quote => `
+                <div style="background: linear-gradient(135deg, #dbeafe 0%, #faf5ff 100%); padding: 1.25rem; border-radius: 0.5rem; border: 1px solid #e5e7eb;">
+                    <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <div style="background: #2563eb; color: white; border-radius: 50%; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: bold;">
+                            ${quote.pastor === 'Pastor Daniel' ? 'D' : 'B'}
+                        </div>
+                        <div style="flex: 1;">
+                            <p style="color: #374151; font-style: italic; margin-bottom: 0.5rem;">"${quote.quote}"</p>
+                            <div style="font-size: 0.875rem;">
+                                <p style="font-weight: 500; color: #1d4ed8;">${quote.pastor}</p>
+                                <p style="color: #6b7280;">${quote.context}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Three attacks
+        function initializeThreeAttacks() {
+            const container = document.getElementById('three-attacks');
+            container.innerHTML = threeAttacks.map(attack => `
+                <div style="background: linear-gradient(135deg, #dbeafe 0%, #faf5ff 100%); padding: 1.25rem; border-radius: 0.5rem; border: 1px solid #e5e7eb;">
+                    <h3 class="text-lg font-bold mb-3">${attack.title}</h3>
+                    <div class="space-y-2 text-sm">
+                        <p><strong>Scripture:</strong> ${attack.scripture}</p>
+                        <p><strong>Target:</strong> ${attack.description}</p>
+                        <p><strong>Example:</strong> ${attack.example}</p>
+                        <div style="background: #fef2f2; padding: 0.5rem; border-radius: 0.25rem; border-left: 4px solid #f87171;">
+                            <p style="color: #b91c1c;"><strong>Satan's Lie:</strong> ${attack.lie}</p>
+                        </div>
+                        <div style="background: #dcfce7; padding: 0.5rem; border-radius: 0.25rem; border-left: 4px solid #4ade80;">
+                            <p style="color: #166534;"><strong>Jesus' Response:</strong> ${attack.response}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // F.A.S.T.E.R. Scale
+        function initializeFasterScale() {
+            const container = document.getElementById('faster-scale');
+            container.innerHTML = fasterScaleData.map((level, index) => `
+                <div class="faster-level faster-${level.color} ${selectedFasterLevel === level.level ? 'selected' : ''}" 
+                     data-level="${level.level}" style="margin-bottom: ${index < fasterScaleData.length - 1 ? '0.5rem' : '0'};">
+                    <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                        <div style="flex: 1;">
+                            <h3 class="font-bold text-lg">${level.label}</h3>
+                            <p class="text-sm mb-3" style="opacity: 0.8;">${level.subtitle}</p>
+                            <div class="behaviors-${level.level}" style="display: ${selectedFasterLevel === level.level ? 'block' : 'none'}; margin-top: 0.75rem;">
+                                <h4 class="font-medium mb-2">Behaviors & Symptoms:</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 0.25rem;">
+                                    ${level.behaviors.map(behavior => `
+                                        <div class="text-sm" style="opacity: 0.9; display: flex; align-items: flex-start; gap: 0.5rem;">
+                                            <span style="margin-top: 0.125rem;">•</span>
+                                            <span>${behavior}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        ${selectedFasterLevel === level.level ? '<span style="font-size: 1.5rem;">✓</span>' : ''}
+                    </div>
+                </div>
+                ${index < fasterScaleData.length - 1 ? '<div style="display: flex; justify-content: center; margin: 0.5rem 0;"><div style="color: #9ca3af; font-size: 0.875rem;">↓ leads to</div></div>' : ''}
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.faster-level').forEach(level => {
+                level.addEventListener('click', () => {
+                    const levelId = level.dataset.level;
+                    selectedFasterLevel = levelId;
+                    
+                    // Update display
+                    document.querySelectorAll('.faster-level').forEach(l => {
+                        l.classList.remove('selected');
+                        const behaviors = l.querySelector(`[class^="behaviors-"]`);
+                        if (behaviors) behaviors.style.display = 'none';
+                    });
+                    
+                    level.classList.add('selected');
+                    const behaviors = level.querySelector(`[class^="behaviors-"]`);
+                    if (behaviors) behaviors.style.display = 'block';
+                    
+                    // Update checkmark
+                    document.querySelectorAll('.faster-level span').forEach(span => {
+                        if (span.textContent === '✓') span.remove();
+                    });
+                    level.querySelector('div').insertAdjacentHTML('beforeend', '<span style="font-size: 1.5rem;">✓</span>');
+                });
+            });
+        }
+
+        // Bible verses
+        function initializeBibleVerses() {
+            updateVerseDisplay();
+            createVerseIndicators();
+            createVerseGrid();
+
+            document.getElementById('prev-verse').addEventListener('click', () => {
+                currentVerseIndex = (currentVerseIndex - 1 + bibleVerses.length) % bibleVerses.length;
+                updateVerseDisplay();
+                updateIndicators();
+            });
+
+            document.getElementById('next-verse').addEventListener('click', () => {
+                currentVerseIndex = (currentVerseIndex + 1) % bibleVerses.length;
+                updateVerseDisplay();
+                updateIndicators();
+            });
+        }
+
+        function updateVerseDisplay() {
+            const verse = bibleVerses[currentVerseIndex];
+            document.getElementById('verse-reference').textContent = verse.reference;
+            document.getElementById('verse-context').textContent = verse.context;
+            document.getElementById('verse-text').textContent = `"${verse.fullText}"`;
+        }
+
+        function createVerseIndicators() {
+            const container = document.getElementById('verse-indicators');
+            container.innerHTML = bibleVerses.map((_, index) => `
+                <button class="verse-indicator ${index === currentVerseIndex ? 'active' : ''}" 
+                        data-index="${index}"></button>
+            `).join('');
+
+            container.addEventListener('click', (e) => {
+                if (e.target.classList.contains('verse-indicator')) {
+                    currentVerseIndex = parseInt(e.target.dataset.index);
+                    updateVerseDisplay();
+                    updateIndicators();
+                }
+            });
+        }
+
+        function updateIndicators() {
+            document.querySelectorAll('.verse-indicator').forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentVerseIndex);
+            });
+        }
+
+        function createVerseGrid() {
+            const container = document.getElementById('verse-grid');
+            container.innerHTML = bibleVerses.map((verse, index) => `
+                <button style="padding: 1rem; border-radius: 0.5rem; border: 1px solid ${index === currentVerseIndex ? '#3b82f6' : '#e5e7eb'}; 
+                               background: ${index === currentVerseIndex ? '#dbeafe' : '#f9fafb'}; text-align: left; transition: all 0.2s;"
+                        data-verse-index="${index}">
+                    <h4 class="font-bold mb-1">${verse.reference}</h4>
+                    <p class="text-sm" style="color: #6b7280;">${verse.context}</p>
+                </button>
+            `).join('');
+
+            container.addEventListener('click', (e) => {
+                const button = e.target.closest('[data-verse-index]');
+                if (button) {
+                    currentVerseIndex = parseInt(button.dataset.verseIndex);
+                    updateVerseDisplay();
+                    updateIndicators();
+                    
+                    // Update grid styling
+                    container.querySelectorAll('button').forEach((btn, index) => {
+                        btn.style.border = index === currentVerseIndex ? '1px solid #3b82f6' : '1px solid #e5e7eb';
+                        btn.style.background = index === currentVerseIndex ? '#dbeafe' : '#f9fafb';
+                    });
+                }
+            });
+        }
+
+        // Reflection functionality
+        function initializeReflection() {
+            // Bind form inputs to state
+            const inputs = [
+                'faster-position',
+                'vulnerability', 
+                'distances',
+                'accountability',
+                'scripture-reason',
+                'victory-declaration'
+            ];
+
+            inputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', (e) => {
+                        const key = id.replace('-', '');
+                        reflectionAnswers[key.replace('faster', 'fasterPosition').replace('scriptureReason', 'scriptureReason').replace('victoryDeclaration', 'victoryDeclaration')] = e.target.value;
+                    });
+                }
+            });
+
+            // Scripture select
+            document.getElementById('scripture-select').addEventListener('change', (e) => {
+                reflectionAnswers.scripture = e.target.value;
+            });
+
+            // Download button
+            document.getElementById('download-reflection').addEventListener('click', downloadReflectionAnswers);
+        }
+
+        function downloadReflectionAnswers() {
+            const currentDate = new Date().toLocaleDateString();
+            const currentTime = new Date().toLocaleTimeString();
+            
+            const content = `
+SPIRITUAL BATTLE PLAN REFLECTION
+Temptation's Triple Threat: Your Battle Plan
+Date: ${currentDate} at ${currentTime}
+Source: Pastor Daniel, Island ECC
+==================================================
+
+PERSONAL ASSESSMENT
+==================================================
+
+1. Where are you on the F.A.S.T.E.R. scale today and why?
+
+${document.getElementById('faster-position').value || '[No answer provided]'}
+
+---
+
+2. What is your greatest area of vulnerability to temptation?
+
+${document.getElementById('vulnerability').value || '[No answer provided]'}
+
+---
+
+BATTLE PLAN DEVELOPMENT
+==================================================
+
+3. What specific "distances" do you need to keep?
+
+${document.getElementById('distances').value || '[No answer provided]'}
+
+---
+
+4. Who can you call for accountability when you're slipping on the F.A.S.T.E.R. scale?
+
+${document.getElementById('accountability').value || '[No answer provided]'}
+
+---
+
+SCRIPTURE MEMORIZATION
+==================================================
+
+5. Which verse will you memorize as your "sword of the spirit"?
+
+Selected verse: ${document.getElementById('scripture-select').value || '[No verse selected]'}
+
+Why this verse speaks to your current spiritual battle:
+
+${document.getElementById('scripture-reason').value || '[No reason provided]'}
+
+---
+
+VICTORY DECLARATION
+==================================================
+
+Your Personal Victory Declaration:
+
+${document.getElementById('victory-declaration').value || '[No declaration written]'}
+
+---
+
+RECOMMENDED NEXT STEPS
+==================================================
+
+□ Memorize your chosen scripture verse
+□ Share this reflection with your accountability partner
+□ Download the official F.A.S.T.E.R. scale PDF from Pure Desire
+□ Schedule regular check-ins using the K.P.I. framework
+□ Implement specific "distance keeping" strategies
+□ Practice speaking truth out loud when temptation comes
+
+RESOURCES
+==================================================
+
+• Sermon: "Temptation's Triple Threat: Your Battle Plan" - Pastor Daniel, Island ECC
+• F.A.S.T.E.R. Scale: https://puredesire.org/wp-content/uploads/2020/04/faster-scale-check-in-2017-1.pdf
+• Key Scripture: Matthew 4:1-11 (Jesus' temptation and victory)
+
+REMEMBER: "We are not victims. We are victors. We are equipped to fight back. 
+We are armored by God's power. We proclaim victory in His name because we are 
+the beloved, and God has already set us free!" - Pastor Daniel
+
+Generated on ${currentDate} at ${currentTime}
+`;
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `spiritual-battle-plan-reflection-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

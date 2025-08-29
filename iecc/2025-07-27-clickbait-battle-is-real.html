@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickbait: The Battle Is Real - Interactive Sermon Study</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            background: linear-gradient(135deg, #064e3b 0%, #1f2937 100%);
+            min-height: 100vh;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fef3c7;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #064e3b 0%, #92400e 100%);
+            color: #fef3c7;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+
+        .header-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .sermon-meta {
+            background: rgba(254, 243, 199, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid rgba(254, 243, 199, 0.3);
+        }
+
+        .header-buttons {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .header-btn {
+            background: rgba(254, 243, 199, 0.2);
+            color: #fef3c7;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            border: 1px solid rgba(254, 243, 199, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .header-btn:hover {
+            background: rgba(254, 243, 199, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px 20px;
+        }
+
+        .tab-container {
+            margin-bottom: 40px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 3px solid #064e3b;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            background: transparent;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1rem;
+            color: #1f2937;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-button.active {
+            background: #064e3b;
+            color: #fef3c7;
+            border-bottom-color: #92400e;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .bento-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #064e3b;
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(6, 78, 59, 0.2);
+        }
+
+        .bento-item h3 {
+            color: #064e3b;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .accordion {
+            margin: 30px 0;
+        }
+
+        .accordion-item {
+            border: 1px solid #064e3b;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background: #064e3b;
+            color: #fef3c7;
+            padding: 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: #0a5d47;
+        }
+
+        .accordion-content {
+            background: white;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+            padding: 25px;
+        }
+
+        .scripture-verse {
+            background: linear-gradient(135deg, #064e3b 0%, #0a5d47 100%);
+            color: #fef3c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #92400e;
+            font-style: italic;
+            position: relative;
+        }
+
+        .scripture-verse::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+        }
+
+        .verse-reference {
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: right;
+            font-style: normal;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted #92400e;
+            cursor: help;
+        }
+
+        .tooltip-content {
+            visibility: hidden;
+            width: 300px;
+            background: #1f2937;
+            color: #fef3c7;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 9999;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .tooltip:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: #fef3c7;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .close {
+            color: #92400e;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+
+        .close:hover {
+            color: #064e3b;
+        }
+
+        .collapsible {
+            background: #f9f9f9;
+            border: 1px solid #064e3b;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .collapsible-header {
+            background: #064e3b;
+            color: #fef3c7;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .collapsible-content.active {
+            padding: 20px;
+            max-height: 800px;
+        }
+
+        .armor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.1);
+        }
+
+        .armor-table th {
+            background: #064e3b;
+            color: #fef3c7;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .armor-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .armor-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .armor-table tr:hover {
+            background: #f3f4f6;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid #064e3b;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #064e3b 0%, #92400e 100%);
+            height: 20px;
+            border-radius: 10px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fef3c7;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .quote-box {
+            background: white;
+            padding: 25px;
+            border-left: 5px solid #92400e;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(6, 78, 59, 0.1);
+        }
+
+        .pastor-quote {
+            background: linear-gradient(135deg, #fef3c7 0%, #f9fafb 100%);
+            padding: 25px;
+            border-left: 5px solid #064e3b;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(6, 78, 59, 0.1);
+            font-style: italic;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-weight: bold;
+            color: #064e3b;
+            margin-top: 15px;
+            font-style: normal;
+        }
+
+        .highlight-term {
+            background: linear-gradient(120deg, #92400e 0%, #92400e 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.2em;
+            background-position: 0 88%;
+            font-weight: bold;
+        }
+
+        .warfare-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #064e3b;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #064e3b;
+        }
+
+        .stat-label {
+            color: #92400e;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .humorous-quote {
+            background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+            padding: 20px;
+            border-left: 5px solid #92400e;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            border: 1px solid #e5e7eb;
+        }
+
+        .personal-story {
+            background: #f0f9ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #064e3b;
+        }
+
+        .story-title {
+            color: #064e3b;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                border-bottom: 1px solid #e5e7eb;
+                border-radius: 0;
+            }
+            
+            .tab-button.active {
+                border-bottom-color: #064e3b;
+            }
+            
+            .header-buttons {
+                flex-direction: column;
+            }
+            
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .warfare-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .tooltip-content {
+                width: 250px;
+                margin-left: -125px;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>⚔️ Clickbait: The Battle Is Real</h1>
+            <div class="header-subtitle">An Interactive Study on Spiritual Warfare</div>
+            
+            <div class="sermon-meta">
+                <strong>📅 27 July 2025 | 🏛️ Island ECC</strong>
+                <p style="margin-top: 10px; font-style: italic;">
+                    "We all believe in invisible things, like oxygen and love... But when it comes to a mysterious spirit world, many think it sounds too fanciful. The unseen world is real, and by pretending it's not, we run the risk of being influenced unknowingly."
+                </p>
+            </div>
+
+            <div class="header-buttons">
+                <a href="https://www.youtube.com/watch?v=KLAEniQuiLo" class="header-btn" target="_blank">
+                    <svg class="w-5 h-5" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <span>Watch Original Sermon</span>
+                </a>
+                <a href="index.html" class="header-btn">
+                    <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <span>View All Sermons</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Tab Navigation -->
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="showTab('main-sermon')">📖 Main Sermon</button>
+                    <button class="tab-button" onclick="showTab('bible-verses')">📜 Bible Verses</button>
+                    <button class="tab-button" onclick="showTab('practical-steps')">🛡️ Practical Steps</button>
+                    <button class="tab-button" onclick="showTab('reflection')">💭 Reflection</button>
+                </div>
+
+                <!-- Main Sermon Tab -->
+                <div id="main-sermon" class="tab-content active">
+                    <!-- Opening Pastor Quote -->
+                    <div class="pastor-quote fade-in">
+                        "But my hope is that we will move to the middle, that we will understand more fully the reality of spiritual warfare, but it wouldn't leave us in a doom and gloom fatalistic approach toward life, but nor would we have a yippity-skippity oblivious perspective... We would, in fact, be sober-minded."
+                        <div class="quote-author">— Pastor Brett</div>
+                    </div>
+
+                    <!-- Bento Grid Overview -->
+                    <div class="bento-grid fade-in">
+                        <div class="bento-item">
+                            <h3>🎯 The Battle Plan</h3>
+                            <p>Five strategic principles for engaging in spiritual warfare with wisdom and confidence, grounded in Ephesians 6.</p>
+                        </div>
+                        <div class="bento-item">
+                            <h3>👁️ Eyes Wide Open</h3>
+                            <p>Understanding the reality of an invisible spiritual realm without falling into paranoia or denial.</p>
+                        </div>
+                        <div class="bento-item">
+                            <h3>⚔️ Full Armor Required</h3>
+                            <p>Seven pieces of divine armor designed for victory: truth, righteousness, peace, faith, salvation, scripture, and prayer.</p>
+                        </div>
+                        <div class="bento-item">
+                            <h3>🎭 Know Your Enemy</h3>
+                            <p>Satan's <span class="tooltip">methodia<span class="tooltip-content">Greek: Strategic craftiness, systematic deception designed for specific weaknesses</span></span> - personalized schemes targeting individual vulnerabilities.</p>
+                        </div>
+                    </div>
+
+                    <!-- Statistics -->
+                    <div class="warfare-stats fade-in">
+                        <div class="stat-card">
+                            <div class="stat-number">1/3</div>
+                            <div class="stat-label">Angels Fell with Satan</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">520</div>
+                            <div class="stat-label">AD - First Satan Art</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">1608</div>
+                            <div class="stat-label">First Horned Depiction</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">Armor Pieces</div>
+                        </div>
+                    </div>
+
+                    <!-- Main Teaching Accordion -->
+                    <div class="accordion fade-in">
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                🌟 The Reality of Invisible Forces
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>We readily accept the existence of oxygen, love, and other invisible realities based on their observable effects. Similarly, Scripture testifies to an invisible spiritual realm where forces of good and evil actively engage in warfare for human souls.</p>
+                                
+                                <div class="pastor-quote">
+                                    "The target is the church, not just this church, but Christians everywhere. For those who don't believe, they have no need to convince them of anything. But to those who have shifted their affections to God, then there is a battle that ensues to dissuade, discourage, to bring about doubt, temptation and accusation."
+                                    <div class="quote-author">— Pastor Brett</div>
+                                </div>
+
+                                <div class="collapsible">
+                                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                        Historical Church Response & Extremes to Avoid
+                                        <span>▼</span>
+                                    </div>
+                                    <div class="collapsible-content">
+                                        <p>The early church (c. 200 AD) practiced a <span class="highlight-term">triple renunciation</span> at baptism:</p>
+                                        <ul style="margin: 15px 0; padding-left: 30px;">
+                                            <li>"Dost thou renounce Satan?" — <em>I renounce him.</em></li>
+                                            <li>"And all his works?" — <em>I renounce them.</em></li>
+                                            <li>"And all his pomps?" — <em>I renounce them.</em></li>
+                                        </ul>
+
+                                        <div class="pastor-quote">
+                                            "Christians can get weird about this stuff. And I remember as a nonbeliever looking at churches who were casting out demons and people were falling down, I would be like, uh-uh, that's not for me. Is that part of this whole package? I'm not shaming those churches. I'm just saying scripture never gets weird about spiritual warfare. So don't be."
+                                            <div class="quote-author">— Pastor Brett</div>
+                                        </div>
+
+                                        <div class="humorous-quote">
+                                            "Oh, I was late paying my bill, Satan. No, you're just late paying your bill. That's irresponsible. I'm not Satan."
+                                            <div class="quote-author">— Pastor Brett (on misattributing everything to spiritual warfare)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                📚 Historical Perspectives on Satan
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Understanding how Satan has been perceived throughout history helps us maintain biblical balance between extremes of fixation and dismissal.</p>
+
+                                <div class="chart-container">
+                                    <h4 style="color: #064e3b; margin-bottom: 15px;">Evolution of Satanic Imagery</h4>
+                                    <div style="margin: 10px 0;">
+                                        <strong>520 AD - Angelic Representation</strong>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 20%;">Biblical</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin: 10px 0;">
+                                        <strong>1608 AD - First Horned Depiction</strong>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 50%;">Mythological</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin: 10px 0;">
+                                        <strong>Enlightenment Era</strong>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 30%;">Rational Dismissal</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin: 10px 0;">
+                                        <strong>Modern Media</strong>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 80%;">Glamorization</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="quote-box">
+                                    <p>"All of our knowledge begins with the senses, proceeds then to the understanding and ends with reason. There is nothing higher than reason."</p>
+                                    <div class="quote-author">— Immanuel Kant</div>
+                                </div>
+
+                                <p>The Enlightenment's elevation of reason above revelation created intellectual resistance to supernatural realities, influencing contemporary skepticism toward spiritual warfare.</p>
+
+                                <div class="pastor-quote">
+                                    "When we bring up the word Satan, you probably think Lan Kwai Fong at Halloween. Horns, pitchfork, red spandex... So our collective understanding of Satan has morphed through the years."
+                                    <div class="quote-author">— Pastor Brett</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                🎯 Personal Testimony: Recognizing Schemes
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Pastor Brett's experiences illustrate how the enemy employs different strategies - from obvious temptation to subtle psychological manipulation.</p>
+
+                                <div class="personal-story">
+                                    <div class="story-title">📍 Lockhart Road Encounter (2003)</div>
+                                    <div class="pastor-quote">
+                                        "I was meeting a property agent... And a young woman approached me, and she was so friendly... And I did not realize what was happening, as naive as I am, until she got increasingly flirty. And I thought, hmm, hmm. Now, was this approach from a woman of the street, was that from the enemy? Was that spiritual warfare? Was I just at the wrong place at the wrong time? I walked away, by the way. Just feel the need to finish that story."
+                                        <div class="quote-author">— Pastor Brett</div>
+                                    </div>
+                                    <div class="humorous-quote">
+                                        "So I followed her home." 
+                                        <div class="quote-author">— Pastor Brett (clearly joking)</div>
+                                    </div>
+                                </div>
+
+                                <div class="personal-story">
+                                    <div class="story-title">🍽️ Staff Meeting Paranoia</div>
+                                    <div class="pastor-quote">
+                                        "A few years later, I remember going to lunch and I saw one of our elders meeting with one of our staff... And they didn't see me, but I saw them go into a restaurant and thought, oh, I don't know what they were meeting about, but okay, didn't think much of it. And then later on in the day, I saw that staff member... But they didn't say, hey, I met with Peter for lunch. But they didn't. They didn't say anything."
+                                        <div class="quote-author">— Pastor Brett</div>
+                                    </div>
+                                    
+                                    <div class="pastor-quote">
+                                        "And a little paranoia started getting in my head... But then I would see other staff having lunch, meeting for coffee, closing a door, and I would jump to dark thoughts. Oh, it's a mutiny. They don't like me. They don't trust my leadership. They're having a conversation. They're this. They're criticizing. They're this. No, to my knowledge, none of that was happening. It was a thing called fellowship."
+                                        <div class="quote-author">— Pastor Brett</div>
+                                    </div>
+                                </div>
+
+                                <div class="pastor-quote">
+                                    "See, the enemy, I think, was probably more at play in that latter scenario than my Lockhart Road scenario. Getting in my head, using a scheme, an attack, an approach that I may be particularly vulnerable to, to try to inject in me dangerous thoughts, accusations that would go against my character."
+                                    <div class="quote-author">— Pastor Brett</div>
+                                </div>
+
+                                <div class="collapsible">
+                                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                        Theological Analysis: Understanding Vulnerability
+                                        <span>▼</span>
+                                    </div>
+                                    <div class="collapsible-content">
+                                        <div class="pastor-quote">
+                                            "There are things the enemy could do to me that I would be impervious to. I'd be like, you know, not a big deal. Not my thing. But you would be very susceptible to. We are wired differently and vice versa. I have got weak spots in my life that maybe you'd be like, what's the big deal?"
+                                            <div class="quote-author">— Pastor Brett</div>
+                                        </div>
+
+                                        <div class="pastor-quote">
+                                            "Maybe you would have deflected that easy. No big deal. See, the enemy has a scheme, a plan... You need to know, how would he affect me? What would his plan be for me?"
+                                            <div class="quote-author">— Pastor Brett</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                📖 Satan's Nature According to Scripture
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="scripture-verse">
+                                    Be sober-minded. Be watchful. Your adversary, the devil, prowls around like a roaring lion seeking someone to devour.
+                                    <div class="verse-reference">1 Peter 5:8 (NIV)</div>
+                                </div>
+
+                                <p>Scripture provides specific designations for Satan's character and methods:</p>
+
+                                <table class="armor-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Biblical Title</th>
+                                            <th>Scripture Reference</th>
+                                            <th>Theological Significance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Adversary</strong></td>
+                                            <td>1 Peter 5:8</td>
+                                            <td>Active opposition to God's people and purposes</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Tempter</strong></td>
+                                            <td>1 Thessalonians 3:5</td>
+                                            <td>Systematic enticement toward moral compromise</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Father of Lies</strong></td>
+                                            <td>John 8:44</td>
+                                            <td>Fundamental nature of deception and falsehood</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Murderer</strong></td>
+                                            <td>John 8:44</td>
+                                            <td>Destructive intent toward human flourishing</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Ancient Serpent</strong></td>
+                                            <td>Revelation 12:9</td>
+                                            <td>Connection to primordial deception in Eden</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="collapsible">
+                                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                        Jesus' Authority & Michael's Example
+                                        <span>▼</span>
+                                    </div>
+                                    <div class="collapsible-content">
+                                        <div class="scripture-verse">
+                                            I saw Satan fall like lightning from heaven.
+                                            <div class="verse-reference">Luke 10:18 (NIV)</div>
+                                        </div>
+
+                                        <div class="pastor-quote">
+                                            "Incidentally, this points to Jesus being pre-incarnate. He didn't start living when he was born. He always was. In fact, this references a time in history past where Jesus says, I was there. I saw it when Satan was thrust down."
+                                            <div class="quote-author">— Pastor Brett</div>
+                                        </div>
+
+                                        <div class="pastor-quote">
+                                            "Even the archangel Michael, when he was disputing with the devil about the body of Moses, did not himself dare to condemn him for slander, but said, the Lord rebuked him. Even Michael stood behind the Lord. That's who's fighting my battle. I'm not casting out a demon. I'm not prophesying what evil spirit resides in you. I don't know. I'm a limited person. I am going to rest in who the Lord is, and he fights our battles."
+                                            <div class="quote-author">— Pastor Brett</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bible Verses Tab -->
+                <div id="bible-verses" class="tab-content">
+                    <h2 style="color: #064e3b; margin-bottom: 30px;">📜 Scripture Foundation</h2>
+                    
+                    <div class="pastor-quote">
+                        "Finally, be strong in the Lord and in his mighty power. It's not a specific where he says, okay, be aware of Satan. Don't be weird about spiritual warfare... Scripture never gets weird about spiritual warfare. So don't be."
+                        <div class="quote-author">— Pastor Brett on Ephesians 6:10</div>
+                    </div>
+                    
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                🛡️ The Armor of God (Ephesians 6:10-18)
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content active">
+                                <div class="scripture-verse">
+                                    Finally, be strong in the Lord and in his mighty power. Put on the full armor of God, so that you can take your stand against the devil's schemes. For our struggle is not against flesh and blood, but against the rulers, against the authorities, against the powers of this dark world and against the spiritual forces of evil in the heavenly realms.
+                                    <div class="verse-reference">Ephesians 6:10-12 (NIV)</div>
+                                </div>
+
+                                <div class="pastor-quote">
+                                    "Paul writes in Ephesians, this beautiful theology, this beautiful outpouring of how a life well-lived would be. And then he wraps it up and he says, okay, stand firm in the gospel. And he gives us these instructions on getting dressed, right?"
+                                    <div class="quote-author">— Pastor Brett</div>
+                                </div>
+
+                                <button class="header-btn" onclick="openModal('armorModal')" style="background: #064e3b; margin: 15px 0;">
+                                    View Complete Armor Passage
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                🦁 The Prowling Enemy (1 Peter 5:8-9)
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="scripture-verse">
+                                    Be alert and of sober mind. Your enemy the devil prowls around like a roaring lion looking for someone to devour. Resist him, standing firm in the faith, because you know that the family of believers throughout the world is undergoing the same kind of sufferings.
+                                    <div class="verse-reference">1 Peter 5:8-9 (NIV)</div>
+                                </div>
+
+                                <div class="pastor-quote">
+                                    "Wake up. Pay attention. Be sober-minded. And Peter will say, it's your adversary. He's against you."
+                                    <div class="quote-author">— Pastor Brett</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                ⚔️ Jesus' Authority Over Satan
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="scripture-verse">
+                                    You belong to your father, the devil, and you want to carry out your father's desires. He was a murderer from the beginning, not holding to the truth, for there is no truth in him. When he lies, he speaks his native language, for he is a liar and the father of lies.
+                                    <div class="verse-reference">John 8:44 (NIV)</div>
+                                </div>
+
+                                <div class="scripture-verse">
+                                    I saw Satan fall like lightning from heaven.
+                                    <div class="verse-reference">Luke 10:18 (NIV)</div>
+                                </div>
+
+                                <div class="pastor-quote">
+                                    "A tempter, an accuser, a liar, a murderer... That leads us to inquire a little bit about the history. What's the backstory? Where did Satan actually come from?"
+                                    <div class="quote-author">— Pastor Brett</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                📖 Additional Key Passages
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="quote-box">
+                                    <div class="scripture-verse" style="background: white; color: #1f2937;">
+                                        Submit yourselves, then, to God. Resist the devil, and he will flee from you.
+                                        <div class="verse-reference" style="color: #064e3b;">James 4:7 (NIV)</div>
+                                    </div>
+                                </div>
+
+                                <div class="quote-box">
+                                    <div class="scripture-verse" style="background: white; color: #1f2937;">
+                                        The reason the Son of God appeared was to destroy the devil's work.
+                                        <div class="verse-reference" style="color: #064e3b;">1 John 3:8 (NIV)</div>
+                                    </div>
+                                </div>
+
+                                <div class="quote-box">
+                                    <div class="scripture-verse" style="background: white; color: #1f2937;">
+                                        And having disarmed the powers and authorities, he made a public spectacle of them, triumphing over them by the cross.
+                                        <div class="verse-reference" style="color: #064e3b;">Colossians 2:15 (NIV)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practical Steps Tab -->
+                <div id="practical-steps" class="tab-content">
+                    <h2 style="color: #064e3b; margin-bottom: 30px;">🛡️ Five Strategic Principles</h2>
+
+                    <div class="pastor-quote">
+                        "So five points for us as we wrap things up here... As you seek to take your faith seriously. It is not to fixate on the enemy. It is not to be overly concerned with spiritual warfare, to live in a sense of paranoia, seeking to assess blame to Satan and his cronies."
+                        <div class="quote-author">— Pastor Brett</div>
+                    </div>
+
+                    <div class="bento-grid">
+                        <div class="bento-item">
+                            <h3>1️⃣ Take Warfare Seriously by Taking Faith Seriously</h3>
+                            <p>The primary defense against spiritual attack is spiritual maturity. Focus on knowing God rather than fixating on the enemy.</p>
+                            
+                            <div class="pastor-quote">
+                                "It is rather to nurture your faith. It is to understand who God is, have your mind transformed, to replace those thoughts with new thoughts about the beauty of who Jesus is."
+                                <div class="quote-author">— Pastor Brett</div>
+                            </div>
+                            
+                            <div class="collapsible">
+                                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                    The Sunday Challenge
+                                    <span>▼</span>
+                                </div>
+                                <div class="collapsible-content">
+                                    <div class="pastor-quote">
+                                        "Can I just say Sunday is not enough. You got to do more than Sunday. I try to pour this into your little mouths every week. Just force feed you. But you got to do more. Right? Because you're going to forget this sermon by Tuesday morning. Or Sunday dinner. It's so sad."
+                                        <div class="quote-author">— Pastor Brett</div>
+                                    </div>
+                                    <ul style="padding-left: 20px; margin-top: 15px;">
+                                        <li>Daily Scripture engagement beyond Sunday sermons</li>
+                                        <li>Regular worship that nurtures affection for God</li>
+                                        <li>Theological education to understand God's character</li>
+                                        <li>Community involvement to prevent isolation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bento-item">
+                            <h3>2️⃣ Know Who the Real Enemy Is</h3>
+                            <p>Our struggle is not against human opposition but against organized spiritual forces led by Satan himself.</p>
+                            
+                            <div class="pastor-quote">
+                                "You can see flesh and blood. That's easy to fight that battle. But Paul will say, no, it's against... And then he gives this organizational chart, if you will, of satanic forces."
+                                <div class="quote-author">— Pastor Brett</div>
+                            </div>
+                            
+                            <div class="collapsible">
+                                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                    Enemy Organization & Intent
+                                    <span>▼</span>
+                                </div>
+                                <div class="collapsible-content">
+                                    <div class="pastor-quote">
+                                        "He wants to destroy the church and the Christian within it, to demoralize you, to discourage you, to discredit you, to stop the advancement of what God is doing."
+                                        <div class="quote-author">— Pastor Brett</div>
+                                    </div>
+                                    <p><strong>Biblical Hierarchy (Ephesians 6:12):</strong></p>
+                                    <ul style="padding-left: 20px;">
+                                        <li><span class="highlight-term">Rulers</span> - High-ranking demonic authorities</li>
+                                        <li><span class="highlight-term">Authorities</span> - Regional spiritual powers</li>
+                                        <li><span class="highlight-term">Powers of darkness</span> - Cultural influence agents</li>
+                                        <li><span class="highlight-term">Spiritual forces of evil</span> - Direct personal tempters</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bento-item">
+                            <h3>3️⃣ Know the Enemy's Plans for You</h3>
+                            <p>Satan employs personalized <span class="tooltip">methodia<span class="tooltip-content">Strategic schemes designed for your specific weaknesses and circumstances</span></span> - understand your particular vulnerabilities.</p>
+                            
+                            <div class="pastor-quote">
+                                "What are the weak spots in you? Where might he attack to demobilize you? What would it look like? Have you ever given that some thought?"
+                                <div class="quote-author">— Pastor Brett</div>
+                            </div>
+                            
+                            <div class="collapsible">
+                                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                    Personal Vulnerability Assessment
+                                    <span>▼</span>
+                                </div>
+                                <div class="collapsible-content">
+                                    <div class="pastor-quote">
+                                        "So schemes is methodia. You can see the word method, right? What would be his methods? What would be his cunning plan, his craftiness, his strategic trickery?"
+                                        <div class="quote-author">— Pastor Brett</div>
+                                    </div>
+                                    <ul style="padding-left: 20px; margin-top: 15px;">
+                                        <li>What circumstances make me most susceptible to temptation?</li>
+                                        <li>What lies about God or myself do I most easily believe?</li>
+                                        <li>How does the enemy typically discourage me in ministry?</li>
+                                        <li>What accusations against others do I readily accept?</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bento-item">
+                            <h3>4️⃣ Allow the Gospel to Permeate Your Life</h3>
+                            <p>Put on the <strong>full armor</strong> of God - not selective pieces, but complete spiritual protection through gospel truth.</p>
+                            
+                            <div class="pastor-quote">
+                                "These are not optional. This is not like pick what you like. What do you need is the full armor of God. He actually says it put on the full armor of God, not just a piece that you find handy."
+                                <div class="quote-author">— Pastor Brett</div>
+                            </div>
+                            
+                            <button class="header-btn" onclick="openModal('armorDetailModal')" style="background: #064e3b; margin: 10px 0;">
+                                Explore Each Armor Piece
+                            </button>
+                        </div>
+
+                        <div class="bento-item">
+                            <h3>5️⃣ Live in Confidence</h3>
+                            <p>The expectation is victory. Stand firm knowing that Christ has already defeated the enemy and equipped you for triumph.</p>
+                            
+                            <div class="pastor-quote">
+                                "So you and I can live in confidence, not in paranoia... Don't have a mindset that goes, oh, the enemy is robbing me of my joy. No. Walk in the spirit. Put on the full armor of God and expect that you will stand. That is his plan for you."
+                                <div class="quote-author">— Pastor Brett</div>
+                            </div>
+                            
+                            <div class="collapsible">
+                                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                    Victory Mindset Details
+                                    <span>▼</span>
+                                </div>
+                                <div class="collapsible-content">
+                                    <div class="scripture-verse" style="background: white; color: #1f2937; margin: 15px 0;">
+                                        Put on the full armor of God so that when the day of evil comes, you may be able to stand your ground. And after you have done everything, to stand.
+                                        <div class="verse-reference" style="color: #064e3b;">Ephesians 6:13 (NIV)</div>
+                                    </div>
+                                    <div class="pastor-quote">
+                                        "Be alert. But don't be in fear. Faith is greater than fear."
+                                        <div class="quote-author">— Pastor Brett</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Worship & Heart Protection -->
+                    <div class="chart-container">
+                        <h3 style="color: #064e3b; margin-bottom: 20px;">💖 The Importance of Worship</h3>
+                        <div class="pastor-quote">
+                            "You know, sometimes we treat the songs like it's just a little warm-up. Some gathering music. We hear the talk, but it's so intentional. It is served up for us so that our hearts can get back into a place of understanding who God is. See, the word won't land well on a heart that is hard."
+                            <div class="quote-author">— Pastor Brett</div>
+                        </div>
+                        
+                        <div class="pastor-quote">
+                            "And so we come in and we sing together theology that is rich and good to nurture our hearts, to remind us of truths that we know in our head. But don't feel in our heart. We get back. Yes, Lord. Yes, Lord. And then we can hear the word of God."
+                            <div class="quote-author">— Pastor Brett</div>
+                        </div>
+                    </div>
+
+                    <!-- Prayer & Self-Sufficiency -->
+                    <div class="chart-container">
+                        <h3 style="color: #064e3b; margin-bottom: 20px;">🙏 The Prayer Life</h3>
+                        <div class="pastor-quote">
+                            "There is nothing like coming before God in a humble posture in prayer, not just prayers that are saying, God, give me, give me, give me, but prayers that say, God, you are amazing, and I need you. I need you every minute. I need you to protect my lips. I need you to expand my capacity to love those I don't really like."
+                            <div class="quote-author">— Pastor Brett</div>
+                        </div>
+                        
+                        <div class="pastor-quote">
+                            "Self-sufficiency could be the greatest threat to your vibrant faith. Pray at all times."
+                            <div class="quote-author">— Pastor Brett</div>
+                        </div>
+                    </div>
+
+                    <!-- The Armor in Detail -->
+                    <div class="chart-container">
+                        <h3 style="color: #064e3b; margin-bottom: 20px;">🛡️ The Complete Armor of God</h3>
+                        <table class="armor-table">
+                            <thead>
+                                <tr>
+                                    <th>Armor Piece</th>
+                                    <th>Spiritual Function</th>
+                                    <th>Pastor's Teaching</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Belt of Truth</strong></td>
+                                    <td>Foundation for all other armor</td>
+                                    <td>"You have to be able to distinguish lies"</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Breastplate of Righteousness</strong></td>
+                                    <td>Heart protection from accusation</td>
+                                    <td>"Doesn't your heart get weird? Don't your emotions confuse you?"</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gospel of Peace</strong></td>
+                                    <td>Readiness for spiritual deployment</td>
+                                    <td>"Not just going to consume... but one who gives your life away"</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Shield of Faith</strong></td>
+                                    <td>Defense against doubt and discouragement</td>
+                                    <td>"Can the 90% be wrong? Doubt. You have to combat it"</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Helmet of Salvation</strong></td>
+                                    <td>Mind protection from deceptive thoughts</td>
+                                    <td>"To make sure that your thoughts are filtered, are edited"</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sword of the Spirit</strong></td>
+                                    <td>Offensive weapon for spiritual battle</td>
+                                    <td>"You got to get God's word into me. It will change you"</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Prayer in the Spirit</strong></td>
+                                    <td>Communication and dependence on God</td>
+                                    <td>"Self-sufficiency could be the greatest threat"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Reflection Tab -->
+                <div id="reflection" class="tab-content">
+                    <h2 style="color: #064e3b; margin-bottom: 30px;">💭 Reflection & Application</h2>
+
+                    <div class="quote-box">
+                        <p>"There are two equal and opposite errors into which our race can fall about the devils. One is to disbelieve in their existence. The other is to believe, and to feel an excessive and unhealthy interest in them. They themselves are equally pleased by both errors."</p>
+                        <div class="quote-author">— C.S. Lewis, <em>The Screwtape Letters</em></div>
+                    </div>
+
+                    <div class="pastor-quote">
+                        "I don't know where you may fall, where you tend to be a little too in the spiritual realm or a little too in the rational side... The enemy is equally pleased with both scenarios."
+                        <div class="quote-author">— Pastor Brett</div>
+                    </div>
+
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                🤔 Personal Assessment Questions
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="pastor-quote">
+                                    "The reality is we're in a battle. Whether you like it or not, you need to be aware... But somewhere, hopefully, where we live at the happy medium is a place where we're keenly aware, we understand, but we don't live in paranoia."
+                                    <div class="quote-author">— Pastor Brett</div>
+                                </div>
+
+                                <div style="background: white; padding: 25px; border-radius: 8px; margin: 20px 0;">
+                                    <h4 style="color: #064e3b; margin-bottom: 15px;">Spiritual Warfare Readiness</h4>
+                                    <ol style="padding-left: 25px; line-height: 2;">
+                                        <li>Where do I fall on the spectrum between denial and obsession regarding spiritual warfare?</li>
+                                        <li>What specific schemes might the enemy use against my particular weaknesses?</li>
+                                        <li>Which pieces of God's armor do I most neglect in daily life?</li>
+                                        <li>How can I better distinguish between spiritual attack and natural consequence?</li>
+                                        <li>What would it look like for me to "stand firm" in my current circumstances?</li>
+                                    </ol>
+                                </div>
+
+                                <div style="background: white; padding: 25px; border-radius: 8px; margin: 20px 0;">
+                                    <h4 style="color: #064e3b; margin-bottom: 15px;">Faith Development</h4>
+                                    <ol style="padding-left: 25px; line-height: 2;" start="6">
+                                        <li>How am I actively nurturing my affection for God beyond Sunday worship?</li>
+                                        <li>What lies about God's character do I most easily believe during difficult times?</li>
+                                        <li>How can I move from spiritual consumption to active gospel deployment?</li>
+                                        <li>Where is self-sufficiency hindering my dependence on God?</li>
+                                        <li>What would confident, non-paranoid spiritual awareness look like in my life?</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                📖 Recommended Resources
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="pastor-quote">
+                                    "C.S. Lewis wrote a whole book called The Screwtape Letters, available in our bookstore, that details the enemy's specific strategy against a believer. It's fascinating reading."
+                                    <div class="quote-author">— Pastor Brett</div>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                                    <div style="background: white; padding: 20px; border-radius: 8px;">
+                                        <h4 style="color: #064e3b;">📚 Essential Reading</h4>
+                                        <ul style="padding-left: 20px; line-height: 1.8;">
+                                            <li><strong>The Screwtape Letters</strong> by C.S. Lewis</li>
+                                            <li><strong>The Armor of God</strong> by Priscilla Shirer</li>
+                                            <li><strong>Victory Over the Darkness</strong> by Neil T. Anderson</li>
+                                            <li><strong>The Bondage Breaker</strong> by Neil T. Anderson</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div style="background: white; padding: 20px; border-radius: 8px;">
+                                        <h4 style="color: #064e3b;">🎯 Practical Tools</h4>
+                                        <ul style="padding-left: 20px; line-height: 1.8;">
+                                            <li>Daily armor of God prayer</li>
+                                            <li>Scripture memorization plan</li>
+                                            <li>Accountability partnership</li>
+                                            <li>Regular fasting and prayer</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                🙏 Prayer Focus
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="scripture-verse">
+                                    And pray in the Spirit on all occasions with all kinds of prayers and requests. With this in mind, be alert and always keep on praying for all the Lord's people.
+                                    <div class="verse-reference">Ephesians 6:18 (NIV)</div>
+                                </div>
+
+                                <div class="pastor-quote">
+                                    "God, I need you to protect my lips. I need you to expand my capacity to love those I don't really like. God, I need you to give me wisdom in the workplace. I need you to parent my kids. God, I need you."
+                                    <div class="quote-author">— Pastor Brett (Sample Prayer)</div>
+                                </div>
+
+                                <div style="background: white; padding: 25px; border-radius: 8px; margin: 20px 0;">
+                                    <h4 style="color: #064e3b; margin-bottom: 15px;">Spiritual Warfare Prayer Points</h4>
+                                    <ul style="padding-left: 25px; line-height: 2;">
+                                        <li><strong>Wisdom</strong> - To discern spiritual realities without paranoia</li>
+                                        <li><strong>Protection</strong> - For family, church, and ministry from enemy schemes</li>
+                                        <li><strong>Strength</strong> - To stand firm when under spiritual pressure</li>
+                                        <li><strong>Truth</strong> - To recognize and reject deceptive thoughts</li>
+                                        <li><strong>Victory</strong> - To live confidently in Christ's triumph</li>
+                                        <li><strong>Service</strong> - To be used by God in advancing His kingdom</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="armorModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('armorModal')">&times;</span>
+            <h2 style="color: #064e3b; margin-bottom: 20px;">The Complete Armor Passage</h2>
+            <div class="scripture-verse">
+                Therefore put on the full armor of God, so that when the day of evil comes, you may be able to stand your ground, and after you have done everything, to stand. Stand firm then, with the belt of truth buckled around your waist, with the breastplate of righteousness in place, and with your feet fitted with the readiness that comes from the gospel of peace. In addition to all this, take up the shield of faith, with which you can extinguish all the flaming arrows of the evil one. Take the helmet of salvation and the sword of the Spirit, which is the word of God. And pray in the Spirit on all occasions with all kinds of prayers and requests. With this in mind, be alert and always keep on praying for all the Lord's people.
+                <div class="verse-reference">Ephesians 6:13-18 (NIV)</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="armorDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('armorDetailModal')">&times;</span>
+            <h2 style="color: #064e3b; margin-bottom: 20px;">Armor Pieces in Detail</h2>
+            
+            <div style="margin: 20px 0;">
+                <h3 style="color: #064e3b;">🔗 Belt of Truth</h3>
+                <p><strong>Function:</strong> The foundation that holds all other armor in place</p>
+                <div class="pastor-quote">
+                    "You have to be able to distinguish lies. In my case that I was sharing, it was the staff doesn't support you. The elders are conniving against you. You're going to be asked to step down. They found somebody else. All this stuff is so ridiculous. Lies that were just whispers. But I gave them a moment's notice. And they took root within."
+                    <div class="quote-author">— Pastor Brett</div>
+                </div>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <h3 style="color: #064e3b;">🛡️ Breastplate of Righteousness</h3>
+                <p><strong>Function:</strong> Protects the heart from spiritual and emotional attack</p>
+                <div class="pastor-quote">
+                    "Doesn't your heart get weird? Don't your emotions confuse you at times? Don't they take you to places you don't want to be? Don't you feel things that you wish you sometimes didn't feel? He says you've got to protect your heart. You've got to make sure that your heart is nurtured for the things of God."
+                    <div class="quote-author">— Pastor Brett</div>
+                </div>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <h3 style="color: #064e3b;">👟 Gospel of Peace</h3>
+                <p><strong>Function:</strong> Readiness for spiritual deployment and service</p>
+                <div class="pastor-quote">
+                    "I'm not trying to guilt trip you into passing out a bulletin. Maybe you don't do it within the confines of the church. But you are called and expected to show up not as a consumer only, but one who gives your life away. To be used in your workplace, in your family. To be used in a beautiful way, spent for the glory of God."
+                    <div class="quote-author">— Pastor Brett</div>
+                </div>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <h3 style="color: #064e3b;">🛡️ Shield of Faith</h3>
+                <p><strong>Function:</strong> Defense against doubt and discouragement</p>
+                <div class="pastor-quote">
+                    "And the enemy would love to undermine that and give doubt. Do you really believe that? You're the only one in your family that believes that. Only 10% of Christians in Hong Kong. Can the 90% be wrong? Doubt. You have to combat it with the shield of faith."
+                    <div class="quote-author">— Pastor Brett</div>
+                </div>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <h3 style="color: #064e3b;">⛑️ Helmet of Salvation</h3>
+                <p><strong>Function:</strong> Mind protection from deceptive thoughts</p>
+                <div class="pastor-quote">
+                    "The helmet of salvation to protect your thoughts. That's what a helmet does. To make sure that your thoughts are filtered, are edited. That you have the ability to spew out what doesn't belong, what is not true. Because you know what lies are. You don't let them reside within you."
+                    <div class="quote-author">— Pastor Brett</div>
+                </div>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <h3 style="color: #064e3b;">⚔️ Sword of the Spirit</h3>
+                <p><strong>Function:</strong> Offensive weapon for spiritual battle</p>
+                <div class="pastor-quote">
+                    "You need to be as imperfect as it may be. You need to have God's concepts, his character, his words embedded within you so that you have something to stand on. Don't settle for a flimsy faith. Be scripture ready."
+                    <div class="quote-author">— Pastor Brett</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.95); color: #064e3b; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(6, 78, 59, 0.3); max-width: 300px; word-wrap: break-word; box-shadow: 0 10px 25px rgba(6, 78, 59, 0.2);">
+        <div style="margin-bottom: 4px; font-weight: bold; color: #064e3b; line-height: 1.3;">
+            Generated using LLM with supervision and polishing by 
+            <a href="../index.html" style="color: #064e3b; text-decoration: none; border-bottom: 1px dotted #064e3b;" target="_blank">
+                benjaminficusmicrocarpa
+            </a>
+        </div>
+        <div>
+            <a href="../license.html" style="color: #064e3b; text-decoration: none; font-size: 0.75rem;" target="_blank">
+                Released under the MIT License
+            </a>
+        </div>
+        </div>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Trigger animations for newly visible content
+            setTimeout(() => {
+                const visibleElements = document.querySelectorAll(`#${tabName} .fade-in`);
+                visibleElements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('visible');
+                    }, index * 100);
+                });
+            }, 50);
+        }
+
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const arrow = header.querySelector('.accordion-arrow');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                arrow.textContent = '▼';
+            } else {
+                content.classList.add('active');
+                arrow.textContent = '▲';
+            }
+        }
+
+        // Collapsible functionality
+        function toggleCollapsible(header) {
+            const content = header.nextElementSibling;
+            const arrow = header.querySelector('span');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                arrow.textContent = '▼';
+            } else {
+                content.classList.add('active');
+                arrow.textContent = '▲';
+            }
+        }
+
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Trigger initial animations
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('visible');
+                    }, index * 200);
+                });
+            }, 300);
+
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Animate progress bars
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 500);
+                });
+            }, 1000);
+        });
+
+        // Keyboard navigation for accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Focus management for modals
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Focus on close button for accessibility
+            setTimeout(() => {
+                modal.querySelector('.close').focus();
+            }, 100);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickbait: Defeating Strongholds - Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .tooltip.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .modal.show {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .accordion-content {
+            display: none;
+        }
+        .accordion-content.open {
+            display: block;
+        }
+        .collapsible-content {
+            display: none;
+        }
+        .collapsible-content.open {
+            display: block;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-800 text-white">
+    <!-- Header -->
+    <header class="bg-slate-800 bg-opacity-90 backdrop-blur-lg border-b border-purple-600 sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-yellow-400 mb-2">
+                        ⚔️ Clickbait: Defeating Strongholds
+                    </h1>
+                    <p class="text-gray-300 text-lg">
+                        Pastor Brett Hilliard • Island ECC • 24 August, 2025
+                    </p>
+                    <div class="flex flex-wrap gap-3 mt-3">
+                        <a href="https://www.youtube.com/watch?v=bpC_bCUyuYo" 
+                           class="inline-flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                            <span>Watch Original Sermon</span>
+                        </a>
+                        <a href="index.html" 
+                           class="inline-flex items-center space-x-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            <span>View All Sermons</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <svg class="w-12 h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"></path>
+                    </svg>
+                    <svg class="w-12 h-12 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l7 18-7-6-7 6 7-18z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-slate-800 bg-opacity-50 border-b border-slate-700">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex space-x-1 overflow-x-auto">
+                <button onclick="switchTab('main')" id="tab-main" class="tab-button flex items-center space-x-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors border-yellow-400 text-yellow-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                    <span>Main Sermon</span>
+                </button>
+                <button onclick="switchTab('verses')" id="tab-verses" class="tab-button flex items-center space-x-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors border-transparent text-gray-400 hover:text-white">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    <span>Bible Verses</span>
+                </button>
+                <button onclick="switchTab('steps')" id="tab-steps" class="tab-button flex items-center space-x-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors border-transparent text-gray-400 hover:text-white">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Practical Steps</span>
+                </button>
+                <button onclick="switchTab('reflection')" id="tab-reflection" class="tab-button flex items-center space-x-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors border-transparent text-gray-400 hover:text-white">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    <span>Reflection</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 pb-24"> <!--pb-24 for padding for attributiion badge-->
+        <!-- Main Sermon Tab -->
+        <div id="main" class="tab-content active">
+            <div class="space-y-8">
+                <!-- Bento Grid Summary -->
+                <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-gradient-to-r from-purple-900 to-purple-700 rounded-lg p-6 border border-purple-600">
+                        <h2 class="text-2xl font-bold text-yellow-400 mb-4 flex items-center">
+                            🏰 What Are Strongholds?
+                        </h2>
+                        <p class="text-lg mb-4">
+                            A <span class="tooltip-trigger border-b border-dotted border-yellow-400 cursor-help text-yellow-400" data-tooltip="A fortified position that allows influence and expansion - can be God's or the enemy's">stronghold</span> is a fortified position that allows influence and expansion. 
+                            The enemy establishes these in our thinking to influence us and grow stronger over time.
+                        </p>
+                        <p class="text-yellow-300">
+                            "Fortified positions within your thinking that will only influence you and get bigger." - Pastor Brett
+                        </p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-red-900 to-red-700 rounded-lg p-6 border border-red-600">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-3 flex items-center">
+                            😈 Enemy's Agenda
+                        </h3>
+                        <ul class="space-y-2 text-red-200">
+                            <li>• Steal</li>
+                            <li>• Kill</li>
+                            <li>• Destroy</li>
+                        </ul>
+                        <p class="text-sm mt-3 text-red-300">No neutrality - it's all destructive</p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-green-900 to-green-700 rounded-lg p-6 border border-green-600">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-3 flex items-center">
+                            ✨ Jesus' Promise
+                        </h3>
+                        <p class="text-green-200 text-lg">
+                            "Life and have it abundantly"
+                        </p>
+                        <p class="text-sm mt-3 text-green-300">Complete opposite of the enemy's agenda</p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-blue-900 to-blue-700 rounded-lg p-6 border border-blue-600">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-3 flex items-center">
+                            🧠 Discernment Required
+                        </h3>
+                        <p class="text-blue-200">
+                            "Test the spirits to see whether they are from God"
+                        </p>
+                        <p class="text-sm mt-3 text-blue-300">A million thoughts daily - know the source</p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-orange-900 to-orange-700 rounded-lg p-6 border border-orange-600">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-3 flex items-center">
+                            🎯 Emotional Vulnerability
+                        </h3>
+                        <p class="text-orange-200">
+                            "In your anger, do not sin"
+                        </p>
+                        <p class="text-sm mt-3 text-orange-300">Know your emotional triggers</p>
+                    </div>
+                </section>
+
+                <!-- Sermon Breakdown Accordion -->
+                <section>
+                    <h2 class="text-2xl font-bold text-yellow-400 mb-6 flex items-center">
+                        📖 Sermon Breakdown
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <!-- Introduction with Lucy Santana -->
+                        <div class="bg-slate-800 bg-opacity-50 rounded-lg border border-slate-700">
+                            <button onclick="toggleAccordion('intro')" class="accordion-button w-full flex items-center justify-between p-6 text-left hover:bg-slate-700 rounded-lg transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                    <h3 class="text-xl font-semibold text-white">The Lucy Santana Illustration</h3>
+                                </div>
+                                <svg class="w-5 h-5 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <div id="intro" class="accordion-content px-6 pb-6 text-gray-300 border-t border-slate-700 pt-4">
+                                <div class="bg-red-900 bg-opacity-30 p-4 rounded-lg border border-red-600 mb-4">
+                                    <h4 class="font-bold text-red-300 mb-2">🎭 Fictional YouTuber "Lucy Santana"</h4>
+                                    <blockquote class="text-red-200 italic">
+                                        "Take every thought captive? That sounds like a horrible idea... The best way to get joy out of this life is to imprison your thoughts? Listen, you know better than to bottle up your feelings... So why would you want to imprison your thoughts? They're yours, uniquely yours."
+                                    </blockquote>
+                                </div>
+                                <p class="mb-3">
+                                    Pastor Brett uses this fictional character to illustrate the <span class="tooltip-trigger border-b border-dotted border-yellow-400 cursor-help text-yellow-400" data-tooltip="The enemy often uses seemingly reasonable advice that contradicts biblical truth">world's wisdom</span> that directly opposes biblical truth about taking thoughts captive.
+                                </p>
+                                <div class="bg-yellow-900 bg-opacity-30 p-3 rounded border border-yellow-600">
+                                    <p class="text-yellow-200">
+                                        <strong>💡 Key Insight:</strong> Notice the 66.6% discount offer - a clear reference to the mark of the beast (666), showing how the enemy's influence can be subtle yet present.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Spiritual Warfare Reality -->
+                        <div class="bg-slate-800 bg-opacity-50 rounded-lg border border-slate-700">
+                            <button onclick="toggleAccordion('warfare')" class="accordion-button w-full flex items-center justify-between p-6 text-left hover:bg-slate-700 rounded-lg transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l7 18-7-6-7 6 7-18z"></path>
+                                    </svg>
+                                    <h3 class="text-xl font-semibold text-white">Understanding Spiritual Warfare</h3>
+                                </div>
+                                <svg class="w-5 h-5 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <div id="warfare" class="accordion-content px-6 pb-6 text-gray-300 border-t border-slate-700 pt-4">
+                                <p class="mb-4">
+                                    We believe in invisible things like oxygen, love, and God. Similarly, we must acknowledge that evil forces work to distract us from God and destroy our faith.
+                                </p>
+                                <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg border border-purple-600 mb-4">
+                                    <h4 class="font-bold text-purple-300 mb-2">📜 2 Corinthians 10:4-5 Context</h4>
+                                    <p class="text-purple-200 mb-3">
+                                        Paul faced opponents who said his teaching was "fleshly" - just human ideas. When they attacked the authenticity of his message, Paul recognized this wasn't just personal - it was spiritual warfare.
+                                    </p>
+                                    <p class="text-purple-200">
+                                        "This is not just a personal insult... he will fight that and say this is a spiritual battle."
+                                    </p>
+                                </div>
+
+                                <div class="grid md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-green-900 bg-opacity-30 p-4 rounded border border-green-600">
+                                        <h5 class="font-bold text-green-300 mb-2">✅ Positive Strongholds</h5>
+                                        <p class="text-green-200 text-sm mb-2">"The Lord is my stronghold" - Psalm 27:1</p>
+                                        <p class="text-green-200 text-sm">God should be the one who takes up position in our life, influences us, and expands His influence.</p>
+                                    </div>
+                                    <div class="bg-red-900 bg-opacity-30 p-4 rounded border border-red-600">
+                                        <h5 class="font-bold text-red-300 mb-2">❌ Enemy Strongholds</h5>
+                                        <p class="text-red-200 text-sm mb-2">"Did not make God his stronghold" - Psalm 52:7</p>
+                                        <p class="text-red-200 text-sm">The enemy establishes fortified positions in our thinking that influence and expand destructively.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Discernment and Truth -->
+                        <div class="bg-slate-800 bg-opacity-50 rounded-lg border border-slate-700">
+                            <button onclick="toggleAccordion('discernment')" class="accordion-button w-full flex items-center justify-between p-6 text-left hover:bg-slate-700 rounded-lg transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    <h3 class="text-xl font-semibold text-white">Developing Discernment</h3>
+                                </div>
+                                <svg class="w-5 h-5 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <div id="discernment" class="accordion-content px-6 pb-6 text-gray-300 border-t border-slate-700 pt-4">
+                                <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-600 mb-4">
+                                    <h4 class="font-bold text-blue-300 mb-2">💰 The Counterfeit Money Illustration</h4>
+                                    <p class="text-blue-200 mb-3">
+                                        In Hong Kong, $1000 bills are often counterfeited. The difference between real and fake is tiny - just the spacing of a security stripe.
+                                    </p>
+                                    <p class="text-blue-200">
+                                        <strong>Training Method:</strong> Learn the real thing thoroughly, not all the counterfeits. When you know truth deeply, you can spot the lie.
+                                    </p>
+                                </div>
+                                
+                                <p class="mb-4">
+                                    "Your commitment to understanding the truth of God... to bathe yourself in his word... over time, truth becomes part of you. And then you see a lie and you go, no, no. That's not right."
+                                </p>
+
+                                <div class="bg-yellow-900 bg-opacity-30 p-4 rounded border border-yellow-600">
+                                    <h5 class="font-bold text-yellow-300 mb-2">🎯 Million Daily Thoughts</h5>
+                                    <p class="text-yellow-200 mb-2">
+                                        You have millions of thoughts crossing your mind daily - ideas, concepts, views, opinions, judgments, conclusions, criticisms.
+                                    </p>
+                                    <p class="text-yellow-200">
+                                        <strong>Key Questions:</strong> Am I thinking God's thoughts? Is this from God, from me, or from the enemy?
+                                    </p>
+                                </div>
+
+                                <!-- Collapsible Personal Application -->
+                                <div class="mt-4">
+                                    <button onclick="toggleCollapsible('discernment-app')" class="collapsible-button flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors">
+                                        <svg class="w-4 h-4 collapsible-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium">✨ Personal Application Notes</span>
+                                    </button>
+                                    <div id="discernment-app" class="collapsible-content mt-3 p-4 bg-slate-900 bg-opacity-50 rounded-lg border border-slate-600">
+                                        <h6 class="font-semibold text-white mb-2">🔍 Developing Your Discernment Muscle</h6>
+                                        <ul class="text-gray-300 text-sm space-y-1">
+                                            <li>• Daily Scripture reading builds your "truth detector"</li>
+                                            <li>• Pay attention to thoughts that come after worship vs. stress</li>
+                                            <li>• Notice patterns: Does this thought lead toward or away from God?</li>
+                                            <li>• Practice asking: "Does this align with God's character?"</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Emotional Vulnerability -->
+                        <div class="bg-slate-800 bg-opacity-50 rounded-lg border border-slate-700">
+                            <button onclick="toggleAccordion('emotions')" class="accordion-button w-full flex items-center justify-between p-6 text-left hover:bg-slate-700 rounded-lg transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                    <h3 class="text-xl font-semibold text-white">Emotional Vulnerability</h3>
+                                </div>
+                                <svg class="w-5 h-5 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <div id="emotions" class="accordion-content px-6 pb-6 text-gray-300 border-t border-slate-700 pt-4">
+                                <div class="bg-orange-900 bg-opacity-30 p-4 rounded-lg border border-orange-600 mb-4">
+                                    <h4 class="font-bold text-orange-300 mb-2">😤 Jesus' Controlled Anger</h4>
+                                    <p class="text-orange-200 mb-3">
+                                        When Jesus cleansed the temple, He wasn't out of control. One Gospel mentions He "wove together a cord of strands" - thoughtful, time-consuming preparation.
+                                    </p>
+                                    <p class="text-orange-200">
+                                        <strong>Key Point:</strong> "In your anger, do not sin" - it's possible to be angry without sinning, but you're closer to sin when angry.
+                                    </p>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h5 class="font-bold text-white mb-3">🎯 Fill in the Blank: "In your _____, do not sin"</h5>
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+                                        <div class="bg-slate-700 px-3 py-2 rounded text-center">Anxiety</div>
+                                        <div class="bg-slate-700 px-3 py-2 rounded text-center">Frustration</div>
+                                        <div class="bg-slate-700 px-3 py-2 rounded text-center">Stress</div>
+                                        <div class="bg-slate-700 px-3 py-2 rounded text-center">Resentment</div>
+                                        <div class="bg-slate-700 px-3 py-2 rounded text-center">Fatigue</div>
+                                        <div class="bg-slate-700 px-3 py-2 rounded text-center">Insecurity</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg border border-purple-600">
+                                    <h5 class="font-bold text-purple-300 mb-2">🎭 Gender Stereotypes (Pastor Brett's Humor)</h5>
+                                    <p class="text-purple-200 text-sm mb-2">
+                                        "Most men are like: I am in tune with my emotions. Right now, I am hungry. That is an emotion, right? I am sleepy."
+                                    </p>
+                                    <p class="text-purple-200 text-sm">
+                                        The point: Many need that toddler emotion chart with faces. Know your emotional state and what vulnerability it brings.
+                                    </p>
+                                </div>
+
+                                <!-- Collapsible Emotional Self-Assessment -->
+                                <div class="mt-4">
+                                    <button onclick="toggleCollapsible('emotion-app')" class="collapsible-button flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors">
+                                        <svg class="w-4 h-4 collapsible-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium">✨ Emotional Self-Assessment</span>
+                                    </button>
+                                    <div id="emotion-app" class="collapsible-content mt-3 p-4 bg-slate-900 bg-opacity-50 rounded-lg border border-slate-600">
+                                        <h6 class="font-semibold text-white mb-2">🔍 Know Your Vulnerability Points</h6>
+                                        <p class="text-gray-300 text-sm mb-3">
+                                            What emotional states make you most vulnerable to temptation or wrong thinking?
+                                        </p>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                            <div class="space-y-2">
+                                                <div class="text-red-300">⚠️ High Risk Emotions:</div>
+                                                <ul class="text-gray-300 ml-4">
+                                                    <li>• When exhausted</li>
+                                                    <li>• After conflict</li>
+                                                    <li>• Feeling rejected</li>
+                                                    <li>• Under pressure</li>
+                                                </ul>
+                                            </div>
+                                            <div class="space-y-2">
+                                                <div class="text-green-300">✅ Protective Strategies:</div>
+                                                <ul class="text-gray-300 ml-4">
+                                                    <li>• Pause before reacting</li>
+                                                    <li>• Call a trusted friend</li>
+                                                    <li>• Pray before deciding</li>
+                                                    <li>• Remember your identity in Christ</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prayer and Authority -->
+                        <div class="bg-slate-800 bg-opacity-50 rounded-lg border border-slate-700">
+                            <button onclick="toggleAccordion('prayer')" class="accordion-button w-full flex items-center justify-between p-6 text-left hover:bg-slate-700 rounded-lg transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <h3 class="text-xl font-semibold text-white">Being "Prayed Up" & Spiritual Authority</h3>
+                                </div>
+                                <svg class="w-5 h-5 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <div id="prayer" class="accordion-content px-6 pb-6 text-gray-300 border-t border-slate-700 pt-4">
+                                <div class="bg-green-900 bg-opacity-30 p-4 rounded-lg border border-green-600 mb-4">
+                                    <h4 class="font-bold text-green-300 mb-2">⛰️ Mark 9: The Transfiguration to Spiritual Battle</h4>
+                                    <p class="text-green-200 mb-3">
+                                        After the incredible mountain experience with Moses and Elijah, Jesus and the disciples immediately face a demon-possessed boy that the disciples couldn't heal.
+                                    </p>
+                                    <p class="text-green-200">
+                                        <strong>Pattern:</strong> Spiritual victories often lead to increased spiritual warfare.
+                                    </p>
+                                </div>
+
+                                <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-600 mb-4">
+                                    <h4 class="font-bold text-blue-300 mb-2">🤔 The Prayer Paradox</h4>
+                                    <p class="text-blue-200 mb-3">
+                                        Jesus said "This kind can come out only by prayer," but nowhere in the text does Jesus actually pray before casting out the demon.
+                                    </p>
+                                    <p class="text-blue-200">
+                                        <strong>Answer:</strong> Jesus wasn't prayerless - He was "prayed up." His life WAS prayer - constant communion with God.
+                                    </p>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h5 class="font-bold text-white mb-3">🙏 Redefining Prayer</h5>
+                                    <p class="mb-3">Pastor Brett's personal insight:</p>
+                                    <blockquote class="bg-purple-900 bg-opacity-30 p-4 rounded border border-purple-600 italic text-purple-200">
+                                        "I still want to grow in my prayer life. But I recognize that I actually pray more than I give myself credit for. Before, I was only counting the prayer as the time between dear God and amen... Maybe it was just constant communion with God. An ongoing sidebar conversation."
+                                    </blockquote>
+                                </div>
+
+                                <div class="bg-yellow-900 bg-opacity-30 p-4 rounded border border-yellow-600 mb-4">
+                                    <h5 class="font-bold text-yellow-300 mb-2">⚡ Luke 9: Spiritual Authority</h5>
+                                    <p class="text-yellow-200 mb-3">
+                                        Jesus gave the disciples "power and authority to drive out all demons and to cure diseases." They got excited about the miracles but missed the point.
+                                    </p>
+                                    <p class="text-yellow-200">
+                                        <strong>Jesus' correction:</strong> "Do not rejoice that the spirits submit to you, but rejoice that your names are written in heaven."
+                                    </p>
+                                </div>
+
+                                <!-- Collapsible Prayer Practice -->
+                                <div class="mt-4">
+                                    <button onclick="toggleCollapsible('prayer-app')" class="collapsible-button flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors">
+                                        <svg class="w-4 h-4 collapsible-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium">✨ Cultivating Ongoing Prayer</span>
+                                    </button>
+                                    <div id="prayer-app" class="collapsible-content mt-3 p-4 bg-slate-900 bg-opacity-50 rounded-lg border border-slate-600">
+                                        <h6 class="font-semibold text-white mb-2">🔄 Living in Constant Communion</h6>
+                                        <div class="space-y-3 text-sm">
+                                            <div>
+                                                <strong class="text-green-300">Throughout the Day:</strong>
+                                                <ul class="text-gray-300 ml-4 mt-1">
+                                                    <li>• Thank God for small moments</li>
+                                                    <li>• Ask for wisdom before decisions</li>
+                                                    <li>• Pray for people as they come to mind</li>
+                                                    <li>• Surrender anxious thoughts immediately</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <strong class="text-blue-300">Praying Without Ceasing:</strong>
+                                                <ul class="text-gray-300 ml-4 mt-1">
+                                                    <li>• Not necessarily verbalized</li>
+                                                    <li>• Heavenward orientation of the heart</li>
+                                                    <li>• Constant surrender and conversation</li>
+                                                    <li>• No formal "dear God" and "amen" required</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Objects and Spiritual Influence -->
+                        <div class="bg-slate-800 bg-opacity-50 rounded-lg border border-slate-700">
+                            <button onclick="toggleAccordion('objects')" class="accordion-button w-full flex items-center justify-between p-6 text-left hover:bg-slate-700 rounded-lg transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                    </svg>
+                                    <h3 class="text-xl font-semibold text-white">Objects & Spiritual Influence (Pastor Tim's Teaching)</h3>
+                                </div>
+                                <svg class="w-5 h-5 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <div id="objects" class="accordion-content px-6 pb-6 text-gray-300 border-t border-slate-700 pt-4">
+                                <div class="bg-amber-900 bg-opacity-30 p-4 rounded-lg border border-amber-600 mb-4">
+                                    <h4 class="font-bold text-amber-300 mb-2">☂️ Hong Kong Umbrella Superstition</h4>
+                                    <p class="text-amber-200 mb-3">
+                                        People believe spirits hide in umbrellas' shadows, so opening them indoors releases spirits into that space.
+                                    </p>
+                                    <p class="text-amber-200">
+                                        <strong>Question:</strong> Can demons actually inhabit inanimate objects?
+                                    </p>
+                                </div>
+
+                                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-red-900 bg-opacity-30 p-4 rounded border border-red-600">
+                                        <h5 class="font-bold text-red-300 mb-2">❌ Demon Possession</h5>
+                                        <p class="text-red-200 text-sm mb-2">
+                                            Scripture shows demons possessing living things (humans, pigs in Mark 5), never inanimate objects.
+                                        </p>
+                                    </div>
+                                    <div class="bg-orange-900 bg-opacity-30 p-4 rounded border border-orange-600">
+                                        <h5 class="font-bold text-orange-300 mb-2">⚠️ Evil Associations</h5>
+                                        <p class="text-orange-200 text-sm">
+                                            Objects can be associated with evil practices: occult items, idols, temple souvenirs, certain music/movies.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-600 mb-4">
+                                    <h4 class="font-bold text-blue-300 mb-2">🔥 Acts 19: New Believers' Response</h4>
+                                    <p class="text-blue-200 mb-3">
+                                        When people became Christians, "those who had practiced sorcery brought their scrolls together and burned them publicly."
+                                    </p>
+                                    <p class="text-blue-200">
+                                        <strong>Modern Application:</strong> Many new Christians throw away music, movies, or books that were stumbling blocks from their old life.
+                                    </p>
+                                </div>
+
+                                <div class="bg-green-900 bg-opacity-30 p-4 rounded-lg border border-green-600">
+                                    <h4 class="font-bold text-green-300 mb-2">💪 Our Victory in Christ</h4>
+                                    <p class="text-green-200 mb-2">
+                                        <strong>1 John 4:4:</strong> "The one who is in you is greater than the one who is in the world."
+                                    </p>
+                                    <p class="text-green-200">
+                                        With the Holy Spirit in us, we don't need to live in fear of objects or spirits.
+                                    </p>
+                                </div>
+
+                                <!-- Pastor Brett's Personal Examples -->
+                                <div class="mt-4 bg-purple-900 bg-opacity-30 p-4 rounded-lg border border-purple-600">
+                                    <h5 class="font-bold text-purple-300 mb-2">🏠 Pastor Brett's Examples</h5>
+                                    <div class="space-y-3 text-sm">
+                                        <div>
+                                            <strong class="text-white">New Believer's Shrine:</strong>
+                                            <p class="text-purple-200">Advice: Remove it from your home (symbol of past beliefs), but don't avoid visiting non-Christian family members' homes. Show Christ's love there.</p>
+                                        </div>
+                                        <div>
+                                            <strong class="text-white">Lion Bookends:</strong>
+                                            <p class="text-purple-200">Got rid of them not because they had spiritual power, but to avoid confusion about what he believes. "I don't want people to be distracted in my home about what I believe."</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses" class="tab-content">
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-yellow-400 mb-6 flex items-center">
+                    📖 Key Scripture References
+                </h2>
+                
+                <div class="grid gap-6">
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-xl font-bold text-yellow-400">2 Corinthians 10:4-5</h3>
+                            <button onclick="showModal('verse-1')" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <blockquote class="text-lg text-white italic mb-3 pl-4 border-l-4 border-purple-600">
+                            "The weapons we fight with are not the weapons of this world. On the contrary, they have divine power to demolish strongholds. We demolish arguments and every pretension that sets itself up against the knowledge of God, and we take captive every thought to make it obedient to Christ."
+                        </blockquote>
+                        <p class="text-gray-400 text-sm">Paul's explanation of spiritual warfare and strongholds</p>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-xl font-bold text-yellow-400">John 10:10</h3>
+                            <button onclick="showModal('verse-2')" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <blockquote class="text-lg text-white italic mb-3 pl-4 border-l-4 border-purple-600">
+                            "The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full."
+                        </blockquote>
+                        <p class="text-gray-400 text-sm">Jesus contrasts Satan's agenda with His own</p>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-xl font-bold text-yellow-400">Ephesians 4:26-27</h3>
+                            <button onclick="showModal('verse-3')" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <blockquote class="text-lg text-white italic mb-3 pl-4 border-l-4 border-purple-600">
+                            "In your anger do not sin: Do not let the sun go down while you are still angry, and do not give the devil a foothold."
+                        </blockquote>
+                        <p class="text-gray-400 text-sm">Warning about emotional vulnerability to the enemy</p>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-xl font-bold text-yellow-400">1 John 4:1</h3>
+                            <button onclick="showModal('verse-4')" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <blockquote class="text-lg text-white italic mb-3 pl-4 border-l-4 border-purple-600">
+                            "Dear friends, do not believe every spirit, but test the spirits to see whether they are from God."
+                        </blockquote>
+                        <p class="text-gray-400 text-sm">The need for spiritual discernment</p>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-xl font-bold text-yellow-400">Mark 9:29</h3>
+                            <button onclick="showModal('verse-5')" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <blockquote class="text-lg text-white italic mb-3 pl-4 border-l-4 border-purple-600">
+                            "He replied, 'This kind can come out only by prayer.'"
+                        </blockquote>
+                        <p class="text-gray-400 text-sm">Jesus explains the power needed for difficult spiritual battles</p>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-xl font-bold text-yellow-400">Luke 9:1</h3>
+                            <button onclick="showModal('verse-6')" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <blockquote class="text-lg text-white italic mb-3 pl-4 border-l-4 border-purple-600">
+                            "When Jesus had called the Twelve together, he gave them power and authority to drive out all demons and to cure diseases."
+                        </blockquote>
+                        <p class="text-gray-400 text-sm">Disciples receive supernatural authority</p>
+                    </div>
+                </div>
+
+                <!-- Additional Scripture Context -->
+                <div class="bg-gradient-to-r from-purple-900 to-blue-900 rounded-lg p-6 border border-purple-600">
+                    <h3 class="text-xl font-bold text-yellow-400 mb-4 flex items-center">
+                        ⭐ Stronghold Verses
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-green-300">Psalm 18:2</h4>
+                            <p class="text-white italic">"The Lord is my rock, my fortress and my deliverer; my God is my rock, in whom I take refuge, my shield and the horn of my salvation, my stronghold."</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-green-300">Psalm 27:1</h4>
+                            <p class="text-white italic">"The Lord is my light and my salvation—whom shall I fear? The Lord is the stronghold of my life—of whom shall I be afraid?"</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-red-300">Psalm 52:7</h4>
+                            <p class="text-white italic">"Here now is the man who did not make God his stronghold but trusted in his great wealth and grew strong by destroying others."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practical Steps Tab -->
+        <div id="steps" class="tab-content">
+            <div class="space-y-8">
+                <h2 class="text-2xl font-bold text-yellow-400 mb-6 flex items-center">
+                    🎯 The Four R's Battle Plan
+                </h2>
+
+                <!-- Four R's Grid -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700 hover:border-purple-600 transition-colors">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-purple-400">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-yellow-400">Repent</h3>
+                        </div>
+                        
+                        <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg border border-purple-600 mb-4">
+                            <h4 class="font-semibold text-purple-300 mb-2">Acts 3:19</h4>
+                            <p class="text-purple-200 italic text-sm">"Repent, then, and turn to God, so that your sins may be wiped out, that times of refreshing may come from the Lord."</p>
+                        </div>
+                        
+                        <p class="text-gray-300">Metanoia - to change your mind. Recognition of wrong thinking and turning toward God.</p>
+                        
+                        <button onclick="showModal('r-1')" class="mt-4 text-yellow-400 hover:text-yellow-300 transition-colors flex items-center space-x-2">
+                            <span class="text-sm">See practical examples</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700 hover:border-purple-600 transition-colors">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-purple-400">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-yellow-400">Receive</h3>
+                        </div>
+                        
+                        <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg border border-purple-600 mb-4">
+                            <h4 class="font-semibold text-purple-300 mb-2">1 John 1:9</h4>
+                            <p class="text-purple-200 italic text-sm">"If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness."</p>
+                        </div>
+                        
+                        <p class="text-gray-300">Accept God's forgiveness completely - no shame, guilt, or repeated confessions needed.</p>
+                        
+                        <button onclick="showModal('r-2')" class="mt-4 text-yellow-400 hover:text-yellow-300 transition-colors flex items-center space-x-2">
+                            <span class="text-sm">See practical examples</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700 hover:border-purple-600 transition-colors">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-purple-400">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-yellow-400">Rebuke</h3>
+                        </div>
+                        
+                        <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg border border-purple-600 mb-4">
+                            <h4 class="font-semibold text-purple-300 mb-2">James 4:7</h4>
+                            <p class="text-purple-200 italic text-sm">"Submit yourselves, then, to God. Resist the devil, and he will flee from you."</p>
+                        </div>
+                        
+                        <p class="text-gray-300">Actively resist the enemy's temptations and lies by naming and rejecting them.</p>
+                        
+                        <button onclick="showModal('r-3')" class="mt-4 text-yellow-400 hover:text-yellow-300 transition-colors flex items-center space-x-2">
+                            <span class="text-sm">See practical examples</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700 hover:border-purple-600 transition-colors">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-purple-400">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-yellow-400">Replace</h3>
+                        </div>
+                        
+                        <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg border border-purple-600 mb-4">
+                            <h4 class="font-semibold text-purple-300 mb-2">Galatians 2:20</h4>
+                            <p class="text-purple-200 italic text-sm">"I have been crucified with Christ and I no longer live, but Christ lives in me."</p>
+                        </div>
+                        
+                        <p class="text-gray-300">Fill your mind with God's truth instead of the enemy's lies.</p>
+                        
+                        <button onclick="showModal('r-4')" class="mt-4 text-yellow-400 hover:text-yellow-300 transition-colors flex items-center space-x-2">
+                            <span class="text-sm">See practical examples</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Spiritual Warfare Chart -->
+                <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-xl font-bold text-yellow-400 mb-6 flex items-center">
+                        📊 Spiritual Vulnerability Assessment
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white font-medium">Thoughts</span>
+                                <div class="flex space-x-4 text-sm">
+                                    <span class="text-red-400">Vulnerability: 85%</span>
+                                    <span class="text-green-400">Protection: 70%</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-red-600 to-red-400 h-full progress-bar" style="width: 85%"></div>
+                                </div>
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-green-600 to-green-400 h-full progress-bar" style="width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white font-medium">Emotions</span>
+                                <div class="flex space-x-4 text-sm">
+                                    <span class="text-red-400">Vulnerability: 75%</span>
+                                    <span class="text-green-400">Protection: 60%</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-red-600 to-red-400 h-full progress-bar" style="width: 75%"></div>
+                                </div>
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-green-600 to-green-400 h-full progress-bar" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white font-medium">Relationships</span>
+                                <div class="flex space-x-4 text-sm">
+                                    <span class="text-red-400">Vulnerability: 65%</span>
+                                    <span class="text-green-400">Protection: 80%</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-red-600 to-red-400 h-full progress-bar" style="width: 65%"></div>
+                                </div>
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-green-600 to-green-400 h-full progress-bar" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white font-medium">Identity</span>
+                                <div class="flex space-x-4 text-sm">
+                                    <span class="text-red-400">Vulnerability: 70%</span>
+                                    <span class="text-green-400">Protection: 85%</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-red-600 to-red-400 h-full progress-bar" style="width: 70%"></div>
+                                </div>
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-green-600 to-green-400 h-full progress-bar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white font-medium">Purpose</span>
+                                <div class="flex space-x-4 text-sm">
+                                    <span class="text-red-400">Vulnerability: 60%</span>
+                                    <span class="text-green-400">Protection: 75%</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-red-600 to-red-400 h-full progress-bar" style="width: 60%"></div>
+                                </div>
+                                <div class="bg-slate-700 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-green-600 to-green-400 h-full progress-bar" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-4">
+                        * This is a sample assessment. Your actual spiritual state may vary. The goal is spiritual growth in all areas.
+                    </p>
+                </div>
+
+                <!-- Practical Applications Table -->
+                <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                    <h3 class="text-xl font-bold text-yellow-400 mb-6">📋 Quick Reference Guide</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-600">
+                                    <th class="text-left py-3 px-4 text-yellow-400">Situation</th>
+                                    <th class="text-left py-3 px-4 text-purple-400">Enemy's Tactic</th>
+                                    <th class="text-left py-3 px-4 text-green-400">Biblical Response</th>
+                                    <th class="text-left py-3 px-4 text-blue-400">Practical Step</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-slate-700">
+                                    <td class="py-3 px-4">Angry thoughts</td>
+                                    <td class="py-3 px-4 text-red-300">"You have every right to be furious"</td>
+                                    <td class="py-3 px-4">"In your anger, do not sin"</td>
+                                    <td class="py-3 px-4">Pause, pray, process with God first</td>
+                                </tr>
+                                <tr class="border-b border-slate-700">
+                                    <td class="py-3 px-4">Critical thoughts</td>
+                                    <td class="py-3 px-4 text-red-300">"You're just being honest about their flaws"</td>
+                                    <td class="py-3 px-4">"Take every thought captive"</td>
+                                    <td class="py-3 px-4">Rebuke the critical spirit, replace with grace</td>
+                                </tr>
+                                <tr class="border-b border-slate-700">
+                                    <td class="py-3 px-4">Temptation</td>
+                                    <td class="py-3 px-4 text-red-300">"Just this once won't hurt"</td>
+                                    <td class="py-3 px-4">"Resist the devil and he will flee"</td>
+                                    <td class="py-3 px-4">Call it what it is, resist actively</td>
+                                </tr>
+                                <tr class="border-b border-slate-700">
+                                    <td class="py-3 px-4">Feeling distant from God</td>
+                                    <td class="py-3 px-4 text-red-300">"God doesn't really care about you"</td>
+                                    <td class="py-3 px-4">"Your names are written in heaven"</td>
+                                    <td class="py-3 px-4">Remember your identity and relationship with God</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <div class="space-y-8">
+                <h2 class="text-2xl font-bold text-yellow-400 mb-6 flex items-center">
+                    🤔 Reflection Questions
+                </h2>
+
+                <div class="grid gap-6">
+                    <div class="bg-gradient-to-r from-purple-900 to-blue-900 rounded-lg p-6 border border-purple-600">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-4 flex items-center">
+                            🎯 Core Questions from the Sermon
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-slate-800 bg-opacity-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-white mb-2">1. What slow-drip lies are you being seduced by?</h4>
+                                <p class="text-gray-300 text-sm">Consider the subtle, gradual lies that the enemy might be feeding you over time. These aren't dramatic deceptions but small compromises in thinking.</p>
+                            </div>
+                            <div class="bg-slate-800 bg-opacity-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-white mb-2">2. How would your life look different if you lived out your authority in Christ more fully?</h4>
+                                <p class="text-gray-300 text-sm">Reflect on the spiritual authority you have as a believer and how you might walk in that more confidently.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-4 flex items-center">
+                            🧠 Personal Stronghold Assessment
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-white mb-3">Identify Your Thought Patterns</h4>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="space-y-2">
+                                        <h5 class="text-red-300 font-medium">🚨 Warning Signs of Enemy Strongholds:</h5>
+                                        <ul class="text-gray-300 text-sm space-y-1">
+                                            <li>• Recurring negative thought patterns</li>
+                                            <li>• Automatic responses of criticism or judgment</li>
+                                            <li>• Thoughts that drive you away from God</li>
+                                            <li>• Mental habits that lead to fear or despair</li>
+                                            <li>• Ideas that contradict Scripture but feel "right"</li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <h5 class="text-green-300 font-medium">✅ Signs of God's Stronghold in Your Life:</h5>
+                                        <ul class="text-gray-300 text-sm space-y-1">
+                                            <li>• Thoughts that align with Scripture</li>
+                                            <li>• Mental patterns that draw you to worship</li>
+                                            <li>• Ideas that promote love and grace</li>
+                                            <li>• Thoughts that bring peace and hope</li>
+                                            <li>• Mental habits that strengthen faith</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg border border-purple-600">
+                                <h5 class="font-semibold text-purple-300 mb-2">💭 Reflection Exercise</h5>
+                                <p class="text-purple-200 text-sm mb-3">
+                                    For the next week, pay attention to your thought patterns. When you notice a thought, ask:
+                                </p>
+                                <ul class="text-purple-200 text-sm space-y-1">
+                                    <li>• Does this thought draw me closer to God or push me away?</li>
+                                    <li>• Does this align with what I know about God's character?</li>
+                                    <li>• Am I more likely to have this thought when I'm tired, stressed, or hurt?</li>
+                                    <li>• What would happen if I replaced this thought with truth from Scripture?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800 bg-opacity-50 rounded-lg p-6 border border-slate-700">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-4 flex items-center">
+                            🙏 Prayer and Spiritual Growth
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-white mb-3">Evaluate Your Prayer Life</h4>
+                                <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-600">
+                                    <h5 class="font-semibold text-blue-300 mb-2">Questions for Consideration:</h5>
+                                    <ul class="text-blue-200 text-sm space-y-2">
+                                        <li>• How would you describe your prayer life right now?</li>
+                                        <li>• Do you only count "dear God to amen" as prayer, or do you live in ongoing communion?</li>
+                                        <li>• What would it look like to be "prayed up" in your daily life?</li>
+                                        <li>• When do you feel most connected to God throughout your day?</li>
+                                        <li>• How can you cultivate more "sidebar conversations" with God?</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="font-semibold text-white mb-3">Authority in Christ</h4>
+                                <div class="bg-green-900 bg-opacity-30 p-4 rounded-lg border border-green-600">
+                                    <h5 class="font-semibold text-green-300 mb-2">Reflection Points:</h5>
+                                    <ul class="text-green-200 text-sm space-y-2">
+                                        <li>• Do you rejoice more in spiritual victories or in your relationship with God?</li>
+                                        <li>• How does knowing "your name is written in heaven" change your perspective?</li>
+                                        <li>• What would change if you truly believed "greater is he who is in you"?</li>
+                                        <li>• Where do you need to exercise more spiritual authority in your life?</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-orange-900 to-red-900 rounded-lg p-6 border border-orange-600">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-4 flex items-center">
+                            ⚔️ Your Personal Battle Plan
+                        </h3>
+                        <p class="text-white mb-4">
+                            Based on this sermon, create your personal strategy for spiritual warfare:
+                        </p>
+                        <div class="space-y-3 text-sm">
+                            <div class="bg-slate-800 bg-opacity-50 p-3 rounded">
+                                <strong class="text-orange-300">Daily Truth Intake:</strong>
+                                <p class="text-gray-300 mt-1">How will you "bathe yourself in God's word" to build discernment?</p>
+                            </div>
+                            <div class="bg-slate-800 bg-opacity-50 p-3 rounded">
+                                <strong class="text-orange-300">Emotional Awareness:</strong>
+                                <p class="text-gray-300 mt-1">What emotional states make you most vulnerable? What's your protection plan?</p>
+                            </div>
+                            <div class="bg-slate-800 bg-opacity-50 p-3 rounded">
+                                <strong class="text-orange-300">Prayer Strategy:</strong>
+                                <p class="text-gray-300 mt-1">How will you cultivate ongoing communion with God throughout your day?</p>
+                            </div>
+                            <div class="bg-slate-800 bg-opacity-50 p-3 rounded">
+                                <strong class="text-orange-300">Four R's Practice:</strong>
+                                <p class="text-gray-300 mt-1">Which of the four R's do you need to work on most? How will you practice it?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Tooltips -->
+    <div id="tooltip" class="tooltip fixed bg-black text-white text-sm rounded-lg shadow-lg z-50 px-3 py-2 w-64 text-center pointer-events-none">
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-800 rounded-lg max-w-2xl max-h-full overflow-y-auto border border-purple-600">
+            <div class="flex justify-between items-center p-6 border-b border-slate-700">
+                <h3 id="modal-title" class="text-xl font-bold text-yellow-400"></h3>
+                <button onclick="hideModal()" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="modal-content" class="p-6 text-white">
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution badge to display at the bottom right-->
+    <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.95); color: #2c3e50; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(52, 152, 219, 0.2); max-width: 300px; word-wrap: break-word; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+        <div style="margin-bottom: 4px; font-weight: bold; color: #3498db; line-height: 1.3;">
+            Generated using LLM with supervision and polishing by 
+            <a href="../index.html" style="color: #3498db; text-decoration: none; border-bottom: 1px dotted #3498db;" target="_blank">
+                benjaminficusmicrocarpa
+            </a>
+        </div>
+        <div>
+            <a href="../license.html" style="color: #e74c3c; text-decoration: none; font-size: 0.75rem;" target="_blank">
+                Released under the MIT License
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let activeTab = 'main';
+        let openAccordions = {};
+        let openCollapsibles = {};
+        let currentModal = null;
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide modal initially
+            document.getElementById('modal-overlay').style.display = 'none';
+            
+            // Initialize tooltips
+            initializeTooltips();
+            
+            // Initialize progress bars
+            setTimeout(() => {
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    bar.style.width = bar.style.width;
+                });
+            }, 500);
+        });
+
+        // Tab switching
+        function switchTab(tabId) {
+            activeTab = tabId;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('border-yellow-400', 'text-yellow-400');
+                btn.classList.add('border-transparent', 'text-gray-400');
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('border-transparent', 'text-gray-400');
+            document.getElementById(`tab-${tabId}`).classList.add('border-yellow-400', 'text-yellow-400');
+            
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Accordion functionality
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const button = content.previousElementSibling;
+            const icon = button.querySelector('.accordion-icon');
+            
+            if (openAccordions[id]) {
+                content.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+                openAccordions[id] = false;
+            } else {
+                content.classList.add('open');
+                icon.style.transform = 'rotate(90deg)';
+                openAccordions[id] = true;
+            }
+        }
+
+        // Collapsible functionality
+        function toggleCollapsible(id) {
+            const content = document.getElementById(id);
+            const button = content.previousElementSibling;
+            const icon = button.querySelector('.collapsible-icon');
+            
+            if (openCollapsibles[id]) {
+                content.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+                openCollapsibles[id] = false;
+            } else {
+                content.classList.add('open');
+                icon.style.transform = 'rotate(90deg)';
+                openCollapsibles[id] = true;
+            }
+        }
+
+        // Tooltip functionality
+        function initializeTooltips() {
+            const tooltip = document.getElementById('tooltip');
+            
+            document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+                trigger.addEventListener('mouseenter', function(e) {
+                    const tooltipText = this.getAttribute('data-tooltip');
+                    tooltip.textContent = tooltipText;
+                    tooltip.classList.add('show');
+                    
+                    // Position tooltip
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+                    tooltip.style.top = rect.top - tooltip.offsetHeight - 8 + 'px';
+                });
+                
+                trigger.addEventListener('mouseleave', function() {
+                    tooltip.classList.remove('show');
+                });
+            });
+        }
+
+        // Modal functionality
+        function showModal(modalId) {
+            currentModal = modalId;
+            const overlay = document.getElementById('modal-overlay');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+            
+            // Set modal content based on ID
+            if (modalId.startsWith('verse-')) {
+                const verseNum = parseInt(modalId.split('-')[1]);
+                const verses = [
+                    {
+                        reference: "2 Corinthians 10:4-5",
+                        text: "The weapons we fight with are not the weapons of this world. On the contrary, they have divine power to demolish strongholds. We demolish arguments and every pretension that sets itself up against the knowledge of God, and we take captive every thought to make it obedient to Christ.",
+                        context: "Paul's explanation of spiritual warfare and strongholds"
+                    },
+                    {
+                        reference: "John 10:10", 
+                        text: "The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full.",
+                        context: "Jesus contrasts Satan's agenda with His own"
+                    },
+                    {
+                        reference: "Ephesians 4:26-27",
+                        text: "In your anger do not sin: Do not let the sun go down while you are still angry, and do not give the devil a foothold.",
+                        context: "Warning about emotional vulnerability to the enemy"
+                    },
+                    {
+                        reference: "1 John 4:1",
+                        text: "Dear friends, do not believe every spirit, but test the spirits to see whether they are from God.",
+                        context: "The need for spiritual discernment"
+                    },
+                    {
+                        reference: "Mark 9:29",
+                        text: "He replied, 'This kind can come out only by prayer.'",
+                        context: "Jesus explains the power needed for difficult spiritual battles"
+                    },
+                    {
+                        reference: "Luke 9:1",
+                        text: "When Jesus had called the Twelve together, he gave them power and authority to drive out all demons and to cure diseases.",
+                        context: "Disciples receive supernatural authority"
+                    }
+                ];
+                
+                const verse = verses[verseNum - 1];
+                title.textContent = verse.reference;
+                content.innerHTML = `
+                    <blockquote class="text-lg italic mb-4 pl-4 border-l-4 border-purple-600">
+                        "${verse.text}"
+                    </blockquote>
+                    <p class="text-gray-300 mb-4">${verse.context}</p>
+                    <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg">
+                        <h4 class="font-semibold text-purple-300 mb-2">Application:</h4>
+                        <p class="text-purple-200 text-sm">
+                            This verse teaches us about the reality of spiritual warfare and our need for divine weapons and discernment in our daily battles.
+                        </p>
+                    </div>
+                `;
+            } else if (modalId.startsWith('r-')) {
+                const rNum = parseInt(modalId.split('-')[1]);
+                const rs = [
+                    {
+                        word: "Repent",
+                        verse: "Acts 3:19",
+                        text: "Repent, then, and turn to God, so that your sins may be wiped out, that times of refreshing may come from the Lord.",
+                        examples: [
+                            "• Recognizing wrong thoughts quickly",
+                            "• Changing your mind about destructive patterns", 
+                            "• Turning toward God when you notice you're heading the wrong direction",
+                            "• Daily examination of heart motives and affections"
+                        ]
+                    },
+                    {
+                        word: "Receive",
+                        verse: "1 John 1:9",
+                        text: "If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness.",
+                        examples: [
+                            "• Accepting forgiveness completely - no repetitive confessing",
+                            "• Refusing to carry shame after repentance",
+                            "• Experiencing the 'times of refreshing' that come from the Lord",
+                            "• Living in the freedom of God's complete forgiveness"
+                        ]
+                    },
+                    {
+                        word: "Rebuke", 
+                        verse: "James 4:7",
+                        text: "Submit yourselves, then, to God. Resist the devil, and he will flee from you.",
+                        examples: [
+                            "• Actively naming temptations as from the enemy",
+                            "• Speaking out loud: 'I resist this critical spirit'",
+                            "• Recognizing patterns and saying 'no' to familiar strongholds",
+                            "• Taking authority over thoughts that don't align with Christ"
+                        ]
+                    },
+                    {
+                        word: "Replace",
+                        verse: "Galatians 2:20", 
+                        text: "I have been crucified with Christ and I no longer live, but Christ lives in me.",
+                        examples: [
+                            "• Memorizing Scripture to counter specific lies",
+                            "• Filling your mind with truth from God's Word",
+                            "• Replacing critical thoughts with grace-filled ones",
+                            "• Speaking identity truths over yourself regularly"
+                        ]
+                    }
+                ];
+                
+                const r = rs[rNum - 1];
+                title.textContent = `${r.word} - Practical Examples`;
+                content.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg">
+                            <h4 class="font-semibold text-purple-300 mb-2">Scripture Foundation</h4>
+                            <p class="text-purple-200 text-sm mb-2">${r.verse}</p>
+                            <p class="text-purple-200 italic">"${r.text}"</p>
+                        </div>
+                        
+                        <div class="bg-slate-700 p-4 rounded-lg">
+                            <h4 class="font-semibold text-white mb-2">What This Looks Like:</h4>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                ${r.examples.map(example => `<li>${example}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            overlay.classList.add('show');
+            overlay.style.display = 'flex';
+        }
+
+        function hideModal() {
+            const overlay = document.getElementById('modal-overlay');
+            overlay.classList.remove('show');
+            overlay.style.display = 'none';
+            currentModal = null;
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && currentModal) {
+                hideModal();
+            }
+        });
+
+        // Close modal on overlay click
+        document.getElementById('modal-overlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast Notes - Benjamin Ficus Microcarpa</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Accordion Styles for Podcast Channels */
+        .accordion {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        .accordion-header:hover {
+            background: linear-gradient(135deg, #5a6fd8, #6a4190);
+            transform: translateY(-2px);
+        }
+
+        .accordion-header.active {
+            background: linear-gradient(135deg, #5a6fd8, #6a4190);
+        }
+
+        .accordion-content {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .accordion-content.active {
+            max-height: 1000px;
+            padding: 2rem;
+        }
+
+        .podcast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .podcast-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .podcast-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .podcast-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .podcast-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .podcast-description {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .podcast-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .podcast-tag {
+            font-size: 1.1rem;
+        }
+
+        .podcast-arrow {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .podcast-card:hover .podcast-arrow {
+            transform: translateX(5px);
+        }
+
+        .channel-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .accordion-toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active .accordion-toggle {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <span class="title-icon">🎧</span>
+                    Podcast Notes
+                </h1>
+                <p class="subtitle">Key takeaways from various educational podcasts</p>
+            </div>
+            <div class="floating-elements">
+                <div class="floating-icon">🧠</div>
+                <div class="floating-icon">🎙️</div>
+                <div class="floating-icon">📚</div>
+                <div class="floating-icon">💡</div>
+                <div class="floating-icon">🎯</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Andrew Huberman Section -->
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><span class="channel-icon">🧠</span>Andrew Huberman</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="podcast-grid">
+                            <div class="podcast-card" data-link="adhd_andrew_hubermann.html">
+                                <div class="podcast-icon">🧠</div>
+                                <h3 class="podcast-title">ADHD: How Anyone Can Improve Their Focus</h3>
+                                <p class="podcast-description">Andrew Huberman's insights on improving focus and attention through neuroscience-based approaches</p>
+                                <div class="podcast-footer">
+                                    <span class="podcast-tag">🧠</span>
+                                    <span class="podcast-arrow">→</span>
+                                </div>
+                            </div>
+
+                            <div class="podcast-card" data-link="optimal_study_protocols_andrew_huberman.html">
+                                <div class="podcast-icon">📚</div>
+                                <h3 class="podcast-title">Optimal Study Protocols</h3>
+                                <p class="podcast-description">Andrew Huberman's research-based study techniques and protocols for maximum learning efficiency</p>
+                                <div class="podcast-footer">
+                                    <span class="podcast-tag">📚</span>
+                                    <span class="podcast-arrow">→</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chris Williamson Section -->
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><span class="channel-icon">🎧</span>Chris Williamson</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="podcast-grid">
+                            <div class="podcast-card" data-link="chris_williamson_anne_laure_le_cunff.html">
+                                <div class="podcast-icon">🎧</div>
+                                <h3 class="podcast-title">How To Live Freely In A Goal-Obsessed World</h3>
+                                <p class="podcast-description">Chris Williamson with Anne-Laure Le Cunff on living freely and finding balance in a goal-driven society</p>
+                                <div class="podcast-footer">
+                                    <span class="podcast-tag">🎧</span>
+                                    <span class="podcast-arrow">→</span>
+                                </div>
+                            </div>
+
+                            <div class="podcast-card" data-link="chris_williamson_alain_de_botton_loneliness_negative_thoughts_childhood_wounds_healing.html">
+                                <div class="podcast-icon">🧠</div>
+                                <h3 class="podcast-title">Understanding Ourselves: A Journey Through Inner Voices</h3>
+                                <p class="podcast-description">Chris Williamson with Alain de Botton on loneliness, negative thoughts, and healing childhood wounds</p>
+                                <div class="podcast-footer">
+                                    <span class="podcast-tag">💡</span>
+                                    <span class="podcast-arrow">→</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Joe Rogan Experience Section -->
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><span class="channel-icon">🎙️</span>Joe Rogan Experience</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="podcast-grid">
+                            <div class="podcast-card" data-link="jre_2252_wesley_huff.html">
+                                <div class="podcast-icon">📜</div>
+                                <h3 class="podcast-title">JRE #2252: Wesley Huff - Biblical Scholar & Ancient Manuscript Expert</h3>
+                                <p class="podcast-description">Christian Apologist and Biblical Scholar discussion on ancient manuscripts and biblical scholarship</p>
+                                <div class="podcast-footer">
+                                    <span class="podcast-tag">📜</span>
+                                    <span class="podcast-arrow">→</span>
+                                </div>
+                            </div>
+
+                            <div class="podcast-card" data-link="jre_2345_roman_roman_yampolskiy.html">
+                                <div class="podcast-icon">🤖</div>
+                                <h3 class="podcast-title">JRE #2345 - Roman Yampolskiy - AI Safety Expert Warns Humanity</h3>
+                                <p class="podcast-description">AI Safety Expert's warnings about artificial intelligence and its potential risks to humanity</p>
+                                <div class="podcast-footer">
+                                    <span class="podcast-tag">🤖</span>
+                                    <span class="podcast-arrow">→</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Melissa Dougherty Section -->
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><span class="channel-icon">🏰</span>Melissa Dougherty</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="podcast-grid">
+                            <div class="podcast-card" data-link="melissa_dougherty_robert_h_schuller2.html">
+                                <div class="podcast-icon">🏰</div>
+                                <h3 class="podcast-title">Robert Schuller & The Movement That Rebranded Church</h3>
+                                <p class="podcast-description">Analysis of Robert Schuller's impact on modern church movements and the rebranding of Christianity</p>
+                                <div class="podcast-footer">
+                                    <span class="podcast-tag">🏰</span>
+                                    <span class="podcast-arrow">→</span>
+                                </div>
+                            </div>
+
+                            <div class="podcast-card" data-link="melissa_dougherty_i_am_affirmation.html">
+                                <div class="podcast-icon">🎯</div>
+                                <h3 class="podcast-title">The Truth About "I AM" Affirmations</h3>
+                                <p class="podcast-description">Understanding the origins, theology, and biblical response to "I AM" affirmations</p>
+                                <div class="podcast-footer">
+                                    <span class="podcast-tag">🎯</span>
+                                    <span class="podcast-arrow">→</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mike Winger Section -->
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><span class="channel-icon">🚨</span>Mike Winger</span>
+                        <span class="accordion-toggle">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="podcast-grid">
+                            <div class="podcast-card" data-link="mike_winger_spiritual_abuse.html">
+                                <div class="podcast-icon">🚨</div>
+                                <h3 class="podcast-title">Understanding Spiritual Abuse</h3>
+                                <p class="podcast-description">Mike Winger's insights on recognizing and addressing spiritual abuse in religious contexts</p>
+                                <div class="podcast-footer">
+                                    <span class="podcast-tag">🚨</span>
+                                    <span class="podcast-arrow">→</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>🎧 Learning from voices that inspire and educate</p>
+                <div class="footer-icons">
+                    <span class="footer-icon">🧠</span>
+                    <span class="footer-icon">🎙️</span>
+                    <span class="footer-icon">📚</span>
+                    <span class="footer-icon">💡</span>
+                    <span class="footer-icon">🎯</span>
+                </div>
+                <div class="footer-license">
+                    <a href="../index.html" style="color: #7f8c8d; text-decoration: none; font-size: 0.9rem; margin-top: 1rem; display: inline-block;">
+                        ← Back to Home
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="particles-container">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        // Accordion functionality for podcast channels
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-toggle');
+            
+            // Close all other accordion items
+            document.querySelectorAll('.accordion-content').forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('active');
+                    item.previousElementSibling.classList.remove('active');
+                    item.previousElementSibling.querySelector('.accordion-toggle').textContent = '▼';
+                }
+            });
+            
+            // Toggle current item
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+            icon.textContent = content.classList.contains('active') ? '▲' : '▼';
+        }
+
+        // Add click functionality to podcast cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const podcastCards = document.querySelectorAll('.podcast-card');
+            podcastCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const link = this.getAttribute('data-link');
+                    if (link) {
+                        window.location.href = link;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
