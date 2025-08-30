@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dave Plummer: From TRS-80 to Task Manager | Interactive Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        :root {
+            --terminal-bg: #0f0f23;
+            --terminal-dark: #10101a;
+            --terminal-green: #00ff41;
+            --terminal-blue: #4fb3ff;
+            --terminal-yellow: #ffff00;
+            --terminal-red: #ff4444;
+            --terminal-gray: #666666;
+            --glow: 0 0 10px var(--terminal-green);
+        }
+        
+        body {
+            background: var(--terminal-bg);
+            color: var(--terminal-green);
+            overflow-x: hidden;
+        }
+        
+        .terminal-window {
+            background: var(--terminal-dark);
+            border: 2px solid var(--terminal-green);
+            border-radius: 8px;
+            box-shadow: var(--glow);
+        }
+        
+        .terminal-header {
+            background: var(--terminal-green);
+            color: var(--terminal-bg);
+            padding: 8px 16px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--terminal-green);
+        }
+        
+        .cursor-blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: var(--glow); }
+            50% { box-shadow: 0 0 20px var(--terminal-green), 0 0 30px var(--terminal-green); }
+        }
+        
+        .glow-animation {
+            animation: glow-pulse 2s ease-in-out infinite;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typewriter 2s steps(40) 1s both;
+        }
+        
+        .accordion-button {
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-button:hover {
+            background-color: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        }
+        
+        .tooltip {
+            position: absolute;
+            z-index: 1000;
+            background: var(--terminal-dark);
+            border: 1px solid var(--terminal-green);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            max-width: 300px;
+            box-shadow: var(--glow);
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .tooltip.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: var(--terminal-dark);
+            border: 2px solid var(--terminal-green);
+            border-radius: 8px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .code-block {
+            background: rgba(0, 255, 65, 0.05);
+            border-left: 3px solid var(--terminal-green);
+            padding: 16px;
+            margin: 16px 0;
+            font-family: 'JetBrains Mono', monospace;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .quote-block {
+            background: rgba(79, 179, 255, 0.05);
+            border-left: 3px solid var(--terminal-blue);
+            padding: 16px;
+            margin: 16px 0;
+            font-style: italic;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .bento-item {
+            background: var(--terminal-dark);
+            border: 1px solid var(--terminal-green);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.2);
+        }
+        
+        .bento-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--terminal-green), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .bento-item:hover::before {
+            left: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 20px;
+            }
+            
+            .tooltip {
+                max-width: 250px;
+                font-size: 11px;
+            }
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 255, 65, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--terminal-green);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .animate-scan {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animate-scan::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            animation: scan 3s ease-in-out infinite;
+        }
+        
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="terminal-window m-4 mb-8">
+        <div class="terminal-header flex justify-between items-center flex-wrap">
+            <div class="flex items-center gap-2">
+                <span class="text-sm">●●●</span>
+                <span class="font-bold">DAVE_PLUMMER.EXE</span>
+                <span class="text-xs opacity-75">- Terminal Session Active</span>
+            </div>
+            <div class="flex gap-2 mt-2 md:mt-0">
+                <a href="https://www.youtube.com/watch?v=HsLgZzgpz9Y" 
+                   class="flex items-center gap-2 px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136C4.495 20.455 12 20.455 12 20.455s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    <span>Watch Original Podcast</span>
+                </a>
+                <a href="index.html" 
+                   class="flex items-center gap-2 px-3 py-1 border border-current hover:bg-white hover:text-black text-xs rounded transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <span>View All Episodes</span>
+                </a>
+            </div>
+        </div>
+        <div class="p-6">
+            <h1 class="text-2xl md:text-4xl font-bold mb-2">
+                <span class="typewriter">Dave Plummer: From DOS to Task Manager</span>
+                <span class="cursor-blink">|</span>
+            </h1>
+            <p class="text-sm md:text-base opacity-75">
+                Interactive exploration of a legendary programmer's journey through autism, Microsoft, and creating software used by billions
+            </p>
+            <div class="mt-4 text-xs">
+                <span class="text-blue-400">Source:</span> Lex Fridman Podcast #479 • 
+                <span class="text-blue-400">Date:</span> 30 Aug 2025 • 
+                <span class="text-blue-400">Runtime:</span> 109 minutes
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="mx-4 mb-8">
+        <div class="terminal-window">
+            <div class="terminal-header">Navigation Menu</div>
+            <div class="p-4">
+                <div class="flex flex-wrap gap-2" id="tabButtons">
+                    <button class="tab-btn px-4 py-2 rounded border border-current hover:bg-white hover:text-black transition-colors active" data-tab="journey">
+                        🚀 The Journey
+                    </button>
+                    <button class="tab-btn px-4 py-2 rounded border border-current hover:bg-white hover:text-black transition-colors" data-tab="microsoft">
+                        🏢 Microsoft Era
+                    </button>
+                    <button class="tab-btn px-4 py-2 rounded border border-current hover:bg-white hover:text-black transition-colors" data-tab="autism">
+                        🧠 Autism Insights
+                    </button>
+                    <button class="tab-btn px-4 py-2 rounded border border-current hover:bg-white hover:text-black transition-colors" data-tab="projects">
+                        ⚙️ Current Projects
+                    </button>
+                    <button class="tab-btn px-4 py-2 rounded border border-current hover:bg-white hover:text-black transition-colors" data-tab="quotes">
+                        💬 Key Quotes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: The Journey -->
+    <div id="journey" class="tab-content active mx-4 mb-8">
+        <!-- Bento Grid Overview -->
+        <div class="terminal-window mb-8">
+            <div class="terminal-header">Journey Overview</div>
+            <div class="p-6">
+                <div class="bento-grid">
+                    <div class="bento-item animate-scan">
+                        <h3 class="text-lg font-bold mb-2 text-yellow-400">🖥️ First Computer</h3>
+                        <p class="text-sm mb-2">TRS-80 Model 1 Level 1 4K</p>
+                        <p class="text-xs opacity-75">Age 11, rode bike to Radio Shack every Thursday & Saturday</p>
+                        <div class="mt-2 text-xs text-blue-400">1979-1980</div>
+                    </div>
+                    <div class="bento-item">
+                        <h3 class="text-lg font-bold mb-2 text-yellow-400">💾 Programming Start</h3>
+                        <p class="text-sm mb-2">Hand-coded machine language</p>
+                        <p class="text-xs opacity-75">Wrote Galaga clone on Commodore 64</p>
+                        <div class="mt-2 text-xs text-blue-400">Early 1980s</div>
+                    </div>
+                    <div class="bento-item">
+                        <h3 class="text-lg font-bold mb-2 text-yellow-400">🏪 Reality Check</h3>
+                        <p class="text-sm mb-2">7-Eleven night shift</p>
+                        <p class="text-xs opacity-75">Splinters in freezing weather doing gas dips</p>
+                        <div class="mt-2 text-xs text-blue-400">Post-dropout</div>
+                    </div>
+                    <div class="bento-item">
+                        <h3 class="text-lg font-bold mb-2 text-yellow-400">🎓 Back to School</h3>
+                        <p class="text-sm mb-2">Convinced principal at age 21</p>
+                        <p class="text-xs opacity-75">Then university computer science</p>
+                        <div class="mt-2 text-xs text-blue-400">1990s</div>
+                    </div>
+                    <div class="bento-item">
+                        <h3 class="text-lg font-bold mb-2 text-yellow-400">🚀 Microsoft</h3>
+                        <p class="text-sm mb-2">Cold email success</p>
+                        <p class="text-xs opacity-75">From Saskatchewan to Redmond</p>
+                        <div class="mt-2 text-xs text-blue-400">1993</div>
+                    </div>
+                    <div class="bento-item">
+                        <h3 class="text-lg font-bold mb-2 text-yellow-400">📚 Author & YouTuber</h3>
+                        <p class="text-sm mb-2">Dave's Garage channel</p>
+                        <p class="text-xs opacity-75">Books on autism & entrepreneurship</p>
+                        <div class="mt-2 text-xs text-blue-400">Present</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Early Computing Accordion -->
+        <div class="terminal-window mb-8">
+            <div class="terminal-header">Early Computing Adventures</div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <!-- TRS-80 Story -->
+                    <div class="accordion-item">
+                        <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('trs80')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">🖥️ The TRS-80 Discovery (Age 11)</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                        </button>
+                        <div id="trs80" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                            <div class="quote-block">
+                                <p>"I rode my bike in 5th or 6th grade. So I was about 11 to the local Radio Shack and you know, they had the standard component stereo systems and everything else Radio Shack had, but they had a stack of boxes that was labeled computer."</p>
+                            </div>
+                            <p class="mb-4">Dave's first encounter with computing was serendipitous. Radio Shack employees hadn't even set up their new TRS-80 Model 1 yet, so young Dave volunteered to do it himself.</p>
+                            
+                            <div class="code-block">
+                                <div class="text-yellow-400 mb-2">TRS-80 Model 1 Specifications:</div>
+                                <div class="text-sm">
+                                    • CPU: Z80 @ 1.77 MHz<br>
+                                    • RAM: 4KB (Level 1 BASIC)<br>
+                                    • Storage: Cassette tape<br>
+                                    • Display: 12" black & white monitor<br>
+                                    • Price: $600 (1977)
+                                </div>
+                            </div>
+                            
+                            <p class="mb-2"><strong>The Challenge:</strong> Tandy used identical 5-pin DIN connectors for power, video, and cassette - plug them wrong and you'd destroy the machine!</p>
+                            
+                            <p><strong>The Discovery:</strong> Dave tried typing English commands into BASIC. Commands like <span class="text-blue-400 tooltip-trigger" data-tooltip="PRINT 2+2 was valid BASIC syntax">print 2+2</span> worked perfectly, but complex English sentences didn't translate to code.</p>
+                        </div>
+                    </div>
+
+                    <!-- Commodore 64 Story -->
+                    <div class="accordion-item">
+                        <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('c64')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">💾 Commodore 64: The Machine Language Era</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                        </button>
+                        <div id="c64" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                            <div class="quote-block">
+                                <p>"The first thing I did was overheat the floppy drive on it, which is unfortunate because it wasn't a warranty machine."</p>
+                            </div>
+                            
+                            <p class="mb-4">Without a working floppy drive, Dave was forced to use cassette storage and learned machine language the hard way.</p>
+                            
+                            <div class="code-block">
+                                <div class="text-yellow-400 mb-2">6502 Machine Language Challenges:</div>
+                                <div class="text-sm">
+                                    • No assembler - entering opcodes in hex<br>
+                                    • No code relocation - sequential programming only<br>
+                                    • Adding code meant manual jump tables<br>
+                                    • First project: Galaga clone (now lost)
+                                </div>
+                            </div>
+                            
+                            <p class="mb-4"><strong>The Tragic Loss:</strong> Dave accidentally copied a blank floppy onto his data floppy, destroying weeks of work on his first major program.</p>
+                            
+                            <div class="quote-block">
+                                <p>"There was a huge amount of guilt because you destroy several weeks of work and you know, it was because you rushed or you did something stupid, or you made an unwise choice."</p>
+                            </div>
+                            
+                            <p><strong>Why Commodore 64?</strong> Dave considers it the greatest computer ever built due to its massive influence - the sales numbers are "hard to believe" even by medium estimates.</p>
+                        </div>
+                    </div>
+
+                    <!-- Dropout & Recovery -->
+                    <div class="accordion-item">
+                        <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('dropout')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">🏪 The 7-Eleven Revelation</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                        </button>
+                        <div id="dropout" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                            <div class="quote-block">
+                                <p>"There's no moment when I dropped out. You just go less and less and less until you realize it's gonna be embarrassing if I show up."</p>
+                            </div>
+                            
+                            <p class="mb-4">Dave's high school dropout wasn't a dramatic decision - it was a gradual fade that many can relate to.</p>
+                            
+                            <p class="mb-4"><strong>The Gas Dip Incident:</strong> Working night shift at 7-Eleven, Dave had to measure gasoline levels using a long wooden stick. In -40°F weather, he dropped the stick and regrabbed it, getting "about a thousand splinters" in his hands.</p>
+                            
+                            <div class="quote-block">
+                                <p>"I realized I don't want to do this for a whole life. I knew that... That next time I'm going to do it differently. And then how ludicrous that is hits me about three seconds later."</p>
+                            </div>
+                            
+                            <p class="mb-4"><strong>The Comeback:</strong> At age 21, Dave approached his high school principal asking to return. The principal initially refused due to age and capacity, but Dave's persistence paid off.</p>
+                            
+                            <div class="code-block">
+                                <div class="text-yellow-400 mb-2">Recovery Strategy:</div>
+                                <div class="text-sm">
+                                    • Convinced principal with logical argument<br>
+                                    • Completed 3-4 missing classes<br>
+                                    • Proceeded to university computer science<br>
+                                    • Learned to "do it for me" - intrinsic motivation
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Microsoft Era -->
+    <div id="microsoft" class="tab-content mx-4 mb-8">
+        <!-- Microsoft Journey Timeline -->
+        <div class="terminal-window mb-8">
+            <div class="terminal-header">Microsoft Career Timeline</div>
+            <div class="p-6">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4 p-4 border border-blue-400 rounded">
+                        <div class="w-12 h-12 bg-blue-400 text-black rounded-full flex items-center justify-center font-bold">93</div>
+                        <div>
+                            <h3 class="font-bold text-blue-400">The Cold Email That Changed Everything</h3>
+                            <p class="text-sm opacity-75">Reading "Hard Drive" book about Microsoft sparked the idea</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 border border-green-400 rounded">
+                        <div class="w-12 h-12 bg-green-400 text-black rounded-full flex items-center justify-center font-bold">95</div>
+                        <div>
+                            <h3 class="font-bold text-green-400">Windows 95 & Shell Team</h3>
+                            <p class="text-sm opacity-75">Porting Windows 95 UI to Windows NT</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 border border-yellow-400 rounded">
+                        <div class="w-12 h-12 bg-yellow-400 text-black rounded-full flex items-center justify-center font-bold">96</div>
+                        <div>
+                            <h3 class="font-bold text-yellow-400">Task Manager Creation</h3>
+                            <p class="text-sm opacity-75">87KB of pure efficiency, used by billions</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 border border-purple-400 rounded">
+                        <div class="w-12 h-12 bg-purple-400 text-black rounded-full flex items-center justify-center font-bold">01</div>
+                        <div>
+                            <h3 class="font-bold text-purple-400">Windows XP Activation</h3>
+                            <p class="text-sm opacity-75">Last-minute implementation of product activation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Manager Deep Dive -->
+        <div class="terminal-window mb-8">
+            <div class="terminal-header">Task Manager: The Legend</div>
+            <div class="p-6">
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-yellow-400">The 87KB Masterpiece</h3>
+                    <div class="quote-block">
+                        <p>"I started writing it at home and I got kind of the basics up and running... when I brought it in house, then I was able to call things like NtQuerySystemInformation or NtQueryProcessInformation and get the real answers very quickly."</p>
+                    </div>
+                </div>
+
+                <!-- Task Manager Stats -->
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div class="p-4 border border-green-400 rounded">
+                        <h4 class="font-bold text-green-400 mb-2">Technical Specs</h4>
+                        <ul class="text-sm space-y-1">
+                            <li>• Original size: 87KB</li>
+                            <li>• No C runtime linking</li>
+                            <li>• Manual object constructors</li>
+                            <li>• Multi-threaded for reliability</li>
+                            <li>• Hamming code-inspired optimization</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 border border-blue-400 rounded">
+                        <h4 class="font-bold text-blue-400 mb-2">Usage Statistics</h4>
+                        <ul class="text-sm space-y-1">
+                            <li>• ~2 billion users monthly</li>
+                            <li>• Shipped in NT4 (1996)</li>
+                            <li>• Still largely original code</li>
+                            <li>• Works on 32+ CPU systems</li>
+                            <li class="tooltip-trigger text-yellow-400" data-tooltip="Even if you have 96 cores like the new AMD processors, it will draw only 8 graphs and wrap">• Scales to modern hardware</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Programming Philosophy -->
+                <div class="accordion-item">
+                    <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('taskmanager-philosophy')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">🧠 The Programming Philosophy Behind Task Manager</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                    </button>
+                    <div id="taskmanager-philosophy" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                        <div class="quote-block">
+                            <p>"You don't assume much. Right. If you're going to call the shell to run an app, well, that could be a network path that's on a TCP IP share that takes 90 seconds to time out. So anytime you do any kind of API call like that, that could take time, you're going to wind up doing it on a separate thread."</p>
+                        </div>
+                        
+                        <div class="code-block">
+                            <div class="text-yellow-400 mb-2">Reliability Design Principles:</div>
+                            <div class="text-sm">
+                                1. Never assume API calls will complete quickly<br>
+                                2. Use separate threads for potentially blocking operations<br>
+                                3. Implement custom Hamming code-like dirty bit tracking<br>
+                                4. Optimize for minimal repainting (cell-level updates)<br>
+                                5. Prioritize resizing capability over feature bloat
+                            </div>
+                        </div>
+                        
+                        <p class="mb-4"><strong>The Resize Obsession:</strong> Dave's biggest personal goal was making Task Manager resize smoothly to any size - a seemingly simple feature that required careful architectural planning.</p>
+                        
+                        <p><strong>Modern Evolution:</strong> Today's Task Manager is 4MB instead of 87KB, but the core reliability remains from Dave's original architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other Microsoft Contributions -->
+        <div class="terminal-window mb-8">
+            <div class="terminal-header">Other Legendary Contributions</div>
+            <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Space Cadet Pinball -->
+                    <div class="bento-item">
+                        <h3 class="text-lg font-bold mb-2 text-purple-400">🎮 Space Cadet Pinball</h3>
+                        <div class="quote-block text-xs">
+                            <p>"They wanted some visual splash for NT to show that NT can do real-time high speed graphics."</p>
+                        </div>
+                        <p class="text-sm mb-2">Ported from Windows 95 to all NT platforms (Intel, MIPS, Alpha, PowerPC)</p>
+                        <div class="code-block text-xs">
+                            Challenge: Much assembly code had to be rewritten in C<br>
+                            Core: Giant state machine with ~50 entries<br>
+                            Bug: Drew unlimited FPS causing different physics
+                        </div>
+                    </div>
+
+                    <!-- Zip Folders -->
+                    <div class="bento-item">
+                        <h3 class="text-lg font-bold mb-2 text-green-400">📁 Zip Folders</h3>
+                        <div class="quote-block text-xs">
+                            <p>"I cut the picture of the house out and I taped it to my monitor. And that was my incentive to just write something at night."</p>
+                        </div>
+                        <p class="text-sm mb-2">Started as shareware "VigilZip", sold thousands of copies at $20-40 each</p>
+                        <div class="code-block text-xs">
+                            Discovery: Microsoft called not knowing he worked there<br>
+                            Result: Bought red Corvette, integrated into Windows<br>
+                            Legacy: Built-in Windows ZIP support since XP
+                        </div>
+                    </div>
+
+                    <!-- Windows Activation -->
+                    <div class="bento-item">
+                        <h3 class="text-lg font-bold mb-2 text-red-400">🔐 Windows Activation</h3>
+                        <div class="quote-block text-xs">
+                            <p>"They came to me late in the XP ship process... whoever was responsible for doing it had slipped it enough times that it wasn't going to happen."</p>
+                        </div>
+                        <p class="text-sm mb-2">Last-minute implementation for Windows XP launch</p>
+                        <div class="code-block text-xs">
+                            Challenge: Adapt Office activation to Windows<br>
+                            Complexity: Hardware fingerprinting + phone activation<br>
+                            Impact: Substantial revenue protection (ongoing)
+                        </div>
+                    </div>
+
+                    <!-- Windows Media Center -->
+                    <div class="bento-item">
+                        <h3 class="text-lg font-bold mb-2 text-blue-400">📺 Media Center Prototype</h3>
+                        <p class="text-sm mb-2">1996 prototype for 10-foot UI experience</p>
+                        <div class="code-block text-xs">
+                            Content: Raging Rudolph, South Park Christmas<br>
+                            Hardware: Satellite dish on Microsoft roof<br>
+                            Goal: Remote control navigation from couch
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blue Screen of Death -->
+        <div class="terminal-window mb-8">
+            <div class="terminal-header">The Blue Screen of Death Story</div>
+            <div class="p-6">
+                <div class="quote-block">
+                    <p>"The reason he picked white on blue... It was just the MIPS firmware that he was building it on was blue on white and Visual SlickEdit that he was using. His editor was also the same color scheme. And so you could code, boot, crash and reboot all in the same color scheme."</p>
+                    <cite class="text-xs block mt-2 opacity-75">- Dave on John Vert's design choice</cite>
+                </div>
+                
+                <div class="mt-4 p-4 bg-blue-600 text-white rounded">
+                    <h4 class="font-bold mb-2">Why Rebooting Fixes Everything</h4>
+                    <p class="text-sm">Two major factors make rebooting so effective:</p>
+                    <ul class="text-sm mt-2 space-y-1">
+                        <li>1. <strong>Memory leaks:</strong> Accumulated memory usage gets cleared</li>
+                        <li>2. <strong>State corruption:</strong> Software stuck in unexpected states gets reset</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Autism Insights -->
+    <div id="autism" class="tab-content mx-4 mb-8">
+        <div class="terminal-window mb-8">
+            <div class="terminal-header">Understanding Autism in Tech</div>
+            <div class="p-6">
+                <div class="mb-6">
+                    <div class="quote-block">
+                        <p>"The fundamental theory of thought for autism is called monotropism. And basically what that means is that my brain does one thing. It does it very intensely, and then when it's done, I can move on and do something else."</p>
+                    </div>
+                </div>
+
+                <!-- Autism Characteristics Table -->
+                <div class="overflow-x-auto mb-8">
+                    <table class="w-full border border-current">
+                        <thead>
+                            <tr class="bg-opacity-20 bg-white">
+                                <th class="border border-current p-3 text-left">Aspect</th>
+                                <th class="border border-current p-3 text-left">Challenge</th>
+                                <th class="border border-current p-3 text-left">Strength</th>
+                                <th class="border border-current p-3 text-left">Strategy</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr>
+                                <td class="border border-current p-3 font-bold text-yellow-400">Focus</td>
+                                <td class="border border-current p-3">Hard to acquire initially (ADHD component)</td>
+                                <td class="border border-current p-3">Incredible depth once locked in</td>
+                                <td class="border border-current p-3">Noise-canceling headphones, minimize distractions</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-current p-3 font-bold text-yellow-400">Communication</td>
+                                <td class="border border-current p-3">Missing social cues, literal interpretation</td>
+                                <td class="border border-current p-3">Direct, honest feedback</td>
+                                <td class="border border-current p-3">Explicit communication, written confirmation</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-current p-3 font-bold text-yellow-400">Problem Solving</td>
+                                <td class="border border-current p-3">Difficulty with ambiguous requirements</td>
+                                <td class="border border-current p-3">Deep technical analysis, pattern recognition</td>
+                                <td class="border border-current p-3">Clear specifications, iterative feedback</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-current p-3 font-bold text-yellow-400">Career</td>
+                                <td class="border border-current p-3">Traditional interviews may not showcase abilities</td>
+                                <td class="border border-current p-3">Portfolio-driven work speaks for itself</td>
+                                <td class="border border-current p-3">"Sell what you can do, not yourself"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- The 10-Second Autism Test -->
+                <div class="accordion-item mb-6">
+                    <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('autism-test')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">🧪 The 10-Second Autism Test</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                    </button>
+                    <div id="autism-test" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="p-4 border border-blue-400 rounded">
+                                <h4 class="font-bold text-blue-400 mb-2">Test #1: Values</h4>
+                                <p class="text-sm mb-2">What's more important to society?</p>
+                                <div class="space-y-2 text-sm">
+                                    <div class="p-2 bg-opacity-10 bg-blue-400 rounded">
+                                        <strong>Cooperation</strong> - Neurotypical tendency
+                                    </div>
+                                    <div class="p-2 bg-opacity-10 bg-green-400 rounded">
+                                        <strong>Creativity</strong> - Autistic tendency
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 border border-green-400 rounded">
+                                <h4 class="font-bold text-green-400 mb-2">Test #2: Logic</h4>
+                                <p class="text-sm mb-2">10 chairs, 6 people sit down. How many chairs are left?</p>
+                                <div class="space-y-2 text-sm">
+                                    <div class="p-2 bg-opacity-10 bg-blue-400 rounded">
+                                        <strong>4 chairs</strong> - Implied meaning
+                                    </div>
+                                    <div class="p-2 bg-opacity-10 bg-green-400 rounded">
+                                        <strong>10 chairs</strong> - Literal interpretation
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs opacity-75">
+                            Note: High error rate with any two-answer test, but useful for self-reflection
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emotional Post-Processing -->
+                <div class="accordion-item mb-6">
+                    <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('post-processing')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">🔄 Emotional Post-Processing Strategy</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                    </button>
+                    <div id="post-processing" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                        <div class="quote-block">
+                            <p>"I will go home later and replay all of the moments where I had choices to make and probably the most uncomfortable ones first to find out what did I do wrong in that moment? What did I miss? What was the other person thinking?"</p>
+                        </div>
+                        
+                        <div class="code-block">
+                            <div class="text-yellow-400 mb-2">Post-Processing Algorithm:</div>
+                            <div class="text-sm">
+                                1. Replay social interaction moments<br>
+                                2. Focus on uncomfortable/choice points<br>
+                                3. Analyze: What did I miss?<br>
+                                4. Consider: What was the other person thinking?<br>
+                                5. Plan: How to improve next time<br>
+                                6. Decide: Do I need to follow up?
+                            </div>
+                        </div>
+                        
+                        <p class="mb-4"><strong>Real Example:</strong> Dave didn't thank craftsmen who restored his 1969 car. Ten years later, he realized the oversight and sent an email to the shop owner.</p>
+                        
+                        <div class="quote-block">
+                            <p>"I sent an email to the manager... And he wrote back, he's like, I've thought of that moment often."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Masking -->
+                <div class="accordion-item mb-6">
+                    <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('masking')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">🎭 Masking: The Energy Cost of "Acting Normal"</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                    </button>
+                    <div id="masking" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                        <div class="quote-block">
+                            <p>"Everything you do in a social interaction, from waving my hands to taking facial expressions, to tone of voice to posture, it's a huge contrivance and it's work. It comes natural to most people... But for somebody on the spectrum, you've got to fake it all."</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold text-blue-400 mb-2">The Rush Connection</h4>
+                            <p class="text-sm mb-2">Dave references Neil Peart's "Limelight" lyrics as possibly describing masking:</p>
+                            <div class="code-block text-sm">
+                                "All the world's indeed a stage and we are merely players,<br>
+                                performers and portrayers each another's audience"
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="p-3 border border-red-400 rounded">
+                                <h5 class="font-bold text-red-400 mb-2">Energy Costs</h5>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Constant conscious effort</li>
+                                    <li>• Monitoring facial expressions</li>
+                                    <li>• Adjusting tone of voice</li>
+                                    <li>• Managing body language</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 border border-green-400 rounded">
+                                <h5 class="font-bold text-green-400 mb-2">Benefits</h5>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Smoother social interactions</li>
+                                    <li>• Reduced misunderstandings</li>
+                                    <li>• Professional acceptance</li>
+                                    <li>• Relationship maintenance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advice for Autistic Individuals -->
+                <div class="terminal-window mb-6">
+                    <div class="terminal-header">Career Advice for Autistic Programmers</div>
+                    <div class="p-4">
+                        <div class="quote-block">
+                            <p>"Sell what you can do and not yourself. Because if you go into a job interview and you try to wow them with your personality and how amazing you are, it may or may not go well. But if you can go in with your portfolio of work..."</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mt-4">
+                            <div>
+                                <h4 class="font-bold text-green-400 mb-2">✅ Do This</h4>
+                                <ul class="text-sm space-y-2">
+                                    <li class="tooltip-trigger" data-tooltip="Show actual code you've written, problems you've solved">• Build a strong portfolio/GitHub</li>
+                                    <li>• Focus on technical demonstrations</li>
+                                    <li>• Ask for explicit feedback/requirements</li>
+                                    <li>• Use written communication when possible</li>
+                                    <li>• Find work environments that value output over socializing</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-red-400 mb-2">❌ Avoid This</h4>
+                                <ul class="text-sm space-y-2">
+                                    <li>• Relying on personality in interviews</li>
+                                    <li>• Assuming your motivation matches others'</li>
+                                    <li>• Trying to "read between the lines"</li>
+                                    <li>• Management roles without explicit training</li>
+                                    <li>• Environments heavy on "soft skills"</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Current Projects -->
+    <div id="projects" class="tab-content mx-4 mb-8">
+        <div class="terminal-window mb-8">
+            <div class="terminal-header">Current Projects & Experiments</div>
+            <div class="p-6">
+                <!-- AI Tempest Project -->
+                <div class="accordion-item mb-6">
+                    <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('tempest-ai')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">🤖 AI Learns Atari Tempest (World Record Holder Project)</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                    </button>
+                    <div id="tempest-ai" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                        <div class="grid md:grid-cols-2 gap-6 mb-4">
+                            <div>
+                                <h4 class="font-bold text-yellow-400 mb-2">The Game: Tempest (1980)</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• 3D vector graphics</li>
+                                    <li>• 360-degree movement</li>
+                                    <li>• 8 shots on screen max</li>
+                                    <li>• 11 different enemy types</li>
+                                    <li>• Spikes and complex behaviors</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-blue-400 mb-2">Dave's Achievement</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Holds world record</li>
+                                    <li>• Currently on level 96</li>
+                                    <li>• AI reaches level 36</li>
+                                    <li>• "Way better than most humans"</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="code-block">
+                            <div class="text-yellow-400 mb-2">Technical Implementation:</div>
+                            <div class="text-sm">
+                                1. Reverse engineered Tempest ROMs<br>
+                                2. Lua extracts game state from memory<br>
+                                3. Python receives parameters via socket<br>
+                                4. Dueling Deep Q-Network with two heads<br>
+                                5. Reinforcement learning with chase mechanics
+                            </div>
+                        </div>
+                        
+                        <div class="quote-block">
+                            <p>"I wanted to build an AI to play the game Tempest. That's the old Atari game Tempest. And this is a game that I actually hold the world record on."</p>
+                        </div>
+                        
+                        <p class="text-sm"><strong>Controls:</strong> Just rotate (optical spinner) and fire - but the complexity emerges from the geometric 3D world and enemy AI behaviors.</p>
+                    </div>
+                </div>
+
+                <!-- PDP-11 Restoration -->
+                <div class="accordion-item mb-6">
+                    <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('pdp11')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">🔧 PDP-11/83: The Ultimate Retro Build</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                    </button>
+                    <div id="pdp11" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                        <div class="quote-block">
+                            <p>"I decided, well, let me build the best PDP 11 that I can. And so it was kind of a quest to just like you'd try to max out a PC, I try to max out a PDP 11."</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mb-4">
+                            <div class="p-4 border border-green-400 rounded">
+                                <h4 class="font-bold text-green-400 mb-2">Hardware Specs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• 4 megabytes RAM (massive for the era)</li>
+                                    <li>• PDP-11/70 control panel</li>
+                                    <li>• Dual floppy drive (DU1/DU2)</li>
+                                    <li>• Siamese twin seeking mechanism</li>
+                                    <li>• Blinking lights that actually work</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 border border-blue-400 rounded">
+                                <h4 class="font-bold text-blue-400 mb-2">Software Challenges</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Rebuilt BSD kernel for light support</li>
+                                    <li>• Manual device driver integration</li>
+                                    <li>• No dynamic driver loading</li>
+                                    <li>• Complete kernel rebuild for new hardware</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="code-block">
+                            <div class="text-yellow-400 mb-2">Control Panel Functions:</div>
+                            <div class="text-sm">
+                                • Data bus view (default display)<br>
+                                • Address bus view (toggle option)<br>
+                                • Machine pause/resume<br>
+                                • Direct memory editing<br>
+                                • Deposit values into memory
+                            </div>
+                        </div>
+                        
+                        <p class="text-sm"><strong>Future Goal:</strong> Acquire RA82 drive - a 14-inch monster spinning at 3,600 RPM that "sounds like a washing machine."</p>
+                    </div>
+                </div>
+
+                <!-- GitHub Primes Project -->
+                <div class="accordion-item mb-6">
+                    <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('github-primes')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">🏁 GitHub Primes: Language Speed Benchmark</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                    </button>
+                    <div id="github-primes" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                        <div class="quote-block">
+                            <p>"It is GitHub, a single set of prime number algorithms implemented in about a hundred different languages. So it's the exact same algorithm and we require that you follow certain rules to make it fair."</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold text-blue-400 mb-2">The Challenge</h4>
+                            <p class="text-sm mb-2">Calculate primes up to 100 million as many times as possible in 5 seconds, across all CPU cores.</p>
+                        </div>
+                        
+                        <div class="code-block">
+                            <div class="text-yellow-400 mb-2">Benchmark Rules:</div>
+                            <div class="text-sm">
+                                ✅ Must use prime sieve algorithm<br>
+                                ✅ Maximum 1 bit per integer (no byte arrays)<br>
+                                ✅ Allocate memory within timed loop<br>
+                                ✅ Same algorithm across all languages<br>
+                                ❌ No language-specific optimizations
+                            </div>
+                        </div>
+                        
+                        <!-- Language Performance Chart -->
+                        <div class="mt-6">
+                            <h4 class="font-bold text-green-400 mb-2">Current Performance Leaders</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 text-center font-bold text-yellow-400">#1</div>
+                                    <div class="flex-1 bg-yellow-400 bg-opacity-20 p-2 rounded">Zig</div>
+                                    <div class="w-20 text-right text-sm">Baseline</div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 text-center font-bold text-gray-400">#2</div>
+                                    <div class="flex-1 bg-gray-400 bg-opacity-20 p-2 rounded">Rust</div>
+                                    <div class="w-20 text-right text-sm">~1.1x slower</div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 text-center font-bold text-orange-400">#3</div>
+                                    <div class="flex-1 bg-orange-400 bg-opacity-20 p-2 rounded">C/C++</div>
+                                    <div class="w-20 text-right text-sm">~1.5x slower</div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 text-center font-bold text-purple-400">#4</div>
+                                    <div class="flex-1 bg-purple-400 bg-opacity-20 p-2 rounded">Nim</div>
+                                    <div class="w-20 text-right text-sm">Various</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 p-3 bg-blue-600 bg-opacity-20 rounded">
+                            <h5 class="font-bold text-blue-400 mb-1">The 1TB RAM Machine</h5>
+                            <p class="text-sm">Built specifically to run these benchmarks without any memory constraints, ensuring pure CPU/language performance measurement.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- YouTube Channel -->
+                <div class="accordion-item mb-6">
+                    <button class="accordion-button w-full text-left p-4 border border-current rounded hover:bg-opacity-10 hover:bg-white transition-all" onclick="toggleAccordion('youtube')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">📺 Dave's Garage: Programming Education Channel</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                    </button>
+                    <div id="youtube" class="accordion-content hidden mt-4 p-4 bg-opacity-5 bg-white rounded">
+                        <p class="text-sm mb-4">Dave's YouTube channel covers programming tutorials, Microsoft history, and hardware restoration projects.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="p-3 border border-green-400 rounded">
+                                <h5 class="font-bold text-green-400 mb-2">Popular Topics</h5>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Task Manager deep dives</li>
+                                    <li>• Programming language comparisons</li>
+                                    <li>• Microsoft development stories</li>
+                                    <li>• Hardware restoration</li>
+                                    <li>• Algorithm explanations</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 border border-blue-400 rounded">
+                                <h5 class="font-bold text-blue-400 mb-2">Recent Episode</h5>
+                                <p class="text-sm">"Why you can't move the Windows taskbar"</p>
+                                <p class="text-xs opacity-75 mt-1">Explaining the technical and business decisions behind Windows 11 UI limitations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Tab Content: Key Quotes -->
+<div id="quotes" class="tab-content mx-4 mb-8">
+    <div class="terminal-window">
+        <div class="terminal-header">Memorable Quotes & Conversations</div>
+        <div class="p-6">
+            <div class="space-y-8">
+                
+                <!-- Conversation Format -->
+                <div class="border border-blue-400 rounded-lg p-6">
+                    <h3 class="text-lg font-bold mb-4 text-blue-400">💬 Lex & Dave Conversations</h3>
+                    
+                    <!-- First Computer Experience -->
+                    <div class="conversation-block mb-6 p-4 bg-opacity-5 bg-blue-400 rounded">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"Did you know what you were doing?"</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-400 font-bold text-sm">DAVE:</span>
+                            <p class="text-sm">"Absolutely not. I mean it's no worse than a component stereo. The only thing is that Tandy and their infinite wisdom use the same five pin DIN connector for power, video and I think cassette. So they're all identical and if you plug them in wrong you'd blow it up."</p>
+                        </div>
+                        <cite class="text-xs opacity-75 block mt-2">On setting up his first TRS-80</cite>
+                    </div>
+
+                    <!-- Greatest Computer Debate -->
+                    <div class="conversation-block mb-6 p-4 bg-opacity-5 bg-green-400 rounded">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"Apple II, would you say that's the greatest computer ever built?"</p>
+                        </div>
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-green-400 font-bold text-sm">DAVE:</span>
+                            <p class="text-sm">"Probably in retrospect? Well, I would probably give that to the Commodore 64."</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"Yeah. You and I agree on this. That was my first computer, probably many years after it was released. But yeah, Commodore 64 is incredible."</p>
+                        </div>
+                        <cite class="text-xs opacity-75 block mt-2">Agreeing on computing history</cite>
+                    </div>
+
+                    <!-- Programming Difficulty -->
+                    <div class="conversation-block mb-6 p-4 bg-opacity-5 bg-yellow-400 rounded">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"So how hard is that to do?" <span class="text-xs opacity-75">[programming in machine language]</span></p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-400 font-bold text-sm">DAVE:</span>
+                            <p class="text-sm">"Trivial. And it's just one of those things that sticks. I think you do so many times. You know, if I give you a C issue, there are certain syntactic issues in C that you're never going to forget and get wrong."</p>
+                        </div>
+                        <cite class="text-xs opacity-75 block mt-2">On the permanence of low-level programming skills</cite>
+                    </div>
+
+                    <!-- Autism Self-Assessment -->
+                    <div class="conversation-block mb-6 p-4 bg-opacity-5 bg-purple-400 rounded">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"Have I failed in any way today?"</p>
+                        </div>
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-green-400 font-bold text-sm">DAVE:</span>
+                            <p class="text-sm">"No, not yet."</p>
+                        </div>
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"All right, what score would you give me? 1 to 10?"</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-400 font-bold text-sm">DAVE:</span>
+                            <p class="text-sm">"7.5. Floating point. Nice"</p>
+                        </div>
+                        <cite class="text-xs opacity-75 block mt-2">Dave's characteristic literal precision and humor</cite>
+                    </div>
+
+                    <!-- Windows Rankings -->
+                    <div class="conversation-block mb-6 p-4 bg-opacity-5 bg-red-400 rounded">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"Ridiculous question, but what do you think is the top three Windows operating systems, the different versions?"</p>
+                        </div>
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-green-400 font-bold text-sm">DAVE:</span>
+                            <p class="text-sm">"I'm a fan of Windows 2000 server."</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"Wait, what? Really?"</p>
+                        </div>
+                        <cite class="text-xs opacity-75 block mt-2">Dave's unexpected but well-reasoned choice</cite>
+                    </div>
+
+                    <!-- Life's Meaning -->
+                    <div class="conversation-block mb-6 p-4 bg-opacity-5 bg-cyan-400 rounded">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"What do you think is the meaning of this whole thing of existence, of life, whatever's going on here?"</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-400 font-bold text-sm">DAVE:</span>
+                            <p class="text-sm">"Making cool stuff, I guess, fundamentally what I care about is being able to make complex things that are useful to other people, which leverages my abilities in a way that allows me to be creative and to create things that other people can use."</p>
+                        </div>
+                        <cite class="text-xs opacity-75 block mt-2">On finding purpose through creation</cite>
+                    </div>
+
+                    <!-- Programming Evolution -->
+                    <div class="conversation-block mb-6 p-4 bg-opacity-5 bg-orange-400 rounded">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-blue-400 font-bold text-sm">LEX:</span>
+                            <p class="text-sm">"Does it make you sad that we're climbing the layers of abstraction so quickly so you somebody that used to do machine code and then assembly, then C and C++ that we're getting to a point where we're Vibe coding with natural language?"</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-400 font-bold text-sm">DAVE:</span>
+                            <p class="text-sm">"Yeah, I kind of came up at a really fortunate time, I think, because I had to come up with the technology over the course of 30 or 40 years. So I understand TTL logic and I can use AI to write code, and I kind of know all the pieces in between."</p>
+                        </div>
+                        <cite class="text-xs opacity-75 block mt-2">On the privilege of living through computing's evolution</cite>
+                    </div>
+                </div>
+
+                <!-- Standalone Dave Quotes -->
+                <div class="border border-green-400 rounded-lg p-6">
+                    <h3 class="text-lg font-bold mb-4 text-green-400">🎯 Dave's Wisdom</h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Programming Joy -->
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"I think the most fun for me is when I build something complex and I thought through how it should work and then I run it and it does work that way, that creates intense satisfaction."</p>
+                            <cite class="text-sm opacity-75">On the joy of programming</cite>
+                        </div>
+
+                        <!-- Career Advice -->
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"Sell what you can do and not yourself. Because if you go into a job interview and you try to wow them with your personality and how amazing you are, it may or may not go well. But if you can go in with your portfolio of work and say, look, here's my GitHub history..."</p>
+                            <cite class="text-sm opacity-75">Career advice for autistic programmers</cite>
+                        </div>
+
+                        <!-- Microsoft Culture -->
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"At the time, it was the single most potent assemblage of smart people that I've ever been a part of. You know that when you're working at a regular computer company, the one guy who actually knows what he's doing, his smarter friend, he probably works at Microsoft."</p>
+                            <cite class="text-sm opacity-75">On Microsoft's early culture</cite>
+                        </div>
+
+                        <!-- Learning from Mistakes -->
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"There was a huge amount of guilt because you destroy several weeks of work and you know, it was because you rushed or you did something stupid, or you made an unwise choice."</p>
+                            <cite class="text-sm opacity-75">On accidentally deleting his first major program</cite>
+                        </div>
+
+                        <!-- Autism Understanding -->
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"I don't know what anybody else is thinking. So I know what I would think about this interaction if I was in your position and I was you, and that's the best I can do."</p>
+                            <cite class="text-sm opacity-75">On theory of mind challenges in autism</cite>
+                        </div>
+
+                        <!-- Bill Gates Awkwardness -->
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"My manager, Ben, who was sort of my mentor at the time, took me over to introduce me to Bill... he's explaining, this is Dave. He's our intern from Canada. And in the space of four months, he's done this feature... But I stopped because I'm like, well, actually, it was three months. I had to interrupt them."</p>
+                            <cite class="text-sm opacity-75">On his awkward first meeting with Bill Gates</cite>
+                        </div>
+
+                        <!-- Tools Philosophy -->
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"Tools are everything. I think for one, people are everything. We'll give that as a granted. But the tool set is a huge factor. If we would have had Git, it would have been immensely easier."</p>
+                            <cite class="text-sm opacity-75">On what makes great software teams</cite>
+                        </div>
+
+                        <!-- The Dropout Process -->
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"There's no moment when I dropped out. You just go less and less and less until you realize it's gonna be embarrassing if I show up. Cause I haven't been there in a long time and then pretty soon you're just not going."</p>
+                            <cite class="text-sm opacity-75">On the gradual nature of dropping out</cite>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lex's Observations -->
+                <div class="border border-blue-400 rounded-lg p-6">
+                    <h3 class="text-lg font-bold mb-4 text-blue-400">🎙️ Lex's Insights</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"There's a few things I love in life more than people who are ultra competent at anything really. But the lower level, the better. In the engineering space... Those people are just magicians, right? It's so inspiring."</p>
+                            <cite class="text-sm opacity-75">On appreciating deep technical expertise</cite>
+                        </div>
+
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"Task Manager is an example of a piece of software. Just how many people use that over the years, how many times? It's crazy. It's probably billions. Billions of times."</p>
+                            <cite class="text-sm opacity-75">Recognizing the scale of Dave's impact</cite>
+                        </div>
+
+                        <div class="quote-block">
+                            <p class="text-lg mb-2">"Sometimes I think about, like Tetris, about certain games with pretty primitive graphics that captivate the excitement of a large number of people. And maybe it's the excitement of a large number of people that contributes to the awesomeness of the game."</p>
+                            <cite class="text-sm opacity-75">On the power of simple, well-designed software</cite>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="mx-4 mb-8">
+        <div class="terminal-window">
+            <div class="terminal-header">Session Complete</div>
+            <div class="p-6 text-center">
+                <p class="mb-4">Thank you for exploring Dave Plummer's journey through programming, autism, and software innovation.</p>
+                <div class="flex flex-wrap justify-center gap-4 text-sm">
+                    <a href="https://www.youtube.com/@DavesGarage" class="text-blue-400 hover:text-blue-300">Dave's Garage YouTube</a>
+                    <span class="opacity-50">|</span>
+                    <a href="https://www.youtube.com/watch?v=HsLgZzgpz9Y" class="text-blue-400 hover:text-blue-300">Original Podcast</a>
+                    <span class="opacity-50">|</span>
+                    <span class="text-blue-400">Lex Fridman Podcast #479</span>
+                </div>
+                <div class="mt-4 text-xs opacity-75">
+                    Created with: HTML5, CSS3, Vanilla JavaScript • Optimized for accessibility
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tooltip Element -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <!-- Modal Template -->
+    <div id="modal" class="modal">
+        <div class="modal-content p-6 m-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-xl font-bold"></h3>
+                <button onclick="closeModal()" class="text-2xl hover:text-red-400">&times;</button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(15, 15, 35, 0.95); color: #00ff41; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(0, 255, 65, 0.3); max-width: 300px; word-wrap: break-word; box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);">
+        <div style="margin-bottom: 4px; font-weight: bold; color: #00ff41; line-height: 1.3;">Generated using LLM with supervision and polishing by <a href="../index.html" style="color: #4fb3ff; text-decoration: none; border-bottom: 1px dotted #4fb3ff;" target="_blank">benjaminficusmicrocarpa</a></div>
+        <div><a href="../license.html" style="color: #00ff41; text-decoration: none; font-size: 0.75rem;" target="_blank">Released under the MIT License</a></div>
+    </div>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.dataset.tab;
+                
+                // Update button states
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'bg-white', 'text-black'));
+                this.classList.add('active', 'bg-white', 'text-black');
+                
+                // Update content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabId).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion functionality
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const button = content.previousElementSibling;
+            const icon = button.querySelector('.accordion-icon');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.textContent = '▲';
+                content.style.animation = 'fadeIn 0.3s ease';
+            } else {
+                content.classList.add('hidden');
+                icon.textContent = '▼';
+            }
+        }
+
+        // Tooltip functionality
+        const tooltip = document.getElementById('tooltip');
+        
+        document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+            trigger.addEventListener('mouseenter', function(e) {
+                const text = this.dataset.tooltip;
+                tooltip.textContent = text;
+                tooltip.classList.add('show');
+                
+                // Position tooltip
+                const rect = this.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+                
+                let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+                let top = rect.top - tooltipRect.height - 10;
+                
+                // Adjust for screen edges
+                if (left < 10) left = 10;
+                if (left + tooltipRect.width > window.innerWidth - 10) {
+                    left = window.innerWidth - tooltipRect.width - 10;
+                }
+                if (top < 10) top = rect.bottom + 10;
+                
+                tooltip.style.left = left + 'px';
+                tooltip.style.top = top + 'px';
+            });
+            
+            trigger.addEventListener('mouseleave', function() {
+                tooltip.classList.remove('show');
+            });
+        });
+
+        // Modal functionality
+        function openModal(title, content) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-body').innerHTML = content;
+            document.getElementById('modal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            
+            // Tab navigation
+            if (e.key >= '1' && e.key <= '5') {
+                const tabs = ['journey', 'microsoft', 'autism', 'projects', 'quotes'];
+                const tabIndex = parseInt(e.key) - 1;
+                if (tabs[tabIndex]) {
+                    document.querySelector(`[data-tab="${tabs[tabIndex]}"]`).click();
+                }
+            }
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Progressive enhancement - add loading states
+        window.addEventListener('load', function() {
+            // Simulate progress for dramatic effect
+            const progressBar = document.querySelector('.progress-fill');
+            if (progressBar) {
+                progressBar.style.width = '100%';
+            }
+            
+            // Add scan animation to bento items
+            document.querySelectorAll('.bento-item:not(.animate-scan)').forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animate-scan');
+                }, index * 200);
+            });
+        });
+
+        // Focus management for accessibility
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure proper focus order
+            const focusableElements = document.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            
+            focusableElements.forEach(element => {
+                element.addEventListener('focus', function() {
+                    this.style.outline = '2px solid var(--terminal-green)';
+                    this.style.outlineOffset = '2px';
+                });
+                
+                element.addEventListener('blur', function() {
+                    this.style.outline = '';
+                    this.style.outlineOffset = '';
+                });
+            });
+        });
+
+        // Performance optimization - lazy loading for images if any were added
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        console.log('🖥️ DAVE_PLUMMER.EXE initialized successfully');
+        console.log('🎮 Interactive elements: Accordion, Tabs, Tooltips, Modal');
+        console.log('♿ Accessibility: Full keyboard navigation enabled');
+        console.log('📱 Responsive: Desktop to mobile optimized');
+        console.log('⚡ Performance: Vanilla JS, minimal dependencies');
+    </script>
+</body>
+</html>
