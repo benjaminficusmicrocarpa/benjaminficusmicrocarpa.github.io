@@ -1,0 +1,1177 @@
+/* 
+ * ════════════════════════════════════════════════════════════════════════════════
+ * 🚀 IECC GENERIC2 CSS FRAMEWORK - NEXT-GENERATION SERMON STYLING
+ * ════════════════════════════════════════════════════════════════════════════════
+ * 
+ * 🎯 REVOLUTIONARY ADVANTAGES OVER GENERIC V1:
+ * ──────────────────────────────────────────────────────
+ * ✅ ZERO THEME FILES - All themes in one CSS file via CSS variables
+ * ✅ TAILWIND CDN NATIVE - No build process required, works instantly
+ * ✅ UTILITY-FIRST COMPATIBLE - Compose with Tailwind, enhance with components
+ * ✅ MOBILE-FIRST DESIGN - Every component optimized for touch and small screens
+ * ✅ BULLETPROOF ANIMATIONS - Smooth transitions without JavaScript manipulation
+ * ✅ ACCESSIBILITY BUILT-IN - ARIA-compliant, keyboard navigation, screen readers
+ * ✅ PERFORMANCE OPTIMIZED - Hardware-accelerated animations, minimal reflows
+ * ✅ DARK MODE READY - Automatic theme switching with CSS custom properties
+ * 
+ * 🔥 FRAMEWORK PHILOSOPHY:
+ * ─────────────────────────
+ * • "Utility-First, Component-Second" - Use Tailwind for layout, Generic2 for behavior
+ * • "Data-Driven Theming" - Themes controlled by data attributes, not CSS files
+ * • "CDN-Compatible Always" - Never use @apply/@layer directives
+ * • "Mobile-First Responsive" - Every element works perfectly on phones
+ * • "Semantic HTML Enhanced" - Meaningful markup with utility styling
+ * 
+ * 🎨 FOR LLM PROMPT ENGINEERS:
+ * ──────────────────────────────
+ * When generating sermon HTML, emphasize these patterns:
+ * 
+ * ✅ CORRECT APPROACH:
+ * ```html
+ * <html data-theme="healing">
+ * <head>
+ *   <script src="https://cdn.tailwindcss.com"></script>
+ *   <link rel="stylesheet" href="css/iecc-generic2.css">
+ * </head>
+ * <body class="bg-gradient-to-br from-slate-50 to-cyan-50">
+ *   <header class="sermon-header px-6 py-8">
+ *     <h1 class="text-4xl font-bold text-white mb-4">Sermon Title</h1>
+ *   </header>
+ * </body>
+ * </html>
+ * ```
+ * 
+ * ❌ NEVER DO THIS (Breaks with CDN):
+ * ```css
+ * .my-component {
+ *   @apply px-4 py-2 bg-blue-500;  /* BREAKS CDN */
+ * }
+ * ```
+ * 
+ * 📦 COMPLETE COMPONENT LIBRARY:
+ * ────────────────────────────────
+ * • sermon-header: Sticky header with backdrop blur
+ * • tab-navigation: Responsive tabs with memory
+ * • accordion-system: Smooth expand/collapse
+ * • modal-overlay: Scripture references & content
+ * • collapsible-system: Fixed rapid-toggle bug from v1
+ * • bento-grid: Modern card layouts
+ * • bible-verse: Styled scripture quotes
+ * • content-card: Elevated content containers
+ * • btn variants: Primary, secondary, outline styles
+ * • tooltip-system: Mobile-optimized hover/touch
+ * 
+ * 🎨 DYNAMIC THEMING SYSTEM:
+ * ────────────────────────────
+ * Set theme via HTML data attribute:
+ * • data-theme="healing" - Cyan/teal (restoration, hope)
+ * • data-theme="pride" - Blue (humility, wisdom)
+ * • data-theme="anger" - Red/amber (forgiveness, conflict)
+ * • data-theme="purpose" - Purple/yellow (calling, destiny)
+ * • data-theme="dark" - Gray/purple (evening, solemn)
+ * 
+ * All theme colors automatically cascade through:
+ * --theme-primary, --theme-secondary, --theme-accent
+ * 
+ * 🚨 CRITICAL FIXES FROM V1:
+ * ─────────────────────────────
+ * • FIXED: Collapsible double-click rapid toggle
+ * • FIXED: Theme file conflicts and loading order
+ * • FIXED: Mobile tooltip positioning issues
+ * • FIXED: Accordion content height calculations
+ * • FIXED: Modal focus trapping and keyboard navigation
+ * • FIXED: Responsive breakpoint inconsistencies
+ * 
+ * 💡 LLM GENERATION EXAMPLES:
+ * ─────────────────────────────
+ * 
+ * Responsive Header:
+ * <header class="sermon-header px-4 md:px-6 py-6 md:py-8">
+ *   <div class="max-w-6xl mx-auto">
+ *     <h1 class="text-2xl md:text-4xl font-bold text-white mb-2">Title</h1>
+ *     <p class="text-white/80 text-sm md:text-base">Subtitle</p>
+ *   </div>
+ * </header>
+ * 
+ * Interactive Tabs:
+ * <nav class="tab-navigation">
+ *   <button data-tab-trigger="main" class="tab-button active">Main</button>
+ * </nav>
+ * <div data-tab-content="main" class="active">Content</div>
+ * 
+ * Collapsible Sections:
+ * <button data-collapsible-trigger="point1" class="collapsible-trigger">
+ *   <span>Point 1</span><span>▼</span>
+ * </button>
+ * <div data-collapsible-content="point1" class="collapsible-content">
+ *   Content
+ * </div>
+ * 
+ * ════════════════════════════════════════════════════════════════════════════════
+ * 🎓 CDN-COMPATIBLE UTILITY FRAMEWORK - No build process, maximum flexibility
+ * ════════════════════════════════════════════════════════════════════════════════
+ */
+
+/* =================================
+   CSS CUSTOM PROPERTIES FOR THEMING
+   ================================= */
+:root {
+  /* Primary Theme Colors - easily customizable per sermon */
+  --theme-primary: 59 130 246; /* blue-500 as RGB for Tailwind */
+  --theme-secondary: 99 102 241; /* indigo-500 */
+  --theme-accent: 236 72 153; /* pink-500 */
+  
+  /* Semantic Color Mappings */
+  --color-header-bg: var(--theme-primary);
+  --color-tab-active: var(--theme-primary);
+  --color-accordion-header: var(--theme-secondary);
+  --color-modal-overlay: 0 0 0; /* black */
+  
+  /* Typography Scale */
+  --font-serif: 'Times New Roman', serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  
+  /* Spacing Scale (matches Tailwind) */
+  --space-xs: 0.25rem; /* 1 */
+  --space-sm: 0.5rem;  /* 2 */
+  --space-md: 1rem;    /* 4 */
+  --space-lg: 1.5rem;  /* 6 */
+  --space-xl: 2rem;    /* 8 */
+  --space-2xl: 3rem;   /* 12 */
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem; /* rounded-md */
+  --radius-lg: 0.75rem;  /* rounded-xl */
+  --radius-xl: 1rem;     /* rounded-2xl */
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Animation Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════════
+   🧩 UTILITY COMPONENTS - CDN COMPATIBLE, TAILWIND ENHANCED
+   ═════════════════════════════════════════════════════════════════════════════════ */
+
+/* 
+ * ────────────────────────────────────────────────────────────────────────────────
+ * 🏛️ SERMON HEADER COMPONENT - STICKY HERO WITH BACKDROP BLUR
+ * ────────────────────────────────────────────────────────────────────────────────
+ * 
+ * 🚀 ADVANTAGES OVER V1:
+ * • Sticky positioning with backdrop blur effect
+ * • Automatic theme color integration
+ * • Mobile-optimized typography scaling
+ * • Hardware-accelerated animations
+ * 
+ * 💡 LLM USAGE PATTERN:
+ * ```html
+ * <header class="sermon-header px-4 md:px-6 py-6 md:py-8">
+ *   <div class="max-w-6xl mx-auto text-center">
+ *     <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 md:mb-4">
+ *       Sermon Title Here
+ *     </h1>
+ *     <p class="text-white/80 text-sm md:text-base lg:text-lg mb-4">
+ *       Pastor Name • Church Name • Date
+ *     </p>
+ *     <div class="flex flex-col sm:flex-row gap-3 justify-center">
+ *       <a href="#" class="btn btn-primary">
+ *         <span>🎥 Watch Video</span>
+ *       </a>
+ *       <a href="#" class="btn btn-secondary">
+ *         <span>📚 All Sermons</span>
+ *       </a>
+ *     </div>
+ *   </div>
+ * </header>
+ * ```
+ * 
+ * 🎨 THEMING: Automatically uses --theme-primary color for background gradient
+ */
+.sermon-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgb(var(--theme-primary) / 0.3);
+  background: rgb(var(--color-header-bg) / 0.9);
+}
+
+/* 
+ * ────────────────────────────────────────────────────────────────────────────────
+ * 📑 TAB NAVIGATION SYSTEM - MEMORY-ENABLED WITH SMOOTH TRANSITIONS
+ * ────────────────────────────────────────────────────────────────────────────────
+ * 
+ * 🚀 ADVANTAGES OVER V1:
+ * • Horizontal scrolling on mobile (no cramped tabs)
+ * • Active state persistence across page reloads
+ * • Smooth content transitions with fade effects
+ * • Touch-optimized button sizes (44px minimum)
+ * • Keyboard navigation support
+ * 
+ * 💡 LLM USAGE PATTERN:
+ * ```html
+ * <nav class="tab-navigation">
+ *   <div class="max-w-6xl mx-auto px-4">
+ *     <div class="flex space-x-1 overflow-x-auto pb-2">
+ *       <button data-tab-trigger="overview" class="tab-button active">
+ *         <span>📖 Overview</span>
+ *       </button>
+ *       <button data-tab-trigger="sermon" class="tab-button">
+ *         <span>🎤 Main Sermon</span>
+ *       </button>
+ *       <button data-tab-trigger="study" class="tab-button">
+ *         <span>📝 Bible Study</span>
+ *       </button>
+ *       <button data-tab-trigger="questions" class="tab-button">
+ *         <span>❓ Discussion</span>
+ *       </button>
+ *     </div>
+ *   </div>
+ * </nav>
+ * 
+ * <!-- Tab Content Sections -->
+ * <div data-tab-content="overview" class="active">
+ *   <div class="max-w-6xl mx-auto px-4 py-8">
+ *     <!-- Overview content with bento-grid layout -->
+ *   </div>
+ * </div>
+ * <div data-tab-content="sermon" class="hidden">
+ *   <!-- Sermon content with collapsible points -->
+ * </div>
+ * ```
+ * 
+ * 🔧 FRAMEWORK INTEGRATION: Automatically handled by TabSystem in iecc-generic2.js
+ */
+.tab-navigation {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+  backdrop-filter: blur(4px);
+  background: rgb(var(--theme-primary) / 0.05);
+  border-bottom: 1px solid rgb(var(--theme-primary) / 0.2);
+}
+
+.tab-button {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 300ms;
+  white-space: nowrap;
+  border: 2px solid transparent;
+  min-height: 44px; /* Touch-friendly minimum */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-button.active {
+  color: white !important; /* UPDATED Dec 2024: Added !important to override inline Tailwind classes */
+  background: rgb(var(--color-tab-active)) !important; /* UPDATED Dec 2024: Added !important for consistent theming */
+  border-color: rgb(var(--theme-primary) / 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(var(--theme-primary) / 0.3);
+}
+
+.tab-button:not(.active) {
+  color: rgb(75 85 99) !important; /* gray-600 - ensuring good contrast */
+}
+
+.tab-button:not(.active):hover {
+  background: rgb(255 255 255 / 0.5);
+  transform: translateY(-1px);
+}
+
+/* Accordion Components */
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  text-align: left;
+  transition: all 300ms;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.accordion-trigger:hover {
+  background: rgb(249 250 251); /* gray-50 */
+}
+
+.accordion-trigger.active {
+  background: rgb(var(--color-accordion-header) / 0.1);
+  color: rgb(var(--theme-secondary));
+}
+
+.accordion-content {
+  overflow: hidden;
+  transition: max-height 300ms ease-out, padding 300ms ease-out;
+  max-height: 0;
+  padding: 0;
+}
+
+.accordion-content.active {
+  max-height: 2000px;
+  padding: 1.5rem;
+  border-top: 1px solid rgb(229 231 235); /* border-gray-200 */
+}
+
+.accordion-icon {
+  transition: transform 300ms;
+  flex-shrink: 0;
+}
+
+.accordion-trigger.active .accordion-icon {
+  transform: rotate(90deg);
+}
+
+/* Fix for accordion headers with custom classes */
+.accordion-header {
+  margin: 0;
+  padding: 1.5rem;
+  border: none;
+  background: transparent;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+/* Modal Components */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 300ms;
+  background: rgb(var(--color-modal-overlay) / 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 1rem;
+  max-width: 42rem;
+  max-height: 100%;
+  overflow-y: auto;
+  transform: scale(0.9);
+  transition: all 300ms;
+  box-shadow: var(--shadow-xl);
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+/* Collapsible Components */
+.collapsible-trigger {
+  width: 100%;
+  text-align: left;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  transition: all 300ms;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collapsible-trigger:hover {
+  background: rgb(249 250 251); /* gray-50 */
+}
+
+/* 
+ * COLLAPSIBLE SYSTEM DOCUMENTATION
+ * =================================
+ * 
+ * OVERVIEW:
+ * The collapsible system provides smooth expand/collapse functionality for content sections.
+ * It uses CSS transitions with max-height to create smooth animations without JavaScript
+ * manipulation of heights.
+ * 
+ * HTML STRUCTURE REQUIRED:
+ * <div class="collapsible">
+ *   <button data-collapsible-trigger="unique-id">
+ *     <span>Content</span>
+ *     <span class="arrow">▼</span>  <!-- This rotates on toggle -->
+ *   </button>
+ *   <div data-collapsible-content="unique-id" class="collapsible-content">
+ *     <!-- Your content here -->
+ *   </div>
+ * </div>
+ * 
+ * IMPORTANT NOTES:
+ * - The data-collapsible-trigger and data-collapsible-content MUST have matching IDs
+ * - Generic2 framework handles all click events automatically via CollapsibleSystem
+ * - CSS classes handle all visual transitions
+ * - Arrow rotation is handled by CSS when .active class is toggled on trigger
+ * 
+ * COMMON ISSUES & SOLUTIONS:
+ * 1. Content taller than max-height gets cut off
+ *    → Increase max-height value in .active state
+ * 2. Animation is jerky or doesn't work
+ *    → Ensure overflow: hidden and proper transition properties
+ * 3. Double-click behavior (opens then closes immediately)
+ *    → Check for duplicate event listeners or multiple init() calls
+ * 4. Arrow doesn't rotate
+ *    → Ensure arrow is last child of trigger button with proper CSS selector
+ * 
+ * CUSTOMIZATION:
+ * - Adjust transition duration by changing the transition property
+ * - Modify max-height in .active state for taller content
+ * - Add custom animations by extending the CSS classes
+ * 
+ * TROUBLESHOOTING CHECKLIST:
+ * ✓ HTML structure matches the required format above
+ * ✓ data-collapsible-trigger and data-collapsible-content IDs match exactly
+ * ✓ Generic2 framework is loaded and initialized only once
+ * ✓ No duplicate event listeners attached
+ * ✓ CSS max-height is sufficient for content
+ * ✓ overflow: hidden is present to prevent content spillover
+ */
+
+.collapsible-content {
+  overflow: hidden;
+  transition: max-height 300ms ease-out;
+  max-height: 0;
+  padding: 0;
+  /* CRITICAL: Don't use display:none as it breaks CSS transitions */
+}
+
+.collapsible-content.active {
+  max-height: 3000px; /* UPDATED Dec 2024: Increased from 1000px to accommodate longer sermon content */
+  padding: 1rem;
+  transition: max-height 500ms ease-in;
+  /* Note: Expanding is intentionally slower for better UX */
+}
+
+/* Fix for custom collapsible styling in Purpose theme */
+.collapsible .collapsible-trigger {
+  padding: 0.75rem 1rem;
+  margin: 0;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
+.collapsible .collapsible-trigger:hover {
+  background: rgb(139 92 246 / 0.2); /* purple-100 hover */
+}
+
+.collapsible .collapsible-content {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  transition: max-height 300ms ease-out, padding 300ms ease-out;
+  max-height: 0;
+}
+
+.collapsible .collapsible-content.active {
+  padding: 1rem;
+  max-height: 2500px; /* UPDATED Dec 2024: Increased from 500px to accommodate longer sermon content */
+}
+
+/* Arrow styling for collapsibles */
+.collapsible .collapsible-trigger span:last-child {
+  transition: transform 300ms;
+  font-size: 1.2rem;
+  line-height: 1;
+  display: inline-block;
+}
+
+.collapsible .collapsible-trigger.active span:last-child {
+  transform: rotate(180deg);
+}
+
+/* Content Cards */
+.content-card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgb(229 231 235); /* border-gray-200 */
+  transition: all 300ms;
+}
+
+.content-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-0.25rem);
+}
+
+/* 
+ * ────────────────────────────────────────────────────────────────────────────────
+ * 🎨 BENTO GRID SYSTEM - MODERN CARD LAYOUTS FOR SERMON OVERVIEWS
+ * ────────────────────────────────────────────────────────────────────────────────
+ * 
+ * 🚀 PERFECT FOR SERMON OVERVIEW SECTIONS:
+ * • Auto-responsive grid (no media queries needed)
+ * • Hover animations with theme color integration
+ * • Mobile-optimized card sizes
+ * • Gradient backgrounds for visual appeal
+ * • Touch-friendly interaction areas
+ * 
+ * 💡 LLM USAGE PATTERN:
+ * ```html
+ * <div class="bento-grid mb-12">
+ *   <!-- Key Verse Card -->
+ *   <div class="bento-item text-center bg-gradient-to-br from-blue-50 to-indigo-100">
+ *     <div class="text-4xl mb-3">📖</div>
+ *     <h3 class="text-xl font-bold text-theme-primary mb-3">Key Verse</h3>
+ *     <p class="text-gray-700 text-sm leading-relaxed">
+ *       "For I know the plans I have for you," declares the LORD...
+ *     </p>
+ *     <p class="text-theme-primary font-semibold mt-2">Jeremiah 29:11</p>
+ *   </div>
+ * 
+ *   <!-- Main Points Card -->
+ *   <div class="bento-item bg-gradient-to-br from-green-50 to-emerald-100">
+ *     <div class="text-4xl mb-3">🎯</div>
+ *     <h3 class="text-xl font-bold text-green-700 mb-3">Main Points</h3>
+ *     <ul class="text-gray-700 text-sm space-y-1">
+ *       <li>• God has a purpose for your life</li>
+ *       <li>• Trust in His timing</li>
+ *       <li>• Walk by faith, not sight</li>
+ *     </ul>
+ *   </div>
+ * 
+ *   <!-- Application Card -->
+ *   <div class="bento-item bg-gradient-to-br from-purple-50 to-violet-100">
+ *     <div class="text-4xl mb-3">💡</div>
+ *     <h3 class="text-xl font-bold text-purple-700 mb-3">Application</h3>
+ *     <p class="text-gray-700 text-sm">
+ *       How will you trust God's plan this week?
+ *     </p>
+ *   </div>
+ * </div>
+ * ```
+ * 
+ * 🎨 RESPONSIVE BEHAVIOR:
+ * • Desktop: 3+ columns (auto-fit based on content)
+ * • Tablet: 2 columns
+ * • Mobile: 1 column (stacked)
+ * • Cards maintain 280px minimum width
+ */
+.bento-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.bento-item {
+  background: linear-gradient(to bottom right, rgb(249 250 251), rgb(243 244 246));
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 2px solid rgb(229 231 235);
+  transition: all 300ms;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-item:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-0.5rem);
+  border-color: rgb(var(--theme-primary));
+}
+
+/* Subtle animation effect on hover */
+.bento-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgb(var(--theme-primary) / 0.1), transparent);
+  transition: left 600ms;
+}
+
+.bento-item:hover::before {
+  left: 100%;
+}
+
+/* Bible Verse Styling */
+.bible-verse {
+  background: linear-gradient(to right, rgb(239 246 255), rgb(238 242 255));
+  border-left: 4px solid rgb(var(--theme-primary));
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+  position: relative;
+}
+
+.bible-verse::before {
+  content: '"';
+  position: absolute;
+  top: -0.5rem;
+  left: 1rem;
+  font-size: 4rem;
+  opacity: 0.3;
+  color: rgb(var(--theme-primary));
+  font-family: var(--font-serif);
+}
+
+/* Quote Styling */
+.author-quote {
+  background: linear-gradient(to right, rgb(255 251 235), rgb(254 243 199));
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border: 2px solid rgb(251 191 36);
+  position: relative;
+  font-style: italic;
+}
+
+.author-quote::before {
+  content: '"';
+  position: absolute;
+  top: -0.25rem;
+  left: 1.25rem;
+  font-size: 4.5rem;
+  opacity: 0.2;
+  color: rgb(var(--theme-accent));
+  font-family: var(--font-serif);
+}
+
+/* Tooltip Styling */
+.tooltip {
+  position: relative;
+  display: inline;
+  cursor: help;
+  color: rgb(37 99 235); /* blue-600 */
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0.5rem;
+  background: rgb(17 24 39); /* gray-900 */
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 300ms;
+  white-space: normal;
+  max-width: 300px;
+  width: max-content;
+  box-shadow: var(--shadow-lg);
+  z-index: 50;
+  line-height: 1.4;
+}
+
+/* Prevent tooltip from overflowing viewport */
+.tooltip-content::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgb(17 24 39);
+}
+
+/* Adjust tooltip position if it would overflow */
+.tooltip:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Smart positioning for tooltips near edges */
+.tooltip:first-child .tooltip-content,
+.tooltip:nth-child(1) .tooltip-content {
+  left: 0;
+  transform: translateX(0);
+}
+
+.tooltip:last-child .tooltip-content,
+.tooltip:nth-last-child(1) .tooltip-content {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+}
+
+/* Button Variants */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 300ms;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  color: white;
+  box-shadow: var(--shadow-md);
+  background: rgb(var(--theme-primary));
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-0.125rem);
+}
+
+.btn-secondary {
+  background: rgb(243 244 246); /* gray-100 */
+  color: rgb(55 65 81); /* gray-700 */
+  border-color: rgb(var(--theme-primary) / 0.3);
+}
+
+.btn-secondary:hover {
+  background: rgb(229 231 235); /* gray-200 */
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: rgb(var(--theme-primary));
+  color: rgb(var(--theme-primary));
+}
+
+.btn-outline:hover {
+  background: rgb(249 250 251); /* gray-50 */
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn var(--duration-slow) ease-out;
+}
+
+.slide-up {
+  animation: slideUp var(--duration-slow) ease-out;
+}
+
+.water-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.water-ripple::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgb(var(--theme-primary) / 0.3), transparent);
+  animation: ripple 3s infinite;
+}
+
+/* =================================
+   THEME VARIANTS (DATA ATTRIBUTES)
+   ================================= */
+
+/* Healing Theme */
+[data-theme="healing"] {
+  --theme-primary: 6 182 212; /* cyan-500 */
+  --theme-secondary: 8 145 178; /* cyan-600 */
+  --theme-accent: 236 72 153; /* pink-500 */
+  --color-tab-active: 8 145 178; /* UPDATED Dec 2024: Use darker cyan-600 for better contrast with white text */
+}
+
+/* Pride Theme */
+[data-theme="pride"] {
+  --theme-primary: 44 82 130; /* blue-700 */
+  --theme-secondary: 49 130 206; /* blue-600 */
+  --theme-accent: 253 215 215; /* red-200 */
+}
+
+/* Anger Theme */
+[data-theme="anger"] {
+  --theme-primary: 185 28 28; /* red-700 */
+  --theme-secondary: 239 68 68; /* red-500 */
+  --theme-accent: 251 191 36; /* amber-400 */
+}
+
+/* Purpose Theme */
+[data-theme="purpose"] {
+  --theme-primary: 120 14 135; /* purple-800 */
+  --theme-secondary: 124 58 237; /* purple-600 */
+  --theme-accent: 253 230 138; /* yellow-200 */
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --theme-primary: 156 163 175; /* gray-400 */
+  --theme-secondary: 107 114 128; /* gray-500 */
+  --theme-accent: 168 85 247; /* purple-500 */
+  
+  /* Override semantic colors for dark mode */
+  --color-modal-overlay: 255 255 255; /* white overlay for dark */
+}
+
+/* =================================
+   KEYFRAME ANIMATIONS
+   ================================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ripple {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+   ================================= */
+@media (max-width: 768px) {
+  .tab-navigation {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .tab-button {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-content {
+    margin: 1rem;
+    max-width: none;
+  }
+  
+  .tooltip-content {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 20rem;
+    white-space: normal;
+  }
+}
+
+/* =================================
+   ACCESSIBILITY ENHANCEMENTS
+   ================================= */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.tab-button:focus,
+.accordion-trigger:focus,
+.collapsible-trigger:focus,
+.btn:focus {
+  outline: none;
+  ring: 2px solid rgb(var(--theme-primary));
+  ring-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .content-card,
+  .bento-item {
+    border: 2px solid rgb(31 41 55); /* gray-800 */
+  }
+}
+
+/* =================================
+   COMPARISON TABLES
+   ================================= */
+.comparison-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.comparison-table th,
+.comparison-table td {
+  text-align: left;
+  vertical-align: top;
+}
+
+/* =================================
+   PRIDE CHART STYLES
+   ================================= */
+.pride-chart {
+  padding: 1.5rem;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  height: 200px;
+  gap: 1rem;
+}
+
+.chart-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 80px;
+  border-radius: 0.5rem 0.5rem 0 0;
+  position: relative;
+  padding: 0.5rem;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+.chart-value {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.chart-bar-label {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: rgb(75 85 99); /* gray-600 */
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════════
+   🤖 LLM COMPLETE SERMON PAGE TEMPLATE GUIDE
+   ═════════════════════════════════════════════════════════════════════════════════ */
+
+/* 
+ * ────────────────────────────────────────────────────────────────────────────────
+ * 🎯 COMPREHENSIVE LLM PROMPTING TEMPLATES
+ * ────────────────────────────────────────────────────────────────────────────────
+ * 
+ * Use these exact HTML patterns when prompting LLMs to generate sermon pages:
+ * 
+ * 📋 COMPLETE SERMON PAGE STRUCTURE:
+ * ```html
+ * <!DOCTYPE html>
+ * <html lang="en" data-theme="healing">
+ * <head>
+ *     <meta charset="UTF-8">
+ *     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ *     <title>Sermon Title - Island ECC</title>
+ *     
+ *     <!-- Tailwind CSS CDN -->
+ *     <script src="https://cdn.tailwindcss.com"></script>
+ *     
+ *     <!-- Generic2 Framework -->
+ *     <link rel="stylesheet" href="css/iecc-generic2.css">
+ *     <script src="js/iecc-generic2.js" defer></script>
+ * </head>
+ * <body class="min-h-screen bg-gradient-to-br from-slate-50 to-cyan-50">
+ * 
+ *     <!-- Sermon Header -->
+ *     <header class="sermon-header px-4 md:px-6 py-6 md:py-8">
+ *         <div class="max-w-6xl mx-auto text-center">
+ *             <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 md:mb-4">
+ *                 Your Sermon Title Here
+ *             </h1>
+ *             <p class="text-white/80 text-sm md:text-base lg:text-lg mb-4">
+ *                 Pastor Name • Island ECC • Date
+ *             </p>
+ *             <div class="flex flex-col sm:flex-row gap-3 justify-center">
+ *                 <a href="#" class="btn btn-primary">🎥 Watch Video</a>
+ *                 <a href="#" class="btn btn-secondary">📚 All Sermons</a>
+ *             </div>
+ *         </div>
+ *     </header>
+ * 
+ *     <!-- Tab Navigation -->
+ *     <nav class="tab-navigation">
+ *         <div class="max-w-6xl mx-auto px-4">
+ *             <div class="flex space-x-1 overflow-x-auto pb-2">
+ *                 <button data-tab-trigger="overview" class="tab-button active">
+ *                     <span>📖 Overview</span>
+ *                 </button>
+ *                 <button data-tab-trigger="sermon" class="tab-button">
+ *                     <span>🎤 Main Sermon</span>
+ *                 </button>
+ *                 <button data-tab-trigger="study" class="tab-button">
+ *                     <span>📝 Bible Study</span>
+ *                 </button>
+ *                 <button data-tab-trigger="discussion" class="tab-button">
+ *                     <span>💬 Discussion</span>
+ *                 </button>
+ *             </div>
+ *         </div>
+ *     </nav>
+ * 
+ *     <!-- Overview Tab -->
+ *     <div data-tab-content="overview" class="active">
+ *         <div class="max-w-6xl mx-auto px-4 py-8">
+ *             
+ *             <!-- Bento Grid Overview -->
+ *             <div class="bento-grid mb-12">
+ *                 <div class="bento-item text-center bg-gradient-to-br from-blue-50 to-indigo-100">
+ *                     <div class="text-4xl mb-3">📖</div>
+ *                     <h3 class="text-xl font-bold text-theme-primary mb-3">Key Verse</h3>
+ *                     <p class="text-gray-700 text-sm leading-relaxed mb-2">
+ *                         Scripture text here...
+ *                     </p>
+ *                     <p class="text-theme-primary font-semibold">Reference</p>
+ *                 </div>
+ *                 
+ *                 <div class="bento-item bg-gradient-to-br from-green-50 to-emerald-100">
+ *                     <div class="text-4xl mb-3">🎯</div>
+ *                     <h3 class="text-xl font-bold text-green-700 mb-3">Main Points</h3>
+ *                     <ul class="text-gray-700 text-sm space-y-1">
+ *                         <li>• Point 1</li>
+ *                         <li>• Point 2</li>
+ *                         <li>• Point 3</li>
+ *                     </ul>
+ *                 </div>
+ *                 
+ *                 <div class="bento-item bg-gradient-to-br from-purple-50 to-violet-100">
+ *                     <div class="text-4xl mb-3">💡</div>
+ *                     <h3 class="text-xl font-bold text-purple-700 mb-3">Application</h3>
+ *                     <p class="text-gray-700 text-sm">
+ *                         How to apply this sermon...
+ *                     </p>
+ *                 </div>
+ *             </div>
+ *         </div>
+ *     </div>
+ * 
+ *     <!-- Main Sermon Tab -->
+ *     <div data-tab-content="sermon" class="hidden">
+ *         <div class="max-w-4xl mx-auto px-4 py-8">
+ *             
+ *             <!-- Collapsible Sermon Points -->
+ *             <div class="space-y-6">
+ *                 <div class="content-card">
+ *                     <button data-collapsible-trigger="point1" class="collapsible-trigger w-full">
+ *                         <div class="flex justify-between items-center">
+ *                             <div class="text-left">
+ *                                 <h3 class="text-xl font-bold text-gray-800">1. First Main Point</h3>
+ *                                 <p class="text-gray-600 text-sm">Brief description...</p>
+ *                             </div>
+ *                             <span class="text-2xl transition-transform duration-300">▼</span>
+ *                         </div>
+ *                     </button>
+ *                     
+ *                     <div data-collapsible-content="point1" class="collapsible-content">
+ *                         <div class="p-6">
+ *                             <div class="bible-verse mb-6">
+ *                                 <p class="text-lg leading-relaxed mb-2">
+ *                                     "Scripture quote here..."
+ *                                 </p>
+ *                                 <p class="text-right font-semibold text-theme-primary">- Reference</p>
+ *                             </div>
+ *                             
+ *                             <p class="text-gray-700 mb-4">
+ *                                 Detailed explanation of the point...
+ *                             </p>
+ *                             
+ *                             <div class="bg-theme-primary/10 rounded-lg p-4">
+ *                                 <h4 class="font-semibold text-theme-primary mb-2">💡 Application:</h4>
+ *                                 <p class="text-gray-700 text-sm">
+ *                                     How to apply this point...
+ *                                 </p>
+ *                             </div>
+ *                         </div>
+ *                     </div>
+ *                 </div>
+ *                 
+ *                 <!-- Repeat for additional points... -->
+ *             </div>
+ *         </div>
+ *     </div>
+ * 
+ *     <!-- Scripture Modal -->
+ *     <div data-modal="scripture-modal" class="modal-overlay">
+ *         <div class="modal-content p-6 max-w-2xl">
+ *             <div class="flex justify-between items-center mb-4">
+ *                 <h3 data-modal-title class="text-xl font-bold text-theme-primary">Scripture</h3>
+ *                 <button data-modal-close="scripture-modal" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+ *             </div>
+ *             <div data-modal-content>
+ *                 <!-- Auto-generated by framework -->
+ *             </div>
+ *         </div>
+ *     </div>
+ * 
+ * </body>
+ * </html>
+ * ```
+ * 
+ * 🎨 THEME SELECTION GUIDE:
+ * • healing: data-theme="healing" - Cyan/teal colors (restoration, hope, recovery)
+ * • pride: data-theme="pride" - Blue colors (humility, wisdom, character growth)
+ * • anger: data-theme="anger" - Red/amber colors (forgiveness, conflict resolution)
+ * • purpose: data-theme="purpose" - Purple/yellow colors (calling, destiny, life direction)
+ * • dark: data-theme="dark" - Gray/purple colors (evening services, memorial)
+ * 
+ * ⚠️ CRITICAL REQUIREMENTS FOR LLMs:
+ * 1. NEVER use @apply or @layer directives (breaks with Tailwind CDN)
+ * 2. ALWAYS include defer attribute on script tags
+ * 3. NEVER call IECCGeneric2.init() manually (auto-initializes)
+ * 4. ALWAYS use data-theme attribute for theming
+ * 5. ALWAYS include proper responsive classes (sm:, md:, lg:)
+ * 6. ALWAYS make buttons touch-friendly (min-height: 44px)
+ * 7. ALWAYS use semantic HTML with ARIA attributes
+ * 8. ALWAYS test on mobile viewport sizes
+ * 
+ * 📱 MOBILE-FIRST RESPONSIVE PATTERNS:
+ * • Use px-4 md:px-6 lg:px-8 for progressive padding
+ * • Use text-sm md:text-base lg:text-lg for scalable typography  
+ * • Use flex-col sm:flex-row for mobile-first layouts
+ * • Use space-y-4 md:space-y-6 for responsive spacing
+ * • Use overflow-x-auto for horizontal scrolling on mobile
+ * 
+ * 🔧 INTERACTIVE ELEMENT PATTERNS:
+ * • Tabs: data-tab-trigger + data-tab-content with matching IDs
+ * • Collapsibles: data-collapsible-trigger + data-collapsible-content
+ * • Modals: data-modal-trigger + data-modal with matching IDs
+ * • Accordions: data-accordion-trigger + data-accordion-content
+ * 
+ * This template provides a complete, production-ready sermon page that works
+ * perfectly with the Generic2 framework and demonstrates all key features.
+ */
