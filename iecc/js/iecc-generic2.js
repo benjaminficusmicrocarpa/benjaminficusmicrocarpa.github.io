@@ -947,32 +947,12 @@ function initScrollAnimations(selector = '.slide-up', options = {}) {
  * Smart tooltip positioning and mobile handling
  */
 function initMobileTooltips() {
-  const tooltips = document.querySelectorAll('.tooltip');
-  console.log(`Initializing ${tooltips.length} tooltips`);
-  
-  tooltips.forEach((tooltip, index) => {
+  document.querySelectorAll('.tooltip').forEach(tooltip => {
     const content = tooltip.querySelector('.tooltip-content');
-    if (!content) {
-      console.warn(`Tooltip ${index} missing .tooltip-content`);
-      return;
-    }
-    
-    console.log(`Initializing tooltip ${index}:`, tooltip.textContent.trim());
+    if (!content) return;
     
     // Smart positioning function for fixed positioning
     function positionTooltip() {
-      console.log('Positioning tooltip for:', tooltip.textContent.trim());
-      
-      // Check if tooltip is inside a bento grid
-      const bentoItem = tooltip.closest('.bento-item');
-      const isInBento = bentoItem !== null;
-      
-      // Move tooltip to body for bento grids to escape clipping
-      if (isInBento && content.parentNode !== document.body) {
-        document.body.appendChild(content);
-        console.log('Moved tooltip to body for bento grid');
-      }
-      
       const rect = tooltip.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
@@ -1003,29 +983,10 @@ function initMobileTooltips() {
       content.style.left = `${left}px`;
       content.style.top = `${top}px`;
       content.style.transform = 'none'; // Remove any transform since we're using fixed positioning
-      
-      // Ensure tooltip is visible
-      content.style.opacity = '1';
-      content.style.visibility = 'visible';
-      content.style.zIndex = '9999';
-      content.style.position = 'fixed';
     }
     
-    // Position on hover and mouseover (for better compatibility)
+    // Position on hover
     tooltip.addEventListener('mouseenter', positionTooltip);
-    tooltip.addEventListener('mouseover', positionTooltip);
-    
-    // Hide tooltip on mouse leave
-    tooltip.addEventListener('mouseleave', () => {
-      content.style.opacity = '0';
-      content.style.visibility = 'hidden';
-      
-      // Move tooltip back to original position if it was moved to body
-      if (content.parentNode === document.body) {
-        tooltip.appendChild(content);
-        console.log('Moved tooltip back to original position');
-      }
-    });
     
     // Mobile click handling
     if (window.innerWidth <= 768) {
@@ -1052,20 +1013,10 @@ function initMobileTooltips() {
           setTimeout(() => {
             content.style.opacity = '0';
             content.style.visibility = 'hidden';
-            
-            // Move tooltip back to original position if it was moved to body
-            if (content.parentNode === document.body) {
-              tooltip.appendChild(content);
-            }
           }, 4000);
         } else {
           content.style.opacity = '0';
           content.style.visibility = 'hidden';
-          
-          // Move tooltip back to original position if it was moved to body
-          if (content.parentNode === document.body) {
-            tooltip.appendChild(content);
-          }
         }
       });
     }
