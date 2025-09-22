@@ -887,70 +887,155 @@ function initScrollAnimations(selector = '.slide-up', options = {}) {
 
 /**
  * Smart tooltip positioning and mobile handling
+ * Supports both title attribute tooltips and custom .tooltip-content structure
  */
 function initMobileTooltips() {
   document.querySelectorAll('.tooltip').forEach(tooltip => {
     const content = tooltip.querySelector('.tooltip-content');
-    if (!content) return;
+    const titleText = tooltip.getAttribute('title');
     
-    // Smart positioning function
-    function positionTooltip() {
-      const rect = tooltip.getBoundingClientRect();
-      const contentRect = content.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-      
-      // Reset positioning
-      content.style.left = '50%';
-      content.style.right = 'auto';
-      content.style.transform = 'translateX(-50%)';
-      
-      // Check if tooltip would overflow on the right
-      if (rect.left + contentRect.width / 2 > viewportWidth - 20) {
-        content.style.left = 'auto';
-        content.style.right = '0';
-        content.style.transform = 'translateX(0)';
+    // Handle custom tooltip content structure
+    if (content) {
+      // Smart positioning function
+      function positionTooltip() {
+        const rect = tooltip.getBoundingClientRect();
+        const contentRect = content.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        // Reset positioning
+        content.style.left = '50%';
+        content.style.right = 'auto';
+        content.style.transform = 'translateX(-50%)';
+        
+        // Check if tooltip would overflow on the right
+        if (rect.left + contentRect.width / 2 > viewportWidth - 20) {
+          content.style.left = 'auto';
+          content.style.right = '0';
+          content.style.transform = 'translateX(0)';
+        }
+        
+        // Check if tooltip would overflow on the left
+        if (rect.left - contentRect.width / 2 < 20) {
+          content.style.left = '0';
+          content.style.right = 'auto';
+          content.style.transform = 'translateX(0)';
+        }
       }
       
-      // Check if tooltip would overflow on the left
-      if (rect.left - contentRect.width / 2 < 20) {
-        content.style.left = '0';
-        content.style.right = 'auto';
-        content.style.transform = 'translateX(0)';
+      // Position on hover
+      tooltip.addEventListener('mouseenter', positionTooltip);
+      
+      // Mobile click handling for custom content
+      if (window.innerWidth <= 768) {
+        tooltip.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // Hide other tooltips
+          document.querySelectorAll('.tooltip-content').forEach(otherContent => {
+            if (otherContent !== content) {
+              otherContent.classList.remove('opacity-100', 'visible');
+              otherContent.classList.add('opacity-0', 'invisible');
+            }
+          });
+          
+          // Toggle current tooltip
+          const isVisible = content.classList.contains('opacity-100');
+          
+          content.classList.toggle('opacity-100', !isVisible);
+          content.classList.toggle('visible', !isVisible);
+          content.classList.toggle('opacity-0', isVisible);
+          content.classList.toggle('invisible', isVisible);
+          
+          if (!isVisible) {
+            positionTooltip();
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+              content.classList.remove('opacity-100', 'visible');
+              content.classList.add('opacity-0', 'invisible');
+            }, 4000);
+          }
+        });
       }
     }
     
-    // Position on hover
-    tooltip.addEventListener('mouseenter', positionTooltip);
-    
-    // Mobile click handling
-    if (window.innerWidth <= 768) {
+    // Handle title attribute tooltips for mobile
+    if (titleText && window.innerWidth <= 768) {
+      // Remove default title behavior on mobile
+      tooltip.setAttribute('data-original-title', titleText);
+      tooltip.removeAttribute('title');
+      
+      // Create mobile tooltip element
+      const mobileTooltip = document.createElement('div');
+      mobileTooltip.className = 'mobile-tooltip-content';
+      mobileTooltip.textContent = titleText;
+      mobileTooltip.style.cssText = `
+        position: fixed;
+        background: rgb(17 24 39);
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        max-width: 20rem;
+        z-index: 9999;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 300ms;
+        pointer-events: none;
+        white-space: normal;
+        line-height: 1.4;
+      `;
+      document.body.appendChild(mobileTooltip);
+      
+      // Mobile click handling for title tooltips
       tooltip.addEventListener('click', (e) => {
         e.preventDefault();
         
-        // Hide other tooltips
-        document.querySelectorAll('.tooltip-content').forEach(otherContent => {
-          if (otherContent !== content) {
-            otherContent.classList.remove('opacity-100', 'visible');
-            otherContent.classList.add('opacity-0', 'invisible');
+        // Hide other mobile tooltips
+        document.querySelectorAll('.mobile-tooltip-content').forEach(otherTooltip => {
+          if (otherTooltip !== mobileTooltip) {
+            otherTooltip.style.opacity = '0';
+            otherTooltip.style.visibility = 'hidden';
           }
         });
         
         // Toggle current tooltip
-        const isVisible = content.classList.contains('opacity-100');
-        
-        content.classList.toggle('opacity-100', !isVisible);
-        content.classList.toggle('visible', !isVisible);
-        content.classList.toggle('opacity-0', isVisible);
-        content.classList.toggle('invisible', isVisible);
+        const isVisible = mobileTooltip.style.opacity === '1';
         
         if (!isVisible) {
-          positionTooltip();
+          // Position tooltip
+          const rect = tooltip.getBoundingClientRect();
+          const tooltipRect = mobileTooltip.getBoundingClientRect();
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+          
+          // Center horizontally, position above element
+          let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+          let top = rect.top - tooltipRect.height - 10;
+          
+          // Adjust if would overflow
+          if (left < 10) left = 10;
+          if (left + tooltipRect.width > viewportWidth - 10) {
+            left = viewportWidth - tooltipRect.width - 10;
+          }
+          if (top < 10) {
+            top = rect.bottom + 10; // Show below instead
+          }
+          
+          mobileTooltip.style.left = left + 'px';
+          mobileTooltip.style.top = top + 'px';
+          mobileTooltip.style.opacity = '1';
+          mobileTooltip.style.visibility = 'visible';
+          
           // Auto-hide after 4 seconds
           setTimeout(() => {
-            content.classList.remove('opacity-100', 'visible');
-            content.classList.add('opacity-0', 'invisible');
+            mobileTooltip.style.opacity = '0';
+            mobileTooltip.style.visibility = 'hidden';
           }, 4000);
+        } else {
+          mobileTooltip.style.opacity = '0';
+          mobileTooltip.style.visibility = 'hidden';
         }
       });
     }
