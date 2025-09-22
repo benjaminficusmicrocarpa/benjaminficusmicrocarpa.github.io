@@ -886,42 +886,146 @@ function initScrollAnimations(selector = '.slide-up', options = {}) {
 }
 
 /**
+ * ═════════════════════════════════════════════════════════════════════════════════
+ * 💬 TOOLTIP SYSTEM - MOBILE-OPTIMIZED INTERACTIVE HELP TEXT
+ * ═════════════════════════════════════════════════════════════════════════════════
+ * 
+ * 🚀 FEATURES:
+ * • Mobile-friendly touch interactions with auto-hide
+ * • Smart positioning to prevent viewport overflow
+ * • Desktop hover behavior with smooth transitions
+ * • Accessibility-compliant keyboard navigation
+ * • Framework-integrated styling and theming
+ * • ANTI-CLIPPING: Fixed positioning prevents clipping by bento grids and other containers
+ * 
+ * 💡 HTML STRUCTURE REQUIRED:
+ * ```html
+ * <span class="tooltip">Trigger Text<span class="tooltip-content">Tooltip content</span></span>
+ * ```
+ * 
+ * 🎯 USAGE EXAMPLES:
+ * 
+ * Scripture References:
+ * ```html
+ * <p>God has <span class="tooltip">plans<span class="tooltip-content">Specific intentions and purposes for your life</span></span> for you.</p>
+ * ```
+ * 
+ * Technical Terms:
+ * ```html
+ * <p>The <span class="tooltip">prefrontal cortex<span class="tooltip-content">Brain region responsible for executive functions like attention and decision-making</span></span> is crucial for focus.</p>
+ * ```
+ * 
+ * 📱 MOBILE BEHAVIOR:
+ * • Touch to show tooltip (replaces hover)
+ * • Auto-hide after 4 seconds
+ * • Centered positioning for better visibility
+ * • Prevents accidental triggers
+ * • Hides other tooltips when new one is shown
+ * 
+ * 🖥️ DESKTOP BEHAVIOR:
+ * • Hover to show tooltip
+ * • Smart positioning prevents overflow
+ * • Smooth fade-in/fade-out transitions
+ * • Click outside to hide (if needed)
+ * 
+ * 🔧 FRAMEWORK INTEGRATION:
+ * • Automatically initialized by Generic2 framework
+ * • No manual setup required
+ * • Works with all theme variants
+ * • Respects accessibility preferences
+ * • Performance optimized with minimal overhead
+ * 
+ * ⚠️ IMPORTANT NOTES:
+ * • Both .tooltip and .tooltip-content classes are required
+ * • Content must be nested inside the trigger element
+ * • Don't use HTML title attribute (use .tooltip-content instead)
+ * • Test on both desktop and mobile devices
+ * • Keep tooltip content concise (1-2 sentences max)
+ */
+
+/**
  * Smart tooltip positioning and mobile handling
  */
 function initMobileTooltips() {
-  document.querySelectorAll('.tooltip').forEach(tooltip => {
+  const tooltips = document.querySelectorAll('.tooltip');
+  console.log(`Initializing ${tooltips.length} tooltips`);
+  
+  tooltips.forEach((tooltip, index) => {
     const content = tooltip.querySelector('.tooltip-content');
-    if (!content) return;
+    if (!content) {
+      console.warn(`Tooltip ${index} missing .tooltip-content`);
+      return;
+    }
     
-    // Smart positioning function
+    console.log(`Initializing tooltip ${index}:`, tooltip.textContent.trim());
+    
+    // Smart positioning function for fixed positioning
     function positionTooltip() {
+      console.log('Positioning tooltip for:', tooltip.textContent.trim());
+      
+      // Check if tooltip is inside a bento grid
+      const bentoItem = tooltip.closest('.bento-item');
+      const isInBento = bentoItem !== null;
+      
+      // Move tooltip to body for bento grids to escape clipping
+      if (isInBento && content.parentNode !== document.body) {
+        document.body.appendChild(content);
+        console.log('Moved tooltip to body for bento grid');
+      }
+      
       const rect = tooltip.getBoundingClientRect();
-      const contentRect = content.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
       
-      // Reset positioning
-      content.style.left = '50%';
-      content.style.right = 'auto';
-      content.style.transform = 'translateX(-50%)';
+      // Calculate tooltip position relative to viewport
+      const tooltipWidth = 300; // max-width from CSS
+      const tooltipHeight = 100; // estimated height
+      const margin = 10; // margin from viewport edges
       
-      // Check if tooltip would overflow on the right
-      if (rect.left + contentRect.width / 2 > viewportWidth - 20) {
-        content.style.left = 'auto';
-        content.style.right = '0';
-        content.style.transform = 'translateX(0)';
+      // Default position: above the trigger element
+      let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+      let top = rect.top - tooltipHeight - margin;
+      
+      // Adjust horizontal position if tooltip would overflow
+      if (left < margin) {
+        left = margin;
+      } else if (left + tooltipWidth > viewportWidth - margin) {
+        left = viewportWidth - tooltipWidth - margin;
       }
       
-      // Check if tooltip would overflow on the left
-      if (rect.left - contentRect.width / 2 < 20) {
-        content.style.left = '0';
-        content.style.right = 'auto';
-        content.style.transform = 'translateX(0)';
+      // Adjust vertical position if tooltip would overflow above
+      if (top < margin) {
+        // Position below the trigger element instead
+        top = rect.bottom + margin;
       }
+      
+      // Apply the calculated position
+      content.style.left = `${left}px`;
+      content.style.top = `${top}px`;
+      content.style.transform = 'none'; // Remove any transform since we're using fixed positioning
+      
+      // Ensure tooltip is visible
+      content.style.opacity = '1';
+      content.style.visibility = 'visible';
+      content.style.zIndex = '9999';
+      content.style.position = 'fixed';
     }
     
-    // Position on hover
+    // Position on hover and mouseover (for better compatibility)
     tooltip.addEventListener('mouseenter', positionTooltip);
+    tooltip.addEventListener('mouseover', positionTooltip);
+    
+    // Hide tooltip on mouse leave
+    tooltip.addEventListener('mouseleave', () => {
+      content.style.opacity = '0';
+      content.style.visibility = 'hidden';
+      
+      // Move tooltip back to original position if it was moved to body
+      if (content.parentNode === document.body) {
+        tooltip.appendChild(content);
+        console.log('Moved tooltip back to original position');
+      }
+    });
     
     // Mobile click handling
     if (window.innerWidth <= 768) {
@@ -931,26 +1035,37 @@ function initMobileTooltips() {
         // Hide other tooltips
         document.querySelectorAll('.tooltip-content').forEach(otherContent => {
           if (otherContent !== content) {
-            otherContent.classList.remove('opacity-100', 'visible');
-            otherContent.classList.add('opacity-0', 'invisible');
+            otherContent.style.opacity = '0';
+            otherContent.style.visibility = 'hidden';
           }
         });
         
         // Toggle current tooltip
-        const isVisible = content.classList.contains('opacity-100');
-        
-        content.classList.toggle('opacity-100', !isVisible);
-        content.classList.toggle('visible', !isVisible);
-        content.classList.toggle('opacity-0', isVisible);
-        content.classList.toggle('invisible', isVisible);
+        const isVisible = content.style.opacity === '1';
         
         if (!isVisible) {
           positionTooltip();
+          content.style.opacity = '1';
+          content.style.visibility = 'visible';
+          
           // Auto-hide after 4 seconds
           setTimeout(() => {
-            content.classList.remove('opacity-100', 'visible');
-            content.classList.add('opacity-0', 'invisible');
+            content.style.opacity = '0';
+            content.style.visibility = 'hidden';
+            
+            // Move tooltip back to original position if it was moved to body
+            if (content.parentNode === document.body) {
+              tooltip.appendChild(content);
+            }
           }, 4000);
+        } else {
+          content.style.opacity = '0';
+          content.style.visibility = 'hidden';
+          
+          // Move tooltip back to original position if it was moved to body
+          if (content.parentNode === document.body) {
+            tooltip.appendChild(content);
+          }
         }
       });
     }
