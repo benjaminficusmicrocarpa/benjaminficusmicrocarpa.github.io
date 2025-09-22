@@ -660,42 +660,7 @@
   font-family: var(--font-serif);
 }
 
-/* 
- * ────────────────────────────────────────────────────────────────────────────────
- * 💬 TOOLTIP SYSTEM - MOBILE-OPTIMIZED INTERACTIVE HELP TEXT
- * ────────────────────────────────────────────────────────────────────────────────
- * 
- * 🚀 FEATURES:
- * • Mobile-friendly touch interactions
- * • Smart positioning to prevent overflow
- * • Accessible keyboard navigation
- * • Theme-integrated styling
- * • Auto-initialization via Generic2 framework
- * • ANTI-CLIPPING: Uses fixed positioning to prevent clipping by parent containers
- * 
- * 💡 HTML USAGE:
- * ```html
- * <span class="tooltip">Trigger Text<span class="tooltip-content">Tooltip content</span></span>
- * ```
- * 
- * 🎨 STYLING:
- * • Trigger: Blue text with dotted underline
- * • Content: Dark background with white text
- * • Responsive: Centered on mobile, positioned above on desktop
- * • Animation: Smooth fade-in/fade-out transitions
- * 
- * 📱 MOBILE BEHAVIOR:
- * • Touch to show tooltip
- * • Auto-hide after 4 seconds
- * • Centered positioning for better visibility
- * • Prevents accidental triggers
- * 
- * 🔧 FRAMEWORK INTEGRATION:
- * • Automatically initialized by Generic2 framework
- * • No manual JavaScript setup required
- * • Works with all theme variants
- * • Respects accessibility preferences
- */
+/* Tooltip Styling */
 .tooltip {
   position: relative;
   display: inline;
@@ -707,7 +672,11 @@
 }
 
 .tooltip-content {
-  position: fixed;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0.5rem;
   background: rgb(17 24 39); /* gray-900 */
   color: white;
   padding: 0.75rem 1rem;
@@ -720,12 +689,11 @@
   max-width: 300px;
   width: max-content;
   box-shadow: var(--shadow-lg);
-  z-index: 9999; /* Very high z-index to appear above all containers */
+  z-index: 50;
   line-height: 1.4;
-  pointer-events: none; /* Prevent tooltip from interfering with mouse events */
 }
 
-/* Tooltip arrow pointing to trigger element */
+/* Prevent tooltip from overflowing viewport */
 .tooltip-content::before {
   content: '';
   position: absolute;
@@ -736,10 +704,24 @@
   border-top-color: rgb(17 24 39);
 }
 
-/* Show tooltip on hover - positioning handled by JavaScript */
+/* Adjust tooltip position if it would overflow */
 .tooltip:hover .tooltip-content {
   opacity: 1;
   visibility: visible;
+}
+
+/* Smart positioning for tooltips near edges */
+.tooltip:first-child .tooltip-content,
+.tooltip:nth-child(1) .tooltip-content {
+  left: 0;
+  transform: translateX(0);
+}
+
+.tooltip:last-child .tooltip-content,
+.tooltip:nth-last-child(1) .tooltip-content {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
 }
 
 /* Button Variants */
@@ -900,7 +882,10 @@
   }
   
   .tooltip-content {
-    /* Mobile positioning handled by JavaScript */
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     max-width: 20rem;
     white-space: normal;
   }
