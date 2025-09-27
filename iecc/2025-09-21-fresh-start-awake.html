@@ -5,14 +5,251 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fresh Start: Awake! - Island ECC</title>
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Selective Tailwind - Local with CDN fallback -->
+    <script>
+        // Load Tailwind with fallback mechanism
+        function loadTailwind() {
+            // Try local first
+            const localScript = document.createElement('script');
+            localScript.src = '../~tailwind/tailwind.min.js';
+            localScript.onerror = function() {
+                console.log('Local Tailwind failed, falling back to CDN');
+                // Fallback to CDN
+                const cdnScript = document.createElement('script');
+                cdnScript.src = 'https://cdn.tailwindcss.com';
+                cdnScript.onload = configureTailwind;
+                document.head.appendChild(cdnScript);
+            };
+            localScript.onload = configureTailwind;
+            document.head.appendChild(localScript);
+        }
+        
+        function configureTailwind() {
+            // Configure Tailwind to only include specific utilities
+            if (typeof tailwind !== 'undefined') {
+                tailwind.config = {
+                    content: [],
+                    corePlugins: {
+                        // Disable conflicting plugins
+                        preflight: false, // Disable Tailwind's reset
+                        container: false,
+                        accessibility: false
+                    }
+                };
+            }
+        }
+        
+        // Load Tailwind when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadTailwind);
+        } else {
+            loadTailwind();
+        }
+    </script>
     
-    <!-- Generic2 Framework -->
+    <!-- Generic2 Framework - For tabs, modals, collapsibles -->
     <link rel="stylesheet" href="css/iecc-generic2.css">
     <script src="js/iecc-generic2.js" defer></script>
     
     <style>
+        /* =================================
+           HEADER WIPE EFFECT - ISOLATED
+           ================================= */
+        
+        /* Reset any framework interference */
+        .wipe-header-container {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 400px !important;
+            z-index: 1000 !important;
+            overflow: hidden !important;
+            transition: height 0.3s ease-out !important;
+            background: linear-gradient(135deg, #FF6B35, #F7931E) !important;
+        }
+        
+        .wipe-header-image {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            transition: transform 0.3s ease-out !important;
+            z-index: 1 !important;
+        }
+        
+        .wipe-header-overlay {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.4) 100%
+            ) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            z-index: 2 !important;
+        }
+        
+        .wipe-header-content {
+            text-align: center !important;
+            color: white !important;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7) !important;
+            transition: all 0.3s ease-out !important;
+            z-index: 3 !important;
+        }
+        
+        .wipe-header-content .awakening-pulse {
+            display: inline-block !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        .wipe-header-content h1 {
+            font-size: 3.5rem !important;
+            font-weight: 900 !important;
+            margin-bottom: 1rem !important;
+            letter-spacing: 2px !important;
+            font-family: 'Arial Black', Arial, sans-serif !important;
+        }
+        
+        .wipe-header-content .subtitle {
+            font-size: 1.2rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 0.5rem !important;
+            opacity: 0.9 !important;
+        }
+        
+        .wipe-header-content .meta {
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+            margin-bottom: 1.5rem !important;
+            opacity: 0.8 !important;
+        }
+        
+        .wipe-header-buttons {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.75rem !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.3s ease-out !important;
+            width: 100% !important;
+        }
+        
+        .wipe-header-buttons .btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 9999px !important;
+            font-weight: 700 !important;
+            transition: all 0.3s ease !important;
+            text-decoration: none !important;
+            min-height: 44px !important;
+        }
+        
+        .wipe-header-buttons .btn-primary {
+            background: white !important;
+            color: #FF6B35 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        .wipe-header-buttons .btn-primary:hover {
+            background: #f8fafc !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        .wipe-header-buttons .btn-secondary {
+            background: rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+            border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        .wipe-header-buttons .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+        
+        /* Wipe effect states */
+        .wipe-header-container.compact {
+            height: 100px !important;
+        }
+        
+        .wipe-header-container.compact .wipe-header-content .awakening-pulse {
+            display: none !important;
+        }
+        
+        .wipe-header-container.compact .wipe-header-content .subtitle {
+            opacity: 0 !important;
+            transform: translateY(-10px) !important;
+        }
+        
+        .wipe-header-container.compact .wipe-header-content .meta {
+            opacity: 0 !important;
+            transform: translateY(-10px) !important;
+        }
+        
+        .wipe-header-container.compact .wipe-header-buttons {
+            opacity: 0 !important;
+            transform: translateY(-20px) !important;
+        }
+        
+        /* MAIN TITLE RETENTION - Keep main title visible and centered */
+        .wipe-header-container.compact .wipe-header-content {
+            opacity: 1 !important; /* Keep content visible */
+        }
+        
+        .wipe-header-container.compact .wipe-header-content h1 {
+            font-size: 1.5rem !important;
+            margin-bottom: 0 !important;
+            opacity: 1 !important; /* Keep main title visible */
+            transform: none !important; /* No movement */
+        }
+        
+        .wipe-header-container.compact .wipe-header-image {
+            transform: scale(1.1) !important;
+        }
+        
+        /* Scroll indicator for debugging */
+        .scroll-indicator {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            background: rgba(0, 0, 0, 0.7) !important;
+            color: white !important;
+            padding: 10px 15px !important;
+            border-radius: 25px !important;
+            font-size: 0.9rem !important;
+            z-index: 1001 !important;
+            transition: all 0.3s ease !important;
+            font-family: monospace !important;
+        }
+        
+        /* Override framework header styles */
+        .sermon-header {
+            display: none !important; /* Hide original header */
+        }
+        
+        /* Adjust main content for fixed header */
+        .main-content-with-wipe {
+            margin-top: 400px !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+        
+        /* =================================
+           FRAMEWORK COMPATIBILITY
+           ================================= */
+        
         /* Energetic Awakening Custom Styles */
         :root {
             --energetic-primary: #FF6B35;
@@ -137,96 +374,105 @@
             transform: translateY(-2px);
         }
         
-        /* Responsive Header Styles */
-        .sermon-header {
-            transition: all 0.3s ease;
-        }
+        /* =================================
+           RESPONSIVE ADJUSTMENTS
+           ================================= */
         
-        .sermon-header.compact {
-            padding: 1rem 1rem 1.5rem 1rem;
-        }
-        
-        .sermon-header.compact .awakening-pulse {
-            display: none;
-        }
-        
-        .sermon-header.compact h1 {
-            font-size: 1.5rem !important;
-            margin-bottom: 0.5rem !important;
-        }
-        
-        .sermon-header.compact p {
-            font-size: 0.875rem !important;
-            margin-bottom: 0.5rem !important;
-        }
-        
-        .sermon-header.compact .header-buttons {
-            display: none;
-        }
-        
-        @media (min-width: 768px) {
-            .sermon-header.compact {
-                padding: 1.5rem 1.5rem 2rem 1.5rem;
+        @media (max-width: 768px) {
+            .wipe-header-container {
+                height: 300px !important;
             }
             
-            .sermon-header.compact h1 {
-                font-size: 2rem !important;
+            .wipe-header-container.compact {
+                height: 80px !important;
             }
             
-            .sermon-header.compact p {
-                font-size: 1rem !important;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .sermon-header.compact h1 {
+            .wipe-header-content h1 {
                 font-size: 2.5rem !important;
             }
             
-            .sermon-header.compact p {
-                font-size: 1.125rem !important;
+            .wipe-header-content .subtitle {
+                font-size: 1rem !important;
+            }
+            
+            .wipe-header-content .meta {
+                font-size: 0.875rem !important;
+            }
+            
+            .wipe-header-buttons {
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+            
+            .wipe-header-buttons .btn {
+                padding: 0.5rem 1rem !important;
+                font-size: 0.875rem !important;
+            }
+            
+            .main-content-with-wipe {
+                margin-top: 300px !important;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .wipe-header-buttons {
+                flex-direction: row !important;
+                gap: 1rem !important;
             }
         }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
 
-    <!-- Header -->
-    <header class="sermon-header px-4 md:px-6 py-6 md:py-8 energetic-gradient">
-        <div class="max-w-6xl mx-auto text-center">
-            <div class="awakening-pulse inline-block mb-4">
-                <span class="text-6xl md:text-8xl">⏰</span>
-            </div>
-            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-3 md:mb-4 energetic-heading">
-                FRESH START: AWAKE! ⚡
-            </h1>
-            <p class="text-white/90 text-lg md:text-xl lg:text-2xl mb-2 font-bold">
-                STOP HITTING THE SPIRITUAL SNOOZE BUTTON!
-            </p>
-            <p class="text-white/80 text-sm md:text-base lg:text-lg mb-6">
-                Pastor Brett • Island ECC • 21 Sep 2025
-            </p>
-            <div class="flex flex-col sm:flex-row gap-3 justify-center header-buttons">
-                <a href="https://www.youtube.com/watch?v=lbPhcBDeMlg"
-                   class="inline-flex items-center gap-2 bg-white text-orange-600 px-6 py-3 rounded-full font-bold hover:bg-orange-50 transition-all duration-300 hover:scale-105">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z"/>
-                    </svg>
-                    <span>Watch Original Sermon</span>
-                </a>
-                <a href="index.html"
-                   class="inline-flex items-center gap-2 bg-orange-100 text-orange-700 px-6 py-3 rounded-full font-bold hover:bg-orange-200 transition-all duration-300 hover:scale-105">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                    </svg>
-                    <span>View All Sermons</span>
-                </a>
+    <!-- =================================
+         CUSTOM WIPE HEADER - ISOLATED
+         ================================= -->
+    <div class="wipe-header-container" id="wipeHeaderContainer">
+        <img src="orange_britanica.webp" alt="Orange Britanica" class="wipe-header-image" id="wipeHeaderImage">
+        <div class="wipe-header-overlay">
+            <div class="wipe-header-content">
+                <div class="awakening-pulse">
+                    <span style="font-size: 4rem;">⏰</span>
+                </div>
+                <h1>FRESH START: AWAKE! ⚡</h1>
+                <p class="subtitle">STOP HITTING THE SPIRITUAL SNOOZE BUTTON!</p>
+                <p class="meta">Pastor Brett • Island ECC • 21 Sep 2025</p>
+                <div class="wipe-header-buttons">
+                    <a href="https://www.youtube.com/watch?v=lbPhcBDeMlg" class="btn btn-primary">
+                        <svg style="width: 1.25rem; height: 1.25rem;" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <span>Watch Original Sermon</span>
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        <svg style="width: 1.25rem; height: 1.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        <span>View All Sermons</span>
+                    </a>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- =================================
+         ORIGINAL HEADER - HIDDEN
+         ================================= -->
+    <header class="sermon-header px-4 md:px-6 py-6 md:py-8 energetic-gradient" style="display: none;">
+        <!-- Original header content hidden -->
     </header>
 
-    <!-- Tab Navigation -->
-    <nav class="tab-navigation bg-gradient-to-r from-orange-100 to-yellow-100 border-b-4 border-orange-300">
+    <!-- Scroll indicator for debugging -->
+    <div class="scroll-indicator" id="scrollIndicator">
+        Scroll: 0%
+    </div>
+
+    <!-- =================================
+         MAIN CONTENT WITH WIPE ADJUSTMENT
+         ================================= -->
+    <div class="main-content-with-wipe">
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation bg-gradient-to-r from-orange-100 to-yellow-100 border-b-4 border-orange-300">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex space-x-1 overflow-x-auto pb-2">
                 <button data-tab-trigger="overview" class="tab-button active bg-orange-500 text-white">
@@ -1227,6 +1473,7 @@
             </div>
         </div>
     </div>
+    </div> <!-- Close main-content-with-wipe -->
 
     <!-- Lightweight Modals -->
     
@@ -1378,45 +1625,73 @@
         </div>
     </div>
 
-    <!-- Responsive Header Script -->
+    <!-- =================================
+         WIPE EFFECT JAVASCRIPT - ISOLATED
+         ================================= -->
     <script>
+        // Isolated wipe effect - doesn't interfere with framework
         document.addEventListener('DOMContentLoaded', function() {
-            const header = document.querySelector('.sermon-header');
-            let lastScrollY = window.scrollY;
-            let ticking = false;
-            let isCompact = false;
+            const wipeContainer = document.getElementById('wipeHeaderContainer');
+            const wipeText = document.getElementById('wipeHeaderText');
+            const scrollIndicator = document.getElementById('scrollIndicator');
             
-            function updateHeader() {
+            if (!wipeContainer) return; // Safety check
+            
+            const maxHeight = 400;
+            const minHeight = 100;
+            const scrollThreshold = 300;
+            
+            let isScrolling = false;
+            
+            function updateWipeHeader() {
                 const scrollY = window.scrollY;
-                const scrollDelta = Math.abs(scrollY - lastScrollY);
+                const scrollPercentage = Math.min((scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100, 100);
                 
-                // Only update if scroll change is significant (reduces jitter)
-                if (scrollDelta < 5) {
-                    ticking = false;
-                    return;
+                // Update scroll indicator
+                if (scrollIndicator) {
+                    scrollIndicator.textContent = `Scroll: ${Math.round(scrollPercentage)}%`;
                 }
                 
-                // Add hysteresis to prevent rapid toggling
-                if (!isCompact && scrollY > 150) {
-                    header.classList.add('compact');
-                    isCompact = true;
-                } else if (isCompact && scrollY < 50) {
-                    header.classList.remove('compact');
-                    isCompact = false;
+                if (scrollY <= scrollThreshold) {
+                    // Full size - show everything
+                    wipeContainer.style.height = maxHeight + 'px';
+                    wipeContainer.classList.remove('compact');
+                } else {
+                    // Calculate height based on scroll position
+                    const scrollProgress = Math.min((scrollY - scrollThreshold) / (scrollThreshold * 0.5), 1);
+                    const currentHeight = maxHeight - (maxHeight - minHeight) * scrollProgress;
+                    
+                    wipeContainer.style.height = Math.max(currentHeight, minHeight) + 'px';
+                    
+                    // MAIN TITLE RETENTION - Keep main title visible
+                    // The CSS handles the visual transitions, we just manage the compact state
+                    if (currentHeight <= minHeight) {
+                        wipeContainer.classList.add('compact');
+                    } else {
+                        wipeContainer.classList.remove('compact');
+                    }
                 }
                 
-                lastScrollY = scrollY;
-                ticking = false;
+                isScrolling = false;
             }
             
-            function requestTick() {
-                if (!ticking) {
-                    requestAnimationFrame(updateHeader);
-                    ticking = true;
+            function onScroll() {
+                if (!isScrolling) {
+                    requestAnimationFrame(updateWipeHeader);
+                    isScrolling = true;
                 }
             }
             
-            window.addEventListener('scroll', requestTick, { passive: true });
+            // Use passive scroll listener to avoid conflicts with framework
+            window.addEventListener('scroll', onScroll, { passive: true });
+            
+            // Initial call to set correct state
+            updateWipeHeader();
+            
+            // Handle resize events
+            window.addEventListener('resize', function() {
+                updateWipeHeader();
+            }, { passive: true });
         });
     </script>
 
