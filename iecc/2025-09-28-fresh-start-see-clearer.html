@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="healing">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Start: See Clearer - 28 Sep 2025 | Island ECC</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Modern Typography (Inter + Georgia) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .scripture-text { font-family: 'Georgia', serif; }
+        .fade-in-up { 
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+
+        /* Wiping Header Styles */
+        .header-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            z-index: 1000;
+            transition: height 0.3s ease-out;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s ease-out;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.4) 100%
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-text {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+            max-width: 6xl;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-text h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            transition: font-size 0.3s ease-out, margin-bottom 0.3s ease-out;
+        }
+
+        .header-text .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .header-text .description {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+            max-width: 2xl;
+            margin-left: auto;
+            margin-right: auto;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .header-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        .btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        /* Minimized header styles */
+        .header-minimized .header-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            letter-spacing: 1px;
+        }
+
+        .header-minimized .header-text .subtitle,
+        .header-minimized .header-text .description,
+        .header-minimized .header-buttons {
+            opacity: 0;
+        }
+
+        /* Animation classes */
+        .header-minimized {
+            height: 100px !important;
+        }
+
+        .header-minimized .header-text {
+            opacity: 1;
+        }
+
+        .header-minimized .header-image {
+            transform: scale(1.1);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header-text .subtitle {
+                font-size: 1rem;
+            }
+            
+            .header-text .description {
+                font-size: 0.9rem;
+            }
+
+            .header-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .header-buttons {
+                flex-direction: row;
+            }
+        }
+
+        /* Adjust main content margin for wiping header */
+        .main-content {
+            margin-top: 400px;
+        }
+
+        /* Tab Navigation Styles */
+        .tab-navigation {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1rem;
+            border: none;
+            background: transparent;
+            color: #6b7280;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            color: #374151;
+            background: #f9fafb;
+        }
+
+        .tab-button.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .bento-item {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Accordion Styles */
+        .accordion-trigger {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .accordion-content {
+            display: none;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-trigger.active .accordion-icon {
+            transform: rotate(90deg);
+        }
+
+        /* Collapsible Styles */
+        .collapsible-trigger {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .collapsible-content {
+            display: none;
+        }
+
+        .collapsible-content.active {
+            display: block;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 0.5rem;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* Tooltip Styles */
+        .tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted #3b82f6;
+            color: #3b82f6;
+        }
+
+        .tooltip:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+
+        /* Bible Verse Styles */
+        .bible-verse {
+            background: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.25rem;
+        }
+
+        /* Author Quote Styles */
+        .author-quote {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-cyan-50">
+
+    <!-- Wiping Header -->
+    <div class="header-container" id="headerContainer">
+        <img src="sea-water-blue-water-under-the-sea.webp" alt="Sea Water" class="header-image" id="headerImage">
+        <div class="header-overlay">
+            <div class="header-text" id="headerText">
+                <h1>Fresh Start: See Clearer 👁️</h1>
+                <p class="subtitle">Pastor Eric • Island ECC • 28 Sep 2025</p>
+                <p class="description">Have you ever felt truly "seen" by someone? Today we'll explore how that longing connects us to seeing God more clearly than ever before.</p>
+                <div class="header-buttons">
+                    <a href="https://www.youtube.com/watch?v=RFnoquLmfog" target="_blank" class="btn btn-primary">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <span>Watch Original Sermon</span>
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0l-4 4m4-4l-4-4"></path>
+                        </svg>
+                        <span>View All Sermons</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex space-x-1 overflow-x-auto pb-2">
+                <button data-tab-trigger="overview" class="tab-button active">
+                    <span>🏠 Overview</span>
+                </button>
+                <button data-tab-trigger="scripture" class="tab-button">
+                    <span>📖 Key Scriptures</span>
+                </button>
+                <button data-tab-trigger="main-sermon" class="tab-button">
+                    <span>🎯 Four Steps</span>
+                </button>
+                <button data-tab-trigger="application" class="tab-button">
+                    <span>💡 Application</span>
+                </button>
+                <button data-tab-trigger="reflection" class="tab-button">
+                    <span>🤔 Reflection</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Overview Tab -->
+    <div data-tab-content="overview" class="active">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            
+            <!-- Bento Grid Overview -->
+            <div class="bento-grid mb-12">
+                <!-- Key Insight Card -->
+                <div class="bento-item text-center bg-gradient-to-br from-cyan-50 to-teal-100 fade-in-up">
+                    <div class="text-4xl mb-3">💙</div>
+                    <h3 class="text-xl font-bold text-cyan-700 mb-3">The Heart of the Matter</h3>
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        We all long to be truly "seen" - understood, valued, and loved for who we really are. 
+                        That same longing is the key to seeing God clearly.
+                    </p>
+                </div>
+                
+                <!-- Main Scripture Card -->
+                <div class="bento-item bg-gradient-to-br from-blue-50 to-indigo-100 fade-in-up animate-delay-1">
+                    <div class="text-4xl mb-3">📜</div>
+                    <h3 class="text-xl font-bold text-blue-700 mb-3">Key Verse</h3>
+                    <p class="scripture-text text-gray-700 text-sm leading-relaxed italic mb-2">
+                        "See, I am doing a new thing! Now it springs up; do you not perceive it?"
+                    </p>
+                    <button class="scripture-reference text-blue-600 underline" data-modal-trigger="scripture-modal">
+                        Isaiah 43:19
+                    </button>
+                </div>
+                
+                <!-- Central Theme Card -->
+                <div class="bento-item bg-gradient-to-br from-teal-50 to-emerald-100 fade-in-up animate-delay-2">
+                    <div class="text-4xl mb-3">👀</div>
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">Fresh Eyes</h3>
+                    <p class="text-gray-700 text-sm">
+                        Just like in human relationships, seeing God clearly requires love, 
+                        vulnerability, and a willingness to set aside our assumptions.
+                    </p>
+                </div>
+                
+                <!-- Four Steps Preview -->
+                <div class="bento-item bg-gradient-to-br from-emerald-50 to-green-100 fade-in-up animate-delay-3">
+                    <div class="text-4xl mb-3">🪜</div>
+                    <h3 class="text-xl font-bold text-green-700 mb-3">Four Steps to See Clearly</h3>
+                    <ul class="text-gray-700 text-sm space-y-1">
+                        <li>• Check your heart's desire</li>
+                        <li>• Set aside assumptions</li>
+                        <li>• Ask how God wants to be seen</li>
+                        <li>• Act as if it's true</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quick Context -->
+            <div class="content-card mb-8 fade-in-up">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">💬 What You'll Discover</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Have you ever watched a romantic movie and felt something stir in your heart? 🎬 
+                    Pastor Eric uses this relatable experience to explore something much deeper - our universal longing to be truly "seen" and understood.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    But here's the beautiful twist: the same principles that help us feel seen in human relationships 
+                    can revolutionize how we see and experience God. You're about to discover a fresh, practical 
+                    approach to spiritual intimacy that anyone can apply.
+                </p>
+            </div>
+
+            <!-- Emmaus Road Story Preview -->
+            <div class="content-card bg-gradient-to-r from-cyan-50 to-blue-50 border-l-4 border-cyan-500 fade-in-up">
+                <h3 class="text-xl font-bold text-cyan-800 mb-3">🛤️ The Emmaus Road Moment</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    Two disciples walked with Jesus for hours but didn't recognize Him. Then something changed everything...
+                </p>
+                <p class="scripture-text italic text-gray-800">
+                    "When he was at the table with them, he took bread, gave thanks, broke it and began to give it to them. 
+                    Then their eyes were opened and they recognized him."
+                </p>
+                <p class="text-right text-sm text-cyan-600 mt-2 font-semibold">- Luke 24:30-31</p>
+                <p class="text-gray-600 text-sm mt-3">
+                    💡 <strong>The question is:</strong> What needs to happen for <em>your</em> eyes to be opened?
+                </p>
+            </div>
+
+            <!-- Connecting the Dots -->
+            <div class="content-card bg-cyan-50 border-l-4 border-cyan-500 mb-8">
+                <h4 class="font-bold text-cyan-800 mb-3">🔗 Connecting the Dots: Movies → God</h4>
+                <div class="space-y-3 text-sm text-gray-700">
+                    <p><strong>Step 1:</strong> Romantic movies make us feel something because they show people being truly "seen" and loved</p>
+                    <p><strong>Step 2:</strong> This feeling reveals a deep human need - we all want to be known and accepted</p>
+                    <p><strong>Step 3:</strong> Only God can fully meet this need because only He truly knows everything about us</p>
+                    <p><strong>Step 4:</strong> The same principles that help us feel "seen" by people can help us "see" God clearly</p>
+                    <p class="text-cyan-700 font-medium">💡 <strong>The connection:</strong> Our longing to be seen points us toward the One who sees us perfectly - God.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Scriptures Tab -->
+    <div data-tab-content="scripture" class="hidden">
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">📖 Key Scripture Passages</h2>
+            
+            <!-- Scripture Accordion -->
+            <div class="space-y-6">
+                
+                <!-- Isaiah 43:19 -->
+                <div class="content-card">
+                    <button data-accordion-trigger="isaiah" class="accordion-trigger w-full">
+                        <div class="flex justify-between items-center">
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-gray-800">Isaiah 43:19 - God's New Thing</h3>
+                                <p class="text-gray-600 text-sm">The foundational promise of fresh starts</p>
+                            </div>
+                            <span class="accordion-icon text-2xl">▶</span>
+                        </div>
+                    </button>
+                    
+                    <div data-accordion-content="isaiah" class="accordion-content">
+                        <div class="p-6">
+                            <div class="bible-verse mb-6">
+                                <p class="scripture-text text-lg leading-relaxed mb-2">
+                                    "See, I am doing a new thing! Now it springs up; do you not perceive it? 
+                                    I am making a way in the wilderness and streams in the wasteland."
+                                </p>
+                                <p class="text-right font-semibold text-cyan-600">- Isaiah 43:19 (NIV)</p>
+                            </div>
+                            
+                            <div class="bg-cyan-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-semibold text-cyan-800 mb-2">📍 Context:</h4>
+                                <p class="text-gray-700 text-sm">
+                                    God spoke this to His people during their exile in Babylon. They had been away from home for decades, 
+                                    and many were losing hope. But God wanted them to know - and He wants <em>you</em> to know - 
+                                    that He specializes in fresh starts.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-teal-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-teal-800 mb-2">💡 Personal Application:</h4>
+                                <p class="text-gray-700 text-sm">
+                                    The question "do you not perceive it?" is God's invitation to <strong>look up</strong> and 
+                                    see what He's doing in your life right now. What new thing might God be doing that you haven't noticed yet?
+                                </p>
+                            </div>
+                            
+                            <!-- Simple Language Version -->
+                            <div class="mt-4">
+                                <button data-collapsible-trigger="isaiah-simple" class="collapsible-trigger w-full bg-green-50 hover:bg-green-100 rounded-lg p-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-green-800 font-medium text-sm">🌱 Simple Language Version</span>
+                                        <span class="text-lg">▼</span>
+                                    </div>
+                                </button>
+                                <div data-collapsible-content="isaiah-simple" class="collapsible-content">
+                                    <div class="p-4 bg-green-50 rounded-lg">
+                                        <h5 class="font-semibold text-green-800 mb-2">What this means in everyday words:</h5>
+                                        <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                                            God is saying: "Look! I'm doing something new in your life. It's starting to happen right now. 
+                                            Can you see it? I'm making a road where there was no road before. I'm bringing fresh water to dry places."
+                                        </p>
+                                        <p class="text-green-700 text-xs italic">
+                                            💡 Like when you're lost and someone builds a bridge just for you, or when you're thirsty and someone brings you cold water.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ephesians 1:17-18 -->
+                <div class="content-card">
+                    <button data-accordion-trigger="ephesians" class="accordion-trigger w-full">
+                        <div class="flex justify-between items-center">
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-gray-800">Ephesians 1:17-18 - Eyes of Your Heart</h3>
+                                <p class="text-gray-600 text-sm">Paul's prayer for spiritual sight</p>
+                            </div>
+                            <span class="accordion-icon text-2xl">▶</span>
+                        </div>
+                    </button>
+                    
+                    <div data-accordion-content="ephesians" class="accordion-content">
+                        <div class="p-6">
+                            <div class="bible-verse mb-6">
+                                <p class="scripture-text text-lg leading-relaxed mb-2">
+                                    "I keep asking that the God of our Lord Jesus Christ, the glorious Father, 
+                                    may give you the Spirit of wisdom and revelation, so that you may know him better. 
+                                    I pray that the eyes of your heart may be enlightened in order that you may know 
+                                    the hope to which he has called you..."
+                                </p>
+                                <p class="text-right font-semibold text-cyan-600">- Ephesians 1:17-18 (NIV)</p>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">
+                                This wasn't a one-time prayer - Paul says "I <em>keep asking</em>." 
+                                Even mature believers need fresh revelation and clearer spiritual sight.
+                            </p>
+                            
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-blue-800 mb-2">🔍 Notice:</h4>
+                                <p class="text-gray-700 text-sm">
+                                    The prayer is specifically for "the eyes of your <strong>heart</strong>" - 
+                                    not just intellectual understanding, but heart-level seeing and knowing.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revelation 2:2-5 -->
+                <div class="content-card">
+                    <button data-accordion-trigger="revelation" class="accordion-trigger w-full">
+                        <div class="flex justify-between items-center">
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-gray-800">Revelation 2:2-5 - Return to First Love</h3>
+                                <p class="text-gray-600 text-sm">Jesus's call back to authentic relationship</p>
+                            </div>
+                            <span class="accordion-icon text-2xl">▶</span>
+                        </div>
+                    </button>
+                    
+                    <div data-accordion-content="revelation" class="accordion-content">
+                        <div class="p-6">
+                            <div class="bible-verse mb-6">
+                                <p class="scripture-text text-lg leading-relaxed mb-2">
+                                    "Yet I hold this against you: You have forsaken the love you had at first. 
+                                    Consider how far you have fallen! Repent and do the things you did at first."
+                                </p>
+                                <p class="text-right font-semibold text-cyan-600">- Revelation 2:4-5 (NIV)</p>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">
+                                Here's what's remarkable: The church in Ephesus was doing <em>everything right</em> - 
+                                they were working hard, persevering, and protecting truth. But they had lost something essential.
+                            </p>
+                            
+                            <div class="bg-red-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-semibold text-red-800 mb-2">⚠️ The Warning:</h4>
+                                <p class="text-gray-700 text-sm">
+                                    You can do all the "right" Christian things and still drift from the heart of relationship with God.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-green-800 mb-2">💚 The Invitation:</h4>
+                                <p class="text-gray-700 text-sm">
+                                    God isn't asking for perfection - He's asking you to come back to that place where 
+                                    your relationship with Him was fresh, alive, and central to everything else.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1 Corinthians 13:12 -->
+                <div class="content-card">
+                    <button data-accordion-trigger="corinthians" class="accordion-trigger w-full">
+                        <div class="flex justify-between items-center">
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-gray-800">1 Corinthians 13:12 - Face to Face</h3>
+                                <p class="text-gray-600 text-sm">The promise of perfect sight</p>
+                            </div>
+                            <span class="accordion-icon text-2xl">▶</span>
+                        </div>
+                    </button>
+                    
+                    <div data-accordion-content="corinthians" class="accordion-content">
+                        <div class="p-6">
+                            <div class="bible-verse mb-6">
+                                <p class="scripture-text text-lg leading-relaxed mb-2">
+                                    "For now we see only a reflection as in a mirror; then we shall see face to face. 
+                                    Now I know in part; then I shall know fully, even as I am fully known."
+                                </p>
+                                <p class="text-right font-semibold text-cyan-600">- 1 Corinthians 13:12 (NIV)</p>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">
+                                Paul acknowledges our current limitation - we see "only a reflection" like looking in an ancient bronze mirror. 
+                                But notice what drives us forward: <strong>love</strong>.
+                            </p>
+                            
+                            <div class="bg-purple-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-purple-800 mb-2">🔗 The Connection:</h4>
+                                <p class="text-gray-700 text-sm">
+                                    This verse comes right after the famous "love chapter." Love isn't just a nice feeling - 
+                                    it's the <strong>lens</strong> through which we see God clearly, both now and eternally.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Four Steps Tab -->
+    <div data-tab-content="main-sermon" class="hidden">
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">🎯 Four Steps to See God Clearly</h2>
+            
+            <div class="mb-8 content-card bg-gradient-to-r from-cyan-50 to-blue-50">
+                <h3 class="text-xl font-bold text-cyan-800 mb-3">💡 The Big Idea</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    What if seeing God clearly worked the same way as truly seeing someone you love? 
+                    Pastor Eric shows us that the principles that create intimacy in human relationships 
+                    can transform our relationship with God.
+                </p>
+            </div>
+
+            <!-- Breaking Down Complex Ideas -->
+            <div class="content-card mb-8 bg-gradient-to-r from-orange-50 to-amber-50 border-l-4 border-orange-400">
+                <h3 class="text-xl font-bold text-orange-800 mb-4">🧩 Breaking Down the Big Ideas</h3>
+                
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg p-4">
+                        <h4 class="font-semibold text-orange-700 mb-2">What does "feeling seen" mean?</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            <strong>Complex version:</strong> "Emotional validation and authentic recognition of one's inner experience."
+                        </p>
+                        <p class="text-green-700 text-sm">
+                            <strong>Simple version:</strong> Someone understands your heart and accepts you as you are.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-4">
+                        <h4 class="font-semibold text-orange-700 mb-2">What are "assumptions"?</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            <strong>Complex version:</strong> "Preconceived cognitive frameworks that filter our interpretive lens."
+                        </p>
+                        <p class="text-green-700 text-sm">
+                            <strong>Simple version:</strong> Ideas we already have about someone before we really listen to them.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-4">
+                        <h4 class="font-semibold text-orange-700 mb-2">What is "spiritual cataracts"?</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            <strong>Pastor Eric's metaphor:</strong> "We all have something like spiritual cataracts that keep us from seeing God clearly."
+                        </p>
+                        <p class="text-green-700 text-sm">
+                            <strong>Simple explanation:</strong> Like cloudy glasses that make it hard to see clearly, sin and hurt make it hard to see God clearly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cultural Context for Hong Kong -->
+            <div class="content-card bg-blue-50 border-l-4 border-blue-400 mb-6">
+                <h4 class="font-bold text-blue-800 mb-3">🌏 Cultural Context for Hong Kong</h4>
+                <div class="text-sm text-gray-700 space-y-2">
+                    <p><strong>Western vs Asian Relationships:</strong></p>
+                    <ul class="list-disc list-inside ml-4 space-y-1">
+                        <li>Western culture often emphasizes <em>talking about feelings</em> directly</li>
+                        <li>Asian culture often shows care through <em>actions and presence</em></li>
+                        <li>Both approaches are valid ways to show love and be "seen"</li>
+                        <li>God understands and values both cultural styles</li>
+                    </ul>
+                    <p class="text-blue-700 italic mt-3">
+                        💭 Remember: God created all cultures. He can "see" you whether you express yourself through words, actions, or quiet presence.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Four Steps - Collapsible Sections -->
+            <div class="space-y-6">
+                
+                <!-- Step 1: Check Your Heart -->
+                <div class="content-card">
+                    <button data-collapsible-trigger="step1" class="collapsible-trigger w-full">
+                        <div class="flex justify-between items-center">
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-gray-800">1️⃣ Check Your Heart's Desire</h3>
+                                <p class="text-gray-600 text-sm">Do you actually want to see God clearly?</p>
+                            </div>
+                            <span class="text-2xl transition-transform duration-300">▼</span>
+                        </div>
+                    </button>
+                    
+                    <div data-collapsible-content="step1" class="collapsible-content">
+                        <div class="p-6">
+                            <p class="text-gray-700 mb-4">
+                                In counseling, there's a saying: "<span class='tooltip' title='This means: don't try to help someone more than they want to be helped'>Don't work harder than the patient</span>." 
+                                The same applies to our relationship with God. If you're honest, do you <em>really</em> want to see Him clearly?
+                            </p>
+                            
+                            <div class="bg-yellow-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-semibold text-yellow-800 mb-2">🤔 Honest Questions:</h4>
+                                <ul class="text-gray-700 text-sm space-y-1">
+                                    <li>• Are you going through spiritual motions without heart engagement?</li>
+                                    <li>• Do you want God to be predictable and manageable?</li>
+                                    <li>• Are you afraid of what you might discover if you really "see" Him?</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bible-verse mb-4">
+                                <p class="scripture-text italic text-gray-800">
+                                    "For God, who said, 'Let light shine out of darkness,' made his light shine in our hearts 
+                                    to give us the light of the knowledge of God's glory displayed in the face of Christ."
+                                </p>
+                                <p class="text-right text-sm text-cyan-600 font-semibold">- 2 Corinthians 4:6</p>
+                            </div>
+                            
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-green-800 mb-2">✨ Good News:</h4>
+                                <p class="text-gray-700 text-sm">
+                                    If you're honest and realize you don't have the desire, that's actually a great place to start! 
+                                    The same God who said "let there be light" can give you new desires and a new heart.
+                                </p>
+                            </div>
+                            
+                            <!-- Hong Kong Example -->
+                            <div class="bg-yellow-50 rounded-lg p-4 mt-4">
+                                <h5 class="font-semibold text-yellow-800 mb-2">🏠 Hong Kong Example:</h5>
+                                <p class="text-gray-700 text-sm">
+                                    Think about how you feel when you come home after a long day at work. 
+                                    Do you <em>really</em> want to spend time with your family, or are you just going through the motions? 
+                                    The same honest question applies to God: "Do I actually want to spend time with You, or am I just doing religious activities?"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Set Aside Assumptions -->
+                <div class="content-card">
+                    <button data-collapsible-trigger="step2" class="collapsible-trigger w-full">
+                        <div class="flex justify-between items-center">
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-gray-800">2️⃣ Set Aside Your Assumptions</h3>
+                                <p class="text-gray-600 text-sm">Come to God with empty hands and an open heart</p>
+                            </div>
+                            <span class="text-2xl transition-transform duration-300">▼</span>
+                        </div>
+                    </button>
+                    
+                    <div data-collapsible-content="step2" class="collapsible-content">
+                        <div class="p-6">
+                            <p class="text-gray-700 mb-4">
+                                In relationship counseling, this is where you <span class='tooltip' title='Stop using past hurts to attack or defend in conversations'>put down your "weapons"</span> - your history, 
+                                hurt feelings, assumptions about motives. You show up ready to listen without defending or attacking.
+                            </p>
+                            
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-semibold text-blue-800 mb-2">🎒 What to Set Aside:</h4>
+                                <ul class="text-gray-700 text-sm space-y-1">
+                                    <li>• Past hurts with church or Christians</li>
+                                    <li>• Assumptions about what God thinks of you</li>
+                                    <li>• Expectations about how God "should" act</li>
+                                    <li>• Your ideas about where your life should be right now</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="author-quote mb-4">
+                                <p class="text-gray-800 italic">
+                                    "God, I've heard things about you, I've thought things about you. 
+                                    I'm putting everything aside and showing up to you empty-handed. 
+                                    I'm willing to start new if I want to see you new."
+                                </p>
+                                <p class="text-right text-sm text-amber-600 font-semibold">- Pastor Eric's suggested prayer</p>
+                            </div>
+                            
+                            <div class="bg-teal-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-teal-800 mb-2">💪 This Takes Courage</h4>
+                                <p class="text-gray-700 text-sm">
+                                    Setting aside assumptions doesn't mean pretending past hurts didn't happen. 
+                                    It means choosing to approach God without those hurts as your primary lens.
+                                </p>
+                            </div>
+                            
+                            <!-- Hong Kong Example -->
+                            <div class="bg-blue-50 rounded-lg p-4 mt-4">
+                                <h5 class="font-semibold text-blue-800 mb-2">🏢 Workplace Example:</h5>
+                                <p class="text-gray-700 text-sm">
+                                    Imagine your boss calls you into their office. You might assume you're in trouble because of past experiences. 
+                                    But what if you walked in with no assumptions? You might discover they want to praise your work or offer you a promotion. 
+                                    Sometimes our past experiences with authority figures affect how we see God.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Ask God -->
+                <div class="content-card">
+                    <button data-collapsible-trigger="step3" class="collapsible-trigger w-full">
+                        <div class="flex justify-between items-center">
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-gray-800">3️⃣ Ask How God Wants to Be Seen</h3>
+                                <p class="text-gray-600 text-sm">Be present and actually listen</p>
+                            </div>
+                            <span class="text-2xl transition-transform duration-300">▼</span>
+                        </div>
+                    </button>
+                    
+                    <div data-collapsible-content="step3" class="collapsible-content">
+                        <div class="p-6">
+                            <p class="text-gray-700 mb-4">
+                                This is the simplest step to explain but often the hardest to do. 
+                                You literally ask: "God, how do you want me to see you? What do you want me to know about you?"
+                            </p>
+                            
+                            <div class="bg-cyan-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-semibold text-cyan-800 mb-2">🗣️ Simple Prayer:</h4>
+                                <p class="scripture-text italic text-gray-800">
+                                    "God, I'm listening. I want to know you in ways I haven't seen you before. 
+                                    I've put aside my assumptions. Please speak."
+                                </p>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">
+                                Then you actually be present. You don't fill the silence with more talking. 
+                                You create space for God to reveal Himself through His Word, through prayer, 
+                                through circumstances, through other people.
+                            </p>
+                            
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-semibold text-purple-800 mb-2">👂 Ways God Speaks:</h4>
+                                <ul class="text-gray-700 text-sm space-y-1">
+                                    <li>• Through Scripture (His primary voice)</li>
+                                    <li>• In quiet moments of prayer</li>
+                                    <li>• Through circumstances and open doors</li>
+                                    <li>• Through wise, godly people</li>
+                                    <li>• Through His creation</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-red-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-red-800 mb-2">⚠️ Important Note:</h4>
+                                <p class="text-gray-700 text-sm">
+                                    God will never contradict Scripture. If you think you're hearing something from God, 
+                                    test it against His Word and the counsel of mature believers.
+                                </p>
+                            </div>
+                            
+                            <!-- Hong Kong Example -->
+                            <div class="bg-purple-50 rounded-lg p-4 mt-4">
+                                <h5 class="font-semibold text-purple-800 mb-2">👥 Family Example:</h5>
+                                <p class="text-gray-700 text-sm">
+                                    When someone you love is upset, the best thing you can do is ask: "What's really bothering you? Help me understand." 
+                                    Then you listen without trying to fix everything immediately. 
+                                    God wants us to approach Him the same way: "God, help me understand who You really are."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Act As If It's True -->
+                <div class="content-card">
+                    <button data-collapsible-trigger="step4" class="collapsible-trigger w-full">
+                        <div class="flex justify-between items-center">
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-gray-800">4️⃣ Act As If It's True</h3>
+                                <p class="text-gray-600 text-sm">Take God at His word and live accordingly</p>
+                            </div>
+                            <span class="text-2xl transition-transform duration-300">▼</span>
+                        </div>
+                    </button>
+                    
+                    <div data-collapsible-content="step4" class="collapsible-content">
+                        <div class="p-6">
+                            <p class="text-gray-700 mb-4">
+                                This is where the rubber meets the road. In a human relationship, trust means 
+                                believing what someone tells you about themselves and responding accordingly. 
+                                The same applies with God.
+                            </p>
+                            
+                            <div class="bg-emerald-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-semibold text-emerald-800 mb-2">🚀 What This Looks Like:</h4>
+                                <ul class="text-gray-700 text-sm space-y-1">
+                                    <li>• If God says He loves you, stop acting like He's angry with you</li>
+                                    <li>• If God says He forgives you, stop punishing yourself</li>
+                                    <li>• If God says He has plans for you, stop acting hopeless</li>
+                                    <li>• If God says He's always with you, stop living in fear</li>
+                                </ul>
+                            </div>
+                            
+                            <p class="text-gray-700 mb-4">
+                                This doesn't mean blind faith - it means informed trust. 
+                                God has proven His character through thousands of years of faithful dealing with His people.
+                            </p>
+                            
+                            <div class="bible-verse mb-4">
+                                <p class="scripture-text italic text-gray-800">
+                                    "Trust in the LORD with all your heart and lean not on your own understanding; 
+                                    in all your ways submit to him, and he will make your paths straight."
+                                </p>
+                                <p class="text-right text-sm text-cyan-600 font-semibold">- Proverbs 3:5-6</p>
+                            </div>
+                            
+                            <div class="bg-yellow-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-yellow-800 mb-2">⭐ The Beautiful Result:</h4>
+                                <p class="text-gray-700 text-sm">
+                                    When you consistently approach God with love - checking your heart, setting aside assumptions, 
+                                    listening, and trusting - you'll experience the fresh start He's been offering all along.
+                                </p>
+                            </div>
+                            
+                            <!-- Hong Kong Example -->
+                            <div class="bg-green-50 rounded-lg p-4 mt-4">
+                                <h5 class="font-semibold text-green-800 mb-2">🚇 MTR Example:</h5>
+                                <p class="text-gray-700 text-sm">
+                                    When you tap your Octopus card at the MTR gate, you trust it will open - even though you can't see your balance. 
+                                    You act based on what the system tells you is true. 
+                                    Faith works similarly: when God tells you something about Himself, you can act on it even when you can't see everything clearly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Reference Section -->
+            <div class="content-card bg-gray-50 mt-8">
+                <button data-collapsible-trigger="quick-reference" class="collapsible-trigger w-full">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-gray-800">📋 Quick Reference: Key Terms & Simple Translations</h3>
+                        <span class="text-2xl">▼</span>
+                    </div>
+                </button>
+                
+                <div data-collapsible-content="quick-reference" class="collapsible-content">
+                    <div class="p-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-3">🗣️ Pastor Eric's Words → Simple English</h4>
+                                <div class="space-y-3 text-sm">
+                                    <div class="border-b pb-2">
+                                        <p class="font-medium">"Spiritual cataracts"</p>
+                                        <p class="text-gray-600">= Things that make it hard to see God clearly</p>
+                                    </div>
+                                    <div class="border-b pb-2">
+                                        <p class="font-medium">"Return to your first love"</p>
+                                        <p class="text-gray-600">= Go back to when your relationship with God was fresh and exciting</p>
+                                    </div>
+                                    <div class="border-b pb-2">
+                                        <p class="font-medium">"Bronze mirror reflection"</p>
+                                        <p class="text-gray-600">= We can only see God partially now, but clearly in heaven</p>
+                                    </div>
+                                    <div class="border-b pb-2">
+                                        <p class="font-medium">"Emotional validation"</p>
+                                        <p class="text-gray-600">= Telling someone their feelings make sense</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-3">🎯 Key Actions in Simple Steps</h4>
+                                <div class="space-y-3 text-sm">
+                                    <div class="bg-blue-50 p-3 rounded">
+                                        <p class="font-medium text-blue-800">Check your heart</p>
+                                        <p class="text-gray-700">Ask yourself: "Do I really want to know God better?"</p>
+                                    </div>
+                                    <div class="bg-green-50 p-3 rounded">
+                                        <p class="font-medium text-green-800">Set aside assumptions</p>
+                                        <p class="text-gray-700">Put away your old ideas about God and listen with fresh ears</p>
+                                    </div>
+                                    <div class="bg-purple-50 p-3 rounded">
+                                        <p class="font-medium text-purple-800">Ask God</p>
+                                        <p class="text-gray-700">Say: "God, how do You want me to see You today?"</p>
+                                    </div>
+                                    <div class="bg-orange-50 p-3 rounded">
+                                        <p class="font-medium text-orange-800">Act on what you learn</p>
+                                        <p class="text-gray-700">Live like God's words about Himself are true</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Tab -->
+    <div data-tab-content="application" class="hidden">
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">💡 Practical Application</h2>
+            
+            <!-- This Week's Challenge -->
+            <div class="content-card bg-gradient-to-r from-teal-50 to-cyan-50 border-l-4 border-teal-500 mb-8">
+                <h3 class="text-2xl font-bold text-teal-800 mb-4">🎯 This Week's Challenge</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Choose one relationship in your life where you'd like to feel more "seen" or connected. 
+                    Practice the four steps there first, then apply the same principles to your relationship with God.
+                </p>
+                <div class="bg-white rounded-lg p-4">
+                    <h4 class="font-semibold text-teal-700 mb-2">Why start with human relationships?</h4>
+                    <p class="text-gray-600 text-sm">
+                        Sometimes it's easier to practice these principles where we can see immediate feedback. 
+                        As you experience breakthrough in human relationships, you'll better understand 
+                        how to approach God with the same intentionality.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Counseling Terms Explanation -->
+            <div class="content-card mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 border-l-4 border-indigo-400">
+                <h3 class="text-xl font-bold text-indigo-800 mb-4">🧠 Understanding Counseling Terms in Simple Language</h3>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-lg p-4">
+                        <h4 class="font-semibold text-indigo-700 mb-2">"Don't work harder than the patient"</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            <strong>Counseling meaning:</strong> Don't try to help someone more than they want to be helped.
+                        </p>
+                        <p class="text-green-700 text-sm">
+                            <strong>God application:</strong> God won't force you to have a relationship with Him. He waits for you to want it too.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-4">
+                        <h4 class="font-semibold text-indigo-700 mb-2">"Active listening"</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            <strong>Counseling meaning:</strong> Giving someone your full attention without planning what to say next.
+                        </p>
+                        <p class="text-green-700 text-sm">
+                            <strong>God application:</strong> When we pray, we should also spend time quietly listening for God's response.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-4">
+                        <h4 class="font-semibold text-indigo-700 mb-2">"Put down your weapons"</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            <strong>Counseling meaning:</strong> Stop using past hurts to attack or defend in conversations.
+                        </p>
+                        <p class="text-green-700 text-sm">
+                            <strong>God application:</strong> Come to God without using past disappointments as reasons why He can't be trusted.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-4">
+                        <h4 class="font-semibold text-indigo-700 mb-2">"Trust what they say they see"</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            <strong>Counseling meaning:</strong> Believe someone when they tell you how they feel or what they experienced.
+                        </p>
+                        <p class="text-green-700 text-sm">
+                            <strong>God application:</strong> When God tells you who He is through Scripture, believe Him rather than your feelings.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Practices -->
+            <div class="content-card mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">📅 Daily Practices for Seeing God Clearly</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Morning Practice -->
+                    <div class="bg-yellow-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-yellow-800 mb-3 flex items-center gap-2">
+                            🌅 Morning: Heart Check
+                        </h4>
+                        <ul class="text-gray-700 text-sm space-y-2">
+                            <li>• Ask: "God, do I really want to see you today?"</li>
+                            <li>• Be honest about your spiritual temperature</li>
+                            <li>• If the desire isn't there, ask Him to give it to you</li>
+                            <li>• Set aside the day's anxieties and assumptions</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Evening Practice -->
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-blue-800 mb-3 flex items-center gap-2">
+                            🌙 Evening: Listen & Trust
+                        </h4>
+                        <ul class="text-gray-700 text-sm space-y-2">
+                            <li>• Ask: "God, how did you want me to see you today?"</li>
+                            <li>• Reflect on where you sensed His presence</li>
+                            <li>• Journal one thing He might be showing you</li>
+                            <li>• Plan how to act on that truth tomorrow</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Obstacles -->
+            <div class="content-card mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">🚧 Common Obstacles (And How to Overcome Them)</h3>
+                
+                <div class="space-y-4">
+                    <div class="border-l-4 border-red-400 pl-4">
+                        <h4 class="font-semibold text-red-700 mb-2">"I don't hear God speaking"</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            Remember: God's primary way of speaking is through Scripture. Start there. 
+                            Also, His voice is often quieter than you expect - more like a gentle impression than an audible voice.
+                        </p>
+                        <p class="text-teal-600 text-sm font-medium">
+                            💡 Try this: Read one Psalm each morning and ask, "God, what do you want me to see about you here?"
+                        </p>
+                    </div>
+                    
+                    <div class="border-l-4 border-orange-400 pl-4">
+                        <h4 class="font-semibold text-orange-700 mb-2">"I can't set aside my hurt/disappointment"</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            Don't try to pretend the hurt isn't real. Instead, acknowledge it, then choose to approach God 
+                            despite it. Say: "God, I'm hurt, but I'm willing to see if there's more to the story."
+                        </p>
+                        <p class="text-teal-600 text-sm font-medium">
+                            💡 Remember: Setting aside assumptions doesn't mean ignoring your feelings - it means not letting them control the conversation.
+                        </p>
+                    </div>
+                    
+                    <div class="border-l-4 border-purple-400 pl-4">
+                        <h4 class="font-semibold text-purple-700 mb-2">"This feels too emotional/touchy-feely"</h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            That's okay! Faith doesn't require you to be emotionally expressive. 
+                            The goal isn't feelings - it's seeing God as He truly is, which is actually very practical.
+                        </p>
+                        <p class="text-teal-600 text-sm font-medium">
+                            💡 Focus on: "What does God want me to know?" rather than "What should I feel?"
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Communion Connection -->
+            <div class="content-card bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-500">
+                <h3 class="text-xl font-bold text-purple-800 mb-4">🍞 The Communion Connection</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Pastor Eric ended with the story of the disciples on the road to Emmaus. 
+                    Their eyes were opened when Jesus broke bread - the same action that established communion.
+                </p>
+                <div class="bg-white rounded-lg p-4">
+                    <h4 class="font-semibold text-purple-700 mb-2">Next time you take communion:</h4>
+                    <ul class="text-gray-700 text-sm space-y-1">
+                        <li>• Ask God to open your eyes like He did for those disciples</li>
+                        <li>• Remember that everything comes back to Jesus's death and resurrection</li>
+                        <li>• Let it be a fresh start moment - your spiritual "eyes opened" experience</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reflection Tab -->
+    <div data-tab-content="reflection" class="hidden">
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">🤔 Reflection Questions</h2>
+            
+            <!-- Personal Reflection -->
+            <div class="content-card mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">🪞 Personal Reflection</h3>
+                <div class="space-y-6">
+                    
+                    <div class="bg-cyan-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-cyan-800 mb-3">1. How has being "seen" by God shaped your relationship with Him?</h4>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p><strong>Think about:</strong></p>
+                            <ul class="list-disc list-inside space-y-1 ml-4">
+                                <li>A time when you felt God truly understood your heart</li>
+                                <li>How knowing God sees you completely (the good and broken parts) affects your daily life</li>
+                                <li>Whether you live more from fear of God's judgment or confidence in His love</li>
+                            </ul>
+                        </div>
+                        <div class="mt-4 p-3 bg-white rounded border-l-4 border-cyan-400">
+                            <p class="text-xs text-gray-600 italic">
+                                💭 Journal space: Take a few minutes to write about a specific moment when you felt seen and loved by God. 
+                                How did that experience change how you relate to Him?
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-teal-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-teal-800 mb-3">2. If you were pursuing a fresh start in seeing God more clearly, what would a helpful first step look like and how could you implement it this week?</h4>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p><strong>Consider:</strong></p>
+                            <ul class="list-disc list-inside space-y-1 ml-4">
+                                <li>Which of the four steps feels most challenging for you right now?</li>
+                                <li>What assumptions about God might be clouding your vision?</li>
+                                <li>What would change in your daily routine if you really believed God wants to be seen clearly by you?</li>
+                            </ul>
+                        </div>
+                        <div class="mt-4 p-3 bg-white rounded border-l-4 border-teal-400">
+                            <p class="text-xs text-gray-600 italic">
+                                🎯 Action step: Choose one specific, measurable action you can take this week. 
+                                Write it down and share it with someone who can encourage you.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Group Discussion -->
+            <div class="content-card mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">👥 Group Discussion Questions</h3>
+                <div class="space-y-4">
+                    
+                    <div class="border-l-4 border-blue-400 pl-4">
+                        <h4 class="font-semibold text-blue-700 mb-2">Icebreaker:</h4>
+                        <p class="text-gray-700 text-sm">
+                            Share about a time when someone really "saw" you - understood you in a way that made you feel valued. 
+                            What did they do or say that made the difference?
+                        </p>
+                    </div>
+                    
+                    <div class="border-l-4 border-green-400 pl-4">
+                        <h4 class="font-semibold text-green-700 mb-2">Digging Deeper:</h4>
+                        <ul class="text-gray-700 text-sm space-y-1">
+                            <li>• Why do you think the disciples didn't recognize Jesus on the road to Emmaus until He broke bread?</li>
+                            <li>• Which of the four steps (check heart, set aside assumptions, ask, trust) comes most naturally to you? Which is hardest?</li>
+                            <li>• How do you typically respond when God seems silent or distant?</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-l-4 border-purple-400 pl-4">
+                        <h4 class="font-semibold text-purple-700 mb-2">Application:</h4>
+                        <ul class="text-gray-700 text-sm space-y-1">
+                            <li>• What's one assumption about God that you might need to set aside?</li>
+                            <li>• How can your group pray for each other's desire to see God more clearly?</li>
+                            <li>• What would look different in your life if you truly believed God delights in revealing Himself to you?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Discussion -->
+            <div class="content-card mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">👨‍👩‍👧‍👦 Family Discussion</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    
+                    <div class="bg-yellow-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-yellow-800 mb-3">For Younger Kids (5-10):</h4>
+                        <ul class="text-gray-700 text-sm space-y-2">
+                            <li>• When someone really listens to you, how does it make you feel?</li>
+                            <li>• How do you think God feels when we talk to Him?</li>
+                            <li>• What's one thing you'd like to know about God?</li>
+                            <li>• Let's pray together and ask God to help us see Him better</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-orange-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-orange-800 mb-3">For Teens (11+):</h4>
+                        <ul class="text-gray-700 text-sm space-y-2">
+                            <li>• What makes it easy or hard to feel "seen" by friends or family?</li>
+                            <li>• Do you think of God as someone who really knows and understands you? Why or why not?</li>
+                            <li>• What questions do you have about God that you'd actually like answered?</li>
+                            <li>• How could our family practice "seeing" God together this week?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Challenge -->
+            <div class="content-card bg-gradient-to-r from-emerald-50 to-green-50 border-l-4 border-emerald-500">
+                <h3 class="text-xl font-bold text-emerald-800 mb-4">🏆 7-Day Challenge: Eyes Wide Open</h3>
+                <p class="text-gray-700 mb-4">
+                    Each day this week, practice one aspect of seeing God clearly. 
+                    At the end of each day, journal one sentence about what you noticed.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p><strong>Day 1:</strong> Heart check - Ask God for desire to see Him</p>
+                        <p><strong>Day 2:</strong> Set aside one assumption about God</p>
+                        <p><strong>Day 3:</strong> Ask God: "How do you want me to see you today?"</p>
+                        <p><strong>Day 4:</strong> Act on one truth you know about God's character</p>
+                    </div>
+                    <div>
+                        <p><strong>Day 5:</strong> Practice seeing a family member/friend more clearly</p>
+                        <p><strong>Day 6:</strong> Read one Psalm looking for God's character</p>
+                        <p><strong>Day 7:</strong> During communion (or quiet time), ask God to "open your eyes"</p>
+                    </div>
+                </div>
+                
+                <div class="mt-4 p-3 bg-white rounded">
+                    <p class="text-xs text-gray-600">
+                        💡 <strong>Tip:</strong> Don't try to manufacture dramatic experiences. 
+                        Sometimes seeing God clearly is as simple as noticing His faithfulness in small, daily ways.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripture Modal -->
+    <div data-modal="scripture-modal" class="modal-overlay">
+        <div class="modal-content p-6 max-w-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 data-modal-title class="text-xl font-bold text-cyan-600">Scripture Context</h3>
+                <button data-modal-close="scripture-modal" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div data-modal-content>
+                <!-- Auto-generated by framework -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip Examples -->
+    <div class="hidden">
+        <span class="tooltip" title="The practice of turning back to God; not just feeling sorry, but actively changing direction">repentance</span>
+        <span class="tooltip" title="God's undeserved favor and kindness toward us, not based on our performance">grace</span>
+        <span class="tooltip" title="The ancient Greek word 'agape' - unconditional, sacrificial love that seeks the other's best">love</span>
+        
+        <!-- Additional Tooltips for Complex Terms -->
+        <span class="tooltip" title="Active listening means giving your full attention to someone when they speak. You focus on understanding their feelings, not planning your response.">active listening</span>
+        <span class="tooltip" title="Emotional validation means telling someone 'your feelings make sense' or 'I understand why you feel that way.' It's not agreeing with everything, just acknowledging their emotions are real.">emotional validation</span>
+        <span class="tooltip" title="Setting boundaries means deciding what behavior you will and won't accept. Like saying 'I need some quiet time' or 'Please don't interrupt when I'm speaking.'">boundaries</span>
+        <span class="tooltip" title="Being vulnerable means sharing your real thoughts and feelings, even when it feels scary. It's like taking off a mask and showing who you really are.">vulnerability</span>
+        <span class="tooltip" title="Authenticity means being genuine - not pretending to be someone else. It's being the same person whether you're alone or with others.">authenticity</span>
+        
+        <!-- Relationship Terms -->
+        <span class="tooltip" title="Intimacy doesn't just mean physical closeness. It means emotional closeness - feeling safe to share your deepest thoughts with someone.">intimacy</span>
+        <span class="tooltip" title="Empathy means understanding how someone else feels. It's like putting yourself in their shoes and feeling what they feel.">empathy</span>
+        <span class="tooltip" title="A fresh start means beginning again with a clean slate. Like erasing a whiteboard and starting to write something new.">fresh start</span>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.95); color: #0891b2; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(8, 145, 178, 0.3); max-width: 300px; word-wrap: break-word; box-shadow: 0 10px 25px rgba(8, 145, 178, 0.15); font-family: 'Inter', sans-serif;">
+        <div style="margin-bottom: 4px; font-weight: bold; color: #0891b2; line-height: 1.3;">
+            Generated using LLM with supervision and polishing by 
+            <a href="../index.html" style="color: #0891b2; text-decoration: none; border-bottom: 1px dotted #0891b2;" target="_blank">
+                benjaminficusmicrocarpa
+            </a>
+        </div>
+        <div>
+            <a href="../license.html" style="color: #0891b2; text-decoration: none; font-size: 0.75rem;" target="_blank">
+                Released under the MIT License
+            </a>
+        </div>
+    </div>
+    </div> <!-- End main-content -->
+
+    <script>
+        // Initialize animations and wiping header
+        document.addEventListener('DOMContentLoaded', function() {
+            // Trigger fade-in animations
+            const elements = document.querySelectorAll('.fade-in-up');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+
+            // Wiping Header Functionality
+            const headerContainer = document.getElementById('headerContainer');
+            const headerText = document.getElementById('headerText');
+            
+            const maxHeaderHeight = 400;
+            const minHeaderHeight = 100;
+            const scrollThreshold = 300; // Distance to scroll before header starts shrinking
+            
+            let isScrolling = false;
+            
+            function updateHeader() {
+                const scrollY = window.scrollY;
+                
+                if (scrollY <= scrollThreshold) {
+                    // Header at full size
+                    headerContainer.style.height = maxHeaderHeight + 'px';
+                    headerText.style.opacity = '1';
+                    headerContainer.classList.remove('header-minimized');
+                } else {
+                    // Calculate header height based on scroll position
+                    const scrollProgress = Math.min((scrollY - scrollThreshold) / (scrollThreshold * 0.5), 1);
+                    const currentHeight = maxHeaderHeight - (maxHeaderHeight - minHeaderHeight) * scrollProgress;
+                    
+                    headerContainer.style.height = Math.max(currentHeight, minHeaderHeight) + 'px';
+                    
+                    // Keep text visible but fade out subtitle and buttons
+                    headerText.style.opacity = '1';
+                    
+                    if (currentHeight <= minHeaderHeight) {
+                        headerContainer.classList.add('header-minimized');
+                    } else {
+                        headerContainer.classList.remove('header-minimized');
+                    }
+                }
+                
+                isScrolling = false;
+            }
+            
+            function onScroll() {
+                if (!isScrolling) {
+                    requestAnimationFrame(updateHeader);
+                    isScrolling = true;
+                }
+            }
+            
+            // Throttled scroll event listener
+            window.addEventListener('scroll', onScroll, { passive: true });
+            
+            // Initial call to set correct state
+            updateHeader();
+            
+            // Handle resize events
+            window.addEventListener('resize', function() {
+                updateHeader();
+            }, { passive: true });
+
+            // Tab Navigation Functionality
+            const tabButtons = document.querySelectorAll('[data-tab-trigger]');
+            const tabContents = document.querySelectorAll('[data-tab-content]');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.getAttribute('data-tab-trigger');
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Show target content
+                    const targetContent = document.querySelector(`[data-tab-content="${targetTab}"]`);
+                    if (targetContent) {
+                        targetContent.classList.remove('hidden');
+                    }
+                });
+            });
+
+            // Accordion Functionality
+            const accordionTriggers = document.querySelectorAll('[data-accordion-trigger]');
+            accordionTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const targetId = trigger.getAttribute('data-accordion-trigger');
+                    const content = document.querySelector(`[data-accordion-content="${targetId}"]`);
+                    const icon = trigger.querySelector('.accordion-icon');
+                    
+                    if (content) {
+                        const isActive = content.classList.contains('active');
+                        
+                        // Close all accordions
+                        document.querySelectorAll('[data-accordion-content]').forEach(acc => {
+                            acc.classList.remove('active');
+                        });
+                        document.querySelectorAll('[data-accordion-trigger]').forEach(trig => {
+                            trig.classList.remove('active');
+                        });
+                        
+                        // Open clicked accordion if it wasn't active
+                        if (!isActive) {
+                            content.classList.add('active');
+                            trigger.classList.add('active');
+                        }
+                    }
+                });
+            });
+
+            // Collapsible Functionality
+            const collapsibleTriggers = document.querySelectorAll('[data-collapsible-trigger]');
+            collapsibleTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const targetId = trigger.getAttribute('data-collapsible-trigger');
+                    const content = document.querySelector(`[data-collapsible-content="${targetId}"]`);
+                    
+                    if (content) {
+                        content.classList.toggle('active');
+                    }
+                });
+            });
+
+            // Modal Functionality
+            const modalTriggers = document.querySelectorAll('[data-modal-trigger]');
+            const modalCloses = document.querySelectorAll('[data-modal-close]');
+            const modals = document.querySelectorAll('[data-modal]');
+
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const modalId = trigger.getAttribute('data-modal-trigger');
+                    const modal = document.querySelector(`[data-modal="${modalId}"]`);
+                    if (modal) {
+                        modal.classList.add('active');
+                    }
+                });
+            });
+
+            modalCloses.forEach(close => {
+                close.addEventListener('click', () => {
+                    const modalId = close.getAttribute('data-modal-close');
+                    const modal = document.querySelector(`[data-modal="${modalId}"]`);
+                    if (modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+
+            // Close modals when clicking overlay
+            modals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+
+            // Add smooth scrolling for any internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
