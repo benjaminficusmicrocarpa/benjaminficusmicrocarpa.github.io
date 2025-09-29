@@ -37,7 +37,6 @@
             height: 400px;
             overflow: hidden;
             z-index: 1000;
-            transition: height 0.3s ease-out;
         }
 
         .header-image {
@@ -1467,33 +1466,26 @@
             
             const maxHeaderHeight = 400;
             const minHeaderHeight = 100;
-            const scrollThreshold = 300; // Distance to scroll before header starts shrinking
+            const scrollRange = maxHeaderHeight - minHeaderHeight; // 300px of scroll range
             
             let isScrolling = false;
             
             function updateHeader() {
                 const scrollY = window.scrollY;
                 
-                if (scrollY <= scrollThreshold) {
-                    // Header at full size
-                    headerContainer.style.height = maxHeaderHeight + 'px';
-                    headerText.style.opacity = '1';
-                    headerContainer.classList.remove('header-minimized');
+                // Calculate header height: 1:1 relationship with scroll
+                // Header starts shrinking immediately as user scrolls
+                const currentHeight = Math.max(maxHeaderHeight - scrollY, minHeaderHeight);
+                
+                headerContainer.style.height = currentHeight + 'px';
+                
+                // Keep text visible but fade out subtitle and buttons
+                headerText.style.opacity = '1';
+                
+                if (currentHeight <= minHeaderHeight) {
+                    headerContainer.classList.add('header-minimized');
                 } else {
-                    // Calculate header height based on scroll position
-                    const scrollProgress = Math.min((scrollY - scrollThreshold) / (scrollThreshold * 0.5), 1);
-                    const currentHeight = maxHeaderHeight - (maxHeaderHeight - minHeaderHeight) * scrollProgress;
-                    
-                    headerContainer.style.height = Math.max(currentHeight, minHeaderHeight) + 'px';
-                    
-                    // Keep text visible but fade out subtitle and buttons
-                    headerText.style.opacity = '1';
-                    
-                    if (currentHeight <= minHeaderHeight) {
-                        headerContainer.classList.add('header-minimized');
-                    } else {
-                        headerContainer.classList.remove('header-minimized');
-                    }
+                    headerContainer.classList.remove('header-minimized');
                 }
                 
                 isScrolling = false;
