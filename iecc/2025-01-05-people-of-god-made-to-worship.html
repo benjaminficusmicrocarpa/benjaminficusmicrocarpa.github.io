@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Made To Worship | Psalm 95 | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary: #4A5568;
+            --secondary: #805AD5;
+            --accent: #D69E2E;
+            --light: #F7FAFC;
+            --dark: #1A202C;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('img/large-group-of-people-sitting-in-a-church.webp') center/cover;
+            animation: breathe 8s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.9) 100%);
+            z-index: 2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .main-content {
+            background: var(--light);
+            margin: -50px auto 0;
+            position: relative;
+            z-index: 10;
+            border-radius: 30px 30px 0 0;
+            padding: 3rem 1.5rem;
+            max-width: 1400px;
+        }
+        
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--primary);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .tab-button:hover {
+            color: var(--secondary);
+        }
+        
+        .tab-button.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .accordion-button {
+            width: 100%;
+            text-align: left;
+            padding: 1.25rem;
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            margin-bottom: 0.75rem;
+        }
+        
+        .accordion-button:hover {
+            border-color: var(--secondary);
+            background: #F7FAFC;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        
+        .accordion-content.open {
+            max-height: 2000px;
+            padding: 1.5rem;
+            border: 2px solid #E2E8F0;
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .bento-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .bento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            border-color: var(--secondary);
+        }
+        
+        .tooltip-trigger {
+            position: relative;
+            color: var(--secondary);
+            font-weight: 600;
+            cursor: help;
+            border-bottom: 2px dotted var(--secondary);
+        }
+        
+        .tooltip {
+            position: fixed;
+            background: white;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            max-width: 320px;
+            z-index: 1000;
+            border: 2px solid var(--secondary);
+            display: none;
+            animation: tooltipFade 0.3s ease;
+        }
+        
+        @keyframes tooltipFade {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideDown 0.4s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--secondary);
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--secondary);
+            border: 2px solid white;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(255,255,255,0.3);
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .cta-button.secondary:hover {
+            background: white;
+            color: var(--secondary);
+        }
+        
+        .scripture-quote {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+        
+        .verse-reference {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-top: 0.75rem;
+            display: block;
+        }
+        
+        .author-quote {
+            background: #FFF5E1;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin: 2rem 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E2E8F0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 70vh;
+                min-height: 500px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1rem;
+                margin-top: -30px;
+            }
+            
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .hero-bg {
+                animation: none;
+            }
+            
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--dark);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            max-width: 300px;
+            word-wrap: break-word;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .attribution-badge a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dotted var(--secondary);
+        }
+        
+        .attribution-badge a:hover {
+            color: var(--accent);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        
+        tr:hover {
+            background: #F7FAFC;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 style="font-size: 3.5rem; font-weight: 700; margin-bottom: 1rem; text-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                ✨ Made To Worship ✨
+            </h1>
+            <p style="font-size: 1.25rem; margin-bottom: 0.5rem; opacity: 0.95;">
+                People of God Series | Psalm 95
+            </p>
+            <p style="font-size: 1rem; margin-bottom: 2rem; opacity: 0.9;">
+                📅 05 January 2025 | 🏛️ Island ECC | Pastor Brett
+            </p>
+            <p style="font-size: 1.1rem; max-width: 700px; margin: 0 auto 2.5rem; line-height: 1.7; opacity: 0.95;">
+                Most of us don't think of worship as a skill to be developed. Are you a good worshipper? Consider making a goal of your 2025 to be a better worshipper of God.
+            </p>
+            <div>
+                <a href="https://www.youtube.com/watch?v=-j-UZfzLLXw" class="cta-button" target="_blank">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 8.64L15.27 12 10 15.36V8.64M8 5v14l11-7L8 5z"/>
+                    </svg>
+                    <span>Watch Original Sermon</span>
+                </a>
+                <a href="index.html" class="cta-button secondary">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <span>View All Sermons</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Tab Navigation -->
+        <div style="border-bottom: 2px solid #E2E8F0; margin-bottom: 2rem; overflow-x: auto; white-space: nowrap;">
+            <button class="tab-button active" onclick="switchTab('overview')">📋 Overview</button>
+            <button class="tab-button" onclick="switchTab('sermon')">🎤 Main Sermon</button>
+            <button class="tab-button" onclick="switchTab('scripture')">📖 Bible Verses</button>
+            <button class="tab-button" onclick="switchTab('application')">💡 Practical Application</button>
+            <button class="tab-button" onclick="switchTab('reflection')">🤔 Reflection Questions</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <h2 style="font-size: 2.5rem; color: var(--dark); margin-bottom: 1.5rem;">📊 Sermon Overview</h2>
+            
+            <div class="bento-grid">
+                <div class="bento-card">
+                    <h3 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1rem;">🎯 Key Theme</h3>
+                    <p>Worship as whole-person engagement with God—involving heart (emotions), will (decisions), and mind (truth).</p>
+                </div>
+                
+                <div class="bento-card">
+                    <h3 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1rem;">📜 Core Scripture</h3>
+                    <p><strong>Psalm 95</strong> — The textbook for biblical worship, inviting God's people to sing, kneel, and hear His voice.</p>
+                </div>
+                
+                <div class="bento-card">
+                    <h3 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1rem;">🎭 Central Question</h3>
+                    <p><em>"Are you good at worship?"</em> — Not about vocal talent, but about cultivating worship as a spiritual discipline.</p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.75rem; color: var(--dark); margin: 2rem 0 1rem;">🌉 Spiritual Disciplines: Bridging Belief and Behavior</h3>
+                <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+                    <p style="line-height: 1.8; margin-bottom: 1rem;">
+                        Spiritual disciplines bridge the gap between <strong>what we believe</strong> and <strong>how we live</strong>. We sing "God, you're my only passion," but our lives don't always match up.
+                    </p>
+                    <p style="line-height: 1.8; margin-bottom: 1rem;">
+                        The reality is we are all hypocrites to some degree—saying and singing things we don't fully live out. <strong>But spiritual disciplines help close that gap.</strong>
+                    </p>
+                    <div style="background: #F7FAFC; padding: 1.25rem; border-radius: 8px; margin-top: 1rem;">
+                        <p style="font-weight: 600; margin-bottom: 0.75rem; color: var(--dark);">Spiritual Disciplines Include:</p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem;">
+                            <div>📖 Scripture Reading</div>
+                            <div>🙏 Prayer</div>
+                            <div>🎵 Worship</div>
+                            <div>💰 Giving</div>
+                            <div>🍞 Fasting</div>
+                            <div>📝 Memorization</div>
+                            <div>🤝 Hospitality</div>
+                            <div>💬 Evangelism</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem; line-height: 1.8; font-style: italic; color: var(--primary);">
+                        By the grace of God, we institute patterns and habits so there's greater consistency between how we live and what we believe.
+                    </p>
+                </div>
+
+            <div class="chart-container">
+                <h3 style="font-size: 1.75rem; color: var(--dark); margin-bottom: 1.5rem;">🧩 Worship Components</h3>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <svg viewBox="0 0 200 200" style="max-width: 250px; width: 100%; height: auto; margin: 0 auto; display: block;">
+                            <!-- Heart slice (0-120 degrees) - Red/Pink -->
+                            <path d="M 100 100 L 100 0 A 100 100 0 0 1 186.6 150 Z" 
+                                  fill="#FF6B6B" opacity="0.9">
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="3s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Will slice (120-240 degrees) - Purple -->
+                            <path d="M 100 100 L 186.6 150 A 100 100 0 0 1 13.4 150 Z" 
+                                  fill="#667eea" opacity="0.9">
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="3s" begin="1s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Mind slice (240-360 degrees) - Blue -->
+                            <path d="M 100 100 L 13.4 150 A 100 100 0 0 1 100 0 Z" 
+                                  fill="#4ECDC4" opacity="0.9">
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="3s" begin="2s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Center circle for donut effect -->
+                            <circle cx="100" cy="100" r="50" fill="white"/>
+                            
+                            <!-- Center text -->
+                            <text x="100" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#1A202C" font-family="'Cormorant Garamond', serif">Whole</text>
+                            <text x="100" y="110" text-anchor="middle" font-size="14" font-weight="bold" fill="#1A202C" font-family="'Cormorant Garamond', serif">Person</text>
+                        </svg>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 250px;">
+                        <div style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 24px; height: 24px; background: #FF6B6B; border-radius: 4px; flex-shrink: 0;"></div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark);">❤️ Heart (Emotions)</div>
+                                <div style="font-size: 0.9rem; color: var(--primary); margin-top: 0.25rem;">Joy, affection, thanksgiving</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 24px; height: 24px; background: #667eea; border-radius: 4px; flex-shrink: 0;"></div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark);">✊ Will (Decisions)</div>
+                                <div style="font-size: 0.9rem; color: var(--primary); margin-top: 0.25rem;">Bowing, kneeling, choosing</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 24px; height: 24px; background: #4ECDC4; border-radius: 4px; flex-shrink: 0;"></div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark);">🧠 Mind (Truth)</div>
+                                <div style="font-size: 0.9rem; color: var(--primary); margin-top: 0.25rem;">Hearing, reasoning, knowing</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.75rem; color: var(--dark); margin: 2rem 0 1rem;">📋 Sermon Structure</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Focus</th>
+                        <th>Key Scripture</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>What is Worship?</strong></td>
+                        <td>Definition and scope</td>
+                        <td>Psalm 95:1-2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Why Should We Worship?</strong></td>
+                        <td>Made to worship; identity in Christ</td>
+                        <td>1 Peter 2:9, Psalm 95:3</td>
+                    </tr>
+                    <tr>
+                        <td><strong>How to Improve Your Worship</strong></td>
+                        <td>Community, Truth, Gospel Rest</td>
+                        <td>Psalm 95:6-11, Hebrews 4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <h2 style="font-size: 2.5rem; color: var(--dark); margin-bottom: 1.5rem;">🎤 Main Sermon Content</h2>
+
+            <!-- What is Worship? -->
+            <button class="accordion-button" onclick="toggleAccordion('worship-definition')">
+                <span style="font-size: 1.25rem;">🔍 What is Worship?</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div id="worship-definition" class="accordion-content">
+                <h3 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1rem;">Definition of Worship</h3>
+                <p style="margin-bottom: 1rem; line-height: 1.8;">
+                    Worship is <strong>the act of ascribing ultimate value</strong> to something in such a way that engages your entire being: heart, will, and mind.
+                </p>
+                
+                <div class="author-quote">
+                    <p style="font-style: italic; margin-bottom: 0.5rem;">
+                        "The word we have in English for worship comes from the Old English word, which combined <em>worth</em> and <em>shape</em> together."
+                    </p>
+                    <span style="color: var(--accent); font-weight: 600;">— Pastor Brett</span>
+                </div>
+                
+                <p style="margin-bottom: 1rem; line-height: 1.8;">
+                    This concept rings true: <span class="tooltip-trigger" onmouseenter="showTooltip(event, 'worship-shapes')" onmouseleave="hideTooltip()">what you worship will shape you</span>. You become like that which you worship.
+                </p>
+                
+                <div class="scripture-quote">
+                    <p>"Come, let us sing for joy to the LORD; let us shout aloud to the Rock of our salvation. Let us come before him with thanksgiving and extol him with music and song."</p>
+                    <span class="verse-reference">— Psalm 95:1-2 (NIV)</span>
+                </div>
+                
+                <div style="background: #E8F5E9; padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border-left: 4px solid #4CAF50;">
+                    <h4 style="font-size: 1.25rem; color: #2E7D32; margin-bottom: 1rem;">🌱 Worship is Transformative</h4>
+                    <p style="line-height: 1.8; margin-bottom: 1rem;">
+                        Worship is more than simply giving God what is rightly due Him. It's a <strong>transformative thing</strong>—as we engage in worship, God uses it to actually change who we are.
+                    </p>
+                    <p style="line-height: 1.8; font-style: italic;">
+                        "There is a beautiful byproduct for us as well. It's not just a duty, it's not just a song. But a yielded life, a worshiping life, is something that God takes and shapes and molds. Transformation occurs."
+                    </p>
+                </div>
+
+                <h4 style="font-size: 1.25rem; color: var(--dark); margin: 1.5rem 0 1rem;">Three Dimensions of Worship</h4>
+                
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">❤️ Heart (Emotions)</h4>
+                        <p>Worship engages our affections with joy, thanksgiving, and singing. It's dripping with emotion—not just intellectual assent.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">✊ Will (Decisions)</h4>
+                        <p>Worship involves volitional choices: bowing down, kneeling, deciding to set aside baggage and focus on God.</p>
+                        <div class="scripture-quote" style="margin-top: 1rem; font-size: 0.9rem;">
+                            <p>"Come, let us bow down in worship, let us kneel before the LORD our Maker."</p>
+                            <span class="verse-reference">— Psalm 95:6 (NIV)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <h4 style="color: var(--secondary); margin-bottom: 0.75rem;">🧠 Mind (Truth)</h4>
+                        <p>Worship engages our intellect. It's a reasonable, rational faith that invites scrutiny and fills our minds with scriptural truth.</p>
+                        <div class="scripture-quote" style="margin-top: 1rem; font-size: 0.9rem;">
+                            <p>"Today, if only you would hear his voice, 'Do not harden your hearts.'"</p>
+                            <span class="verse-reference">— Psalm 95:7-8 (NIV)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #FFF9E6, #FFF4CC); padding: 1.5rem; border-radius: 12px; margin-top: 2rem; border-left: 4px solid var(--accent);">
+                    <h4 style="font-size: 1.25rem; color: var(--dark); margin-bottom: 1rem;">💡 Key Insight: Wherever You Are, Think About Where You're Not</h4>
+                    <p style="line-height: 1.8; margin-bottom: 1rem;">
+                        God has wired each of us differently. Some are naturally emotional, others are analytical thinkers, and still others are action-oriented doers. <strong>Honor that—but don't hide behind it.</strong>
+                    </p>
+                    <p style="line-height: 1.8; font-style: italic;">
+                        "Don't just hide behind what is convenient for you. If you're an emotional person... maybe you need to also engage your mind. Maybe you need to memorize some scripture. If you're a thinking person... God made you to be emotional. Maybe that hasn't been nurtured in your life."
+                    </p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: var(--accent);">
+                        — Pastor Brett
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Why Should We Worship? -->
+            <button class="accordion-button" onclick="toggleAccordion('why-worship')">
+                <span style="font-size: 1.25rem;">🙏 Why Should We Worship?</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div id="why-worship" class="accordion-content">
+                <h3 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1rem;">You Can't NOT Worship</h3>
+                <p style="margin-bottom: 1rem; line-height: 1.8;">
+                    We are always worshiping something. The issue is: <strong>What is the object of your worship?</strong> You were made to worship.
+                </p>
+                
+                <div class="scripture-quote">
+                    <p>"But you are a chosen people, a royal priesthood, a holy nation, God's special possession, that you may declare the praises of him who called you out of darkness into his wonderful light."</p>
+                    <span class="verse-reference">— 1 Peter 2:9 (NIV)</span>
+                </div>
+                
+                <h4 style="font-size: 1.25rem; color: var(--dark); margin: 1.5rem 0 1rem;">⚠️ Counterfeit Gods</h4>
+                <p style="margin-bottom: 1rem; line-height: 1.8;">
+                    Psalm 95:3 says, "For the LORD is the great God, the great King above all gods." Most of us unknowingly give our lives to counterfeit gods—idols that promise fulfillment but never deliver.
+                </p>
+                
+                <div class="bento-grid">
+                    <div class="bento-card" style="background: linear-gradient(135deg, #FFF5E1, #FFE8CC);">
+                        <h4 style="color: var(--accent);">🛋️ Comfort</h4>
+                        <p>The pursuit of ease and financial security as ultimate values.</p>
+                    </div>
+                    <div class="bento-card" style="background: linear-gradient(135deg, #E8F5E9, #C8E6C9);">
+                        <h4 style="color: #388E3C;">🎮 Control</h4>
+                        <p>Structuring life around maintaining power and predictability.</p>
+                    </div>
+                    <div class="bento-card" style="background: linear-gradient(135deg, #E3F2FD, #BBDEFB);">
+                        <h4 style="color: #1976D2;">⚡ Power</h4>
+                        <p>Seeking influence, prestige, and dominance over others.</p>
+                    </div>
+                    <div class="bento-card" style="background: linear-gradient(135deg, #FCE4EC, #F8BBD0);">
+                        <h4 style="color: #C2185B;">👥 Acceptance</h4>
+                        <p>Living for others' approval and validation.</p>
+                    </div>
+                </div>
+                
+                <h4 style="font-size: 1.25rem; color: var(--dark); margin: 2rem 0 1rem;">🪞 The Mirror of Erised: What Do You Really Desire?</h4>
+                    <div style="background: white; padding: 1.5rem; border-radius: 12px; border: 2px solid #E2E8F0; margin-bottom: 1.5rem;">
+                        <p style="line-height: 1.8; margin-bottom: 1rem;">
+                            In the first Harry Potter story, there's a <span class="tooltip-trigger" onmouseenter="showTooltip(event, 'erised')" onmouseleave="hideTooltip()">Mirror of Erised</span> that shows you your deepest desires. When Harry looked, he saw his deceased parents. When Ron looked, he saw himself as a celebrated sports star.
+                        </p>
+                        <p style="line-height: 1.8; margin-bottom: 1rem;">
+                            <strong>The question for us:</strong> If there were such a mirror for your soul, what would you see? What are your deepest longings?
+                        </p>
+                        <ul style="margin-left: 1.5rem; line-height: 2; color: var(--primary);">
+                            <li>Financial security and comfort?</li>
+                            <li>Control over your circumstances?</li>
+                            <li>Power, influence, and prestige?</li>
+                            <li>Acceptance and approval from others?</li>
+                        </ul>
+                        <p style="margin-top: 1rem; line-height: 1.8; background: #F7FAFC; padding: 1rem; border-radius: 8px;">
+                            Most of us structure our lives around something <em>without even realizing it</em>. These become functional gods—counterfeit sources of meaning that promise fulfillment but can't deliver.
+                        </p>
+                    </div>
+
+                <div class="author-quote">
+                    <p style="font-style: italic; margin-bottom: 0.5rem;">
+                        "Whatever controls us is our Lord. The person who seeks power is controlled by power. The person who seeks acceptance is controlled by acceptance."
+                    </p>
+                    <span style="color: var(--accent); font-weight: 600;">— Becky Pippert</span>
+                </div>
+                
+                <p style="margin-top: 1.5rem; line-height: 1.8;">
+                    Your ultimate problems are based on <span class="tooltip-trigger" onmouseenter="showTooltip(event, 'misguided-worship')" onmouseleave="hideTooltip()">misguided worship</span>. If you worship career, prestige, respect, or comfort—it won't yield what it promises.
+                </p>
+            </div>
+
+            <!-- How to Improve Your Worship -->
+            <button class="accordion-button" onclick="toggleAccordion('improve-worship')">
+                <span style="font-size: 1.25rem;">📈 How to Improve Your Worship</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div id="improve-worship" class="accordion-content">
+                <h3 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1rem;">Three Ways to Deepen Your Worship</h3>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="font-size: 1.25rem; color: var(--dark); margin-bottom: 1rem;">1️⃣ Community</h4>
+                    <p style="margin-bottom: 1rem; line-height: 1.8;">
+                        Psalm 95 uses plural pronouns throughout: <em>let <strong>us</strong> sing, let <strong>us</strong> bow down, let <strong>us</strong> kneel.</em> Corporate worship is not optional—it's essential.
+                    </p>
+                    
+                    <div class="author-quote">
+                        <p style="font-style: italic; margin-bottom: 0.5rem;">
+                            "The more diverse your worshiping community, the more accurately you will be able to comprehend God."
+                        </p>
+                        <span style="color: var(--accent); font-weight: 600;">— Tim Keller (paraphrased)</span>
+                    </div>
+                    
+                    <div style="background: white; padding: 1.5rem; border-radius: 12px; border: 2px solid #E2E8F0; margin-top: 1.5rem;">
+                        <h5 style="font-size: 1.1rem; color: var(--secondary); margin-bottom: 1rem;">🌍 A Personal Example: Worship in Korea</h5>
+                        <p style="line-height: 1.8; margin-bottom: 1rem;">
+                            Pastor Brett shared about attending a conference in Korea where he was placed at a table with complete strangers from diverse backgrounds:
+                        </p>
+                        <ul style="margin-left: 1.5rem; line-height: 2; margin-bottom: 1rem;">
+                            <li>🇭🇰 One woman from Hong Kong</li>
+                            <li>🇮🇳 An Indian man</li>
+                            <li>🇳🇬🇺🇸 A Nigerian woman living in New York</li>
+                            <li>🇳🇬🇬🇧 An African living in London</li>
+                            <li>🌍 Another African still living in Africa</li>
+                        </ul>
+                        <p style="line-height: 1.8; margin-bottom: 1rem;">
+                            <strong>The Nigerian woman in New York</strong> spoke with profound gratitude about America—the opportunities, freedom, and blessings. Pastor Brett admitted his American perspective was quite different (thinking about school shootings and crime).
+                        </p>
+                        <p style="line-height: 1.8; margin-bottom: 1rem;">
+                            <strong>The Indian man</strong> came from a Hindu caste background where hierarchy defined worth. Coming to faith, he realized <em>everyone is made in the image of God</em>—leveling the playing field and shattering racism.
+                        </p>
+                        <p style="line-height: 1.8; font-style: italic; background: #F7FAFC; padding: 1rem; border-radius: 8px;">
+                            "I was blessed. I was changed. I was impacted... You get to see God more holistically, more fully, when you are teachable to other people's experience of who He is."
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="font-size: 1.25rem; color: var(--dark); margin-bottom: 1rem;">2️⃣ Truth</h4>
+                    <p style="margin-bottom: 1rem; line-height: 1.8;">
+                        Worship must be rooted in <span class="tooltip-trigger" onmouseenter="showTooltip(event, 'biblical-truth')" onmouseleave="hideTooltip()">biblical truth</span>. Don't worship a God of your own making. Throughout Psalm 95, David quotes Scripture about who God is.
+                    </p>
+                    
+                    <div class="scripture-quote">
+                        <p>"In his hand are the depths of the earth, and the mountain peaks belong to him. The sea is his, for he made it, and his hands formed the dry land."</p>
+                        <span class="verse-reference">— Psalm 95:4-5 (NIV)</span>
+                    </div>
+                    
+                    <p style="margin-top: 1rem; line-height: 1.8;">
+                        If your God never disagrees with you, you've made yourself God. Truth says, "I want to know what's right, and I know I'm not always right."
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 style="font-size: 1.25rem; color: var(--dark); margin-bottom: 1rem;">3️⃣ Gospel Sabbath Rest</h4>
+                    <p style="margin-bottom: 1rem; line-height: 1.8;">
+                        Psalm 95 ends with a warning about <span class="tooltip-trigger" onmouseenter="showTooltip(event, 'rest')" onmouseleave="hideTooltip()">rest</span>. Physical rest (Sabbath) is important, but Gospel rest is deeper.
+                    </p>
+                    
+                    <div class="scripture-quote">
+                        <p>"Today, if only you would hear his voice, 'Do not harden your hearts as you did at Meribah… They will never enter my rest.'"</p>
+                        <span class="verse-reference">— Psalm 95:7-8, 11 (NIV)</span>
+                    </div>
+                    
+                    <p style="margin-bottom: 1rem; line-height: 1.8; background: #E8F5E9; padding: 1.25rem; border-radius: 12px; border-left: 4px solid #4CAF50;">
+                        <strong>Gospel Rest means:</strong> It is by grace you are saved. There's no amount of effort, pleasing God, or showing up at church that can make Him love you more. He loves you fully and completely <em>as is</em>.
+                    </p>
+                    
+                    <p style="line-height: 1.8;">
+                        When you understand Gospel rest, worship isn't another good deed to earn God's favor. It's an expression of gratitude for all He's already done. You've already been loved and accepted fully in Christ.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripture Tab -->
+        <div id="scripture" class="tab-content">
+            <h2 style="font-size: 2.5rem; color: var(--dark); margin-bottom: 1.5rem;">📖 Bible Verses Referenced</h2>
+            
+            <button class="accordion-button" onclick="toggleAccordion('psalm95-full')">
+                <span style="font-size: 1.25rem;">📜 Psalm 95 (Full Passage)</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div id="psalm95-full" class="accordion-content">
+                <div class="scripture-quote">
+                    <p><sup>1</sup> Come, let us sing for joy to the LORD; let us shout aloud to the Rock of our salvation. <sup>2</sup> Let us come before him with thanksgiving and extol him with music and song.</p>
+                    <p><sup>3</sup> For the LORD is the great God, the great King above all gods. <sup>4</sup> In his hand are the depths of the earth, and the mountain peaks belong to him. <sup>5</sup> The sea is his, for he made it, and his hands formed the dry land.</p>
+                    <p><sup>6</sup> Come, let us bow down in worship, let us kneel before the LORD our Maker; <sup>7</sup> for he is our God and we are the people of his pasture, the flock under his care.</p>
+                    <p>Today, if only you would hear his voice, <sup>8</sup> "Do not harden your hearts as you did at Meribah, as you did that day at Massah in the wilderness, <sup>9</sup> where your ancestors tested me; they tried me, though they had seen what I did. <sup>10</sup> For forty years I was angry with that generation; I said, 'They are a people whose hearts go astray, and they have not known my ways.' <sup>11</sup> So I declared on oath in my anger, 'They shall never enter my rest.'"</p>
+                    <span class="verse-reference">— Psalm 95:1-11 (NIV)</span>
+                </div>
+                <button onclick="openModal('psalm95-context')" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--secondary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                    📖 View Context & Commentary
+                </button>
+            </div>
+            
+            <button class="accordion-button" onclick="toggleAccordion('1peter2')">
+                <span style="font-size: 1.25rem;">✨ 1 Peter 2:9</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div id="1peter2" class="accordion-content">
+                <div class="scripture-quote">
+                    <p>"But you are a chosen people, a royal priesthood, a holy nation, God's special possession, that you may declare the praises of him who called you out of darkness into his wonderful light."</p>
+                    <span class="verse-reference">— 1 Peter 2:9 (NIV)</span>
+                </div>
+                <p style="margin-top: 1rem; line-height: 1.8;">
+                    <strong>Context:</strong> Peter describes the new identity of believers—chosen, priestly, holy, belonging to God. The purpose? To declare God's praises. We are made <em>for</em> worship.
+                </p>
+            </div>
+            
+            <button class="accordion-button" onclick="toggleAccordion('hebrews4')">
+                <span style="font-size: 1.25rem;">🕊️ Hebrews 4 (Gospel Rest)</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div id="hebrews4" class="accordion-content">
+                <div class="scripture-quote">
+                    <p>"Therefore, since the promise of entering his rest still stands, let us be careful that none of you be found to have fallen short of it… There remains, then, a Sabbath-rest for the people of God; for anyone who enters God's rest also rests from their works, just as God did from his."</p>
+                    <span class="verse-reference">— Hebrews 4:1, 9-10 (NIV, excerpts)</span>
+                </div>
+                <p style="margin-top: 1rem; line-height: 1.8;">
+                    <strong>Context:</strong> Hebrews 4 references Psalm 95 and expands on the concept of rest—not just physical Sabbath, but entering into the finished work of Christ. Gospel rest means ceasing from our own efforts to earn salvation.
+                </p>
+            </div>
+            
+            <table style="margin-top: 2rem;">
+                <thead>
+                    <tr>
+                        <th>Scripture</th>
+                        <th>Theme</th>
+                        <th>Application</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Psalm 95:1-2</td>
+                        <td>Heart engagement</td>
+                        <td>Worship involves joyful emotions</td>
+                    </tr>
+                    <tr>
+                        <td>Psalm 95:6-7</td>
+                        <td>Will engagement</td>
+                        <td>Worship requires volitional decisions</td>
+                    </tr>
+                    <tr>
+                        <td>Psalm 95:7-8</td>
+                        <td>Mind engagement</td>
+                        <td>Worship is hearing and obeying truth</td>
+                    </tr>
+                    <tr>
+                        <td>1 Peter 2:9</td>
+                        <td>Identity & purpose</td>
+                        <td>We are made to declare God's praises</td>
+                    </tr>
+                    <tr>
+                        <td>Hebrews 4</td>
+                        <td>Gospel rest</td>
+                        <td>Worship flows from grace, not works</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <h2 style="font-size: 2.5rem; color: var(--dark); margin-bottom: 1.5rem;">💡 Practical Application</h2>
+            
+            <div class="bento-grid">
+                <div class="bento-card" style="background: linear-gradient(135deg, #FFE8E8, #FFD6D6);">
+                    <h3 style="color: #D32F2F; margin-bottom: 1rem;">❤️ For Heart-Oriented People</h3>
+                    <p style="margin-bottom: 1rem;">You're naturally emotional and moved by worship music. That's a gift! But don't hide behind your strength.</p>
+                    <p><strong>Challenge:</strong> Engage your mind. Memorize Scripture. Do a Bible study. Learn theological truths about God.</p>
+                </div>
+                
+                <div class="bento-card" style="background: linear-gradient(135deg, #E3F2FD, #BBDEFB);">
+                    <h3 style="color: #1976D2; margin-bottom: 1rem;">🧠 For Head-Oriented People</h3>
+                    <p style="margin-bottom: 1rem;">You love outlines, diagrams, and theological precision. Excellent! But worship isn't just cognitive.</p>
+                    <p><strong>Challenge:</strong> Nurture your emotions. God made you emotional—He is emotional. Learn to express feelings in worship and relationships.</p>
+                </div>
+                
+                <div class="bento-card" style="background: linear-gradient(135deg, #F3E5F5, #E1BEE7);">
+                    <h3 style="color: #7B1FA2; margin-bottom: 1rem;">✊ For Hands-Oriented People</h3>
+                    <p style="margin-bottom: 1rem;">You're a doer. You make things happen. Great! But don't let busyness replace being.</p>
+                    <p><strong>Challenge:</strong> Be still and know that He is God. Develop your emotional and intellectual life. Rest in His presence.</p>
+                </div>
+            </div>
+            
+            <h3 style="font-size: 1.75rem; color: var(--dark); margin: 2.5rem 0 1.5rem;">🎯 Actionable Steps for 2025</h3>
+            
+            <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 2rem;">
+                <h4 style="font-size: 1.25rem; color: var(--secondary); margin-bottom: 1rem;">1. Download the Island ECC Worship Playlist</h4>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    On Spotify, find the Island ECC worship playlist. Let worship songs become part of your weekly routine—not just a Sunday thing.
+                </p>
+                <a href="https://open.spotify.com/search/Island%20ECC" target="_blank" style="color: var(--secondary); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--secondary);">
+                    🎵 Search for Island ECC on Spotify →
+                </a>
+            </div>
+            
+            <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 2rem;">
+                <h4 style="font-size: 1.25rem; color: var(--secondary); margin-bottom: 1rem;">2. Commit to 100% Church Attendance</h4>
+                <p style="line-height: 1.8;">
+                    Corporate worship matters. Make it a priority. If you've started 2025 at 100% attendance, keep going! Community is non-negotiable for worship.
+                </p>
+            </div>
+            
+            <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 2rem;">
+                <h4 style="font-size: 1.25rem; color: var(--secondary); margin-bottom: 1rem;">3. Identify Your Counterfeit God</h4>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    Honestly ask: What do I really worship? Is it comfort, control, power, or acceptance? Confess it. Bring it to God. Let Him be your ultimate value.
+                </p>
+                <div style="background: #FFF5E1; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent);">
+                    <p style="font-style: italic;">
+                        "If you're worshiping a career, prestige, respect, or comfort—it's not going to yield for you that which it promises."
+                    </p>
+                </div>
+            </div>
+            
+            <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+                <h4 style="font-size: 1.25rem; color: var(--secondary); margin-bottom: 1rem;">4. Rest in Gospel Grace</h4>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    Stop trying to earn God's love. You're already fully accepted in Christ. Let your worship be an overflow of gratitude, not a performance to impress.
+                </p>
+                <div class="scripture-quote">
+                    <p>"For it is by grace you have been saved, through faith—and this is not from yourselves, it is the gift of God—not by works, so that no one can boast."</p>
+                    <span class="verse-reference">— Ephesians 2:8-9 (NIV)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <h2 style="font-size: 2.5rem; color: var(--dark); margin-bottom: 1.5rem;">🤔 Reflection Questions</h2>
+            
+            <div style="background: white; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 2rem;">
+                <h3 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1.5rem;">Question 1</h3>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark);">
+                    What is one insight from the message today that stood out to you?
+                </p>
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: #F7FAFC; border-radius: 12px; border-left: 4px solid var(--secondary);">
+                    <p style="font-size: 0.95rem; line-height: 1.7; color: var(--primary);">
+                        <strong>Reflection Space:</strong> Take time to journal or discuss with your small group. Was it the concept of whole-person worship? The idea that you're always worshiping something? Gospel rest?
+                    </p>
+                </div>
+            </div>
+            
+            <div style="background: white; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+                <h3 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1.5rem;">Question 2</h3>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark);">
+                    What is one actionable step you can take to be "better at worship"?
+                </p>
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: #F7FAFC; border-radius: 12px; border-left: 4px solid var(--secondary);">
+                    <p style="font-size: 0.95rem; line-height: 1.7; color: var(--primary); margin-bottom: 1rem;">
+                        <strong>Consider these areas:</strong>
+                    </p>
+                    <ul style="margin-left: 1.5rem; line-height: 2;">
+                        <li>Will you engage your heart more? Your mind? Your will?</li>
+                        <li>Will you prioritize corporate worship?</li>
+                        <li>Will you ground your worship in biblical truth?</li>
+                        <li>Will you rest in the gospel instead of striving?</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #667eea15, #764ba215); border-radius: 16px; border: 2px solid var(--secondary);">
+                <h3 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1rem;">💬 Discussion Prompt</h3>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    Share with your small group or a trusted friend: <strong>"Are you good at worship?"</strong> What does that question stir in you? How might you grow in this spiritual discipline?
+                </p>
+                <p style="line-height: 1.8; font-style: italic; color: var(--primary);">
+                    Remember: The goal isn't perfection, but transformation. As we yield ourselves to God in worship, He shapes us to become more like Christ.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="psalm95-context" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('psalm95-context')">&times;</span>
+            <h2 style="font-size: 2rem; color: var(--secondary); margin-bottom: 1rem;">📖 Psalm 95 Context</h2>
+            <p style="line-height: 1.8; margin-bottom: 1rem;">
+                <strong>Author:</strong> David (confirmed in Hebrews 4)<br>
+                <strong>Type:</strong> Corporate worship psalm, invitation to worship<br>
+                <strong>Historical Context:</strong> References Meribah and Massah (Exodus 17), where Israel tested God in the wilderness
+            </p>
+            <h3 style="font-size: 1.5rem; color: var(--dark); margin: 1.5rem 0 1rem;">Key Themes</h3>
+            <ul style="margin-left: 1.5rem; line-height: 2;">
+                <li><strong>Invitation to worship</strong> (vv. 1-7a): Joyful, corporate, whole-person worship</li>
+                <li><strong>Warning about hardness of heart</strong> (vv. 7b-11): Don't be like the wilderness generation who refused to trust God</li>
+                <li><strong>Promise of rest</strong> (v. 11): Entering God's rest through faith, not rebellion</li>
+            </ul>
+            <h3 style="font-size: 1.5rem; color: var(--dark); margin: 1.5rem 0 1rem;">Latin Title: Venite Exultemus</h3>
+            <p style="line-height: 1.8;">
+                Jerome's Latin Vulgate translation (405 AD) begins with "Venite, exultemus Domino" ("Come, let us sing joyfully to the Lord"). This psalm became known as the <em>Venite</em> and has been used for centuries as the textbook for corporate worship.
+            </p>
+        </div>
+    </div>
+
+    <!-- Tooltips -->
+    <div id="worship-shapes" class="tooltip">
+        <strong>What you worship shapes you:</strong> This Old English concept ("worthship" = worth + shape) means that whatever you ascribe ultimate value to will mold your character, priorities, and life trajectory.
+    </div>
+    
+    <div id="misguided-worship" class="tooltip">
+        <strong>Misguided worship:</strong> When we worship counterfeit gods (comfort, control, power, acceptance) instead of the true God, our problems stem from seeking fulfillment in things that cannot deliver.
+    </div>
+    
+    <div id="biblical-truth" class="tooltip">
+        <strong>Biblical truth:</strong> Worship rooted in Scripture, not personal preferences. If your view of God never challenges you, you may have created a god in your own image.
+    </div>
+    
+    <div id="rest" class="tooltip">
+        <strong>Gospel rest:</strong> Not just ceasing from physical work (Sabbath), but resting in the finished work of Christ. You cannot earn God's love—it's already fully given by grace.
+    </div>
+
+    <div id="erised" class="tooltip">
+        <strong>Mirror of Erised:</strong> In Harry Potter, "Erised" is "desire" spelled backwards. The mirror shows the viewer's deepest, most desperate desire—revealing what truly drives them.
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div style="margin-bottom: 4px; font-weight: bold; color: var(--dark); line-height: 1.3;">
+            Generated using LLM with supervision and polishing by 
+            <a href="../index.html" target="_blank">benjaminficusmicrocarpa</a>
+        </div>
+        <div>
+            <a href="../license.html" target="_blank">Released under the MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Accordion toggle
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const button = event.currentTarget;
+            const icon = button.querySelector('.accordion-icon');
+            
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.textContent = '▼';
+            } else {
+                content.classList.add('open');
+                icon.textContent = '▲';
+            }
+        }
+
+        // Tooltip functions
+        function showTooltip(event, tooltipId) {
+            const tooltip = document.getElementById(tooltipId);
+            tooltip.style.display = 'block';
+            
+            // Position at top right
+            tooltip.style.top = '20px';
+            tooltip.style.right = '20px';
+            tooltip.style.left = 'auto';
+        }
+
+        function hideTooltip() {
+            const tooltips = document.querySelectorAll('.tooltip');
+            tooltips.forEach(tooltip => tooltip.style.display = 'none');
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => modal.style.display = 'none');
+            }
+        });
+
+        // Animate progress bars on load
+        window.addEventListener('load', function() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            setTimeout(() => {
+                progressBars.forEach(bar => {
+                    bar.style.width = bar.style.width;
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
