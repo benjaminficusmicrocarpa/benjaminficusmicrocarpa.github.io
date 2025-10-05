@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Start: Trust Deeper | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a202c;
+            line-height: 1.6;
+        }
+
+        /* Header container for wipe effect */
+        .header-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            z-index: 1000;
+            transition: height 0.3s ease-out;
+        }
+
+        /* Header image */
+        .header-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Overlay for better text readability */
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.4) 100%
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Header text */
+        .header-text {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+            max-width: 6xl;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-text h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            transition: font-size 0.3s ease-out, margin-bottom 0.3s ease-out;
+        }
+
+        .header-text .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .header-text .description {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+            max-width: 2xl;
+            margin-left: auto;
+            margin-right: auto;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .header-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        .btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        /* Minimized header styles */
+        .header-minimized .header-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            letter-spacing: 1px;
+        }
+
+        .header-minimized .header-text .subtitle,
+        .header-minimized .header-text .description,
+        .header-minimized .header-buttons {
+            opacity: 0;
+        }
+
+        /* Animation classes */
+        .header-minimized {
+            height: 100px !important;
+        }
+
+        .header-minimized .header-text {
+            opacity: 1;
+        }
+
+        .header-minimized .header-image {
+            transform: scale(1.1);
+        }
+
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .tab-button {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .accordion-button {
+            transition: all 0.3s ease;
+        }
+
+        .accordion-button:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+        }
+
+        /* Fixed Tooltip - Hidden by default */
+        .tooltip-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 320px;
+            max-width: 90vw;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tooltip-container.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Clickable Terms */
+        .term {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            transition: color 0.2s ease;
+            font-weight: 600;
+        }
+        
+        .term:hover {
+            color: #764ba2;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 768px) {
+            .tooltip-container {
+                position: fixed;
+                bottom: 140px; /* Above attribution badge */
+                left: 10px;
+                right: 10px;
+                width: auto;
+                max-width: none;
+                transform: translateY(100%);
+            }
+            
+            .tooltip-container.active {
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tooltip-container {
+                bottom: 120px;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #667eea;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .bento-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .verse-card:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            transform: translateX(5px);
+        }
+
+        .fadeIn {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header-text .subtitle {
+                font-size: 1rem;
+            }
+            
+            .header-text .description {
+                font-size: 0.9rem;
+            }
+            
+            .header-buttons {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 1rem 0.5rem;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                padding: 1.5rem;
+                width: 95%;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .header-buttons {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Tooltip Container -->
+    <div class="tooltip-container" id="tooltipContainer">
+        <div class="flex justify-between items-center mb-4 pb-2 border-b-2 border-purple-200">
+            <div class="font-bold text-purple-800 text-lg" id="tooltipTitle">Definition</div>
+            <button class="text-gray-500 hover:bg-purple-100 hover:text-purple-800 w-8 h-8 flex items-center justify-center rounded-full text-xl" onclick="closeTooltip()">&times;</button>
+        </div>
+        <div class="text-gray-600 text-sm leading-relaxed" id="tooltipContent">
+            Click on highlighted terms to see definitions and explanations.
+        </div>
+    </div>
+
+    <!-- Header with wipe effect -->
+    <div class="header-container" id="headerContainer">
+        <img src="img/vitex-agnus-castus.webp" alt="Sea Water" class="header-image" id="headerImage">
+        <div class="header-overlay">
+            <div class="header-text" id="headerText">
+                <h1>Fresh Start: Trust Deeper 🕊️</h1>
+                <p class="subtitle">Pastor Tim | Island ECC | 05 Oct 2025</p>
+                <p class="description">Our days are often full of worry. We fall into a routine of trying to control everything—our schedules, our work, our relationships—doing our best to hold it all together. And it's exhausting. We need a Fresh Start.</p>
+                <div class="header-buttons">
+                    <a href="https://www.youtube.com/watch?v=RFnoquLmfog" target="_blank" class="btn btn-primary">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        <span>Watch Original Sermon</span>
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <span>View All Sermons</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 400px;">
+
+        <!-- Tabs Navigation -->
+        <div class="glass-card mb-8 fadeIn" style="animation-delay: 0.1s">
+            <div class="flex flex-wrap gap-2 p-4 border-b border-gray-200">
+                <button class="tab-button active px-6 py-3 rounded-lg font-semibold" onclick="showTab('overview')">
+                    📊 Overview
+                </button>
+                <button class="tab-button px-6 py-3 rounded-lg font-semibold" onclick="showTab('sermon')">
+                    📖 Main Sermon
+                </button>
+                <button class="tab-button px-6 py-3 rounded-lg font-semibold" onclick="showTab('verses')">
+                    ✝️ Bible Verses
+                </button>
+                <button class="tab-button px-6 py-3 rounded-lg font-semibold" onclick="showTab('application')">
+                    ✨ Practical Application
+                </button>
+                <button class="tab-button px-6 py-3 rounded-lg font-semibold" onclick="showTab('reflection')">
+                    💭 Reflection Questions
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-6">
+                <!-- Overview Tab -->
+                <div id="overview-tab" class="tab-content">
+                    <h2 class="heading-font text-3xl font-bold mb-6 text-gray-800">Sermon Overview 🎯</h2>
+                    
+                    <div class="mb-8 p-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border-l-4 border-purple-600">
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            Our days are often full of worry. We fall into a routine of trying to control everything—our schedules, our work, our relationships—doing our best to hold it all together. And it's exhausting. We need a <span class="font-bold text-purple-700">Fresh Start</span>. We need a way to step out of the cycle, loosen our grip, and trust God more deeply with our lives. Today, we're going to explore practical ways to grow in faith and experience the peace God promises, even in the midst of life's chaos.
+                        </p>
+                    </div>
+
+                    <h3 class="heading-font text-2xl font-bold mb-4 text-gray-800">Key Sermon Points 🔑</h3>
+                    <div class="bento-grid mb-8">
+                        <div class="bento-item">
+                            <div class="text-3xl mb-3">🎭</div>
+                            <h4 class="font-bold text-lg mb-2 text-gray-800">Moses' Track Record</h4>
+                            <p class="text-gray-600">Examined Moses' incredible history of trusting God through miracles and provision</p>
+                        </div>
+                        <div class="bento-item">
+                            <div class="text-3xl mb-3">⚡</div>
+                            <h4 class="font-bold text-lg mb-2 text-gray-800">One Moment of Weakness</h4>
+                            <p class="text-gray-600">How striking the rock twice instead of speaking to it had severe consequences</p>
+                        </div>
+                        <div class="bento-item">
+                            <div class="text-3xl mb-3">🚧</div>
+                            <h4 class="font-bold text-lg mb-2 text-gray-800">Five Trust Barriers</h4>
+                            <p class="text-gray-600">Control, fear, disappointment, misunderstanding, and impatience</p>
+                        </div>
+                        <div class="bento-item">
+                            <div class="text-3xl mb-3">💊</div>
+                            <h4 class="font-bold text-lg mb-2 text-gray-800">Biblical Antidotes</h4>
+                            <p class="text-gray-600">Scripture verses to counter each trust barrier</p>
+                        </div>
+                        <div class="bento-item">
+                            <div class="text-3xl mb-3">⛵</div>
+                            <h4 class="font-bold text-lg mb-2 text-gray-800">The Sampan Story</h4>
+                            <p class="text-gray-600">Personal illustration of finding peace in the storm by trusting the captain</p>
+                        </div>
+                        <div class="bento-item">
+                            <div class="text-3xl mb-3">🙏</div>
+                            <h4 class="font-bold text-lg mb-2 text-gray-800">Philippians 4:6-7</h4>
+                            <p class="text-gray-600">Four-step framework: Prayer, Petition, Thanksgiving, Release</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Sermon Tab -->
+                <div id="sermon-tab" class="tab-content hidden">
+                    <h2 class="heading-font text-3xl font-bold mb-6 text-gray-800">Main Sermon Content 📖</h2>
+
+                    <!-- Accordion Section 1 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="accordion-button w-full text-left px-6 py-4 bg-white hover:bg-purple-50 transition-all flex justify-between items-center" onclick="toggleAccordion('acc1')">
+                            <span class="font-bold text-lg text-gray-800">Introduction: The Challenge of Trust in Modern Life 🌐</span>
+                            <svg class="w-6 h-6 transform transition-transform" id="acc1-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 py-4 bg-gray-50" id="acc1">
+                            <p class="mb-4 text-gray-700">Pastor Tim opened by highlighting how trust is something we deal with every single day. Do we trust the weather forecast? Our bus drivers? The barber with our hair? Our phones to last all day? We put trust in countless things, yet we're constantly being deceived.</p>
+                            
+                            <div class="bg-white p-4 rounded-lg mb-4 border-l-4 border-purple-600">
+                                <p class="text-gray-700 italic">Examples of modern deception include spam calls starting with "3", phishing emails, and increasingly sophisticated AI-generated content that makes it harder than ever to distinguish truth from falsehood. This constant deception conditions us toward mistrust.</p>
+                            </div>
+
+                            <p class="text-gray-700">The sermon posed the critical question: <span class="font-bold text-purple-700">In a world where we can't trust anything, who can we trust? What can we trust?</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Section 2 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="accordion-button w-full text-left px-6 py-4 bg-white hover:bg-purple-50 transition-all flex justify-between items-center" onclick="toggleAccordion('acc2')">
+                            <span class="font-bold text-lg text-gray-800">Moses: A Case Study in Trust 🪨</span>
+                            <svg class="w-6 h-6 transform transition-transform" id="acc2-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 py-4 bg-gray-50" id="acc2">
+                            <h4 class="font-bold text-lg mb-3 text-gray-800">Moses' Incredible Track Record:</h4>
+                            <ul class="space-y-3 mb-4">
+                                <li class="flex gap-3">
+                                    <span class="text-purple-600 font-bold">✓</span>
+                                    <span class="text-gray-700"><strong>Confronting Pharaoh:</strong> Faced one of the most powerful men in the world, trusting God's protection</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-purple-600 font-bold">✓</span>
+                                    <span class="text-gray-700"><strong>Parting the Red Sea:</strong> Stretched out his hand and the sea parted, saving the Israelites from Pharaoh's army</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-purple-600 font-bold">✓</span>
+                                    <span class="text-gray-700"><strong>Provision of Manna:</strong> Trusted God to rain down bread from heaven for sustenance in the wilderness</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-purple-600 font-bold">✓</span>
+                                    <span class="text-gray-700"><strong>Water from the Rock (First Time):</strong> Struck the rock at Horeb and water came out</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-purple-600 font-bold">✓</span>
+                                    <span class="text-gray-700"><strong>Victory over the Amalekites:</strong> Held up his staff for victory in battle</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-purple-600 font-bold">✓</span>
+                                    <span class="text-gray-700"><strong>Meeting God at Mount Sinai:</strong> Received the Ten Commandments</span>
+                                </li>
+                            </ul>
+
+                            <h4 class="font-bold text-lg mb-3 text-gray-800 mt-6">The Fatal Mistake:</h4>
+                            <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-600">
+                                <p class="text-gray-700 mb-3">After <strong>40 years</strong> of faithful leadership, the Israelites were thirsty again. This time, God told Moses to <em>speak</em> to the rock, not strike it. But Moses, frustrated with the people, called them "rebels" and said <strong>"Must WE bring you water?"</strong> (taking credit for God's work) and struck the rock twice instead of speaking to it.</p>
+                                
+                                <button onclick="openModal('moses-consequence')" class="mt-3 text-purple-600 hover:text-purple-800 font-semibold underline">
+                                    📖 Read God's Response
+                                </button>
+                            </div>
+
+                            <div class="mt-4 p-4 bg-purple-50 rounded-lg">
+                                <p class="text-gray-700 italic">This illustrates the profound truth: <strong>"Trust takes years to build, seconds to break, and forever to repair."</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Section 3 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="accordion-button w-full text-left px-6 py-4 bg-white hover:bg-purple-50 transition-all flex justify-between items-center" onclick="toggleAccordion('acc3')">
+                            <span class="font-bold text-lg text-gray-800">Five Reasons Why We Struggle to Trust God 🚧</span>
+                            <svg class="w-6 h-6 transform transition-transform" id="acc3-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 py-4 bg-gray-50" id="acc3">
+                            <div class="space-y-6">
+                                <div class="bg-white p-5 rounded-lg border-l-4 border-purple-600">
+                                    <h4 class="font-bold text-lg mb-2 text-purple-700">1. We Like Control 🎮</h4>
+                                    <p class="text-gray-700 mb-3">We have our schedules, diaries, planners, budgets, banking apps, fitness trackers—we try to maintain complete control of everything. We predict our own future. But eventually chaos erupts (tragedy, health concern, financial crisis) and throws us off balance. That's usually when people come running back to God.</p>
+                                    <p class="text-gray-600 italic">Antidote: <strong>God is in Command</strong></p>
+                                    <button onclick="openModal('control-verse')" class="mt-2 text-purple-600 hover:text-purple-800 font-semibold underline text-sm">
+                                        View Scripture →
+                                    </button>
+                                </div>
+
+                                <div class="bg-white p-5 rounded-lg border-l-4 border-indigo-600">
+                                    <h4 class="font-bold text-lg mb-2 text-indigo-700">2. We're Scared 😰</h4>
+                                    <p class="text-gray-700 mb-3">We're scared of an unknown future, of taking risks, of taking a leap of faith. We don't want to rock the boat or change the status quo. Maybe God is calling us to something right now but we're too scared to take the jump, even though God has something great in store.</p>
+                                    <p class="text-gray-600 italic">Antidote: <strong>God is Our Courage</strong></p>
+                                    <button onclick="openModal('fear-verse')" class="mt-2 text-indigo-600 hover:text-indigo-800 font-semibold underline text-sm">
+                                        View Scripture →
+                                    </button>
+                                </div>
+
+                                <div class="bg-white p-5 rounded-lg border-l-4 border-violet-600">
+                                    <h4 class="font-bold text-lg mb-2 text-violet-700">3. We've Been Disappointed 💔</h4>
+                                    <p class="text-gray-700 mb-3">We've been disappointed by other people, so we don't trust them as much. But we can also be disappointed by God—maybe we've been praying about something for so long, giving it to God, but He's not coming through for us or not answering the prayer in the way we want.</p>
+                                    <p class="text-gray-600 italic">Antidote: <strong>God Never Fails</strong></p>
+                                    <button onclick="openModal('disappointment-verse')" class="mt-2 text-violet-600 hover:text-violet-800 font-semibold underline text-sm">
+                                        View Scripture →
+                                    </button>
+                                </div>
+
+                                <div class="bg-white p-5 rounded-lg border-l-4 border-fuchsia-600">
+                                    <h4 class="font-bold text-lg mb-2 text-fuchsia-700">4. We Don't Understand God's Ways 🤔</h4>
+                                    <p class="text-gray-700 mb-3">When we buy something or invest, we do all the research first to understand if it's a good investment. We're meticulous about understanding details before jumping in. But God says to flip that around: Believe in me, trust in me first, and then grow in your understanding. We struggle with this.</p>
+                                    <p class="text-gray-600 italic">Antidote: <strong>God is Wise</strong></p>
+                                    <button onclick="openModal('understanding-verse')" class="mt-2 text-fuchsia-600 hover:text-fuchsia-800 font-semibold underline text-sm">
+                                        View Scripture →
+                                    </button>
+                                </div>
+
+                                <div class="bg-white p-5 rounded-lg border-l-4 border-pink-600">
+                                    <h4 class="font-bold text-lg mb-2 text-pink-700">5. We Want Instant Gratification ⚡</h4>
+                                    <p class="text-gray-700 mb-3">We want things to happen right now. We treat God like a vending machine—push a button and the thing happens. But God wants us to be patient and work in His time, not ours. The Israelites' 11-day journey took 40 years because God was refining them to be His holy nation.</p>
+                                    <p class="text-gray-600 italic">Antidote: <strong>God's Timing is Perfect</strong></p>
+                                    <button onclick="openModal('timing-verse')" class="mt-2 text-pink-600 hover:text-pink-800 font-semibold underline text-sm">
+                                        View Scripture →
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 p-5 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-lg">
+                                <h4 class="font-bold text-lg mb-2 text-gray-800">The Parent-Child Parallel 👨‍👩‍👧‍👦</h4>
+                                <p class="text-gray-700">Pastor Tim shared how having children helps us understand our relationship with God. Kids have no control but act like they do, want instant gratification, don't understand our bigger plans (like waiting for ice cream after dinner or waiting until they're old enough for a dog). When we act the same way toward God, He's looking at us thinking, "What are you doing? I have a much bigger, better plan for you."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Section 4 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="accordion-button w-full text-left px-6 py-4 bg-white hover:bg-purple-50 transition-all flex justify-between items-center" onclick="toggleAccordion('acc4')">
+                            <span class="font-bold text-lg text-gray-800">Unlimited God: The "If You Can" Moment ✨</span>
+                            <svg class="w-6 h-6 transform transition-transform" id="acc4-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 py-4 bg-gray-50" id="acc4">
+                            <p class="mb-4 text-gray-700">We often limit God because we don't believe He can do everything we're asking. In Mark 9, a father brought his son (who had an impure spirit causing convulsions and inability to speak) to Jesus and said: <strong>"But if you can do anything, have compassion on us and help us."</strong></p>
+
+                            <div class="bg-white p-4 rounded-lg mb-4 border-l-4 border-purple-600">
+                                <p class="text-gray-700 mb-2"><strong>Jesus' Response:</strong></p>
+                                <p class="text-purple-700 font-bold text-lg mb-2">"'If you can'?!"</p>
+                                <p class="text-gray-700">The exclamation point shows Jesus was animated—"Of course! Who are you talking to right now? <strong>All things are possible for one who believes.</strong>"</p>
+                            </div>
+
+                            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-2 text-gray-800">The Perfect Human Response 🙏</h4>
+                                <p class="text-gray-700 mb-3">Immediately the father cried out:</p>
+                                <p class="text-2xl font-bold text-purple-700 mb-3">"I believe; help my unbelief!"</p>
+                                <p class="text-gray-700 italic">This is all of us. We believe, but we don't always believe. We go through disappointments, periods of doubt, struggle with lack of hope. If we would just cry out, "God, I believe in you, help my unbelief," that would be incredibly helpful.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Section 5 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="accordion-button w-full text-left px-6 py-4 bg-white hover:bg-purple-50 transition-all flex justify-between items-center" onclick="toggleAccordion('acc5')">
+                            <span class="font-bold text-lg text-gray-800">The Sampan Story: Peace in the Storm ⛵</span>
+                            <svg class="w-6 h-6 transform transition-transform" id="acc5-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 py-4 bg-gray-50" id="acc5">
+                            <p class="mb-4 text-gray-700">Pastor Tim shared a personal story from 2006 when his family lived on Lamma Island. One windy night, they missed the last ferry to their village and had to take a <span class="term" onclick="showTooltip('Sampan', 'A sampan is a small wooden boat, common in Hong Kong waters, typically used for short-distance water transport.')">sampan</span> across the Lamma Channel (South China Sea).</p>
+
+                            <div class="bg-white p-4 rounded-lg mb-4">
+                                <p class="text-gray-700 mb-3"><strong>The Experience:</strong></p>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                    <li>The boat rocked violently in the wind</li>
+                                    <li>Container ships passing by created massive waves</li>
+                                    <li>Pastor Tim was holding one-year-old Lily, absolutely terrified</li>
+                                    <li>He and Cindy were making emergency plans, joking about Titanic scenarios</li>
+                                    <li>He was questioning all his life decisions</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-5 rounded-lg border-l-4 border-blue-600">
+                                <h4 class="font-bold text-lg mb-2 text-gray-800">The Turning Point 🌊</h4>
+                                <p class="text-gray-700 mb-3">In the midst of all this chaos, Pastor Tim looked at the boat captain—who was completely stoic, holding the motor, looking like they were on crystal clear waters. Not a care in the world.</p>
+                                <p class="text-gray-700 italic"><strong>"All of a sudden, this peace which surpassed all understanding came upon me. I thought, 'Oh, okay. He looks like he's under control. If he's doing fine, then I think we'll be okay.'"</strong></p>
+                            </div>
+
+                            <div class="mt-4 p-4 bg-purple-50 rounded-lg">
+                                <p class="text-gray-700"><strong>The Parallel:</strong> This is exactly how we should look to God in our storms. If we would just look to Him, we can find that transcendent peace even in chaos. Like Jesus sleeping in the boat during the storm while the disciples panicked—He asked them, "Why are you so afraid? Do you still have no faith?"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Section 6 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="accordion-button w-full text-left px-6 py-4 bg-white hover:bg-purple-50 transition-all flex justify-between items-center" onclick="toggleAccordion('acc6')">
+                            <span class="font-bold text-lg text-gray-800">Philippians 4:6-7 Framework: Four Steps to Peace 🕊️</span>
+                            <svg class="w-6 h-6 transform transition-transform" id="acc6-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 py-4 bg-gray-50" id="acc6">
+                            <div class="verse-card mb-6">
+                                <p class="text-gray-700 mb-2"><strong>Philippians 4:6-7 (NIV)</strong></p>
+                                <p class="text-lg text-gray-800 italic">"Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."</p>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                                <div class="bg-white p-5 rounded-lg border-t-4 border-purple-600">
+                                    <h4 class="font-bold text-lg mb-2 text-purple-700">1. Prayer 🙏</h4>
+                                    <p class="text-gray-700 mb-3">Acknowledge God and His goodness.</p>
+                                    <div class="bg-purple-50 p-3 rounded">
+                                        <p class="font-semibold text-sm text-purple-800">Fresh Start Practice:</p>
+                                        <p class="text-gray-700 text-sm">Every morning, give the day to God and start it with prayer. Before getting out of bed or looking at your phone, thank God and praise Him that you have life, that He is who He is, that He loves us and has a plan for us.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-5 rounded-lg border-t-4 border-indigo-600">
+                                    <h4 class="font-bold text-lg mb-2 text-indigo-700">2. Petition 📝</h4>
+                                    <p class="text-gray-700 mb-3">Bring your specific need or worry. Give that to God.</p>
+                                    <div class="bg-indigo-50 p-3 rounded">
+                                        <p class="font-semibold text-sm text-indigo-800">Fresh Start Practice:</p>
+                                        <p class="text-gray-700 text-sm">Keep a prayer journal (on paper or your phone) so you can see how God answers those prayers. Set a daily notification to write down your prayer requests.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-5 rounded-lg border-t-4 border-violet-600">
+                                    <h4 class="font-bold text-lg mb-2 text-violet-700">3. Thanksgiving 🙌</h4>
+                                    <p class="text-gray-700 mb-3">Thank Him for hearing you and for His work.</p>
+                                    <div class="bg-violet-50 p-3 rounded">
+                                        <p class="font-semibold text-sm text-violet-800">Fresh Start Practice:</p>
+                                        <p class="text-gray-700 text-sm">Record your gratitude. Think about and write down the things you're thankful for every single day. Don't take anything for granted—the air in your lungs, roof over your head, food, job, friends, family.</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-5 rounded-lg border-t-4 border-fuchsia-600">
+                                    <h4 class="font-bold text-lg mb-2 text-fuchsia-700">4. Release 🎈</h4>
+                                    <p class="text-gray-700 mb-3">Hand it over and trust Him.</p>
+                                    <div class="bg-fuchsia-50 p-3 rounded">
+                                        <p class="font-semibold text-sm text-fuchsia-800">Fresh Start Practice:</p>
+                                        <p class="text-gray-700 text-sm">Pause in your day and make declarations. Set an alarm or when something is weighing you down too much, stop what you're doing and give it to God. Pause and make that declaration to Him.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-gradient-to-r from-purple-100 to-indigo-100 p-6 rounded-lg">
+                                <h4 class="font-bold text-xl mb-3 text-gray-800">The Promise 💎</h4>
+                                <p class="text-lg text-gray-700 mb-2">When you give those requests to God...</p>
+                                <p class="text-2xl font-bold text-purple-700">"The peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."</p>
+                                <p class="text-gray-700 mt-3 italic">This is the supernatural peace we sang about earlier: "I've got peace that makes no sense." When you're in chaos or a storm of life, you can trust God, release it to Him, and find that transcendental peace.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Section 7 -->
+                    <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <button class="accordion-button w-full text-left px-6 py-4 bg-white hover:bg-purple-50 transition-all flex justify-between items-center" onclick="toggleAccordion('acc7')">
+                            <span class="font-bold text-lg text-gray-800">Final Reminder: God Is My Rock 🪨</span>
+                            <svg class="w-6 h-6 transform transition-transform" id="acc7-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 py-4 bg-gray-50" id="acc7">
+                            <div class="verse-card mb-4">
+                                <p class="text-gray-700 mb-2"><strong>Psalm 62:1-2 (NIV)</strong></p>
+                                <p class="text-lg text-gray-800 italic">"Truly my soul finds rest in God; my salvation comes from him. Truly he is my rock and my salvation; he is my fortress, I will never be shaken."</p>
+                            </div>
+
+                            <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 rounded-lg text-center">
+                                <p class="text-sm mb-2 opacity-90">When the storm comes and you're feeling disoriented, remember this simple declaration:</p>
+                                <p class="text-3xl font-bold mb-2">GOD IS MY ROCK</p>
+                                <p class="text-2xl font-bold">I WILL NOT BE SHAKEN</p>
+                            </div>
+
+                            <div class="mt-6 p-4 bg-white rounded-lg border-l-4 border-purple-600">
+                                <p class="text-gray-700"><strong>We need to consistently remind ourselves of God's faithfulness so that we can remain faithful.</strong> We need to remind ourselves of the great things God has done in our lives so that we can trust in Him fully. Because we're weak at times, we need these daily reminders constantly to find trust.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bible Verses Tab -->
+                <div id="verses-tab" class="tab-content hidden">
+                    <h2 class="heading-font text-3xl font-bold mb-6 text-gray-800">Key Scripture References ✝️</h2>
+
+                    <div class="verse-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-purple-700">Numbers 20:7-12</h4>
+                            <span class="text-sm text-gray-500">Moses Strikes the Rock</span>
+                        </div>
+                        <p class="text-gray-800 mb-2">The Lord said to Moses, "Take the staff, and you and your brother Aaron gather the assembly together. Speak to that rock before their eyes and it will pour out its water. You will bring water out of the rock for the community so they and their livestock can drink."</p>
+                        <p class="text-gray-800 mb-2">So Moses took the staff from the Lord's presence, just as he commanded him. He and Aaron gathered the assembly together in front of the rock and Moses said to them, "Listen, you rebels, must we bring you water out of this rock?" Then Moses raised his arm and struck the rock twice with his staff. Water gushed out, and the community and their livestock drank.</p>
+                        <p class="text-gray-800 italic">But the Lord said to Moses and Aaron, "Because you did not trust in me enough to honor me as holy in the sight of the Israelites, you will not bring this community into the land I give them."</p>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-purple-700">Proverbs 16:9</h4>
+                            <span class="text-sm text-gray-500">God is in Command</span>
+                        </div>
+                        <p class="text-gray-800">"In their hearts humans plan their course, but the Lord establishes their steps."</p>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-purple-700">Psalm 46:1-2</h4>
+                            <span class="text-sm text-gray-500">God is Our Courage</span>
+                        </div>
+                        <p class="text-gray-800">"God is our refuge and strength, an ever-present help in trouble. Therefore we will not fear, though the earth give way and the mountains fall into the heart of the sea."</p>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-purple-700">Psalm 55:22</h4>
+                            <span class="text-sm text-gray-500">God Never Fails</span>
+                        </div>
+                        <p class="text-gray-800">"Cast your cares on the Lord and he will sustain you; he will never let the righteous be shaken."</p>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-purple-700">Proverbs 3:5-6</h4>
+                            <span class="text-sm text-gray-500">God is Wise</span>
+                        </div>
+                        <p class="text-gray-800">"Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."</p>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-purple-700">Psalm 27:14</h4>
+                            <span class="text-sm text-gray-500">God's Timing is Perfect</span>
+                        </div>
+                        <p class="text-gray-800">"Wait for the Lord; be strong and take heart and wait for the Lord."</p>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-purple-700">Mark 9:22-24</h4>
+                            <span class="text-sm text-gray-500">"I Believe; Help My Unbelief"</span>
+                        </div>
+                        <p class="text-gray-800 mb-2">"But if you can do anything, take pity on us and help us."</p>
+                        <p class="text-gray-800 mb-2">"'If you can'?" said Jesus. "Everything is possible for one who believes."</p>
+                        <p class="text-gray-800 italic">Immediately the boy's father exclaimed, "I do believe; help me overcome my unbelief!"</p>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-purple-700">Philippians 4:6-7</h4>
+                            <span class="text-sm text-gray-500">The Peace Framework</span>
+                        </div>
+                        <p class="text-gray-800">"Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."</p>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-purple-700">Psalm 62:1-2</h4>
+                            <span class="text-sm text-gray-500">God Is My Rock</span>
+                        </div>
+                        <p class="text-gray-800">"Truly my soul finds rest in God; my salvation comes from him. Truly he is my rock and my salvation; he is my fortress, I will never be shaken."</p>
+                    </div>
+
+                    <div class="mt-8 p-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border-l-4 border-purple-600">
+                        <h3 class="font-bold text-xl mb-3 text-gray-800">Notable Quote</h3>
+                        <p class="text-lg text-gray-700 italic mb-2">"Never be afraid to trust an unknown future to a known God."</p>
+                        <p class="text-sm text-gray-600">— Corrie ten Boom, Holocaust survivor</p>
+                    </div>
+                </div>
+
+                <!-- Practical Application Tab -->
+                <div id="application-tab" class="tab-content hidden">
+                    <h2 class="heading-font text-3xl font-bold mb-6 text-gray-800">Practical Ways to Trust God Deeper ✨</h2>
+
+                    <div class="bg-gradient-to-r from-purple-100 to-indigo-100 p-6 rounded-lg mb-8">
+                        <h3 class="font-bold text-xl mb-3 text-gray-800">Daily Fresh Start Practices 🌅</h3>
+                        <p class="text-gray-700">These are actionable steps you can implement today to develop deeper trust in God:</p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-600">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-3xl">🙏</span>
+                                <h4 class="font-bold text-xl text-gray-800">Morning Prayer Routine</h4>
+                            </div>
+                            <p class="text-gray-700 mb-3">Before getting out of bed or checking your phone, acknowledge God and His goodness. Thank Him for the gift of a new day, for His presence, and for His plans.</p>
+                            <div class="bg-purple-50 p-4 rounded">
+                                <p class="font-semibold text-sm text-purple-800 mb-2">Try This:</p>
+                                <p class="text-gray-700 text-sm">Set your alarm 5 minutes earlier. When it goes off, don't reach for your phone—close your eyes and simply say, "Good morning, God. Thank You for this day. I trust You with everything ahead."</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-indigo-600">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-3xl">📝</span>
+                                <h4 class="font-bold text-xl text-gray-800">Keep a Prayer Journal</h4>
+                            </div>
+                            <p class="text-gray-700 mb-3">Write down your specific prayer requests so you can track how God answers them. This builds faith as you see His faithfulness over time.</p>
+                            <div class="bg-indigo-50 p-4 rounded">
+                                <p class="font-semibold text-sm text-indigo-800 mb-2">Try This:</p>
+                                <p class="text-gray-700 text-sm">Use your phone's notes app or a physical journal. Create three columns: Date | Request | God's Answer. Set a daily notification to remind you to write down what you're praying for.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-violet-600">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-3xl">🙌</span>
+                                <h4 class="font-bold text-xl text-gray-800">Daily Gratitude Practice</h4>
+                            </div>
+                            <p class="text-gray-700 mb-3">Actively record what you're thankful for every single day. Don't take anything for granted—the air in your lungs, food, shelter, relationships, opportunities.</p>
+                            <div class="bg-violet-50 p-4 rounded">
+                                <p class="font-semibold text-sm text-violet-800 mb-2">Try This:</p>
+                                <p class="text-gray-700 text-sm">Every evening before bed, write down 3-5 specific things you're grateful for that day. Be detailed: instead of "family," write "the way my daughter laughed at dinner tonight."</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-fuchsia-600">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-3xl">⏸️</span>
+                                <h4 class="font-bold text-xl text-gray-800">Pause and Declare</h4>
+                            </div>
+                            <p class="text-gray-700 mb-3">Throughout the day when anxiety or worry hits, stop what you're doing and make a declaration of trust to God. Release the burden to Him.</p>
+                            <div class="bg-fuchsia-50 p-4 rounded">
+                                <p class="font-semibold text-sm text-fuchsia-800 mb-2">Try This:</p>
+                                <p class="text-gray-700 text-sm mb-2">When you feel overwhelmed, literally pause. Take three deep breaths and say out loud (or silently): "God is my rock. I will not be shaken." Or simply: "I trust You, God. This is Yours now."</p>
+                                <p class="text-gray-700 text-sm">Set 2-3 alarms throughout your day labeled "Pause & Trust" as reminders.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-pink-600">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-3xl">📖</span>
+                                <h4 class="font-bold text-xl text-gray-800">Memorize Trust Scriptures</h4>
+                            </div>
+                            <p class="text-gray-700 mb-3">When storms hit, having Scripture memorized gives you an anchor. Start with short, powerful verses you can recall instantly.</p>
+                            <div class="bg-pink-50 p-4 rounded">
+                                <p class="font-semibold text-sm text-pink-800 mb-2">Start With These:</p>
+                                <ul class="text-gray-700 text-sm space-y-1 list-disc list-inside">
+                                    <li>"God is my rock. I will not be shaken." (Psalm 62:2)</li>
+                                    <li>"I believe; help my unbelief." (Mark 9:24)</li>
+                                    <li>"God is our refuge and strength." (Psalm 46:1)</li>
+                                </ul>
+                                <p class="text-gray-700 text-sm mt-3">Write them on sticky notes and place them where you'll see them: bathroom mirror, computer screen, car dashboard.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg">
+                        <h3 class="font-bold text-2xl mb-3">Which Trust Barrier Do You Face Most? 🤔</h3>
+                        <p class="mb-4">Reflect on the five barriers we discussed. Which one resonates most with where you are right now?</p>
+                        <div class="space-y-2">
+                            <div class="bg-white/20 p-3 rounded">
+                                <span class="font-bold">Control:</span> You schedule everything and panic when plans change
+                            </div>
+                            <div class="bg-white/20 p-3 rounded">
+                                <span class="font-bold">Fear:</span> You're scared to take risks or step into the unknown
+                            </div>
+                            <div class="bg-white/20 p-3 rounded">
+                                <span class="font-bold">Disappointment:</span> Past prayers feel unanswered; you're struggling to believe
+                            </div>
+                            <div class="bg-white/20 p-3 rounded">
+                                <span class="font-bold">Misunderstanding:</span> God's ways don't make sense to you
+                            </div>
+                            <div class="bg-white/20 p-3 rounded">
+                                <span class="font-bold">Impatience:</span> You want results NOW and can't wait on God's timing
+                            </div>
+                        </div>
+                        <p class="mt-4 italic">Choose ONE barrier to focus on this week. Apply the corresponding antidote scripture and practice.</p>
+                    </div>
+                </div>
+
+                <!-- Reflection Questions Tab -->
+                <div id="reflection-tab" class="tab-content hidden">
+                    <h2 class="heading-font text-3xl font-bold mb-6 text-gray-800">Reflection Questions 💭</h2>
+
+                    <div class="bg-gradient-to-r from-purple-100 to-indigo-100 p-6 rounded-lg mb-8">
+                        <p class="text-gray-700 text-lg">Take time to honestly reflect on these questions. Consider journaling your responses or discussing them with a trusted friend or small group.</p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-600">
+                            <div class="flex items-start gap-3 mb-4">
+                                <span class="text-2xl">1️⃣</span>
+                                <h4 class="font-bold text-lg text-gray-800">Which of the five trust barriers (control, fear, disappointment, misunderstanding, or impatience) do I struggle with the most, and what would trusting God in that area look like today?</h4>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded">
+                                <p class="text-sm text-purple-800 font-semibold mb-2">Dig Deeper:</p>
+                                <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside">
+                                    <li>What specific situation in my life right now reveals this barrier?</li>
+                                    <li>How has this barrier affected my relationship with God?</li>
+                                    <li>What would it look like to release this specific area to God this week?</li>
+                                    <li>Which scripture antidote do I need to memorize and apply?</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-indigo-600">
+                            <div class="flex items-start gap-3 mb-4">
+                                <span class="text-2xl">2️⃣</span>
+                                <h4 class="font-bold text-lg text-gray-800">When I feel anxious or uncertain, how can I practically hand my worries over to God and experience His peace, as Philippians 4:6-7 promises?</h4>
+                            </div>
+                            <div class="bg-indigo-50 p-4 rounded">
+                                <p class="text-sm text-indigo-800 font-semibold mb-2">Dig Deeper:</p>
+                                <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside">
+                                    <li>What specific anxieties am I carrying right now that I need to release?</li>
+                                    <li>Have I been treating God like a vending machine, or am I genuinely seeking relationship?</li>
+                                    <li>What does "peace that transcends understanding" actually mean in my current circumstances?</li>
+                                    <li>Which of the four steps (prayer, petition, thanksgiving, release) am I weakest at?</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-violet-600">
+                            <div class="flex items-start gap-3 mb-4">
+                                <span class="text-2xl">💡</span>
+                                <h4 class="font-bold text-lg text-gray-800">Additional Reflection: The "I Believe; Help My Unbelief" Prayer</h4>
+                            </div>
+                            <div class="bg-violet-50 p-4 rounded">
+                                <p class="text-gray-700 mb-3">Like the father in Mark 9, we often have simultaneous belief and doubt. This is normal and human.</p>
+                                <p class="text-sm text-violet-800 font-semibold mb-2">Reflect:</p>
+                                <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside">
+                                    <li>Where do I genuinely believe God, and where am I struggling with unbelief?</li>
+                                    <li>Am I honest with God about my doubts, or do I pretend to have it all together?</li>
+                                    <li>What past evidence do I have of God's faithfulness that I'm forgetting?</li>
+                                    <li>How can I practice the "I believe; help my unbelief" prayer this week?</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-fuchsia-600">
+                            <div class="flex items-start gap-3 mb-4">
+                                <span class="text-2xl">🌊</span>
+                                <h4 class="font-bold text-lg text-gray-800">The Sampan Story Application: Where is God the "Captain" in my storm?</h4>
+                            </div>
+                            <div class="bg-fuchsia-50 p-4 rounded">
+                                <p class="text-gray-700 mb-3">Pastor Tim found peace by looking at the calm, confident captain instead of focusing on the violent waves.</p>
+                                <p class="text-sm text-fuchsia-800 font-semibold mb-2">Reflect:</p>
+                                <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside">
+                                    <li>What "storm" am I currently in? (Health, finances, relationships, work, etc.)</li>
+                                    <li>Am I focusing more on the waves (circumstances) or the Captain (God)?</li>
+                                    <li>What would it look like for me to shift my focus from my problems to God's character?</li>
+                                    <li>Can I identify one area where I'm "freaking out" that I need to surrender to God's control?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg">
+                        <h3 class="font-bold text-2xl mb-3">Action Step for This Week 🎯</h3>
+                        <p class="mb-4">Based on your reflections, what is ONE specific, measurable action you will take this week to trust God deeper?</p>
+                        <div class="bg-white/20 p-4 rounded">
+                            <p class="text-sm mb-2">Examples:</p>
+                            <ul class="text-sm space-y-1 list-disc list-inside">
+                                <li>"I will start each morning with 5 minutes of prayer before checking my phone"</li>
+                                <li>"I will write down 3 things I'm grateful for every evening this week"</li>
+                                <li>"I will memorize Psalm 62:1-2 and recite it when I feel anxious"</li>
+                                <li>"I will identify one area I'm trying to control and consciously release it to God daily"</li>
+                            </ul>
+                        </div>
+                        <p class="mt-4 italic">Write down your commitment and share it with someone who will hold you accountable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="moses-consequence" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('moses-consequence')">&times;</span>
+            <h3 class="heading-font text-2xl font-bold mb-4 text-gray-800">God's Response to Moses</h3>
+            <div class="verse-card">
+                <p class="text-gray-800 font-semibold mb-2">Numbers 20:12 (NIV)</p>
+                <p class="text-lg text-gray-700 italic">"But the Lord said to Moses and Aaron, 'Because you did not trust in me enough to honor me as holy in the sight of the Israelites, you will not bring this community into the land I give them.'"</p>
+            </div>
+            <div class="mt-4 p-4 bg-red-50 rounded-lg">
+                <p class="text-gray-700"><strong>The Consequence:</strong> After 40 years of faithful leadership, Moses was not allowed to enter the Promised Land because of this one moment of not fully trusting God. He could see it from a distance, but could not enter.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="control-verse" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('control-verse')">&times;</span>
+            <h3 class="heading-font text-2xl font-bold mb-4 text-purple-700">Antidote to Control: God is in Command</h3>
+            <div class="verse-card">
+                <p class="text-gray-800 font-semibold mb-2">Proverbs 16:9 (NIV)</p>
+                <p class="text-lg text-gray-700 italic">"In their hearts humans plan their course, but the Lord establishes their steps."</p>
+            </div>
+            <div class="mt-4 p-4 bg-purple-50 rounded-lg">
+                <p class="text-gray-700"><strong>Application:</strong> It's not wrong to make plans, but we must hold them loosely. When our plans don't work out, we can trust that God has a better plan. Like the sermon service being filmed on Friday for a potential T8, but God's plan was for everyone to gather in person on a beautiful T3 Sunday!</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="fear-verse" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('fear-verse')">&times;</span>
+            <h3 class="heading-font text-2xl font-bold mb-4 text-indigo-700">Antidote to Fear: God is Our Courage</h3>
+            <div class="verse-card">
+                <p class="text-gray-800 font-semibold mb-2">Psalm 46:1-2 (NIV)</p>
+                <p class="text-lg text-gray-700 italic">"God is our refuge and strength, an ever-present help in trouble. Therefore we will not fear, though the earth give way and the mountains fall into the heart of the sea."</p>
+            </div>
+            <div class="mt-4 p-4 bg-indigo-50 rounded-lg">
+                <p class="text-gray-700"><strong>Application:</strong> When facing scary situations—new ventures, big decisions, unknown futures—we can trust that God is our strength and refuge. He is WITH us in the trouble, not watching from afar.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="disappointment-verse" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('disappointment-verse')">&times;</span>
+            <h3 class="heading-font text-2xl font-bold mb-4 text-violet-700">Antidote to Disappointment: God Never Fails</h3>
+            <div class="verse-card">
+                <p class="text-gray-800 font-semibold mb-2">Psalm 55:22 (NIV)</p>
+                <p class="text-lg text-gray-700 italic">"Cast your cares on the Lord and he will sustain you; he will never let the righteous be shaken."</p>
+            </div>
+            <div class="mt-4 p-4 bg-violet-50 rounded-lg">
+                <p class="text-gray-700"><strong>Application:</strong> When prayers seem unanswered or God's response isn't what we hoped for, we can give those disappointments TO Him. He promises to sustain us and never let us be ultimately shaken, even when we feel disappointed.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="understanding-verse" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('understanding-verse')">&times;</span>
+            <h3 class="heading-font text-2xl font-bold mb-4 text-fuchsia-700">Antidote to Misunderstanding: God is Wise</h3>
+            <div class="verse-card">
+                <p class="text-gray-800 font-semibold mb-2">Proverbs 3:5-6 (NIV)</p>
+                <p class="text-lg text-gray-700 italic">"Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."</p>
+            </div>
+            <div class="mt-4 p-4 bg-fuchsia-50 rounded-lg">
+                <p class="text-gray-700"><strong>Application:</strong> Like children who don't understand their parents' bigger plans (waiting for the right time for a dog, or ice cream after dinner), we often don't understand God's ways. But we can trust Him FIRST, then grow in understanding, rather than demanding to understand before we trust.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="timing-verse" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('timing-verse')">&times;</span>
+            <h3 class="heading-font text-2xl font-bold mb-4 text-pink-700">Antidote to Impatience: God's Timing is Perfect</h3>
+            <div class="verse-card">
+                <p class="text-gray-800 font-semibold mb-2">Psalm 27:14 (NIV)</p>
+                <p class="text-lg text-gray-700 italic">"Wait for the Lord; be strong and take heart and wait for the Lord."</p>
+            </div>
+            <div class="mt-4 p-4 bg-pink-50 rounded-lg">
+                <p class="text-gray-700"><strong>Application:</strong> The Israelites' 11-day journey took 40 years because God was refining them into His holy nation. When we want instant results but God says "wait," He's not ignoring us—He's preparing us, refining us, and working for our ultimate good in His perfect timing.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.95); color: #667eea; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3); max-width: 300px; word-wrap: break-word; box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2); font-family: 'Inter', sans-serif;">
+        <div style="margin-bottom: 4px; font-weight: bold; color: #667eea; line-height: 1.3;">
+            Generated using LLM with supervision and polishing by 
+            <a href="../index.html" style="color: #667eea; text-decoration: none; border-bottom: 1px dotted #667eea;" target="_blank">
+                benjaminficusmicrocarpa
+            </a>
+        </div>
+        <div>
+            <a href="../license.html" style="color: #667eea; text-decoration: none; font-size: 0.75rem;" target="_blank">
+                Released under the MIT License
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Header wipe effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const headerContainer = document.getElementById('headerContainer');
+            const headerText = document.getElementById('headerText');
+            
+            const maxHeaderHeight = 400;
+            const minHeaderHeight = 100;
+            const scrollRange = maxHeaderHeight - minHeaderHeight; // 300px of scroll range
+            
+            let isScrolling = false;
+            
+            function updateHeader() {
+                const scrollY = window.scrollY;
+                
+                // Calculate header height: 1:1 relationship with scroll
+                // Header starts shrinking immediately as user scrolls
+                const currentHeight = Math.max(maxHeaderHeight - scrollY, minHeaderHeight);
+                
+                headerContainer.style.height = currentHeight + 'px';
+                
+                // Keep text visible but fade out subtitle and buttons
+                headerText.style.opacity = '1';
+                
+                if (currentHeight <= minHeaderHeight) {
+                    headerContainer.classList.add('header-minimized');
+                } else {
+                    headerContainer.classList.remove('header-minimized');
+                }
+                
+                isScrolling = false;
+            }
+            
+            function onScroll() {
+                if (!isScrolling) {
+                    requestAnimationFrame(updateHeader);
+                    isScrolling = true;
+                }
+            }
+            
+            // Throttled scroll event listener
+            window.addEventListener('scroll', onScroll, { passive: true });
+            
+            // Initial call to set correct state
+            updateHeader();
+            
+            // Handle resize events
+            window.addEventListener('resize', function() {
+                updateHeader();
+            }, { passive: true });
+        });
+
+        // Tab switching
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            tabs.forEach(tab => tab.classList.add('hidden'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName + '-tab').classList.remove('hidden');
+            event.target.classList.add('active');
+        }
+
+        // Accordion toggle
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            
+            content.classList.toggle('active');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Keyboard navigation for accessibility
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Add focus management for accordion buttons
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.setAttribute('role', 'button');
+            button.setAttribute('tabindex', '0');
+            button.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Tooltip Management
+        function showTooltip(title, content) {
+            const tooltip = document.getElementById('tooltipContainer');
+            const titleElement = document.getElementById('tooltipTitle');
+            const contentElement = document.getElementById('tooltipContent');
+            
+            titleElement.textContent = title;
+            contentElement.textContent = content;
+            tooltip.classList.add('active');
+        }
+
+        function closeTooltip() {
+            document.getElementById('tooltipContainer').classList.remove('active');
+        }
+
+        // Enhanced mobile responsiveness for tooltips
+        function checkMobile() {
+            const tooltip = document.getElementById('tooltipContainer');
+            if (window.innerWidth <= 768) {
+                tooltip.style.position = 'fixed';
+                tooltip.style.bottom = '140px';
+                tooltip.style.top = 'auto';
+                tooltip.style.left = '10px';
+                tooltip.style.right = '10px';
+                tooltip.style.width = 'auto';
+                tooltip.style.maxWidth = 'none';
+            } else {
+                tooltip.style.position = 'fixed';
+                tooltip.style.bottom = '20px';
+                tooltip.style.top = 'auto';
+                tooltip.style.left = '20px';
+                tooltip.style.right = 'auto';
+                tooltip.style.width = '320px';
+                tooltip.style.maxWidth = '90vw';
+            }
+        }
+
+        // Check mobile on load and resize
+        window.addEventListener('load', checkMobile);
+        window.addEventListener('resize', checkMobile);
+    </script>
+</body>
+</html>
