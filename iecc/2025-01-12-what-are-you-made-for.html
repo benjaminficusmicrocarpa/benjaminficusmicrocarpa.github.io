@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Are You Made For? | Island ECC Sermon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #2C5F7C;
+            --secondary: #5A8FA8;
+            --accent: #D4A574;
+            --light: #F5F1E8;
+            --dark: #1A3D4F;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #F5F1E8 0%, #E8DCC8 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+        }
+        
+        /* Hero Header with Animated Background */
+        .hero-header {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80') center/cover no-repeat;
+            animation: breathe 8s ease-in-out infinite, parallax 20s ease-in-out infinite;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes parallax {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(28, 61, 79, 0.85) 0%, rgba(42, 95, 124, 0.75) 50%, rgba(90, 143, 168, 0.65) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn-primary, .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-primary:hover {
+            background: #C89563;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        /* Tab Navigation */
+        .tab-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin: 2rem auto;
+            max-width: 1400px;
+        }
+        
+        .tab-nav {
+            display: flex;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+        
+        .tab-button {
+            flex: 1;
+            min-width: 150px;
+            padding: 1.25rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+        
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .tab-button.active {
+            background: white;
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2.5rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Accordion */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-item:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        
+        .accordion-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: white;
+        }
+        
+        .accordion-item.active .accordion-content {
+            max-height: 4000px;
+        }
+        
+        .accordion-body {
+            padding: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .bento-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .bento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(42, 95, 124, 0.15);
+            border-color: var(--accent);
+        }
+        
+        .bento-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .bento-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Tooltip */
+        .tooltip-trigger {
+            position: relative;
+            color: var(--accent);
+            font-weight: 600;
+            cursor: help;
+            border-bottom: 2px dotted var(--accent);
+        }
+        
+        .tooltip {
+            position: fixed;
+            background: var(--dark);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            max-width: 300px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .tooltip.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--dark);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            opacity: 1;
+        }
+        
+        /* Scripture Quote */
+        .scripture-quote {
+            background: linear-gradient(135deg, rgba(42, 95, 124, 0.05) 0%, rgba(90, 143, 168, 0.05) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-style: italic;
+            line-height: 1.8;
+        }
+        
+        .scripture-ref {
+            display: block;
+            margin-top: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-style: normal;
+            font-size: 0.95rem;
+        }
+        
+        /* Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            background: white;
+            border-bottom: 1px solid rgba(42, 95, 124, 0.1);
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table tr:hover td {
+            background: rgba(42, 95, 124, 0.03);
+        }
+        
+        /* Attribution Badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(42, 95, 124, 0.2);
+            max-width: 300px;
+            word-wrap: break-word;
+            box-shadow: 0 10px 25px rgba(42, 95, 124, 0.15);
+            font-family: 'Inter', sans-serif;
+            opacity: 0.3;
+            transform: translateX(15px);
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-badge:hover {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .attribution-badge a {
+            color: var(--primary);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--primary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .tab-nav {
+                flex-wrap: wrap;
+            }
+            
+            .tab-button {
+                flex: 1 1 50%;
+                min-width: 120px;
+            }
+            
+            .tab-content {
+                padding: 1.5rem;
+            }
+            
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tooltip {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .hero-background {
+                animation: none;
+            }
+            
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Collapsible */
+        .collapsible-trigger {
+            background: linear-gradient(135deg, rgba(42, 95, 124, 0.08) 0%, rgba(90, 143, 168, 0.08) 100%);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .collapsible-trigger:hover {
+            background: linear-gradient(135deg, rgba(42, 95, 124, 0.12) 0%, rgba(90, 143, 168, 0.12) 100%);
+        }
+        
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 1.5rem;
+        }
+        
+        .collapsible-content.active {
+            max-height: 3000px;
+            padding: 1.5rem;
+        }
+        
+        .modal-trigger {
+            color: var(--accent);
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        
+        .modal-trigger:hover {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="hero-background"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">✨ What Are You Made For? ✨</h1>
+            <p class="hero-subtitle">12 January 2025 | Island ECC | Pastor Brett</p>
+            <p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.9;">
+                Too often our lives are simply a repeating rhythm of duty and relief. Work hard, so you can enjoy relief. But is that really God's pattern for us? What were you really made for?
+            </p>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=HOaVhSRlfNs" class="btn-primary" target="_blank">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 8.64L15.27 12 10 15.36V8.64M8 5v14l11-7L8 5z"/>
+                    </svg>
+                    <span>Watch Original Sermon</span>
+                </a>
+                <a href="index.html" class="btn-secondary">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <span>View All Sermons</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main style="max-width: 1400px; margin: 0 auto; padding: 2rem 1rem;">
+        
+        <!-- Tab Container -->
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" onclick="openTab(event, 'overview')">📋 Overview</button>
+                <button class="tab-button" onclick="openTab(event, 'sermon')">🎤 Main Sermon</button>
+                <button class="tab-button" onclick="openTab(event, 'bible')">📖 Bible Verses</button>
+                <button class="tab-button" onclick="openTab(event, 'shape')">🎯 SHAPE Assessment</button>
+                <button class="tab-button" onclick="openTab(event, 'application')">💡 Application</button>
+                <button class="tab-button" onclick="openTab(event, 'reflection')">🤔 Reflection</button>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;">📋 Sermon Overview</h2>
+                
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="bento-icon">🎯</div>
+                        <h3 class="bento-title">Core Message</h3>
+                        <p>Discover your unique purpose through understanding your spiritual gifts, heart, aptitude, personality, and experience (SHAPE).</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">📖</div>
+                        <h3 class="bento-title">Key Scripture</h3>
+                        <p>Ephesians 2:8-10 - Saved by grace to do good works prepared in advance.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">💎</div>
+                        <h3 class="bento-title">Big Idea</h3>
+                        <p>You are God's masterpiece, uniquely created for specific good works that bring glory to Him.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">🔑</div>
+                        <h3 class="bento-title">Action Step</h3>
+                        <p>Take the SHAPE assessment to discover your unique calling and align your life accordingly.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <h3 style="font-size: 1.75rem; color: var(--primary); margin-bottom: 1rem;">🌟 Sermon Highlights</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(42, 95, 124, 0.1);">
+                            <strong style="color: var(--accent);">✓</strong> Your purpose is more than just existing—it's about bringing out God's flavors in this world
+                        </li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(42, 95, 124, 0.1);">
+                            <strong style="color: var(--accent);">✓</strong> Salvation by grace is not the end—it's the beginning of living out your purpose
+                        </li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(42, 95, 124, 0.1);">
+                            <strong style="color: var(--accent);">✓</strong> God has prepared specific good works for you to walk in
+                        </li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(42, 95, 124, 0.1);">
+                            <strong style="color: var(--accent);">✓</strong> Your unique SHAPE reveals your calling and helps you serve effectively
+                        </li>
+                        <li style="padding: 0.75rem 0;">
+                            <strong style="color: var(--accent);">✓</strong> Fan into flame your gifts and help others discover theirs
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Sermon Tab -->
+            <div id="sermon" class="tab-content">
+                <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;">🎤 Main Sermon Content</h2>
+                
+                <!-- Introduction -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🚀 Introduction: What Are You Made For?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Brett begins by asking a fundamental question that every person asks at some point: <em>"What are you made for?"</em> He illustrates this with a personal story about finding a mysterious object in his drawer—a mic stand attachment—and not knowing its purpose. This mirrors how many of us go through life without understanding our unique purpose.</p>
+                            
+                            <p style="margin-top: 1rem;">The sermon references <span class="tooltip-trigger" data-tooltip="Japanese concept combining 'iki' (life) and 'gai' (value/worth), representing one's reason for being">ikigai</span>, a Japanese concept of finding your life's purpose at the intersection of what you love, what the world needs, what you can be paid for, and what you're good at. While this framework is helpful, Pastor Brett emphasizes that from a Christian perspective, discovering your purpose goes much deeper.</p>
+                            
+                            <div class="scripture-quote">
+                                "Let me tell you why you are here. You're here to be salt seasoning that brings out the God flavors of this earth."
+                                <span class="scripture-ref">Matthew 5:13 (MSG paraphrase)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Foundation: Saved by Grace -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>⛪ Foundation: Saved by Grace, Created for Works</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Brett emphasizes the foundational truth of salvation before discussing purpose and calling:</p>
+                            
+                            <div class="scripture-quote">
+                                "For it is by grace you have been saved, through faith—and this is not from yourselves, it is the gift of God—not by works, so that no one can boast."
+                                <span class="scripture-ref">Ephesians 2:8-9 (NIV)</span>
+                            </div>
+                            
+                            <p style="margin-top: 1rem;">He stresses that salvation is entirely by grace—not earned through our efforts. When you stand before God and He asks, "Why should I let you into heaven?" your answer is simply: <strong>Jesus</strong>. Nothing you've done, no church attendance, no good deeds—only Jesus is perfect, and we trust in Him, not ourselves.</p>
+                            
+                            <p style="margin-top: 1rem;">However, Pastor Brett points out that the Greek text doesn't stop there. The translators added a period, but Paul continues:</p>
+                            
+                            <div class="scripture-quote">
+                                "For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do."
+                                <span class="scripture-ref">Ephesians 2:10 (NIV)</span>
+                            </div>
+                            
+                            <p style="margin-top: 1rem;">This verse reveals that while works don't save us, God has prepared specific good works for each believer. You are God's <span class="tooltip-trigger" data-tooltip="Greek word 'poiema' meaning masterpiece, work of art, from which we get 'poem'">poiema</span>—His masterpiece, His work of art. James reinforces this: "Faith without works is dead" (James 2:26). The assumption is that genuine faith naturally produces good works.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SHAPE Framework -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🎯 The SHAPE Framework: Discovering Your Design</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Brett introduces the SHAPE acronym to help believers understand how God has uniquely designed them:</p>
+                            
+                            <h4 style="color: var(--primary); font-size: 1.5rem; margin: 1.5rem 0 1rem;">🎁 S - Spiritual Gifts</h4>
+                            <p>Every believer receives at least one spiritual gift when they come to faith. These are supernatural abilities given by the Holy Spirit to build up the church and advance God's kingdom.</p>
+                            
+                            <div class="scripture-quote">
+                                "Each of you should use whatever gift you have received to serve others, as faithful stewards of God's grace in its various forms."
+                                <span class="scripture-ref">1 Peter 4:10 (NIV)</span>
+                            </div>
+                            
+                            <p style="margin-top: 1rem;">Paul strongly emphasizes: <span class="modal-trigger" onclick="openModal('ignorantModal')">"Now concerning spiritual gifts, brothers, I do not want you to be ignorant."</span> (1 Corinthians 12:1). What a tragedy to be highly educated but ignorant about the greatest gift you'll ever receive!</p>
+                            
+                            <p style="margin-top: 1rem;">Pastor Brett shares that his spiritual gift is teaching. This doesn't mean he's the best teacher in the world, but he likes it, is competent at it, enjoys it, and feels gifted at it. Importantly, recognizing your gift isn't bragging—God gave it to you.</p>
+                            
+                            <h4 style="color: var(--primary); font-size: 1.5rem; margin: 1.5rem 0 1rem;">❤️ H - Heart (Passion)</h4>
+                            <p>Your heart represents what you care about more than others do. It's a passion or concern that God has placed within you, sometimes for things that aren't explicitly commanded in Scripture.</p>
+                            
+                            <p style="margin-top: 1rem;">Pastor Brett uses the Apostle Paul as an example. Paul was so consumed with spreading the gospel that he suggested everyone should remain single like him to avoid distractions! Of course, he quickly retreated, acknowledging that "if you cannot control yourself, then they should marry, for it is better to marry than burn with passion" (1 Corinthians 7:9). But his heart's burning passion was clearly church planting and gospel advancement.</p>
+                            
+                            <p style="margin-top: 1rem;">Pastor Brett confesses: "I think everybody should adopt children." With 153 million orphans worldwide, he secretly believes everyone should adopt—even though he knows God hasn't called everyone to this. Similarly, one church member felt passionate about reducing plastic in the ocean and gave him a reusable water bottle. While Pastor Brett cares about environmental issues, it's not his burning passion.</p>
+                            
+                            <p style="margin-top: 1rem;"><strong>The key indicator:</strong> You secretly think everyone should care about your passion as much as you do. What issue makes your heart beat faster? Justice? Human trafficking? The elderly? Prison reform? The environment? Children's education? That's a clue to your heart.</p>
+                            
+                            <h4 style="color: var(--primary); font-size: 1.5rem; margin: 1.5rem 0 1rem;">💪 A - Aptitude (Talents)</h4>
+                            <p>This is simply what you're good at—your natural talents and proficiencies. No false humility here; everyone is good at something.</p>
+                            
+                            <p style="margin-top: 1rem;">Pastor Brett shares a powerful story of a man who approached him and said: "Pastor Brett, I'm not good at leading Bible studies or teaching and preaching. But you know what I'm good at? <strong>Making money</strong>." He wasn't bragging; he recognized his unique ability to close deals and envision business opportunities. He asked Pastor Brett to tell him about needs in the church or ministry opportunities where he could help financially.</p>
+                            
+                            <p style="margin-top: 1rem;">Later, when Pastor Brett met a young man in mainland China who wanted theological education but couldn't afford it, he connected him with this businessman. The result? This couple funded 100% of a four-year theological degree so this young man could return and serve the church in China more effectively.</p>
+                            
+                            <p style="margin-top: 1rem;">The worship team is another example: they're good at music. While you may love music, if you're not good at it, that's not where you should serve. Pastor Brett jokes about begging Byron to let him sing: "It's not gonna happen, right?"</p>
+                            
+                            <h4 style="color: var(--primary); font-size: 1.5rem; margin: 1.5rem 0 1rem;">👤 P - Personality</h4>
+                            <p>Your unique wiring matters. Understanding your personality helps you serve in roles that fit who God made you to be, not what drains or frustrates you.</p>
+                            
+                            <p style="margin-top: 1rem;"><strong>Key personality dimensions:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 2rem;">
+                                <li><strong>People-oriented vs. Task-oriented:</strong> Neither is better; they're just different</li>
+                                <li><strong>Fast-paced vs. Slow-paced:</strong> Pastor Brett's wife makes decisions instantly while he needs data and time to compare options</li>
+                                <li><strong>Outgoing vs. Introverted:</strong> Do people energize you or drain you? Do you restore by socializing or by reading alone?</li>
+                            </ul>
+                            
+                            <p style="margin-top: 1rem;">Pastor Brett and his wife are opposites: she's fast-paced, he's slow. In restaurants, she hands back the menu immediately ("I already know what I want"), while he wants to study all the options. She finishes eating while he's still deciding what to order! But together they make "informed and timely decisions"—her speed balanced by his thoroughness.</p>
+                            
+                            <p style="margin-top: 1rem;">The church uses personality assessments (Myers-Briggs, DiSC, Enneagram, StrengthsFinder, etc.) for staff to understand who would be good at what tasks, what work environments suit different people, and how to build effective teams. You should know yourself too.</p>
+                            
+                            <h4 style="color: var(--primary); font-size: 1.5rem; margin: 1.5rem 0 1rem;">📚 E - Experience</h4>
+                            <p>Everything God has allowed in your life—successes, failures, disappointments, heartache, trauma—happened under His sovereign hand. Nothing is wasted in God's economy; He wants to redeem it all for good.</p>
+                            
+                            <div class="scripture-quote">
+                                "The Father of compassion and the God of all comfort, who comforts us in all our troubles, so that we can comfort those in any trouble with the comfort we ourselves receive from God."
+                                <span class="scripture-ref">2 Corinthians 1:3-4 (NIV)</span>
+                            </div>
+                            
+                            <p style="margin-top: 1rem;">Notice "comfort" appears <strong>four times</strong> in this passage. God comforts you so that you can comfort others with the comfort He provides. This is why Island ECC runs a Divorce Care ministry—led by people who have been divorced. How fitting! God uses your experiences for good.</p>
+                            
+                            <p style="margin-top: 1rem;">Your experiences make you who you are right now. Perhaps there are others yearning to be seen, to be understood, who just need to know peace—to feel empathy from someone who has been there. Your experiences matter and can bring healing to others.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wisdom on Your Calling -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🦉 Three Wisdom Principles for Your Calling</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <h4 style="color: var(--primary); font-size: 1.5rem; margin: 1.5rem 0 1rem;">1️⃣ God's Commands Are Not Optional</h4>
+                            <p>There is a general blueprint for all Christians: to become more Christ-like. This means developing compassion, forgiveness, kindness, generosity, and other character qualities. You don't get to say, "I'm not wired to be compassionate." These are God's commands, not suggestions.</p>
+                            
+                            <p style="margin-top: 1rem;">This framework isn't meant to help you opt out of certain character qualities God wants to develop in all believers. The SHAPE assessment helps you understand your unique calling, but it doesn't excuse you from Christlikeness.</p>
+                            
+                            <h4 style="color: var(--primary); font-size: 1.5rem; margin: 1.5rem 0 1rem;">2️⃣ Manage Your Passion with Wisdom</h4>
+                            <p>Just as Pastor Brett needs to realize not everybody needs to adopt children, you must recognize that your passion shouldn't become others' burden. When you're passionate about something, the tendency is to think everyone should be equally passionate.</p>
+                            
+                            <p style="margin-top: 1rem;">You can present your passion, care about it, recruit people for it, and inform others—but don't demand it takes front and center in their lives as well. Respect that God has given different people different hearts and callings.</p>
+                            
+                            <h4 style="color: var(--primary); font-size: 1.5rem; margin: 1.5rem 0 1rem;">3️⃣ Calling Provides Focus and Boundaries</h4>
+                            <p>When you know who you are and what you're called to do, it helps you respond appropriately to what you shouldn't do or don't need to do. If you don't love kids, you can cross out children's ministry from your options—the church wants people who love kids serving there.</p>
+                            
+                            <p style="margin-top: 1rem;">Knowing yourself is freeing. You're supposed to live within your calling, make decisions based on it, refine it, schedule around it, care about it, and investigate ways to be faithful to what you care about. This clarity prevents burnout and enables joyful, effective service.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conclusion -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🔥 Conclusion: Fan Into Flame</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>As Paul wrote to his young disciple Timothy:</p>
+                            
+                            <div class="scripture-quote">
+                                "I remind you to fan into flame the gift of God."
+                                <span class="scripture-ref">2 Timothy 1:6 (NIV)</span>
+                            </div>
+                            
+                            <p style="margin-top: 1rem;">God has gifted you, but sometimes that gift can die down. You procrastinate, put it off, let good intentions win over good decisions. Paul says: <strong>Fan that flame. Let it grow. Make sure it takes preeminence in your life.</strong></p>
+                            
+                            <p style="margin-top: 1rem;">But also fan into flame the gift of God <em>in other people</em>. When you see people operating in their gifts, encourage them! Pastor Brett shares an example of attending a dinner where the hostess had an incredible gift of hospitality—not just setting a beautiful table, but caring about the people at the table, meeting dietary needs, creating conversation by seating the right people together. He told her: "You're really good at hospitality."</p>
+                            
+                            <p style="margin-top: 1rem;">This kind of encouragement helps people see their gifts and do more of what God created them for. Your affirmation might be the catalyst someone needs to step into their calling.</p>
+                            
+                            <div style="background: linear-gradient(135deg, rgba(42, 95, 124, 0.08) 0%, rgba(90, 143, 168, 0.08) 100%); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 4px solid var(--accent);">
+                                <p style="font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">📝 Action Steps:</p>
+                                <ul style="padding-left: 1.5rem;">
+                                    <li>Take the SHAPE assessment (available on the church app)</li>
+                                    <li>Ask God to reveal your unique design and calling</li>
+                                    <li>Align your schedule and decisions with your SHAPE</li>
+                                    <li>Fan into flame your own gifts through intentional practice and development</li>
+                                    <li>Encourage others by helping them see and develop their gifts</li>
+                                </ul>
+                            </div>
+                            
+                            <p style="margin-top: 1.5rem; font-style: italic; color: var(--secondary);">"You are here for something far greater than just your life, but for the message that it sends, for the impact that it has, for the ripple effect that it will render on other people as well." - Pastor Brett</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bible Verses Tab -->
+            <div id="bible" class="tab-content">
+                <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;">📖 Key Scripture Passages</h2>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Ephesians 2:8-10 - Saved by Grace for Good Works</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-quote">
+                                "For it is by grace you have been saved, through faith—and this is not from yourselves, it is the gift of God— not by works, so that no one can boast. For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do."
+                                <span class="scripture-ref">Ephesians 2:8-10 (NIV)</span>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> This is the foundational passage of the sermon. Paul is writing to the church in Ephesus, a predominantly pagan city. He explains the essence of salvation and immediately connects it to purpose. While salvation is entirely by grace through faith (not works), believers are created as God's masterpieces (Greek: <em>poiema</em>) to do good works that God prepared beforehand.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Matthew 5:13 - Salt of the Earth</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-quote">
+                                "You are the salt of the earth. But if the salt loses its saltiness, how can it be made salty again? It is no longer good for anything, except to be thrown out and trampled underfoot."
+                                <span class="scripture-ref">Matthew 5:13 (NIV)</span>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Eugene Peterson's Paraphrase (The Message):</strong> "Let me tell you why you are here. You're here to be salt seasoning that brings out the God flavors of this earth."</p>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Jesus is teaching the Sermon on the Mount, explaining to His disciples their purpose and identity. Being "salt" means being a preserving, flavoring influence—bringing out God's character in the world around you.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>1 Peter 4:10 - Using Your Spiritual Gifts</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-quote">
+                                "Each of you should use whatever gift you have received to serve others, as faithful stewards of God's grace in its various forms."
+                                <span class="scripture-ref">1 Peter 4:10 (NIV)</span>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Peter is writing to persecuted Christians scattered throughout Asia Minor. He emphasizes that <em>each</em> believer has received a gift and is responsible for using it to serve others. These gifts are expressions of God's grace in different forms.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>1 Corinthians 12:1 - Don't Be Ignorant About Gifts</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-quote">
+                                "Now concerning spiritual gifts, brothers, I do not want you to be ignorant."
+                                <span class="scripture-ref">1 Corinthians 12:1 (NIV)</span>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Paul is addressing the Corinthian church's confusion about spiritual gifts. He strongly emphasizes that believers should not be ignorant about this crucial topic. The chapter goes on to explain the diversity of gifts and their purpose in the body of Christ.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>James 2:26 - Faith Without Works Is Dead</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-quote">
+                                "As the body without the spirit is dead, so faith without deeds is dead."
+                                <span class="scripture-ref">James 2:26 (NIV)</span>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> James, the brother of Jesus, is writing to Jewish Christians scattered abroad. He addresses the relationship between faith and works—not contradicting Paul's teaching on salvation by grace, but emphasizing that genuine faith naturally produces good works as evidence.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>1 Corinthians 7:8-9 - Paul's Heart for Gospel Work</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-quote">
+                                "Now to the unmarried and the widows I say: It is good for them to stay unmarried, as I do. But if they cannot control themselves, they should marry, for it is better to marry than to burn with passion."
+                                <span class="scripture-ref">1 Corinthians 7:8-9 (NIV)</span>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Paul is answering questions about marriage. His personal preference for singleness stems from his consuming passion for gospel ministry—not because marriage is wrong. This illustrates how a person's unique "heart" (passion) can shape their perspective, though Paul wisely acknowledges not everyone shares his calling.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>2 Corinthians 1:3-4 - God Comforts to Comfort</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-quote">
+                                "Praise be to the God and Father of our Lord Jesus Christ, the Father of compassion and the God of all comfort, who comforts us in all our troubles, so that we can comfort those in any trouble with the comfort we ourselves receive from God."
+                                <span class="scripture-ref">2 Corinthians 1:3-4 (NIV)</span>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Paul is writing about God's redemptive purposes in suffering. He emphasizes that God comforts us not just for our sake, but so we can comfort others. This passage appears four times with the word "comfort," showing God's cyclical pattern of redemption—using our experiences to minister to others.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>2 Timothy 1:6 - Fan Into Flame Your Gift</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-quote">
+                                "For this reason I remind you to fan into flame the gift of God, which is in you through the laying on of my hands."
+                                <span class="scripture-ref">2 Timothy 1:6 (NIV)</span>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Paul is writing his final letter to his spiritual son Timothy, encouraging him to remain faithful in ministry. The metaphor of "fanning into flame" suggests that spiritual gifts can diminish if neglected and need to be actively cultivated and exercised.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Matthew 5:16 - Let Your Light Shine</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-quote">
+                                "In the same way, let your light shine before others, that they may see your good deeds and glorify your Father in heaven."
+                                <span class="scripture-ref">Matthew 5:16 (NIV)</span>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Continuing the Sermon on the Mount after calling believers "salt" and "light," Jesus emphasizes that good deeds should be visible and observable—not for self-glorification, but so that others will glorify God when they see believers living out their faith.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SHAPE Assessment Tab -->
+            <div id="shape" class="tab-content">
+                <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;">🎯 Understanding Your SHAPE</h2>
+                
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                    The SHAPE framework helps you discover how God has uniquely designed you for specific purposes. Each component works together to reveal your calling and guide you toward meaningful, fulfilling service.
+                </p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Component</th>
+                            <th style="width: 35%;">What It Means</th>
+                            <th style="width: 45%;">Key Questions to Ask</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>🎁 Spiritual Gifts</strong></td>
+                            <td>Supernatural abilities given by the Holy Spirit when you believe in Christ</td>
+                            <td>
+                                • What do I do that feels natural and effective?<br>
+                                • Where have I seen God work through me?<br>
+                                • What ministry activities energize rather than drain me?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>❤️ Heart</strong></td>
+                            <td>Passions and concerns God has placed in you; what you care about deeply</td>
+                            <td>
+                                • What issues make me emotional or angry?<br>
+                                • What do I think everyone should care about?<br>
+                                • What needs in the world break my heart?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>💪 Aptitude</strong></td>
+                            <td>Natural talents, skills, and abilities you've developed over time</td>
+                            <td>
+                                • What am I naturally good at?<br>
+                                • What do others frequently compliment me on?<br>
+                                • What tasks come easily to me?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>👤 Personality</strong></td>
+                            <td>Your unique wiring—how God designed you to interact with the world</td>
+                            <td>
+                                • Am I people-oriented or task-oriented?<br>
+                                • Do I make quick decisions or need time to process?<br>
+                                • Do people energize or drain me?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>📚 Experience</strong></td>
+                            <td>Your life journey—successes, failures, pain, and lessons learned</td>
+                            <td>
+                                • What hardships have I overcome?<br>
+                                • How has God comforted me in the past?<br>
+                                • What life lessons could help others?
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 2.5rem; padding: 2rem; background: linear-gradient(135deg, rgba(42, 95, 124, 0.05) 0%, rgba(90, 143, 168, 0.05) 100%); border-radius: 12px; border-left: 4px solid var(--accent);">
+                    <h3 style="color: var(--primary); font-size: 1.75rem; margin-bottom: 1rem;">📱 Take the Assessment</h3>
+                    <p style="line-height: 1.8; margin-bottom: 1rem;">
+                        The SHAPE assessment is available on the Island ECC app. It takes approximately 30 minutes and will provide you with a detailed profile of how God has uniquely designed you.
+                    </p>
+                    <p style="line-height: 1.8; font-weight: 600;">
+                        📍 To access: Open the app → Navigate to "More" (bottom menu) → Select "SHAPE Assessment"
+                    </p>
+                </div>
+
+                <div class="collapsible-trigger" onclick="toggleCollapsible(this)">
+                    <span>💡 Common Spiritual Gifts</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">🎤 Teaching</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Ability to explain and apply Scripture clearly</p>
+                        </div>
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">🤝 Service</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Meeting practical needs and helping behind the scenes</p>
+                        </div>
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">💬 Encouragement</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Uplifting and motivating others in their faith</p>
+                        </div>
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">💰 Giving</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Generous stewardship and financial support</p>
+                        </div>
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">🎯 Leadership</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Guiding and directing others toward goals</p>
+                        </div>
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">❤️ Mercy</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Compassion for those who are suffering</p>
+                        </div>
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">💡 Wisdom</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Applying knowledge with godly insight</p>
+                        </div>
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">🏠 Hospitality</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Creating welcoming environments for connection</p>
+                        </div>
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">🙏 Faith</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Trusting God for the impossible</p>
+                        </div>
+                        <div style="padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <strong style="color: var(--primary);">🧭 Administration</strong>
+                            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Organizing people and resources effectively</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Tab -->
+            <div id="application" class="tab-content">
+                <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;">💡 Practical Application</h2>
+                
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 2rem;">
+                    <h3 style="color: var(--accent); font-size: 1.75rem; margin-bottom: 1rem;">⚠️ Important Clarification</h3>
+                    <p style="line-height: 1.8; font-size: 1.05rem;">
+                        This sermon is <strong>NOT</strong> about volunteer recruitment for church programs. It's about something much bigger: discovering your God-given purpose and aligning your entire life—inside and outside the church—with how He made you. Your calling may be to use your gifts in your workplace, neighborhood, or other spheres of influence.
+                    </p>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="bento-icon">📝</div>
+                        <h3 class="bento-title">Take the Assessment</h3>
+                        <p>Download the Island ECC app and complete the SHAPE assessment. Set aside 30 minutes of uninterrupted time to thoughtfully answer the questions.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">🙏</div>
+                        <h3 class="bento-title">Pray for Clarity</h3>
+                        <p>Ask God to reveal how He's uniquely designed you. Request wisdom to see patterns in your life that point to your calling and purpose.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">👥</div>
+                        <h3 class="bento-title">Seek Feedback</h3>
+                        <p>Ask trusted friends, family, or mentors: "What do you see as my strengths? What activities do I seem most alive doing?" Others often see gifts we overlook.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">📅</div>
+                        <h3 class="bento-title">Audit Your Schedule</h3>
+                        <p>Review how you spend your time. Does your schedule reflect your SHAPE? Are you investing in areas aligned with how God made you, or constantly drained by misfit roles?</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">🔬</div>
+                        <h3 class="bento-title">Experiment</h3>
+                        <p>Try serving in different capacities. Notice what energizes vs. drains you. What feels like duty vs. delight? Use these experiences to refine your understanding.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">🎯</div>
+                        <h3 class="bento-title">Set Boundaries</h3>
+                        <p>Learn to say "no" to opportunities that don't align with your SHAPE, even if they're good. This creates space for God's best—what you're uniquely made for.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">🔥</div>
+                        <h3 class="bento-title">Fan Your Flame</h3>
+                        <p>Intentionally develop your gifts. Take classes, find mentors, practice, and grow in areas where God has equipped you. Don't let your gifts atrophy through neglect.</p>
+                    </div>
+                    
+                    <div class="bento-card">
+                        <div class="bento-icon">💪</div>
+                        <h3 class="bento-title">Encourage Others</h3>
+                        <p>When you see someone operating in their gifts, tell them! Your affirmation might be the catalyst they need to step fully into their calling.</p>
+                    </div>
+                </div>
+
+                <div class="collapsible-trigger" onclick="toggleCollapsible(this)">
+                    <span>📖 Real-Life Examples from the Sermon</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h4 style="color: var(--primary); font-size: 1.25rem; margin-bottom: 0.75rem;">💼 The Businessman's Gift</h4>
+                        <p style="line-height: 1.8;">
+                            A church member approached Pastor Brett saying: "I'm not good at teaching or leading Bible studies, but I'm good at making money." He asked to be informed about financial needs so he could help. When Pastor Brett later mentioned a young man in China who needed funding for theological education, this businessman and his wife funded 100% of a four-year degree. Result: A minister equipped to serve the church in China more effectively.
+                        </p>
+                        <p style="margin-top: 1rem; font-style: italic; color: var(--secondary);">
+                            <strong>Lesson:</strong> Your aptitude (what you're good at) combined with your heart (what you care about) can create kingdom impact in unexpected ways—often outside traditional "church" ministry.
+                        </p>
+                    </div>
+                    
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h4 style="color: var(--primary); font-size: 1.25rem; margin-bottom: 0.75rem;">🏠 The Hospitality Expert</h4>
+                        <p style="line-height: 1.8;">
+                            Pastor Brett attended a dinner where the hostess demonstrated exceptional hospitality—not through elaborate decorations or expensive food, but by genuinely caring about the people present. She ensured dietary needs were met, facilitated connections between guests, and created an atmosphere where everyone felt valued.
+                        </p>
+                        <p style="margin-top: 1rem; font-style: italic; color: var(--secondary);">
+                            <strong>Lesson:</strong> Spiritual gifts manifest in everyday settings. Hospitality isn't just about entertaining—it's about using your gift to create spaces where people encounter God's love through genuine care.
+                        </p>
+                    </div>
+                    
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px;">
+                        <h4 style="color: var(--primary); font-size: 1.25rem; margin-bottom: 0.75rem;">🌊 The Environmental Advocate</h4>
+                        <p style="line-height: 1.8;">
+                            A woman gave Pastor Brett a reusable water bottle, passionate about reducing plastic waste in the ocean. While Pastor Brett cares about the environment, it's not his burning passion—but it clearly was hers.
+                        </p>
+                        <p style="margin-top: 1rem; font-style: italic; color: var(--secondary);">
+                            <strong>Lesson:</strong> Your heart (passion) will be unique to you. God places different concerns in different people's hearts. Don't judge or compare—celebrate that God cares about various needs through His diverse people.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reflection Tab -->
+            <div id="reflection" class="tab-content">
+                <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;">🤔 Reflection Questions</h2>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>1. What is your current understanding of your life's purpose?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="line-height: 1.8;">
+                                Take time to journal your honest answer. Have you been living with clarity about why you're here, or have you been drifting through a cycle of duty and relief? How does your current life align (or not align) with God's purposes for you?
+                            </p>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(42, 95, 124, 0.05); border-radius: 8px;">
+                                <strong>Dig Deeper:</strong> If someone asked you, "Why are you here on this planet?" what would you say? How much of your answer reflects God's purposes versus cultural expectations or personal ambitions?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>2. What activities make you feel most alive and aligned with God's purposes?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="line-height: 1.8;">
+                                Think about times when you've felt deeply fulfilled—not just happy, but purposeful. What were you doing? Who were you with? What needs were you meeting? These moments often reveal clues to your SHAPE.
+                            </p>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(42, 95, 124, 0.05); border-radius: 8px;">
+                                <strong>Practical Exercise:</strong> List five times in the past year when you felt energized and purposeful. Look for common threads—these patterns reveal how God has wired you.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>3. What issue or need in the world breaks your heart or stirs your passion?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="line-height: 1.8;">
+                                This question addresses the "H" in SHAPE—your heart. What injustice makes you angry? What suffering moves you to tears? What need do you secretly wish everyone cared about as much as you do? This passion is God-given and points toward your calling.
+                            </p>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(42, 95, 124, 0.05); border-radius: 8px;">
+                                <strong>Consider:</strong> Pastor Brett cares about orphans and adoption. Someone else cares about plastic in the ocean. Another person cares about prison reform. What's your thing? Don't dismiss it as insignificant—God placed it in your heart for a reason.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>4. How has God used your past experiences (including pain) to shape who you are today?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="line-height: 1.8;">
+                                Reflect on the "E" in SHAPE—your experiences. God wastes nothing. Even hardships, failures, and trauma can be redeemed to comfort others who face similar struggles. How has God comforted you in ways that uniquely equip you to minister to others?
+                            </p>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(42, 95, 124, 0.05); border-radius: 8px;">
+                                <strong>Scripture Reminder:</strong> "God comforts us in all our troubles, so that we can comfort those in any trouble with the comfort we ourselves receive from God" (2 Corinthians 1:4). What comfort have you received that you can now share?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>5. Are you currently serving in roles that drain you or energize you? Why?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="line-height: 1.8;">
+                                Jesus said, "My yoke is easy and my burden is light" (Matthew 11:30). If you're constantly exhausted and resentful in your service, you might be in a misfit role. Conversely, when you serve according to your SHAPE, it should feel life-giving, even when it's challenging.
+                            </p>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(42, 95, 124, 0.05); border-radius: 8px;">
+                                <strong>Self-Check:</strong> Make two lists—"What drains me" and "What energizes me." Be honest. Then prayerfully consider: How can you move toward more of what energizes you and less of what drains you?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>6. Who in your life needs encouragement to discover or develop their gifts?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="line-height: 1.8;">
+                                Part of living out your purpose is helping others discover theirs. Think of someone you know who has a gift they may not recognize. How can you "fan into flame" their gift through specific, encouraging words?
+                            </p>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(42, 95, 124, 0.05); border-radius: 8px;">
+                                <strong>Action Challenge:</strong> This week, identify one person and write them a note or have a conversation specifically affirming a gift you see in them. Be specific about what you observe and how it impacts others.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>7. What would change if you fully embraced that you are God's masterpiece?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="line-height: 1.8;">
+                                Ephesians 2:10 says you are God's <em>poiema</em>—His masterpiece, His work of art. How would your life look different if you truly believed this? What insecurities would lose their power? What risks might you take? What opportunities might you pursue?
+                            </p>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(42, 95, 124, 0.05); border-radius: 8px;">
+                                <strong>Meditate:</strong> You are not an accident. You are not average. You are not inadequate. You are God's unique creation, designed with intention for specific purposes. Let this truth sink deep into your identity.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>8. What is one concrete step you will take this week to align your life with your SHAPE?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="line-height: 1.8;">
+                                Knowledge without action is incomplete. After reflecting on these questions and the sermon content, commit to one specific, measurable action this week. It could be taking the SHAPE assessment, having a conversation, saying "yes" to something aligned with your gifts, or saying "no" to something that isn't.
+                            </p>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(42, 95, 124, 0.05); border-radius: 8px;">
+                                <strong>Make It Specific:</strong> Don't just say "I'll think about it more." Write down exactly what you'll do, when you'll do it, and how you'll know you've completed it. Share your commitment with someone who can help keep you accountable.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Tooltip (Fixed Position) -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <!-- Modal for Bible Context -->
+    <div id="ignorantModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('ignorantModal')">&times;</button>
+            <h3 style="color: var(--primary); font-size: 2rem; margin-bottom: 1rem;">📖 Full Context: 1 Corinthians 12:1</h3>
+            <div class="scripture-quote">
+                "Now concerning spiritual gifts, brothers, I do not want you to be ignorant."
+                <span class="scripture-ref">1 Corinthians 12:1 (NIV)</span>
+            </div>
+            <p style="margin-top: 1.5rem; line-height: 1.8;">
+                Paul is addressing the Corinthian church, which was confused about spiritual gifts. He uses the strong word "ignorant" (Greek: <em>agnoeo</em>, meaning "to be without knowledge or understanding") to emphasize how crucial it is for believers to understand this topic.
+            </p>
+            <p style="margin-top: 1rem; line-height: 1.8;">
+                The chapter continues to explain that there are different kinds of gifts, but the same Spirit; different kinds of service, but the same Lord; different kinds of working, but the same God works all of them in everyone. Every believer receives a manifestation of the Spirit "for the common good" (v. 7).
+            </p>
+            <p style="margin-top: 1rem; line-height: 1.8;">
+                Pastor Brett's point: What a shame to be highly educated in worldly matters but ignorant about the greatest spiritual gift you'll ever receive—your God-given purpose and calling.
+            </p>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div style="margin-bottom: 4px; font-weight: bold; color: var(--primary); line-height: 1.3;">
+            Generated using LLM with supervision and polishing by 
+            <a href="../index.html" target="_blank">benjaminficusmicrocarpa</a>
+        </div>
+        <div>
+            <a href="../license.html" target="_blank" style="font-size: 0.75rem;">Released under the MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Accordion functionality
+        function toggleAccordion(element) {
+            const accordionItem = element.parentElement;
+            accordionItem.classList.toggle('active');
+        }
+
+        // Collapsible functionality
+        function toggleCollapsible(element) {
+            const content = element.nextElementSibling;
+            content.classList.toggle('active');
+            const icon = element.querySelector('.accordion-icon');
+            icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Tooltip functionality
+        const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
+        const tooltip = document.getElementById('tooltip');
+
+        tooltipTriggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', function(e) {
+                const tooltipText = this.getAttribute('data-tooltip');
+                tooltip.textContent = tooltipText;
+                tooltip.classList.add('active');
+            });
+
+            trigger.addEventListener('mouseleave', function() {
+                tooltip.classList.remove('active');
+            });
+        });
+
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let modal of modals) {
+                if (event.target === modal) {
+                    modal.classList.remove('active');
+                }
+            }
+        }
+
+        // Open first accordion item by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstAccordion = document.querySelector('#sermon .accordion-item');
+            if (firstAccordion) {
+                firstAccordion.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
