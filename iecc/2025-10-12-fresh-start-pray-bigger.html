@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Start: Pray Bigger | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A5568;
+            --secondary-color: #2D3748;
+            --accent-color: #2B6CB0;
+            --light-bg: #F7FAFC;
+            --text-primary: #1A202C;
+            --text-secondary: #4A5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.7;
+            background: var(--light-bg);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* Hero Header with Animated Background */
+        .hero-header {
+            position: relative;
+            width: 100%;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #3182CE 0%, #2B6CB0 100%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/patrick-fore-b_SHPU5M3nk-unsplash.webp');
+            background-size: cover;
+            background-position: center;
+            animation: breathe 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(49, 130, 206, 0.85) 0%, rgba(43, 108, 176, 0.85) 100%);
+            animation: shimmer 6s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.85; }
+            50% { opacity: 0.75; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Tab Navigation */
+        .tab-container {
+            background: white;
+            border-bottom: 2px solid #E2E8F0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-nav {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tab-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            padding: 1.25rem 2rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--accent-color);
+            background: rgba(43, 108, 176, 0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+            background: rgba(43, 108, 176, 0.08);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Accordion */
+        .accordion-item {
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            background: #F7FAFC;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: #EDF2F7;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--accent-color);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--accent-color);
+            cursor: help;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .tooltip-content {
+            visibility: hidden;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: var(--text-primary);
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            max-width: 320px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .tooltip:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2.5rem;
+            border-radius: 12px;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .bento-item {
+            background: linear-gradient(135deg, #3182CE 0%, #2B6CB0 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .bento-item:hover::before {
+            transform: translateY(0);
+        }
+
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(49, 130, 206, 0.3);
+        }
+
+        .bento-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .bento-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .bento-text {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        /* Scripture Card */
+        .scripture-card {
+            background: linear-gradient(135deg, #F7FAFC 0%, #EDF2F7 100%);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        .scripture-quote {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .scripture-ref {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-style: normal;
+            font-size: 0.95rem;
+        }
+
+        /* Quote Card */
+        .quote-card {
+            background: white;
+            border-left: 4px solid #2B6CB0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .quote-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .quote-author {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        /* Attribution Badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--accent-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(43, 108, 176, 0.3);
+            max-width: 300px;
+            box-shadow: 0 10px 25px rgba(43, 108, 176, 0.2);
+            font-family: 'Inter', sans-serif;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+        }
+
+        .attribution-badge:hover {
+            opacity: 1;
+        }
+
+        .attribution-title {
+            margin-bottom: 4px;
+            font-weight: bold;
+            line-height: 1.3;
+        }
+
+        .attribution-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--accent-color);
+        }
+
+        .attribution-license {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.75rem;
+        }
+
+        /* Table */
+        .responsive-table {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        tr:hover {
+            background: #F7FAFC;
+        }
+
+        /* Reflection Section */
+        .reflection-section {
+            background: linear-gradient(135deg, rgba(49, 130, 206, 0.1) 0%, rgba(43, 108, 176, 0.1) 100%);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .reflection-question {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-header {
+                min-height: 60vh;
+            }
+
+            .hero-content {
+                padding: 1.5rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+
+            .tab-btn {
+                padding: 1rem 1.25rem;
+                font-size: 0.9rem;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 10% 1rem;
+                padding: 1.5rem;
+            }
+
+            .attribution-badge {
+                bottom: 5px;
+                right: 5px;
+                font-size: 0.7rem;
+                padding: 6px 10px;
+                max-width: 250px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* Emoji Styling */
+        .emoji {
+            font-size: 1.3em;
+            margin-right: 0.3rem;
+        }
+
+        /* Key Point Highlight */
+        .key-point {
+            background: rgba(43, 108, 176, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .key-point h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">🙏 Pray Bigger</h1>
+            <p class="hero-subtitle">Fresh Start Series | 12 October 2025</p>
+            <p style="font-size: 1.1rem; max-width: 700px; margin: 0 auto 2rem; line-height: 1.7;">
+                When our spiritual lives stagnate, the first warning signs appear in our prayer life. Discover the most powerful prayer ever prayed and how it can revitalize your relationship with God.
+            </p>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=xfr67OWHxNw" class="btn-primary" target="_blank">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                        <path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                    </svg>
+                    <span>Watch Original Sermon</span>
+                </a>
+                <a href="index.html" class="btn-secondary">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <span>View All Sermons</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <div class="tab-container">
+        <nav class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('overview')">📋 Overview</button>
+            <button class="tab-btn" onclick="switchTab('sermon')">💬 Main Sermon</button>
+            <button class="tab-btn" onclick="switchTab('scripture')">📖 Bible Verses</button>
+            <button class="tab-btn" onclick="switchTab('application')">✨ Practical Application</button>
+            <button class="tab-btn" onclick="switchTab('reflection')">🤔 Reflection Questions</button>
+        </nav>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="container">
+        
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="content-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color);">
+                    <span class="emoji">🌟</span> Sermon Overview
+                </h2>
+                
+                <div class="bento-grid">
+                    <div class="bento-item">
+                        <div class="bento-icon">🙏</div>
+                        <div class="bento-title">The Prayer of Surrender</div>
+                        <div class="bento-text">Jesus modeled the most powerful prayer in the Garden of Gethsemane: "Not my will, but yours be done."</div>
+                    </div>
+                    <div class="bento-item">
+                        <div class="bento-icon">💪</div>
+                        <div class="bento-title">Spirit vs. Flesh</div>
+                        <div class="bento-text">The disciples wanted to follow Jesus to death, but couldn't even stay awake. True surrender requires both intention and action.</div>
+                    </div>
+                    <div class="bento-item">
+                        <div class="bento-icon">🔥</div>
+                        <div class="bento-title">Revitalize Your Prayer Life</div>
+                        <div class="bento-text">When prayer becomes mechanical and routine, it loses power. Praying bigger means wrestling with God honestly.</div>
+                    </div>
+                    <div class="bento-item">
+                        <div class="bento-icon">⚔️</div>
+                        <div class="bento-title">A Dangerous Prayer</div>
+                        <div class="bento-text">Saying "thy will be done" is not just words—it may cost you everything, including your comfort and plans.</div>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    <h3><span class="emoji">💡</span> Central Message</h3>
+                    <p>A big prayer is not big because of what you pray for or how eloquently you pray—it's big because of your heart. The prayer of surrender ("not my will, but yours be done") has the power to transform your entire spiritual life, but only when you truly wrestle with what you desire and live in obedience to God's will.</p>
+                </div>
+
+                <div class="scripture-card">
+                    <div class="scripture-quote">
+                        "Going a little farther, he fell with his face to the ground and prayed, 'My Father, if it is possible, may this cup be taken from me. Yet not as I will, but as you will.'"
+                    </div>
+                    <div class="scripture-ref">— Matthew 26:39 (NIV)</div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--accent-color);">
+                    <span class="emoji">📊</span> Sermon Structure
+                </h2>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🤲 Part 1:</strong> Jesus's Example - Wrestling with God</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Key Scripture:</strong> Matthew 26:36-39</p>
+                            <p style="margin-top: 1rem;">Jesus went to the Garden of Gethsemane, overcome with sorrow "to the point of death." He prayed all night, pleading with God: "If it is possible, may this cup be taken from me." The "cup" refers to the cup of God's wrath—the full punishment for sin that Jesus would drink on our behalf, leading to separation from the Father.</p>
+                            <p style="margin-top: 1rem;"><strong>💡 Key Insight:</strong> Jesus didn't just casually say "not my will." He wrestled with God for hours, fully processing what He desired (to avoid separation from the Father) before surrendering. This makes His prayer powerful—not empty words, but genuine surrender after deep wrestling.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>😴 Part 2:</strong> The Disciples' Failure - Spirit Willing, Flesh Weak</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Key Scripture:</strong> Matthew 26:40-41</p>
+                            <p style="margin-top: 1rem;">The disciples boldly declared they would die for Jesus, yet they couldn't even stay awake for one hour when He asked them to. Jesus said: "The spirit is willing, but the flesh is weak." This wasn't just about physical exhaustion—it was about the gap between their intentions and their actions.</p>
+                            <p style="margin-top: 1rem;"><strong>💡 Key Insight:</strong> Most of the disciples weren't present at Jesus's crucifixion. They said they'd follow Him to death, but they couldn't even carry His cross, die alongside Him, or bury Him. When we can't obey God in small things now, what makes us think we'll obey when times get tough?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🙏 Part 3:</strong> Praying the Prayer of Surrender</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Two Requirements for Genuine Surrender:</strong></p>
+                            <ol style="margin-left: 1.5rem; margin-top: 1rem; line-height: 2;">
+                                <li><strong>"Not My Will"</strong> - Truly think about what you desire. Process it. Wrestle with God. Plead and petition. Only then, after genuine wrestling, say "not my will."</li>
+                                <li><strong>"Thy Will Be Done"</strong> - Are you already living according to God's will? If you aren't obeying God's small commands now (love your neighbor, steward finances, forgive others), what makes you think you'll obey when the cost is greater?</li>
+                            </ol>
+                            <p style="margin-top: 1.5rem;"><strong>⚠️ Warning:</strong> This is a dangerous prayer. It may cost you what's most important to you—even your life itself. The disciples eventually gave their lives as martyrs because they learned to truly pray this prayer.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <div class="content-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color);">
+                    <span class="emoji">💬</span> Full Sermon Breakdown
+                </h2>
+
+                <div class="accordion-item active">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🎯 Introduction:</strong> When Prayer Becomes Routine</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Kevin begins by acknowledging that this Fresh Start series is perfect for both new believers and longtime Christians who may have lost their initial fire. He emphasizes that <strong>when your prayer life stalls or stagnates, the rest of your spiritual life will follow suit</strong>.</p>
+                            
+                            <p style="margin-top: 1rem;">He shares his personal struggle: "I have never been someone who prays big elaborate prayers, big bold prayers. When I pray, I'm pretty safe. I pray small prayers." He prays for good health and smart physicians instead of miraculous healing; for jobs and promotions instead of divine provision.</p>
+
+                            <div class="quote-card" style="margin-top: 1.5rem;">
+                                <div class="quote-text">"I've always wanted to be someone who can pray big, bold prayers."</div>
+                                <div class="quote-author">— Pastor Kevin</div>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;">He then shares the story of Ted in Singapore—a man who ministered to disadvantaged youth. When 50 kids showed up instead of 10 for a Christmas party, Ted prayed boldly, believing God would provide. God impressed on him to go fishing, and he caught bucket after bucket of fish miraculously. Pastor Kevin reflects: "If I were in his shoes, my first instinct is not to pray... For Ted, prayer was his first and only option."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>💡 Main Point:</strong> The Prayer of Surrender</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Kevin introduces the central thesis:</p>
+                            
+                            <div class="key-point">
+                                <h3>💡 What Makes a Prayer "Big"?</h3>
+                                <p>"A big prayer is not a big prayer because you're praying for a miracle. And a big prayer is not a big prayer because you stand up and you pray in a very eloquent way. <strong>A big prayer is a big prayer because of your heart.</strong>"</p>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;">That heart is captured in the <span class="tooltip">prayer of surrender<span class="tooltip-content">💡 <strong>Prayer of Surrender:</strong> A prayer where you genuinely wrestle with God about your desires, fully process what you want and why, and then sincerely say "not my will, but yours be done"—while already living in obedience to God's will in your daily life.</span></span>. He points to Matthew 26, where Jesus prays in the Garden of Gethsemane before His crucifixion.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🤲 Section 1:</strong> Jesus - Wrestling with God</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>The Setting: Garden of Gethsemane</strong></p>
+                            <p>The word <span class="tooltip">Gethsemane<span class="tooltip-content">🌿 <strong>Gethsemane:</strong> Hebrew for "olive press"—a place where olives are crushed and pressed to extract oil. A powerful metaphor for the long, grueling, excruciating prayer Jesus was about to pray.</span></span> means "olive press"—a fitting metaphor for the crushing, agonizing prayer Jesus was about to pray.</p>
+
+                            <div class="scripture-card" style="margin-top: 1.5rem;">
+                                <div class="scripture-quote">
+                                    "He took Peter and the two sons of Zebedee along with him, and he began to be sorrowful and troubled. Then he said to them, 'My soul is overwhelmed with sorrow to the point of death. Stay here and keep watch with me.'"
+                                </div>
+                                <div class="scripture-ref">— Matthew 26:37-38 (NIV)</div>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;"><strong>Why Was Jesus in Anguish?</strong></p>
+                            <p>Pastor Kevin explores what caused Jesus such overwhelming sorrow. He shares a personal analogy: when he and his wife did long distance for 18 months, every taxi ride to the airport brought "a wave of sorrow" because of impending separation. Similarly, Jesus was facing separation—not from the disciples, but from the Father.</p>
+
+                            <p style="margin-top: 1rem;"><strong>The Cup of Wrath</strong></p>
+                            <button class="btn-secondary" onclick="openModal('cupModal')" style="margin-top: 1rem;">📖 Click to Read Full Scripture Context</button>
+
+                            <div class="scripture-card" style="margin-top: 1.5rem;">
+                                <div class="scripture-quote">
+                                    "Going a little farther, he fell with his face to the ground and prayed, 'My Father, if it is possible, may this cup be taken from me. Yet not as I will, but as you will.'"
+                                </div>
+                                <div class="scripture-ref">— Matthew 26:39 (NIV)</div>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;">The "cup" refers to the <span class="tooltip">cup of wrath<span class="tooltip-content">☕ <strong>Cup of Wrath:</strong> According to Psalm 75:7-8, this is "a cup full of foaming wine mixed with spices" that "all the wicked of the earth drink down to its very dregs." It represents the full punishment reserved for the wicked—drinking it to the dregs means experiencing the complete, undiluted punishment, including all the worst parts.</span></span> mentioned in Psalm 75:7-8. Pastor Kevin explains: "This cup is reserved for us. But Jesus' mission is to drink that cup on our behalf."</p>
+
+                            <div class="key-point" style="margin-top: 1.5rem;">
+                                <h3>💔 The Most Devastating Aspect</h3>
+                                <p>"God is a holy God, which means he can't be around sin. So the most devastating aspect of sin in my book is that we are separated from God... For Jesus Christ, who had been intimately connected with God the Father for all of eternity from before creation, this was infinitely more excruciating."</p>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;"><strong>Jesus Wrestled All Night</strong></p>
+                            <p>We learn from verse 40 that Jesus prayed for at least one hour in this first round, then came back a second and third time. "All through the night he was pleading with God... Jesus wrestled with God. He kept praying on and over and over."</p>
+
+                            <div class="quote-card" style="margin-top: 1.5rem;">
+                                <div class="quote-text">"When he says 'not my will,' Jesus knew what he wanted and why he wanted it. I don't think that for many of us, we are the same. We like to throw in this phrase at the end of our prayers because it sounds nice. But we don't truly think about it."</div>
+                                <div class="quote-author">— Pastor Kevin</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>😴 Section 2:</strong> The Disciples - Spirit Willing, Flesh Weak</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-card">
+                                <div class="scripture-quote">
+                                    "Then he returned to his disciples and found them sleeping. 'Couldn't you men keep watch with me for one hour?' he asked Peter. 'Watch and pray so that you will not fall into temptation. The spirit is willing, but the flesh is weak.'"
+                                </div>
+                                <div class="scripture-ref">— Matthew 26:40-41 (NIV)</div>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;"><strong>The Cryptic Warning</strong></p>
+                            <p>Pastor Kevin was initially puzzled: "Why is physical exhaustion a temptation? Why are the disciples being reprimanded in this way? And then what is this cryptic line: 'The spirit is willing, but the flesh is weak'?"</p>
+
+                            <p style="margin-top: 1rem;">He explains that "flesh" in Scripture refers to <span class="tooltip">the selfish part of us<span class="tooltip-content">💭 <strong>Flesh (Biblical Definition):</strong> Not literal physical flesh, but that selfish part of us bent toward self-glory and self-preservation. When Jesus says "the spirit is willing but the flesh is weak," He's pointing out the gap between our good intentions and our actual obedience.</span></span> bent toward self-glory and self-preservation. But falling asleep doesn't seem selfish—so what's really happening?</p>
+
+                            <p style="margin-top: 1.5rem;"><strong>Going Back to the Last Supper</strong></p>
+                            <p>Before Gethsemane, at the Last Supper, Jesus predicted all the disciples would fail Him:</p>
+
+                            <div class="scripture-card" style="margin-top: 1rem;">
+                                <div class="scripture-quote">
+                                    "Truly I tell you, this very night, before the rooster crows, you will disown me three times. But Peter declared, 'Even if I have to die with you, I will never disown you.' And all the other disciples said the same."
+                                </div>
+                                <div class="scripture-ref">— Matthew 26:34-35 (NIV)</div>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;">Pastor Kevin emphasizes the often-overlooked detail: <strong>"And all the other disciples said the same."</strong> It wasn't just Peter who would fail—all of them would.</p>
+
+                            <div class="key-point" style="margin-top: 1.5rem;">
+                                <h3>😢 The Tragic Reality</h3>
+                                <p>"They all had the intention to follow Jesus to the cross. They said in a very spirited way, 'Lord, we will die for you.' And then Jesus gives them a simple and small instruction: 'Stay awake.' And they can't do that. If they can't even stay awake for him, how could they ever stand with him through what he was going to have to go through?"</p>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;"><strong>The Most Tragic Thing</strong></p>
+                            <p>Pastor Kevin shares what he finds most heartbreaking about the crucifixion:</p>
+                            <ul style="margin-left: 1.5rem; margin-top: 1rem; line-height: 2;">
+                                <li>Who carried the cross? A random guy named Simon—not a disciple</li>
+                                <li>Who died on Jesus's left and right? Two thieves—not disciples</li>
+                                <li>Who took His body down and buried Him? Joseph of Arimathea—not a disciple</li>
+                                <li>Apart from John, the disciples were nowhere to be seen</li>
+                            </ul>
+
+                            <div class="quote-card" style="margin-top: 1.5rem;">
+                                <div class="quote-text">"Here they said they would follow him to death... They're not even there. They can't even stay awake. Spirit is willing, but the flesh is weak."</div>
+                                <div class="quote-author">— Pastor Kevin</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>💭 Application 1:</strong> Not My Will - Truly Process Your Desires</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Kevin challenges us to stop saying "not my will" as mere lip service:</p>
+
+                            <div class="key-point">
+                                <h3>💼 Example: Praying for a Job</h3>
+                                <p>You apply for a job and pray: "God, please give me that job. But not my will, but yours be done."</p>
+                                <p style="margin-top: 1rem;"><strong>But wait—WHY do you want that job?</strong></p>
+                                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                    <li>Is it because the company's values align with yours?</li>
+                                    <li>Would it give you greater fulfillment and belonging?</li>
+                                    <li>So what you truly want is fulfillment and purpose?</li>
+                                    <li>Are you lacking that in other areas of your life?</li>
+                                </ul>
+                                <p style="margin-top: 1rem;">"I'm just running through a line of questionings to get at the heart of what you truly desire."</p>
+                            </div>
+
+                            <div class="quote-card" style="margin-top: 1.5rem;">
+                                <div class="quote-text">"When you gloss over the things you want, when you don't really think through what it is your will is, when you say the words 'not my will,' it makes it empty. Powerless."</div>
+                                <div class="quote-author">— Pastor Kevin</div>
+                            </div>
+
+                            <div class="key-point" style="margin-top: 1.5rem;">
+                                <h3>⚡ What Makes for a Powerful Prayer of Surrender</h3>
+                                <p>"When you have truly, truly thought through the things that you desire. When you truly consider what your heart motivations are, why you want those things, when you have wrestled with God, when you have contended with him for a long time. And then after all of that fighting, all night of prayer, then you say, 'Not my will.' That's when it's powerful. Otherwise, it's just lip service."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>✅ Application 2:</strong> Thy Will Be Done - Live It Now</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Kevin uses a personal story to illustrate this point:</p>
+
+                            <div class="quote-card">
+                                <div class="quote-text">"My son and I were cooped up at home because of the typhoons... my son was just in a mood. I'd say, 'Kirby, please don't jump off the couch,' and he jumps off the couch... And it got to the point where I said, 'Kirby, you are not listening to daddy.' And he turns around and he says almost immediately, 'I do listen to daddy. I listen to daddy all the time.' And he said it with so much conviction, so much sincerity, he truly believed that he listened well."</div>
+                                <div class="quote-author">— Pastor Kevin</div>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;"><strong>Aren't we the same?</strong></p>
+                            <p>We say: "Thy will be done, Lord, we will follow you. We will listen to wherever you guide us."</p>
+                            <p style="margin-top: 0.5rem;">God says: "Okay, so sell everything and go follow me." → We say no.</p>
+                            <p style="margin-top: 0.5rem;">God says: "Go help that guy in the corner." → Too inconvenient.</p>
+                            <p style="margin-top: 0.5rem;">God says: "Turn the other cheek and not seek revenge." → No.</p>
+                            <p style="margin-top: 0.5rem;">God says: "Forgive 70 times 70 times." → That's figurative, Lord...</p>
+
+                            <div class="key-point" style="margin-top: 1.5rem;">
+                                <h3>💯 The Hard Truth</h3>
+                                <p>"And yet, we still believe that we listen well. We can't be obedient now. What makes us think we can be obedient when the times get tough? What makes us think we will be obedient just because we utter those words in a prayer?"</p>
+                                <p style="margin-top: 1rem; font-weight: 600;">"Saying thy will be done is meaningless unless you are already living in that way. Otherwise, it's just lip service."</p>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;"><strong>Pastor Albert's Wisdom</strong></p>
+                            <p>When Pastor Kevin first arrived in Hong Kong, he shared his grand vision for young adult ministry with Pastor Albert. Pastor Albert responded with no facial expression, maybe a smirk, and said three words that became foundational to Pastor Kevin's ministry:</p>
+
+                            <div class="quote-card" style="margin-top: 1rem;">
+                                <div class="quote-text">"Talk is cheap."</div>
+                                <div class="quote-author">— Pastor Albert</div>
+                            </div>
+
+                            <p style="margin-top: 1rem;">"There's enough talkers in ministry," Pastor Kevin reflects. The same is true in our prayer lives—there are enough people saying "thy will be done" without actually doing God's will.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🎁 Benefits:</strong> What This Prayer Brings</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>1. Greater Open-Handedness</strong></p>
+                            <p>"Open-handed meaning you're not grasping onto your plans. You're not obsessed with your goals in life. If you realize a plan, you're pleased. That's awesome. If you don't realize it, you're also okay."</p>
+
+                            <p style="margin-top: 1.5rem;"><strong>2. Contentment in All Situations</strong></p>
+                            <p>"You begin living life with a level of contentment that Paul talks about in the book of Philippians, to be content in all situations, whether living in plenty or living in want."</p>
+
+                            <p style="margin-top: 1.5rem;"><strong>3. Peace and Margin</strong></p>
+                            <p>"Greater peace, less anxiety. Greater margin, less busyness. Greater hope, less despair."</p>
+
+                            <p style="margin-top: 1.5rem;"><strong>4. Outward Focus on God's Mission</strong></p>
+                            <p>"It actually helps you not fixate on yourself anymore... it's only until we stop fixating on ourselves that we realize, whoa, there's a whole world out there. There's needs elsewhere. And only until you do that do you really see how God is moving around the world, around you. And only then do you see what he wants you to care about."</p>
+
+                            <div class="key-point" style="margin-top: 1.5rem;">
+                                <h3>🎯 Understanding Your Calling</h3>
+                                <p>"My definition of calling is pretty simple: It's responding to a need in the world related to the mission of God."</p>
+                                <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                                    <li>Moses was called to rescue Israel (God's mission to bless nations through Israel)</li>
+                                    <li>Jonah was called to preach to Nineveh (God's mission of compassion to all nations)</li>
+                                    <li>Paul was called to the Gentiles (God's mission to save all who call on Jesus)</li>
+                                </ul>
+                                <p style="margin-top: 1rem;">"To see what that is, we have to turn our hearts and our focus outward. The prayer of surrender helps with that."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>⚠️ Warning:</strong> This Is a Dangerous Prayer</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="key-point">
+                                <h3>⚠️ Final Warning</h3>
+                                <p>"This is a very dangerous prayer to pray. Because it might cause you to actually have to surrender that which is most important to you. And for some, even your life itself."</p>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;"><strong>The Disciples' Ultimate Surrender</strong></p>
+                            <p>After Jesus's resurrection, He appeared to Peter and reinstated him, asking three times, "Do you love me?" Pastor Kevin believes all the disciples witnessed this, "knowing that in some way, that forgiveness was for them as well."</p>
+
+                            <div class="responsive-table" style="margin-top: 1.5rem;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Disciple</th>
+                                            <th>Place of Martyrdom</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Matthew</td><td>Ethiopia</td></tr>
+                                        <tr><td>Andrew</td><td>Greece</td></tr>
+                                        <tr><td>Bartholomew</td><td>Armenia</td></tr>
+                                        <tr><td>Simon the Zealot</td><td>Persia</td></tr>
+                                        <tr><td>Thomas</td><td>India</td></tr>
+                                        <tr><td>James (son of Zebedee)</td><td>Jerusalem</td></tr>
+                                        <tr><td>James (son of Alphaeus)</td><td>Jerusalem</td></tr>
+                                        <tr><td>Thaddeus</td><td>Persia</td></tr>
+                                        <tr><td>Matthias</td><td>Jerusalem</td></tr>
+                                        <tr><td>Philip</td><td>Hieropolis</td></tr>
+                                        <tr><td>Peter</td><td>Rome (crucified upside down)</td></tr>
+                                        <tr><td>John</td><td>Died of natural causes</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;">Peter was crucified upside down in Rome "because he didn't feel worthy to die in the same manner as Jesus Christ."</p>
+
+                            <div class="quote-card" style="margin-top: 1.5rem;">
+                                <div class="quote-text">"All of the disciples would give their lives as martyrs for Jesus Christ. And I want to believe, and I fully believe, they were able to do so because they were finally able to pray the prayer, 'Not my will. May yours be done.'"</div>
+                                <div class="quote-author">— Pastor Kevin</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🌟 Conclusion:</strong> The Most Beautiful Thing on This Side of Heaven</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Kevin ends with a powerful image from a sports photographer who captures baseball players sliding into home plate, with the whole team there cheering and ready to celebrate:</p>
+
+                            <div class="quote-card">
+                                <div class="quote-text">"He says that [is] the most beautiful thing you can see on this side of heaven... You might have prayed that prayer for the very first time. Oh, this is scary. I'm living my life. I'm giving everything up for God. But recognizing that you're not doing it alone. It's not just with the body of Christ right now. It's with all those who have come before us and all those who come after us. And when we finally stand before the Lord and hear him say, 'Well done, my good and faithful servant,' there are the saints of God welcoming you and cheering you on. You have lived faithfully. You did not live just for yourself."</div>
+                                <div class="quote-author">— Pastor Kevin</div>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;"><strong>Final Encouragement:</strong></p>
+                            <p>"It's not a scary thing. It's a wonderful thing if this prayer, if this heart of surrender is something that you can pray... We want to live for you. We want to surrender all of our lives for you. Because we know it's a beautiful thing, and that there is a wonderful life that awaits us when we are yielded to your will."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Scripture Tab -->
+        <div id="scripture" class="tab-content">
+            <div class="content-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color);">
+                    <span class="emoji">📖</span> Bible Verses Referenced
+                </h2>
+
+                <div class="accordion-item active">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🤲 Matthew 26:36-46</strong> - Jesus in Gethsemane (Main Passage)</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-card">
+                                <div class="scripture-quote">
+                                    Then Jesus went with his disciples to a place called Gethsemane, and he said to them, "Sit here while I go over there and pray." He took Peter and the two sons of Zebedee along with him, and he began to be sorrowful and troubled. Then he said to them, "My soul is overwhelmed with sorrow to the point of death. Stay here and keep watch with me."
+                                    <br><br>
+                                    Going a little farther, he fell with his face to the ground and prayed, "My Father, if it is possible, may this cup be taken from me. Yet not as I will, but as you will."
+                                    <br><br>
+                                    Then he returned to his disciples and found them sleeping. "Couldn't you men keep watch with me for one hour?" he asked Peter. "Watch and pray so that you will not fall into temptation. The spirit is willing, but the flesh is weak."
+                                    <br><br>
+                                    He went away a second time and prayed, "My Father, if it is not possible for this cup to be taken away unless I drink it, may your will be done."
+                                    <br><br>
+                                    When he came back, he again found them sleeping, because their eyes were heavy. So he left them and went away once more and prayed the third time, saying the same thing.
+                                    <br><br>
+                                    Then he returned to the disciples and said to them, "Are you still sleeping and resting? Look, the hour has come, and the Son of Man is delivered into the hands of sinners. Rise! Let us go! Here comes my betrayer!"
+                                </div>
+                                <div class="scripture-ref">— Matthew 26:36-46 (NIV)</div>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> This is the central passage of the sermon, showing Jesus's prayer of surrender in the Garden of Gethsemane before His arrest and crucifixion.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>☕ Psalm 75:7-8</strong> - The Cup of Wrath</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-card">
+                                <div class="scripture-quote">
+                                    It is God who judges: He brings one down, he exalts another. In the hand of the Lord is a cup full of foaming wine mixed with spices; he pours it out, and all the wicked of the earth drink it down to its very dregs.
+                                </div>
+                                <div class="scripture-ref">— Psalm 75:7-8 (NIV)</div>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> This passage explains what the "cup" Jesus refers to represents—the cup of God's wrath, the full punishment for sin that Jesus would drink on our behalf.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>💬 Matthew 26:34-35</strong> - The Disciples' Promise</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-card">
+                                <div class="scripture-quote">
+                                    "Truly I tell you," Jesus answered, "this very night, before the rooster crows, you will disown me three times."
+                                    <br><br>
+                                    But Peter declared, "Even if I have to die with you, I will never disown you." And all the other disciples said the same.
+                                </div>
+                                <div class="scripture-ref">— Matthew 26:34-35 (NIV)</div>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> At the Last Supper, Jesus predicts Peter's denial, but Peter and all the disciples boldly claim they would die for Jesus—promises they couldn't keep.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>💰 Mark 8:36</strong> - What Profit to Gain the World?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-card">
+                                <div class="scripture-quote">
+                                    "What good is it for someone to gain the whole world, yet forfeit their soul?"
+                                </div>
+                                <div class="scripture-ref">— Mark 8:36 (NIV)</div>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Referenced in the worship introduction, emphasizing that nothing in this world compares to Jesus and eternal life with God.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>👑 Mark 10</strong> - The Rich Young Ruler</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-card">
+                                <div class="scripture-quote">
+                                    Jesus looked at him and loved him. "One thing you lack," he said. "Go, sell everything you have and give to the poor, and you will have treasure in heaven. Then come, follow me."
+                                    <br><br>
+                                    At this the man's face fell. He went away sad, because he had great wealth.
+                                </div>
+                                <div class="scripture-ref">— Mark 10:21-22 (NIV)</div>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Also referenced in worship, illustrating the importance of putting God first above all possessions and desires.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>😌 Philippians 4:11-13</strong> - Contentment in All Situations</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-card">
+                                <div class="scripture-quote">
+                                    I am not saying this because I am in need, for I have learned to be content whatever the circumstances. I know what it is to be in need, and I know what it is to have plenty. I have learned the secret of being content in any and every situation, whether well fed or hungry, whether living in plenty or in want. I can do all this through him who gives me strength.
+                                </div>
+                                <div class="scripture-ref">— Philippians 4:11-13 (NIV)</div>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Pastor Kevin references Paul's teaching on contentment as one of the benefits of living with a surrendered heart.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>👑 Hebrews 4:16</strong> - Approaching God's Throne Boldly</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="scripture-card">
+                                <div class="scripture-quote">
+                                    Let us then approach God's throne of grace with confidence, so that we may receive mercy and find grace to help us in our time of need.
+                                </div>
+                                <div class="scripture-ref">— Hebrews 4:16 (NIV)</div>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Pastor Eric references this in his opening prayer, noting it's "grace and mercy that allows us to boldly approach" God's throne.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Practical Application Tab -->
+        <div id="application" class="tab-content">
+            <div class="content-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color);">
+                    <span class="emoji">✨</span> Practical Application
+                </h2>
+
+                <div class="key-point">
+                    <h3>🙏 How to Pray the Prayer of Surrender</h3>
+                    <p>This isn't a formula, but a genuine heart posture. Here's how to approach it:</p>
+                </div>
+
+                <div class="accordion-item active">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🔍 Step 1:</strong> Identify What You Truly Desire</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Don't rush past this.</strong> Take time to really examine what you want and why.</p>
+                            
+                            <p style="margin-top: 1rem;"><strong>Questions to ask yourself:</strong></p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 2;">
+                                <li>What am I really praying for? (Be specific)</li>
+                                <li>Why do I want this?</li>
+                                <li>What deeper need or desire is driving this request?</li>
+                                <li>If God said no to this specific request, what would I truly be losing?</li>
+                                <li>Is this about my comfort, my glory, my control—or about God's kingdom?</li>
+                            </ul>
+
+                            <div class="quote-card" style="margin-top: 1.5rem;">
+                                <div class="quote-text">"When you gloss over the things you want, when you don't really think through what it is your will is, when you say the words 'not my will,' it makes it empty."</div>
+                                <div class="quote-author">— Pastor Kevin</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🤲 Step 2:</strong> Wrestle with God in Prayer</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Prayer isn't about being polite—it's about being honest.</strong></p>
+                            
+                            <p style="margin-top: 1rem;"><strong>What wrestling looks like:</strong></p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 2;">
+                                <li>Don't just pray once—pray repeatedly, like Jesus did all night</li>
+                                <li>Be brutally honest with God about your fears, desires, and struggles</li>
+                                <li>Ask God if there's another way (Jesus did: "if it is possible, may this cup be taken from me")</li>
+                                <li>Plead your case—God can handle your emotions and questions</li>
+                                <li>Listen for His response in Scripture, through the Holy Spirit, and in wise counsel</li>
+                            </ul>
+
+                            <div class="scripture-card" style="margin-top: 1.5rem;">
+                                <div class="scripture-quote">
+                                    "Going a little farther, he fell with his face to the ground and prayed, 'My Father, if it is possible, may this cup be taken from me. Yet not as I will, but as you will.'"
+                                </div>
+                                <div class="scripture-ref">— Matthew 26:39 (NIV)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>💭 Step 3:</strong> Say "Not My Will" with Full Understanding</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Only after wrestling can you truly say "not my will."</strong></p>
+                            
+                            <p style="margin-top: 1rem;">This isn't giving up or being passive. It's active trust. It means:</p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 2;">
+                                <li>I've fully processed what I want</li>
+                                <li>I understand why I want it</li>
+                                <li>I've wrestled with God about it</li>
+                                <li>And now I'm choosing to trust His plan over mine</li>
+                            </ul>
+
+                            <div class="key-point" style="margin-top: 1.5rem;">
+                                <h3>⚡ The Power of This Prayer</h3>
+                                <p>"When you have truly, truly thought through the things that you desire... when you have wrestled with God, when you have contended with him for a long time... then you say, 'Not my will.' That's when it's powerful."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>✅ Step 4:</strong> Live "Thy Will Be Done" in Daily Obedience</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>The prayer is meaningless if you're not already obeying God's known will.</strong></p>
+                            
+                            <p style="margin-top: 1rem;"><strong>Audit your life:</strong></p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 2;">
+                                <li>Are you loving your neighbor? Or just tolerating people?</li>
+                                <li>Are you stewarding your finances according to God's principles?</li>
+                                <li>Are you forgiving those who've hurt you? Or holding grudges?</li>
+                                <li>Are you serving the poor and marginalized?</li>
+                                <li>Are you pursuing holiness in your personal life?</li>
+                                <li>Are you generous with your time, talents, and treasure?</li>
+                            </ul>
+
+                            <div class="quote-card" style="margin-top: 1.5rem;">
+                                <div class="quote-text">"We can't be obedient now. What makes us think we can be obedient when the times get tough?... Saying thy will be done is meaningless unless you are already living in that way."</div>
+                                <div class="quote-author">— Pastor Kevin</div>
+                            </div>
+
+                            <p style="margin-top: 1.5rem;"><strong>Start Small</strong></p>
+                            <p>The disciples couldn't even stay awake. Don't make grandiose promises. Start with small acts of obedience:</p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 2;">
+                                <li>Help someone today who inconveniences you</li>
+                                <li>Forgive someone who doesn't deserve it</li>
+                                <li>Give generously when it costs you something</li>
+                                <li>Speak truth when it's uncomfortable</li>
+                                <li>Choose God's way over your comfort</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>📋 Action Steps:</strong> This Week's Challenge</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="bento-grid">
+                                <div class="bento-item">
+                                    <div class="bento-icon">📝</div>
+                                    <div class="bento-title">Day 1-2: Self-Examination</div>
+                                    <div class="bento-text">Write down your current prayers. For each one, ask "What do I really want?" and "Why do I want it?" Go 3-5 levels deep.</div>
+                                </div>
+                                <div class="bento-item">
+                                    <div class="bento-icon">🙏</div>
+                                    <div class="bento-title">Day 3-4: Extended Prayer</div>
+                                    <div class="bento-text">Set aside extended time (30-60 minutes) to wrestle with God about one major desire. Be honest. Plead. Listen.</div>
+                                </div>
+                                <div class="bento-item">
+                                    <div class="bento-icon">🔍</div>
+                                    <div class="bento-title">Day 5-6: Obedience Audit</div>
+                                    <div class="bento-text">Identify 3 areas where you're not living according to God's will. Pick one and take concrete action to change.</div>
+                                </div>
+                                <div class="bento-item">
+                                    <div class="bento-icon">✅</div>
+                                    <div class="bento-title">Day 7: Surrender Prayer</div>
+                                    <div class="bento-text">After wrestling and examining your obedience, pray "not my will, but yours be done" with full understanding of what it means.</div>
+                                </div>
+                            </div>
+
+                            <div class="key-point" style="margin-top: 2rem;">
+                                <h3>⚠️ Remember the Warning</h3>
+                                <p>This prayer may cost you everything. It may require you to:</p>
+                                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                    <li>Give up comfort for obedience</li>
+                                    <li>Sacrifice your plans for God's purposes</li>
+                                    <li>Release control of your life</li>
+                                    <li>Face persecution or hardship</li>
+                                    <li>Possibly even give your life (like the disciples did)</li>
+                                </ul>
+                                <p style="margin-top: 1rem; font-weight: 600;">But it will also bring the most beautiful, fulfilling life possible—one aligned with your Creator's design.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><strong>🎁 Benefits:</strong> What You'll Gain</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="responsive-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Benefit</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Open-Handedness</strong></td>
+                                            <td>You're no longer grasping onto your plans. You're pleased if they work out, okay if they don't.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Contentment</strong></td>
+                                            <td>Like Paul, you're content in all situations—whether in plenty or in want.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Greater Peace</strong></td>
+                                            <td>Less anxiety because you trust God's plan over your own.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Greater Margin</strong></td>
+                                            <td>Less busyness because you're not frantically pursuing your own agenda.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Greater Hope</strong></td>
+                                            <td>Less despair because your hope is in God, not circumstances.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Outward Focus</strong></td>
+                                            <td>You stop fixating on yourself and see the needs around you and God's mission in the world.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Clear Calling</strong></td>
+                                            <td>You see what God wants you to care about and how to respond to needs related to His mission.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Reflection Questions Tab -->
+        <div id="reflection" class="tab-content">
+            <div class="content-section">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color);">
+                    <span class="emoji">🤔</span> Reflection Questions
+                </h2>
+
+                <div class="reflection-section">
+                    <div class="reflection-question">
+                        <h3 style="color: var(--accent-color); margin-bottom: 1rem; font-size: 1.4rem;">
+                            <span class="emoji">💭</span> Question 1: What Do You Need to Wrestle About?
+                        </h3>
+                        <p style="margin-bottom: 1rem; line-height: 1.8;">
+                            <strong>What is a circumstance or issue that you feel you need to wrestle with God about?</strong>
+                        </p>
+                        <p style="line-height: 1.8; color: var(--text-secondary);">
+                            Consider the areas of your life where you're holding on tightly to your own plans or desires. Where are you most resistant to saying "not my will, but yours"? This might be related to:
+                        </p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem; line-height: 2; color: var(--text-secondary);">
+                            <li>Your career or calling</li>
+                            <li>A relationship (romantic, family, friendship)</li>
+                            <li>Your finances or living situation</li>
+                            <li>A health concern for yourself or a loved one</li>
+                            <li>A decision you're facing</li>
+                            <li>Unforgiveness or bitterness toward someone</li>
+                            <li>A dream or ambition you're pursuing</li>
+                        </ul>
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 4px solid var(--accent-color);">
+                            <p style="font-weight: 600; margin-bottom: 0.5rem;">Journaling Prompt:</p>
+                            <p style="color: var(--text-secondary);">Write out what you want in this situation and keep asking "why?" until you get to the heart of your desire. Then bring that honest desire to God in prayer—don't hold back. Tell Him everything.</p>
+                        </div>
+                    </div>
+
+                    <div class="reflection-question">
+                        <h3 style="color: var(--accent-color); margin-bottom: 1rem; font-size: 1.4rem;">
+                            <span class="emoji">🔍</span> Question 2: Where Are You Misaligned?
+                        </h3>
+                        <p style="margin-bottom: 1rem; line-height: 1.8;">
+                            <strong>How can you live more in line with God's will in your day-to-day? What areas of your life are most "misaligned"?</strong>
+                        </p>
+                        <p style="line-height: 1.8; color: var(--text-secondary);">
+                            The disciples said they would follow Jesus to death but couldn't even stay awake for one hour. Where is there a gap between what you say you believe and how you actually live?
+                        </p>
+                        
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem;">
+                            <p style="font-weight: 600; margin-bottom: 1rem;">Audit These Areas:</p>
+                            
+                            <div style="margin-bottom: 1.5rem;">
+                                <p style="font-weight: 600; color: var(--accent-color);">❤️ Love & Relationships</p>
+                                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary); line-height: 1.9;">
+                                    <li>Am I loving my neighbors or just tolerating them?</li>
+                                    <li>Do I forgive freely or hold grudges?</li>
+                                    <li>Am I serving others or primarily serving myself?</li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-bottom: 1.5rem;">
+                                <p style="font-weight: 600; color: var(--accent-color);">💰 Finances & Possessions</p>
+                                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary); line-height: 1.9;">
+                                    <li>Am I stewarding my money according to God's principles?</li>
+                                    <li>Am I generous or stingy?</li>
+                                    <li>Do I trust God with my finances or hoard out of fear?</li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-bottom: 1.5rem;">
+                                <p style="font-weight: 600; color: var(--accent-color);">⏰ Time & Priorities</p>
+                                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary); line-height: 1.9;">
+                                    <li>What consumes most of my time and energy?</li>
+                                    <li>Am I prioritizing my relationship with God or just fitting Him in?</li>
+                                    <li>Do I make time for prayer, Scripture, and community?</li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-bottom: 1.5rem;">
+                                <p style="font-weight: 600; color: var(--accent-color);">🎯 Obedience & Character</p>
+                                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary); line-height: 1.9;">
+                                    <li>Are there clear commands in Scripture I'm ignoring?</li>
+                                    <li>Am I pursuing holiness or making excuses for sin?</li>
+                                    <li>Do I speak truth even when it's costly?</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <p style="font-weight: 600; color: var(--accent-color);">🌍 Mission & Purpose</p>
+                                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary); line-height: 1.9;">
+                                    <li>Am I responding to needs around me?</li>
+                                    <li>Do I care about what God cares about (justice, mercy, the lost)?</li>
+                                    <li>Am I using my gifts to build God's kingdom or my own?</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 4px solid var(--accent-color);">
+                            <p style="font-weight: 600; margin-bottom: 0.5rem;">Action Step:</p>
+                            <p style="color: var(--text-secondary);">Pick ONE specific area where you're misaligned. Don't try to fix everything at once. Write down one concrete action you'll take this week to align that area with God's will. Then do it—even if it's uncomfortable.</p>
+                        </div>
+                    </div>
+
+                    <div class="reflection-question">
+                        <h3 style="color: var(--accent-color); margin-bottom: 1rem; font-size: 1.4rem;">
+                            <span class="emoji">⚠️</span> Bonus Question: Are You Ready for the Cost?
+                        </h3>
+                        <p style="margin-bottom: 1rem; line-height: 1.8;">
+                            <strong>This is a dangerous prayer. What might it cost you to truly pray "not my will, but yours be done"?</strong>
+                        </p>
+                        <p style="line-height: 1.8; color: var(--text-secondary);">
+                            Pastor Kevin warned us: "This prayer may cause you to actually have to surrender that which is most important to you. And for some, even your life itself."
+                        </p>
+                        
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem;">
+                            <p style="font-weight: 600; margin-bottom: 1rem;">Consider What You Might Have to Surrender:</p>
+                            <ul style="margin-left: 1.5rem; color: var(--text-secondary); line-height: 2;">
+                                <li>Your plans for your career or education</li>
+                                <li>Your comfort and security</li>
+                                <li>Relationships that aren't aligned with God's will</li>
+                                <li>Your reputation or what people think of you</li>
+                                <li>Control over your future</li>
+                                <li>Your money and possessions</li>
+                                <li>Your time and personal preferences</li>
+                                <li>Perhaps even your safety or life (like the disciples)</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(49, 130, 206, 0.15) 0%, rgba(43, 108, 176, 0.15) 100%); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem;">
+                            <p style="font-weight: 600; margin-bottom: 0.5rem; color: var(--accent-color);">But Remember:</p>
+                            <p style="color: var(--text-secondary); line-height: 1.8;">"It's not a scary thing. It's a wonderful thing... Because we know it's a beautiful thing, and that there is a wonderful life that awaits us when we are yielded to your will." The saints who've gone before us—including all the disciples who gave their lives—are cheering you on. You're not doing this alone.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-point" style="margin-top: 2rem;">
+                    <h3><span class="emoji">🎯</span> Final Challenge</h3>
+                    <p>Set aside extended time this week (30-60 minutes) to wrestle with God in prayer about one major area of your life. Don't rush. Be honest. Process your desires. Then, only after genuine wrestling, pray: "Not my will, but yours be done."</p>
+                    <p style="margin-top: 1rem;">And then—this is crucial—<strong>take one concrete action this week to align your life with God's will in an area where you've been disobedient.</strong></p>
+                    <p style="margin-top: 1rem; font-style: italic;">Talk is cheap. Let your prayer become action.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal for Cup of Wrath Context -->
+    <div id="cupModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('cupModal')">&times;</span>
+            <h2 style="color: var(--accent-color); margin-bottom: 1.5rem;">
+                <span class="emoji">☕</span> The Cup of Wrath - Full Context
+            </h2>
+            
+            <div class="scripture-card">
+                <div class="scripture-quote">
+                    It is God who judges: He brings one down, he exalts another. In the hand of the Lord is a cup full of foaming wine mixed with spices; he pours it out, and all the wicked of the earth drink it down to its very dregs.
+                </div>
+                <div class="scripture-ref">— Psalm 75:7-8 (NIV)</div>
+            </div>
+
+            <p style="margin-top: 1.5rem; line-height: 1.8;">
+                <strong>What is the "cup of wrath"?</strong>
+            </p>
+            <p style="margin-top: 1rem; line-height: 1.8;">
+                The cup represents the full punishment that is reserved for those who are wicked—for all of humanity who have sinned. It's not just a sip of judgment; it's drinking the entire cup "down to its very dregs."
+            </p>
+
+            <p style="margin-top: 1.5rem; line-height: 1.8;">
+                <strong>What does "to its very dregs" mean?</strong>
+            </p>
+            <p style="margin-top: 1rem; line-height: 1.8;">
+                When you brew something with mixed spices, there's inevitably residue that settles at the bottom—the worst parts. Drinking something "to its dregs" means consuming the entire cup, including all that bitter, unpleasant sediment. It's drinking every last drop of punishment—experiencing the fullness of what we deserve for our sin.
+            </p>
+
+            <p style="margin-top: 1.5rem; line-height: 1.8;">
+                <strong>Why was Jesus so anguished about this cup?</strong>
+            </p>
+            <p style="margin-top: 1rem; line-height: 1.8;">
+                This cup was reserved for us, but Jesus' mission was to drink it on our behalf. It wasn't just about physical pain or death—it was about being separated from God the Father. God is holy and cannot be around sin. So when Jesus became sin for us, He experienced the most devastating consequence: separation from the Father with whom He'd been intimately connected for all eternity.
+            </p>
+
+            <div class="key-point" style="margin-top: 2rem;">
+                <h3>☕ The Gospel in This Cup</h3>
+                <p>Jesus drank the cup of wrath—the full punishment for our sin—down to its very dregs so that we don't have to. He experienced complete separation from God so that we can be reconciled to the Father forever. This is why Jesus prayed so desperately in Gethsemane—He knew exactly what this cup would cost Him.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-title">
+            Generated using LLM with supervision and polishing by 
+            <a href="../index.html" class="attribution-link" target="_blank">benjaminficusmicrocarpa</a>
+        </div>
+        <div>
+            <a href="../license.html" class="attribution-license" target="_blank">Released under the MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switching
+        function switchTab(tabName) {
+            // Hide all tab content
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(element) {
+            const accordionItem = element.parentElement;
+            const isActive = accordionItem.classList.contains('active');
+
+            // Close all accordions in the same container
+            const container = accordionItem.closest('.content-section');
+            const allAccordions = container.querySelectorAll('.accordion-item');
+            allAccordions.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Toggle current accordion
+            if (!isActive) {
+                accordionItem.classList.add('active');
+            }
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Keyboard navigation for accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Initialize first accordion as open in overview tab
+        window.addEventListener('load', function() {
+            const firstAccordion = document.querySelector('#overview .accordion-item');
+            if (firstAccordion) {
+                firstAccordion.classList.add('active');
+            }
+        });
+    </script>
+
+</body>
+</html>
