@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Start: Give Easier | Island ECC Sermon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2D5F4F;
+            --secondary: #8B7355;
+            --accent: #D4A574;
+            --dark: #1A1A1A;
+            --light: #F5F5F0;
+            --text: #333333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--light);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .hero-section {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            animation: kenBurns 12s ease-in-out infinite;
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+        }
+
+        @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-2%, -2%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(45, 95, 79, 0.85) 0%, rgba(139, 115, 85, 0.75) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .hero-content .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .hero-content .description {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin: 1.5rem auto 2rem;
+            max-width: 700px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: 2px solid white;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .tabs-wrapper {
+            position: sticky;
+            top: 0;
+            background: var(--light);
+            z-index: 100;
+            padding: 1rem 0 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .tabs-wrapper.scrolled {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid #E5E5E0;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .accordion-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary);
+            user-select: none;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 5000px;
+        }
+
+        .accordion-body {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 120px;
+            opacity: 0.1;
+            font-family: Georgia, serif;
+        }
+
+        .verse-text {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .verse-reference {
+            font-weight: 600;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .key-point {
+            background: #FFF9F0;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .key-point h4 {
+            margin-bottom: 0.75rem;
+            color: var(--secondary);
+        }
+
+        .tooltip-trigger {
+            text-decoration: underline dotted;
+            cursor: help;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .tooltip-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 350px;
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            border: 2px solid var(--accent);
+        }
+
+        .tooltip-container.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .tooltip-header {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 300px;
+            font-size: 0.85rem;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .attribution a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 768px) {
+            .attribution {
+                transform: translateX(250px);
+            }
+
+            .attribution:hover {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .attribution {
+                font-size: 0.75rem;
+                padding: 0.75rem;
+                max-width: 250px;
+            }
+
+            .tooltip-container {
+                max-width: calc(100vw - 40px);
+                right: 20px;
+                left: 20px;
+            }
+
+            .tab-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .reflection-question {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .reflection-question::before {
+            content: '🤔';
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .section-header {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        .quote-box {
+            background: linear-gradient(to right, #F8F9FA, white);
+            border-left: 5px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, rgba(212, 165, 116, 0.3) 60%);
+            padding: 0 4px;
+            font-weight: 600;
+        }
+
+        @media print {
+            .hero-section, .tabs-wrapper, .attribution, .tooltip-container {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="carousel-bg">
+            <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=1920&q=80" alt="Giving hands" class="carousel-image active">
+            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1920&q=80" alt="Open hands receiving light" class="carousel-image">
+            <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=1920&q=80" alt="Generosity and abundance" class="carousel-image">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>💝 Fresh Start: Give Easier</h1>
+            <p class="subtitle">19 October 2025 | Pastor Kevin | Island ECC</p>
+            <p class="description">
+                Discover how generosity isn't just a duty—it's a powerful weapon against the enslaving force of money. Learn to break free from the scarcity mindset and experience the joy of abundant giving.
+            </p>
+            <div>
+                <a href="https://www.youtube.com/watch?v=IpBC9iEJh_k" target="_blank" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                    View All Sermons
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Tabs Wrapper -->
+    <div class="tabs-wrapper" id="tabsWrapper">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(0)">📋 Overview</button>
+            <button class="tab-btn" onclick="switchTab(1)">📖 Main Sermon</button>
+            <button class="tab-btn" onclick="switchTab(2)">📜 Bible Verses</button>
+            <button class="tab-btn" onclick="switchTab(3)">✨ Application</button>
+            <button class="tab-btn" onclick="switchTab(4)">💭 Reflection</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Tab Content -->
+        <div class="tab-content active" id="tab-0">
+            <h2 class="section-header">Sermon Overview</h2>
+            
+            <div class="key-point">
+                <h4>🎯 Central Message</h4>
+                <p>Generosity isn't merely a religious duty—it's a powerful weapon that breaks us free from money's enslaving grip. By shifting from a scarcity mindset to an abundance mindset, we can give easier and experience true freedom.</p>
+            </div>
+
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🔑 Three Key Elements</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p><strong>1. The Mentality:</strong> We struggle between two mindsets—<span class="tooltip-trigger" onclick="showTooltip('abundance')">abundance</span> (healthy eyes) and <span class="tooltip-trigger" onclick="showTooltip('scarcity')">scarcity</span> (unhealthy eyes). An abundance mindset recognizes that God owns everything, making us more generous. A scarcity mindset clutches wealth out of fear and never feels satisfied.</p>
+                        
+                        <p><strong>2. The Culprit:</strong> <span class="tooltip-trigger" onclick="showTooltip('mammon')">Mammon</span>—the god of money—is a rival deity that masters us. Jesus says we cannot serve both God and money; we either despise money (cautious and wary of its corrupting power) or become devoted to it.</p>
+                        
+                        <p><strong>3. The Solution:</strong> Generosity itself is the weapon. Start small, test God in giving, and watch for the target result: freedom from money's mastery. Each act of generosity chips away at mammon's control over our lives.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📚 Series Context: Fresh Start</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>This is part five of the Fresh Start series, based on Isaiah 43:18-19. The series focuses on perceiving God's new work in our lives through:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li><strong>Week 1:</strong> Wake up from spiritual malaise</li>
+                            <li><strong>Week 2:</strong> See Him more clearly</li>
+                            <li><strong>Week 3:</strong> Trust Him deeper</li>
+                            <li><strong>Week 4:</strong> Pray bigger through surrender</li>
+                            <li><strong>Week 5:</strong> Give easier through generosity</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>💡 Practical Takeaway</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p><strong>Start small and test God.</strong> Begin with small acts of generosity—$5 to a beggar, then $10, $20, $50. Pay attention to your relationship with money. Do you notice the narrative of "just a little more" quieting down? Continue ramping up: give abundantly to friends in need, to strangers, to the church, to NGOs. Watch as your scarcity mindset shifts and peace increases.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-1">
+            <h2 class="section-header">Main Sermon Content</h2>
+            
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Introduction: The Charity Gala Experience 🎭</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Pastor Kevin shares his personal experience at a charity gala where an auctioneer publicly asked for pledges at increasing financial thresholds—$800,000, $600,000, down to $10,000. As people raised their hands and the room erupted in applause, he felt the pressure to give but ultimately didn't.</p>
+                        
+                        <div class="quote-box">
+                            "I'd be lying if I said that I was disappointed. If I had to be honest, I was more relieved because generosity has always been a hard thing for me."
+                        </div>
+
+                        <p>Despite knowing that generous people are happier, have better health, stronger relationships, and longer lives, Kevin asks: <em>Why is it so hard for us to give?</em> The answer isn't just economic circumstances—it's something more insidious at work in our hearts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Part 1: The Mentality — Healthy vs. Unhealthy Eyes 👁️</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Jesus teaches in Matthew 6:19-23 about storing treasures in heaven rather than on earth. But the passage about "healthy" and "unhealthy" eyes seems confusing until we understand the cultural context.</p>
+
+                        <div class="verse-card">
+                            <p class="verse-text">"The eye is the lamp of the body. If your eyes are healthy, your whole body will be full of light. But if your eyes are unhealthy, your whole body will be full of darkness."</p>
+                            <p class="verse-reference">Matthew 6:22-23 (NIV)</p>
+                        </div>
+
+                        <p>In Greek culture, "healthy eyes" meant <strong class="highlight">generous</strong>, while "unhealthy eyes" meant <strong class="highlight">stingy</strong>. This unlocks the passage's meaning.</p>
+
+                        <h4 style="margin-top: 1.5rem; color: var(--primary);">Abundance Mindset (Healthy Eyes)</h4>
+                        <p>Someone with an abundance mindset:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Sees the world as plentiful</li>
+                            <li>Isn't afraid to be generous or take risks</li>
+                            <li>Appreciates what they have rather than fixating on what they lack</li>
+                            <li><strong>Fundamentally believes that God owns everything</strong></li>
+                        </ul>
+
+                        <div class="key-point">
+                            <h4>🎁 Everything Is a Gift</h4>
+                            <p>"Until you recognize that all of your life is a gift, you will struggle to do generosity as anything more than religious duty. But when you do recognize that all of your life is a gift, then you will want to bless and be as generous as possible."</p>
+                        </div>
+
+                        <p>Kevin illustrates this with his childhood: when his dad gave him and his brother money for their mom's birthday, they went all out—fancy restaurants, cashmere scarves—because it wasn't their money. Now as an adult paying with his own money, he gives "free hug" coupons. <em>When it's not our money, we're more generous.</em></p>
+
+                        <h4 style="margin-top: 1.5rem; color: var(--primary);">Scarcity Mindset (Unhealthy Eyes)</h4>
+                        <p>Someone with a scarcity mindset:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Isn't appreciative of what they have</li>
+                            <li>Constantly focuses on what they don't have yet</li>
+                            <li>Can never have enough wealth, comfort, or security</li>
+                            <li>Often stems from past experiences of poverty or loss</li>
+                        </ul>
+
+                        <p>Jesus warns: <em>"If your eyes are unhealthy, your whole body will be full of darkness."</em> This darkness isn't trivial—it's dangerous and corrupting.</p>
+
+                        <div class="quote-box">
+                            A Monopoly study found that players given more money at the start became meaner, more manipulative, and bullying. The conclusion: "Objectively, money makes people mean."
+                        </div>
+
+                        <p>History confirms this—the Atlantic slave trade, social media's mental health crisis—all driven ultimately by greed and profit at the expense of human wellbeing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Part 2: The Culprit — Mammon, the Rival God 💰</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="verse-card">
+                            <p class="verse-text">"No one can serve two masters. Either you will hate the one and love the other, or you will be devoted to the one and despise the other. You cannot serve both God and money."</p>
+                            <p class="verse-reference">Matthew 6:24 (NIV)</p>
+                        </div>
+
+                        <p>The word "money" here is the Aramaic word <strong class="highlight">Mammon</strong>—the name of a god. Matthew preserved this word because he knew its specific nuance: <em>Money isn't just a resource; it's a rival deity.</em></p>
+
+                        <p>Matthew, a former tax collector, understood money's pull better than anyone. We face a binary choice: be <strong>devoted</strong> to money or <strong>despise</strong> it.</p>
+
+                        <h4 style="margin-top: 1.5rem; color: var(--primary);">What Does "Despising Money" Mean?</h4>
+                        <p>It doesn't mean disgust every time you see your paycheck. Rather, imagine being filled with <strong class="highlight">dread</strong> when receiving money because:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>You know money's controlling nature</li>
+                            <li>You're cautious around it because you know its dangers</li>
+                            <li>You recognize its corrupting power</li>
+                        </ul>
+
+                        <p>This cautious, wary attitude is what Jesus calls "despising" money. The alternative is devotion—and it spirals quickly.</p>
+
+                        <div class="key-point">
+                            <h4>📈 The "Just a Little More" Trap</h4>
+                            <p>First job → apartment → bigger apartment → marriage and kids → two bedrooms → third bedroom for a study → parking spot → buy instead of rent → second property → third property...</p>
+                            <p><em>"Before you know it, Mammon has you in its clutches. That feeling of 'just a little more' keeps you coming back over and over to grovel at the altar of mammon."</em></p>
+                        </div>
+
+                        <p>So when the charity auctioneer asks for $10,000, you clutch your wallet because your dreams of "just a little more" feel more important than fighting poverty.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Part 3: The Solution — Generosity as a Weapon ⚔️</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Once we recognize that devotion to money brings pain and destruction, we'll want to fight against it. <strong class="highlight">The best weapon is generosity.</strong></p>
+
+                        <div class="quote-box">
+                            "Reframe the way you think about generosity. Not just a duty, not just a tool, but a weapon."
+                        </div>
+
+                        <p>There's a difference between doing something because you're told to versus doing it because you <em>want</em> to and understand its full benefits. It's like going to the gym:</p>
+
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>If your wife forces you and you don't know why, you won't return</li>
+                            <li>If you understand how each exercise works and see results, you'll keep going</li>
+                            <li>But if you look for results in the wrong place (bicep curls for a six-pack), you'll get discouraged</li>
+                        </ul>
+
+                        <p>Many of us have that relationship with giving—we think it leads to more blessing, provision, or favor. While those <em>may</em> happen, <strong class="highlight">the target result is freedom from mammon's mastery</strong>.</p>
+
+                        <div class="verse-card">
+                            <p class="verse-text">"Bring the whole tithe into the storehouse, that there may be food in my house. Test me in this, says the Lord Almighty, and see if I will not throw open the floodgates of heaven and pour out so much blessing that there will not be room enough to store it."</p>
+                            <p class="verse-reference">Malachi 3:10 (NIV)</p>
+                        </div>
+
+                        <p>Kevin suggests that embedded in God's "blessing" is <strong class="highlight">freedom from enslavement to money</strong>.</p>
+
+                        <h4 style="margin-top: 1.5rem; color: var(--primary);">Practical Steps: Test God in This</h4>
+                        
+                        <div class="key-point">
+                            <h4>🌱 Start Small, Ramp Up</h4>
+                            <p><strong>1. Start giving in small ways:</strong> $5 to a beggar. Notice anything in your heart?</p>
+                            <p><strong>2. Ramp it up:</strong> $10, $20, $50, $100, $500, your whole wallet. Do you notice your devotion to money fading? Is the "just a little more" narrative quieting?</p>
+                            <p><strong>3. Continue ramping up:</strong> Give abundantly to friends in need, beyond basic needs. Give to strangers. Give sacrificially to the church, NGOs, missionaries.</p>
+                            <p><strong>4. Pay attention to the target result:</strong> Do you sense greater peace and contentment? Is money's mastery over your life lessening?</p>
+                        </div>
+
+                        <p><em>Every act of generosity chips away at money's mastery over our lives.</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Conclusion: Why 25% of Jesus' Teachings? 🙏</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Over 25% of Jesus' teachings focused on money and generosity. Kevin admits only 1% of his own sermons have touched on this topic. When there's such a discrepancy, we must stop and re-evaluate.</p>
+
+                        <p><strong>Why did Jesus care so much about this?</strong></p>
+
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Not just to support church ministries (though important)</li>
+                            <li>Not just to help us understand we're stewards, not owners</li>
+                            <li>Because Jesus knew money's power to enslave and corrupt us</li>
+                        </ul>
+
+                        <div class="quote-box">
+                            "It's easier for a camel to go through the eye of a needle than for a rich man to get into heaven." — Jesus
+                        </div>
+
+                        <p>Jesus knows generosity is the greatest weapon against money's pervasive force, and He wants us to wield it.</p>
+
+                        <div class="key-point">
+                            <h4>🛡️ Recognizing the Stronghold</h4>
+                            <p>Money is a stronghold for many of us—so powerful we don't even recognize it. It has brought destruction, fractured relationships, and strained connections. Some have been on the receiving end; some have committed these wrongs themselves.</p>
+                            <p><strong>It's time to repent and stop serving at the altar of this false god.</strong></p>
+                        </div>
+
+                        <p>The sermon closes with a prayer of repentance and surrender, acknowledging God's grace and love, and submitting all resources—including money—to Him.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-2">
+            <h2 class="section-header">Key Bible Verses</h2>
+            
+            <div class="verse-card">
+                <p class="verse-text">"Forget the former things; do not dwell on the past. See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland."</p>
+                <p class="verse-reference">Isaiah 43:18-19 (NIV) — Series Theme Verse</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-text">"Do not store up for yourselves treasures on earth, where moths and vermin destroy, and where thieves break in and steal. But store up for yourselves treasures in heaven, where moths and vermin do not destroy, and where thieves do not break in and steal. For where your treasure is, there your heart will be also."</p>
+                <p class="verse-reference">Matthew 6:19-21 (NIV)</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-text">"The eye is the lamp of the body. If your eyes are healthy, your whole body will be full of light. But if your eyes are unhealthy, your whole body will be full of darkness. If then the light within you is darkness, how great is that darkness!"</p>
+                <p class="verse-reference">Matthew 6:22-23 (NIV)</p>
+            </div>
+
+            <div class="key-point">
+                <h4>📝 Translation Note</h4>
+                <p><strong>"Healthy eyes"</strong> in Greek implies <em>generous</em></p>
+                <p><strong>"Unhealthy eyes"</strong> in Greek implies <em>stingy</em></p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-text">"No one can serve two masters. Either you will hate the one and love the other, or you will be devoted to the one and despise the other. You cannot serve both God and money."</p>
+                <p class="verse-reference">Matthew 6:24 (NIV)</p>
+            </div>
+
+            <div class="key-point">
+                <h4>🔍 Cultural Context</h4>
+                <p>The word for "money" here is the Aramaic word <strong>Mammon</strong>—literally the name of a god. Money isn't just a resource; it's a rival deity that seeks to master us.</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-text">"Bring the whole tithe into the storehouse, that there may be food in my house. Test me in this, says the Lord Almighty, and see if I will not throw open the floodgates of heaven and pour out so much blessing that there will not be room enough to store it."</p>
+                <p class="verse-reference">Malachi 3:10 (NIV)</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-text">"In the beginning God created the heavens and the earth... God saw all that he had made, and it was very good."</p>
+                <p class="verse-reference">Genesis 1:1, 31a (NIV)</p>
+            </div>
+
+            <div class="key-point">
+                <h4>💎 Foundational Truth</h4>
+                <p>Because God created everything, He owns everything. All of our lives—our homes, cars, families, resources—are gifts from Him. This is the foundation of the abundance mindset.</p>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-3">
+            <h2 class="section-header">Practical Application</h2>
+            
+            <div class="key-point">
+                <h4>🎯 The Big Shift: From Duty to Weapon</h4>
+                <p>Stop viewing generosity as merely a religious obligation. Instead, see it as your <strong>primary weapon</strong> against money's enslaving power. Each act of giving is a strike against mammon's grip on your heart.</p>
+            </div>
+
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Step 1: Assess Your Mindset 🧠</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <h4 style="color: var(--primary);">Ask yourself these questions:</h4>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li>Do I view my possessions as gifts from God, or as things I've earned?</li>
+                            <li>Am I constantly thinking "just a little more" about money and possessions?</li>
+                            <li>When opportunities to give arise, do I feel excited or anxious?</li>
+                            <li>Do I appreciate what I have, or fixate on what I lack?</li>
+                            <li>Can I give joyfully, or only out of obligation?</li>
+                        </ul>
+                        
+                        <div class="key-point" style="margin-top: 1.5rem;">
+                            <h4>💡 Remember</h4>
+                            <p>Your honest answers reveal whether you lean toward an abundance or scarcity mindset. There's no condemnation—just awareness that leads to change.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Step 2: Identify Your "Just a Little More" Pattern 🔄</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Write down your financial/material progression over the last 5-10 years:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>What did you think would make you content back then?</li>
+                            <li>When you achieved it, did you feel satisfied?</li>
+                            <li>What did the goalpost shift to next?</li>
+                            <li>Can you identify the repeating pattern of "just a little more"?</li>
+                        </ul>
+
+                        <div class="quote-box" style="margin-top: 1.5rem;">
+                            "That feeling of just a little more keeps you coming back over and over to grovel at the altar of mammon." — Pastor Kevin
+                        </div>
+
+                        <p style="margin-top: 1rem;"><strong>Action:</strong> Name this pattern specifically in your life. Awareness is the first step to breaking free.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Step 3: Test God — Start Small and Ramp Up 🌱</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <h4 style="color: var(--primary);">Week 1-2: Micro-Generosity</h4>
+                        <p>Give $5-$10 to beggars, service workers, or people in need you encounter. <strong>Pay close attention to your heart.</strong> Do you feel reluctance? Joy? Anxiety? Relief?</p>
+
+                        <h4 style="color: var(--primary); margin-top: 1.5rem;">Week 3-4: Increasing Stakes</h4>
+                        <p>Increase amounts: $20, $50, $100. Notice if the "just a little more" voice in your head gets quieter. Does parting with money feel less painful?</p>
+
+                        <h4 style="color: var(--primary); margin-top: 1.5rem;">Week 5-8: Sacrificial Giving</h4>
+                        <p>Give beyond what's comfortable:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Support a friend's need abundantly—beyond what they asked for</li>
+                            <li>Give anonymously to a stranger facing hardship</li>
+                            <li>Increase your church giving sacrificially</li>
+                            <li>Support a missionary or NGO meaningfully</li>
+                        </ul>
+
+                        <div class="key-point" style="margin-top: 1.5rem;">
+                            <h4>🎯 The Target Result to Watch For</h4>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li>Is your relationship with money changing?</li>
+                                <li>Do you feel less mastered by it?</li>
+                                <li>Is there greater peace and contentment in your life?</li>
+                                <li>Do you experience more joy in giving?</li>
+                                <li>Has the scarcity mindset begun to shift?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Step 4: Cultivate "Despising" Money 💭</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Practice viewing money with healthy caution:</p>
+                        
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li><strong>When receiving your paycheck:</strong> Pause and acknowledge both its usefulness and its danger. Thank God for the provision while recognizing money's corrupting potential.</li>
+                            
+                            <li><strong>Before major purchases:</strong> Ask yourself, "Am I buying this to meet a genuine need, or to satisfy the 'just a little more' voice?"</li>
+                            
+                            <li><strong>When tempted to hoard:</strong> Remember that you can't take it with you. What eternal impact could this money have?</li>
+                            
+                            <li><strong>In moments of financial anxiety:</strong> Remind yourself that God owns everything and you are merely a steward.</li>
+                        </ul>
+
+                        <div class="quote-box" style="margin-top: 1.5rem;">
+                            "You can either be devoted to money or you can despise money. Despising money means being filled with dread when you receive it because you know its controlling nature. You're cautious around money because you know its dangers."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Step 5: Make Generosity a Regular Rhythm 🔄</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Don't let generosity be sporadic. Build it into your life:</p>
+
+                        <h4 style="color: var(--primary); margin-top: 1rem;">Weekly Practices:</h4>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Set aside a specific percentage for giving before you spend on anything else</li>
+                            <li>Look for one unexpected opportunity to be generous each week</li>
+                            <li>Practice "over-tipping" service workers</li>
+                        </ul>
+
+                        <h4 style="color: var(--primary); margin-top: 1.5rem;">Monthly Practices:</h4>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Review your giving and reflect on how your heart is changing</li>
+                            <li>Consider supporting a new cause or person in need</li>
+                            <li>Pray for God to show you where He wants you to give</li>
+                        </ul>
+
+                        <h4 style="color: var(--primary); margin-top: 1.5rem;">Yearly Practices:</h4>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Evaluate your overall financial priorities</li>
+                            <li>Consider increasing your giving percentage</li>
+                            <li>Make one major sacrificial gift that requires faith</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Step 6: Accountability and Community 👥</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>This battle against mammon is too important to fight alone:</p>
+
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li><strong>Find an accountability partner:</strong> Share your struggles with money and your goals for generosity</li>
+                            
+                            <li><strong>Be honest in your small group:</strong> Money is one of the last taboos in Christian community. Break that silence.</li>
+                            
+                            <li><strong>Learn from generous people:</strong> Ask someone you admire for their generosity to share their journey</li>
+                            
+                            <li><strong>Teach others:</strong> Share what you're learning about freedom through generosity</li>
+                        </ul>
+
+                        <div class="key-point" style="margin-top: 1.5rem;">
+                            <h4>⚠️ Remember</h4>
+                            <p>Money is a stronghold for many of us—so powerful we don't even recognize it. Don't underestimate its grip or try to break free alone.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point" style="margin-top: 2rem;">
+                <h4>✝️ The Gospel Connection</h4>
+                <p>At its core, generosity flows from understanding the gospel. God didn't give us "just enough" for salvation—He gave us His Son. He gave abundantly, sacrificially, and generously. When we truly grasp this extravagant grace, we can't help but give to others.</p>
+                <p style="margin-top: 0.5rem;"><em>"We love because he first loved us."</em> (1 John 4:19) We give because He first gave to us.</p>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-4">
+            <h2 class="section-header">Reflection Questions</h2>
+            
+            <div class="reflection-question">
+                <strong>Personal Mindset Assessment:</strong> Looking at your life right now, would you say you operate more from an abundance mindset or a scarcity mindset? What specific evidence supports your answer?
+            </div>
+
+            <div class="reflection-question">
+                <strong>The "Just a Little More" Trap:</strong> Can you identify times in your life when you thought "just a little more" would satisfy you—only to find the goalpost moved once you achieved it? What does this pattern reveal about money's grip on your heart?
+            </div>
+
+            <div class="reflection-question">
+                <strong>Everything Is a Gift:</strong> Do you truly believe that everything you have is a gift from God, or do you feel you've earned it through your own efforts? How does your answer affect your willingness to give?
+            </div>
+
+            <div class="reflection-question">
+                <strong>Devotion vs. Despising:</strong> In Matthew 6:24, Jesus says we either love money or hate it—there's no middle ground. Which master are you serving? What evidence in your life supports this?
+            </div>
+
+            <div class="reflection-question">
+                <strong>The Target Result:</strong> When you give, what result are you expecting? Are you looking for material blessing, or are you watching for freedom from money's mastery? How might changing your focus change your experience of generosity?
+            </div>
+
+            <div class="reflection-question">
+                <strong>Small Steps of Testing:</strong> What would it look like for you to "test God" in generosity this week? What small act of giving could you do, and what would you pay attention to in your heart as you do it?
+            </div>
+
+            <div class="reflection-question">
+                <strong>Historical Impact:</strong> Reflect on Pastor Kevin's examples of greed's destructive power (Atlantic slave trade, social media's mental health crisis). How have you personally witnessed or experienced the "darkness" that money can bring?
+            </div>
+
+            <div class="reflection-question">
+                <strong>The Charity Gala Question:</strong> If you had been at that charity gala, would you have given? Why or why not? Be brutally honest about what held you back or would have motivated you.
+            </div>
+
+            <div class="reflection-question">
+                <strong>Why 25%?:</strong> Jesus spent 25% of His teachings on money and generosity. Does this surprise you? What does it tell you about how seriously God takes this issue in our lives?
+            </div>
+
+            <div class="reflection-question">
+                <strong>Stronghold Recognition:</strong> Pastor Kevin said money is "such a stronghold that most of us don't recognize its power in our lives." Do you recognize money's power over you? What might you be blind to?
+            </div>
+
+            <div class="reflection-question">
+                <strong>Freedom and Peace:</strong> Have you ever experienced genuine peace and freedom in your relationship with money? If so, what contributed to that? If not, what do you think prevents it?
+            </div>
+
+            <div class="reflection-question">
+                <strong>Generosity as Worship:</strong> How does viewing generosity as "worship" rather than "duty" change your perspective? What would it look like to give as an act of worship this week?
+            </div>
+
+            <div class="key-point" style="margin-top: 2rem;">
+                <h4>📝 Journal Prompt</h4>
+                <p>Write a prayer of surrender about your relationship with money. Be specific about your fears, your desires for "just a little more," and your genuine longing for freedom. Ask God to show you one concrete step toward generous living this week.</p>
+            </div>
+
+            <div class="verse-card" style="margin-top: 2rem;">
+                <p class="verse-text">"Test me in this, says the Lord Almighty, and see if I will not throw open the floodgates of heaven and pour out so much blessing that there will not be room enough to store it."</p>
+                <p class="verse-reference">Malachi 3:10b (NIV)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip Container -->
+    <div class="tooltip-container" id="tooltip">
+        <div class="tooltip-header" id="tooltip-header"></div>
+        <div id="tooltip-body"></div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+    </div>
+
+    <script>
+        // Carousel functionality
+        let currentImage = 0;
+        const images = document.querySelectorAll('.carousel-image');
+        
+        function nextImage() {
+            images[currentImage].classList.remove('active');
+            currentImage = (currentImage + 1) % images.length;
+            images[currentImage].classList.add('active');
+        }
+        
+        setInterval(nextImage, 10000);
+
+        // Sticky tabs scroll effect
+        const tabsWrapper = document.getElementById('tabsWrapper');
+        let lastScrollTop = 0;
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+                tabsWrapper.classList.add('scrolled');
+            } else {
+                tabsWrapper.classList.remove('scrolled');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Tab switching
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            tabs[index].classList.add('active');
+            contents[index].classList.add('active');
+            
+            // Scroll to top of content area (below sticky tabs)
+            const tabsWrapperHeight = tabsWrapper.offsetHeight;
+            const heroHeight = document.querySelector('.hero-section').offsetHeight;
+            window.scrollTo({ 
+                top: heroHeight - tabsWrapperHeight, 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all accordions in the same container
+            const container = item.parentElement;
+            container.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('active');
+            });
+            
+            // Toggle current accordion
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Tooltip functionality
+        const tooltipData = {
+            'abundance': {
+                title: 'Abundance Mindset',
+                body: 'A perspective that sees the world as plentiful and recognizes that God owns everything. People with this mindset aren\'t afraid to be generous because they fundamentally believe all of life is a gift from God.'
+            },
+            'scarcity': {
+                title: 'Scarcity Mindset',
+                body: 'A perspective rooted in fear and lack, where one constantly focuses on what they don\'t have and can never feel they have enough. Often stems from past experiences of poverty or loss, leading to hoarding and anxiety about resources.'
+            },
+            'mammon': {
+                title: 'Mammon',
+                body: 'The Aramaic word for money, literally the name of a god. Jesus uses this term to show that money isn\'t just a resource—it\'s a rival deity that seeks to master us. We must choose between serving God or serving Mammon.'
+            }
+        };
+
+        function showTooltip(key) {
+            const tooltip = document.getElementById('tooltip');
+            const header = document.getElementById('tooltip-header');
+            const body = document.getElementById('tooltip-body');
+            
+            if (tooltipData[key]) {
+                header.textContent = tooltipData[key].title;
+                body.textContent = tooltipData[key].body;
+                tooltip.classList.add('visible');
+                
+                setTimeout(() => {
+                    tooltip.classList.remove('visible');
+                }, 5000);
+            }
+        }
+
+        // Close tooltip when clicking outside
+        document.addEventListener('click', function(e) {
+            const tooltip = document.getElementById('tooltip');
+            if (!e.target.classList.contains('tooltip-trigger') && !tooltip.contains(e.target)) {
+                tooltip.classList.remove('visible');
+            }
+        });
+
+        // Prevent tooltip from closing when clicking inside it
+        document.getElementById('tooltip').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>
