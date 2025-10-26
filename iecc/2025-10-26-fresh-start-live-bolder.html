@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Start: Live Bolder | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+        
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #dc2626;
+            --accent: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --gold: #fbbf24;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Merriweather', serif;
+            line-height: 1.8;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        /* Header Carousel */
+        .header-carousel {
+            position: relative;
+            height: 70vh;
+            min-height: 500px;
+            overflow: hidden;
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+            animation: kenBurns 12s ease-out;
+        }
+        
+        @keyframes kenBurns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(220, 38, 38, 0.75) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+        
+        .header-content {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 900px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+        
+        .header-subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Sticky Tabs */
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .tabs-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 0;
+            scrollbar-width: thin;
+        }
+        
+        .tab-button {
+            flex: 1;
+            min-width: 140px;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+        
+        .tab-button:hover {
+            background: var(--light);
+        }
+        
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: rgba(30, 58, 138, 0.05);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Content Container */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        /* Section Styling */
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        /* Bible Verse Card */
+        .verse-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .verse-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 120px;
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .verse-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .verse-reference {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Key Points */
+        .key-points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 30%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .key-point:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .key-point-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Metamorphosis Section */
+        .metamorphosis-container {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+        }
+        
+        .lifecycle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .lifecycle-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .lifecycle-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .lifecycle-image {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            object-position: center;
+            background-color: #f8fafc;
+            border-radius: 8px;
+        }
+        
+        .lifecycle-content {
+            padding: 1.5rem;
+        }
+        
+        .lifecycle-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .stages-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .stage-item {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: var(--light);
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .stage-number {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        /* Accordion */
+        .accordion-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .accordion-header {
+            background: var(--light);
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: #e5e7eb;
+        }
+        
+        .accordion-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-body {
+            padding: 1.5rem;
+        }
+        
+        /* Tooltip */
+        .tooltip-trigger {
+            color: var(--primary);
+            text-decoration: underline dotted;
+            cursor: help;
+            position: relative;
+        }
+        
+        .tooltip-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 320px;
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            animation: slideInRight 0.3s ease;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .tooltip-container.active {
+            display: block;
+        }
+        
+        .tooltip-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            opacity: 0.6;
+        }
+        
+        .tooltip-close:hover {
+            opacity: 1;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: scaleIn 0.3s ease;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .share-btn {
+            padding: 1rem;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Attribution Badge - FIXED */
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 0.85rem;
+            z-index: 999;
+            max-width: 280px;
+            line-height: 1.6;
+            border: 1px solid rgba(30, 58, 138, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-badge:hover {
+            max-width: 400px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .attribution-badge a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dotted var(--primary);
+        }
+        
+        .attribution-badge a:hover {
+            border-bottom-style: solid;
+        }
+        
+        /* Reflection Questions */
+        .reflection-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            border-left: 5px solid var(--accent);
+        }
+        
+        .reflection-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Print Styles */
+        @media print {
+            .sticky-tabs,
+            .button-group,
+            .attribution-badge,
+            .tooltip-container,
+            .modal {
+                display: none !important;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-carousel {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .header-title {
+                font-size: 2rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .tabs-container {
+                justify-content: flex-start;
+            }
+            
+            .tab-button {
+                min-width: 120px;
+                font-size: 0.85rem;
+                padding: 0.875rem 1rem;
+            }
+            
+            .attribution-badge {
+                max-width: 200px;
+                font-size: 0.75rem;
+                padding: 10px 15px;
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .attribution-badge:hover {
+                max-width: calc(100vw - 30px);
+            }
+            
+            .tooltip-container {
+                right: 10px;
+                left: 10px;
+                max-width: calc(100% - 20px);
+            }
+        }
+        
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Carousel -->
+    <header class="header-carousel">
+        <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?w=1920&q=80');"></div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=80');"></div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80');"></div>
+        
+        <div class="header-overlay">
+            <div class="header-content">
+                <h1 class="header-title">Fresh Start: Live Bolder 🦋</h1>
+                <p class="header-subtitle">
+                    <i class="fas fa-calendar-alt"></i> 26 October 2025 | 
+                    <i class="fas fa-user"></i> Pastor Albert | 
+                    <i class="fas fa-church"></i> Island ECC
+                </p>
+                <p style="font-size: 1.1rem; margin-top: 1rem; font-style: italic;">
+                    "The boldest decision you could ever make is to give your life to serve God"
+                </p>
+                
+                <div class="button-group">
+                    <a href="https://www.youtube.com/live/JvYDPa9U_Ek?si=yyqt90BML9Tc_1-d" class="btn btn-primary" target="_blank">
+                        <i class="fas fa-play"></i> Watch Sermon
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> View All Sermons
+                    </a>
+                    <button class="btn btn-secondary" onclick="openShareModal()">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="tabs-container">
+            <button class="tab-button active" onclick="switchTab('overview')">
+                <i class="fas fa-info-circle"></i> Overview
+            </button>
+            <button class="tab-button" onclick="switchTab('sermon')">
+                <i class="fas fa-book-open"></i> Main Sermon
+            </button>
+            <button class="tab-button" onclick="switchTab('metamorphosis')">
+                <i class="fas fa-sync-alt"></i> Metamorphosis
+            </button>
+            <button class="tab-button" onclick="switchTab('verses')">
+                <i class="fas fa-bible"></i> Bible Verses
+            </button>
+            <button class="tab-button" onclick="switchTab('application')">
+                <i class="fas fa-tasks"></i> Application
+            </button>
+            <button class="tab-button" onclick="switchTab('reflection')">
+                <i class="fas fa-lightbulb"></i> Reflection
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-container">
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-compass"></i></div>
+                    Sermon Overview
+                </h2>
+                <p style="font-size: 1.1rem; line-height: 1.9;">
+                    In this powerful conclusion to the <strong>Fresh Start</strong> series, Pastor Albert challenges us to break free from routine and live boldly for Christ. Using the profound metaphor of a caterpillar's <span class="tooltip-trigger" onclick="showTooltip('metamorphosis')">metamorphosis</span> into a butterfly, he reveals how true transformation requires us to die to our old selves and embrace God's perfect will for our lives. This isn't just about making changes—it's about <span class="tooltip-trigger" onclick="showTooltip('consecration')">consecration</span>, setting our entire lives apart for God's use.
+                </p>
+                
+                <div class="key-points-grid" style="margin-top: 2rem;">
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            🎯 Central Thesis
+                        </h3>
+                        <p>The boldest decision you could ever make is to give your life to serve God—a decision that moves you from an earthly life of selfish ambition to a divine life of vitality, purpose, and blessing.</p>
+                    </div>
+                    
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            🌱 Key Scripture
+                        </h3>
+                        <p><strong>John 12:24-25</strong> - Unless a grain of wheat falls to the ground and dies, it remains only a single seed. But if it dies, it produces many seeds.</p>
+                    </div>
+                    
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            🦋 Main Metaphor
+                        </h3>
+                        <p>The caterpillar's transformation into a butterfly illustrates our spiritual metamorphosis—from earthly existence to divine purpose.</p>
+                    </div>
+                    
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            ⚡ Call to Action
+                        </h3>
+                        <p>Stop procrastinating. Make TODAY count. Take a bolder step toward God's good, pleasing, and perfect will for your life.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-route"></i></div>
+                    Two Paths to Change
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 1.5rem;">
+                    <div style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); padding: 2rem; border-radius: 12px;">
+                        <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.4rem;">
+                            <i class="fas fa-arrow-down"></i> Passive Changes
+                        </h3>
+                        <p><strong>Definition:</strong> Changes that happen TO you through others' decisions</p>
+                        <p style="margin-top: 1rem;"><strong>Example:</strong> Moving to a new country as a child, family circumstances, job transfers</p>
+                        <p style="margin-top: 1rem; font-style: italic;">God works through these circumstances to shape our path</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 2rem; border-radius: 12px;">
+                        <h3 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.4rem;">
+                            <i class="fas fa-arrow-up"></i> Proactive Changes
+                        </h3>
+                        <p><strong>Definition:</strong> Bold decisions YOU make that set new directions</p>
+                        <p style="margin-top: 1rem;"><strong>Example:</strong> Pastor Albert's decision to go on a 5-week mission trip to the Philippines as a university student</p>
+                        <p style="margin-top: 1rem; font-style: italic;">God uses our bold decisions to reveal His calling</p>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+                    <h3 style="color: #065f46; margin-bottom: 1rem; font-size: 1.3rem;">
+                        💡 Pastor Albert's Personal Story
+                    </h3>
+                    <p>That bold mission trip decision led to two life-changing outcomes:</p>
+                    <ol style="margin-left: 1.5rem; margin-top: 1rem;">
+                        <li style="margin: 0.5rem 0;"><strong>Career Direction:</strong> God revealed his calling to ministry through experiencing gospel work firsthand</li>
+                        <li style="margin: 0.5rem 0;"><strong>Life Partner:</strong> He met his future wife Elisa (celebrating 31 years of marriage and 35 years since their first date!)</li>
+                    </ol>
+                    <p style="margin-top: 1rem; font-style: italic; font-weight: 600;">One bold decision can redirect your entire life's trajectory!</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-seedling"></i></div>
+                    The Caterpillar Conversation: Understanding Transformation
+                </h2>
+                
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                    Pastor Albert imagines a dialogue with a caterpillar to illustrate our spiritual resistance to transformation:
+                </p>
+                
+                <div style="background: #f9fafb; padding: 2rem; border-radius: 12px; border-left: 5px solid var(--primary); margin: 1.5rem 0;">
+                    <p style="margin-bottom: 1rem;"><strong>Pastor:</strong> "Hey caterpillar, would you like to be a butterfly?"</p>
+                    <p style="margin-bottom: 1rem;"><strong>Caterpillar:</strong> "What is a butterfly? Why would I want to be a butterfly?"</p>
+                    <p style="margin-bottom: 1rem;"><strong>Pastor:</strong> "You'll have wings! You'll fly in beautiful gardens with flowers. You'll be free and eat different things!"</p>
+                    <p style="margin-bottom: 1rem;"><strong>Caterpillar:</strong> "I cannot imagine that. I don't want to change. I love my leaves. I love being fat. Please don't change me!"</p>
+                    <p style="margin-bottom: 1rem;"><strong>Pastor:</strong> "If you're willing to give up your leaves, to die to yourself, you'll be transformed into this beautiful butterfly—a perfect, meaningful life you can never imagine."</p>
+                    <p><strong>Caterpillar:</strong> "Why do you keep wanting to change me? Why do I want to give up my leaves? Why do you want me to die? You don't love me. You are so cruel!"</p>
+                </div>
+                
+                <div class="key-points-grid">
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            😨 Uncertainty
+                        </h3>
+                        <p>Like the caterpillar, we can't see beyond this stage of life. We resist what we don't understand.</p>
+                    </div>
+                    
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            😰 Fear
+                        </h3>
+                        <p>"I know where I am. I don't know what you're talking about." Fear keeps us from taking bolder steps forward.</p>
+                    </div>
+                    
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            🎭 Limited Perspective
+                        </h3>
+                        <p>The caterpillar only knows caterpillar life—nothing beyond. We similarly struggle to imagine God's better plan.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-book"></i></div>
+                    The Theology of Metamorphosis
+                </h2>
+                
+                <div class="verse-card">
+                    <p class="verse-text">
+                        "Therefore, I urge you, brothers and sisters, in view of God's mercy, to offer your bodies as a living sacrifice, holy and pleasing to God—this is your true and proper worship. Do not conform to the pattern of this world, but be transformed by the renewing of your mind. Then you will be able to test and approve what God's will is—his good, pleasing and perfect will."
+                    </p>
+                    <p class="verse-reference">— Romans 12:1-2 (NIV)</p>
+                </div>
+                
+                <h3 style="font-size: 1.5rem; color: var(--primary); margin: 2rem 0 1rem;">
+                    🔤 Word Study: Metamorphosis (μεταμόρφωσις)
+                </h3>
+                
+                <div style="background: #f0f9ff; padding: 2rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <h4 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.5rem;">
+                                <strong>Meta (μετά)</strong>
+                            </h4>
+                            <p>Greek preposition meaning <strong>"beyond"</strong></p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.5rem;">
+                                <strong>Morphē (μορφή)</strong>
+                            </h4>
+                            <p>Means <strong>"form"</strong> or <strong>"shape"</strong></p>
+                        </div>
+                    </div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 5px solid var(--primary);">
+                        <p style="font-size: 1.2rem; font-weight: 600;">
+                            <strong>Metamorphosis =</strong> To go beyond your current form
+                        </p>
+                        <p style="margin-top: 0.75rem;">Moving from one form to a completely different form—just like caterpillar → chrysalis → butterfly</p>
+                    </div>
+                </div>
+                
+                <h3 style="font-size: 1.5rem; color: var(--primary); margin: 2rem 0 1rem;">
+                    📖 Biblical Parallels: Put Off, Put On
+                </h3>
+                
+                <div class="verse-card" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);">
+                    <p class="verse-text">
+                        "You were taught, with regard to your former way of life, to put off your old self, which is being corrupted by its deceitful desires..."
+                    </p>
+                    <p class="verse-reference">— Ephesians 4:22 (NIV)</p>
+                </div>
+                
+                <p style="margin: 1.5rem 0; font-size: 1.1rem;">
+                    Just as the caterpillar literally <strong>puts off its old skin</strong> during transformation, Scripture calls us to put off our old self and put on our new self. This isn't metaphorical—it's a radical, complete transformation!
+                </p>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-praying-hands"></i></div>
+                    What is Consecration?
+                </h2>
+                
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 2rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <h3 style="font-size: 1.4rem; margin-bottom: 1rem;">
+                        Definition: <strong>To set apart solely for God's use</strong>
+                    </h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                        In the Old Testament temple, items like lampstands, cups, and decorations were <strong>consecrated</strong>—set apart exclusively for worship, never used for anything else.
+                    </p>
+                    <p style="font-size: 1.1rem; font-weight: 600;">
+                        Similarly, we are called to consecrate ourselves—our lives, careers, families, and children—entirely for God's purposes.
+                    </p>
+                </div>
+                
+                <h3 style="font-size: 1.5rem; color: var(--primary); margin: 2rem 0 1rem;">
+                    💼 What Consecration Looks Like in Practice
+                </h3>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title">Full-Time Ministry (Pastor Albert's Story)</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                During his final year at the University of Hong Kong, Pastor Albert reflected on his journey from a farming village in Mainland China to the Kowloon Walled City, and now living in the university's Swire Hall.
+                            </p>
+                            <p style="margin-bottom: 1rem; font-style: italic; background: #f3f4f6; padding: 1rem; border-radius: 8px;">
+                                "God, everything that I have, everything that I am, comes from you. It is by your grace and by your mercy that I am who I am today. So God, today I want to make a decision to move away from my engineering career and I want to serve you for the rest of my life."
+                            </p>
+                            <p style="font-weight: 600; color: var(--primary);">
+                                This was the boldest decision he had ever made—and it forever changed the direction of his life.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title">Business for God (Paul's Story)</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                Before retirement, Pastor Albert's friend "Paul" was CEO of a tech firm. All the owners/shareholders were Christians, and together they made a corporate decision:
+                            </p>
+                            <p style="font-size: 1.2rem; font-weight: 600; background: var(--light); padding: 1.5rem; border-radius: 8px; border-left: 5px solid var(--primary); margin: 1rem 0;">
+                                "We give this business to God and we all work for God."
+                            </p>
+                            <p style="margin-top: 1rem;"><strong>Practical Implementation:</strong></p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li style="margin: 0.5rem 0;">Conducted business according to Christian principles (not easy in Hong Kong/China!)</li>
+                                <li style="margin: 0.5rem 0;">Set aside a percentage of profits to support Christian ministries and missionaries</li>
+                                <li style="margin: 0.5rem 0;">Maintained integrity through ups and downs, sticking to their commitment</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+                    <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">
+                        ❓ Your Turn: What Does Consecration Look Like for You?
+                    </h3>
+                    <p style="font-size: 1.1rem;">
+                        Whether you're an executive, employee, student, parent, or retiree—in YOUR context, what does giving your life to serve God look like? This is a great question to discuss in your care group or over dim sum today!
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-heart-broken"></i></div>
+                    Addressing Spiritual Cognitive Dissonance
+                </h2>
+                
+                <div style="background: #fee2e2; padding: 2rem; border-radius: 12px; border: 2px solid #dc2626; margin: 1.5rem 0;">
+                    <h3 style="color: #991b1b; font-size: 1.4rem; margin-bottom: 1rem;">
+                        ⚠️ The Dangerous Contradiction
+                    </h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                        Many Christians believe two contradictory things simultaneously:
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; margin: 1.5rem 0;">
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px;">
+                            <p style="font-weight: 600; text-align: center;">✅ "God is good"</p>
+                        </div>
+                        <div style="font-size: 2rem; font-weight: 700;">BUT</div>
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px;">
+                            <p style="font-weight: 600; text-align: center;">❌ "If I give my life to God, He'll ruin it"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="font-size: 1.4rem; color: var(--primary); margin: 2rem 0 1rem;">
+                    💭 The Fearful Narrative
+                </h3>
+                <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                    <p style="font-style: italic;">
+                        "If I dare to say 'God, I give my life to serve you,' then God will take away all my money, call me to be a missionary somewhere in Africa, the indigenous people will catch me, cut off my right leg, eat it, and ruin my life."
+                    </p>
+                </div>
+                
+                <h3 style="font-size: 1.4rem; color: var(--primary); margin: 2rem 0 1rem;">
+                    ✨ The Biblical Truth
+                </h3>
+                <div class="verse-card">
+                    <p class="verse-text">
+                        "Then you will be able to test and approve what God's will is—his <strong>good</strong>, <strong>pleasing</strong> and <strong>perfect</strong> will."
+                    </p>
+                    <p class="verse-reference">— Romans 12:2b (NIV)</p>
+                </div>
+                
+                <div class="key-points-grid">
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            ✅ GOOD
+                        </h3>
+                        <p>God's will is genuinely good for you—not harmful, not destructive, but truly beneficial</p>
+                    </div>
+                    
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            😊 PLEASING
+                        </h3>
+                        <p>You will <strong>like</strong> it! Like enjoying your favorite ice cream or durian. God's will brings joy!</p>
+                    </div>
+                    
+                    <div class="key-point">
+                        <h3 class="key-point-title">
+                            💎 PERFECT
+                        </h3>
+                        <p>Complete, lacking nothing, exactly what you need—God's design is flawless</p>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+                    <h3 style="color: #065f46; font-size: 1.3rem; margin-bottom: 1rem;">
+                        🎯 The Challenge
+                    </h3>
+                    <p style="font-size: 1.1rem; font-weight: 600;">
+                        Today is the day to move away from spiritual cognitive dissonance. Stop believing the lie that God will ruin your life. Instead, trust that His will is good, pleasing, and perfect!
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-language"></i></div>
+                    Two Kinds of Life: Psychē vs. Zōē
+                </h2>
+                
+                <div class="verse-card">
+                    <p class="verse-text">
+                        "Anyone who loves their life will lose it, while anyone who hates their life in this world will keep it for eternal life."
+                    </p>
+                    <p class="verse-reference">— John 12:25 (NIV)</p>
+                </div>
+                
+                <p style="margin: 1.5rem 0; font-size: 1.1rem;">
+                    This verse appears contradictory until we understand the Greek. The word "life" appears three times, but it's actually <strong>two different Greek words</strong>:
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 2rem; border-radius: 12px; border-left: 5px solid #dc2626;">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #991b1b;">
+                            Psychē (ψυχή) Life
+                        </h3>
+                        <p style="font-weight: 600; margin-bottom: 1rem;">The Earthly Life</p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li style="margin: 0.5rem 0;">Faculty of feeling, emotion, desire</li>
+                            <li style="margin: 0.5rem 0;">Selfish ambitions</li>
+                            <li style="margin: 0.5rem 0;">Self-focused existence</li>
+                            <li style="margin: 0.5rem 0;">Soon to be gone</li>
+                            <li style="margin: 0.5rem 0;">Ultimately renders itself useless</li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-style: italic; background: white; padding: 1rem; border-radius: 8px;">
+                            "Anyone who loves his earthly life with his selfish desires will end up rendering it <strong>useless</strong>."
+                        </p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); padding: 2rem; border-radius: 12px; border-left: 5px solid #059669;">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #065f46;">
+                            Zōē (ζωή) Life
+                        </h3>
+                        <p style="font-weight: 600; margin-bottom: 1rem;">The Divine Life</p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li style="margin: 0.5rem 0;">Full of vitality and fullness</li>
+                            <li style="margin: 0.5rem 0;">Real and genuine (authentic)</li>
+                            <li style="margin: 0.5rem 0;">Devoted to God</li>
+                            <li style="margin: 0.5rem 0;">Blessed by God</li>
+                            <li style="margin: 0.5rem 0;">Eternal quality</li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-style: italic; background: white; padding: 1rem; border-radius: 8px;">
+                            "Whoever disregards selfish ambition will receive a <strong>transformed life</strong> that is eternal—marked by vitality, fullness, authenticity, and God's blessing."
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); padding: 2.5rem; border-radius: 12px; margin-top: 2rem; text-align: center;">
+                    <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--primary);">
+                        🦋 You Are Meant to Be the Butterfly
+                    </h3>
+                    <p style="font-size: 1.2rem; line-height: 1.9;">
+                        Church, you are <strong>not meant to be the caterpillar</strong> for your whole life. You are meant to be the <strong>monarch butterfly</strong> who is free, who can go everywhere—that is your life!
+                    </p>
+                    <p style="font-size: 1.2rem; line-height: 1.9; margin-top: 1rem;">
+                        We are not meant to stay in the earthly <em>psychē</em> life. We are meant to move forward, go through the metamorphosis, and live the <strong>zōē life</strong>—a life with God and a life with meaning.
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Metamorphosis Tab -->
+        <div id="metamorphosis" class="tab-content">
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-sync-alt"></i></div>
+                    Understanding Metamorphosis: God's Design for Transformation
+                </h2>
+                
+                <p style="font-size: 1.1rem; line-height: 1.9; margin-bottom: 2rem;">
+                    Metamorphosis is one of nature's most profound demonstrations of transformation. In biology, there are two types: <strong>complete metamorphosis</strong> (like butterflies) and <strong>incomplete metamorphosis</strong> (like dragonflies). Both serve as powerful parallels to our spiritual transformation in Christ, illustrating different aspects of how God radically changes us from one form of existence to another.
+                </p>
+                
+                <div class="metamorphosis-container">
+                    <h3 style="font-size: 1.8rem; color: var(--primary); margin-bottom: 1.5rem; text-align: center;">
+                        🦋 Complete vs. Incomplete Metamorphosis
+                    </h3>
+                    
+                    <div class="lifecycle-grid">
+                        <!-- Butterfly Lifecycle - COMPLETE METAMORPHOSIS -->
+                        <div class="lifecycle-card">
+                            <img src="img/Butterfly_life_cycle_diagram.webp" alt="Butterfly Life Cycle - Complete Metamorphosis" class="lifecycle-image" onerror="this.src='https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=800&q=80'">
+                            <div style="padding: 0.5rem 1rem; background: #f1f5f9; border-top: 1px solid #e2e8f0; font-size: 0.8rem; color: #64748b;">
+                                <strong>Source:</strong> <a href="https://openclipart.org/detail/322882/butterflys-life-cycle-english" target="_blank" style="color: #3b82f6; text-decoration: none;">Butterfly's Life Cycle - English</a> by j4p4n via <a href="https://openclipart.org" target="_blank" style="color: #3b82f6; text-decoration: none;">OpenClipart</a> | <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" style="color: #3b82f6; text-decoration: none;">Creative Commons Zero 1.0 License</a>
+                            </div>
+                            <div class="lifecycle-content">
+                                <h4 class="lifecycle-title">
+                                    <i class="fas fa-check-circle" style="color: #059669;"></i> Butterfly: Complete Metamorphosis
+                                </h4>
+                                <p style="margin-bottom: 1rem; font-weight: 600; color: #065f46; background: #dcfce7; padding: 0.75rem; border-radius: 6px;">
+                                    Four Distinct Stages with Radical Transformation
+                                </p>
+                                <p style="margin-bottom: 1.5rem;">
+                                    Complete metamorphosis involves a <strong>total restructuring</strong>—the larva essentially dissolves and reforms into a completely different creature. This mirrors our complete transformation in Christ.
+                                </p>
+                                
+                                <ul class="stages-list">
+                                    <li class="stage-item">
+                                        <span class="stage-number">1</span>
+                                        <div>
+                                            <strong>Egg</strong> — Laid on a leaf, containing the blueprint for transformation. <em>Spiritual parallel: God's design for your life exists before you're even aware.</em>
+                                        </div>
+                                    </li>
+                                    <li class="stage-item">
+                                        <span class="stage-number">2</span>
+                                        <div>
+                                            <strong>Caterpillar (Larva)</strong> — The "earthly life" phase. Its only job: eat and grow 100× its original size. This is the <em>psychē</em> life—focused on earthly consumption and selfish fulfillment.
+                                        </div>
+                                    </li>
+                                    <li class="stage-item">
+                                        <span class="stage-number">3</span>
+                                        <div>
+                                            <strong>Chrysalis (Pupa)</strong> — The transformation chamber where the "death" occurs. The caterpillar hangs upside down, skin splits and falls away ("put off the old self"). Inside, complete reorganization at cellular level—the creature literally dissolves into a soup-like substance before reforming.
+                                        </div>
+                                    </li>
+                                    <li class="stage-item">
+                                        <span class="stage-number">4</span>
+                                        <div>
+                                            <strong>Butterfly (Adult)</strong> — The <em>zōē</em> life emerges! Wings unfold, vibrant colors appear. No longer bound to crawling on leaves—the whole garden awaits. Can now fly, pollinate flowers, and fulfill its true purpose in the ecosystem.
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                                <div style="background: #fef3c7; padding: 1rem; border-radius: 8px; margin-top: 1.5rem;">
+                                    <p style="font-size: 0.95rem; font-style: italic;">
+                                        <strong>🙏 Spiritual Significance:</strong> Complete metamorphosis illustrates our total transformation in Christ. We don't just modify our behavior—we become an entirely new creation (2 Corinthians 5:17). The old self truly dies, and a radically different, beautiful new self emerges.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dragonfly Lifecycle - INCOMPLETE METAMORPHOSIS -->
+                        <div class="lifecycle-card">
+                            <img src="img/a-simplified-dragonfly-life-cycle-illustration.webp" alt="Dragonfly Life Cycle - Incomplete Metamorphosis" class="lifecycle-image" onerror="this.src='https://images.unsplash.com/photo-1599389320928-f37f58c7e79e?w=800&q=80'">
+                            <div style="padding: 0.5rem 1rem; background: #f1f5f9; border-top: 1px solid #e2e8f0; font-size: 0.8rem; color: #64748b;">
+                                <strong>Source:</strong> <a href="https://picryl.com/media/a-simplified-dragonfly-life-cycle-illustration-cf67699b-3468-42e9-a3ec-d2bd29880690-b5d5aa" target="_blank" style="color: #3b82f6; text-decoration: none;">A Simplified Dragonfly Life Cycle Illustration</a> via <a href="https://picryl.com" target="_blank" style="color: #3b82f6; text-decoration: none;">Picryl</a> | <a href="https://creativecommons.org/publicdomain/mark/1.0/" target="_blank" style="color: #3b82f6; text-decoration: none;">Public Domain License</a>
+                            </div>
+                            <div class="lifecycle-content">
+                                <h4 class="lifecycle-title">
+                                    <i class="fas fa-arrow-up" style="color: #0284c7;"></i> Dragonfly: Incomplete Metamorphosis
+                                </h4>
+                                <p style="margin-bottom: 1rem; font-weight: 600; color: #075985; background: #e0f2fe; padding: 0.75rem; border-radius: 6px;">
+                                    Three Stages with Gradual Transition Between Realms
+                                </p>
+                                <p style="margin-bottom: 1.5rem;">
+                                    Incomplete metamorphosis lacks a pupal stage—the nymph gradually matures and then dramatically emerges into a different realm of existence. This illustrates our <strong>sanctification journey</strong> and crossing from death to life.
+                                </p>
+                                
+                                <ul class="stages-list">
+                                    <li class="stage-item">
+                                        <span class="stage-number">1</span>
+                                        <div>
+                                            <strong>Egg</strong> — Laid underwater or on aquatic plants, beginning life beneath the surface. <em>Spiritual parallel: We start "under water"—in a fallen, spiritually dead state.</em>
+                                        </div>
+                                    </li>
+                                    <li class="stage-item">
+                                        <span class="stage-number">2</span>
+                                        <div>
+                                            <strong>Nymph (Larva)</strong> — Lives entirely <em>underwater</em> for months to years. Breathes through gills, crawls on pond bottom. This is its complete reality—it knows nothing of the sky or air above. Represents those living in the earthly realm, unaware of the heavenly dimension.
+                                        </div>
+                                    </li>
+                                    <li class="stage-item">
+                                        <span class="stage-number">3</span>
+                                        <div>
+                                            <strong>Adult Dragonfly</strong> — Climbs <em>above water</em> onto a plant stem. Exoskeleton splits, and the creature literally leaves its underwater skin behind. The dragonfly that emerges now lives in an entirely different realm—the air! Four wings, incredible flying ability, compound eyes. Can never return to underwater breathing.
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                                <div style="background: #e0f2fe; padding: 1rem; border-radius: 8px; margin-top: 1.5rem;">
+                                    <p style="font-size: 0.95rem; font-style: italic;">
+                                        <strong>🙏 Spiritual Significance:</strong> The dragonfly dramatically illustrates crossing from one realm to another—from water to air, from death to life (John 5:24). Like the nymph climbing above water, we move from earthly/fleshly existence to spiritual/heavenly living. Once we've breathed the air of God's presence, we can never go back to the old underwater life.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: white; padding: 2.5rem; border-radius: 12px; margin-top: 3rem;">
+                        <h3 style="font-size: 1.6rem; color: var(--primary); margin-bottom: 1.5rem; text-align: center;">
+                            🔬 Comparing the Two Types of Metamorphosis
+                        </h3>
+                        
+                        <div style="overflow-x: auto; margin: 1.5rem 0;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                                <thead>
+                                    <tr style="background: var(--primary); color: white;">
+                                        <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Aspect</th>
+                                        <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Complete (Butterfly)</th>
+                                        <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Incomplete (Dragonfly)</th>
+                                        <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Spiritual Application</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background: #f9fafb;">
+                                        <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Number of Stages</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">4 stages (egg, larva, pupa, adult)</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">3 stages (egg, nymph, adult)</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Both show progression toward maturity in Christ</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Transformation Process</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Total dissolution and reformation in chrysalis</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Gradual growth, then dramatic emergence</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Justification (instant) + Sanctification (gradual)</td>
+                                    </tr>
+                                    <tr style="background: #f9fafb;">
+                                        <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Realm Change</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Same realm (land/air) but different form</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Complete realm shift (water → air)</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">From earthly to heavenly mindset (Colossians 3:1-2)</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Old Self</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Skin literally falls away</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Exoskeleton left behind above water</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">"Put off the old self" (Ephesians 4:22)</td>
+                                    </tr>
+                                    <tr style="background: #f9fafb;">
+                                        <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">New Abilities</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Flight, pollination, reproduction</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Flight, aerial hunting, new breathing system</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Spiritual gifts, fruit of the Spirit, kingdom impact</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Can't Imagine It</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Caterpillar can't conceive of butterfly life</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">Nymph underwater can't imagine breathing air</td>
+                                        <td style="padding: 1rem; border: 1px solid #ddd;">We can't fully grasp the <em>zōē</em> life God promises</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div style="background: white; padding: 2.5rem; border-radius: 12px; margin-top: 2rem;">
+                        <h3 style="font-size: 1.6rem; color: var(--primary); margin-bottom: 1.5rem; text-align: center;">
+                            🔍 Universal Truths About Metamorphosis
+                        </h3>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                            <div style="background: #f0f9ff; padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: var(--primary); margin-bottom: 0.75rem;">
+                                    💀 Death is Required
+                                </h4>
+                                <p>In both types, the old form must die for the new to emerge. There's no shortcut—transformation requires letting go of the old life.</p>
+                            </div>
+                            
+                            <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #065f46; margin-bottom: 0.75rem;">
+                                    🧬 Radical Change
+                                </h4>
+                                <p>Whether gradual or sudden, the end result is a creature with vastly different capabilities, purpose, and perspective. Not modification—transformation.</p>
+                            </div>
+                            
+                            <div style="background: #fef3c7; padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #92400e; margin-bottom: 0.75rem;">
+                                    🙈 Limited Perspective
+                                </h4>
+                                <p>The larva/nymph cannot conceive of adult life. We similarly struggle to imagine the abundant life God has designed for us.</p>
+                            </div>
+                            
+                            <div style="background: #fce7f3; padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #9f1239; margin-bottom: 0.75rem;">
+                                    🎯 Purpose Fulfilled
+                                </h4>
+                                <p>Only in adult form can the creature fulfill its ecological purpose. Only in transformed life can we fulfill God's calling.</p>
+                            </div>
+                            
+                            <div style="background: #ede9fe; padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #5b21b6; margin-bottom: 0.75rem;">
+                                    🔄 Irreversible
+                                </h4>
+                                <p>Once transformed, there's no going back. The butterfly can't return to caterpillar form. Our new creation in Christ is permanent.</p>
+                            </div>
+                            
+                            <div style="background: #fff7ed; padding: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #9a3412; margin-bottom: 0.75rem;">
+                                    ✨ Exponential Expansion
+                                </h4>
+                                <p>Transformed creatures have vastly greater freedom and capability—flight vs. crawling, air vs. water. God's life is infinitely greater than earthly existence.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); color: white; padding: 2.5rem; border-radius: 12px; margin-top: 2rem; text-align: center;">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">
+                            💡 The Bridge to Your Spiritual Journey
+                        </h3>
+                        <p style="font-size: 1.2rem; line-height: 1.9;">
+                            God has woven transformation into the very fabric of creation. Every spring, millions of creatures demonstrate that radical change is not only possible—it's <strong>natural, beautiful, and leads to fuller life</strong>. If God can transform a crawling caterpillar into a soaring butterfly, and a water-bound nymph into an aerial dragonfly, imagine what He can do with a willing heart surrendered to His metamorphosis process.
+                        </p>
+                        <p style="font-size: 1.3rem; font-weight: 700; margin-top: 1.5rem; background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px;">
+                            The question is not <em>"Can God transform me?"</em> but <em>"Will I trust the process and climb out of the water?"</em>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses" class="tab-content">
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-bible"></i></div>
+                    Key Scripture Passages
+                </h2>
+                
+                <div class="accordion-item active">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title">John 12:24-26 - The Grain of Wheat</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content" style="max-height: 1000px;">
+                        <div class="accordion-body">
+                            <div class="verse-card">
+                                <p class="verse-text">
+                                    Very truly I tell you, unless a kernel of wheat falls to the ground and dies, it remains only a single seed. But if it dies, it produces many seeds. Anyone who loves their life will lose it, while anyone who hates their life in this world will keep it for eternal life. Whoever serves me must follow me; and where I am, my servant also will be. My Father will honor the one who serves me.
+                                </p>
+                                <p class="verse-reference">— John 12:24-26 (NIV)</p>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Jesus spoke these words shortly before His crucifixion, explaining the necessity of His death for fruitfulness.</p>
+                            <p style="margin-top: 0.5rem;"><strong>Application:</strong> Just as a seed must "die" to produce a harvest, we must die to selfish ambition to experience spiritual fruitfulness and eternal life.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item active">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title">Romans 12:1-2 - Living Sacrifice & Transformation</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content" style="max-height: 1000px;">
+                        <div class="accordion-body">
+                            <div class="verse-card" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);">
+                                <p class="verse-text">
+                                    Therefore, I urge you, brothers and sisters, in view of God's mercy, to offer your bodies as a living sacrifice, holy and pleasing to God—this is your true and proper worship. Do not conform to the pattern of this world, but be transformed by the renewing of your mind. Then you will be able to test and approve what God's will is—his good, pleasing and perfect will.
+                                </p>
+                                <p class="verse-reference">— Romans 12:1-2 (NIV)</p>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Key Word:</strong> "Transformed" = metamorphōsis (μεταμόρφωσις) in Greek—the same biological term!</p>
+                            <p style="margin-top: 0.5rem;"><strong>Application:</strong> Giving our lives to God is "true and proper worship"—the most reasonable response to His mercy. Transformation reveals God's good, pleasing, and perfect will.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title">2 Timothy 1:7 - Spirit of Power</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="verse-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                                <p class="verse-text">
+                                    For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.
+                                </p>
+                                <p class="verse-reference">— 2 Timothy 1:7 (NIV)</p>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> Paul's encouragement to Timothy to live boldly in ministry despite opposition.</p>
+                            <p style="margin-top: 0.5rem;"><strong>Application:</strong> God gives us power to overcome fear and uncertainty. We can live boldly because His Spirit empowers us.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title">Ephesians 4:22-24 - Put Off, Put On</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="verse-card" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);">
+                                <p class="verse-text">
+                                    You were taught, with regard to your former way of life, to put off your old self, which is being corrupted by its deceitful desires; to be made new in the attitude of your minds; and to put on the new self, created to be like God in true righteousness and holiness.
+                                </p>
+                                <p class="verse-reference">— Ephesians 4:22-24 (NIV)</p>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Connection:</strong> Just as the caterpillar's old skin literally falls away, we are to put off our old self.</p>
+                            <p style="margin-top: 0.5rem;"><strong>Application:</strong> Transformation requires actively removing the old patterns and embracing the new identity God has created.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-title">Isaiah 43:19 - See, I Am Doing a New Thing</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="verse-card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                <p class="verse-text">
+                                    See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland.
+                                </p>
+                                <p class="verse-reference">— Isaiah 43:19 (NIV)</p>
+                            </div>
+                            <p style="margin-top: 1rem;"><strong>Context:</strong> God's promise to Israel of restoration and new beginnings.</p>
+                            <p style="margin-top: 0.5rem;"><strong>Application:</strong> God specializes in fresh starts. He can create life and possibility where there was only barrenness.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-running"></i></div>
+                    Practical Next Steps: Make Today Count
+                </h2>
+                
+                <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 2.5rem; border-radius: 12px; margin-bottom: 2rem; text-align: center;">
+                    <h3 style="font-size: 2rem; margin-bottom: 1rem;">
+                        ⏰ Stop Procrastinating. Make TODAY Count.
+                    </h3>
+                    <p style="font-size: 1.2rem;">
+                        This is the recurring challenge throughout the sermon. Don't put off your bolder decision. Act now!
+                    </p>
+                </div>
+                
+                <h3 style="font-size: 1.6rem; color: var(--primary); margin: 2rem 0 1rem;">
+                    🎯 For Non-Believers or Seekers
+                </h3>
+                
+                <div style="background: #fef3c7; padding: 2rem; border-radius: 12px; border-left: 5px solid var(--accent); margin-bottom: 2rem;">
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem;">Maybe Today is YOUR Day</h4>
+                    <p style="margin-bottom: 1rem;">If you've been exploring Christianity, attending church, getting your questions answered—maybe today God is nudging you to take that bolder step forward.</p>
+                    <p style="font-weight: 600; margin-top: 1.5rem;">Action Steps:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li style="margin: 0.5rem 0;">Pray in your heart right now and invite Jesus to come into your life</li>
+                        <li style="margin: 0.5rem 0;">Talk to a pastor or Christian friend about your decision</li>
+                        <li style="margin: 0.5rem 0;">Join a care group to begin your journey of faith with others</li>
+                        <li style="margin: 0.5rem 0;">Start reading the Bible (suggest beginning with the Gospel of John)</li>
+                    </ul>
+                </div>
+                
+                <h3 style="font-size: 1.6rem; color: var(--primary); margin: 2rem 0 1rem;">
+                    🙏 For Believers Sensing a Call to Ministry
+                </h3>
+                
+                <div style="background: #e0f2fe; padding: 2rem; border-radius: 12px; border-left: 5px solid var(--primary-light); margin-bottom: 2rem;">
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem;">"You Know in Your Heart"</h4>
+                    <p style="margin-bottom: 1rem;">Maybe you've felt God calling you into full-time ministry but you keep procrastinating. Pastor Albert says: "I believe this calling is not just for me. Some of you feel it too."</p>
+                    <p style="font-weight: 600; margin-top: 1.5rem;">Action Steps:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li style="margin: 0.5rem 0;">Schedule a meeting with a pastor to discuss your calling</li>
+                        <li style="margin: 0.5rem 0;">Research seminary/Bible college programs</li>
+                        <li style="margin: 0.5rem 0;">Serve in a ministry capacity now (small groups, outreach, teaching)</li>
+                        <li style="margin: 0.5rem 0;">Talk with your spouse/family about this direction</li>
+                        <li style="margin: 0.5rem 0;">Attend a missions conference or ministry exploration event</li>
+                    </ul>
+                </div>
+                
+                <h3 style="font-size: 1.6rem; color: var(--primary); margin: 2rem 0 1rem;">
+                    💼 For Believers in Business/Secular Work
+                </h3>
+                
+                <div style="background: #dcfce7; padding: 2rem; border-radius: 12px; border-left: 5px solid #059669; margin-bottom: 2rem;">
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem;">What Does Consecration Look Like for You?</h4>
+                    <p style="margin-bottom: 1rem;">This is the key question Pastor Albert poses: "In your context, what does giving your life to serve God look like?"</p>
+                    <p style="font-weight: 600; margin-top: 1.5rem;">Reflection Questions:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li style="margin: 0.5rem 0;">How can I conduct my business according to Christian principles?</li>
+                        <li style="margin: 0.5rem 0;">What percentage of profits should I dedicate to kingdom work?</li>
+                        <li style="margin: 0.5rem 0;">How can I use my position/influence to advance God's purposes?</li>
+                        <li style="margin: 0.5rem 0;">Are there unethical practices I need to eliminate, even if costly?</li>
+                        <li style="margin: 0.5rem 0;">How can I mentor/disciple others in my workplace?</li>
+                    </ul>
+                    <p style="font-weight: 600; margin-top: 1.5rem;">Action Steps:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li style="margin: 0.5rem 0;">Write a "business mission statement" aligned with God's values</li>
+                        <li style="margin: 0.5rem 0;">Set up automatic giving to support missionaries/ministries</li>
+                        <li style="margin: 0.5rem 0;">Start a workplace Bible study or prayer group</li>
+                        <li style="margin: 0.5rem 0;">Discuss with your care group how to integrate faith and work</li>
+                    </ul>
+                </div>
+                
+                <h3 style="font-size: 1.6rem; color: var(--primary); margin: 2rem 0 1rem;">
+                    📝 Care Group Discussion Prompts
+                </h3>
+                
+                <div style="background: #f3f4f6; padding: 2rem; border-radius: 12px;">
+                    <p style="margin-bottom: 1rem;">Pastor Albert suggests discussing these with your care group or over dim sum:</p>
+                    <ol style="margin-left: 1.5rem;">
+                        <li style="margin: 1rem 0; font-weight: 600;">What are the boldest decisions you have ever made in your life thus far? How have those decisions unfolded over the years?</li>
+                        <li style="margin: 1rem 0; font-weight: 600;">In your specific context (career, family situation, life stage), what does "giving your life to serve God" look like practically?</li>
+                        <li style="margin: 1rem 0; font-weight: 600;">What fears or uncertainties are holding you back from taking a bolder step in your faith?</li>
+                        <li style="margin: 1rem 0; font-weight: 600;">How can we help each other move from spiritual cognitive dissonance (believing God is good but fearing He'll ruin our lives) to trusting His good, pleasing, and perfect will?</li>
+                        <li style="margin: 1rem 0; font-weight: 600;">Looking back at your life, where can you see God's hand guiding you through both passive and proactive changes?</li>
+                    </ol>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); color: white; padding: 2.5rem; border-radius: 12px; margin-top: 2rem; text-align: center;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">
+                        🦋 Your Metamorphosis Begins Today
+                    </h3>
+                    <p style="font-size: 1.2rem; line-height: 1.9;">
+                        The caterpillar doesn't know what it will become, but it trusts the process. The dragonfly nymph can't imagine flight, but it climbs out of the water anyway. You don't need to see the full picture—you just need to take the next bolder step in faith.
+                    </p>
+                    <p style="font-size: 1.4rem; font-weight: 700; margin-top: 1.5rem; background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px;">
+                        Don't procrastinate. Make today count. 🚀
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <section class="section">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-lightbulb"></i></div>
+                    Personal Reflection Questions
+                </h2>
+                
+                <div class="reflection-card">
+                    <p class="reflection-question">1. What stage of metamorphosis best describes your current spiritual life?</p>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">Are you in the "egg" stage (just beginning to understand who God is)? The "caterpillar/nymph" stage (consuming spiritual truth but not yet transformed)? The "chrysalis" stage (in the uncomfortable process of change)? Or have you emerged into the "butterfly/dragonfly" stage (living in the freedom and purpose of your new identity)?</p>
+                </div>
+                
+                <div class="reflection-card">
+                    <p class="reflection-question">2. What "leaves" or "underwater existence" are you clinging to?</p>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">Like the caterpillar loves its leaves, or the nymph knows only underwater life—what comfortable routines, earthly securities, or selfish ambitions are you reluctant to surrender? What would it look like to "put off your old self" in this specific area?</p>
+                </div>
+                
+                <div class="reflection-card">
+                    <p class="reflection-question">3. Where do you experience spiritual cognitive dissonance?</p>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">In what areas do you intellectually believe "God is good" but emotionally fear that surrendering to Him will lead to loss or suffering? How can you realign your heart with the truth that God's will is good, pleasing, and perfect?</p>
+                </div>
+                
+                <div class="reflection-card">
+                    <p class="reflection-question">4. Are you living more in psychē (earthly life) or zōē (divine life)?</p>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">Evaluate your daily priorities, motivations, and pursuits. Are they centered on selfish ambition and earthly fulfillment (psychē)? Or are they marked by vitality, authenticity, devotion to God, and His blessing (zōē)?</p>
+                </div>
+                
+                <div class="reflection-card">
+                    <p class="reflection-question">5. What is one "smaller but bolder" decision you can make this week?</p>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">Pastor Albert asks this directly. What concrete step—that stretches you beyond your comfort zone—can you take in the next seven days? (Examples: start tithing, join a care group, apologize to someone, share your faith, serve in ministry, eliminate a compromise)</p>
+                </div>
+                
+                <div class="reflection-card">
+                    <p class="reflection-question">6. If you gave your ENTIRE life to serve God today, what would change tomorrow?</p>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">Be specific and practical. What would be different about your schedule, your finances, your relationships, your career decisions, your habits? This exercise helps identify where you're still holding back.</p>
+                </div>
+                
+                <div class="reflection-card">
+                    <p class="reflection-question">7. Looking back, what proactive decisions set the direction you're on now?</p>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">Following Pastor Albert's example, trace how your bold decisions (or lack thereof) have shaped your current reality. What does this reveal about the importance of making bolder decisions going forward?</p>
+                </div>
+                
+                <div class="reflection-card">
+                    <p class="reflection-question">8. What would "consecration" look like in your specific context?</p>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">Given your career, family situation, resources, and gifts—how can you set your life apart solely for God's use? Be as practical and specific as possible. Consider writing a personal "consecration statement."</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 2.5rem; border-radius: 12px; margin-top: 2rem; text-align: center;">
+                    <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--dark);">
+                        📖 Journaling Prompt
+                    </h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                        Write a letter to God describing your current "caterpillar/nymph life" and expressing your willingness (or struggles) to enter the transformation process. Ask Him to reveal what your "butterfly/dragonfly life" might look like, and commit to trusting the process even when you can't see the outcome.
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); padding: 2.5rem; border-radius: 12px; margin-top: 2rem;">
+                    <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--primary); text-align: center;">
+                        🙏 Closing Prayer
+                    </h3>
+                    <p style="font-style: italic; font-size: 1.1rem; line-height: 1.9; text-align: center;">
+                        "Father, You are truly an amazing God. You love us and You have a wonderful plan for our lives. Help us to live a bolder life. Help us not to get stuck with the routine. Help us to experience You in such a way that we will be surprised, that we will experience the genuine, the real, the authentic life—the zōē life—that You have planned for us. Take away our fears and take away our procrastinations. Today we give our lives to You to serve You. In Your Son Jesus' name, we pray. Amen."
+                    </p>
+                    <p style="margin-top: 1rem; text-align: right; font-weight: 600; color: var(--primary);">
+                        — Adapted from Pastor Albert's closing prayer
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeShareModal()">&times;</button>
+            <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--primary);">
+                <i class="fas fa-share-alt"></i> Share This Sermon
+            </h2>
+            <p style="margin-bottom: 1.5rem;">Help others discover this powerful message about living bolder for Christ!</p>
+            
+            <div class="share-buttons">
+                <button class="share-btn" style="background: #1da1f2; color: white;" onclick="shareOn('twitter')">
+                    <i class="fab fa-twitter"></i> Twitter
+                </button>
+                <button class="share-btn" style="background: #4267B2; color: white;" onclick="shareOn('facebook')">
+                    <i class="fab fa-facebook"></i> Facebook
+                </button>
+                <button class="share-btn" style="background: #25D366; color: white;" onclick="shareOn('whatsapp')">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                <button class="share-btn" style="background: #0088cc; color: white;" onclick="shareOn('telegram')">
+                    <i class="fab fa-telegram"></i> Telegram
+                </button>
+                <button class="share-btn" style="background: #0077b5; color: white;" onclick="shareOn('linkedin')">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </button>
+                <button class="share-btn" style="background: var(--dark); color: white;" onclick="copyLink()">
+                    <i class="fas fa-link"></i> Copy Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip Container -->
+    <div id="tooltipContainer" class="tooltip-container">
+        <button class="tooltip-close" onclick="hideTooltip()">&times;</button>
+        <h3 id="tooltipTitle" style="font-size: 1.3rem; margin-bottom: 0.75rem; color: var(--primary);"></h3>
+        <p id="tooltipContent"></p>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+    </div>
+
+    <script>
+        // Header Carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 6000);
+        
+        // Tab Switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Accordion
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            const isActive = item.classList.contains('active');
+            
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('active');
+                acc.querySelector('.accordion-content').style.maxHeight = '0';
+            });
+            
+            if (!isActive) {
+                item.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        }
+        
+        // Tooltip
+        const tooltipData = {
+            metamorphosis: {
+                title: 'Metamorphosis',
+                content: 'Greek: μεταμόρφωσις (metamorphōsis). Meta = "beyond", morphē = "form/shape". The biological process where a creature transforms from one form to a completely different form, like caterpillar to butterfly. Used in Romans 12:2 for spiritual transformation.'
+            },
+            consecration: {
+                title: 'Consecration',
+                content: 'To set apart solely for God\'s use. In the Old Testament, temple items were consecrated—dedicated exclusively for worship. Similarly, we consecrate ourselves, our families, our careers, and all we have to serve God\'s purposes alone.'
+            }
+        };
+        
+        function showTooltip(term) {
+            const container = document.getElementById('tooltipContainer');
+            const data = tooltipData[term];
+            
+            if (data) {
+                document.getElementById('tooltipTitle').textContent = data.title;
+                document.getElementById('tooltipContent').textContent = data.content;
+                container.classList.add('active');
+            }
+        }
+        
+        function hideTooltip() {
+            document.getElementById('tooltipContainer').classList.remove('active');
+        }
+        
+        // Share Modal
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('active');
+        }
+        
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('active');
+        }
+        
+        function shareOn(platform) {
+            const url = window.location.href;
+            const text = 'Fresh Start: Live Bolder - Powerful sermon on spiritual transformation!';
+            
+            const shareUrls = {
+                twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`,
+                telegram: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+                linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`
+            };
+            
+            if (shareUrls[platform]) {
+                window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+            }
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = event.target.closest('.share-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                btn.style.background = '#059669';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'var(--dark)';
+                }, 2000);
+            });
+        }
+        
+        document.getElementById('shareModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareModal();
+            }
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeShareModal();
+                hideTooltip();
+            }
+        });
+        
+        window.addEventListener('load', function() {
+            const versesTab = document.getElementById('verses');
+            const firstTwo = versesTab.querySelectorAll('.accordion-item');
+            firstTwo.forEach((item, index) => {
+                if (index < 2) {
+                    const content = item.querySelector('.accordion-content');
+                    item.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
