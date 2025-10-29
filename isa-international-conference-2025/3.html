@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singapore as a City in Nature: Trees' Role in Urban Evolution | ISA Hong Kong Conference 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #10b981 100%);
+        }
+        
+        .carousel-container {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+            animation: kenBurns 20s ease-in-out infinite;
+        }
+        
+        @keyframes kenBurns {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .overlay {
+            background: linear-gradient(to bottom, rgba(6, 78, 59, 0.7), rgba(4, 120, 87, 0.85));
+        }
+        
+        .tab-button {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: #059669;
+        }
+        
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #059669;
+        }
+        
+        .accordion-item {
+            border-bottom: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header {
+            cursor: pointer;
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+        
+        .accordion-header:hover {
+            background: #f3f4f6;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 1.25rem;
+        }
+        
+        .accordion-content.open {
+            max-height: 5000px;
+            padding: 1.25rem;
+        }
+        
+        .chevron {
+            transition: transform 0.3s ease;
+        }
+        
+        .chevron.rotate {
+            transform: rotate(180deg);
+        }
+        
+        .tooltip-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 320px;
+        }
+        
+        .tooltip-trigger {
+            cursor: help;
+            border-bottom: 1px dotted #059669;
+            color: #059669;
+            font-weight: 500;
+        }
+        
+        .tooltip-content {
+            display: none;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .tooltip-content.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-size: 0.75rem;
+            color: #6b7280;
+            z-index: 999;
+            max-width: 280px;
+            transition: transform 0.3s ease;
+        }
+        
+        .badge:hover {
+            transform: translateX(-10px);
+        }
+        
+        @media (max-width: 768px) {
+            .carousel-container {
+                height: 400px;
+            }
+            
+            .tooltip-container {
+                position: relative;
+                top: auto;
+                right: auto;
+                max-width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 1rem;
+                max-width: 100%;
+            }
+            
+            .badge:hover {
+                transform: none;
+            }
+        }
+        
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 0.875rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #059669;
+        }
+        
+        tr:hover {
+            background: #f9fafb;
+        }
+        
+        .citation {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+        
+        .citation a {
+            color: #059669;
+            text-decoration: none;
+        }
+        
+        .citation a:hover {
+            text-decoration: underline;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            .accordion-content {
+                max-height: none !important;
+                padding: 1.25rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section with Carousel -->
+    <header class="relative carousel-container">
+        <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1564939558297-fc396f18e5c7?w=1920&q=80');"></div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1528127269322-539801943592?w=1920&q=80');"></div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1596003906949-67221c37965c?w=1920&q=80');"></div>
+        
+        <div class="overlay absolute inset-0 flex items-center justify-center">
+            <div class="text-center text-white px-6 max-w-5xl">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+                    🌳 Singapore as a City in Nature
+                </h1>
+                <p class="text-xl md:text-2xl mb-3 opacity-90">
+                    Trees' Role in Urban Evolution
+                </p>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-3 text-sm md:text-base mb-6 opacity-80">
+                    <span>📅 28 Oct 2025</span>
+                    <span class="hidden md:inline">•</span>
+                    <span>🎤 Chan Chung Leong</span>
+                    <span class="hidden md:inline">•</span>
+                    <span>🏛️ ISA Hong Kong Conference</span>
+                </div>
+                <p class="text-base md:text-lg mb-8 max-w-3xl mx-auto opacity-90">
+                    Director, Streetscape, National Parks Board, Singapore | ISA Board-Certified Master Arborist
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="index.html" class="no-print inline-flex items-center justify-center gap-2 bg-white text-emerald-700 px-6 py-3 rounded-lg font-semibold hover:bg-emerald-50 transition">
+                        📋 View All Presentations
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tooltip Container -->
+    <div class="tooltip-container no-print">
+        <div id="tooltip" class="tooltip-content">
+            <h4 class="font-semibold text-emerald-700 mb-2"></h4>
+            <p class="text-sm text-gray-700"></p>
+        </div>
+    </div>
+
+    <!-- Sticky Tabs Navigation -->
+    <nav class="sticky-tabs no-print">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex overflow-x-auto gap-6 py-4 border-b-2 border-gray-200">
+                <button class="tab-button active whitespace-nowrap font-semibold" data-tab="overview">Overview</button>
+                <button class="tab-button whitespace-nowrap font-semibold" data-tab="evolution">Evolution</button>
+                <button class="tab-button whitespace-nowrap font-semibold" data-tab="metrics">Metrics & Benchmarks</button>
+                <button class="tab-button whitespace-nowrap font-semibold" data-tab="management">Tree Management</button>
+                <button class="tab-button whitespace-nowrap font-semibold" data-tab="technology">Technology</button>
+                <button class="tab-button whitespace-nowrap font-semibold" data-tab="community">Community</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        
+        <!-- Overview Tab -->
+        <section id="overview" class="tab-content">
+            <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+                <h2 class="text-3xl font-bold text-emerald-700 mb-6">🎯 Key Points</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-emerald-50 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-3 text-emerald-800">🌱 Vision Evolution</h3>
+                        <p>Singapore's transformation from <span class="tooltip-trigger" data-term="garden-city">Garden City</span> (1960s) to City in a Garden to <span class="tooltip-trigger" data-term="city-nature">City in Nature</span> represents a deepening ecological commitment driven by historical initiatives and modern strategies.</p>
+                    </div>
+                    <div class="bg-emerald-50 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-3 text-emerald-800">📊 Global Recognition</h3>
+                        <p>MIT Treepedia study ranked Singapore highest among 17 cities for street-level greenery at 29.3%, while approaching the <span class="tooltip-trigger" data-term="3-30-300">3-30-300 rule</span> for equitable green access.</p>
+                    </div>
+                    <div class="bg-emerald-50 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-3 text-emerald-800">🔧 Advanced Tools</h3>
+                        <p><span class="tooltip-trigger" data-term="trees-sg">Trees.sg</span> and <span class="tooltip-trigger" data-term="maven2">Maven2</span> enhance public engagement and professional tree management through LiDAR, IoT sensors, and AI-driven biometrics.</p>
+                    </div>
+                    <div class="bg-emerald-50 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-3 text-emerald-800">👥 Professional Standards</h3>
+                        <p>Community stewardship combined with <span class="tooltip-trigger" data-term="isa">ISA</span>-aligned training standards ensures sustainable tree care while balancing urban development and biodiversity goals.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-8">
+                <h2 class="text-3xl font-bold text-emerald-700 mb-6">📝 Presentation Abstract</h2>
+                <div class="prose max-w-none">
+                    <p class="text-lg leading-relaxed mb-4">
+                        Trees have been integral to Singapore's urban transformation—from the early Garden City vision of the 1960s, to City in a Garden, and now, City in Nature. This evolving vision reflects a deepening commitment to urban forestry as a cornerstone of sustainable development and liveability.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-4">
+                        The <span class="tooltip-trigger" data-term="nparks">National Parks Board (NParks)</span> leads this effort through comprehensive strategies that emphasise long-term planning, ecological resilience, and community stewardship. Singapore's OneMillionTrees movement, species diversification efforts, and the creation of Nature Park Networks demonstrate a strategic approach to integrating trees into the urban fabric.
+                    </p>
+                    <p class="text-lg leading-relaxed">
+                        NParks employs science and technology to enhance tree management and maintenance. Tools such as LiDAR, IoT networks, and Maven 2 support evidence-based decision-making, risk assessment, and proactive care of trees across the island. These innovations help ensure tree health, public safety, and optimise ecosystem services, showcasing how data-driven, science-based strategies can align nature with urban growth.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Evolution Tab -->
+        <section id="evolution" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+                <h2 class="text-3xl font-bold text-emerald-700 mb-6">🌿 Historical Foundations</h2>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🏛️ Colonial Roots: Singapore Botanic Gardens</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content open">
+                            <p class="mb-4">
+                                Singapore's natural heritage began with the <strong>Singapore Botanic Gardens</strong>, originally established at Fort Canning in 1822 before relocating to its current 82-hectare site off Holland Road in 1859. This institution evolved from a colonial experimental garden to a global biodiversity hub, earning <strong>UNESCO World Heritage status in 2015</strong> as Singapore's first inscribed site.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://whc.unesco.org/en/list/1483/" target="_blank">UNESCO World Heritage Centre</a> | 
+                                <a href="https://www.nparks.gov.sg/sbg/about/singapore-s-first-unesco-world-heritage-site" target="_blank">NParks Heritage Site</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🌱 Garden City Vision (1963-1990s)</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                Following independence in 1965, founding Prime Minister <strong>Lee Kuan Yew</strong> launched the first tree-planting campaign in 1963, integrating greening as an economic strategy to attract foreign investment. Often called the "Chief Gardener," Lee transformed Singapore from a polluted port city into a model green metropolis.
+                            </p>
+                            <blockquote class="border-l-4 border-emerald-500 pl-4 italic my-4 text-gray-700">
+                                "We wanted to make Singapore clean and green as a key component of our development strategy—to show that we were serious about creating a livable environment."
+                                <footer class="text-sm mt-2">— Lee Kuan Yew (paraphrased from historical records)</footer>
+                            </blockquote>
+                            <p class="mb-4">
+                                Key initiatives included mandatory tree verges along all roads (enshrined in urban planning codes since the 1960s), reclamation of coastal parks like East Coast Park, and intensive street tree planting programs.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://www.nparks.gov.sg/sbg/about/our-history/1963-the-greening-of-singapore" target="_blank">NParks 1963 Greening</a> | 
+                                <a href="https://www.cnbc.com/2016/03/27/lee-kuan-yew-was-actually-singapores-chief-gardener.html" target="_blank">CNBC Chief Gardener</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🦀 The Feng Shui Crab Legend</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                An urban legend suggests that Feng Shui masters advised early leaders to plant more trees to avoid Singapore becoming a "cooked crab" (referencing the island's crab-like shape and national dish, chili crab). While this story remains unverified without primary sources, it reflects the cultural narratives around Singapore's greening and the symbolic importance of maintaining vitality.
+                            </p>
+                            <div class="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500">
+                                <p class="text-sm">
+                                    ⚠️ <strong>Note:</strong> This anecdote is part of local folklore and should be treated as illustrative rather than historical fact. The primary drivers were economic and environmental pragmatism.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🏞️ City in a Garden to City in Nature (2000s-Present)</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                Under the <strong>Singapore Green Plan 2030</strong>, the vision shifted from quantity-focused greening to quality-driven ecological outcomes. The <strong>City in Nature</strong> strategy emphasizes:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700">
+                                <li><strong>Conserving natural capital:</strong> Protecting four major nature areas (Central Catchment, Bukit Timah, military reserves, mangrove zones)</li>
+                                <li><strong>Intensifying nature in parks:</strong> Creating nature parks as buffers, reducing edge effects on core reserves</li>
+                                <li><strong>Restoring biodiversity:</strong> Reintroducing endemic species like <em>Hopea mengarawan</em> (heritage tree accidentally felled in 2016, propagated from seeds)</li>
+                                <li><strong>Connectivity corridors:</strong> 2022 ecological profiling identified wildlife corridors; park connectors form a 300km+ cycling network</li>
+                            </ul>
+                            <p class="mb-4">
+                                Multi-tiered planting strategies restore forest structure with canopy trees, shrubs, climbers, and ground covers, enhancing both ecological function and visual appeal. Incentive schemes (e.g., plot ratio bonuses for green buildings) extend greening to industrial and commercial sectors.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://www.greenplan.gov.sg/key-focus-areas/city-in-nature/" target="_blank">Singapore Green Plan 2030</a> | 
+                                <a href="https://www.unep.org/news-and-stories/story/city-garden-singapores-journey-becoming-biodiversity-model" target="_blank">UNEP Biodiversity Model</a> | 
+                                <a href="https://www.nparks.gov.sg/who-we-are/city-in-nature-key-strategies" target="_blank">NParks Key Strategies</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🤔 Defining "Nature" in Urban Contexts</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                The presentation challenges narrow definitions of "nature" by showcasing diverse landscapes:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700">
+                                <li><strong>East Coast Park:</strong> Entirely reclaimed land, now green space</li>
+                                <li><strong>Park connectors:</strong> Engineered greenways for recreation</li>
+                                <li><strong>Industrial green zones:</strong> Brownfield restoration in shipbuilding/refining areas</li>
+                                <li><strong>Disused quarries:</strong> Former mining sites transformed into biodiversity hotspots</li>
+                                <li><strong>Mangrove reserves:</strong> Only truly "untouched" ecosystems among these examples</li>
+                            </ul>
+                            <p class="mb-4">
+                                This aligns with debates on novel ecosystems and human-impacted environments as valid nature, recognizing that restoration and constructed habitats can deliver ecological services even if not "pristine."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metrics Tab -->
+        <section id="metrics" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+                <h2 class="text-3xl font-bold text-emerald-700 mb-6">📊 Global Benchmarks & Performance</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-emerald-800 mb-4">🌍 MIT Treepedia Study</h3>
+                    <p class="mb-4">
+                        The <strong>MIT Senseable City Lab's Treepedia</strong> project used computer vision on Google Street View imagery to measure the <strong>Green View Index (GVI)</strong>—the percentage of visible greenery from street level. Singapore ranked <strong>#1 among 17 global cities at 29.3%</strong>, outperforming cities like Vancouver (25.9%) and Sydney (25.5%).
+                    </p>
+                    <p class="mb-4">
+                        This achievement is notable given Singapore's lack of natural hinterlands; greenery is concentrated in urban areas. The metric reflects deliberate policy: mandatory tree verges, intensive planting programs, and integration of greenery into built environments.
+                    </p>
+                    <div class="citation">
+                        📚 References: 
+                        <a href="https://senseable.mit.edu/treepedia/treepedia_publication.pdf" target="_blank">MIT Treepedia Publication</a> | 
+                        <a href="https://senseable.mit.edu/news/pdfs/20170412_Citygreen.pdf" target="_blank">MIT City Green Report</a> | 
+                        <a href="https://www.smithsonianmag.com/smart-news/mits-treepedia-maps-how-green-your-city-grows-180963000/" target="_blank">Smithsonian Coverage</a>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-emerald-800 mb-4">🌲 The 3-30-300 Rule</h3>
+                    <p class="mb-4">
+                        Proposed by <strong>Professor Cecil Konijnendijk</strong>, this benchmark ensures equitable green access for urban health:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700 bg-emerald-50 p-6 rounded-lg">
+                        <li><strong>3 trees</strong> visible from every home</li>
+                        <li><strong>30% canopy cover</strong> in every neighborhood</li>
+                        <li><strong>300 meters</strong> to the nearest park or green space</li>
+                    </ul>
+                    <p class="mb-4">
+                        Singapore approaches these targets: neighborhoods average ~30% canopy, most areas are within 300-400m of parks, and ongoing tree planting (OneMillionTrees movement aims to add 1 million trees by 2030) enhances visibility from homes.
+                    </p>
+                    <div class="citation">
+                        📚 References: 
+                        <a href="https://www.researchgate.net/publication/353571108_The_3-30-300_Rule_for_Urban_Forestry_and_Greener_Cities" target="_blank">ResearchGate Paper</a> | 
+                        <a href="https://nbsi.eu/the-3-30-300-rule/" target="_blank">NBSI Explainer</a> | 
+                        <a href="https://iucnurbanalliance.org/promoting-health-and-wellbeing-through-urban-forests-introducing-the-3-30-300-rule/" target="_blank">IUCN Urban Alliance</a>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <h3 class="text-2xl font-semibold text-emerald-800 mb-4">📋 Key Metrics Summary Table</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metric/Source</th>
+                                <th>Description</th>
+                                <th>Singapore's Performance</th>
+                                <th>Reference</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Green View Index</strong><br>(MIT Treepedia)</td>
+                                <td>Percentage of visible greenery from street level via Google Street View</td>
+                                <td>29.3% (highest among 17 cities studied)</td>
+                                <td><a href="https://senseable.mit.edu/treepedia/treepedia_publication.pdf" target="_blank">MIT</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Canopy Cover</strong></td>
+                                <td>Overall tree canopy as percentage of land area</td>
+                                <td>~30% in neighborhoods, aiming for 3-30-300 compliance</td>
+                                <td><a href="https://www.greenplan.gov.sg/key-focus-areas/city-in-nature/" target="_blank">Green Plan</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Park Accessibility</strong></td>
+                                <td>Distance to nearest park or green space</td>
+                                <td>Most areas within 300-400m; round-island route in progress</td>
+                                <td><a href="https://www.nparks.gov.sg/who-we-are/city-in-nature-key-strategies" target="_blank">NParks</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tree Inventory</strong></td>
+                                <td>Total managed trees</td>
+                                <td>Over 2 million, with 800,000 actively inspected</td>
+                                <td><a href="https://www.straitstimes.com/singapore/new-national-parks-board-online-map-treessg-lists-locations-info-of-500000-trees" target="_blank">Trees.sg</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Biodiversity Restoration</strong></td>
+                                <td>Native species reintroduction</td>
+                                <td>Endemics like <em>Hopea mengarawan</em> propagated</td>
+                                <td><a href="https://www.unep.org/news-and-stories/story/city-garden-singapores-journey-becoming-biodiversity-model" target="_blank">UNEP</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Management Tab -->
+        <section id="management" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+                <h2 class="text-3xl font-bold text-emerald-700 mb-6">🛠️ Tree Management Approach</h2>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">📍 Inventory & Digital Twins</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content open">
+                            <p class="mb-4">
+                                NParks maintains a <strong>20+ year GIS database</strong> of over 2 million trees, with 800,000 actively inspected. The <strong>Maven2 system</strong> serves as the digital backbone, integrating:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700">
+                                <li><strong>Real-time field updates:</strong> Inspectors use mobile apps that sync data even offline</li>
+                                <li><strong>Dashboards:</strong> Population analysis, demographic trends, risk stratification</li>
+                                <li><strong>Workflow automation:</strong> Prescriptions generated directly from inspection forms, ensuring closed-loop accountability</li>
+                                <li><strong>IoT integration:</strong> 2,000+ tilt sensors monitor tree movement, feeding data into predictive models</li>
+                            </ul>
+                            <p class="mb-4">
+                                The philosophy: <em>"Everything starts from a map."</em> By digitizing tree locations and attributes, NParks creates digital twins enabling remote assessment, historical tracking, and evidence-based decision-making.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://www.nparks.gov.sg/news/news-detail/nparks-rolls-out-new-model-of-greenery-management-for-parks-and-streetscape-that-leverages-suite-of-digital-tools-developed-with-landscape-industry" target="_blank">NParks Maven2 Launch</a> | 
+                                <a href="https://www.straitstimes.com/singapore/nparks-launches-new-model-of-managing-parks-and-streetscapes" target="_blank">Straits Times Coverage</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🔍 Risk-Based Inspection Protocol</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                Inspection follows <strong>ISA standards</strong> (Level 1, 2, 3, TRAQ) with risk stratification based on occupancy:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700 bg-blue-50 p-6 rounded-lg">
+                                <li><strong>High occupancy (expressways, parks):</strong> 6-month inspection cycles</li>
+                                <li><strong>Medium occupancy (residential streets):</strong> 12-month cycles</li>
+                                <li><strong>Low occupancy (nature areas):</strong> 24-month cycles</li>
+                            </ul>
+                            <p class="mb-4">
+                                A <strong>scheduling engine</strong> ensures no tree misses its designated frequency, smooths workload spikes, and accommodates event-driven priorities (e.g., Formula 1 race inspections completed by June for September events).
+                            </p>
+                            <p class="mb-4">
+                                <strong>Workflow escalation:</strong> Level 1 inspectors can prescribe basic treatments; uncertain cases escalate to Level 2 (climbing, cranes) or Level 3 (sonic tomography, resistographs). All tools interface with Maven2 for seamless data flow.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://www.mnd.gov.sg/newsroom/speeches/view/oral-answer-by-ministry-of-national-development-on-nparks-current-tree-inspection-regime" target="_blank">MND Inspection Regime</a> | 
+                                <a href="https://www.nparks.gov.sg/cuge/programmes-schemes/programmes/professional-programmes/isa-tree-risk-assessment-qualification-%28traq%29" target="_blank">NParks TRAQ</a> | 
+                                <a href="https://wwv.isa-arbor.com/education/onlineresources/basictreeriskassessmentform" target="_blank">ISA BTRA Form</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🚨 Emergency Response & Contracting</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                Contractors are the "hands" to NParks' "eyes and head." Service models vary by setting:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700">
+                                <li><strong>Prescriptive contracts:</strong> NParks specifies exact work (e.g., roadside pruning)</li>
+                                <li><strong>Performance-based contracts:</strong> Outcomes-focused (e.g., park maintenance standards)</li>
+                            </ul>
+                            <p class="mb-4">
+                                <strong>Emergency services:</strong> Contractors must clear fallen trees from roads/footpaths <strong>within 1 hour</strong> of notification, regardless of ownership. First responders stabilize hazards, then traffic crews finish clearing. Coordination with agencies (via traffic cameras, WhatsApp groups) enables rapid deployment.
+                            </p>
+                            <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500 mb-4">
+                                <p class="text-sm">
+                                    ⚡ <strong>Critical Infrastructure:</strong> Dense urban fabric demands swift action. A single blocked expressway can cascade into island-wide gridlock, hence the 1-hour SLA.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🧪 Inspection Tools & Techniques</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                NParks equips inspectors with advanced diagnostics:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700 bg-emerald-50 p-6 rounded-lg">
+                                <li><strong>Resistograph drills:</strong> One drill per five staff (ratio chosen for familiarity—same weight as M16 rifle used in national service)</li>
+                                <li><strong>Sonic tomography:</strong> Advanced cavity detection, though labor-intensive</li>
+                                <li><strong>LiDAR (iPhone/Android):</strong> Off-the-shelf sensors capture 3D profiles, enabling volume calculations for cavity risk (current rule: ~6.3x DBH threshold, subject to ongoing research)</li>
+                                <li><strong>Photography & annotation:</strong> Ortho-rectified images draped over point clouds allow precise branch-level prescriptions</li>
+                            </ul>
+                            <p class="mb-4">
+                                Mobile apps optimize for outdoor use: high-brightness UI, auto-syncing, and seamless integration with IML series Visco drafts for adding decay data to tree records without returning to the office.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://www.channelnewsasia.com/cna-insider/tree-management-arborist-doctors-nparks-urban-healthy-safe-inspection-pruning-3354271" target="_blank">CNA Tree Doctors</a> | 
+                                <a href="https://www.arborleaf.com.sg/" target="_blank">ArborLeaf Singapore</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Tab -->
+        <section id="technology" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+                <h2 class="text-3xl font-bold text-emerald-700 mb-6">💻 Science & Technology Integration</h2>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🚁 LiDAR & Remote Tree Management System (RTMS)</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content open">
+                            <p class="mb-4">
+                                RTMS leverages <strong>LiDAR point cloud data</strong> to create detailed 3D tree models. Workflow:
+                            </p>
+                            <ol class="list-decimal list-inside space-y-2 mb-4 text-gray-700">
+                                <li><strong>Data capture:</strong> Mobile LiDAR units scan streets, generating point clouds + RGB imagery</li>
+                                <li><strong>AI extraction:</strong> Machine learning (trained on multi-stem, palm, and canopy trees) automates biometric measurements (height, DBH, crown spread)</li>
+                                <li><strong>Orthophoto draping:</strong> RGB images overlay point clouds for visual interpretation</li>
+                                <li><strong>Annotation & prescription:</strong> Inspectors mark specific branches, cavities, or defects, sending precise work orders to contractors</li>
+                            </ol>
+                            <p class="mb-4">
+                                Benefits include remote inspection capability, automated dimension updates (replacing manual measurements), and enhanced quality control via historical comparisons.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://govinsider.asia/intl-en/article/inside-singapores-plan-for-climate-change-resistant-trees-nparks" target="_blank">GovInsider Climate Trees</a> | 
+                                <a href="https://www.nparks.gov.sg/portals/annualreport/nurturing-science-technology-innovation.html" target="_blank">NParks STI Report</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">📡 IoT Sensor Networks</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                Over <strong>2,000 wireless tilt sensors</strong> monitor tree movement in real-time, measuring inclination angles during wind events. Data feeds into:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700">
+                                <li><strong>Failure prediction models:</strong> Correlating tilt with structural parameters (cavity size, root plate dimensions, species)</li>
+                                <li><strong>Calibration studies:</strong> Establishing tolerance thresholds—what tilt angle for what tree size/condition signals imminent failure?</li>
+                                <li><strong>Longitudinal research:</strong> Accumulating data on trees that fail vs. survive, refining risk algorithms</li>
+                            </ul>
+                            <p class="mb-4">
+                                Current phase focuses on data collection; future iterations will enable predictive alerts (e.g., "Tree X exceeded safe tilt threshold—inspect within 24 hours").
+                            </p>
+                            <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                                <p class="text-sm">
+                                    🔬 <strong>Research Note:</strong> While sensor failures provide valuable data, the goal is prevention through early detection, not just post-mortem analysis.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🗺️ Maven2: Integrated Management Platform</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                Maven2 is NParks' enterprise GIS platform built on Microsoft 365, integrating:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700 bg-blue-50 p-6 rounded-lg">
+                                <li><strong>Tree inventory:</strong> 20+ years of historical data, continuously updated</li>
+                                <li><strong>Work order management:</strong> Automated dispatch from inspection findings to contractor execution</li>
+                                <li><strong>Fleet tracking:</strong> GPS monitoring of emergency response vehicles</li>
+                                <li><strong>Dashboards:</strong> Real-time KPIs (e.g., % inspections overdue, contractor response times)</li>
+                                <li><strong>Public interface:</strong> Trees.sg portal draws from Maven2 database, anonymizing sensitive data</li>
+                            </ul>
+                            <p class="mb-4">
+                                Design philosophy: <em>"Field staff have office-level information; office staff have field-level awareness."</em> This breaks down silos, ensuring decisions are informed by real-time ground truth.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">📱 Mobile Inspection Apps</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                Custom apps optimize for Singapore's tropical conditions (high sunlight, humidity):
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700">
+                                <li><strong>High-brightness UI:</strong> Readable without screen glare adjustments</li>
+                                <li><strong>Offline mode:</strong> Sync when connectivity resumes (critical in parks with poor cell coverage)</li>
+                                <li><strong>Prescriptive workflows:</strong> Inspectors can issue pruning/removal orders directly; supervisors approve via dashboard</li>
+                                <li><strong>Photo integration:</strong> Geo-tagged images auto-attach to tree records</li>
+                            </ul>
+                            <p class="mb-4">
+                                Monthly assignments are pushed to inspectors' devices, with AI-assisted route optimization to minimize travel time while meeting deadlines.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Tab -->
+        <section id="community" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+                <h2 class="text-3xl font-bold text-emerald-700 mb-6">👥 Community Stewardship & Standards</h2>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🌐 Trees.sg: Public Engagement Platform</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content open">
+                            <p class="mb-4">
+                                Launched as <strong>Asia's most extensive interactive tree map</strong>, Trees.sg plots over <strong>500,000 trees</strong>, allowing residents to:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700 bg-green-50 p-6 rounded-lg">
+                                <li><strong>Identify species:</strong> Click any tree for scientific/common names, planting date, size</li>
+                                <li><strong>Leave messages:</strong> Digital "hugging"—users post tributes, memories, or advocacy statements</li>
+                                <li><strong>Upload photos:</strong> Crowdsourced galleries document seasonal changes, wildlife sightings</li>
+                                <li><strong>Track favorites:</strong> Users curate collections of personally significant trees</li>
+                            </ul>
+                            <p class="mb-4">
+                                <strong>Strategic intent:</strong> Transform trees from anonymous street furniture to valued community members. When people know a tree's name and history, they're more likely to advocate for its protection during development disputes.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://www.nparks.gov.sg/treessg/explore" target="_blank">Trees.sg Official</a> | 
+                                <a href="https://www.straitstimes.com/singapore/new-national-parks-board-online-map-treessg-lists-locations-info-of-500000-trees" target="_blank">Straits Times Launch</a> | 
+                                <a href="https://vulcanpost.com/682077/trees-sg-singapore/" target="_blank">Vulcan Post Feature</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🎓 Training & Professional Development</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                <strong>Centre for Urban Greenery and Ecology (CUGE)</strong>, NParks' training arm, has partnered with ISA for <strong>24 years</strong> (since 2001). Career pathway:
+                            </p>
+                            <ul class="list-decimal list-inside space-y-2 mb-4 text-gray-700">
+                                <li><strong>Entry-level:</strong> Local certifications (NParks-specific) for new hires lacking ISA eligibility</li>
+                                <li><strong>Certified Arborist:</strong> Required for tree inspectors after gaining experience</li>
+                                <li><strong>Specializations:</strong> TRAQ, Municipal Specialist (recently revamped for regional relevance), BCMA (Board Certified Master Arborist)</li>
+                                <li><strong>Advanced:</strong> Participation in test committees, standards development</li>
+                            </ul>
+                            <p class="mb-4">
+                                <strong>ISA Singapore Chapter</strong> (established 2025) formalizes regional collaboration via tripartite MoU: NParks, Landscape Industry Association Singapore (LIAS), and ISA. This facilitates:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700">
+                                <li>Biennial arboriculture seminars (inaugural 2024, with ISA board members Harry, John, Leo, Ryan)</li>
+                                <li>Regional knowledge exchange (Hong Kong, Malaysia, Indonesia)</li>
+                                <li>Standards harmonization across Southeast Asia</li>
+                            </ul>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://www.nparks.gov.sg/cuge/programmes-schemes/programmes/professional-programmes/isa-tree-risk-assessment-qualification-%28traq%29" target="_blank">CUGE TRAQ Programme</a> | 
+                                <a href="https://www.facebook.com/groups/1259531044969947/posts/1793633608226352/" target="_blank">ISA Chapter Announcement</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">📜 Standards Development</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                NParks and LIAS are co-developing <strong>Singapore Standards (SS)</strong> for arboriculture, starting with:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700 bg-amber-50 p-6 rounded-lg">
+                                <li><strong>SS XXX: Tree Measurement Standards for Urban Properties</strong> (in public consultation as of Oct 2025)</li>
+                                <li><strong>Upcoming:</strong> Tree inspection protocols, planting guidelines, highway tree anchoring, soils/mulching</li>
+                            </ul>
+                            <p class="mb-4">
+                                <strong>Purpose:</strong> These standards serve as public references to prevent disputes. Example: A homeowner demands "prune until no leaves remain" to maximize sunlight. Contractor cites SS pruning standard limiting canopy removal to 25%, protecting tree health while educating the client.
+                            </p>
+                            <p class="mb-4">
+                                Standards also raise contractor professionalism: service buyers (condominiums, corporations) can specify SS compliance in tenders, weeding out low-quality providers.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://www.nparks.gov.sg/-/media/nparks-real-content/partner-us/developers-architects-and-engineers/guidelines-on-greenery-provision-and-tree-conservation-for-developments_version-3.pdf" target="_blank">Greenery Provision Guidelines</a> | 
+                                <a href="https://www.facebook.com/groups/1259531044969947/posts/1793633608226352/" target="_blank">Standards Development Update</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-semibold text-emerald-800">🤝 Community in Nature Initiatives</h3>
+                            <svg class="chevron w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="mb-4">
+                                Beyond digital tools, NParks mobilizes volunteers for hands-on stewardship:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-700">
+                                <li><strong>Tree planting drives:</strong> OneMillionTrees campaign engages schools, corporations, residents</li>
+                                <li><strong>Habitat restoration:</strong> Volunteers remove invasives, plant natives in nature parks</li>
+                                <li><strong>Guided walks:</strong> Citizen scientists document wildlife, contributing to biodiversity databases</li>
+                            </ul>
+                            <p class="mb-4">
+                                <strong>Political dimension:</strong> Grassroots advocacy ensures sustained funding. When residents personally plant trees or attend nature walks, they become vocal supporters of green budgets during elections.
+                            </p>
+                            <div class="citation">
+                                📚 References: 
+                                <a href="https://www.researchgate.net/publication/293190011_The_Community_in_Nature_Initiative_Reconnecting_Singapore%27s_Urbanites_with_Nature" target="_blank">ResearchGate Study</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="badge no-print">
+        Generated by LLM with supervision by <a href="../index.html" class="text-emerald-600 hover:underline">benjaminficusmicrocarpa</a>. 
+        <a href="../license.html" class="text-emerald-600 hover:underline">MIT License</a>
+    </div>
+
+    <script>
+        // Carousel functionality
+        const slides = document.querySelectorAll('.carousel-slide');
+        let currentSlide = 0;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(() => showSlide(currentSlide + 1), 8000);
+
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                    if (content.id === targetTab) {
+                        content.classList.remove('hidden');
+                    }
+                });
+            });
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const chevron = header.querySelector('.chevron');
+                
+                content.classList.toggle('open');
+                chevron.classList.toggle('rotate');
+            });
+        });
+
+        // Tooltip functionality
+        const tooltipDefinitions = {
+            'garden-city': {
+                title: 'Garden City',
+                description: 'Singapore\'s initial greening vision (1963-1990s) focused on tree planting along roads and in parks to create a clean, attractive environment for economic development.'
+            },
+            'city-nature': {
+                title: 'City in Nature',
+                description: 'Current strategy under Singapore Green Plan 2030 emphasizing ecological quality, biodiversity restoration, connectivity corridors, and integration of nature into urban fabric.'
+            },
+            '3-30-300': {
+                title: '3-30-300 Rule',
+                description: 'Urban forestry benchmark by Prof. Cecil Konijnendijk: 3 trees visible from every home, 30% canopy cover per neighborhood, 300m to nearest park.'
+            },
+            'trees-sg': {
+                title: 'Trees.sg',
+                description: 'Asia\'s largest interactive tree map, plotting 500,000+ trees with species info, user messages, photos, and planting history to foster community connection.'
+            },
+            'maven2': {
+                title: 'Maven2',
+                description: 'NParks\' integrated GIS platform for tree inventory, inspection scheduling, work order management, IoT data, and real-time dashboards built on Microsoft 365.'
+            },
+            'nparks': {
+                title: 'National Parks Board (NParks)',
+                description: 'Singapore\'s statutory agency managing parks, nature reserves, streetscape trees, and biodiversity conservation since 1990.'
+            },
+            'isa': {
+                title: 'International Society of Arboriculture (ISA)',
+                description: 'Global nonprofit advancing arboriculture through research, education, and certification programs (Certified Arborist, TRAQ, BCMA).'
+            }
+        };
+
+        const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
+        const tooltip = document.getElementById('tooltip');
+
+        tooltipTriggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', (e) => {
+                const term = e.target.dataset.term;
+                const def = tooltipDefinitions[term];
+                
+                if (def) {
+                    tooltip.querySelector('h4').textContent = def.title;
+                    tooltip.querySelector('p').textContent = def.description;
+                    tooltip.classList.add('show');
+                }
+            });
+
+            trigger.addEventListener('mouseleave', () => {
+                tooltip.classList.remove('show');
+            });
+        });
+
+        // Print optimization
+        window.addEventListener('beforeprint', () => {
+            document.querySelectorAll('.accordion-content').forEach(content => {
+                content.classList.add('open');
+            });
+        });
+    </script>
+</body>
+</html>

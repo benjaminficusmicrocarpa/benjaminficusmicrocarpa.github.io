@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Forestry Strategies: Making a Real Difference | Dr. Cecil Konijnendijk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1a3a1a;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a5f3a 0%, #2d8659 50%, #4a9f73 100%);
+        }
+        
+        .hero-images {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+        
+        .hero-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: kenBurnsFade 24s infinite;
+        }
+        
+        .hero-image:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .hero-image:nth-child(2) {
+            animation-delay: 8s;
+        }
+        
+        .hero-image:nth-child(3) {
+            animation-delay: 16s;
+        }
+        
+        @keyframes kenBurnsFade {
+            0%, 33.33% { opacity: 1; transform: scale(1); }
+            8.33%, 100% { opacity: 0; transform: scale(1.1); }
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(26, 58, 26, 0.7), rgba(26, 95, 58, 0.85));
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+        
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-button {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button:hover {
+            color: #2d8659;
+            background: #f0f9f4;
+        }
+        
+        .tab-button.active {
+            color: #1a5f3a;
+            border-bottom-color: #2d8659;
+            background: #f0f9f4;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .accordion-button {
+            width: 100%;
+            padding: 1.25rem;
+            text-align: left;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .accordion-button:hover {
+            background: #f0f9f4;
+            border-color: #2d8659;
+        }
+        
+        .accordion-button.active {
+            background: #e6f4ed;
+            border-color: #2d8659;
+            color: #1a5f3a;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: #f8fafb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .accordion-content.active {
+            max-height: 2000px;
+            padding: 1.5rem;
+        }
+        
+        .rule-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #2d8659;
+        }
+        
+        .rule-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .number-badge {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d8659, #4a9f73);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 15px rgba(45, 134, 89, 0.3);
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #f0f9f4, #e6f4ed);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            border: 2px solid #2d8659;
+        }
+        
+        .tooltip-trigger {
+            position: relative;
+            display: inline-block;
+            border-bottom: 2px dotted #2d8659;
+            cursor: help;
+            color: #1a5f3a;
+            font-weight: 600;
+        }
+        
+        .tooltip-box {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: 2px solid #2d8659;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .tooltip-box.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.875rem;
+            max-width: 250px;
+            transition: transform 0.3s ease;
+            z-index: 999;
+        }
+        
+        .attribution-badge:hover {
+            transform: translateX(-10px);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                height: auto;
+                min-height: 500px;
+            }
+            
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .attribution-badge {
+                position: static;
+                margin: 1rem;
+                max-width: 100%;
+            }
+            
+            .tooltip-box {
+                right: 0.5rem;
+                max-width: calc(100% - 1rem);
+            }
+        }
+        
+        @media print {
+            .sticky-tabs, .attribution-badge, .modal, .tooltip-box {
+                display: none !important;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+            
+            .accordion-content {
+                max-height: none !important;
+                padding: 1rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-images">
+            <img src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=1920&q=80" alt="Urban forest canopy" class="hero-image">
+            <img src="https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1920&q=80" alt="City park with mature trees" class="hero-image">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt="Green urban landscape" class="hero-image">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="max-w-4xl">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">Urban Forestry Strategies 🌳</h1>
+                <p class="text-2xl md:text-3xl mb-4 font-light">Making a Real Difference</p>
+                <div class="text-lg md:text-xl mb-8 opacity-90">
+                    <p class="mb-2">🎤 Dr. Cecil Konijnendijk</p>
+                    <p class="mb-2">Honorary Professor of Urban Forestry, University of British Columbia</p>
+                    <p class="mb-2">Director, Nature Based Solutions Institute</p>
+                    <p>📅 28 October 2025 | ISA Hong Kong International Conference</p>
+                </div>
+                <div class="flex flex-wrap gap-4 justify-center mt-8">
+                    <button onclick="scrollToContent()" class="px-8 py-4 bg-white text-green-800 rounded-full font-semibold hover:bg-green-50 transition shadow-lg">
+                        📖 Explore Strategies
+                    </button>
+                    <button onclick="openShareModal()" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-green-800 transition">
+                        📤 Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Tabs Navigation -->
+    <nav class="sticky-tabs" id="stickyTabs">
+        <div class="max-w-7xl mx-auto overflow-x-auto">
+            <div class="flex">
+                <button class="tab-button active" onclick="switchTab('overview')">🌍 Overview</button>
+                <button class="tab-button" onclick="switchTab('planning')">📋 Planning Cycle</button>
+                <button class="tab-button" onclick="switchTab('rule')">🎯 3-30-300 Rule</button>
+                <button class="tab-button" onclick="switchTab('strategies')">💡 Key Strategies</button>
+                <button class="tab-button" onclick="switchTab('impact')">📊 Global Impact</button>
+                <button class="tab-button" onclick="switchTab('resources')">📚 Resources</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tab Contents -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <section class="mb-12">
+                <h2 class="text-4xl font-bold mb-6 text-green-800">🌳 The Urban Forest Challenge</h2>
+                <div class="bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-xl mb-8 border-l-4 border-green-600">
+                    <p class="text-xl leading-relaxed mb-4">
+                        Trees are <span class="tooltip-trigger" data-tooltip="superheroes">superheroes</span> in our cities, yet we continue to lose tree canopy cover globally. Despite growing recognition of their benefits for health, climate adaptation, and livability, urban development threatens our green infrastructure.
+                    </p>
+                    <p class="text-xl leading-relaxed">
+                        The challenge: How do we move from ambitious visions to measurable, impactful action? How do we ensure trees become part and parcel of every strategic decision?
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="stat-box">
+                        <div class="text-4xl font-bold text-green-700 mb-2">70%</div>
+                        <p class="text-gray-700">of Dutch neighborhoods have insufficient green space access</p>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-4xl font-bold text-green-700 mb-2">12,000</div>
+                        <p class="text-gray-700">estimated premature deaths from heat in Tokyo summers</p>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-4xl font-bold text-green-700 mb-2">43,000</div>
+                        <p class="text-gray-700">lives could be saved annually in Europe with adequate canopy cover</p>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-bold mb-4 text-green-800">Key Conference Insights</h3>
+                <div class="space-y-4">
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🌍 Global Context: From COVID to Climate Crisis</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4">The last five years have brought dramatic changes: the COVID-19 pandemic revealed how essential visual and physical access to nature is for mental health. Volatile political times have challenged environmental priorities, yet research supporting urban forestry benefits has strengthened.</p>
+                        <p>Paradoxically, while evidence mounts, tree canopy cover continues declining in many cities worldwide. This makes strategic, evidence-based planning more critical than ever.</p>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🏛️ From Hollow Phrases to Real Action</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4">Cities increasingly adopt terms like "biophilic cities," "nature-positive," and "tree cities," but these risk becoming hollow political slogans without genuine commitment and funding.</p>
+                        <p>Dr. Konijnendijk emphasizes the need for concrete metrics, accountability frameworks, and financial resources to transform vision into measurable outcomes that truly enhance urban tree populations.</p>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🤝 The 12 C's of Urban Forestry Success</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Connection:</strong> Building relationships between people, trees, and nature</li>
+                            <li><strong>Collaboration:</strong> Working across departments, professions, and sectors</li>
+                            <li><strong>Community:</strong> Engaging residents in tree stewardship</li>
+                            <li><strong>Communication:</strong> Clear, compelling messaging about tree benefits</li>
+                            <li><strong>Clarity:</strong> Transparent goals and measurable targets</li>
+                            <li><strong>Competence:</strong> Professional training and certification (like ISA programs)</li>
+                            <li><strong>Creativity:</strong> Innovative solutions for urban tree challenges</li>
+                            <li><strong>Courage:</strong> Bold political and community leadership</li>
+                            <li><strong>Champions:</strong> Dedicated individuals driving change</li>
+                            <li><strong>Cash:</strong> Adequate funding for planting and maintenance</li>
+                            <li><strong>Context:</strong> Understanding local conditions and complexities</li>
+                            <li><strong>Celebrate:</strong> Recognizing trees as wonderful beings</li>
+                            <li><strong>Care:</strong> Nurturing people-tree relationships and urban forests</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Planning Cycle Tab -->
+        <div id="planning" class="tab-content">
+            <section class="mb-12">
+                <h2 class="text-4xl font-bold mb-6 text-green-800">📋 The Strategic Planning Cycle</h2>
+                <p class="text-xl mb-8 text-gray-700">Effective urban forestry strategies follow a proven four-step planning cycle that ensures continuous improvement and measurable impact.</p>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div class="rule-card">
+                        <div class="number-badge">1</div>
+                        <h3 class="text-2xl font-bold mb-4 text-center">Where Are We Now?</h3>
+                        <p class="mb-4"><strong>Building Trust & Understanding:</strong> Bring together diverse stakeholders from arboriculture, forestry, planning, architecture, and community groups. Establish common language and shared understanding.</p>
+                        <p class="mb-4"><strong>Gather Key Information:</strong></p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Current canopy cover and distribution</li>
+                            <li>Tree inventory and species diversity</li>
+                            <li>Heat mapping and vulnerability analysis</li>
+                            <li>Available resources and funding</li>
+                            <li>Existing policies and institutional frameworks</li>
+                        </ul>
+                        <div class="mt-4 p-4 bg-green-50 rounded">
+                            <p class="font-semibold mb-2">Example: Barcelona's Approach</p>
+                            <p class="text-sm">Barcelona created simple, accessible reports showing residents that each person has one tree citywide, or one tree per five people for municipal trees alone—making urban forestry tangible and relatable.</p>
+                        </div>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="number-badge">2</div>
+                        <h3 class="text-2xl font-bold mb-4 text-center">Where Do We Want to Go?</h3>
+                        <p class="mb-4"><strong>Bold Vision Setting:</strong> Create aspirational descriptions of your ideal urban forest 20-30 years ahead. Be ambitious while remaining realistic.</p>
+                        <p class="mb-4"><strong>Vision Elements:</strong></p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Clear statement of desired future state</li>
+                            <li>Benefits for all communities (health, climate, equity)</li>
+                            <li>Specific, measurable targets (canopy %, access metrics)</li>
+                            <li>Principles: proximity, connectivity, diversity, equity</li>
+                        </ul>
+                        <div class="mt-4 p-4 bg-green-50 rounded">
+                            <p class="font-semibold mb-2">Example: Singapore's Vision</p>
+                            <p class="text-sm">"By 2030, Singapore will be a green and beautiful city in nature, with 50% more land (200 hectares) for nature parks and every household within a 10-minute walk of a park."</p>
+                        </div>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="number-badge">3</div>
+                        <h3 class="text-2xl font-bold mb-4 text-center">How Do We Get There?</h3>
+                        <p class="mb-4"><strong>Implementation Planning:</strong> Develop detailed work plans with clear means, instruments, timelines, and responsible parties.</p>
+                        <p class="mb-4"><strong>Key Components:</strong></p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Specific actions for each target (planting, protection, maintenance)</li>
+                            <li>Resource allocation and funding sources</li>
+                            <li>Interdepartmental coordination (e.g., Trees for Seattle model)</li>
+                            <li>Policy integration with climate, health, biodiversity plans</li>
+                            <li>Communication strategies for public engagement</li>
+                        </ul>
+                        <div class="mt-4 p-4 bg-green-50 rounded">
+                            <p class="font-semibold mb-2">Example: Boston's Strategy</p>
+                            <p class="text-sm">Boston prioritizes protecting existing mature trees, recognizing they provide exponentially higher benefits than new plantings—focusing resources on care, not just planting numbers.</p>
+                        </div>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="number-badge">4</div>
+                        <h3 class="text-2xl font-bold mb-4 text-center">Have We Arrived?</h3>
+                        <p class="mb-4"><strong>Monitoring & Evaluation:</strong> Use clear metrics to track progress and demonstrate impact, ensuring accountability and continuous improvement.</p>
+                        <p class="mb-4"><strong>Measurement Tools:</strong></p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Annual canopy cover assessments (LiDAR, AI analysis)</li>
+                            <li>Tree equity scores and access mapping</li>
+                            <li>Heat reduction and air quality data</li>
+                            <li>Public accountability reports</li>
+                            <li>Benchmarking against other cities</li>
+                        </ul>
+                        <div class="mt-4 p-4 bg-green-50 rounded">
+                            <p class="font-semibold mb-2">Example: Malmö's Accountability</p>
+                            <p class="text-sm">Malmö (Sweden) publishes annual tree accountability reports with clear graphics showing canopy trends, distributed to all residents—making progress transparent and engaging.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-3 text-yellow-800">🔄 The Continuous Cycle</h3>
+                    <p class="text-gray-700">This isn't a one-time exercise. Effective urban forestry strategies revisit each step regularly, adapting to new challenges (like typhoons in Hong Kong), emerging research, and changing community needs. The cycle ensures strategies remain dynamic and responsive.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- 3-30-300 Rule Tab -->
+        <div id="rule" class="tab-content">
+            <section class="mb-12">
+                <h2 class="text-4xl font-bold mb-6 text-green-800">🎯 The 3-30-300 Rule</h2>
+                <div class="bg-gradient-to-br from-green-600 to-blue-600 text-white p-8 rounded-2xl mb-8 shadow-xl">
+                    <p class="text-2xl font-bold mb-4">A Simple Framework for Healthier, Greener Cities</p>
+                    <p class="text-lg opacity-90">Introduced by Dr. Konijnendijk during the COVID-19 pandemic (2021), this evidence-based guideline provides measurable targets for urban greening that directly correlate with health, climate resilience, and equity outcomes.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="rule-card bg-gradient-to-br from-green-50 to-green-100">
+                        <div class="number-badge">3</div>
+                        <h3 class="text-3xl font-bold mb-4 text-center text-green-800">Trees</h3>
+                        <p class="text-center text-lg mb-4">See at least <strong>3 mature trees</strong> from your home, workplace, or school</p>
+                        <div class="bg-white p-4 rounded mt-4">
+                            <p class="text-sm mb-2"><strong>🌳 Why It Matters:</strong></p>
+                            <p class="text-sm mb-3">Visual access to trees provides mental health benefits, reduces stress, improves concentration, and maintains connection to nature even when physical access is limited (as seen during COVID lockdowns).</p>
+                            <p class="text-sm mb-2"><strong>📍 Real Example:</strong></p>
+                            <p class="text-sm">Frederiksberg, Denmark adopted a policy ensuring every resident can see at least one tree from their home—achieving near 100% compliance and significantly improving wellbeing scores.</p>
+                        </div>
+                    </div>
+
+                    <div class="rule-card bg-gradient-to-br from-blue-50 to-blue-100">
+                        <div class="number-badge" style="background: linear-gradient(135deg, #2563eb, #60a5fa);">30</div>
+                        <h3 class="text-3xl font-bold mb-4 text-center text-blue-800">Percent</h3>
+                        <p class="text-center text-lg mb-4">Achieve at least <strong>30% tree canopy cover</strong> in your neighborhood</p>
+                        <div class="bg-white p-4 rounded mt-4">
+                            <p class="text-sm mb-2"><strong>🌡️ Why It Matters:</strong></p>
+                            <p class="text-sm mb-3">30% canopy cover is the threshold for significant cooling effects, air quality improvement, and health benefits. Studies show it can prevent thousands of premature deaths from heat and pollution.</p>
+                            <p class="text-sm mb-2"><strong>📊 Research Evidence:</strong></p>
+                            <p class="text-sm">European studies estimate that reaching 30% canopy could prevent 2,644 premature deaths annually from heat and pollution, plus 43,000 lives saved from improved cooling alone.</p>
+                        </div>
+                    </div>
+
+                    <div class="rule-card bg-gradient-to-br from-purple-50 to-purple-100">
+                        <div class="number-badge" style="background: linear-gradient(135deg, #7c3aed, #a78bfa);">300</div>
+                        <h3 class="text-3xl font-bold mb-4 text-center text-purple-800">Meters</h3>
+                        <p class="text-center text-lg mb-4">Live within <strong>300 meters</strong> of a high-quality, accessible green space</p>
+                        <div class="bg-white p-4 rounded mt-4">
+                            <p class="text-sm mb-2"><strong>🏃 Why It Matters:</strong></p>
+                            <p class="text-sm mb-3">This aligns with WHO recommendations for green space access. Proximity encourages regular use, supporting physical activity, social connection, mental restoration, and children's play.</p>
+                            <p class="text-sm mb-2"><strong>🌍 Global Adoption:</strong></p>
+                            <p class="text-sm">Cities like Nice (France), Bristol (UK), and Tokyo (Japan) have mapped 300-meter access zones, revealing equity gaps and guiding targeted park creation in underserved neighborhoods.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-bold mb-6 text-green-800">🔬 Scientific Foundation & Global Impact</h3>
+                <div class="space-y-4 mb-8">
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>📈 Evidence-Based Health Benefits</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4">Since the rule's introduction in 2021, numerous studies have validated its thresholds:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Cardiovascular Health:</strong> Higher canopy cover correlates with lower cardiovascular disease rates and improved blood pressure (Lancet Planetary Health, 2024)</li>
+                            <li><strong>Mental Wellbeing:</strong> Visual access to trees reduces anxiety, depression, and improves sleep quality</li>
+                            <li><strong>Birth Outcomes:</strong> Increased canopy associated with higher birth weights, a predictor of lifelong health</li>
+                            <li><strong>Mortality Reduction:</strong> Each percentage point of canopy increase yields measurable decreases in premature deaths from heat and pollution</li>
+                        </ul>
+                        <p class="mt-4 italic text-gray-600">Reference: Konijnendijk, C.C. (2023). "Evidence-based guidelines for greener, healthier, more resilient neighbourhoods: Introducing the 3–30–300 rule." Journal of Forestry Research.</p>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🌍 Political & Policy Adoption</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4">The rule's simplicity has driven remarkable political uptake:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Netherlands National Elections (2025):</strong> Five of 15 political parties incorporated the 3-30-300 rule into their platforms, making urban greening a national campaign issue</li>
+                            <li><strong>City Strategies:</strong> Nice (France), Strasbourg, Bristol (UK), and numerous others officially adopted it in master plans</li>
+                            <li><strong>Implementation Reports:</strong> Cities like Malmö publish annual progress reports with 3-30-300 compliance maps, increasing transparency and accountability</li>
+                            <li><strong>Global Recognition:</strong> Featured in WHO's 2023 "Urban Green Space and Health" intervention roadmap as a practical implementation framework</li>
+                        </ul>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🚧 Implementation Challenges & Solutions</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4">While aspirational, the rule faces real-world obstacles, particularly in dense cities:</p>
+                        <div class="mb-4">
+                            <p class="font-semibold mb-2">Challenge: Underground Infrastructure</p>
+                            <p class="mb-2">Cities like Tokyo cite subway systems, utilities, and building foundations as barriers to tree planting.</p>
+                            <p class="text-sm text-gray-600"><strong>Solution:</strong> Structural soil techniques, suspended pavement systems, and strategic species selection (smaller root systems) enable planting in constrained spaces.</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="font-semibold mb-2">Challenge: High-Density Housing</p>
+                            <p class="mb-2">In cities like Hong Kong with extreme vertical density, achieving 3 visible trees per residence is difficult.</p>
+                            <p class="text-sm text-gray-600"><strong>Solution:</strong> Vertical greening, rooftop forests, and strategic tree placement in sight corridors. Consider "quality over quantity" for visual access.</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="font-semibold mb-2">Challenge: Cultural Preferences</p>
+                            <p class="mb-2">Some communities (e.g., parts of Tokyo) resist large street trees due to mess, shade, or maintenance concerns.</p>
+                            <p class="text-sm text-gray-600"><strong>Solution:</strong> Community engagement, education on benefits, and participatory design processes. Offer maintenance support programs.</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-2">Challenge: Equity Distribution</p>
+                            <p class="mb-2">Research shows affluent neighborhoods often exceed targets while vulnerable areas fall short.</p>
+                            <p class="text-sm text-gray-600"><strong>Solution:</strong> Prioritize investments using tree equity scores, targeting underserved communities with heat vulnerability analysis and health outcome data.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🔗 Integration with Other Frameworks</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4">The 3-30-300 rule complements and enhances other urban planning concepts:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>15-Minute City:</strong> Fort Collins, Colorado is piloting integration where 300-meter green access aligns with the 15-minute neighborhood model, ensuring nature is part of daily life amenities</li>
+                            <li><strong>Biodiversity Net Gain (UK):</strong> The rule provides a measurable baseline for assessing whether development projects achieve mandated 10% biodiversity increases</li>
+                            <li><strong>Heat Action Plans:</strong> Cities use 30% canopy targets to prioritize cooling interventions in heat-vulnerable neighborhoods</li>
+                            <li><strong>WHO Green Space Recommendations:</strong> The 300-meter threshold directly implements WHO's proximity guidelines, providing a clear compliance metric</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-3 text-green-800">💡 Why This Matters for Hong Kong</h3>
+                    <p class="text-gray-700 mb-3">Following recent super typhoons, Hong Kong faces unique challenges in maintaining tree canopy. The 3-30-300 rule offers a resilience framework: prioritizing mature tree protection (the "3"), investing in canopy recovery post-storms (the "30"), and ensuring equitable green access across all districts (the "300").</p>
+                    <p class="text-gray-700">By adopting these metrics, Hong Kong can benchmark progress, justify funding for post-typhoon replanting, and demonstrate climate adaptation leadership in Asia's densest urban environment.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Key Strategies Tab -->
+        <div id="strategies" class="tab-content">
+            <section class="mb-12">
+                <h2 class="text-4xl font-bold mb-6 text-green-800">💡 Strategic Approaches for Impact</h2>
+                <p class="text-xl mb-8 text-gray-700">Based on global best practices, here are proven strategies that cities can implement to enhance urban forestry impact and move from vision to measurable action.</p>
+
+                <div class="space-y-6">
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🌲 Prioritize Mature Tree Protection Over New Plantings</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4"><strong>The Principle:</strong> Politicians love planting ceremonies and big numbers ("1 million trees!"), but mature trees provide exponentially higher benefits than saplings. A 50-year-old tree delivers 70x more ecosystem services than a newly planted one.</p>
+                        <div class="bg-blue-50 p-4 rounded mb-4">
+                            <p class="font-semibold mb-2">🌟 Boston's Leadership</p>
+                            <p class="text-sm">Boston's Urban Forest Master Plan explicitly states: "Mature trees provide exponentially higher benefits." Their Strategy 2 is "Proactively protect and care for existing trees"—prioritizing maintenance funding over planting budgets, a courageous stance in a political landscape that rewards visible new projects.</p>
+                        </div>
+                        <p class="mb-2"><strong>Implementation Actions:</strong></p>
+                        <ul class="list-disc pl-6 space-y-1 text-sm">
+                            <li>Conduct tree risk assessments focused on preservation, not removal</li>
+                            <li>Implement tree protection ordinances during construction</li>
+                            <li>Allocate at least 60% of tree budgets to maintenance vs. 40% to new planting</li>
+                            <li>Create heritage tree registries with enhanced legal protections</li>
+                            <li>Educate policymakers: shift metrics from "trees planted" to "canopy preserved/gained"</li>
+                        </ul>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🏫 Transform School Environments into Green Learning Hubs</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4"><strong>The Evidence:</strong> Research consistently shows that green school environments improve academic performance, reduce behavioral issues, enhance physical health, and foster environmental stewardship. Yet globally, school grounds are becoming more paved and less green.</p>
+                        <div class="bg-purple-50 p-4 rounded mb-4">
+                            <p class="font-semibold mb-2">🏙️ Barcelona, Paris, Rotterdam Examples</p>
+                            <p class="text-sm">These cities are actively "de-paving" schoolyards, replacing asphalt with trees, gardens, and natural play areas. Barcelona's program includes community access after school hours, turning schoolyards into neighborhood parks—a dual-benefit strategy addressing both education and the 300-meter access target.</p>
+                        </div>
+                        <p class="mb-2"><strong>Four High-Impact Interventions:</strong></p>
+                        <ol class="list-decimal pl-6 space-y-2 text-sm">
+                            <li><strong>Increase Canopy Cover:</strong> Every 1% increase correlates with better mental health, cardiovascular outcomes, and birth weights</li>
+                            <li><strong>Create Small Neighborhood Parks:</strong> Social hubs for intergenerational connection, play, and restoration</li>
+                            <li><strong>Establish Community Gardens:</strong> Food growing spaces build social inclusion and healthy eating habits</li>
+                            <li><strong>Green School Grounds:</strong> The most leveraged investment—children learn better, play more actively, and develop lifelong nature connections</li>
+                        </ol>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>⚖️ Advance Tree Equity Through Targeted Investments</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4"><strong>The Reality:</strong> Tree canopy is not equally distributed. Wealthier neighborhoods often have 40-50% canopy while low-income areas may have under 10%, creating "heat islands" and health disparities.</p>
+                        <div class="bg-red-50 p-4 rounded mb-4">
+                            <p class="font-semibold mb-2">📊 Tulsa's Gathering Place & Tree Equity Scores</p>
+                            <p class="text-sm mb-3">North American cities now use tree equity scores—algorithms combining canopy cover, income, race, health data, and heat vulnerability. Tulsa's Gathering Place park was designed with explicit equity goals: welcoming design for all communities, free programming, and transit access.</p>
+                            <p class="text-sm"><strong>Key Metric:</strong> A tree equity score of 100 means a neighborhood has ideal tree coverage for its population density and heat exposure. Scores below 80 trigger priority funding.</p>
+                        </div>
+                        <p class="mb-2"><strong>Implementation Framework:</strong></p>
+                        <ul class="list-disc pl-6 space-y-1 text-sm">
+                            <li>Calculate tree equity scores using publicly available tools (American Forests' platform)</li>
+                            <li>Map heat vulnerability overlaid with canopy deficits</li>
+                            <li>Prioritize 70% of planting/park budgets to lowest-scoring neighborhoods</li>
+                            <li>Ensure parks feel welcoming: culturally relevant design, safety features, community programming</li>
+                            <li>Track demographic usage patterns to verify equitable access</li>
+                        </ul>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🤝 Pool Resources Across Departments & Sectors</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4"><strong>The Challenge:</strong> Trees are managed by parks departments, but impacted by transportation (street trees), utilities (pruning conflicts), planning (development codes), and public works (stormwater). Siloed decision-making leads to inefficiency and tree loss.</p>
+                        <div class="bg-yellow-50 p-4 rounded mb-4">
+                            <p class="font-semibold mb-2">🌲 Seattle & Malmö Models</p>
+                            <p class="text-sm mb-3"><strong>Trees for Seattle:</strong> An informal coalition bringing together staff from parks, transportation, utilities, and planning for monthly coordination. They share budgets, align policies (e.g., joint street redesign/tree planting projects), and speak with one voice to City Council.</p>
+                            <p class="text-sm"><strong>Malmö's Integration:</strong> Sweden's Malmö similarly pools expertise, recognizing trees as cross-cutting infrastructure. Their annual accountability reports are co-signed by multiple department heads, reinforcing shared responsibility.</p>
+                        </div>
+                        <p class="mb-2"><strong>Creating Your Coalition:</strong></p>
+                        <ul class="list-disc pl-6 space-y-1 text-sm">
+                            <li>Convene quarterly inter-departmental tree summits</li>
+                            <li>Develop joint performance indicators (all departments accountable to canopy targets)</li>
+                            <li>Create pooled funding mechanisms (e.g., stormwater fees funding street tree planting)</li>
+                            <li>Establish a "tree advocate" role with cross-departmental authority</li>
+                            <li>Engage private sector: utilities, developers, businesses as partners (not adversaries)</li>
+                        </ul>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>📢 Communicate with Clarity & Accessibility</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4"><strong>The Power of Simplicity:</strong> Complex technical reports gather dust. Simple, visual, relatable metrics drive public engagement and political action.</p>
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div class="bg-green-50 p-4 rounded">
+                                <p class="font-semibold mb-2">Barcelona's "One Tree Per Person"</p>
+                                <p class="text-sm">Instead of "182,000 municipal trees across 102 km²," Barcelona says: "Every person has one tree" (counting all trees) or "one tree per five people" (city trees only). Instantly understandable, emotionally resonant.</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded">
+                                <p class="font-semibold mb-2">Melbourne & Toronto's Canopy Graphics</p>
+                                <p class="text-sm">Before/after aerial images, color-coded neighborhood maps, and "shadow studies" showing cooling effects make the case for funding far more effectively than spreadsheets.</p>
+                            </div>
+                        </div>
+                        <p class="mb-2"><strong>Communication Best Practices:</strong></p>
+                        <ul class="list-disc pl-6 space-y-1 text-sm">
+                            <li>Use human-scale metrics: trees per person, walking distance to parks, degrees of cooling</li>
+                            <li>Visualize progress: annual before/after photos, interactive maps, infographics</li>
+                            <li>Tell stories: profile individual trees, community tree stewards, health transformations</li>
+                            <li>Publish accountability reports: Malmö's model—simple, annual, distributed to all residents</li>
+                            <li>Leverage champions: residents, celebrities, local influencers advocating for trees</li>
+                        </ul>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🌍 Adapt Global Best Practices to Local Context</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-4"><strong>No One-Size-Fits-All:</strong> Riyadh (desert, <1% canopy) and Singapore (tropical, 50%+ green cover) face vastly different challenges. Strategies must respect climate, culture, governance, and resources.</p>
+                        <div class="bg-orange-50 p-4 rounded mb-4">
+                            <p class="font-semibold mb-2">🏜️ Riyadh's Billion-Dollar Gamble</p>
+                            <p class="text-sm mb-3">With summer temperatures hitting 50-55°C and under 1% canopy, Riyadh launched a multi-billion dollar greening initiative: 9% canopy target, 444 new parks, greening mosques and schools. They recruited Melbourne's urban forest expert Yvonne Lynch, who had 10 minutes to pitch to Crown Prince Mohammed bin Salman.</p>
+                            <p class="text-sm"><strong>Lesson:</strong> Even in extreme conditions, bold vision + political will + massive investment can work. But success requires hiring global expertise, investing in irrigation infrastructure, and selecting climate-appropriate species.</p>
+                        </div>
+                        <p class="mb-2"><strong>Contextual Adaptation Questions:</strong></p>
+                        <ul class="list-disc pl-6 space-y-1 text-sm">
+                            <li><strong>Climate:</strong> What species thrive here? Is water scarcity limiting? Do typhoons/hurricanes necessitate storm-resistant strategies?</li>
+                            <li><strong>Culture:</strong> Do communities value large trees or prefer open spaces? Are there religious/cultural tree significances to honor?</li>
+                            <li><strong>Governance:</strong> Is decision-making centralized (enabling rapid action like Singapore) or fragmented (requiring coalition-building like U.S. cities)?</li>
+                            <li><strong>Resources:</strong> Can we afford Riyadh-scale investment, or must we leverage volunteer labor (community tree planting programs)?</li>
+                            <li><strong>Density:</strong> In high-rise cities (Hong Kong), focus on vertical greening, rooftop forests, and strategic sight-line trees</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Global Impact Tab -->
+        <div id="impact" class="tab-content">
+            <section class="mb-12">
+                <h2 class="text-4xl font-bold mb-6 text-green-800">📊 Global Impact & Case Studies</h2>
+                <p class="text-xl mb-8 text-gray-700">From Vancouver to Tokyo, cities worldwide are implementing bold urban forestry strategies. Here are transformative examples showcasing what's possible when vision meets action.</p>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="rule-card">
+                        <h3 class="text-2xl font-bold mb-4 text-green-800">🇨🇦 Vancouver, Canada</h3>
+                        <p class="mb-3"><strong>Vision:</strong> "World's Greenest City by 2020"</p>
+                        <p class="mb-4 text-sm text-gray-600">Under Mayor Gregor Robertson, Vancouver set an audacious goal that mobilized the entire city around sustainability, with urban forestry as a cornerstone.</p>
+                        <div class="bg-green-50 p-4 rounded mb-3">
+                            <p class="font-semibold mb-2">Key Strategies:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li>Comprehensive urban forest strategy integrated with climate action plan</li>
+                                <li>22% canopy cover target (from 18% baseline)</li>
+                                <li>150,000 new trees planted by 2020</li>
+                                <li>Policy coherence: tree plans aligned with transportation, housing, climate goals</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm"><strong>Impact:</strong> While "greenest city" is subjective (Singapore might disagree!), the vision unified stakeholders and drove measurable progress. Canopy increased, green jobs grew 30%, and Vancouver became a global model for integrated sustainability planning.</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h3 class="text-2xl font-bold mb-4 text-green-800">🇸🇬 Singapore</h3>
+                        <p class="mb-3"><strong>Vision:</strong> "City in Nature" by 2030</p>
+                        <p class="mb-4 text-sm text-gray-600">Perhaps the world's most successful urban greening story, Singapore transformed from colonial port to "Garden City" through decades of sustained political commitment and innovation.</p>
+                        <div class="bg-green-50 p-4 rounded mb-3">
+                            <p class="font-semibold mb-2">Key Strategies:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li>50% more land (200 hectares) for nature parks by 2030</li>
+                                <li>Every household within 10-minute walk of a park (highly measurable!)</li>
+                                <li>Skyrise greenery incentive schemes (rooftop/vertical gardens on buildings)</li>
+                                <li>Strict tree protection laws: developers must replace removed trees at 2:1 ratio</li>
+                                <li>National Parks Board coordinates across all agencies</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm"><strong>Impact:</strong> Singapore's green cover increased from 36% (1986) to over 47% (2020s), despite being one of the world's most densely populated nations. Life expectancy, air quality, and livability rankings all top global charts.</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h3 class="text-2xl font-bold mb-4 text-green-800">🇬🇧 Birmingham, UK</h3>
+                        <p class="mb-3"><strong>Innovation:</strong> First British Urban Forest Master Plan</p>
+                        <p class="mb-4 text-sm text-gray-600">Dr. Konijnendijk helped Birmingham develop a comprehensive master plan during COVID, using virtual stakeholder engagement to craft a 20-year vision.</p>
+                        <div class="bg-green-50 p-4 rounded mb-3">
+                            <p class="font-semibold mb-2">Key Features:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li>Vision: "More trees for Birmingham delivering benefits for health, nature, and climate for all communities"</li>
+                                <li>Four guiding principles with 20-25 specific KPIs</li>
+                                <li>Each KPI on single sheet: current state, targets, actions, responsible parties, timeline, funding</li>
+                                <li>Explicit equity focus: benefits "for all communities, now and in the future"</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm"><strong>Impact:</strong> The master plan structure became a model for other UK cities. Birmingham's approach—granular action plans tied to measurable KPIs—addresses the common critique that tree strategies are "all vision, no action."</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h3 class="text-2xl font-bold mb-4 text-green-800">🇸🇦 Riyadh, Saudi Arabia</h3>
+                        <p class="mb-3"><strong>Challenge:</strong> From <1% Canopy to Livable Desert City</p>
+                        <p class="mb-4 text-sm text-gray-600">One of the world's hottest capitals (summer temps 50-55°C) with almost no natural tree cover faces an existential livability crisis as oil dependence declines and climate worsens.</p>
+                        <div class="bg-green-50 p-4 rounded mb-3">
+                            <p class="font-semibold mb-2">Ambitious Program:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li>Target: 9% canopy cover (from under 1%)—a 9x increase</li>
+                                <li>444 new parks across the metropolitan area</li>
+                                <li>Greening mosques, schools, and public buildings</li>
+                                <li>Billions in investment for irrigation infrastructure and tree procurement</li>
+                                <li>Recruited Melbourne's Yvonne Lynch to lead urban forest strategy</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm"><strong>Impact:</strong> Early stages, but already thousands of trees planted. The program demonstrates that even extreme climates can be transformed with sufficient political will and resources. Crown Prince MBS's 10-minute meeting with Lynch shows how executive support can unlock massive change.</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h3 class="text-2xl font-bold mb-4 text-green-800">🇺🇸 New York City, USA</h3>
+                        <p class="mb-3"><strong>Initiative:</strong> First Urban Biodiversity Strategy</p>
+                        <p class="mb-4 text-sm text-gray-600">Surprisingly, NYC—a planning leader—lacked a comprehensive biodiversity strategy until local nonprofits and professionals collaborated to fill the gap.</p>
+                        <div class="bg-green-50 p-4 rounded mb-3">
+                            <p class="font-semibold mb-2">Vision Statement:</p>
+                            <p class="text-sm mb-3">"Biological diversity and abundance must be intentionally woven into every aspect of New York City planning, governance, and life."</p>
+                            <p class="font-semibold mb-2">Key Elements:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li>Goal: Make NYC a global biodiversity leader</li>
+                                <li>Grassroots-driven strategy showing power of civil society</li>
+                                <li>Emphasizes integration across all city systems (not just parks)</li>
+                                <li>Dr. Konijnendijk wrote the preface, lending academic credibility</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm"><strong>Impact:</strong> While implementation is ongoing, the strategy signals a shift from trees as aesthetic amenities to trees as essential ecological infrastructure. The "every aspect" language mirrors Singapore's comprehensive approach.</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h3 class="text-2xl font-bold mb-4 text-green-800">🇯🇵 Tokyo, Japan</h3>
+                        <p class="mb-3"><strong>Challenge:</strong> Aging Population + Deadly Heat Waves</p>
+                        <p class="mb-4 text-sm text-gray-600">Tokyo's summers are increasingly lethal, with an estimated 12,000 premature deaths in recent heat waves—a crisis amplified by an aging populace vulnerable to heat stress.</p>
+                        <div class="bg-green-50 p-4 rounded mb-3">
+                            <p class="font-semibold mb-2">Mapping Gaps with 3-30-300:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li>Tokyo created rare 3-30-300 compliance maps revealing severe deficits</li>
+                                <li>Many streets lack large trees due to cultural preferences (dislike of mess) and underground infrastructure concerns</li>
+                                <li>High residential density makes achieving "3 visible trees" extremely difficult</li>
+                            </ul>
+                            <p class="font-semibold mb-2 mt-3">Potential Solutions:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li>Community education on tree benefits (cooling, longevity)</li>
+                                <li>Vertical greening on buildings</li>
+                                <li>Structural soil and suspended pavement for constrained planting spaces</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm"><strong>Impact:</strong> Tokyo's case shows that even the world's most advanced cities struggle with urban greening in ultra-dense contexts. The 3-30-300 framework made these gaps visible, catalyzing policy discussions.</p>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-bold mb-6 text-green-800">🌍 Additional Global Highlights</h3>
+                <div class="space-y-4">
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🇫🇷 Nice, France: 3-30-300 Implementation Leader</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-3">One of the first European cities to officially adopt the 3-30-300 rule into its urban plan. Nice mapped current compliance, identified gaps, and is systematically adding trees and small parks in deficit areas.</p>
+                        <p class="text-sm"><strong>Key Action:</strong> Created public-facing interactive maps showing which neighborhoods meet each threshold, with timelines for improvement. Transparency builds public support for tree budgets.</p>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🇸🇪 Malmö, Sweden: Annual Tree Accountability</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-3">Malmö publishes annual tree accountability reports with simple graphics showing canopy trends, distributed to all residents. This transparency model has been copied by cities worldwide.</p>
+                        <p class="text-sm"><strong>Innovation:</strong> Reports are co-signed by multiple department heads (parks, planning, transport), reinforcing shared responsibility and preventing siloed management.</p>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🇩🇰 Frederiksberg, Denmark: Every Home Sees a Tree</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-3">Frederiksberg (surrounded by Copenhagen) adopted a policy ensuring every resident can see at least one tree from their home. They achieved near-100% compliance through strategic street tree planting and courtyard greening.</p>
+                        <p class="text-sm"><strong>Lesson:</strong> Even in dense European cities, the "3 trees" target is achievable with political commitment and creative site solutions (e.g., shared courtyard trees counted for multiple residences).</p>
+                    </div>
+
+                    <div class="accordion-button" onclick="toggleAccordion(this)">
+                        <span>🇺🇸 Fort Collins, Colorado: Integrating 3-30-300 with 15-Minute City</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="mb-3">Fort Collins is piloting a project combining the 3-30-300 rule with Carlos Moreno's 15-Minute City concept, ensuring nature is integral to neighborhood-scale planning (not an afterthought).</p>
+                        <p class="text-sm"><strong>Why It Matters:</strong> The 15-Minute City typically focuses on shops, schools, services within a 15-minute walk—but often omits green space. This integration ensures parks and trees are core amenities alongside groceries and transit.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Resources Tab -->
+        <div id="resources" class="tab-content">
+            <section class="mb-12">
+                <h2 class="text-4xl font-bold mb-6 text-green-800">📚 Further Resources & References</h2>
+                
+                <div class="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-xl mb-8 border-l-4 border-blue-600">
+                    <h3 class="text-xl font-bold mb-3">🔬 Academic Foundations</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="font-semibold mb-1">Evidence-based guidelines for greener, healthier, more resilient neighbourhoods: Introducing the 3–30–300 rule</p>
+                            <p class="text-sm text-gray-600 mb-1">Cecil C. Konijnendijk (2023), Journal of Forestry Research</p>
+                            <a href="https://link.springer.com/article/10.1007/s11676-022-01523-z" target="_blank" class="text-blue-600 hover:underline text-sm">Read Paper →</a>
+                            <p class="text-sm mt-2 italic">This foundational paper details the 3-30-300 rule's evidence base, health benefits data, and implementation frameworks.</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-1">Associations of greenness with physical health among older adults</p>
+                            <p class="text-sm text-gray-600 mb-1">Haotian Wu et al. (2024), The Lancet Planetary Health</p>
+                            <a href="https://www.thelancet.com/journals/lanplh/article/PIIS2542-5196(24)00064-0/fulltext" target="_blank" class="text-blue-600 hover:underline text-sm">Read Study →</a>
+                            <p class="text-sm mt-2 italic">Quantifies how 30%+ canopy cover correlates with epigenetic health markers in aging populations.</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-1">Urban Green Space and Health: Intervention Research Roadmap</p>
+                            <p class="text-sm text-gray-600 mb-1">World Health Organization (2023)</p>
+                            <a href="https://www.who.int/publications/i/item/9789289055093" target="_blank" class="text-blue-600 hover:underline text-sm">Download Report →</a>
+                            <p class="text-sm mt-2 italic">WHO's official framework aligning with the 300-meter access guideline and providing policy implementation guidance.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-green-50 to-yellow-50 p-6 rounded-xl mb-8 border-l-4 border-green-600">
+                    <h3 class="text-xl font-bold mb-3">🌳 Practical Tools & Frameworks</h3>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <p class="font-semibold">i-Tree Suite</p>
+                            <p class="text-gray-700">Free software from USDA Forest Service for tree inventory, canopy analysis, and ecosystem service valuation.</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Tree Equity Score Tool</p>
+                            <p class="text-gray-700">American Forests' platform for calculating neighborhood-level tree equity, identifying underserved areas.</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">ISA Certification Programs</p>
+                            <p class="text-gray-700">International Society of Arboriculture offers professional credentials ensuring competent tree care and management.</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Biodiversity Net Gain Calculator (UK)</p>
+                            <p class="text-gray-700">Metric for ensuring development projects achieve mandated 10% biodiversity increases.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl mb-8 border-l-4 border-purple-600">
+                    <h3 class="text-xl font-bold mb-3">📖 Recommended Reading</h3>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <p class="font-semibold mb-1">"Community Trees: A Handbook for Local Action"</p>
+                            <p class="text-gray-700">Dan Lambe, Arbor Day Foundation - practical guide for residents to advocate for urban trees</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-1">Dr. Konijnendijk's 12 C's Framework</p>
+                            <p class="text-gray-700">From his book detailing Connection, Collaboration, Community, Communication, Clarity, Competence, Creativity, Courage, Champions, Cash, Context, Celebrate, and Care</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-xl border-l-4 border-orange-600">
+                    <h3 class="text-xl font-bold mb-3">🌐 City Strategy Examples</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="font-semibold mb-2">Available Online:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Birmingham Urban Forest Master Plan (UK)</li>
+                                <li>Vancouver's Greenest City 2020 Action Plan</li>
+                                <li>Singapore's City in Nature vision documents</li>
+                                <li>Boston Urban Forest Plan</li>
+                                <li>New York City Biodiversity Strategy</li>
+                                <li>Barcelona Green Infrastructure Plan</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-2">Key Features to Study:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Vision statements (bold yet measurable)</li>
+                                <li>KPI frameworks (specific targets, timelines)</li>
+                                <li>Governance structures (inter-departmental coordination)</li>
+                                <li>Community engagement strategies</li>
+                                <li>Funding mechanisms and budgets</li>
+                                <li>Monitoring/reporting protocols</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-xl mt-8">
+                    <h3 class="text-xl font-bold mb-3">🎓 About Dr. Cecil Konijnendijk</h3>
+                    <p class="text-sm mb-3">Dr. Konijnendijk is Honorary Professor of Urban Forestry at the University of British Columbia and Director of the Nature Based Solutions Institute. With 32 years in urban forestry research and practice, he has advised cities worldwide on strategic tree planning.</p>
+                    <p class="text-sm mb-3">He developed the 3-30-300 rule during the COVID-19 pandemic (2021) to provide a simple, evidence-based framework for urban greening. The rule has since been adopted by thousands of cities globally and incorporated into national political platforms.</p>
+                    <p class="text-sm italic">"Let there never be a curtain drawn between you and me." - Robert Frost (Dr. Konijnendijk's guiding quote on human-tree relationships)</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Floating Tooltip Box -->
+    <div id="tooltipBox" class="tooltip-box">
+        <button onclick="closeTooltip()" class="float-right text-gray-500 hover:text-gray-700 font-bold text-xl">&times;</button>
+        <div id="tooltipContent"></div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-green-800">📤 Share This Resource</h3>
+                <button onclick="closeShareModal()" class="text-gray-500 hover:text-gray-700 font-bold text-2xl">&times;</button>
+            </div>
+            <p class="mb-4 text-gray-700">Help spread the word about sustainable urban forestry strategies!</p>
+            <div class="space-y-3">
+                <button onclick="shareVia('twitter')" class="w-full px-4 py-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition font-semibold">
+                    Share on Twitter/X
+                </button>
+                <button onclick="shareVia('linkedin')" class="w-full px-4 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold">
+                    Share on LinkedIn
+                </button>
+                <button onclick="shareVia('email')" class="w-full px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-semibold">
+                    Share via Email
+                </button>
+                <button onclick="copyLink()" class="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold">
+                    Copy Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <p class="text-xs text-gray-600">Generated by LLM with supervision by <a href="../index.html" class="text-green-600 hover:underline font-semibold">benjaminficusmicrocarpa</a></p>
+        <p class="text-xs text-gray-500 mt-1"><a href="../license.html" class="hover:underline">MIT License</a></p>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Scroll to tabs
+            document.getElementById('stickyTabs').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Accordion functionality
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('span:last-child');
+            
+            // Close all other accordions in the same section
+            const allButtons = button.parentElement.querySelectorAll('.accordion-button');
+            const allContents = button.parentElement.querySelectorAll('.accordion-content');
+            
+            allButtons.forEach(btn => {
+                if (btn !== button) {
+                    btn.classList.remove('active');
+                    btn.querySelector('span:last-child').textContent = '+';
+                }
+            });
+            
+            allContents.forEach(cont => {
+                if (cont !== content) {
+                    cont.classList.remove('active');
+                }
+            });
+            
+            // Toggle current accordion
+            button.classList.toggle('active');
+            content.classList.toggle('active');
+            icon.textContent = button.classList.contains('active') ? '−' : '+';
+        }
+
+        // Tooltip functionality
+        const tooltips = {
+            'superheroes': 'Trees provide numerous ecosystem services: cooling (up to 5°C temperature reduction), air purification (filtering particulates and CO2), stormwater management, biodiversity habitat, mental health benefits, and property value increases. Their combined impact makes them essential urban infrastructure.'
+        };
+
+        document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tooltipKey = this.dataset.tooltip;
+                const tooltipBox = document.getElementById('tooltipBox');
+                const tooltipContent = document.getElementById('tooltipContent');
+                
+                tooltipContent.innerHTML = `
+                    <h4 class="font-bold text-green-800 mb-2">${this.textContent}</h4>
+                    <p class="text-sm text-gray-700">${tooltips[tooltipKey]}</p>
+                `;
+                
+                tooltipBox.classList.add('active');
+            });
+        });
+
+        function closeTooltip() {
+            document.getElementById('tooltipBox').classList.remove('active');
+        }
+
+        // Modal functionality
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('active');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('active');
+        }
+
+        // Share functions
+        function shareVia(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Urban Forestry Strategies: Making a Real Difference - Dr. Cecil Konijnendijk');
+            
+            let shareUrl;
+            switch(platform) {
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'email':
+                    shareUrl = `mailto:?subject=${text}&body=Check out this resource: ${url}`;
+                    break;
+            }
+            
+            window.open(shareUrl, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copied to clipboard! 📋');
+            });
+        }
+
+        // Smooth scroll to content
+        function scrollToContent() {
+            document.getElementById('stickyTabs').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('shareModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareModal();
+            }
+        });
+
+        // Close tooltip when clicking outside
+        document.addEventListener('click', function(e) {
+            const tooltipBox = document.getElementById('tooltipBox');
+            const isTooltipTrigger = e.target.classList.contains('tooltip-trigger');
+            const isInsideTooltip = tooltipBox.contains(e.target);
+            
+            if (!isTooltipTrigger && !isInsideTooltip && tooltipBox.classList.contains('active')) {
+                closeTooltip();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeTooltip();
+                closeShareModal();
+            }
+        });
+
+        // Print optimization
+        window.addEventListener('beforeprint', function() {
+            // Expand all accordions for printing
+            document.querySelectorAll('.accordion-content').forEach(content => {
+                content.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Water Management for Trees with IoT Sensors | Dr. Andrew Hirons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, #f0f9ff, #e0f2fe);
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .header-bg {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0c4a6e 0%, #075985 50%, #0e7490 100%);
+        }
+        
+        .header-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(12, 74, 110, 0.7), rgba(7, 89, 133, 0.85));
+            z-index: 1;
+        }
+        
+        .header-carousel {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        
+        .carousel-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            animation: kenBurns 20s ease-in-out infinite;
+        }
+        
+        .carousel-image.active {
+            opacity: 0.4;
+        }
+        
+        @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-2%, -2%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+        
+        .tab-container {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-button {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button:hover {
+            color: #0c4a6e;
+            background: #f1f5f9;
+        }
+        
+        .tab-button.active {
+            color: #0c4a6e;
+            border-bottom-color: #0c4a6e;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .accordion-item {
+            background: white;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-item:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .accordion-header {
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, #f8fafc, #ffffff);
+            transition: background 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: linear-gradient(to right, #f1f5f9, #f8fafc);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: #0c4a6e;
+            font-size: 1.25rem;
+        }
+        
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .accordion-item.open .accordion-content {
+            max-height: 5000px;
+        }
+        
+        .tooltip-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 100;
+            max-width: 320px;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            padding: 1.25rem;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        
+        .tooltip-container.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+        
+        .tooltip-term {
+            color: #0c4a6e;
+            font-weight: 600;
+            cursor: help;
+            border-bottom: 2px dotted #0c4a6e;
+            transition: all 0.2s ease;
+        }
+        
+        .tooltip-term:hover {
+            color: #075985;
+            border-bottom-color: #075985;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 0.875rem;
+            max-width: 60px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 150;
+        }
+        
+        .attribution-badge:hover {
+            max-width: 400px;
+        }
+        
+        .attribution-short {
+            display: block;
+        }
+        
+        .attribution-full {
+            display: none;
+        }
+        
+        .attribution-badge:hover .attribution-short {
+            display: none;
+        }
+        
+        .attribution-badge:hover .attribution-full {
+            display: block;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 1.5rem 0;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .data-table th {
+            background: linear-gradient(to right, #0c4a6e, #075985);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .data-table td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .data-table tr:hover {
+            background: #f8fafc;
+        }
+        
+        .emoji-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-bg {
+                height: 70vh;
+                min-height: 500px;
+            }
+            
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .tooltip-container {
+                position: fixed;
+                top: auto;
+                bottom: 80px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+            
+            .attribution-badge {
+                max-width: none;
+                width: calc(100% - 40px);
+                left: 20px;
+            }
+            
+            .attribution-badge .attribution-short {
+                display: none;
+            }
+            
+            .attribution-badge .attribution-full {
+                display: block;
+            }
+        }
+        
+        @media print {
+            .tab-container, .tooltip-container, .modal, .attribution-badge {
+                display: none !important;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+            
+            .accordion-content {
+                max-height: none !important;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-bg">
+        <div class="header-carousel" role="img" aria-label="Background carousel showing urban trees and IoT sensors">
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1920&h=1080&fit=crop" alt="Urban trees in cityscape" class="carousel-image active">
+            <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1920&h=1080&fit=crop" alt="Tree roots and soil" class="carousel-image">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop" alt="Technology and nature integration" class="carousel-image">
+        </div>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg">🌳 Smart Water Management for Trees with IoT Sensors</h1>
+                <div class="text-xl md:text-2xl mb-4 font-light">
+                    <span class="emoji-icon">👨‍🏫</span>Dr. Andrew Hirons
+                </div>
+                <div class="text-lg md:text-xl mb-2 opacity-90">
+                    Senior Lecturer in Arboriculture, University Centre Myerscough, UK
+                </div>
+                <div class="text-base md:text-lg mb-8 opacity-80">
+                    <span class="emoji-icon">📅</span>28 Oct 2025 | ISA Hong Kong Chapter - International Conference 2025
+                </div>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="index.html" class="inline-flex items-center px-6 py-3 bg-white text-sky-900 rounded-lg font-semibold hover:bg-sky-50 transition-all shadow-lg hover:shadow-xl">
+                        <span class="mr-2">📋</span> View All Sessions
+                    </a>
+                    <button onclick="openShareModal()" class="inline-flex items-center px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-600 transition-all shadow-lg hover:shadow-xl">
+                        <span class="mr-2">📤</span> Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="tab-container">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex overflow-x-auto">
+                <button class="tab-button active" onclick="switchTab(0)">
+                    <span class="emoji-icon">🎯</span> Overview
+                </button>
+                <button class="tab-button" onclick="switchTab(1)">
+                    <span class="emoji-icon">💧</span> Water Fundamentals
+                </button>
+                <button class="tab-button" onclick="switchTab(2)">
+                    <span class="emoji-icon">🏙️</span> Urban Challenges
+                </button>
+                <button class="tab-button" onclick="switchTab(3)">
+                    <span class="emoji-icon">📊</span> Research & Data
+                </button>
+                <button class="tab-button" onclick="switchTab(4)">
+                    <span class="emoji-icon">🔧</span> Practical Solutions
+                </button>
+                <button class="tab-button" onclick="switchTab(5)">
+                    <span class="emoji-icon">📚</span> Key Takeaways
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Floating Tooltip -->
+    <div id="tooltip" class="tooltip-container" role="tooltip">
+        <button onclick="closeTooltip()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold" aria-label="Close tooltip">×</button>
+        <h3 id="tooltip-term" class="text-lg font-bold text-sky-900 mb-2"></h3>
+        <p id="tooltip-definition" class="text-sm text-gray-700"></p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <!-- Tab 1: Overview -->
+        <div class="tab-content active">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-sky-900 mb-6">
+                    <span class="emoji-icon">🎯</span> Conference Overview
+                </h2>
+                <div class="prose max-w-none">
+                    <p class="text-lg leading-relaxed mb-4">
+                        One of the greatest sources of tree mortality in the urban landscape is drought, or water deficit. Therefore, water management in urban landscapes is critical for tree establishment and ongoing tree performance.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-4">
+                        This presentation explores how site characteristics can influence water availability and how the use of <span class="tooltip-term" onclick="showTooltip('IoT Sensors', 'Internet of Things sensors that collect real-time environmental data such as soil moisture, tree growth (dendrometers), and water movement (sap flow). These devices enable precise monitoring and data-driven management of urban trees.')">IoT sensors</span> (such as soil moisture, dendrometers and sap flow) can be used to help inform water management strategies and help to understand tree stress trajectories.
+                    </p>
+                    <div class="bg-sky-50 border-l-4 border-sky-600 p-6 rounded-r-lg mt-6">
+                        <h3 class="text-xl font-bold text-sky-900 mb-3">
+                            <span class="emoji-icon">👨‍🏫</span> About the Speaker
+                        </h3>
+                        <p class="text-gray-700">
+                            Andrew is a Senior Lecturer in Arboriculture at University Centre Myerscough, UK. He teaches modules relating to tree biology, tree establishment and tree management. His current research activity is motivated by the need to create resilience in our urban forests and is focused on using plant traits to inform species selection for urban environments. A further interest is in the role of sensors to inform tree management and provide more robust evidence for tree management practices. He is co-author of <em>Applied Tree Biology</em> (Wiley-Blackwell) and <em>Tree Selection for Green Infrastructure</em> (Trees and Design Action Group) as well as numerous academic papers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Statistics Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-gradient-to-br from-sky-500 to-sky-700 text-white rounded-xl p-6 shadow-lg">
+                    <div class="text-4xl mb-2">💧</div>
+                    <div class="text-3xl font-bold mb-2">70-95%</div>
+                    <div class="text-sm opacity-90">Water content in non-woody tree tissues</div>
+                </div>
+                <div class="bg-gradient-to-br from-emerald-500 to-emerald-700 text-white rounded-xl p-6 shadow-lg">
+                    <div class="text-4xl mb-2">🌍</div>
+                    <div class="text-3xl font-bold mb-2">Global Impact</div>
+                    <div class="text-sm opacity-90">More water moves through trees than rivers worldwide</div>
+                </div>
+                <div class="bg-gradient-to-br from-amber-500 to-amber-700 text-white rounded-xl p-6 shadow-lg">
+                    <div class="text-4xl mb-2">🔬</div>
+                    <div class="text-3xl font-bold mb-2">IoT Innovation</div>
+                    <div class="text-sm opacity-90">Real-time sensors transforming tree care</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Water Fundamentals -->
+        <div class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-sky-900 mb-6">
+                    <span class="emoji-icon">💧</span> The Critical Role of Water
+                </h2>
+                
+                <div class="accordion-item open">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🧬</span> Water in Tree Physiology
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Water is fundamental to every aspect of tree biology and function:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                                <li><strong>Structural component:</strong> 70-95% of non-woody tissue and ~50% of wood</li>
+                                <li><strong>Photosynthesis substrate:</strong> Essential for splitting water to release oxygen</li>
+                                <li><strong>Transport medium:</strong> Solvent for gases, minerals, and growth regulators</li>
+                                <li><strong>Nutrient acquisition:</strong> Critical for mineral uptake from soil</li>
+                            </ul>
+                            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+                                <p class="text-sm text-amber-900">
+                                    <strong>⚠️ Important:</strong> Only 1-5% of water absorbed by trees is retained in biomass—the rest is transpired to the atmosphere!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🌡️</span> Atmospheric Demand & Vapor Pressure Deficit
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                The atmosphere exerts a powerful "suction force" on trees through <span class="tooltip-term" onclick="showTooltip('Vapor Pressure Deficit (VPD)', 'The difference between the amount of moisture in the air and how much moisture the air can hold when saturated. Higher VPD means drier air and greater atmospheric demand for water from trees.')">vapor pressure deficit (VPD)</span>. This demand varies throughout the day:
+                            </p>
+                            <div class="chart-container">
+                                <h4 class="font-semibold mb-3 text-gray-800">Daily Atmospheric Demand Pattern</h4>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm text-gray-600">🌅 Morning (low VPD)</span>
+                                            <span class="text-sm font-semibold text-gray-800">High humidity</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-emerald-500 h-3 rounded-full" style="width: 30%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm text-gray-600">☀️ Midday (high VPD)</span>
+                                            <span class="text-sm font-semibold text-gray-800">Peak demand</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-red-500 h-3 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm text-gray-600">🌙 Night (low VPD)</span>
+                                            <span class="text-sm font-semibold text-gray-800">Minimal demand</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-blue-500 h-3 rounded-full" style="width: 15%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-4 text-gray-700">
+                                Air water potential can easily drop below <strong>-100 MPa</strong>, creating an enormous gradient that pulls water from the tree. Sap flow mirrors this atmospheric demand with fine temporal resolution.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">⚡</span> Hydraulic Failure & Embolism
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                As water stress increases, air can enter the <span class="tooltip-term" onclick="showTooltip('Xylem Vessels', 'Specialized cells in wood that form tubes for water transport from roots to leaves. When air enters these vessels (embolism), they lose conductivity and can no longer transport water.')">xylem vessels</span> through a process called <span class="tooltip-term" onclick="showTooltip('Embolism', 'The formation of air bubbles in xylem vessels that blocks water transport. This occurs when water tension becomes too great during drought, causing the water column to break and air to be pulled in.')">embolism</span>. This progressively blocks water transport:
+                            </p>
+                            <div class="chart-container bg-gradient-to-r from-blue-50 to-red-50">
+                                <h4 class="font-semibold mb-4 text-gray-800">Vulnerability Curve: Loss of Conductivity</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                                    <div class="bg-blue-100 p-4 rounded-lg">
+                                        <div class="text-3xl mb-2">✅</div>
+                                        <div class="font-bold text-blue-900 mb-1">0% Loss</div>
+                                        <div class="text-sm text-gray-700">All vessels conducting</div>
+                                        <div class="text-xs text-gray-600 mt-2">Normal water potential</div>
+                                    </div>
+                                    <div class="bg-amber-100 p-4 rounded-lg">
+                                        <div class="text-3xl mb-2">⚠️</div>
+                                        <div class="font-bold text-amber-900 mb-1">50% Loss (Ψ₅₀)</div>
+                                        <div class="text-sm text-gray-700">Half vessels embolized</div>
+                                        <div class="text-xs text-gray-600 mt-2">Critical threshold</div>
+                                    </div>
+                                    <div class="bg-red-100 p-4 rounded-lg">
+                                        <div class="text-3xl mb-2">❌</div>
+                                        <div class="font-bold text-red-900 mb-1">100% Loss</div>
+                                        <div class="text-sm text-gray-700">Complete hydraulic failure</div>
+                                        <div class="text-xs text-gray-600 mt-2">Tree mortality</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-4 text-gray-700">
+                                This loss of hydraulic connection between roots and leaves is a major driver of drought-induced tree death, often visible as crown dieback and thinning foliage.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Urban Challenges -->
+        <div class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-sky-900 mb-6">
+                    <span class="emoji-icon">🏙️</span> Urban Tree Drought Stress
+                </h2>
+
+                <div class="accordion-item open">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🌆</span> The Urban Heat Island Effect
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Urban environments create unique and intensified challenges for tree water relations. Dr. Hirons illustrated this with a natural example from Wales—trees on shallow soils died during drought while those with deeper root access survived.
+                            </p>
+                            <div class="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-lg mb-4">
+                                <p class="text-gray-800">
+                                    <strong>🔍 Key Insight:</strong> "This is almost like a microcosm of an urban to rural gradient. Trees in really small rooting environments have much greater acceleration of water stress and may tip over into mortality."
+                                </p>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                                    <h4 class="font-semibold text-red-900 mb-2">⚠️ Urban Stressors</h4>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Compacted soils limit water infiltration</li>
+                                        <li>• Impervious surfaces (>75%) accelerate stress</li>
+                                        <li>• Small planting pits restrict root growth</li>
+                                        <li>• Heat reflection increases water demand</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-emerald-50 p-4 rounded-lg border-l-4 border-emerald-500">
+                                    <h4 class="font-semibold text-emerald-900 mb-2">✅ Natural Advantages</h4>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Deep, uncompacted soil volumes</li>
+                                        <li>• Natural water infiltration and retention</li>
+                                        <li>• Cooler ambient temperatures</li>
+                                        <li>• Greater hydraulic resilience</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">📉</span> 2022 UK Drought: A Case Study
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                In August 2022, southern and eastern UK experienced severe drought. Dr. Hirons shared dramatic evidence of the crisis:
+                            </p>
+                            <div class="bg-amber-50 p-4 rounded-lg mb-4">
+                                <div class="flex items-start">
+                                    <span class="text-3xl mr-3">🪨</span>
+                                    <div>
+                                        <h4 class="font-semibold text-amber-900 mb-2">The Hunger Stone Warning</h4>
+                                        <p class="text-sm text-gray-700">
+                                            A stone submerged beneath the Elbe River was exposed, carved 400 years ago with: <em>"If you can see me, weep."</em> This historical marker warned of crop failure and mass starvation when rivers dried.
+                                        </p>
+                                        <p class="text-xs text-gray-600 mt-2 italic">
+                                            "For me, this was more impactful than newspaper headlines about heat records."
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <h4 class="font-semibold mb-3 text-gray-800">Impact Severity by Region</h4>
+                                <div class="space-y-2">
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm">Southeast England (London)</span>
+                                            <span class="text-sm font-semibold text-red-700">Severe</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-red-600 h-3 rounded-full" style="width: 95%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm">Eastern England</span>
+                                            <span class="text-sm font-semibold text-orange-700">High</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-orange-500 h-3 rounded-full" style="width: 80%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm">Northwest England</span>
+                                            <span class="text-sm font-semibold text-yellow-700">Moderate</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-yellow-500 h-3 rounded-full" style="width: 40%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">💀</span> Mechanisms of Tree Mortality
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Dr. Hirons presented research from Nate McDowell's team identifying two interconnected pathways to death:
+                            </p>
+                            
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mechanism</th>
+                                        <th>Description</th>
+                                        <th>Timeline</th>
+                                        <th>Evidence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-semibold">🚰 Hydraulic Failure</td>
+                                        <td>Progressive loss of water transport due to embolism</td>
+                                        <td class="text-red-700 font-semibold">Early stage</td>
+                                        <td>Crown thinning, vessel blockage</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">🍬 Carbon Starvation</td>
+                                        <td>Depletion of energy reserves as photosynthesis shuts down</td>
+                                        <td class="text-amber-700 font-semibold">Late stage</td>
+                                        <td>NSC depletion in roots/stems</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-blue-900 mb-2">🔗 Interconnection</h4>
+                                    <p class="text-sm text-gray-700">
+                                        Trees can't move sugars (carbon) without water as the transport medium. Hydraulic failure accelerates carbon starvation by cutting off sugar distribution.
+                                    </p>
+                                </div>
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-purple-900 mb-2">🦠 Biotic Amplifiers</h4>
+                                    <p class="text-sm text-gray-700">
+                                        Fungi and pathogens attacking fine roots accelerate hydraulic failure, while pest damage increases metabolic demand when carbon is already scarce.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="bg-red-50 border-l-4 border-red-600 p-4 rounded-r-lg mt-4">
+                                <p class="text-sm text-red-900">
+                                    <strong>⚠️ Critical Finding:</strong> Research across 26 diverse species shows <strong>hydraulic failure is a more ubiquitous driver of tree mortality than carbon depletion alone</strong>, though they work in tandem.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🌍</span> Global Forest Mortality Crisis
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Tree mortality is not confined to one region—it's a global phenomenon crossing biomes and continents:
+                            </p>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                                <div class="bg-gray-100 p-3 rounded text-center">
+                                    <div class="text-2xl mb-1">🌎</div>
+                                    <div class="text-sm font-semibold">Americas</div>
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded text-center">
+                                    <div class="text-2xl mb-1">🌍</div>
+                                    <div class="text-sm font-semibold">Europe</div>
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded text-center">
+                                    <div class="text-2xl mb-1">🌍</div>
+                                    <div class="text-sm font-semibold">Africa</div>
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded text-center">
+                                    <div class="text-2xl mb-1">🌏</div>
+                                    <div class="text-sm font-semibold">Asia</div>
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded text-center">
+                                    <div class="text-2xl mb-1">🌏</div>
+                                    <div class="text-sm font-semibold">Australasia</div>
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded text-center">
+                                    <div class="text-2xl mb-1">🌲</div>
+                                    <div class="text-sm font-semibold">All Biomes</div>
+                                </div>
+                            </div>
+
+                            <div class="chart-container bg-gradient-to-br from-orange-50 to-red-50">
+                                <h4 class="font-semibold mb-3 text-gray-800">Urban Tree Climate Vulnerability</h4>
+                                <p class="text-sm text-gray-600 mb-4">Projected mean annual temperature increases threaten urban forests globally:</p>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm">North America 🌎</span>
+                                            <span class="text-sm font-semibold">+2.0-3.0°C</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-orange-500 h-3 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm">Europe 🌍</span>
+                                            <span class="text-sm font-semibold">+2.0-2.5°C</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-orange-600 h-3 rounded-full" style="width: 65%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="text-sm">Asia 🌏</span>
+                                            <span class="text-sm font-semibold">~+2.0°C</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-3">
+                                            <div class="bg-red-500 h-3 rounded-full" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-600 mt-3">
+                                    ⚠️ Temperature increases drive higher VPD (atmospheric water demand), exacerbating drought stress in cities with limited tree diversity.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Research & Data -->
+        <div class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-sky-900 mb-6">
+                    <span class="emoji-icon">📊</span> IoT Sensors & Sap Flow Research
+                </h2>
+
+                <div class="accordion-item open">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🌊</span> Understanding Sap Flow
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Dr. Hirons demonstrated how sap flow measurement provides unprecedented insight into tree water use. The technique uses the <strong>heat ratio method</strong> for its superior accuracy:
+                            </p>
+                            
+                            <div class="bg-blue-50 p-5 rounded-lg mb-4">
+                                <h4 class="font-semibold text-blue-900 mb-3">🔬 How It Works</h4>
+                                <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700">
+                                    <li><strong>Three probes</strong> are inserted into the tree: one heater and two temperature sensors (upstream and downstream)</li>
+                                    <li>A <strong>heat pulse</strong> is introduced into the sapwood</li>
+                                    <li>The <strong>ratio of heat arrival times</strong> at upstream vs. downstream probes indicates sap velocity</li>
+                                    <li>No movement = heat reaches both probes simultaneously; upward flow = downstream probe heats faster</li>
+                                    <li>Data is corrected for small wounding and converted to <span class="tooltip-term" onclick="showTooltip('Sap Flux Density', 'The volume of water moving through a unit area of sapwood per unit time, typically measured in liters per square meter per hour.')">sap flux density</span></li>
+                                </ol>
+                            </div>
+
+                            <div class="chart-container">
+                                <h4 class="font-semibold mb-3 text-gray-800">Sap Flow Mirrors Atmospheric Demand</h4>
+                                <p class="text-sm text-gray-600 mb-3">Fine-resolution data (every 10 minutes) reveals how tree water use tracks VPD:</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gradient-to-r from-blue-100 to-sky-100 p-4 rounded-lg">
+                                        <div class="font-semibold text-sky-900 mb-2">🌡️ High VPD Day</div>
+                                        <div class="text-xs text-gray-700 mb-2">Warm, dry conditions</div>
+                                        <div class="w-full bg-white rounded-full h-4 mb-1">
+                                            <div class="bg-sky-600 h-4 rounded-full flex items-center justify-end pr-2" style="width: 85%">
+                                                <span class="text-xs text-white font-semibold">High flow</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gradient-to-r from-gray-100 to-slate-100 p-4 rounded-lg">
+                                        <div class="font-semibold text-slate-900 mb-2">🌧️ Wet Day</div>
+                                        <div class="text-xs text-gray-700 mb-2">Cool, humid conditions</div>
+                                        <div class="w-full bg-white rounded-full h-4 mb-1">
+                                            <div class="bg-slate-500 h-4 rounded-full flex items-center justify-end pr-2" style="width: 25%">
+                                                <span class="text-xs text-white font-semibold">Low</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-600 mt-3 italic">
+                                    💡 "You can read the weather based on sap flow—I can tell when it rained, how long it rained, which were the cool days, which were the warm days."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">📡</span> Real-Time IoT Dashboards
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Modern sensors transmit data to cloud-based dashboards, enabling instant decision-making. Dr. Hirons' work with tree growers showcased the power of this technology:
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="bg-emerald-50 p-4 rounded-lg border-l-4 border-emerald-500">
+                                    <h4 class="font-semibold text-emerald-900 mb-2">🌊 Sap Flow</h4>
+                                    <p class="text-xs text-gray-700">Real-time flux density showing diurnal cycles and stress responses</p>
+                                </div>
+                                <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                                    <h4 class="font-semibold text-blue-900 mb-2">📏 Dendrometers</h4>
+                                    <p class="text-xs text-gray-700">Stem expansion/contraction indicating water status and growth</p>
+                                </div>
+                                <div class="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500">
+                                    <h4 class="font-semibold text-amber-900 mb-2">🌡️ Weather</h4>
+                                    <p class="text-xs text-gray-700">Temperature, humidity, VPD—geospatially referenced</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-lg mb-4">
+                                <h4 class="font-semibold text-sky-900 mb-2">🎯 Case Study: Irrigation Optimization</h4>
+                                <p class="text-sm text-gray-700 mb-2">
+                                    A tree nursery was irrigating at 2-3 AM on a timer. Sap flow data revealed:
+                                </p>
+                                <ul class="text-sm text-gray-700 space-y-1 ml-4">
+                                    <li>• Water was draining below root zones on sandy soil before trees could use it</li>
+                                    <li>• <strong>Solution:</strong> Turn on irrigation 10 minutes before sap flow typically starts</li>
+                                    <li>• <strong>Result:</strong> Water stayed in root zone, massive efficiency gain, cost savings</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-purple-50 border-l-4 border-purple-600 p-4 rounded-r-lg">
+                                <h4 class="font-semibold text-purple-900 mb-2">🚨 Early Problem Detection</h4>
+                                <p class="text-sm text-gray-700">
+                                    When an irrigation solenoid failed, sensors detected the anomaly on <strong>day one</strong>—before any visual wilting. Without sensors, the failure might not be noticed until <strong>day ten</strong> when trees are already severely stressed.
+                                </p>
+                                <p class="text-xs text-purple-800 mt-2 italic font-semibold">
+                                    💡 "Visual tree analysis is almost totally redundant. By the time you can see something going wrong, it's really already lost it. Sensors are much more attuned."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">📈</span> Tree Water Use Data Across Species
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Dr. Hirons' research monitored approximately 10 tree species, revealing significant variation in daily water use:
+                            </p>
+
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Species Example</th>
+                                        <th>Cool Day</th>
+                                        <th>Warm Day</th>
+                                        <th>Peak (Heat Wave)</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-semibold">🍁 Red Maple (full leaf)</td>
+                                        <td>~10 L/day</td>
+                                        <td>~50 L/day</td>
+                                        <td>>100 L/day</td>
+                                        <td>Dramatic increase with leaf expansion</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">🌳 Tilia cordata (lime)</td>
+                                        <td>1-2 L/day</td>
+                                        <td>2-3 L/day</td>
+                                        <td>~5 L/day</td>
+                                        <td>2025 specimen, smaller size class</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">🌲 Silver Birch</td>
+                                        <td>~5 L/day</td>
+                                        <td>10-12 L/day</td>
+                                        <td>15+ L/day</td>
+                                        <td>Peak during leaf expansion phase</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">🌿 Liquidambar (field)</td>
+                                        <td colspan="3" class="text-center">Significantly suppressed</td>
+                                        <td>Field trees underperformed vs. containers</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="mt-4 bg-amber-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-amber-900 mb-2">🔍 Key Findings</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• <strong>Leaf area drives water use:</strong> Red maple water consumption increased 10x when leaves fully expanded</li>
+                                    <li>• <strong>Species variation:</strong> Low-water species like <em>Sorbus aria</em> vs. high-water <em>Liriodendron tulipifera</em></li>
+                                    <li>• <strong>Container vs. field:</strong> Field-grown trees often suppressed, indicating suboptimal conditions</li>
+                                    <li>• <strong>Tree size matters:</strong> Larger sapwood area = proportionally higher water demand</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🧮</span> Water Use Calculator Tool
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                From extensive field data, Dr. Hirons developed a practical calculator for tree managers:
+                            </p>
+
+                            <div class="chart-container bg-gradient-to-br from-sky-50 to-blue-50">
+                                <h4 class="font-semibold mb-3 text-gray-800">Calculator Inputs</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <div class="bg-white p-3 rounded mb-2">
+                                            <div class="text-sm font-semibold text-gray-700 mb-1">🌳 Tree Type</div>
+                                            <div class="text-xs text-gray-600">Species-specific water use coefficient</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded mb-2">
+                                            <div class="text-sm font-semibold text-gray-700 mb-1">📏 Tree Size</div>
+                                            <div class="text-xs text-gray-600">Sapwood area or DBH class</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="bg-white p-3 rounded mb-2">
+                                            <div class="text-sm font-semibold text-gray-700 mb-1">🌡️ Weather Days</div>
+                                            <div class="text-xs text-gray-600">Cool/mild/hot day counts</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded mb-2">
+                                            <div class="text-sm font-semibold text-gray-700 mb-1">💧 Efficiency Factor</div>
+                                            <div class="text-xs text-gray-600">Irrigation method effectiveness</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded-r-lg mt-4">
+                                <h4 class="font-semibold text-emerald-900 mb-2">✅ Practical Applications</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• <strong>Irrigation scheduling:</strong> Deliver precise volumes based on forecast conditions</li>
+                                    <li>• <strong>Species comparison:</strong> Understand relative water demands for planting decisions</li>
+                                    <li>• <strong>Resource planning:</strong> Growers can calculate seasonal water liabilities</li>
+                                    <li>• <strong>Aftercare protocols:</strong> Evidence-based watering for newly planted trees</li>
+                                </ul>
+                            </div>
+
+                            <p class="mt-4 text-sm text-gray-600 italic">
+                                💡 "If you have this rich data, it's possible to develop really strong, robust models to predict water use under different circumstances."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🎨</span> Visualizing Tree Water Dynamics
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Dr. Hirons showcased innovative data visualization techniques that reveal patterns invisible to traditional monitoring:
+                            </p>
+
+                            <div class="bg-indigo-50 p-5 rounded-lg mb-4">
+                                <h4 class="font-semibold text-indigo-900 mb-3">🌈 Heat Map Visualization</h4>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    By plotting day of year (Y-axis) against time of day (X-axis) with color intensity representing sap flux density:
+                                </p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="bg-white p-3 rounded">
+                                        <div class="text-xs font-semibold text-gray-700 mb-1">🔴 Hot Colors</div>
+                                        <div class="text-xs text-gray-600">Peak midday sap flow during warm periods</div>
+                                    </div>
+                                    <div class="bg-white p-3 rounded">
+                                        <div class="text-xs font-semibold text-gray-700 mb-1">🔵 Cool Colors</div>
+                                        <div class="text-xs text-gray-600">Rainy/cool days, nighttime, suppressed flow</div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-600 mt-3 italic">
+                                    "This visualization reminds me of starlings murmurating—the patterns reveal the tree's entire seasonal experience."
+                                </p>
+                            </div>
+
+                            <div class="chart-container">
+                                <h4 class="font-semibold mb-3 text-gray-800">Multi-Sensor Time Series Example</h4>
+                                <p class="text-sm text-gray-600 mb-3">Integrated data streams tell a complete story:</p>
+                                <div class="space-y-3">
+                                    <div class="bg-amber-100 p-3 rounded">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm font-semibold">🌡️ VPD (atmospheric demand)</span>
+                                            <span class="text-xs">High → Low → High</span>
+                                        </div>
+                                    </div>
+                                    <div class="bg-blue-100 p-3 rounded">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm font-semibold">🌊 Sap flux density</span>
+                                            <span class="text-xs">Mirrors VPD closely</span>
+                                        </div>
+                                    </div>
+                                    <div class="bg-green-100 p-3 rounded">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm font-semibold">📏 Dendrometer (stem diameter)</span>
+                                            <span class="text-xs">Shrinkage during stress</span>
+                                        </div>
+                                    </div>
+                                    <div class="bg-purple-100 p-3 rounded">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm font-semibold">💧 Soil moisture</span>
+                                            <span class="text-xs">Gradual depletion/recovery</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-600 mt-3">
+                                    ⚡ When VPD spikes, sap flow increases, stem shrinks (water deficit), and soil moisture drops—all captured simultaneously.
+                                </p>
+                            </div>
+
+                            <div class="mt-4 bg-sky-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-sky-900 mb-2">📖 Narrative from Data</h4>
+                                <p class="text-sm text-gray-700">
+                                    "Looking at time series in this way gives you a narrative of the tree's experience that you couldn't achieve by point measurements with various instruments. You see leaf expansion driving water use spikes, drought stress accumulating, recovery after rainfall—the complete physiological story."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Practical Solutions -->
+        <div class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-sky-900 mb-6">
+                    <span class="emoji-icon">🔧</span> Evidence-Based Water Management
+                </h2>
+
+                <div class="accordion-item open">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🏗️</span> Maximize Rooting Volume
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                The single most important factor for long-term tree resilience is <strong>soil volume</strong>. Dr. Hirons' Wales hillside example perfectly illustrates this:
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+                                    <h4 class="font-semibold text-red-900 mb-2">❌ Small Soil Volume</h4>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Stress trajectories accelerate rapidly</li>
+                                        <li>• Limited buffer against drought events</li>
+                                        <li>• Water deficit becomes intense quickly</li>
+                                        <li>• Higher mortality risk</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg">
+                                    <h4 class="font-semibold text-emerald-900 mb-2">✅ Large Soil Volume</h4>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Stress develops more slowly</li>
+                                        <li>• Greater water storage capacity</li>
+                                        <li>• More manageable stress events</li>
+                                        <li>• Enhanced survival prospects</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="chart-container bg-gradient-to-r from-emerald-50 to-green-50">
+                                <h4 class="font-semibold mb-3 text-gray-800">Recommended Soil Volumes</h4>
+                                <table class="w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b border-emerald-200">
+                                            <th class="text-left py-2">Tree Size at Maturity</th>
+                                            <th class="text-left py-2">Minimum Soil Volume</th>
+                                            <th class="text-left py-2">Optimal Volume</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b border-emerald-100">
+                                            <td class="py-2">Small (< 10m)</td>
+                                            <td>10-15 m³</td>
+                                            <td>20+ m³</td>
+                                        </tr>
+                                        <tr class="border-b border-emerald-100">
+                                            <td class="py-2">Medium (10-15m)</td>
+                                            <td>20-30 m³</td>
+                                            <td>40+ m³</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">Large (> 15m)</td>
+                                            <td>30-50 m³</td>
+                                            <td>60+ m³</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="bg-blue-50 p-4 rounded-lg mt-4">
+                                <h4 class="font-semibold text-blue-900 mb-2">🛠️ Implementation Strategies</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Use <strong>structural soils</strong> under pavements to expand rooting zones</li>
+                                    <li>• Design <strong>continuous tree trenches</strong> instead of individual pits</li>
+                                    <li>• Incorporate <strong>soil cells/frames</strong> to prevent compaction while supporting hard surfaces</li>
+                                    <li>• Prioritize <strong>connected green spaces</strong> where possible</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">💧</span> Improve Soil Water-Holding Capacity
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Even with adequate volume, soil texture and amendments dramatically affect water availability:
+                            </p>
+
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Soil Type</th>
+                                        <th>Water-Holding Capacity</th>
+                                        <th>Challenges</th>
+                                        <th>Amendment Strategy</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-semibold">🏖️ Sandy</td>
+                                        <td class="text-red-700">Low (drains quickly)</td>
+                                        <td>Water drains below roots</td>
+                                        <td>Add compost, biochar, clay</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">🧱 Clay</td>
+                                        <td class="text-emerald-700">High (holds water)</td>
+                                        <td>Poor drainage, compaction</td>
+                                        <td>Improve structure with organics</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">🌱 Loam</td>
+                                        <td class="text-blue-700">Optimal</td>
+                                        <td>Maintain quality</td>
+                                        <td>Regular organic matter additions</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-amber-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-amber-900 mb-2">🌿 Organic Matter Benefits</h4>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Increases water retention in sandy soils</li>
+                                        <li>• Improves structure in clay soils</li>
+                                        <li>• Enhances microbial activity</li>
+                                        <li>• Provides slow-release nutrients</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-purple-900 mb-2">🧪 Clay Powder Addition</h4>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Binds to sand particles</li>
+                                        <li>• Creates better aggregate structure</li>
+                                        <li>• Increases cation exchange capacity</li>
+                                        <li>• Cost-effective for large areas</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-lg mt-4">
+                                <p class="text-sm text-gray-700">
+                                    <strong>🔬 Understand Water Release Characteristics:</strong> The relationship between soil drying and <span class="tooltip-term" onclick="showTooltip('Soil Water Potential', 'A measure of how tightly water is held in soil. As soil dries, water potential becomes more negative, making it harder for roots to extract water. Sandy soils release water quickly (potential drops fast), while clay soils hold water more tightly at lower moisture contents.')">soil water potential</span> is critical. Sandy soils release water easily at first but dry completely; clay soils hold water longer but at lower potentials that stress roots.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🚿</span> Precision Irrigation: Right Amount, Right Time
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Dr. Hirons emphasized that irrigation effectiveness depends on <strong>timing</strong> and <strong>targeting</strong>, not just volume:
+                            </p>
+
+                            <div class="bg-emerald-50 p-5 rounded-lg mb-4">
+                                <h4 class="font-semibold text-emerald-900 mb-3">⏰ Timing Strategies</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <div class="bg-white p-3 rounded mb-2">
+                                            <div class="text-sm font-semibold text-emerald-800 mb-1">✅ Best Practice</div>
+                                            <div class="text-xs text-gray-700">Irrigate 10 minutes <strong>before</strong> sap flow typically starts (early morning)</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded">
+                                            <div class="text-sm font-semibold text-emerald-800 mb-1">📈 Benefit</div>
+                                            <div class="text-xs text-gray-700">Water stays in root zone when trees need it most</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="bg-white p-3 rounded mb-2">
+                                            <div class="text-sm font-semibold text-red-800 mb-1">❌ Common Mistake</div>
+                                            <div class="text-xs text-gray-700">Irrigating at night (e.g., 2-3 AM) on free-draining soils</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded">
+                                            <div class="text-sm font-semibold text-red-800 mb-1">📉 Problem</div>
+                                            <div class="text-xs text-gray-700">Water drains below roots before trees wake up</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="chart-container">
+                                <h4 class="font-semibold mb-3 text-gray-800">Deep vs. Shallow Watering</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-50 p-4 rounded-lg">
+                                        <div class="text-center mb-3">
+                                            <span class="text-3xl">💧</span>
+                                            <div class="font-bold text-blue-900 mt-1">Deep, Infrequent</div>
+                                        </div>
+                                        <ul class="text-xs text-gray-700 space-y-1">
+                                            <li>✅ Encourages deep root growth</li>
+                                            <li>✅ Builds drought resilience</li>
+                                            <li>✅ More water-efficient</li>
+                                            <li>✅ Reduces weed competition</li>
+                                        </ul>
+                                        <div class="mt-3 text-xs bg-blue-200 p-2 rounded">
+                                            <strong>Target:</strong> 12-18 inches deep, every 1-2 weeks
+                                        </div>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-red-100 to-red-50 p-4 rounded-lg">
+                                        <div class="text-center mb-3">
+                                            <span class="text-3xl">💦</span>
+                                            <div class="font-bold text-red-900 mt-1">Shallow, Frequent</div>
+                                        </div>
+                                        <ul class="text-xs text-gray-700 space-y-1">
+                                            <li>❌ Keeps roots near surface</li>
+                                            <li>❌ Vulnerable to surface drying</li>
+                                            <li>❌ Wastes water to evaporation</li>
+                                            <li>❌ Encourages weed growth</li>
+                                        </ul>
+                                        <div class="mt-3 text-xs bg-red-200 p-2 rounded">
+                                            <strong>Problem:</strong> Creates shallow root systems
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-blue-50 p-4 rounded-lg mt-4">
+                                <h4 class="font-semibold text-blue-900 mb-2">🎯 Ensure Water Reaches Roots</h4>
+                                <p class="text-sm text-gray-700 mb-2">
+                                    "It sounds simple, but it's also simple to get wrong:"
+                                </p>
+                                <ul class="text-sm text-gray-700 space-y-1 ml-4">
+                                    <li>• For <strong>newly planted trees</strong>, water the root ball, not the surrounding native soil</li>
+                                    <li>• Avoid watering pavement or mulch while missing the actual root zone</li>
+                                    <li>• Use <strong>soaker hoses</strong> or <strong>drip irrigation</strong> for efficient delivery</li>
+                                    <li>• Create a shallow <strong>watering basin</strong> to direct water over roots</li>
+                                    <li>• For established trees, water the <strong>drip line</strong> (crown edge), not the trunk</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🌡️</span> Reduce Evaporation & Competition
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <div class="bg-amber-50 p-5 rounded-lg mb-4">
+                                <h4 class="font-semibold text-amber-900 mb-3">🍂 Mulching Benefits</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-amber-800 mb-2">Water Conservation</h5>
+                                        <ul class="text-xs text-gray-700 space-y-1">
+                                            <li>• Reduces soil surface evaporation</li>
+                                            <li>• Moderates soil temperature extremes</li>
+                                            <li>• Slows water runoff, improves infiltration</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-amber-800 mb-2">Soil Health</h5>
+                                        <ul class="text-xs text-gray-700 space-y-1">
+                                            <li>• Adds organic matter as it decomposes</li>
+                                            <li>• Suppresses weed germination</li>
+                                            <li>• Protects soil structure from rain impact</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="chart-container">
+                                <h4 class="font-semibold mb-3 text-gray-800">Proper Mulch Application</h4>
+                                <div class="bg-gradient-to-r from-emerald-50 to-green-50 p-4 rounded-lg mb-3">
+                                    <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                                        <div>
+                                            <div class="font-semibold text-emerald-900 mb-1">Depth</div>
+                                            <div class="text-2xl font-bold text-emerald-700">3-4"</div>
+                                            <div class="text-gray-600 mt-1">(7-10 cm)</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-semibold text-emerald-900 mb-1">Radius</div>
+                                            <div class="text-2xl font-bold text-emerald-700">3-6 ft</div>
+                                            <div class="text-gray-600 mt-1">(1-2 m)</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-semibold text-emerald-900 mb-1">Trunk Gap</div>
+                                            <div class="text-2xl font-bold text-emerald-700">2-3"</div>
+                                            <div class="text-gray-600 mt-1">Avoid contact</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-red-50 border-l-4 border-red-500 p-3 rounded-r-lg">
+                                    <div class="text-sm font-semibold text-red-900 mb-1">⚠️ Avoid "Mulch Volcanoes"</div>
+                                    <div class="text-xs text-gray-700">Never pile mulch against the trunk—this promotes rot, disease, and pest problems.</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-sky-50 p-4 rounded-lg mt-4">
+                                <h4 class="font-semibold text-sky-900 mb-2">🌾 Competition Management</h4>
+                                <p class="text-sm text-gray-700 mb-2">
+                                    Grass and weeds compete aggressively for water, especially during establishment:
+                                </p>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Maintain a <strong>weed-free zone</strong> extending 3-6 feet from trunk</li>
+                                    <li>• Mulch provides dual benefit: suppresses weeds while conserving water</li>
+                                    <li>• For meadow/prairie plantings, use compatible groundcovers that don't compete heavily</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">⚖️</span> Avoid Over-Irrigation
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                "Too much water is also a bad thing—it's not really too much water, it's not enough oxygen."
+                            </p>
+
+                            <div class="bg-red-50 border-l-4 border-red-600 p-4 rounded-r-lg mb-4">
+                                <h4 class="font-semibold text-red-900 mb-2">🚫 Waterlogging Consequences</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Water displaces oxygen in soil pore spaces</li>
+                                    <li>• Roots require oxygen for respiration and nutrient uptake</li>
+                                    <li>• Prolonged saturation causes root death and decay</li>
+                                    <li>• Anaerobic conditions favor harmful pathogens (e.g., <em>Phytophthora</em>)</li>
+                                    <li>• Symptoms mimic drought: wilting, yellowing, dieback</li>
+                                </ul>
+                            </div>
+
+                            <div class="chart-container">
+                                <h4 class="font-semibold mb-3 text-gray-800">Soil Moisture Sweet Spot</h4>
+                                <div class="relative h-12 bg-gradient-to-r from-red-200 via-emerald-200 to-blue-300 rounded-lg flex items-center justify-between px-4 text-xs font-semibold">
+                                    <span class="text-red-900">Too Dry</span>
+                                    <span class="text-emerald-900">Optimal</span>
+                                    <span class="text-blue-900">Too Wet</span>
+                                </div>
+                                <div class="mt-3 grid grid-cols-3 gap-2 text-xs text-center">
+                                    <div class="bg-red-50 p-2 rounded">
+                                        <div class="font-semibold text-red-800">Drought Stress</div>
+                                        <div class="text-gray-600">Embolism, starvation</div>
+                                    </div>
+                                    <div class="bg-emerald-50 p-2 rounded">
+                                        <div class="font-semibold text-emerald-800">Field Capacity</div>
+                                        <div class="text-gray-600">Water + air balance</div>
+                                    </div>
+                                    <div class="bg-blue-50 p-2 rounded">
+                                        <div class="font-semibold text-blue-800">Saturation</div>
+                                        <div class="text-gray-600">Oxygen deficit, root death</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-blue-50 p-4 rounded-lg mt-4">
+                                <h4 class="font-semibold text-blue-900 mb-2">🎯 Monitoring Soil Moisture</h4>
+                                <p class="text-sm text-gray-700 mb-2">
+                                    Use sensors or simple manual checks to avoid both under- and over-watering:
+                                </p>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• <strong>Soil moisture sensors:</strong> Real-time data on volumetric water content</li>
+                                    <li>• <strong>Feel test:</strong> Soil should feel moist but not soggy; form a ball but crumble easily</li>
+                                    <li>• <strong>Observation:</strong> Standing water or constantly wet soil = too much</li>
+                                    <li>• <strong>Goal:</strong> Keep soil near <span class="tooltip-term" onclick="showTooltip('Field Capacity', 'The amount of water soil can hold after excess water has drained away by gravity. At field capacity, water and air occupy pore spaces optimally for root function.')">field capacity</span>, not saturation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🧂</span> Manage Salinity in Irrigation Water
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                Dr. Hirons warned: "Ensure that the <span class="tooltip-term" onclick="showTooltip('Osmotic Potential', 'The component of water potential due to dissolved solutes (salts). High salt concentration lowers osmotic potential, making it harder for roots to absorb water even when soil is wet.')">osmotic potential</span> of the soil solution doesn't hinder root absorption."
+                            </p>
+
+                            <div class="bg-amber-50 border-l-4 border-amber-600 p-4 rounded-r-lg mb-4">
+                                <h4 class="font-semibold text-amber-900 mb-2">⚠️ Salinity Challenges</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• <strong>Grey water irrigation:</strong> Often contains high salt levels from detergents, soaps</li>
+                                    <li>• <strong>Coastal areas:</strong> Saltwater intrusion into groundwater</li>
+                                    <li>• <strong>De-icing salts:</strong> Roadside runoff accumulates in urban soils</li>
+                                    <li>• <strong>Arid regions:</strong> Natural salts concentrated by evaporation</li>
+                                </ul>
+                            </div>
+
+                            <div class="chart-container">
+                                <h4 class="font-semibold mb-3 text-gray-800">How Salinity Affects Water Uptake</h4>
+                                <div class="bg-gradient-to-r from-blue-50 to-amber-50 p-4 rounded-lg">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <div class="font-semibold text-blue-900 mb-2">💧 Freshwater (low salts)</div>
+                                            <ul class="text-xs text-gray-700 space-y-1">
+                                                <li>✅ High osmotic potential (less negative)</li>
+                                                <li>✅ Easy for roots to absorb water</li>
+                                                <li>✅ Normal cellular function</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <div class="font-semibold text-amber-900 mb-2">🧂 Saline water (high salts)</div>
+                                            <ul class="text-xs text-gray-700 space-y-1">
+                                                <li>❌ Low osmotic potential (very negative)</li>
+                                                <li>❌ Roots must work harder to absorb water</li>
+                                                <li>❌ Can cause "physiological drought"</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-600 mt-3 italic">
+                                    Even if soil is wet, high salt concentration can prevent trees from accessing water—effectively creating drought conditions.
+                                </p>
+                            </div>
+
+                            <div class="bg-purple-50 p-4 rounded-lg mt-4">
+                                <h4 class="font-semibold text-purple-900 mb-2">🔧 Salinity Management</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• <strong>Test water sources:</strong> Measure electrical conductivity (EC) before irrigating</li>
+                                    <li>• <strong>Leach salts:</strong> Apply extra water periodically to flush salts below root zone</li>
+                                    <li>• <strong>Select tolerant species:</strong> Some trees handle moderate salinity better</li>
+                                    <li>• <strong>Avoid grey water for sensitive species:</strong> Use fresh water when possible</li>
+                                    <li>• <strong>Improve drainage:</strong> Prevent salt accumulation in poorly draining soils</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg mt-4">
+                                <p class="text-sm text-red-900">
+                                    <strong>⚠️ Key Point:</strong> Salty water can be "more of a problem than a solution" for urban tree irrigation. Always assess water quality before use.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 6: Key Takeaways -->
+        <div class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-sky-900 mb-6">
+                    <span class="emoji-icon">📚</span> Key Takeaways & Future Directions
+                </h2>
+
+                <div class="accordion-item open">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">💡</span> Core Messages
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-gradient-to-br from-sky-50 to-blue-50 p-5 rounded-lg border-l-4 border-sky-600">
+                                    <div class="flex items-start mb-3">
+                                        <span class="text-3xl mr-3">🌊</span>
+                                        <div>
+                                            <h4 class="font-bold text-sky-900 mb-1">Water is Fundamental</h4>
+                                            <p class="text-sm text-gray-700">Water comprises 70-95% of tree tissue and drives all physiological processes. Most absorbed water is transpired—trees are powerful water pumps in the global cycle.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-gradient-to-br from-red-50 to-orange-50 p-5 rounded-lg border-l-4 border-red-600">
+                                    <div class="flex items-start mb-3">
+                                        <span class="text-3xl mr-3">🏙️</span>
+                                        <div>
+                                            <h4 class="font-bold text-red-900 mb-1">Urban Challenges are Severe</h4>
+                                            <p class="text-sm text-gray-700">Small rooting volumes, impervious surfaces, and heat amplify drought stress. Water deficit is the dominant stressor for urban trees globally.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-gradient-to-br from-purple-50 to-indigo-50 p-5 rounded-lg border-l-4 border-purple-600">
+                                    <div class="flex items-start mb-3">
+                                        <span class="text-3xl mr-3">💀</span>
+                                        <div>
+                                            <h4 class="font-bold text-purple-900 mb-1">Mortality is Multi-Factorial</h4>
+                                            <p class="text-sm text-gray-700">Hydraulic failure (early stage) and carbon starvation (late stage) work together. Biotic stressors amplify both pathways.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-gradient-to-br from-emerald-50 to-green-50 p-5 rounded-lg border-l-4 border-emerald-600">
+                                    <div class="flex items-start mb-3">
+                                        <span class="text-3xl mr-3">📊</span>
+                                        <div>
+                                            <h4 class="font-bold text-emerald-900 mb-1">Sensors Transform Management</h4>
+                                            <p class="text-sm text-gray-700">IoT sensors detect stress before visual symptoms appear. Real-time data enables precision irrigation and proactive intervention.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-gradient-to-br from-amber-50 to-yellow-50 p-5 rounded-lg border-l-4 border-amber-600">
+                                    <div class="flex items-start mb-3">
+                                        <span class="text-3xl mr-3">🏗️</span>
+                                        <div>
+                                            <h4 class="font-bold text-amber-900 mb-1">Soil Volume is Critical</h4>
+                                            <p class="text-sm text-gray-700">Maximize rooting space to slow stress trajectories and build resilience. Structural soils and tree trenches are essential in urban design.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-gradient-to-br from-blue-50 to-cyan-50 p-5 rounded-lg border-l-4 border-blue-600">
+                                    <div class="flex items-start mb-3">
+                                        <span class="text-3xl mr-3">🎯</span>
+                                        <div>
+                                            <h4 class="font-bold text-blue-900 mb-1">Evidence-Based Practice</h4>
+                                            <p class="text-sm text-gray-700">Move beyond rules of thumb. Use species-specific data, site conditions, and sensor feedback to optimize water management.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-sky-100 border-l-4 border-sky-700 p-5 rounded-r-lg mt-6">
+                                <h4 class="font-bold text-sky-900 mb-2 text-lg">
+                                    <span class="emoji-icon">🔬</span> Dr. Hirons' Most Powerful Insight
+                                </h4>
+                                <p class="text-gray-800 italic text-lg">
+                                    "Visual tree analysis is almost totally redundant. By the time you can see something going wrong with a tree, it's really already lost it. Sensors are much more attuned to what's actually going on and you can be much, much more responsive."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">📋</span> Practical Action Checklist
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <div class="bg-emerald-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-emerald-900 mb-3">✅ Design & Planning Phase</h4>
+                                    <ul class="text-sm text-gray-700 space-y-2">
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Specify minimum soil volumes based on mature tree size (20-60+ m³)</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Incorporate structural soils, soil cells, or continuous trenches</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Select species matched to site water availability and climate projections</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Design stormwater integration to maximize tree access to rainfall</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-blue-900 mb-3">✅ Planting & Establishment</h4>
+                                    <ul class="text-sm text-gray-700 space-y-2">
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Amend soil with compost or clay powder to improve water-holding capacity</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Apply 3-4 inches of mulch in 3-6 ft radius, avoiding trunk contact</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Install soaker hoses or drip irrigation targeting root zones</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Water deeply (12-18") to encourage deep rooting</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-purple-900 mb-3">✅ Monitoring & Maintenance</h4>
+                                    <ul class="text-sm text-gray-700 space-y-2">
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Install IoT sensors (soil moisture, dendrometers, sap flow) on sentinel trees</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Connect sensors to dashboard for real-time feedback</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Schedule irrigation based on sensor data and weather forecasts, not timers</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Check for equipment failures (e.g., solenoid valves) using sensor anomalies</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Test irrigation water for salinity; avoid grey water on sensitive species</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-amber-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-amber-900 mb-3">✅ Adaptive Management</h4>
+                                    <ul class="text-sm text-gray-700 space-y-2">
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Review sensor data trends to identify chronic stress before visual decline</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Adjust irrigation timing to coincide with sap flow initiation (early morning)</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Avoid over-irrigation; maintain soil near field capacity, not saturation</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <input type="checkbox" class="mt-1 mr-3" />
+                                            <span>Update species palettes as climate projections evolve</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">🔮</span> Future Directions & Research Needs
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <p class="mb-4 text-gray-700">
+                                While this research provides powerful insights, Dr. Hirons acknowledges several frontiers for future work:
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div class="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500">
+                                    <h4 class="font-semibold text-indigo-900 mb-2">🌐 Expand Species Coverage</h4>
+                                    <p class="text-sm text-gray-700">Current data covers ~10 species in UK conditions. Global tree diversity requires expanded databases across climates and functional types.</p>
+                                </div>
+                                <div class="bg-pink-50 p-4 rounded-lg border-l-4 border-pink-500">
+                                    <h4 class="font-semibold text-pink-900 mb-2">🔗 Integrate Multiple Stressors</h4>
+                                    <p class="text-sm text-gray-700">Study interactions between water stress, heat, pests, pollution, and soil compaction in realistic urban contexts.</p>
+                                </div>
+                                <div class="bg-teal-50 p-4 rounded-lg border-l-4 border-teal-500">
+                                    <h4 class="font-semibold text-teal-900 mb-2">📱 Democratize Sensor Technology</h4>
+                                    <p class="text-sm text-gray-700">Reduce costs and simplify interfaces so sensors become standard practice for municipalities and tree care professionals.</p>
+                                </div>
+                                <div class="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500">
+                                    <h4 class="font-semibold text-orange-900 mb-2">🧬 Link Traits to Performance</h4>
+                                    <p class="text-sm text-gray-700">Develop trait-based frameworks connecting hydraulic vulnerability, NSC storage, and stomatal behavior to field outcomes.</p>
+                                </div>
+                                <div class="bg-lime-50 p-4 rounded-lg border-l-4 border-lime-500">
+                                    <h4 class="font-semibold text-lime-900 mb-2">🌍 Climate Adaptation Scenarios</h4>
+                                    <p class="text-sm text-gray-700">Use water use models to project which species will thrive or struggle under 2°C, 3°C, 4°C warming scenarios.</p>
+                                </div>
+                                <div class="bg-rose-50 p-4 rounded-lg border-l-4 border-rose-500">
+                                    <h4 class="font-semibold text-rose-900 mb-2">🏛️ Policy & Standards</h4>
+                                    <p class="text-sm text-gray-700">Translate research into updated planting standards, irrigation codes, and green infrastructure design guidelines.</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-gradient-to-r from-sky-100 to-blue-100 p-5 rounded-lg border-l-4 border-sky-700">
+                                <h4 class="font-bold text-sky-900 mb-2 text-lg">
+                                    <span class="emoji-icon">🎯</span> The Ultimate Goal
+                                </h4>
+                                <p class="text-gray-800">
+                                    "Understanding the water use of trees and predicting the water use of trees is highly relevant for successful management. We need to create resilience in our urban forests through evidence-based decisions. IoT technology is now a really important tool to get that real-time feedback and make those informed choices that ensure the health and vitality of trees in urban environments."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-sky-900">
+                            <span class="emoji-icon">📖</span> Further Resources
+                        </h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-blue-900 mb-2">📚 Dr. Hirons' Publications</h4>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• <strong>Applied Tree Biology</strong> (Wiley-Blackwell) – Co-authored with Peter Thomas</li>
+                                        <li>• <strong>Tree Selection for Green Infrastructure</strong> (Trees and Design Action Group)</li>
+                                        <li>• Numerous peer-reviewed papers on tree physiology and urban forestry</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-emerald-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-emerald-900 mb-2">🔬 Key Research Cited</h4>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• McDowell et al. – Mechanisms of tree mortality (Nature)</li>
+                                        <li>• Beeson et al. – Weighing lysimeter studies (University of Florida)</li>
+                                        <li>• Meta-analyses on global tree mortality patterns</li>
+                                        <li>• Urban tree vulnerability to climate change assessments</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-purple-900 mb-2">🌐 Online Resources</h4>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• <strong>University Centre Myerscough</strong> – Arboriculture programs and research</li>
+                                        <li>• <strong>ISA (International Society of Arboriculture)</strong> – Standards and continuing education</li>
+                                        <li>• <strong>IoT sensor manufacturers</strong> – Heat ratio, dendrometer, soil moisture technologies</li>
+                                        <li>• <strong>ChatGPT & AI tools</strong> – As Dr. Hirons humorously noted, even AI is catching up!</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-lg mt-4">
+                                <p class="text-sm text-gray-700">
+                                    <strong>🎓 For Students & Practitioners:</strong> Dr. Hirons teaches modules on tree biology, establishment, and management at University Centre Myerscough and supervises online students globally. His work bridges fundamental research with applied arboriculture.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Summary Card -->
+            <div class="bg-gradient-to-br from-sky-600 to-blue-700 text-white rounded-xl shadow-2xl p-8 text-center">
+                <div class="text-5xl mb-4">🌳💧📡</div>
+                <h3 class="text-2xl font-bold mb-4">A New Era for Urban Tree Management</h3>
+                <p class="text-lg mb-6 max-w-3xl mx-auto">
+                    By combining rigorous science, cutting-edge sensors, and evidence-based practice, we can build urban forests that not only survive but thrive in a changing climate. The future of arboriculture is data-driven, proactive, and resilient.
+                </p>
+                <div class="text-sm opacity-90">
+                    "Thanks for listening, appreciate your time." – Dr. Andrew Hirons
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-sky-900">
+                    <span class="emoji-icon">📤</span> Share This Resource
+                </h3>
+                <button onclick="closeShareModal()" class="text-gray-500 hover:text-gray-700 text-3xl font-bold">&times;</button>
+            </div>
+            <div class="space-y-3">
+                <button onclick="shareVia('twitter')" class="w-full bg-blue-400 hover:bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg transition-all flex items-center justify-center">
+                    <span class="mr-2">🐦</span> Share on Twitter
+                </button>
+                <button onclick="shareVia('facebook')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all flex items-center justify-center">
+                    <span class="mr-2">📘</span> Share on Facebook
+                </button>
+                <button onclick="shareVia('linkedin')" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all flex items-center justify-center">
+                    <span class="mr-2">💼</span> Share on LinkedIn
+                </button>
+                <button onclick="copyLink()" class="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-all flex items-center justify-center">
+                    <span class="mr-2">🔗</span> Copy Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html" class="text-sky-700 hover:underline font-semibold">benjaminficusmicrocarpa</a>. <a href="../license.html" class="text-sky-700 hover:underline">MIT License</a>.
+        </div>
+    </div>
+
+    <script>
+        // Carousel rotation
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-image');
+        
+        function rotateCarousel() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(rotateCarousel, 5000);
+
+        // Tab switching
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            tabs[index].classList.add('active');
+            contents[index].classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion toggle
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasOpen = item.classList.contains('open');
+            
+            // Close all accordions in the same section
+            const section = item.closest('.tab-content');
+            section.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+            
+            // Open clicked accordion if it wasn't already open
+            if (!wasOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // Tooltip functionality
+        let tooltipTimeout;
+        
+        function showTooltip(term, definition) {
+            const tooltip = document.getElementById('tooltip');
+            document.getElementById('tooltip-term').textContent = term;
+            document.getElementById('tooltip-definition').textContent = definition;
+            
+            clearTimeout(tooltipTimeout);
+            tooltip.classList.add('active');
+            
+            tooltipTimeout = setTimeout(() => {
+                tooltip.classList.remove('active');
+            }, 10000);
+        }
+        
+        function closeTooltip() {
+            document.getElementById('tooltip').classList.remove('active');
+        }
+
+        // Share modal
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('active');
+        }
+        
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('active');
+        }
+        
+        function shareVia(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('Smart Water Management for Trees with IoT Sensors - Dr. Andrew Hirons');
+            
+            const urls = {
+                twitter: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+                linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+            };
+            
+            if (urls[platform]) {
+                window.open(urls[platform], '_blank', 'width=600,height=400');
+            }
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('✅ Link copied to clipboard!');
+            });
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('shareModal');
+            if (event.target === modal) {
+                closeShareModal();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeTooltip();
+                closeShareModal();
+            }
+        });
+
+        // Auto-open first accordion in each tab
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                const firstAccordion = tab.querySelector('.accordion-item');
+                if (firstAccordion && !firstAccordion.classList.contains('open')) {
+                    firstAccordion.classList.add('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
