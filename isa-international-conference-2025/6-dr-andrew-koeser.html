@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooted in Research: Minimizing Construction Impacts on Tree Stability | Dr. Andrew Koeser</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #f8f9fa;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e3a1a 0%, #2d5a2d 50%, #3a7a3a 100%);
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .hero-bg-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+        
+        .hero-bg-image.active {
+            opacity: 0.3;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30, 58, 26, 0.85) 0%, rgba(45, 90, 45, 0.75) 100%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-meta {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            margin-bottom: 1rem;
+            opacity: 0.95;
+        }
+        
+        .hero-description {
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: #ffffff;
+            color: #2d5a2d;
+        }
+        
+        .btn-primary:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-container {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #2d5a2d #f0f0f0;
+        }
+        
+        .tab-container::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .tab-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+        
+        .tab-container::-webkit-scrollbar-thumb {
+            background: #2d5a2d;
+            border-radius: 4px;
+        }
+        
+        .tab {
+            flex: 0 0 auto;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            white-space: nowrap;
+            color: #666;
+        }
+        
+        .tab:hover {
+            background: #f8f9fa;
+            color: #2d5a2d;
+        }
+        
+        .tab.active {
+            color: #2d5a2d;
+            border-bottom-color: #2d5a2d;
+            background: #f8f9fa;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 3rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            color: #2d5a2d;
+        }
+        
+        .accordion-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-item:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, #f8f9fa, white);
+            transition: background 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: linear-gradient(to right, #e9ecef, #f8f9fa);
+        }
+        
+        .accordion-header h3 {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            color: #2d5a2d;
+            font-weight: 600;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: #2d5a2d;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-content {
+            max-height: 5000px;
+            padding: 1.5rem;
+        }
+        
+        .content-block {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f4 100%);
+            border-left: 4px solid #2d5a2d;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .data-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .data-card:hover {
+            border-color: #2d5a2d;
+            box-shadow: 0 4px 12px rgba(45, 90, 45, 0.1);
+        }
+        
+        .tooltip-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .tooltip {
+            background: white;
+            border: 2px solid #2d5a2d;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .tooltip.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .tooltip-term {
+            color: #2d5a2d;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            cursor: help;
+            font-weight: 500;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+            background: white;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #2d5a2d;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            max-width: 300px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution:hover {
+            max-width: 400px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Unified attribution hover behavior */
+        .attribution-short { display: block; font-weight: 700; color: #2d5a2d; }
+        .attribution-full { display: none; }
+        .attribution:hover .attribution-short { display: none; }
+        .attribution:hover .attribution-full { display: block; }
+        
+        .attribution a {
+            color: #2d5a2d;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 80vh;
+            }
+            
+            .attribution {
+                position: static;
+                margin: 2rem 1rem;
+                max-width: 100%;
+            }
+            
+            .tooltip-container {
+                position: static;
+                margin: 1rem;
+                max-width: 100%;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media print {
+            .sticky-tabs, .attribution, .tooltip-container, .btn-group {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
+            
+            .hero-section {
+                min-height: auto;
+                page-break-after: always;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1920&q=80" alt="Tree roots and urban environment" class="hero-bg-image active" id="heroImg1">
+            <img src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1920&q=80" alt="Urban forest canopy" class="hero-bg-image" id="heroImg2">
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1920&q=80" alt="Tree construction interaction" class="hero-bg-image" id="heroImg3">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">🌳 Rooted in Research: Minimizing Construction Impacts on Tree Stability</h1>
+            <p class="hero-meta">📅 28 Oct 2025 | 🎤 Dr. Andrew Koeser | 🏢 ISA Hong Kong International Conference 2025</p>
+            <p class="hero-description">
+                Exploring the hidden world beneath our feet where tree roots meet urban infrastructure. Discover groundbreaking research on root biomechanics, sidewalk design, and strategies to protect urban trees during construction while maintaining safe, accessible hardscapes.
+            </p>
+            <div class="btn-group">
+                <a href="index.html" class="btn btn-primary">
+                    <i data-lucide="list" style="width: 20px; height: 20px;"></i>
+                    View All Presentations
+                </a>
+                <button onclick="openShareModal()" class="btn btn-secondary">
+                    <i data-lucide="share-2" style="width: 20px; height: 20px;"></i>
+                    Share Research
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="tab-container">
+            <div class="tab active" onclick="switchTab('overview')">📋 Overview</div>
+            <div class="tab" onclick="switchTab('problem')">⚠️ The Problem</div>
+            <div class="tab" onclick="switchTab('research')">🔬 Research Methods</div>
+            <div class="tab" onclick="switchTab('findings')">💡 Key Findings</div>
+            <div class="tab" onclick="switchTab('solutions')">🛠️ Practical Solutions</div>
+            <div class="tab" onclick="switchTab('side-quest')">🌱 Root Regrowth Study</div>
+            <div class="tab" onclick="switchTab('about')">👨‍🔬 About Dr. Koeser</div>
+        </div>
+    </nav>
+
+    <!-- Tooltip Container -->
+    <div class="tooltip-container">
+        <div class="tooltip" id="tooltip">
+            <h4 style="color: #2d5a2d; margin-bottom: 0.5rem; font-size: 1rem;"></h4>
+            <p style="font-size: 0.9rem; color: #333;"></p>
+        </div>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content active" id="overview">
+        <h2 class="section-title">📋 Presentation Overview</h2>
+        
+        <div class="content-block">
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                Urban trees are long-lived organisms that play a vital role in city ecosystems, offering shade, improving air quality, and enhancing urban aesthetics. However, they frequently face construction-related stress during development projects. One of the most damaging threats occurs below ground, where grading, digging, and trenching activities can sever or injure critical supporting roots.
+            </p>
+        </div>
+
+        <div class="highlight-box">
+            <h3 style="color: #2d5a2d; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="target" style="width: 24px; height: 24px;"></i>
+                Research Objectives
+            </h3>
+            <ul style="list-style-type: none; padding-left: 0; line-height: 2;">
+                <li>🎯 Determine the pressure threshold where tree roots flatten rather than lift hardscapes</li>
+                <li>🎯 Design infrastructure that can resist root pressures without damage</li>
+                <li>🎯 Develop practical planting width guidelines for urban environments</li>
+                <li>🎯 Understand root regrowth patterns after trenching damage</li>
+            </ul>
+        </div>
+
+        <div class="accordion-item active">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🏙️ Why This Matters for Urban Planning</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>This research addresses one of the most costly challenges in urban forestry. When trees are planted in spaces that are too narrow, their structural roots inevitably conflict with sidewalks, leading to expensive repairs, accessibility issues, and premature tree removal. By understanding root biomechanics at a micro scale, we can design better urban spaces that accommodate both trees and infrastructure.</p>
+                <p style="margin-top: 1rem;">The economic impact is substantial. In California alone, communities spend an estimated <strong>$42 million annually</strong> on sidewalk repairs caused by tree root damage. A single city like Tampa can face $2 million in annual maintenance costs. This research provides evidence-based solutions to prevent these conflicts before they occur.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🌍 Global Relevance and Local Application</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>While this research was conducted in Florida, the principles apply universally to dense urban environments worldwide, including Hong Kong. Cities everywhere face the same challenge: how to maximize tree benefits while maintaining safe, accessible infrastructure in limited space.</p>
+                <p style="margin-top: 1rem;">The beauty of this approach is its simplicity. Rather than requiring expensive specialized systems, the solutions involve thoughtful design modifications that can be implemented with standard construction materials and techniques, making them accessible to cities of all sizes and budgets.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="problem">
+        <h2 class="section-title">⚠️ Understanding the Problem</h2>
+
+        <div class="content-block">
+            <h3 style="color: #2d5a2d; margin-bottom: 1rem;">The Conflict Between Trees and Infrastructure</h3>
+            <p>The challenges we face with urban trees and construction aren't about soil volume for water storage, they're about <span class="tooltip-term" onclick="showTooltip('Minimum Planting Width', 'The horizontal space available for near-surface structural roots to develop without conflicting with hardscapes like sidewalks, curbs, and paving.')">minimum planting width</span>. This is the space where structural roots grow just beneath the surface and interact with sidewalks, curbs, and other hardscapes.</p>
+        </div>
+
+        <div class="data-card">
+            <h4 style="color: #2d5a2d; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="dollar-sign" style="width: 20px; height: 20px;"></i>
+                Economic Impact
+            </h4>
+            <ul style="line-height: 1.8;">
+                <li><strong>California (36 million people):</strong> $42 million annually in sidewalk replacement costs</li>
+                <li><strong>Tampa, FL (400,000 people):</strong> Potential $2 million annual cost (often unfunded, creating maintenance backlogs)</li>
+                <li><strong>Seven Oaks neighborhood case:</strong> 2,000 trees removed before providing meaningful environmental benefits</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h3 style="color: #2d5a2d; margin-bottom: 1rem;">The Development Cycle Problem</h3>
+            <p>A typical scenario unfolds like this:</p>
+            <ol style="line-height: 2; padding-left: 1.5rem;">
+                <li>Developer plants a 10cm diameter tree in a 1.3m strip</li>
+                <li>Initially, the proportions look acceptable</li>
+                <li>Within 8-10 years, the tree exceeds available rooting space</li>
+                <li>Sidewalks begin to lift, creating hazards and accessibility issues</li>
+                <li>Mass removal occurs before trees have paid back their environmental debt</li>
+            </ol>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🚶‍♀️ Accessibility and Safety Concerns</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>In the United States, the <span class="tooltip-term" onclick="showTooltip('Americans with Disabilities Act (ADA)', 'Federal civil rights law that prohibits discrimination based on disability and mandates accessible public infrastructure, including sidewalks that are safe and navigable for wheelchair users and others with mobility devices.')">Americans with Disabilities Act (ADA)</span> requires that sidewalks remain traversable for people with mobility devices. Lifted sidewalks create serious obstacles for wheelchair users and increase trip hazards for all pedestrians.</p>
+                <p style="margin-top: 1rem;">This legal requirement creates a difficult situation for urban foresters. When faced with lifted sidewalks, cities must either invest heavily in repairs or remove trees to maintain compliance. Without evidence-based design solutions, tree removal often becomes the default option.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🤔 The Crack or Root Question</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Earlier research by T. Davis Sydnor from Idaho State University questioned whether roots actually generate enough pressure to crack concrete, or if they simply exploit existing cracks. In areas with shrinking and swelling soils or freeze-thaw cycles, cracks form naturally without any tree involvement.</p>
+                <p style="margin-top: 1rem;">However, roots are strongly attracted to these cracks because they provide an ideal growing environment with moisture, warmth from the pavement above, and air circulation. Research by Nicholas D'Amato confirmed that roots proliferate dramatically wherever cracks exist, regardless of whether the roots caused the initial crack.</p>
+                <p style="margin-top: 1rem;">This research reveals that sidewalks actually create a surprisingly favorable environment for roots, functioning almost like mulch that traps moisture and heat, both essential for root growth.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="research">
+        <h2 class="section-title">🔬 Research Methodology</h2>
+
+        <div class="content-block">
+            <p style="font-size: 1.05rem; margin-bottom: 1rem;">
+                Our research took a unique approach to measuring root pressure. While previous studies examined seedlings using methods like chalk compression and photoelastic discs, we focused on mature woody roots that actually interact with urban infrastructure.
+            </p>
+        </div>
+
+        <div class="accordion-item active">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🌳 Study Site and Species Selection</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>We conducted our research at the University of Florida's Gulf Coast Research and Education Center, using trees that had been previously studied. This gave us several advantages:</p>
+                <ul style="margin: 1rem 0; line-height: 2;">
+                    <li><strong>Live Oak (Quercus virginiana):</strong> Our most common urban tree in Florida, known for being "bulletproof" in the South</li>
+                    <li><strong>Bald Cypress (Taxodium distichum):</strong> A conifer with different wood density characteristics, providing comparative data</li>
+                    <li><strong>Previously trenched sites:</strong> By returning to areas where roots were cut 5 years earlier, we could study roots of known age, eliminating one variable</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🔧 The Clamping System: Elegant Simplicity</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Our methodology was deliberately simple yet effective. We developed a clamping system using readily available materials:</p>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 1rem;">System Components:</h4>
+                    <ul style="line-height: 2;">
+                        <li><strong>Aluminum clamps:</strong> Non-corrosive metal bars that resist Florida's humid climate</li>
+                        <li><strong>Guide bars:</strong> Keep the system aligned as roots grow</li>
+                        <li><strong>Geriatric physical therapy bands:</strong> These bands have precisely known tension values, making them perfect for our measurements</li>
+                        <li><strong>Irrigation valve boxes:</strong> Protect the setup and isolate individual roots</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 1rem;">The beauty of this system is straightforward physics. We start with a known tension from the therapy bands. As the root grows in diameter, it pushes against the clamps, increasing the tension. Eventually, the root reaches a point where it can no longer overcome the resistance and begins to flatten. That's our critical measurement point.</p>
+
+                <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Measurement Process:</h4>
+                    <ol style="line-height: 2; padding-left: 1.5rem;">
+                        <li>Install clamps on exposed roots with known initial tension</li>
+                        <li>Monitor monthly for flattening response</li>
+                        <li>When flattening occurs, use a load cell to measure the exact pressure</li>
+                        <li>Remove clamps and measure contact area using ImageJ software</li>
+                        <li>Calculate pressure distribution across the flattened surface</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>📊 Historical Context: Previous Research Methods</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>To understand our contribution, it's helpful to know what came before. Previous researchers developed creative solutions with the technology available to them:</p>
+
+                <div class="data-card" style="margin: 1rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">The Chalk Method (Historic)</h4>
+                    <p>Researchers milled chalk to different diameters and drilled holes through it. They grew seedling taproots through these holes. As roots expanded in diameter, they measured whether the force was sufficient to crack the chalk. This gave early estimates of radial pressure from growing roots.</p>
+                    <p style="margin-top: 0.75rem;"><strong>Result:</strong> 0.25-0.5 MPa for seedlings</p>
+                </div>
+
+                <div class="data-card" style="margin: 1rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Photoelastic Disc Method (Evelyn Kolb)</h4>
+                    <p>This sophisticated approach used special gummy photoelastic discs that change their light diffraction pattern under pressure. Seedlings grew between these discs in wet foam, and researchers could measure pressure based on the optical patterns created.</p>
+                    <p style="margin-top: 0.75rem;"><strong>Result:</strong> 0.3 MPa (±0.15 MPa)</p>
+                </div>
+
+                <div class="data-card" style="margin: 1rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Foam Compression Method (Grabowski, Smiley, Doll)</h4>
+                    <p>Jason Grabowski and colleagues placed insulation foam beneath sidewalks in a sandwich configuration. After roots grew and created indentations, they used ball bearings and a press to recreate those indentations, measuring the force required.</p>
+                    <p style="margin-top: 0.75rem;"><strong>Result:</strong> 0.35-0.4 MPa</p>
+                </div>
+
+                <p style="margin-top: 1rem;">The consistency of these independent measurements gave us confidence that we were in the right range with our own methodology.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🐍 Field Challenges: The Wildlife Factor</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Research in the field presents unique challenges. Our irrigation valve boxes, designed to protect experimental roots, became attractive homes for Florida wildlife:</p>
+                <ul style="margin: 1rem 0; line-height: 2;">
+                    <li>🐍 Corn snakes seeking shelter</li>
+                    <li>🐜 Fire ant colonies (particularly problematic when air-spading trenches)</li>
+                    <li>🐝 Bee colonies establishing in the boxes (one had five pounds of bees!)</li>
+                </ul>
+                <p style="margin-top: 1rem;">These encounters made for "brutal" field seasons for students, but they're part of the reality of conducting long-term ecological research. Every box opening became an adventure in wildlife management.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🖥️ Finite Element Analysis: Computer Modeling</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>We partnered with an engineer from Rutgers University to conduct <span class="tooltip-term" onclick="showTooltip('Finite Element Analysis', 'A computational technique used in engineering to predict how materials and structures behave under various forces, temperatures, and other physical effects. Engineers use known material properties to build virtual models and test different scenarios without physical prototypes.')">finite element analysis</span> (FEA). This powerful engineering tool allowed us to:</p>
+                
+                <ul style="margin: 1rem 0; line-height: 2;">
+                    <li>Model root growth and pressure application in virtual environments</li>
+                    <li>Test multiple scenarios: varying root depths, diameters, and sidewalk specifications</li>
+                    <li>Predict concrete behavior under root pressure with soil and geotextile layers</li>
+                    <li>Optimize designs without expensive field trials</li>
+                </ul>
+
+                <p style="margin-top: 1rem;">The modeling revealed something surprising: with the root pressures we measured, it was nearly impossible to crack concrete on its own. Cracks primarily occurred at seams or when loads (like pedestrians or vehicles) pushed down on concrete that was being lifted by roots underneath.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="findings">
+        <h2 class="section-title">💡 Key Research Findings</h2>
+
+        <div class="highlight-box">
+            <h3 style="color: #2d5a2d; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="trending-up" style="width: 24px; height: 24px;"></i>
+                Critical Pressure Threshold
+            </h3>
+            <p style="font-size: 1.1rem;">Our research determined that tree roots flatten rather than lift infrastructure at approximately <strong>0.33 MPa</strong> (megapascals), or about <strong>45 pounds per square inch</strong> — roughly the pressure used to inflate a bicycle tire.</p>
+        </div>
+
+        <div class="content-block">
+            <h3 style="color: #2d5a2d; margin-bottom: 1rem;">Validation Through Consistency</h3>
+            <p>The power of our findings lies in their consistency with independent research using completely different methodologies:</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                <div class="data-card">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.5rem;">Chalk Method</h4>
+                    <p style="font-size: 0.9rem; color: #666;">Seedling Study</p>
+                    <p style="font-size: 1.5rem; font-weight: 700; color: #2d5a2d; margin-top: 0.5rem;">0.25-0.5 MPa</p>
+                </div>
+                <div class="data-card">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.5rem;">Photoelastic Discs</h4>
+                    <p style="font-size: 0.9rem; color: #666;">Kolb et al.</p>
+                    <p style="font-size: 1.5rem; font-weight: 700; color: #2d5a2d; margin-top: 0.5rem;">0.3 MPa ±0.15</p>
+                </div>
+                <div class="data-card">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.5rem;">Foam Compression</h4>
+                    <p style="font-size: 0.9rem; color: #666;">Grabowski et al.</p>
+                    <p style="font-size: 1.5rem; font-weight: 700; color: #2d5a2d; margin-top: 0.5rem;">0.35-0.4 MPa</p>
+                </div>
+                <div class="data-card" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-color: #2d5a2d;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.5rem;">Our Research</h4>
+                    <p style="font-size: 0.9rem; color: #666;">Woody Roots (99.99% confidence)</p>
+                    <p style="font-size: 1.5rem; font-weight: 700; color: #2d5a2d; margin-top: 0.5rem;">0.33 MPa</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 1rem;">This convergence of results from different research teams using different methods provides strong evidence that we've identified the true pressure threshold. In science, replication is crucial — a single study might be an anomaly, but when multiple independent approaches reach similar conclusions, we can have confidence in the findings.</p>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>📏 Minimum Planting Width Guidelines</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Based on our root flare measurements and structural root spread, we developed practical formulas for minimum planting widths. The key equation is surprisingly simple:</p>
+
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; text-align: center;">
+                    <p style="font-size: 1.3rem; font-weight: 600; color: #2d5a2d;">Root Flare Diameter = Tree DBH × 1.7</p>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">(DBH = Diameter at Breast Height, measured at 1.37m above ground)</p>
+                </div>
+
+                <p style="margin-top: 1rem;">To this measured or predicted root flare diameter, we add a buffer zone for subsurface structural roots:</p>
+
+                <div class="highlight-box" style="margin: 1rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Planting Width Formula:</h4>
+                    <ul style="line-height: 2;">
+                        <li><strong>Large stature trees:</strong> Root flare diameter + 2.6m buffer (1.3m on each side)</li>
+                        <li><strong>Small stature trees:</strong> Root flare diameter + 1.3m buffer (0.65m on each side)</li>
+                    </ul>
+                    <p style="margin-top: 1rem; font-style: italic;">Small stature trees show half the likelihood of lifting sidewalks compared to large trees in similar conditions.</p>
+                </div>
+
+                <div class="data-card" style="margin-top: 1rem;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Example: Mature Live Oak</h4>
+                    <p>A typical mature live oak in Florida requires approximately <strong>5 meters</strong> of planting width to avoid future conflicts with adjacent hardscapes. While this seems large, it prevents decades of costly maintenance and premature tree removal.</p>
+                </div>
+
+                <p style="margin-top: 1.5rem;">We also created reference tables for different species at various mature sizes (100%, 75%, 50%, and 25% of champion size) to accommodate different urban contexts and space constraints. This allows planners to make informed decisions about realistic tree size goals given available space.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>💰 Economic Return on Spacing Investment</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Through logistic regression modeling and cost analysis, we quantified the economic benefits of proper spacing:</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                    <div class="data-card" style="background: linear-gradient(to bottom right, #e8f5e9, white);">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Tampa Cost Analysis</h4>
+                        <p>Providing an additional <strong>2 meters</strong> of planting width (compared to planting directly against sidewalk) returns an average of:</p>
+                        <p style="font-size: 2rem; font-weight: 700; color: #2d5a2d; margin: 1rem 0;">$192 per tree</p>
+                        <p style="font-size: 0.9rem; color: #666;">in avoided sidewalk replacement costs over the tree's lifetime</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Species Considerations</h4>
+                        <p>The return varies by species and mature size potential:</p>
+                        <ul style="margin-top: 1rem; line-height: 1.8;">
+                            <li><strong>Large trees:</strong> Higher initial cost, but greater environmental benefits</li>
+                            <li><strong>Small stature trees:</strong> Lower spacing requirements, reduced savings but also reduced conflict</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1rem;">These calculations used actual municipal costs for full sidewalk replacement, including labor, materials, and tree-related work. Cities that subsidize costs through other budget categories (like Milwaukee in our study) may show different numbers, but the principle remains: prevention is far more cost-effective than remediation.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🔍 The Crack-or-Root Question: Answered</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Our finite element analysis revealed something fascinating: <strong>roots alone cannot crack concrete with the pressures they generate</strong>. Instead, damage occurs through a more complex mechanism:</p>
+
+                <div class="highlight-box" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 1rem;">The Actual Damage Mechanism:</h4>
+                    <ol style="line-height: 2; padding-left: 1.5rem;">
+                        <li>Concrete develops natural cracks at seams or from environmental factors (temperature, moisture, soil movement)</li>
+                        <li>Roots exploit these existing cracks because they provide ideal growing conditions (moisture, warmth, air)</li>
+                        <li>Roots grow beneath the concrete, creating an uneven base</li>
+                        <li><strong>Loading events</strong> (pedestrians, vehicles) push down on lifted sections</li>
+                        <li>The combination of root pressure from below and loads from above creates enough stress to widen cracks</li>
+                    </ol>
+                </div>
+
+                <p style="margin-top: 1rem;">This finding has important implications: it means that trees often get blamed for damage that was initiated by other factors. However, roots do contribute to progressive damage once cracks exist, particularly through lifting that creates trip hazards and structural instability.</p>
+
+                <div class="data-card" style="margin-top: 1rem;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Rock Face Observations</h4>
+                    <p>Research from Oregon studying trees growing on rock faces provides a natural experiment. When roots encounter resistance they cannot overcome (solid rock), they simply flatten completely while continuing to grow laterally. These flattened roots still function for water transport and anchoring — they adapt rather than crack the substrate.</p>
+                    <p style="margin-top: 0.75rem;">This phenomenon suggests that with properly designed infrastructure, we can create the same scenario: roots that flatten harmlessly beneath sidewalks rather than lifting them.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="solutions">
+        <h2 class="section-title">🛠️ Practical Design Solutions</h2>
+
+        <div class="content-block">
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                The ultimate goal of this research was to develop practical, cost-effective solutions that cities can actually implement. Our guiding principle was simplicity — we've had sophisticated solutions like structural soil cells and root bridges for years, yet adoption remains limited. The solutions needed to be straightforward enough for standard municipal construction crews.
+            </p>
+        </div>
+
+        <div class="accordion-item active">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🏗️ The Gravel Base Layer Solution</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Our finite element analysis revealed an elegantly simple solution: <strong>doubling the base layer of coarse gravel beneath sidewalks</strong>. This approach works for several reasons:</p>
+
+                <div class="highlight-box" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 1rem;">Why Gravel Works:</h4>
+                    <ul style="line-height: 2;">
+                        <li><strong>Eliminates the ideal zone:</strong> Coarse gravel doesn't retain moisture like fine soil, making the area beneath the sidewalk less attractive to roots</li>
+                        <li><strong>Distributes forces:</strong> The granular structure spreads upward pressure from roots across a wider area, preventing localized lifting</li>
+                        <li><strong>Drainage:</strong> Better drainage means less moisture accumulation, further reducing root attraction</li>
+                        <li><strong>Flexibility:</strong> Individual gravel particles can shift slightly, accommodating minor root growth without transferring stress to the concrete</li>
+                    </ul>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                    <div class="data-card">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Standard Design (10+ feet from tree)</h4>
+                        <ul style="line-height: 1.8; list-style: none; padding: 0;">
+                            <li>✓ Geotextile fabric</li>
+                            <li>✓ Standard base layer (gravel)</li>
+                            <li>✓ 10cm (4-inch) concrete slab</li>
+                        </ul>
+                    </div>
+
+                    <div class="data-card" style="background: linear-gradient(to bottom right, #e8f5e9, white); border-color: #2d5a2d;">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Enhanced Design (near trees)</h4>
+                        <ul style="line-height: 1.8; list-style: none; padding: 0;">
+                            <li>✓ Geotextile fabric</li>
+                            <li>✓ <strong>Double-depth base layer</strong></li>
+                            <li>✓ 10cm (4-inch) concrete slab</li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">No special materials or techniques required beyond doubling standard gravel depth</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1.5rem;"><strong>Important caveat:</strong> This solution works best for new installations. If roots are already established beneath existing sidewalks, excavating for a deeper gravel layer would require cutting those roots, potentially destabilizing the tree. In those cases, other solutions or tree replacement might be necessary.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>📐 Distance-Based Design Modifications</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Our design recommendations vary based on proximity to the tree. Closer areas experience higher root density and pressure, requiring more robust construction:</p>
+
+                <div style="margin: 1.5rem 0;">
+                    <div class="data-card" style="margin-bottom: 1rem;">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Zone 1: Immediately Adjacent (0-3 feet / 0-1m)</h4>
+                        <p><strong>Recommendation:</strong> Maximum enhanced base layer depth</p>
+                        <p style="margin-top: 0.5rem;">This zone experiences the highest root density and the largest structural roots. The full enhanced design with doubled gravel base is critical here.</p>
+                    </div>
+
+                    <div class="data-card" style="margin-bottom: 1rem;">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Zone 2: Near Tree (3-6 feet / 1-2m)</h4>
+                        <p><strong>Recommendation:</strong> Enhanced base layer, potentially graded transition</p>
+                        <p style="margin-top: 0.5rem;">Still significant root presence, but pressure decreases with distance. Enhanced design recommended, though some flexibility exists.</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Zone 3: Distant (10+ feet / 3+ meters)</h4>
+                        <p><strong>Recommendation:</strong> Standard construction adequate</p>
+                        <p style="margin-top: 0.5rem;">Beyond the primary structural root zone for most urban trees. Standard base layer with geotextile fabric provides sufficient protection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🌱 Species Selection Strategy</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>When space is severely limited, selecting appropriate tree species becomes critical. Our research confirmed that small stature trees present significantly fewer conflicts:</p>
+
+                <div class="highlight-box" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 1rem;">Small Stature Tree Advantages:</h4>
+                    <ul style="line-height: 2;">
+                        <li>50% reduction in sidewalk damage likelihood compared to large trees in similar spaces</li>
+                        <li>Reduced planting width requirements (smaller buffer zones needed)</li>
+                        <li>Easier maintenance and pruning access</li>
+                        <li>Lower infrastructure conflict potential (utilities, overhead wires)</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 1rem;">However, there's an important tradeoff to consider: larger trees provide proportionally greater environmental benefits, including more carbon sequestration, greater temperature reduction, and more extensive habitat. The decision between species should balance available space, infrastructure concerns, and desired ecosystem services.</p>
+
+                <div class="data-card" style="margin-top: 1.5rem;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Reference Tables Available</h4>
+                    <p>We've developed comprehensive tables listing species with their predicted mature sizes and minimum planting widths required at 100%, 75%, 50%, and 25% of champion (maximum recorded) size. This allows urban planners to select realistic size goals based on available space rather than hoping trees won't reach their genetic potential.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>💡 Initial Design: What We Abandoned</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Initially, we explored more complex solutions. One promising idea was using mobile home anchors — the devices used to secure trailers during storms. The concept was to anchor them into the ground beneath the sidewalk and pour concrete over them, mechanically preventing uplift.</p>
+
+                <p style="margin-top: 1rem;">However, our engineering analysis showed this was unnecessary. The enhanced gravel base layer proved sufficient and far simpler to implement. This illustrates an important principle in applied research: sometimes the elegant solution is also the simple one.</p>
+
+                <p style="margin-top: 1rem;">This actually validated earlier work by Ed Gilman, Dr. Koeser's predecessor at the University of Florida, who had found a decade earlier that thick gravel layers were highly effective at preventing root proliferation directly beneath hardscapes. Our research provided the biomechanical explanation for why his observation held true.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🎯 Integration with Existing Best Practices</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>These solutions work best when integrated with other urban forestry best practices:</p>
+
+                <ul style="line-height: 2; margin: 1rem 0;">
+                    <li><strong>Adequate soil volume:</strong> While our research focused on minimum width, trees still need sufficient soil volume for water and nutrient access</li>
+                    <li><strong>Soil quality:</strong> Well-structured, uncompacted soil encourages roots to grow deeper rather than surfacing</li>
+                    <li><strong>Proper drainage:</strong> Prevents waterlogging that forces roots toward the surface</li>
+                    <li><strong>Strategic placement:</strong> Consider mature tree size during planning, not just installation appearance</li>
+                    <li><strong>Maintenance commitment:</strong> Regular inspection and proactive care extend tree lifespan and infrastructure compatibility</li>
+                </ul>
+
+                <p style="margin-top: 1.5rem;">The goal isn't to make trees fit into inadequate spaces, but to design spaces that accommodate both human infrastructure needs and healthy tree development from the start.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="side-quest">
+        <h2 class="section-title">🌱 Side Quest: Root Regrowth After Trenching</h2>
+
+        <div class="content-block">
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                Since we were returning to sites that had been trenched five years earlier for previous research, we seized the opportunity to study root regrowth patterns. This "side quest" provided valuable insights into how trees recover from construction damage and how distance from the trunk affects recovery.
+            </p>
+        </div>
+
+        <div class="accordion-item active">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🔬 Research Questions</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>We wanted to answer three key questions about root recovery:</p>
+                <ol style="line-height: 2; padding-left: 1.5rem; margin: 1rem 0;">
+                    <li>What level of root regrowth occurs after five years following trenching?</li>
+                    <li>How prevalent is root decay and death after cutting?</li>
+                    <li>What factors are associated with increased or decreased root regrowth?</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>📊 Methodology and Measurements</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>We relocated 577 individual roots that had been cut in 2017. For each root, we measured:</p>
+
+                <div class="highlight-box" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 1rem;">Measurement Parameters:</h4>
+                    <ul style="line-height: 2;">
+                        <li><strong>Presence/absence of regrowth:</strong> Did any new roots develop from the cut surface?</li>
+                        <li><strong>Number of new roots:</strong> How many individual roots sprouted from each cut?</li>
+                        <li><strong>Total cross-sectional area:</strong> Combined area of all new roots compared to original root area</li>
+                        <li><strong>Distance from trunk:</strong> Both the original treatment distance and distance along the root path</li>
+                        <li><strong>Original root diameter:</strong> Size of the root when initially cut</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 1rem;">We initially planned to measure decay extent using an air spade to make centimeter cuts and track how far decay penetrated. However, time and budget constraints (renting equipment burns through funds quickly) limited this aspect of the study.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>📈 Key Findings: Survival and Regrowth</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                    <div class="data-card" style="background: linear-gradient(to bottom right, #e8f5e9, white); border-color: #2d5a2d;">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Overall Survival Rate</h4>
+                        <p style="font-size: 2.5rem; font-weight: 700; color: #2d5a2d; margin: 1rem 0;">93.3%</p>
+                        <p>539 of 577 cut roots showed new growth</p>
+                        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: #666;">Only 38 roots (6.7%) completely died or stopped growing</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Root Proliferation</h4>
+                        <p style="font-size: 2.5rem; font-weight: 700; color: #2d5a2d; margin: 1rem 0;">14-15</p>
+                        <p>Average number of new roots per cut</p>
+                        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: #666;">Multiple new roots typically sprout from each severed root</p>
+                    </div>
+
+                    <div class="data-card" style="border-color: #d32f2f;">
+                        <h4 style="color: #d32f2f; margin-bottom: 0.75rem;">Area Recovery</h4>
+                        <p style="font-size: 2.5rem; font-weight: 700; color: #d32f2f; margin: 1rem 0;">22%</p>
+                        <p>Cross-sectional area recovered after 5 years</p>
+                        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: #666;">Despite many new roots, total functional area remains significantly reduced</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1.5rem;">The most striking finding is the contrast between root numbers and functional recovery. While trees readily sprout multiple new roots from cut surfaces, the combined cross-sectional area of these new roots represents only about one-fifth of the original root's area even after five years.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>📏 Distance Effects: Treatment vs. Reality</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Our original experimental treatments varied the trenching distance from the trunk (3, 6, 9, and 15 trunk diameters). Surprisingly, <strong>these treatment distances had minimal effect on the number of new roots</strong> that sprouted.</p>
+
+                <p style="margin-top: 1rem;">However, <strong>distance did significantly affect area recovery</strong>. Roots cut further from the trunk recovered a greater percentage of their original cross-sectional area compared to roots cut closer to the trunk. This suggests:</p>
+
+                <div class="highlight-box" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 1rem;">Distance Implications:</h4>
+                    <ul style="line-height: 2;">
+                        <li>Roots further from the trunk may have access to more soil resources for regrowth</li>
+                        <li>Competition from the main root system may be less intense at greater distances</li>
+                        <li>The tree may prioritize replacing critical structural roots closer to the trunk differently than exploratory roots</li>
+                        <li>Even with better recovery, distant roots still only achieved about 22% of original area</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 1rem;">The practical implication is that while giving trees more distance from construction activities provides some benefit for recovery, the primary advantage of distance is avoiding the injury in the first place.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>⏰ Long-Term Recovery Implications</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>The limited area recovery after five years suggests that <strong>root systems require many years to fully recover from trenching damage</strong>. Several important implications emerge:</p>
+
+                <div class="data-card" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Structural Considerations</h4>
+                    <p>With only 22% of cross-sectional area recovered, trees may have:</p>
+                    <ul style="margin-top: 0.75rem; line-height: 1.8;">
+                        <li>Reduced structural support and anchorage capacity</li>
+                        <li>Increased vulnerability to wind throw or failure</li>
+                        <li>Compromised mechanical stability during storms</li>
+                    </ul>
+                </div>
+
+                <div class="data-card" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Physiological Function</h4>
+                    <p>The modest area recovery suggests trees may have reached a new hydrologic equilibrium, where:</p>
+                    <ul style="margin-top: 0.75rem; line-height: 1.8;">
+                        <li>Water and nutrient uptake capacity remains permanently reduced</li>
+                        <li>Canopy size may have adjusted to match new root capacity</li>
+                        <li>Overall tree vigor could be chronically compromised</li>
+                        <li>Non-conductive root tissue may account for some area, reducing actual functional recovery even further</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 1.5rem;">These findings reinforce the importance of protecting existing root systems during construction rather than relying on post-damage recovery. Trees can survive root cutting, but full functional recovery may take decades or never fully occur.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🎯 Management Recommendations</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Based on these regrowth findings, several management strategies emerge:</p>
+
+                <div class="highlight-box" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 1rem;">Best Practices for Construction Near Trees:</h4>
+                    <ol style="line-height: 2; padding-left: 1.5rem;">
+                        <li><strong>Maximize distance:</strong> While greater distance provides only modest recovery benefits, the primary benefit is avoiding injury altogether</li>
+                        <li><strong>Expect long recovery:</strong> Plan for decades of reduced tree function following significant root damage</li>
+                        <li><strong>Monitor stability:</strong> Trees with major root cutting may require enhanced inspection and potential support systems</li>
+                        <li><strong>Consider removal threshold:</strong> Severe root damage may warrant removal rather than maintaining a permanently compromised tree</li>
+                        <li><strong>Document and communicate:</strong> Make property owners aware that trenched trees have reduced stability and longevity</li>
+                    </ol>
+                </div>
+
+                <p style="margin-top: 1.5rem;">The core message is clear: <strong>prevention through proper planning beats recovery every time</strong>. Once roots are severed, even vigorous regrowth cannot fully replace the lost structure and function within timeframes relevant to urban tree management.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="about">
+        <h2 class="section-title">👨‍🔬 About Dr. Andrew Koeser</h2>
+
+        <div class="content-block">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; align-items: start;">
+                <div>
+                    <h3 style="color: #2d5a2d; margin-bottom: 1rem;">Professional Background</h3>
+                    <p style="line-height: 1.8;">
+                        Dr. Andrew Koeser is an Associate Professor of Urban Tree and Landscape Management at the University of Florida's Gulf Coast Research and Education Center. His work bridges applied research and outreach, focusing on urban forest storm resilience, tree species diversity, belowground construction damage, and policy.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 style="color: #2d5a2d; margin-bottom: 1rem;">Recognition & Leadership</h3>
+                    <ul style="line-height: 1.8;">
+                        <li>🏆 L.C. Chadwick Award recipient</li>
+                        <li>👔 Past President, Florida Chapter of the ISA</li>
+                        <li>📚 Author of over 100 peer-reviewed articles</li>
+                        <li>🎓 Active mentor of graduate students</li>
+                        <li>💡 Principal investigator on numerous funded research projects</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🔬 Research Focus Areas</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Dr. Koeser's research program addresses critical challenges at the intersection of urban development and forest preservation:</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                    <div class="data-card">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">🌪️ Storm Resilience</h4>
+                        <p>Investigating how urban trees respond to hurricanes and extreme weather events, developing strategies to enhance canopy resilience while maintaining ecosystem services.</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">🌳 Species Diversity</h4>
+                        <p>Working to expand the palette of trees suitable for urban environments, reducing monoculture risks while adapting to climate change and pest pressures.</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">🏗️ Construction Impacts</h4>
+                        <p>This presentation's focus — understanding and mitigating below-ground damage from construction activities through biomechanical research and design innovation.</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">📋 Policy Development</h4>
+                        <p>Translating scientific findings into practical policies and standards that municipalities can implement to protect and enhance urban forests.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🎓 Educational Philosophy</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Dr. Koeser's work exemplifies the integration of rigorous scientific research with practical application. His approach emphasizes:</p>
+
+                <ul style="line-height: 2; margin: 1rem 0;">
+                    <li><strong>Community-driven research:</strong> Projects like this one originated from questions posed by practicing arborists, ensuring relevance to real-world challenges</li>
+                    <li><strong>Accessibility:</strong> Developing solutions that can be implemented by standard municipal crews, not just specialized contractors</li>
+                    <li><strong>Student engagement:</strong> Involving graduate students in every phase of research, from design through publication</li>
+                    <li><strong>Evidence-based practice:</strong> Building robust datasets that can withstand peer review and inform policy decisions</li>
+                </ul>
+
+                <div class="highlight-box" style="margin-top: 1.5rem;">
+                    <p style="font-style: italic;">"We've had sophisticated solutions like structural soil cells and root bridges for years, yet adoption remains limited. The solutions needed to be straightforward enough for standard municipal construction crews to implement."</p>
+                    <p style="text-align: right; margin-top: 0.5rem; color: #666;">— Dr. Andrew Koeser on practical research goals</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>🤝 Funding & Collaboration</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>This research was made possible through collaborative funding and partnerships:</p>
+
+                <div class="data-card" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Primary Funders</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>TREE Fund:</strong> Supported the original trenching and tree physiology research conducted by Dr. Benson</li>
+                        <li><strong>Florida Chapter ISA:</strong> Provided directed research grants up to $150,000 for the root pressure and sidewalk design study</li>
+                    </ul>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">The Florida ISA's research program is unique in offering substantial grants not just to Florida researchers, but to anyone conducting research meaningful to practicing arborists in the state.</p>
+                </div>
+
+                <div class="data-card" style="margin: 1.5rem 0;">
+                    <h4 style="color: #2d5a2d; margin-bottom: 0.75rem;">Key Collaborators</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Jason Grabowski:</strong> Co-principal investigator with prior experience in root-foam compression research</li>
+                        <li><strong>Rutgers University engineer:</strong> Conducted finite element analysis modeling</li>
+                        <li><strong>Graduate student team:</strong> Endured fire ants, snakes, and bees to collect field data</li>
+                        <li><strong>Ed Gilman:</strong> Dr. Koeser's predecessor whose earlier work on gravel layers provided foundational insights</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>📚 Selected Publications & Resources</h3>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Dr. Koeser's extensive publication record includes work on urban tree risk assessment, species selection, and biomechanics. Relevant to this presentation:</p>
+
+                <div style="margin: 1.5rem 0;">
+                    <div class="data-card" style="margin-bottom: 1rem;">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.5rem;">Minimum Planting Width Research</h4>
+                        <p style="font-size: 0.95rem; line-height: 1.6;">Work with Dr. Deborah Hilbert developing practical guidelines for planting width based on species and mature size predictions. Published reference tables allow urban planners to make evidence-based spacing decisions.</p>
+                    </div>
+
+                    <div class="data-card" style="margin-bottom: 1rem;">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.5rem;">"The Tripping Point" Study</h4>
+                        <p style="font-size: 0.95rem; line-height: 1.6;">Creative title from the "weird Covid times" that examined minimum planting widths for small stature trees in dense urban environments, demonstrating their reduced sidewalk damage potential.</p>
+                    </div>
+
+                    <div class="data-card">
+                        <h4 style="color: #2d5a2d; margin-bottom: 0.5rem;">Economic Analysis of Tree Spacing</h4>
+                        <p style="font-size: 0.95rem; line-height: 1.6;">Logistic regression models quantifying the dollar value of adequate planting space through avoided sidewalk replacement costs in multiple cities.</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1.5rem;">These publications are accessible through the University of Florida's IFAS Extension system and peer-reviewed journals in urban forestry and arboriculture.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top: 2rem;">
+            <h3 style="color: #2d5a2d; margin-bottom: 1rem;">Conference Context</h3>
+            <p>This presentation was delivered at the ISA Hong Kong Chapter International Conference on Arboriculture & Urban Forestry in October 2025. Dr. Koeser expressed appreciation for the "fantastic hosting organization" and hoped it wouldn't be his last visit to Hong Kong.</p>
+            <p style="margin-top: 1rem;">The presentation content represented some of his freshest data at the time, with results that had "just came out this year" — demonstrating his commitment to sharing cutting-edge research with the global arboriculture community.</p>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal" id="shareModal" onclick="closeShareModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="color: #2d5a2d; font-size: 1.5rem;">Share This Research</h3>
+                <button onclick="closeShareModal()" style="background: none; border: none; cursor: pointer; padding: 0.5rem;">
+                    <i data-lucide="x" style="width: 24px; height: 24px; color: #666;"></i>
+                </button>
+            </div>
+            
+            <div class="share-buttons">
+                <button class="share-btn" onclick="shareVia('twitter')">
+                    <i data-lucide="twitter" style="width: 20px; height: 20px;"></i>
+                    Twitter
+                </button>
+                <button class="share-btn" onclick="shareVia('facebook')">
+                    <i data-lucide="facebook" style="width: 20px; height: 20px;"></i>
+                    Facebook
+                </button>
+                <button class="share-btn" onclick="shareVia('linkedin')">
+                    <i data-lucide="linkedin" style="width: 20px; height: 20px;"></i>
+                    LinkedIn
+                </button>
+                <button class="share-btn" onclick="shareVia('email')">
+                    <i data-lucide="mail" style="width: 20px; height: 20px;"></i>
+                    Email
+                </button>
+                <button class="share-btn" onclick="copyLink()">
+                    <i data-lucide="link" style="width: 20px; height: 20px;"></i>
+                    Copy Link
+                </button>
+            </div>
+            
+            <div id="copyNotification" style="display: none; margin-top: 1rem; padding: 1rem; background: #e8f5e9; border-radius: 8px; text-align: center; color: #2d5a2d; font-weight: 500;">
+                Link copied to clipboard! ✓
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html" style="color:#2d5a2d; text-decoration: underline; font-weight: 600;">benjaminficusmicrocarpa</a>. <a href="../license.html" style="color:#2d5a2d; text-decoration: underline;">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Hero image carousel
+        let currentImage = 1;
+        const images = ['heroImg1', 'heroImg2', 'heroImg3'];
+        
+        function rotateHeroImage() {
+            const current = document.getElementById(images[currentImage - 1]);
+            current.classList.remove('active');
+            
+            currentImage = currentImage % 3 + 1;
+            const next = document.getElementById(images[currentImage - 1]);
+            next.classList.add('active');
+        }
+        
+        setInterval(rotateHeroImage, 5000);
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all accordions in the same section
+            const section = item.closest('.tab-content');
+            section.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('active');
+            });
+            
+            // Open clicked accordion if it wasn't active
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Tooltip functionality
+        const tooltipData = {
+            'Minimum Planting Width': 'The horizontal space available for near-surface structural roots to develop without conflicting with hardscapes like sidewalks, curbs, and paving.',
+            'Americans with Disabilities Act (ADA)': 'Federal civil rights law that prohibits discrimination based on disability and mandates accessible public infrastructure, including sidewalks that are safe and navigable for wheelchair users and others with mobility devices.',
+            'Finite Element Analysis': 'A computational technique used in engineering to predict how materials and structures behave under various forces, temperatures, and other physical effects. Engineers use known material properties to build virtual models and test different scenarios without physical prototypes.'
+        };
+
+        function showTooltip(term, definition) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.querySelector('h4').textContent = term;
+            tooltip.querySelector('p').textContent = definition;
+            tooltip.classList.add('active');
+            
+            setTimeout(() => {
+                tooltip.classList.remove('active');
+            }, 5000);
+        }
+
+        // Share modal
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('active');
+        }
+
+        function closeShareModal(event) {
+            if (!event || event.target.id === 'shareModal') {
+                document.getElementById('shareModal').classList.remove('active');
+            }
+        }
+
+        function shareVia(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('Rooted in Research: Minimizing Construction Impacts on Tree Stability');
+            const text = encodeURIComponent('Check out this fascinating research on urban tree biomechanics and infrastructure design by Dr. Andrew Koeser');
+            
+            let shareUrl;
+            switch(platform) {
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'email':
+                    shareUrl = `mailto:?subject=${title}&body=${text}%20${url}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank');
+            }
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const notification = document.getElementById('copyNotification');
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeShareModal();
+            }
+        });
+
+        // Open first accordion in each section by default
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.tab-content');
+            sections.forEach(section => {
+                const firstAccordion = section.querySelector('.accordion-item:not(.active)');
+                if (firstAccordion && section.id === 'overview') {
+                    // Overview section already has active items
+                } else if (firstAccordion) {
+                    firstAccordion.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

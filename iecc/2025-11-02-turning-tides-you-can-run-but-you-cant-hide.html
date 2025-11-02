@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turning Tides: You Can Run, But You Can't Hide | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ocean-deep: #0a4a6e;
+            --ocean-mid: #0d6ba8;
+            --ocean-light: #3a9bd9;
+            --wave-foam: #e8f4f8;
+            --sand: #f5ebe0;
+            --sunset: #d4743f;
+            --storm: #2c3e50;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.7;
+            background: linear-gradient(to bottom, var(--wave-foam), white);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .header-carousel {
+            position: relative;
+            height: 75vh;
+            min-height: 500px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--ocean-deep), var(--ocean-mid));
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            animation: kenBurns 20s ease-in-out infinite;
+        }
+
+        .carousel-image.active {
+            opacity: 0.4;
+        }
+
+        @keyframes kenBurns {
+            0%, 100% { transform: scale(1) translateX(0); }
+            50% { transform: scale(1.1) translateX(-2%); }
+        }
+
+        .header-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 74, 110, 0.7), rgba(42, 62, 80, 0.85));
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+
+        .wave-divider {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .wave-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px;
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button {
+            position: relative;
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            color: var(--text-light);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button:hover {
+            color: var(--ocean-mid);
+            background: var(--wave-foam);
+        }
+
+        .tab-button.active {
+            color: var(--ocean-deep);
+            border-bottom-color: var(--ocean-mid);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .accordion-button {
+            width: 100%;
+            text-align: left;
+            padding: 1.25rem;
+            background: var(--wave-foam);
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--ocean-deep);
+        }
+
+        .accordion-button:hover {
+            background: #d4e7f0;
+        }
+
+        .accordion-button.active {
+            background: var(--ocean-mid);
+            color: white;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 5000px;
+        }
+
+        .tooltip {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--ocean-deep);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            max-width: 300px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .tooltip-trigger {
+            color: var(--ocean-mid);
+            text-decoration: underline dotted;
+            cursor: help;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .bible-verse {
+            background: linear-gradient(135deg, var(--wave-foam), white);
+            border-left: 4px solid var(--ocean-mid);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            position: relative;
+        }
+
+        .bible-verse::before {
+            content: '📖';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            opacity: 0.3;
+        }
+
+        .quote-box {
+            background: var(--sand);
+            border-left: 4px solid var(--sunset);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote-box::before {
+            content: '"';
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            font-size: 3rem;
+            color: var(--sunset);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--ocean-mid);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ocean-deep);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(13, 107, 168, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--ocean-mid);
+            border-color: var(--ocean-mid);
+        }
+
+        .btn-secondary:hover {
+            background: var(--wave-foam);
+        }
+
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 90;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 2rem;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            max-width: 50px;
+            overflow: hidden;
+        }
+
+        .attribution-badge:hover {
+            max-width: 400px;
+            transform: translateX(-10px);
+        }
+
+        .attribution-short {
+            font-size: 1.25rem;
+        }
+
+        .attribution-full {
+            display: none;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-left: 0.5rem;
+        }
+
+        .attribution-badge:hover .attribution-full {
+            display: inline;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, var(--ocean-light), var(--ocean-mid));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+        }
+
+        .reflection-card {
+            background: var(--wave-foam);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--ocean-mid);
+        }
+
+        @media (max-width: 768px) {
+            .header-carousel {
+                height: 60vh;
+                min-height: 400px;
+            }
+
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                max-width: 100%;
+            }
+
+            .attribution-badge:hover {
+                transform: none;
+            }
+
+            .attribution-full {
+                display: inline;
+            }
+
+            .tooltip {
+                top: auto;
+                bottom: 20px;
+                right: 50%;
+                transform: translateX(50%);
+                max-width: calc(100% - 2rem);
+            }
+        }
+
+        @media print {
+            .sticky-tabs, .attribution-badge, .btn, .tooltip {
+                display: none;
+            }
+
+            .tab-content {
+                display: block !important;
+            }
+
+            .accordion-content {
+                max-height: none !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Carousel -->
+    <header class="header-carousel">
+        <img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&q=80" alt="Stormy ocean waves" class="carousel-image active" loading="eager">
+        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&q=80" alt="Whale in ocean" class="carousel-image" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920&q=80" alt="Boat on stormy sea" class="carousel-image" loading="lazy">
+        
+        <div class="header-overlay"></div>
+        
+        <div class="header-content">
+            <div style="max-width: 900px;">
+                <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; text-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                    🌊 Turning Tides: You Can Run, But You Can't Hide
+                </h1>
+                <p style="font-size: clamp(1rem, 2vw, 1.25rem); margin-bottom: 0.5rem; opacity: 0.95;">
+                    Pastor Brett | Island ECC | 02 November 2025
+                </p>
+                <p style="font-size: clamp(0.875rem, 1.5vw, 1.125rem); margin-bottom: 2rem; opacity: 0.9; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    Exploring Jonah's story and our own sophisticated ways of running from God's call
+                </p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <a href="https://www.youtube.com/watch?v=C3RRhkc_9-k" target="_blank" class="btn btn-primary">
+                        ▶️ Watch Original Sermon
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        📚 View All Sermons
+                    </a>
+                    <button onclick="openShareModal()" class="btn btn-secondary">
+                        🔗 Share This
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="wave-divider">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#ffffff"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation Tabs -->
+    <nav class="sticky-tabs">
+        <div style="max-width: 1400px; margin: 0 auto; overflow-x: auto;">
+            <div style="display: flex; min-width: max-content;">
+                <button class="tab-button active" onclick="switchTab('overview')">📋 Overview</button>
+                <button class="tab-button" onclick="switchTab('sermon')">🎙️ Main Sermon</button>
+                <button class="tab-button" onclick="switchTab('verses')">📖 Bible Verses</button>
+                <button class="tab-button" onclick="switchTab('application')">💡 Application</button>
+                <button class="tab-button" onclick="switchTab('reflection')">🤔 Reflection</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+        
+        <!-- Overview Tab -->
+        <div id="overview-tab" class="tab-content active">
+            <div class="section-card">
+                <h2 style="font-size: 2rem; color: var(--ocean-deep); margin-bottom: 1.5rem;">
+                    🌊 Sermon Overview
+                </h2>
+                
+                <div style="display: grid; gap: 1.5rem;">
+                    <div>
+                        <h3 style="color: var(--ocean-mid); margin-bottom: 0.75rem; font-size: 1.5rem;">
+                            📚 Central Theme
+                        </h3>
+                        <p style="font-size: 1.125rem; line-height: 1.8;">
+                            We all have sophisticated ways of running from God, just like Jonah. This sermon explores how we accumulate bitterness, harbor disappointment, leave sin unconfessed, and hold conflicting opinions with God—all while appearing outwardly obedient. Yet God's mercy is greater still, pursuing us even in our rebellion.
+                        </p>
+                    </div>
+
+                    <div class="key-point">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem;">
+                            🎯 Key Verse
+                        </h3>
+                        <p style="font-size: 1rem; font-style: italic;">
+                            "But Jonah ran away from the Lord and headed for Tarshish." — Jonah 1:3
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 style="color: var(--ocean-mid); margin-bottom: 1rem; font-size: 1.5rem;">
+                            🗺️ Sermon Outline
+                        </h3>
+                        <div style="display: grid; gap: 1rem;">
+                            <div style="background: var(--wave-foam); padding: 1rem; border-radius: 0.5rem; border-left: 4px solid var(--ocean-mid);">
+                                <strong style="color: var(--ocean-deep);">1. Jonah's Overt Rebellion 🏃</strong>
+                                <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                                    God calls Jonah to Nineveh (885km), but he flees to Tarshish (4,000km)—the furthest point in the ancient world. Distance mattered more than destination.
+                                </p>
+                            </div>
+                            
+                            <div style="background: var(--wave-foam); padding: 1rem; border-radius: 0.5rem; border-left: 4px solid var(--ocean-mid);">
+                                <strong style="color: var(--ocean-deep);">2. Our Sophisticated Running 🎭</strong>
+                                <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                                    We don't run as obviously as Jonah. We back away quietly through accumulated bitterness, unresolved disappointment, unconfessed sin, and conflicting opinions with God.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--wave-foam); padding: 1rem; border-radius: 0.5rem; border-left: 4px solid var(--ocean-mid);">
+                                <strong style="color: var(--ocean-deep);">3. Strange Decisions While Running 🤯</strong>
+                                <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                                    Jonah makes illogical choices: paying a fortune, getting on a boat on the God-made sea, confessing truth while fleeing. In darkness, we all make strange decisions.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--wave-foam); padding: 1rem; border-radius: 0.5rem; border-left: 4px solid var(--ocean-mid);">
+                                <strong style="color: var(--ocean-deep);">4. God's Relentless Mercy 💙</strong>
+                                <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                                    Despite Jonah's rebellion, God shows mercy to the Assyrians, the ship's crew, and to Jonah himself. His mercy is juxtaposed against our disobedience.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--wave-foam); padding: 1rem; border-radius: 0.5rem; border-left: 4px solid var(--ocean-mid);">
+                                <strong style="color: var(--ocean-deep);">5. The Call to Surrender 🙏</strong>
+                                <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                                    Like Peter: "Because you say so, I will." Obedience means saying yes even when we don't want to, trusting God's wisdom over our own.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="color: var(--ocean-mid); margin-bottom: 1rem; font-size: 1.5rem;">
+                            🎓 About the Speaker
+                        </h3>
+                        <p style="line-height: 1.8;">
+                            <strong>Pastor Brett</strong> serves as Senior Pastor at Island ECC in Hong Kong. He brings personal vulnerability to his teaching, sharing his own struggles with distance from family and the daily choice to trust God's goodness. His preaching style combines biblical exposition with practical application and honest storytelling.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon-tab" class="tab-content">
+            <div class="section-card">
+                <h2 style="font-size: 2rem; color: var(--ocean-deep); margin-bottom: 1.5rem;">
+                    🎙️ Full Sermon Content
+                </h2>
+
+                <!-- Introduction -->
+                <div style="margin-bottom: 2rem;">
+                    <button class="accordion-button active" onclick="toggleAccordion(this)">
+                        <span>🌊 Introduction: Jonah, The Well-Known Prophet</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content active" style="padding: 1.5rem 0;">
+                        <p style="margin-bottom: 1rem;">
+                            Jonah is probably the most well-known of all the prophets. It's a favorite story to teach children: Jonah disobeys, God sends a whale, swallows Jonah for three days and three nights, spits him up, and then he goes and tells people to repent. Classic story that all our kids upstairs know well.
+                        </p>
+
+                        <p style="margin-bottom: 1rem;">
+                            But today we're doing the adult version. We're going to turn it up and understand the nuance and depth of meaning that God has for us in this story. We're going to avoid the temptation to think that familiarity breeds contempt and look at it with fresh eyes.
+                        </p>
+
+                        <div class="quote-box">
+                            <p style="margin-bottom: 0.5rem;">
+                                "It is a classic story... but we're going to take a chance to do the adult version of this. We're going to turn it up a little bit and understand the nuance."
+                            </p>
+                            <cite style="font-size: 0.875rem; opacity: 0.8;">— Pastor Brett</cite>
+                        </div>
+
+                        <h4 style="color: var(--ocean-mid); margin: 1.5rem 0 1rem; font-size: 1.25rem;">
+                            📚 Understanding Jonah's Place in Scripture
+                        </h4>
+
+                        <p style="margin-bottom: 1rem;">
+                            Jonah is one of the <span class="tooltip-trigger" data-tooltip="Twelve prophetic books in the Old Testament that are shorter in length: Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, Zephaniah, Haggai, Zechariah, and Malachi">minor prophets</span> in the Old Testament. They're called "minor" only because they're shorter, not because they're less important. In fact, Jonah is only four chapters long—depending on your Bible, it's only two pages.
+                        </p>
+
+                        <p style="margin-bottom: 1rem;">
+                            The Old Testament books can be grouped this way:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li>Books of the Law</li>
+                            <li>Historical books</li>
+                            <li>Books of poetry (Psalms, Proverbs, Ecclesiastes)</li>
+                            <li>Five major prophets</li>
+                            <li>Twelve minor prophets (including Jonah)</li>
+                        </ul>
+
+                        <h4 style="color: var(--ocean-mid); margin: 1.5rem 0 1rem; font-size: 1.25rem;">
+                            🔍 Unique Features of Jonah
+                        </h4>
+
+                        <div style="background: var(--wave-foam); padding: 1.5rem; border-radius: 0.75rem; margin: 1rem 0;">
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #cbd5e0;">
+                                    <strong>✅ Very well-known:</strong> Probably more famous than any other prophet
+                                </li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #cbd5e0;">
+                                    <strong>📝 No other names listed:</strong> Only Jonah and his father Amitai are mentioned—no kings, judges, or other prophets
+                                </li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #cbd5e0;">
+                                    <strong>📅 No dates or times:</strong> Very unusual for prophetic books, leading to skepticism about its authenticity
+                                </li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #cbd5e0;">
+                                    <strong>🗺️ Lots of geography:</strong> Places like Joppa, Tarshish, and Nineveh are prominently featured
+                                </li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #cbd5e0;">
+                                    <strong>🕊️ Name means "dove":</strong> Ironic, since doves represent peace and Jonah is anything but peaceful
+                                </li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #cbd5e0;">
+                                    <strong>📖 Mostly narrative:</strong> Tells the story of Jonah's life rather than recording God's messages
+                                </li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #cbd5e0;">
+                                    <strong>💔 Hard-hearted prophet:</strong> Unlike other prophets, Jonah is neither tender toward people nor toward God
+                                </li>
+                                <li style="padding: 0.75rem 0;">
+                                    <strong>❓ Cliffhanger ending:</strong> Like the prodigal son's older brother, we're left wondering if Jonah ever truly repented
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jonah's Overt Rebellion -->
+                <div style="margin-bottom: 2rem;">
+                    <button class="accordion-button active" onclick="toggleAccordion(this)">
+                        <span>🏃 Jonah's Overt Rebellion: Running from God</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content active" style="padding: 1.5rem 0;">
+                        <div class="bible-verse">
+                            <p style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 0.75rem;">
+                                <strong>Jonah 1:1-3 (NIV)</strong>
+                            </p>
+                            <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                "The word of the Lord came to Jonah son of Amittai: 'Go to the great city of Nineveh and preach against it, because its wickedness has come up before me.' But Jonah ran away from the Lord and headed for Tarshish."
+                            </p>
+                        </div>
+
+                        <h4 style="color: var(--ocean-mid); margin: 1.5rem 0 1rem; font-size: 1.25rem;">
+                            🗺️ The Geography of Disobedience
+                        </h4>
+
+                        <p style="margin-bottom: 1rem;">
+                            God told Jonah to go to <span class="tooltip-trigger" data-tooltip="The capital of Assyria, known for extreme cruelty. They perfected the art of skinning people alive. Located about 885km from Joppa.">Nineveh</span>—the great city, capital of Assyria. This was a journey of about 885 kilometers from Joppa (where Jonah would board a ship).
+                        </p>
+
+                        <p style="margin-bottom: 1rem;">
+                            But Jonah said, "Nope. I've got a better idea. I haven't seen Spain." He heads to <span class="tooltip-trigger" data-tooltip="Located in modern-day Spain, approximately 4,000km from Joppa. This was the furthest navigable point in the ancient world—literally 'the end of the world.'">Tarshish</span>—4,000 kilometers in the opposite direction. This was the furthest point in the navigable ancient world. This was the end of the world.
+                        </p>
+
+                        <div class="key-point">
+                            <p style="font-size: 1.125rem; margin-bottom: 0.5rem;">
+                                💡 <strong>Key Insight:</strong>
+                            </p>
+                            <p style="font-size: 1rem;">
+                                The destination didn't matter to Jonah—the distance did. He wanted to get as far away from God's call as humanly possible.
+                            </p>
+                        </div>
+
+                        <h4 style="color: var(--ocean-mid); margin: 1.5rem 0 1rem; font-size: 1.25rem;">
+                            😠 Why Did Jonah Run?
+                        </h4>
+
+                        <p style="margin-bottom: 1rem;">
+                            Nineveh was known for being evil and harsh. The Ninevites had perfected the art of skinning human beings alive—that's next-level cruelty. This reputation was well-known throughout the region, recorded in extra-biblical historical writings.
+                        </p>
+
+                        <p style="margin-bottom: 1rem;">
+                            Jonah couldn't think of a worse group of people to receive the mercy of God. He decides: "No, no. You can tell me to go here, maybe. But I'm not going there."
+                        </p>
+
+                        <div class="quote-box">
+                            <p style="margin-bottom: 0.5rem;">
+                                "He had limitations on what he would do in response to God, which made him God of his own life. If he chose obedience to God as 'maybe I'll do it, maybe I won't,' he's not really obeying at all."
+                            </p>
+                            <cite style="font-size: 0.875rem; opacity: 0.8;">— Pastor Brett</cite>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Our Sophisticated Running -->
+                <div style="margin-bottom: 2rem;">
+                    <button class="accordion-button active" onclick="toggleAccordion(this)">
+                        <span>🎭 Our Sophisticated Running: How We Distance Ourselves from God</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content active" style="padding: 1.5rem 0;">
+                        <p style="margin-bottom: 1.5rem; font-size: 1.125rem; color: var(--ocean-deep); font-weight: 500;">
+                            For most of us, our running from God is quite sophisticated. We don't do it so overtly like Jonah. We walk. We back away. So as to not cause a lot of attention, so as to not be so rebellious.
+                        </p>
+
+                        <p style="margin-bottom: 1.5rem;">
+                            We're a little more sophisticated in our ability to manage God's role in our lives. We sing "I'm prone to wander, Lord I feel it, I'm prone to leave the God I love," while simultaneously making plans to avoid Him.
+                        </p>
+
+                        <h4 style="color: var(--ocean-mid); margin: 2rem 0 1rem; font-size: 1.5rem;">
+                            1️⃣ Accumulated Bitterness
+                        </h4>
+
+                        <div class="bible-verse">
+                            <p style="margin-bottom: 0.75rem;"><strong>Hebrews 12:15 (NIV)</strong></p>
+                            <p style="font-style: italic;">
+                                "See to it that no one falls short of the grace of God and that no bitter root grows up to cause trouble and defile many."
+                            </p>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">
+                            Not one massive event, but a stack of slow things that build up over time:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li>A relationship gone bad</li>
+                            <li>A friendship broken</li>
+                            <li>A misunderstanding with family</li>
+                            <li>A promotion not granted at work</li>
+                            <li>Small disappointments that accumulate</li>
+                        </ul>
+
+                        <p style="margin-bottom: 1rem;">
+                            Our emotional experience in life can affect our spiritual vitality. The author of Hebrews warns us: don't let bitterness stay there, because if it does, it develops roots. It grabs hold and becomes controlling of who you are.
+                        </p>
+
+                        <div class="key-point">
+                            <p style="font-size: 1.125rem; margin-bottom: 0.5rem;">
+                                ⚠️ <strong>The Danger:</strong>
+                            </p>
+                            <p style="font-size: 1rem; margin-bottom: 0.75rem;">
+                                Sometimes we like our bitterness. Being a victim can feel soothing. We would rather stay in that than choose to embrace the grace of God.
+                            </p>
+                            <p style="font-size: 1rem;">
+                                <strong>The Antidote:</strong> Identify bitterness and don't give it room. Don't water it, don't feed it, don't allow it to grow.
+                            </p>
+                        </div>
+
+                        <div class="quote-box">
+                            <p style="margin-bottom: 0.5rem;">
+                                "I have to do something wonderfully Hong Kong—go to a beautiful beach that's five minutes away and go, 'I'm so glad I'm not in Texas right now.' Just to soothe my heart... But see, you have to acknowledge it and what impact it could have on your heart. And you have to put it to death."
+                            </p>
+                            <cite style="font-size: 0.875rem; opacity: 0.8;">— Pastor Brett, on dealing with distance from family</cite>
+                        </div>
+
+                        <h4 style="color: var(--ocean-mid); margin: 2rem 0 1rem; font-size: 1.5rem;">
+                            2️⃣ Unresolved Disappointment
+                        </h4>
+
+                        <p style="margin-bottom: 1rem;">
+                            We all have disappointment. If you don't have any disappointment, you're not paying attention. There are things to be disappointed in: finances, health, investments, career, marriage, kids, parents, siblings. Life in a broken world guarantees disappointment.
+                        </p>
+
+                        <div class="quote-box">
+                            <p style="margin-bottom: 0.5rem;">
+                                "The mistake is we tend to think life should be fair because God is fair. But God is not life. And if I confuse God with the physical reality of life, then I set myself up for crashing disappointment."
+                            </p>
+                            <cite style="font-size: 0.875rem; opacity: 0.8;">— Philip Yancey, "Disappointment with God"</cite>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">
+                            The key question: In this broken world where disappointment will happen, what do you do with it? Do you:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li>Tuck it away as evidence that "life isn't fair"?</li>
+                            <li>Feel mistreated and victimized?</li>
+                            <li>Believe it's more unfair to you than others?</li>
+                        </ul>
+
+                        <div class="bible-verse">
+                            <p style="margin-bottom: 0.75rem;"><strong>Key Responses to Disappointment:</strong></p>
+                            <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                <strong>1 Peter 5:7 (NIV):</strong> "Cast all your anxiety on him because he cares for you."
+                            </p>
+                            <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                <strong>Remember:</strong> God is El Roi—the God who sees. He understands your plight, pain, fear, and insecurity.
+                            </p>
+                            <p style="font-style: italic;">
+                                <strong>Hebrews 12:2 (NIV):</strong> "Fixing our eyes on Jesus, the pioneer and perfecter of faith."
+                            </p>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">
+                            If you don't fix your eyes on Jesus, you'll look around and either become:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li><strong>Smug and superior</strong> as you find someone whose life is worse</li>
+                            <li><strong>Envious and jealous</strong> as you find someone whose life is better</li>
+                        </ul>
+
+                        <h4 style="color: var(--ocean-mid); margin: 2rem 0 1rem; font-size: 1.5rem;">
+                            3️⃣ Unconfessed Sin
+                        </h4>
+
+                        <p style="margin-bottom: 1rem;">
+                            We all have sin in our lives. The problem? Most of us are very uncomfortable with that word. We don't often get together for dinner and ask, "How are you dealing with sin in your life?" It's not exactly a party starter.
+                        </p>
+
+                        <p style="margin-bottom: 1rem;">
+                            We tend to categorize sin into the "big bad ones" and think: "I'm fine. No murder equals no sin." But sin refers to the depths of our depravity—our very disposition, our tendency to be selfish. That's all it is.
+                        </p>
+
+                        <div class="bible-verse">
+                            <p style="margin-bottom: 0.75rem;"><strong>1 John 1:8-10 (NIV)</strong></p>
+                            <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                "If we claim to be without sin, we deceive ourselves and the truth is not in us. If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness. If we claim we have not sinned, we make him out to be a liar and his word is not in us."
+                            </p>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">
+                            John is simply saying: You've got sin. If you don't know you have sin, you haven't looked hard enough or haven't asked people around you. It's your motives, your ideas, your thoughts—not just your behaviors.
+                        </p>
+
+                        <div class="key-point">
+                            <p style="font-size: 1.125rem; margin-bottom: 0.5rem;">
+                                💡 <strong>The Core Issue:</strong>
+                            </p>
+                            <p style="font-size: 1rem;">
+                                At our core, we want distance from God. We want blessings but not direction. We want God to be kind all the time at no cost or adjustment to us. In fact, we want Santa Claus in the sky. We don't want a God who tells us what to do—we prefer to tell Him how to bless us.
+                            </p>
+                        </div>
+
+                        <div class="bible-verse">
+                            <p style="margin-bottom: 0.75rem;"><strong>Luke 5:8 (NIV)</strong></p>
+                            <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                "When Simon Peter saw this, he fell at Jesus' knees and said, 'Go away from me, Lord; I am a sinful man!'"
+                            </p>
+                            <p style="margin-top: 1rem;">
+                                Peter recognizes the effect of sin: it causes us to want to walk away from God when we realize how good, great, and forgiving He is. Our tendency is to say, "This is too much. Depart from me."
+                            </p>
+                        </div>
+
+                        <div class="quote-box">
+                            <p style="margin-bottom: 0.5rem;">
+                                "The answer to our sin issue is that it was solved once and for all at the cross in terms of forgiveness. But for ongoing sin, it is to confess—which means to simply agree with God—and to have relationship restored and intimacy welcomed."
+                            </p>
+                            <cite style="font-size: 0.875rem; opacity: 0.8;">— Pastor Brett</cite>
+                        </div>
+
+                        <div class="bible-verse">
+                            <p style="margin-bottom: 0.75rem;"><strong>James 5:16 (NIV)</strong></p>
+                            <p style="font-style: italic;">
+                                "Therefore confess your sins to each other and pray for each other so that you may be healed."
+                            </p>
+                            <p style="margin-top: 1rem;">
+                                When we put words to our sin and confess to a trusted friend, it makes it real. This is the pathway to healing and great accountability.
+                            </p>
+                        </div>
+
+                        <h4 style="color: var(--ocean-mid); margin: 2rem 0 1rem; font-size: 1.5rem;">
+                            4️⃣ Conflicting Opinion with God
+                        </h4>
+
+                        <p style="margin-bottom: 1rem;">
+                            Sometimes it's not overt sin, but just a conflicting opinion with God. There are areas where it seems like a judgment call, and we might disagree with God's wisdom or direction.
+                        </p>
+
+                        <div class="bible-verse">
+                            <p style="margin-bottom: 0.75rem;"><strong>Luke 5:4-5 (NIV) - Peter's Response</strong></p>
+                            <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                When Jesus told Peter to go fishing at noon (the worst time), Peter replied: "Master, we've worked hard all night and haven't caught anything. But because you say so, I will let down the nets."
+                            </p>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">
+                            Peter had every reason to resist:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li><strong>Physical exhaustion:</strong> He'd been fishing all night</li>
+                            <li><strong>Vocational expertise:</strong> He was the professional fisherman, not Jesus</li>
+                            <li><strong>Logical reasoning:</strong> Noon is the worst time to fish</li>
+                        </ul>
+
+                        <div class="key-point">
+                            <p style="font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 700;">
+                                🎯 The Most Important Words
+                            </p>
+                            <p style="font-size: 1.125rem; margin-bottom: 0.75rem;">
+                                "Because you say so, I will."
+                            </p>
+                            <p style="font-size: 1rem;">
+                                Reluctance is registered—it's not because Peter wanted to. But this is where faith is tested: when you obey even when you don't want to.
+                            </p>
+                        </div>
+
+                        <div class="quote-box">
+                            <p style="margin-bottom: 0.5rem;">
+                                "Hudson (my son with ADD) finally buckled his seatbelt and said, 'On the outside I'm buckled, but on the inside I'm running everywhere.' He was so Peter-esque: 'Because you say so I will, but I don't want to. Don't think I want to, because I don't want to.'"
+                            </p>
+                            <cite style="font-size: 0.875rem; opacity: 0.8;">— Pastor Brett</cite>
+                        </div>
+
+                        <p style="margin-bottom: 1rem; font-size: 1.125rem; font-weight: 500; color: var(--ocean-deep);">
+                            When's the last time your actions reflected "because you say so, I will"? When you forgive but don't want to? When you obey but don't want to? This is where faith is genuinely tested.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Strange Decisions While Running -->
+                <div style="margin-bottom: 2rem;">
+                    <button class="accordion-button active" onclick="toggleAccordion(this)">
+                        <span>🤯 Strange Decisions While Running: Jonah's Illogical Choices</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content active" style="padding: 1.5rem 0;">
+                        <div class="bible-verse">
+                            <p style="margin-bottom: 0.75rem;"><strong>Jonah 1:3, 9 (NIV)</strong></p>
+                            <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                "But Jonah ran away from the Lord and headed for Tarshish. He went down to Joppa, where he found a ship bound for that port. After paying the fare, he went aboard and sailed for Tarshish to flee from the Lord."
+                            </p>
+                            <p style="font-style: italic; margin-top: 0.75rem;">
+                                "He answered, 'I am a Hebrew and I worship the Lord, the God of heaven, who made the sea and the dry land.'"
+                            </p>
+                        </div>
+
+                        <p style="margin-bottom: 1.5rem; font-size: 1.125rem; color: var(--ocean-deep); font-weight: 500;">
+                            While running from God, we make some strange decisions. We get distorted. We get weird. Jonah made some wild decisions, and so do we. In our darkness, we can't always see how illogical our choices become.
+                        </p>
+
+                        <h4 style="color: var(--ocean-mid); margin: 1.5rem 0 1rem; font-size: 1.25rem;">
+                            🚢 Jonah's Illogical Decisions
+                        </h4>
+
+                        <div style="display: grid; gap: 1rem;">
+                            <div style="background: var(--wave-foam); padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid var(--sunset);">
+                                <strong style="color: var(--ocean-deep); font-size: 1.125rem;">1. Geographically Delusional 🗺️</strong>
+                                <p style="margin-top: 0.75rem;">
+                                    He acknowledges: "I worship the Lord, the God of heaven, who made the sea and the dry land." The God who made the sea—and he's going to get on a boat? The God he has angered controls the very sea he's sailing on. Isn't land safer than water?
+                                </p>
+                            </div>
+
+                            <div style="background: var(--wave-foam); padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid var(--sunset);">
+                                <strong style="color: var(--ocean-deep); font-size: 1.125rem;">2. Economically Wasteful 💰</strong>
+                                <p style="margin-top: 0.75rem;">
+                                    He pays money out of his own pocket for the longest, most expensive fare available. There's no price you can put on disobedience. "If I want to do what I'm going to do, I will just be lavish in it," he says.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--wave-foam); padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid var(--sunset);">
+                                <strong style="color: var(--ocean-deep); font-size: 1.125rem;">3. Logistically Absurd 📏</strong>
+                                <p style="margin-top: 0.75rem;">
+                                    God asks him to go 885km. He chooses instead to travel 4,000km in the opposite direction for weeks at a time. It doesn't make sense—but in rebellion, distance matters more than logic.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--wave-foam); padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid var(--sunset);">
+                                <strong style="color: var(--ocean-deep); font-size: 1.125rem;">4. Spiritually Deluded ⛪</strong>
+                                <p style="margin-top: 0.75rem;">
+                                    He's running from God overtly, telling people "I'm running from God," yet he declares truthfully: "I'm a Hebrew and I worship the Lord." Strange way of worshiping—by disobeying and fleeing!
+                                </p>
+                            </div>
+                        </div>
+
+                        <h4 style="color: var(--ocean-mid); margin: 2rem 0 1rem; font-size: 1.25rem;">
+                            🎭 Why Confess Truth While Fleeing?
+                        </h4>
+
+                        <p style="margin-bottom: 1rem;">
+                            If Jonah is trying to disobey God so overtly, lying wouldn't be beyond his capacity. So why does he confess the truth about who he worships?
+                        </p>
+
+                        <div class="key-point">
+                            <p style="font-size: 1.125rem; margin-bottom: 0.75rem;">
+                                💡 <strong>The Pattern of Self-Deception:</strong>
+                            </p>
+                            <p style="font-size: 1rem; margin-bottom: 0.75rem;">
+                                We know that when we are disobeying here, we will highlight our obedience there to make ourselves feel better. "Well, we can't be perfect. So, you know, I'm disobeying God here, but by the way, I'm a worshiper of God, the maker of heaven and earth."
+                            </p>
+                            <p style="font-size: 1rem;">
+                                He tells the truth to justify his own psyche, to hopefully balance out his other more flagrant sins. He has moments of brilliant truth-telling to compensate for his rebellion.
+                            </p>
+                        </div>
+
+                        <div class="quote-box">
+                            <p style="margin-bottom: 0.5rem;">
+                                "I can't tell you how many times I've seen this played out where people will make horrible decision, horrible decision, horrible decision, and then make one small good spiritual one and say, 'Look at this! Notice this!' Deceived through and through."
+                            </p>
+                            <cite style="font-size: 0.875rem; opacity: 0.8;">— Pastor Brett</cite>
+                        </div>
+
+                        <h4 style="color: var(--ocean-mid); margin: 2rem 0 1rem; font-size: 1.25rem;">
+                            ⬇️ The Downward Spiral
+                        </h4>
+
+                        <p style="margin-bottom: 1rem;">
+                            In the Hebrew language, the text emphasizes Jonah's descent:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li>He went <strong>down</strong> to Joppa</li>
+                            <li>He went <strong>down</strong> to the ship's hold</li>
+                            <li>He went <strong>down</strong> into the ocean</li>
+                            <li>He went <strong>down</strong> into the whale</li>
+                        </ul>
+
+                        <p style="margin-bottom: 1rem;">
+                            The repeated use of "down" highlights that Jonah's physical descent mirrors his spiritual digression—a downward spiral of the soul.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- God's Relentless Mercy -->
+                <div style="margin-bottom: 2rem;">
+                    <button class="accordion-button active" onclick="toggleAccordion(this)">
+                        <span>💙 God's Relentless Mercy: Greater Than Our Rebellion</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content active" style="padding: 1.5rem 0;">
+                        <p style="margin-bottom: 1.5rem; font-size: 1.125rem; color: var(--ocean-deep); font-weight: 500;">
+                            Juxtaposed against Jonah's overt deceit and rebellion is the mercy of God. Throughout the entire book, we see mercy laced everywhere—toward people who seemingly don't deserve it, including Jonah himself.
+                        </p>
+
+                        <h4 style="color: var(--ocean-mid); margin: 1.5rem 0 1rem; font-size: 1.25rem;">
+                            🌍 Mercy to the Ninevites
+                        </h4>
+
+                        <div class="bible-verse">
+                            <p style="margin-bottom: 0.75rem;"><strong>Jonah 1:2; 3:1-2, 10 (NIV)</strong></p>
+                            <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                "Go to the great city of Nineveh and preach against it, because its wickedness has come up before me."
+                            </p>
+                            <p style="font-style: italic; margin-bottom: 0.5rem; margin-top: 0.75rem;">
+                                "Then the word of the Lord came to Jonah a second time: 'Go to the great city of Nineveh and proclaim to it the message I give you.'"
+                            </p>
+                            <p style="font-style: italic; margin-top: 0.75rem;">
+                                "When God saw what they did and how they turned from their evil ways, he relented and did not bring on them the destruction he had threatened."
+                            </p>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">
+                            These were the people who perfected skinning humans alive. The most cruel, evil people imaginable. Yet God:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li>Wanted to warn them</li>
+                            <li>Gave them a chance to repent</li>
+                            <li>Sent a prophet (twice!) to reach them</li>
+                            <li>Relented from destruction when they turned from evil</li>
+                        </ul>
+
+                        <h4 style="color: var(--ocean-mid); margin: 1.5rem 0 1rem; font-size: 1.25rem;">
+                            ⚓ Mercy to the Ship's Crew
+                        </h4>
+
+                        <div class="bible-verse">
+                            <p style="margin-bottom: 0.75rem;"><strong>Jonah 1:16 (NIV)</strong></p>
+                            <p style="font-style: italic;">
+                                "At this the men greatly feared the Lord, and they offered a sacrifice to the Lord and made vows to him."
+                            </p>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">
+                            These unsuspecting passengers and crew members encountered Jonah's God through this storm. The word used is "Yahweh"—they came to faith in Jonah's God. 
+                        </p>
+
+                        <div class="key-point">
+                            <p style="font-size: 1.125rem; margin-bottom: 0.75rem;">
+                                🤔 <strong>Powerful Question:</strong>
+                            </p>
+                            <p style="font-size: 1rem;">
+                                Would witnessing this have been enough for you to believe in God? They did. The very people Jonah didn't want to engage, who he didn't want God's blessing to reach—a revival breaks out among them on the boat!
+                            </p>
+                        </div>
+
+                        <h4 style="color: var(--ocean-mid); margin: 1.5rem 0 1rem; font-size: 1.25rem;">
+                            🐋 Mercy to Jonah
+                        </h4>
+
+                        <div style="display: grid; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="background: linear-gradient(135deg, var(--wave-foam), white); padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid var(--ocean-mid);">
+                                <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                    <strong>Jonah 1:17:</strong> "Now the Lord provided a huge fish to swallow Jonah, and Jonah was in the belly of the fish three days and three nights."
+                                </p>
+                                <p style="margin-top: 0.75rem; font-size: 0.95rem;">
+                                    God <strong>provided</strong> the fish—not as punishment, but as rescue. Without it, Jonah would have drowned.
+                                </p>
+                            </div>
+
+                            <div style="background: linear-gradient(135deg, var(--wave-foam), white); padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid var(--ocean-mid);">
+                                <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                    <strong>Jonah 2:10:</strong> "And the Lord commanded the fish, and it vomited Jonah onto dry land."
+                                </p>
+                                <p style="margin-top: 0.75rem; font-size: 0.95rem;">
+                                    God <strong>commanded</strong> the fish to deliver Jonah safely to land—giving him another chance.
+                                </p>
+                            </div>
+
+                            <div style="background: linear-gradient(135deg, var(--wave-foam), white); padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid var(--ocean-mid);">
+                                <p style="font-style: italic; margin-bottom: 0.5rem;">
+                                    <strong>Jonah 4:6:</strong> "Then the Lord God provided a leafy plant and made it grow up over Jonah to give shade for his head to ease his discomfort."
+                                </p>
+                                <p style="margin-top: 0.75rem; font-size: 0.95rem;">
+                                    Even when Jonah was angry and sulking, God <strong>provided</strong> shade and comfort.
+                                </p>
+                            </div>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">
+                            Over and over throughout the book, we see:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1.5rem; list-style-type: disc;">
+                            <li>God <strong>provides</strong></li>
+                            <li>God <strong>leads</strong></li>
+                            <li>God <strong>commands</strong></li>
+                            <li>God <strong>relents</strong></li>
+                            <li>God shows <strong>mercy</strong></li>
+                        </ul>
+
+                        <div class="quote-box">
+                            <p style="margin-bottom: 0.5rem; font-size: 1.125rem;">
+                                "We see mercy pouring out, juxtaposed against this prophet who does no good. And God says, 'My mercy is greater still.'"
+                            </p>
+                            <cite style="font-size: 0.875rem; opacity: 0.8;">— Pastor Brett</cite>
+                        </div>
+
+                        <div class="key-point" style="background: linear-gradient(135deg, var(--sunset), #c25a2f); margin-top: 2rem;">
+                            <p style="font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 700;">
+                                ✨ The Central Truth
+                            </p>
+                            <p style="font-size: 1.125rem;">
+                                Despite all of Jonah's rebellion, disobedience, hard-heartedness, and attempts to flee—God's mercy remains constant, relentless, and greater than we can comprehend. This is the God we serve.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application -->
+                <div style="margin-bottom: 2rem;">
+                    <button class="accordion-button active" onclick="toggleAccordion(this)">
+                        <span>🙏 The Call to Surrender: Where Are We Like Jonah?</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content active" style="padding: 1.5rem 0;">
+                        <p style="margin-bottom: 1.5rem; font-size: 1.125rem; color: var(--ocean-deep); font-weight: 500;">
+                            It's a great place for us to ask ourselves: Where can I be like Jonah? We're all a little Jonah-ish. Don't beat yourself up—but do examine your heart.
+                        </p>
+
+                        <h4 style="color: var(--ocean-mid); margin: 1.5rem 0 1rem; font-size: 1.25rem;">
+                            🔍 Self-Examination Questions
+                        </h4>
+
+                        <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+                            <div class="reflection-card">
+                                <p style="font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.5rem;">
+                                    👥 Are there people in my life that I look down upon or judge?
+                                </p>
+                                <p style="font-size: 0.95rem;">
+                                    People I'm unreconciled with? People that I need to be tender and long-suffering with, like God is with me, but I just don't want to?
+                                </p>
+                            </div>
+
+                            <div class="reflection-card">
+                                <p style="font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.5rem;">
+                                    🤝 Do Peter's words need to capture me?
+                                </p>
+                                <p style="font-size: 0.95rem;">
+                                    "Because you say so, I will"—even when I don't want to, even when it goes against my preferences or expertise.
+                                </p>
+                            </div>
+
+                            <div class="reflection-card">
+                                <p style="font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.5rem;">
+                                    📏 Where do I make excuses for keeping distance from God?
+                                </p>
+                                <p style="font-size: 0.95rem;">
+                                    What's my cocktail of reasons for not moving closer? My disappointments? Unanswered prayers? Hypocritical Christians I've encountered?
+                                </p>
+                            </div>
+
+                            <div class="reflection-card">
+                                <p style="font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.5rem;">
+                                    🏗️ What airtight case have I constructed?
+                                </p>
+                                <p style="font-size: 0.95rem;">
+                                    What justifications have I built to maintain a "respectful distance" from God rather than true closeness?
+                                </p>
+                            </div>
+
+                            <div class="reflection-card">
+                                <p style="font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.5rem;">
+                                    💔 What bitterness needs to be rooted out?
+                                </p>
+                                <p style="font-size: 0.95rem;">
+                                    What accumulated hurts, disappointments, or grievances am I watering and feeding instead of putting to death?
+                                </p>
+                            </div>
+
+                            <div class="reflection-card">
+                                <p style="font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.5rem;">
+                                    🗣️ What sin needs to be confessed?
+                                </p>
+                                <p style="font-size: 0.95rem;">
+                                    Not just behavioral sins, but the deeper heart issues—my selfishness, my desire for control, my resistance to God's authority?
+                                </p>
+                            </div>
+                        </div>
+
+                        <h4 style="color: var(--ocean-mid); margin: 2rem 0 1rem; font-size: 1.25rem;">
+                            🕊️ The Path Forward
+                        </h4>
+
+                        <div class="key-point">
+                            <p style="font-size: 1.125rem; margin-bottom: 0.75rem;">
+                                ✅ <strong>Don't Beat Yourself Up</strong>
+                            </p>
+                            <p style="font-size: 1rem; margin-bottom: 1rem;">
+                                We're all prone to wander. We're all a little Jonah-ish. God knows this about us.
+                            </p>
+                            
+                            <p style="font-size: 1.125rem; margin-bottom: 0.75rem;">
+                                🌱 <strong>Take Action</strong>
+                            </p>
+                            <ul style="font-size: 1rem; margin-left: 1.5rem; margin-bottom: 1rem; list-style-type: disc;">
+                                <li>Get rid of bitterness</li>
+                                <li>Deal with disappointment</li>
+                                <li>Confess your sin</li>
+                                <li>Surrender conflicting opinions</li>
+                            </ul>
+
+                            <p style="font-size: 1.125rem; margin-bottom: 0.75rem;">
+                                💙 <strong>Remember God's Mercy</strong>
+                            </p>
+                            <p style="font-size: 1rem;">
+                                His mercy is greater still. One day it will be overwhelming to know that this God was patient, kind, and long-suffering—waiting, longing for us to come into humble surrender to Him.
+                            </p>
+                        </div>
+
+                        <div class="quote-box" style="margin-top: 2rem;">
+                            <p style="margin-bottom: 0.5rem; font-size: 1.125rem;">
+                                "All the while God is saying, 'Come near.' That's what He longs for... God, you are worth it. You are worth my full surrender, my complete trust, my whole heart."
+                            </p>
+                            <cite style="font-size: 0.875rem; opacity: 0.8;">— Pastor Brett</cite>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, var(--ocean-light), var(--ocean-mid)); color: white; padding: 2rem; border-radius: 1rem; margin-top: 2rem;">
+                            <p style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; text-align: center;">
+                                🙌 We are always moving—either closer to God or further away
+                            </p>
+                            <p style="font-size: 1.125rem; text-align: center;">
+                                God beckons. God woos. God invites. We choose to step into it, knowing we are always welcome.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses-tab" class="tab-content">
+            <div class="section-card">
+                <h2 style="font-size: 2rem; color: var(--ocean-deep); margin-bottom: 1.5rem;">
+                    📖 Key Bible Passages
+                </h2>
+
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--ocean-mid); margin-bottom: 1rem; font-size: 1.5rem;">
+                        🌊 Jonah Chapter 1 (NIV)
+                    </h3>
+                    <div class="bible-verse">
+                        <p style="font-weight: 600; margin-bottom: 1rem;">Jonah Flees From the Lord</p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            <sup>1</sup> The word of the Lord came to Jonah son of Amittai: <sup>2</sup> "Go to the great city of Nineveh and preach against it, because its wickedness has come up before me."
+                        </p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            <sup>3</sup> But Jonah ran away from the Lord and headed for Tarshish. He went down to Joppa, where he found a ship bound for that port. After paying the fare, he went aboard and sailed for Tarshish to flee from the Lord.
+                        </p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            <sup>4</sup> Then the Lord sent a great wind on the sea, and such a violent storm arose that the ship threatened to break up. <sup>5</sup> All the sailors were afraid and each cried out to his own god. And they threw the cargo into the sea to lighten the ship.
+                        </p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            But Jonah had gone below deck, where he lay down and fell into a deep sleep. <sup>6</sup> The captain went to him and said, "How can you sleep? Get up and call on your god! Maybe he will take notice of us so that we will not perish."
+                        </p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            <sup>7</sup> Then the sailors said to each other, "Come, let us cast lots to find out who is responsible for this calamity." They cast lots and the lot fell on Jonah. <sup>8</sup> So they asked him, "Tell us, who is responsible for making all this trouble for us? What kind of work do you do? Where do you come from? What is your country? From what people are you?"
+                        </p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            <sup>9</sup> He answered, "I am a Hebrew and I worship the Lord, the God of heaven, who made the sea and the dry land."
+                        </p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            <sup>10</sup> This terrified them and they asked, "What have you done?" (They knew he was running away from the Lord, because he had already told them so.)
+                        </p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            <sup>11</sup> The sea was getting rougher and rougher. So they asked him, "What should we do to you to make the sea calm down for us?"
+                        </p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            <sup>12</sup> "Pick me up and throw me into the sea," he replied, "and it will become calm. I know that it is my fault that this great storm has come upon you."
+                        </p>
+                        
+                        <p style="margin-bottom: 0.75rem;">
+                            <sup>13</sup> Instead, the men did their best to row back to land. But they could not, for the sea grew even wilder than before. <sup>14</sup> Then they cried out to the Lord, "Please, Lord, do not let us die for taking this man's life. Do not hold us accountable for killing an innocent man, for you, Lord, have done as you pleased." <sup>15</sup> Then they took Jonah and threw him overboard, and the raging sea grew calm.
+                        </p>
+                        
+                        <p style="margin-bottom: 0;">
+                            <sup>16</sup> At this the men greatly feared the Lord, and they offered a sacrifice to the Lord and made vows to him.
+                        </p>
+                        
+                        <p style="margin-top: 1rem; font-weight: 600;">
+                            Jonah's Prayer
+                        </p>
+                        
+                        <p>
+                            <sup>17</sup> Now the Lord provided a huge fish to swallow Jonah, and Jonah was in the belly of the fish three days and three nights.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--ocean-mid); margin-bottom: 1rem; font-size: 1.5rem;">
+                        ⚓ Supporting Verses on Running from God
+                    </h3>
+                    
+                    <div class="bible-verse">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">Hebrews 12:15 (NIV)</p>
+                        <p style="font-style: italic;">
+                            "See to it that no one falls short of the grace of God and that no bitter root grows up to cause trouble and defile many."
+                        </p>
+                    </div>
+
+                    <div class="bible-verse">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">1 John 1:8-10 (NIV)</p>
+                        <p style="font-style: italic;">
+                            "If we claim to be without sin, we deceive ourselves and the truth is not in us. If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness. If we claim we have not sinned, we make him out to be a liar and his word is not in us."
+                        </p>
+                    </div>
+
+                    <div class="bible-verse">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">Luke 5:8 (NIV)</p>
+                        <p style="font-style: italic;">
+                            "When Simon Peter saw this, he fell at Jesus' knees and said, 'Go away from me, Lord; I am a sinful man!'"
+                        </p>
+                    </div>
+
+                    <div class="bible-verse">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">James 5:16 (NIV)</p>
+                        <p style="font-style: italic;">
+                            "Therefore confess your sins to each other and pray for each other so that you may be healed. The prayer of a righteous person is powerful and effective."
+                        </p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--ocean-mid); margin-bottom: 1rem; font-size: 1.5rem;">
+                        💙 Verses on God's Mercy & Our Response
+                    </h3>
+
+                    <div class="bible-verse">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">1 Peter 5:7 (NIV)</p>
+                        <p style="font-style: italic;">
+                            "Cast all your anxiety on him because he cares for you."
+                        </p>
+                    </div>
+
+                    <div class="bible-verse">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">Hebrews 12:2 (NIV)</p>
+                        <p style="font-style: italic;">
+                            "Fixing our eyes on Jesus, the pioneer and perfecter of faith. For the joy set before him he endured the cross, scorning its shame, and sat down at the right hand of the throne of God."
+                        </p>
+                    </div>
+
+                    <div class="bible-verse">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">Luke 5:4-5 (NIV) - Peter's Obedience</p>
+                        <p style="font-style: italic;">
+                            "When he had finished speaking, he said to Simon, 'Put out into deep water, and let down the nets for a catch.' Simon answered, 'Master, we've worked hard all night and haven't caught anything. But because you say so, I will let down the nets.'"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application-tab" class="tab-content">
+            <div class="section-card">
+                <h2 style="font-size: 2rem; color: var(--ocean-deep); margin-bottom: 1.5rem;">
+                    💡 Practical Application
+                </h2>
+
+                <div style="background: linear-gradient(135deg, var(--ocean-light), var(--ocean-mid)); color: white; padding: 2rem; border-radius: 1rem; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">
+                        🎯 Central Challenge
+                    </h3>
+                    <p style="font-size: 1.125rem; line-height: 1.8;">
+                        Stop running in sophisticated ways. Identify where you're backing away from God, and choose to move closer instead. Remember: you're either moving toward God or away from Him—there's no neutral ground.
+                    </p>
+                </div>
+
+                <h3 style="color: var(--ocean-mid); margin: 2rem 0 1rem; font-size: 1.5rem;">
+                    🔧 Four Areas for Action
+                </h3>
+
+                <div style="display: grid; gap: 1.5rem;">
+                    <div style="background: white; border: 2px solid var(--wave-foam); border-radius: 1rem; padding: 1.5rem;">
+                        <h4 style="color: var(--ocean-deep); font-size: 1.25rem; margin-bottom: 1rem;">
+                            1️⃣ Deal with Accumulated Bitterness
+                        </h4>
+                        
+                        <p style="margin-bottom: 1rem; font-weight: 600; color: var(--ocean-mid);">
+                            📝 This Week's Action:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li>Write down 3 things you're bitter about (relationships, circumstances, disappointments)</li>
+                            <li>For each one, ask: "Am I holding onto this? Am I watering and feeding this bitterness?"</li>
+                            <li>Pray specifically: "God, I confess my bitterness about _____. I choose to release this to you."</li>
+                            <li>If needed, confess to a trusted friend for accountability</li>
+                        </ul>
+
+                        <p style="background: var(--wave-foam); padding: 1rem; border-radius: 0.5rem; font-style: italic;">
+                            💭 Remember: "See to it that no root of bitterness grows up to cause trouble" (Hebrews 12:15). Don't give bitterness room to grow.
+                        </p>
+                    </div>
+
+                    <div style="background: white; border: 2px solid var(--wave-foam); border-radius: 1rem; padding: 1.5rem;">
+                        <h4 style="color: var(--ocean-deep); font-size: 1.25rem; margin-bottom: 1rem;">
+                            2️⃣ Process Your Disappointment
+                        </h4>
+                        
+                        <p style="margin-bottom: 1rem; font-weight: 600; color: var(--ocean-mid);">
+                            📝 This Week's Action:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li>List your current disappointments (finances, health, relationships, career, etc.)</li>
+                            <li>Ask: "What conclusions am I making? Do I feel victimized? Do I think life is more unfair to me?"</li>
+                            <li>Meditate on this truth: "God is not life. God is good even when life is hard."</li>
+                            <li>Practice: "Cast all your anxiety on him because he cares for you" (1 Peter 5:7)</li>
+                            <li>Fix your eyes on Jesus instead of comparing your life to others</li>
+                        </ul>
+
+                        <p style="background: var(--wave-foam); padding: 1rem; border-radius: 0.5rem; font-style: italic;">
+                            💭 Remember: God is El Roi—the God who sees. He understands your pain, but He is not the source of it. Don't confuse God with life's circumstances.
+                        </p>
+                    </div>
+
+                    <div style="background: white; border: 2px solid var(--wave-foam); border-radius: 1rem; padding: 1.5rem;">
+                        <h4 style="color: var(--ocean-deep); font-size: 1.25rem; margin-bottom: 1rem;">
+                            3️⃣ Confess Unconfessed Sin
+                        </h4>
+                        
+                        <p style="margin-bottom: 1rem; font-weight: 600; color: var(--ocean-mid);">
+                            📝 This Week's Action:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li>Set aside time for honest self-examination (not just behaviors, but motives and thoughts)</li>
+                            <li>Ask: "What do I really want? Blessings without direction? A Santa Claus God?"</li>
+                            <li>Confess to God: "I don't fully trust you. I'm guarded. I want control. I have limitations on my obedience."</li>
+                            <li>If appropriate, confess to a trusted friend for healing and accountability</li>
+                            <li>Remember: forgiveness is already granted at the cross—confession restores intimacy</li>
+                        </ul>
+
+                        <p style="background: var(--wave-foam); padding: 1rem; border-radius: 0.5rem; font-style: italic;">
+                            💭 Remember: "If we confess our sins, he is faithful and just and will forgive us" (1 John 1:9). Confession means to agree with God about our sin.
+                        </p>
+                    </div>
+
+                    <div style="background: white; border: 2px solid var(--wave-foam); border-radius: 1rem; padding: 1.5rem;">
+                        <h4 style="color: var(--ocean-deep); font-size: 1.25rem; margin-bottom: 1rem;">
+                            4️⃣ Surrender Conflicting Opinions
+                        </h4>
+                        
+                        <p style="margin-bottom: 1rem; font-weight: 600; color: var(--ocean-mid);">
+                            📝 This Week's Action:
+                        </p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem; list-style-type: disc;">
+                            <li>Identify areas where you disagree with God's direction or wisdom</li>
+                            <li>Ask: "Where am I saying 'Stay in your lane, God' about my life, career, relationships, or calling?"</li>
+                            <li>Practice Peter's response: Write it down and pray it: "Because you say so, I will"</li>
+                            <li>Obey even when you don't want to—especially when you don't want to</li>
+                            <li>Remember: trusting God is a logical decision, not an outlandish one</li>
+                        </ul>
+
+                        <p style="background: var(--wave-foam); padding: 1rem; border-radius: 0.5rem; font-style: italic;">
+                            💭 Remember: Faith is tested when you obey but don't want to. "On the outside I'm buckled, but on the inside I'm running everywhere"—acknowledge the tension, but choose obedience anyway.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, var(--sunset), #c25a2f); color: white; padding: 2rem; border-radius: 1rem; margin-top: 2rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">
+                        🎯 This Week's Challenge
+                    </h3>
+                    <p style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 1rem;">
+                        Choose ONE of the four areas above and take concrete action this week. Don't try to fix everything at once—start where God is prompting you most strongly.
+                    </p>
+                    <p style="font-size: 1rem; font-style: italic;">
+                        Share your commitment with one trusted friend who can pray for you and check in with you.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection-tab" class="tab-content">
+            <div class="section-card">
+                <h2 style="font-size: 2rem; color: var(--ocean-deep); margin-bottom: 1.5rem;">
+                    🤔 Questions for Reflection
+                </h2>
+
+                <p style="margin-bottom: 2rem; font-size: 1.125rem; line-height: 1.8;">
+                    Set aside time this week to honestly consider these questions. You might journal your responses, discuss them with a friend, or bring them to God in prayer.
+                </p>
+
+                <div style="display: grid; gap: 1.5rem;">
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            1. 🏃 How Am I Running?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            Jonah's running was obvious—he bought a ticket to the other side of the world. How is my running more sophisticated? Am I:
+                        </p>
+                        <ul style="margin-left: 2rem; list-style-type: disc;">
+                            <li>Avoiding people who remind me of God?</li>
+                            <li>Making conversations less about God and more about other things?</li>
+                            <li>Showing up physically but with a dead or hard heart?</li>
+                            <li>Performing outwardly while distant inwardly?</li>
+                        </ul>
+                    </div>
+
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            2. 💔 What's My Root of Bitterness?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            What small disappointments have I allowed to accumulate? What relationships, circumstances, or unmet expectations am I holding onto? Am I watering and feeding bitterness instead of embracing God's grace?
+                        </p>
+                        <p style="font-style: italic; color: var(--text-light);">
+                            Be specific: Name the bitterness. Write it down. Confess it to God and ask Him to help you release it.
+                        </p>
+                    </div>
+
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            3. 😔 How Do I Handle Disappointment?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            When life doesn't go as planned, what conclusions do I make? Do I:
+                        </p>
+                        <ul style="margin-left: 2rem; list-style-type: disc; margin-bottom: 0.75rem;">
+                            <li>Feel victimized and mistreated?</li>
+                            <li>Believe life is more unfair to me than to others?</li>
+                            <li>Confuse God's character with life's circumstances?</li>
+                            <li>Compare myself to others and become envious or smug?</li>
+                        </ul>
+                        <p style="font-style: italic; color: var(--text-light);">
+                            Remember: God is not life. God is good even when life is hard. How can I better fix my eyes on Jesus this week?
+                        </p>
+                    </div>
+
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            4. 🎭 What Am I Confessing Truthfully While Fleeing?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            Jonah declared "I worship the Lord" while running from Him. Where am I highlighting my obedience in one area to justify my disobedience in another? What "good spiritual decisions" am I using to balance out my rebellion?
+                        </p>
+                    </div>
+
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            5. 🤐 What Sin Remains Unconfessed?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            Beyond behaviors, what about my motives, thoughts, and heart attitudes? Where do I want:
+                        </p>
+                        <ul style="margin-left: 2rem; list-style-type: disc; margin-bottom: 0.75rem;">
+                            <li>Blessings without direction?</li>
+                            <li>A Santa Claus God instead of a sovereign Lord?</li>
+                            <li>To tell God how to bless me rather than surrender to His wisdom?</li>
+                            <li>Control over my life instead of trust in His plan?</li>
+                        </ul>
+                        <p style="font-style: italic; color: var(--text-light);">
+                            Consider: Who is one trusted person I could confess this to for healing and accountability?
+                        </p>
+                    </div>
+
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            6. 👥 Who Are My "Ninevites"?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            Are there people in my life that I:
+                        </p>
+                        <ul style="margin-left: 2rem; list-style-type: disc; margin-bottom: 0.75rem;">
+                            <li>Look down upon or judge?</li>
+                            <li>Can't imagine receiving God's mercy?</li>
+                            <li>Refuse to be tender and long-suffering with?</li>
+                            <li>Am unreconciled with?</li>
+                        </ul>
+                        <p style="font-style: italic; color: var(--text-light);">
+                            God showed mercy to the cruel Ninevites. How is He calling me to extend mercy, forgiveness, or patience to someone I'd rather avoid?
+                        </p>
+                    </div>
+
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            7. 🙏 Where Do I Need to Say "Because You Say So"?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            Like Peter in the boat, where is God asking me to obey even when:
+                        </p>
+                        <ul style="margin-left: 2rem; list-style-type: disc; margin-bottom: 0.75rem;">
+                            <li>I don't want to?</li>
+                            <li>It goes against my expertise or experience?</li>
+                            <li>I'm tired and it seems illogical?</li>
+                            <li>My emotions resist but I know it's right?</li>
+                        </ul>
+                        <p style="font-style: italic; color: var(--text-light);">
+                            Faith is tested when we obey but don't want to. Where is God specifically calling me to trust Him this week?
+                        </p>
+                    </div>
+
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            8. 🤔 What's My "Airtight Case"?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            What justifications have I constructed for keeping God at a distance? My excuses might include:
+                        </p>
+                        <ul style="margin-left: 2rem; list-style-type: disc; margin-bottom: 0.75rem;">
+                            <li>Unanswered prayers from the past</li>
+                            <li>Hypocritical Christians I've encountered</li>
+                            <li>Disappointments that seem unfair</li>
+                            <li>Life circumstances that don't make sense</li>
+                            <li>Areas where I "know better" than God</li>
+                        </ul>
+                        <p style="font-style: italic; color: var(--text-light);">
+                            What if these are just sophisticated ways of backing away from God? What would it look like to surrender these excuses?
+                        </p>
+                    </div>
+
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            9. 💙 Have I Experienced God's Relentless Mercy?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            Reflect on times when:
+                        </p>
+                        <ul style="margin-left: 2rem; list-style-type: disc; margin-bottom: 0.75rem;">
+                            <li>God pursued me when I was running</li>
+                            <li>He provided for me despite my disobedience</li>
+                            <li>He gave me a second chance (or third, or fourth...)</li>
+                            <li>His mercy seemed illogical given my rebellion</li>
+                        </ul>
+                        <p style="font-style: italic; color: var(--text-light);">
+                            How does remembering God's past mercy help me trust Him in my current situation?
+                        </p>
+                    </div>
+
+                    <div class="reflection-card">
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.75rem;">
+                            10. 🎯 What's My Next Step?
+                        </p>
+                        <p style="margin-bottom: 0.75rem;">
+                            Based on this sermon, what is ONE concrete action I will take this week to move closer to God instead of backing away? Will I:
+                        </p>
+                        <ul style="margin-left: 2rem; list-style-type: disc; margin-bottom: 0.75rem;">
+                            <li>Confess specific sin to God or a trusted friend?</li>
+                            <li>Release bitterness about a particular situation?</li>
+                            <li>Reach out to someone I've been judging or avoiding?</li>
+                            <li>Obey in an area where I've been resisting?</li>
+                            <li>Process my disappointment through prayer and Scripture?</li>
+                        </ul>
+                        <p style="font-style: italic; color: var(--text-light);">
+                            Who will I share this commitment with for accountability?
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, var(--ocean-light), var(--ocean-mid)); color: white; padding: 2rem; border-radius: 1rem; margin-top: 2rem;">
+                    <p style="font-size: 1.25rem; font-weight: 600; text-align: center; margin-bottom: 1rem;">
+                        🌊 Final Reflection
+                    </p>
+                    <p style="font-size: 1.125rem; text-align: center; line-height: 1.8;">
+                        "God, we pray that we would be tender before you, that you would convict us when we construct excuses or margin or something that prevents us from moving closer to you. We are always moving closer or further away. We thank you that you beckon, that you woo, that you invite us, and we choose to step into it, knowing we are always welcome."
+                    </p>
+                    <p style="text-align: center; margin-top: 1rem; font-style: italic; opacity: 0.9;">
+                        — Closing Prayer, Pastor Brett
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.5rem; color: var(--ocean-deep);">🔗 Share This Sermon</h3>
+                <button onclick="closeShareModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-light);">×</button>
+            </div>
+            
+            <p style="margin-bottom: 1.5rem; color: var(--text-light);">
+                Share this sermon infographic with friends and family
+            </p>
+
+            <div style="display: grid; gap: 1rem;">
+                <button onclick="shareVia('twitter')" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                    🐦 Share on Twitter
+                </button>
+                <button onclick="shareVia('facebook')" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                    📘 Share on Facebook
+                </button>
+                <button onclick="shareVia('whatsapp')" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                    💬 Share on WhatsApp
+                </button>
+                <button onclick="copyLink()" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                    📋 Copy Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Tooltip -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <span class="attribution-short">ℹ️</span>
+        <span class="attribution-full">Generated by LLM with supervision by <a href="../index.html" style="color: var(--ocean-mid); text-decoration: underline;">benjaminficusmicrocarpa</a>. <a href="../license.html" style="color: var(--ocean-mid); text-decoration: underline;">MIT License</a></span>
+    </div>
+
+    <script>
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-image');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 5000);
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion functionality
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const isActive = button.classList.contains('active');
+            
+            button.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        // Tooltip functionality
+        const tooltip = document.getElementById('tooltip');
+        const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
+        
+        tooltipTriggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', function() {
+                const text = this.getAttribute('data-tooltip');
+                tooltip.textContent = text;
+                tooltip.classList.add('show');
+            });
+            
+            trigger.addEventListener('mouseleave', function() {
+                tooltip.classList.remove('show');
+            });
+        });
+
+        // Modal functions
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('active');
+        }
+        
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('active');
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('shareModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareModal();
+            }
+        });
+
+        // Share functions
+        function shareVia(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('Turning Tides: You Can Run, But You Can\'t Hide - Island ECC');
+            
+            const shareUrls = {
+                twitter: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+                whatsapp: `https://wa.me/?text=${title}%20${url}`
+            };
+            
+            if (shareUrls[platform]) {
+                window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+            }
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copied to clipboard!');
+                closeShareModal();
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeShareModal();
+            }
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

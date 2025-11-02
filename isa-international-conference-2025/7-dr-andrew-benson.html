@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimising Tree Responses to Root Pruning - Dr. Andrew Benson</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --primary: #2d5016;
+            --secondary: #7d8f3f;
+            --accent: #c4a24c;
+            --dark: #1a2e0a;
+            --light: #f4f1e8;
+            --overlay: rgba(29, 46, 10, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            animation: kenBurns 20s ease-in-out infinite;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        @keyframes kenBurns {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--overlay) 0%, rgba(125, 143, 63, 0.6) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .header-content {
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 2rem;
+        }
+        
+        .header-content h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header-meta {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin-bottom: 1.5rem;
+            color: rgba(255,255,255,0.95);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-primary:hover {
+            background-color: #d4b05c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(196, 162, 76, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tab-nav {
+            display: flex;
+            overflow-x: auto;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .tab-button {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button:hover {
+            background-color: rgba(125, 143, 63, 0.1);
+        }
+        
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 3rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .accordion-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            background-color: var(--secondary);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background-color: var(--primary);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .accordion-inner {
+            padding: 1.5rem;
+        }
+        
+        .tooltip-trigger {
+            position: relative;
+            color: var(--accent);
+            cursor: help;
+            border-bottom: 1px dotted var(--accent);
+        }
+        
+        .tooltip-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+            max-width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .tooltip-box.show {
+            display: block;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            animation: modalSlide 0.3s ease;
+        }
+        
+        @keyframes modalSlide {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .share-btn {
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            font-weight: 600;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-size: 0.85rem;
+            max-width: 300px;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-badge a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .attribution-badge {
+                font-size: 0.75rem;
+                padding: 0.5rem 0.75rem;
+                max-width: 200px;
+            }
+            
+            .tooltip-box {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+        }
+
+        /* Unified attribution hover behavior */
+        .attribution-short { display: block; color: var(--primary); font-weight: 700; }
+        .attribution-full { display: none; }
+        .attribution-badge:hover .attribution-short { display: none; }
+        .attribution-badge:hover .attribution-full { display: block; }
+        
+        .image-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .image-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .image-box {
+            background: #f9f9f9;
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            height: 200px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(125, 143, 63, 0.1) 0%, rgba(196, 162, 76, 0.1) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .data-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .data-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 0.5rem;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        @media print {
+            .sticky-tabs, .btn-group, .attribution-badge, .share-modal {
+                display: none !important;
+            }
+            
+            .tab-content {
+                display: block !important;
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Carousel -->
+    <header class="carousel-container">
+        <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1920&q=80');"></div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=80');"></div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80');"></div>
+        
+        <div class="header-overlay">
+            <div class="header-content">
+                <h1>🌳 Optimising Tree Responses to Root Pruning</h1>
+                <div class="header-meta">
+                    <p><strong>Dr. Andrew Benson</strong></p>
+                    <p>Urban Tree Ecophysiologist, The Tree Consultancy Company, New Zealand</p>
+                    <p>📅 28 October 2025 | ISA Hong Kong Chapter International Conference</p>
+                </div>
+                <div class="btn-group">
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> View All Sessions
+                    </a>
+                    <button onclick="openShareModal()" class="btn btn-primary">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs Navigation -->
+    <nav class="sticky-tabs">
+        <div class="tab-nav">
+            <button class="tab-button active" onclick="switchTab('overview')">
+                <i class="fas fa-info-circle"></i> Overview
+            </button>
+            <button class="tab-button" onclick="switchTab('research')">
+                <i class="fas fa-flask"></i> Research
+            </button>
+            <button class="tab-button" onclick="switchTab('methods')">
+                <i class="fas fa-cogs"></i> Methods
+            </button>
+            <button class="tab-button" onclick="switchTab('results')">
+                <i class="fas fa-chart-line"></i> Results
+            </button>
+            <button class="tab-button" onclick="switchTab('practical')">
+                <i class="fas fa-tools"></i> Practical Applications
+            </button>
+            <button class="tab-button" onclick="switchTab('speaker')">
+                <i class="fas fa-user"></i> Speaker Bio
+            </button>
+        </div>
+    </nav>
+
+    <!-- Tab Contents -->
+    <main>
+        <!-- Overview Tab -->
+        <section id="overview" class="tab-content active">
+            <h2><span class="emoji">🌿</span>Conference Overview</h2>
+            <div class="highlight-box">
+                <h3>ISA Hong Kong Chapter - International Conference 2025</h3>
+                <p><strong>Theme:</strong> Arboriculture & Urban Forestry</p>
+                <p><strong>Date:</strong> 28 October 2025</p>
+            </div>
+
+            <h3><span class="emoji">📋</span>Presentation Abstract</h3>
+            <p>A long history of research and experience has informed current best practices on the timing and methods used during branch pruning. However, comparatively little is known about root pruning.</p>
+            
+            <p>To improve our understanding, three roots from each of 32 mature <span class="tooltip-trigger" data-tooltip="platanus">Platanus × acerifolia</span> trees were selected and severed in October 2020 and April 2021, representing southern hemisphere spring and autumn pruning timings, respectively.</p>
+            
+            <p>Roots were pruned <span class="tooltip-trigger" data-tooltip="internode">internodally</span> (leaving a stub) or at a <span class="tooltip-trigger" data-tooltip="junction">junction</span> (to a side root). Three years after these treatments were imposed, pruned roots were re-exposed using an <span class="tooltip-trigger" data-tooltip="airspade">air cultivation tool</span>, excised, and root regrowth responses were recorded.</p>
+            
+            <p>Roots were then dissected and the area of discoloured/dysfunctional wood around the pruning cut measured. This presentation explores the results of the experiment, including how the growth of new roots produced following pruning was affected by the position of the pruning cuts, and how the season the roots were cut affected the discoloured area of the dissected roots.</p>
+
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-tree"></i> Study Species</h4>
+                    <p>32 mature London Plane trees (Platanus × acerifolia)</p>
+                    <p><strong>DBH:</strong> ~1.2 meters (4 feet)</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-map-marker-alt"></i> Location</h4>
+                    <p>Hagley Park, Christchurch, New Zealand</p>
+                    <p>Dual row along western boundary</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-calendar-alt"></i> Timeline</h4>
+                    <p><strong>Spring Pruning:</strong> October 2020</p>
+                    <p><strong>Autumn Pruning:</strong> April 2021</p>
+                    <p><strong>Re-excavation:</strong> October 2023, April 2024</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-seedling"></i> New Roots Counted</h4>
+                    <p><strong>Total:</strong> 2,072 new roots</p>
+                    <p><strong>Diameter:</strong> 1-3mm (beardy regrowth)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Tab -->
+        <section id="research" class="tab-content">
+            <h2><span class="emoji">🔬</span>Research Questions</h2>
+            
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Question 1: Location of Pruning Cuts</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" style="max-height: 1000px;">
+                    <div class="accordion-inner">
+                        <p><strong>Do tree roots respond differently when they are severed at different locations?</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li><strong>Internodal cuts:</strong> Leaving a stub (similar to topping a branch)</li>
+                            <li><strong>Junction cuts:</strong> Reduction cuts back to side roots (similar to branch reduction)</li>
+                        </ul>
+                        
+                        <div class="image-comparison">
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>Internode Cut<br/>(Stub Left)</span>
+                                </div>
+                                <p><strong>Expected:</strong> More epicormic-like response</p>
+                            </div>
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>Junction Cut<br/>(To Side Root)</span>
+                                </div>
+                                <p><strong>Expected:</strong> Side root assumes terminal role</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <p><strong>🔑 Key Concept:</strong> Similar to branch pruning, where aspect ratio (ratio of remaining branch diameter to removed branch diameter) affects <span class="tooltip-trigger" data-tooltip="compartment">compartmentalization</span> success.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Question 2: Timing of Pruning</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p><strong>Do tree roots respond differently when they are severed before or after an active growing season?</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li><strong>Spring pruning:</strong> October 2020 (Southern Hemisphere)</li>
+                            <li><strong>Autumn pruning:</strong> April 2021 (Southern Hemisphere)</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <h4>Seasonal Considerations</h4>
+                            <p><strong>Spring Hypotheses:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Warm, moist soil conditions favorable for fungal activity</li>
+                                <li>Carbohydrates moving upward to support leaf growth</li>
+                                <li>Potentially compromised compartmentalization</li>
+                            </ul>
+                            
+                            <p><strong>Autumn Hypotheses:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Cold soil temperatures may slow fungal activity</li>
+                                <li>Carbohydrates moving downward from senescing leaves</li>
+                                <li>Energy immediately available at pruning site</li>
+                                <li>Potentially enhanced compartmentalization</li>
+                            </ul>
+                        </div>
+                        
+                        <p><em>Note: These hypotheses were not directly tested but offer possible explanations for observed results.</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Background: Why This Matters</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>🌳 Current Best Practice (ISA Guidance)</h4>
+                        <blockquote style="border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; font-style: italic;">
+                            "Root pruning cuts should be made cleanly using a sharp tool appropriate for the root diameter, leaving a clean cut perpendicular to the direction of growth with bark intact."
+                        </blockquote>
+                        
+                        <p><strong>What's Missing:</strong> The guidance doesn't tell us <em>where</em> and <em>when</em> to cut for optimal results.</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">⚠️ The Challenge</h4>
+                        <p>Working with roots is inherently difficult:</p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Dirty, time-consuming, unpleasant work</li>
+                            <li>Research in this area is scarce</li>
+                            <li>Few researchers want to get involved</li>
+                            <li>Takes significant time and resources</li>
+                        </ul>
+                        
+                        <div class="image-box" style="margin-top: 1.5rem;">
+                            <div class="image-placeholder">
+                                <span>Dr. Benson operating air spade<br/>"Seven days in, covered in filth"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methods Tab -->
+        <section id="methods" class="tab-content">
+            <h2><span class="emoji">⚙️</span>Research Methods</h2>
+            
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Study Site & Tree Selection</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" style="max-height: 1000px;">
+                    <div class="accordion-inner">
+                        <h4>📍 Hagley Park, Christchurch, New Zealand</h4>
+                        <p>Located in the center of Christchurch, featuring:</p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Avon River running through</li>
+                            <li>Botanic gardens</li>
+                            <li>Golf course</li>
+                            <li>Dual row of mature London Plane trees on western boundary</li>
+                        </ul>
+                        
+                        <h4 style="margin-top: 1.5rem;">🌳 Trees</h4>
+                        <div class="data-card">
+                            <p><strong>Species:</strong> Platanus × acerifolia (London Plane)</p>
+                            <p><strong>Number:</strong> 32 trees selected from dual row</p>
+                            <p><strong>Size:</strong> ~1.2m (4ft) DBH - "pretty big trees, quite old"</p>
+                            <p><strong>Roots per tree:</strong> 3 (to minimize harm)</p>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Important:</strong> The study was not designed to stress the trees biologically. Only three roots per tree were selected to understand root responses without causing significant harm.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Root Excavation & Pruning Protocol</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>Step 1: Root Location</h4>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Narrow trench excavated perpendicular to tree</li>
+                            <li>Distance: approximately 3× DBH from trunk</li>
+                            <li>Method: Air spade (pneumatic excavation tool)</li>
+                            <li>Objective: Find 3 suitable roots per tree</li>
+                        </ul>
+                        
+                        <h4 style="margin-top: 1.5rem;">Step 2: Pruning Treatments</h4>
+                        <p><strong>Two treatment types:</strong></p>
+                        
+                        <div class="image-comparison">
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>Internode Treatment<br/>(Stub Left)</span>
+                                </div>
+                                <p>Middle section removed, leaving stub with no side branches</p>
+                            </div>
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>Junction Treatment<br/>(Reduction Cut)</span>
+                                </div>
+                                <p>Cut back to side root, recording aspect ratio (diameter ratio)</p>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Step 3: Root Fragment Analysis</h4>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Removed fragments taken to laboratory</li>
+                            <li>Thin sliver (2-3mm) cut from pruning end</li>
+                            <li>Cross-sectional area measured using leaf area meter</li>
+                            <li>Precise measurements to fraction of square millimeter</li>
+                        </ul>
+                        
+                        <h4 style="margin-top: 1.5rem;">Step 4: Site Marking & Backfilling</h4>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Extensive photography and measurements to relocate roots</li>
+                            <li>Original plan (metal detectors) abandoned due to park users</li>
+                            <li>Trenches backfilled with native Hagley Park soil</li>
+                            <li>Grass seed applied</li>
+                            <li>Three-year waiting period</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <p><strong>⏱️ Timeline:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li><strong>Spring group:</strong> Pruned October 2020 → Re-excavated October 2023</li>
+                                <li><strong>Autumn group:</strong> Pruned April 2021 → Re-excavated April 2024</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Re-excavation & Measurement Protocol</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>Root Recovery</h4>
+                        <p>Three years after initial pruning, roots were carefully re-excavated using the air spade, guided by photographs and measurements.</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">Measurements Taken (within 100mm of cut)</h4>
+                        
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <h4>1️⃣ Number of New Roots</h4>
+                                <p>Total count of all adventitious roots that emerged</p>
+                            </div>
+                            <div class="data-card">
+                                <h4>2️⃣ Position of New Roots</h4>
+                                <p>Distance from cut (0-100mm in 10mm bands)</p>
+                                <p>Quadrant location (1-4, clockwise from top right)</p>
+                            </div>
+                            <div class="data-card">
+                                <h4>3️⃣ Diameter of New Roots</h4>
+                                <p>Measured at point of emergence</p>
+                                <p>Converted to cross-sectional area</p>
+                            </div>
+                            <div class="data-card">
+                                <h4>4️⃣ Total CSA Recovery</h4>
+                                <p>Sum of all new root cross-sectional areas</p>
+                                <p>Expressed as % of parent root CSA</p>
+                                <p><em>(Proxy for hydraulic capacity recovery)</em></p>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Internal Decay Assessment</h4>
+                        <p>After external measurements:</p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Roots washed and dried overnight</li>
+                            <li>Longitudinal section cut through root center</li>
+                            <li>High-resolution photographs taken with ruler for scale</li>
+                            <li>ImageJ software used to measure discoloured area</li>
+                            <li><strong>Decay Index calculated:</strong> Discoloured area ÷ Total root cross-sectional area</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Callus Formation:</strong> A distinctive rib of callus growth was observed almost completely circumferentially on internode cuts (stubs), with intermittent presence on junction cuts. This represents traumatic cambium response attempting to close the wound.</p>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Abandoned Measurement: Root Length</h4>
+                        <p>The first re-excavated root revealed new roots had grown far beyond expectations (1.87m documented). Due to extensive intertwining with the root system and risk of damage, this measurement was abandoned for subsequent samples.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Tab -->
+        <section id="results" class="tab-content">
+            <h2><span class="emoji">📊</span>Research Results</h2>
+            
+            <div class="highlight-box">
+                <h3>Key Finding Summary</h3>
+                <p><strong>✅ Location of pruning cuts DOES affect root response</strong></p>
+                <p><strong>✅ Timing of pruning DOES affect internal discoloration</strong></p>
+                <p><strong>Total new roots counted:</strong> 2,072 across all treatments</p>
+            </div>
+
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Finding 1: Diameter of New Roots</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" style="max-height: 1000px;">
+                    <div class="accordion-inner">
+                        <h4>📏 Result: No Significant Difference</h4>
+                        <p>New root diameter ranged from 1-3mm across all treatments, appearing as "beardy" or "fleshy" non-lignified roots.</p>
+                        
+                        <div class="data-card">
+                            <p><strong>Comparison factors tested:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Internode vs. Junction: <strong>Not significant</strong></li>
+                                <li>Spring vs. Autumn: <strong>Not significant</strong></li>
+                                <li>Interaction effects: <strong>Not significant</strong></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <p><strong>💡 Interpretation:</strong> Regardless of where or when roots were cut, the new roots that regrew were consistently small-diameter feeder roots. This consistency is actually quite interesting as a non-significant result—it suggests root pruning timing and location don't affect the <em>type</em> of roots produced, only the <em>quantity</em> and <em>distribution</em>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Finding 2: Number of New Roots ⭐</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>📈 Result: SIGNIFICANT DIFFERENCE by Location</h4>
+                        
+                        <div class="image-comparison">
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>INTERNODE (Stub)<br/>Significantly MORE roots</span>
+                                </div>
+                                <p style="color: var(--primary); font-weight: bold;">✓ Higher new root production</p>
+                            </div>
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>JUNCTION (Reduction)<br/>Significantly FEWER roots</span>
+                                </div>
+                                <p style="color: var(--secondary); font-weight: bold;">Lower new root production</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h4>🌱 Comparison to Branch Pruning</h4>
+                            <p>This response mirrors what happens with branch pruning:</p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li><strong>Topped branch (stub):</strong> Produces ring of epicormic shoots from cambium</li>
+                                <li><strong>Reduction cut (to side branch):</strong> Side branch assumes terminal role, fewer epicormic shoots</li>
+                                <li><strong>Root response:</strong> Stubs (internode) produce significantly more new roots than reduction cuts (junction)</li>
+                            </ul>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">🤔 Possible Explanations</h4>
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <h4>Hypothesis 1: Hydraulic Compensation</h4>
+                                <p><strong>Junction cuts:</strong> The remaining side root "wakes up" with increased hydraulic activity to compensate for lost capacity.</p>
+                                <p><strong>Internode cuts:</strong> The stub has no nearby "friend" to help, so it must grow many new roots if it wants water.</p>
+                            </div>
+                            <div class="data-card">
+                                <h4>Hypothesis 2: Hormonal Control</h4>
+                                <p>Plant hormones (cytokinins, etc.) from upstream portions of junction-cut roots may suppress new root growth when they reach the pruning cut.</p>
+                                <p><em>Note: Not tested in this study; further research needed.</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Finding 3: Position of New Roots</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>📍 Result: Concentrated Near Cut</h4>
+                        <p>The 100mm parent root section was divided into ten 10mm bands (0-10mm, 10-20mm, etc.) from the pruning cut.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>🎯 Key Finding:</strong> Approximately <strong>3× more roots</strong> emerged within the first 10mm band compared to other positions.</p>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Spatial Distribution Analysis</h4>
+                        <p>Roots were also categorized by quadrant (1-4, clockwise from top right). This spatial mapping revealed:</p>
+                        
+                        <div class="data-card">
+                            <h4>Lower Root Quadrants (3 & 4)</h4>
+                            <p><strong>Significantly greater CSA regrowth</strong> in the lower half of the root</p>
+                            <p><strong>Possible explanation:</strong> Christchurch is very flat with the Avon River nearby, suggesting a high water table. Soil conditions lower down are more favorable to root regrowth, and trees preferentially allocate resources to areas with better hydraulic access.</p>
+                        </div>
+                        
+                        <div class="image-comparison">
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>0-10mm from cut<br/>HIGHEST density</span>
+                                </div>
+                                <p>~3× more roots than other positions</p>
+                            </div>
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>10-100mm from cut<br/>LOWER density</span>
+                                </div>
+                                <p>Relatively uniform distribution</p>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-top: 1.5rem;"><em>This pattern again mirrors branch behavior, where epicormic shoots cluster around the wound edge.</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Finding 4: Hydraulic Capacity Recovery ⭐</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>💧 CSA Regrowth Percent (Crude Proxy for Hydraulic Recovery)</h4>
+                        <p>By summing the cross-sectional areas of all new roots and expressing it as a percentage of the original parent root's cross-sectional area, we get an estimate of how much water-conducting capacity has been recovered.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>🏆 Result: Internode cuts recovered significantly MORE hydraulic capacity than junction cuts</strong></p>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Why Does This Matter?</h4>
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <h4>Higher Recovery = Better</h4>
+                                <p>More cross-sectional area means:</p>
+                                <ul style="margin-left: 1.5rem;">
+                                    <li>Greater ability to move water from soil</li>
+                                    <li>Faster tree recovery from pruning</li>
+                                    <li>Better support for canopy demands</li>
+                                </ul>
+                            </div>
+                            <div class="data-card">
+                                <h4>Internode Advantage</h4>
+                                <p>Because internode cuts produced more new roots (Finding 2), the cumulative cross-sectional area was also greater, even though individual root diameters were the same (Finding 1).</p>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Supporting the Previous Findings</h4>
+                        <p>This result reinforces Finding 2:</p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li><strong>Internode roots → More new roots → More total CSA → More hydraulic recovery</strong></li>
+                            <li><strong>Junction roots → Fewer new roots → Less total CSA → Side root compensates</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Finding 5: Internal Discoloration by Season ⭐</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>🍂 Decay Index: Autumn vs Spring Pruning</h4>
+                        <p>The decay index (discoloured area ÷ total root cross-sectional area) standardizes the extent of internal dysfunction relative to root size.</p>
+                        
+                        <div class="image-comparison">
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>SPRING PRUNING<br/>MORE discoloration</span>
+                                </div>
+                                <p style="color: #d9534f; font-weight: bold;">⚠️ Significantly more brown tissue</p>
+                            </div>
+                            <div class="image-box">
+                                <div class="image-placeholder">
+                                    <span>AUTUMN PRUNING<br/>LESS discoloration</span>
+                                </div>
+                                <p style="color: var(--primary); font-weight: bold;">✓ Significantly less brown tissue</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <p><strong>🎯 Key Finding: Roots pruned in AUTUMN had significantly LESS internal discoloration than those pruned in SPRING</strong></p>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">🤔 Possible Explanations (Hypotheses)</h4>
+                        
+                        <div class="accordion-item" style="margin-top: 1rem;">
+                            <div class="accordion-header" onclick="toggleAccordion(this)" style="font-size: 1rem;">
+                                <h4 style="margin: 0;">Hypothesis 1: Soil Temperature & Fungal Activity</h4>
+                                <i class="fas fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-inner">
+                                    <p><strong>Initial thought:</strong> Cold winter soil temperatures might completely suppress fungal activity.</p>
+                                    <p><strong>Expert consultation:</strong> Wood decay experts advised that cold doesn't stop fungi, but it may <em>slow them down</em>.</p>
+                                    <p><strong>Christchurch winters:</strong> Very cold with significant frost and snow.</p>
+                                    <p><strong>Interpretation:</strong> Slower fungal colonization in autumn-pruned roots may have given trees more time to compartmentalize effectively, resulting in less discoloration three years later.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item" style="margin-top: 0.5rem;">
+                            <div class="accordion-header" onclick="toggleAccordion(this)" style="font-size: 1rem;">
+                                <h4 style="margin: 0;">Hypothesis 2: Seasonal Carbohydrate Flux</h4>
+                                <i class="fas fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-inner">
+                                    <p><strong>Deciduous tree physiology:</strong> London Plane trees move carbohydrates seasonally.</p>
+                                    
+                                    <p><strong>Autumn scenario:</strong></p>
+                                    <ul style="margin-left: 1.5rem;">
+                                        <li>Trees losing leaves</li>
+                                        <li>Carbohydrates moving downward for storage</li>
+                                        <li>Energy <strong>immediately available</strong> at root pruning site</li>
+                                        <li>Trees can quickly mobilize defenses (compartmentalization)</li>
+                                    </ul>
+                                    
+                                    <p><strong>Spring scenario:</strong></p>
+                                    <ul style="margin-left: 1.5rem;">
+                                        <li>Carbohydrates moving upward to support leaf growth</li>
+                                        <li>Energy <strong>not immediately available</strong> at root pruning site</li>
+                                        <li>Compromised ability to compartmentalize quickly</li>
+                                        <li>Fungi have more time to colonize before defenses activate</li>
+                                    </ul>
+                                    
+                                    <p><strong>Result:</strong> Autumn-pruned roots had energy reserves in the right place at the right time.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="data-card" style="margin-top: 1.5rem;">
+                            <h4>⚠️ Important Note</h4>
+                            <p>These are <strong>hypotheses only</strong>. Neither was directly tested in this experiment. Further research is needed to confirm the mechanisms behind seasonal differences in compartmentalization success.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Finding 6: Aspect Ratio</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>📏 Aspect Ratio and Internal Discoloration</h4>
+                        <p><strong>Aspect Ratio Definition:</strong> The ratio of the side root diameter to the removed root diameter (for junction cuts).</p>
+                        <p><strong>Range tested:</strong> 0.3 to 1.8 (similar to oak studies by Ed Gilman and Jason Grabosky)</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>🎯 Result: NO SIGNIFICANT RELATIONSHIP between aspect ratio and internal discoloration</strong></p>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Why This Matters</h4>
+                        <div class="data-card">
+                            <p><strong>For branch pruning:</strong> Aspect ratio is critical. A ratio >2:1 often leads to poor compartmentalization.</p>
+                            <p><strong>For root pruning:</strong> Within the range tested (0.3-1.8), aspect ratio didn't significantly affect discoloration.</p>
+                            <p><strong>Practical implication:</strong> When making reduction cuts on roots, arborists don't need to worry as much about precise aspect ratio targets (within this range) as they do with branches.</p>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Supporting Research</h4>
+                        <p>Ed Gilman and Jason Grabosky's work on oak species found similar results with a comparable aspect ratio range, also showing non-significant relationships to decay.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>💡 Interpretation:</strong> Roots and branches may compartmentalize differently. The aspect ratio "rule" that applies to aerial pruning may not apply underground—at least not within the ranges tested here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Visual Evidence: Photographs</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>📸 Root Responses Documented</h4>
+                        <p>Dr. Benson showed numerous photographs during the presentation. While we cannot reproduce them here, he described several notable patterns:</p>
+                        
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <h4>"Face Hugger" Pattern</h4>
+                                <p>Unique circumferential callus formation around stub cuts, resembling the alien creature</p>
+                                <p>Almost exclusively on internode roots</p>
+                            </div>
+                            <div class="data-card">
+                                <h4>"Beard" Pattern</h4>
+                                <p>Dense cluster of new roots emerging in a ring from the cut end</p>
+                                <p>Described as "waking up centimeters backwards"</p>
+                            </div>
+                            <div class="data-card">
+                                <h4>Necrotic Ends</h4>
+                                <p>Some stub ends became necrotic but produced "halos" of new roots exploding through the bark</p>
+                            </div>
+                            <div class="data-card">
+                                <h4>Extreme Growth</h4>
+                                <p>One root measured 1.87 meters—approximately Dr. Benson's height!</p>
+                                <p>Led to abandonment of root length measurements</p>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Callus Formation</h4>
+                        <p>A distinctive rib of callus growth was observed almost completely circumferentially on internode cuts (stubs), with intermittent presence on junction cuts. This represents:</p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Traumatic cambium response to wounding</li>
+                            <li>Attempt to close the wound surface</li>
+                            <li>Differentiation zone where many new roots emerged</li>
+                        </ul>
+                        
+                        <h4 style="margin-top: 1.5rem;">Internal Sections</h4>
+                        <p>Dissections revealed clear differences in discoloration between spring and autumn treatments, with spring-pruned roots showing extensive brown tissue extending into the root core.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Applications Tab -->
+        <section id="practical" class="tab-content">
+            <h2><span class="emoji">🛠️</span>Practical Applications</h2>
+            
+            <div class="highlight-box">
+                <h3>🎯 Research Questions Answered</h3>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h4>Question 1: Location</h4>
+                        <p><strong>Do tree roots respond differently when severed at different locations?</strong></p>
+                        <p style="color: var(--primary); font-weight: bold; font-size: 1.2rem;">✅ YES</p>
+                        <p>Roots pruned internodally (stubs) produced significantly more new roots.</p>
+                    </div>
+                    <div class="data-card">
+                        <h4>Question 2: Timing</h4>
+                        <p><strong>Do tree roots respond differently when severed before or after an active growing season?</strong></p>
+                        <p style="color: var(--primary); font-weight: bold; font-size: 1.2rem;">✅ YES</p>
+                        <p>Roots pruned in autumn had less internal discoloration.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Recommendation 1: When to Prune Roots</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" style="max-height: 1000px;">
+                    <div class="accordion-inner">
+                        <div class="highlight-box">
+                            <h4>🍂 AUTUMN PRUNING</h4>
+                            <p style="font-size: 1.1rem; font-weight: bold; color: var(--primary);">Where possible, root pruning should be undertaken in AUTUMN to:</p>
+                            <ul style="margin-left: 1.5rem; font-size: 1.05rem;">
+                                <li>✓ Minimize the area of dysfunctional wood inside the root</li>
+                                <li>✓ Minimize new root regrowth</li>
+                            </ul>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">⚠️ Important Caveat</h4>
+                        <p>It's not always possible to coordinate the timing of root pruning with seasonal schedules. Emergency work, construction deadlines, and other factors may dictate timing. However, <strong>when you have flexibility</strong>, autumn offers advantages.</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">Southern vs Northern Hemisphere</h4>
+                        <div class="data-card">
+                            <p><strong>This study was in New Zealand (Southern Hemisphere):</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Autumn = April</li>
+                                <li>Spring = October</li>
+                            </ul>
+                            <p><strong>Northern Hemisphere equivalent:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Autumn = September/October</li>
+                                <li>Spring = March/April</li>
+                            </ul>
+                            <p><em>Adjust timing based on your local climate and deciduous tree senescence patterns.</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Recommendation 2: Minimizing Root Regrowth</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <div class="highlight-box">
+                            <h4>✂️ TO MINIMIZE NEW ROOT GROWTH</h4>
+                            <p style="font-size: 1.1rem; font-weight: bold; color: var(--primary);">Prune back to a side root (JUNCTION CUT / REDUCTION CUT)</p>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">When Would You Want to Minimize Regrowth?</h4>
+                        
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <h4>🚰 Scenario 1: Sewer/Pipe Conflicts</h4>
+                                <p>Tree roots have invaded a sewer pipe or drainage system. You want to:</p>
+                                <ul style="margin-left: 1.5rem;">
+                                    <li>Clear the pipe</li>
+                                    <li>Cut the roots</li>
+                                    <li><strong>Prevent</strong> the tree from putting its roots back into the pipe</li>
+                                </ul>
+                                <p><strong>Solution:</strong> Make reduction cuts back to side roots to minimize regrowth at that specific location.</p>
+                            </div>
+                            <div class="data-card">
+                                <h4>🏗️ Scenario 2: Permanent Infrastructure</h4>
+                                <p>Root pruning is required for permanent infrastructure installation (foundations, utilities, hardscaping) where future root conflicts are undesirable.</p>
+                                <p><strong>Solution:</strong> Reduction cuts will limit regrowth while maintaining the side root's function.</p>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">How to Execute</h4>
+                        <div class="image-box">
+                            <div class="image-placeholder">
+                                <span>Reduction Cut to Side Root<br/>Similar to Branch Pruning</span>
+                            </div>
+                            <p>Identify a suitable side root and make a clean cut just beyond the branch collar, similar to proper branch reduction techniques.</p>
+                        </div>
+                        
+                        <div class="data-card" style="margin-top: 1.5rem;">
+                            <h4>⚠️ Note on Aspect Ratio</h4>
+                            <p>Unlike branch pruning, aspect ratio (within the range of 0.3-1.8 tested) did <strong>not</strong> significantly affect internal discoloration. You don't need to be as strict about this measurement for roots as you would for branches.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Recommendation 3: Maximizing Root Regrowth</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <div class="highlight-box">
+                            <h4>🌱 TO MAXIMIZE NEW ROOT GROWTH</h4>
+                            <p style="font-size: 1.1rem; font-weight: bold; color: var(--primary);">Leave a stub (INTERNODE CUT)</p>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">When Would You Want to Maximize Regrowth?</h4>
+                        
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <h4>🚚 Scenario 1: Tree Transplanting</h4>
+                                <p>When moving a tree, you inevitably sever roots. To help the tree recover quickly:</p>
+                                <ul style="margin-left: 1.5rem;">
+                                    <li>Leave root stubs rather than clean cuts to junctions</li>
+                                    <li>Stubs will produce more new feeder roots</li>
+                                    <li>Greater hydraulic capacity recovery</li>
+                                    <li>Faster establishment in new location</li>
+                                </ul>
+                            </div>
+                            <div class="data-card">
+                                <h4>⏳ Scenario 2: Temporary Conflicts</h4>
+                                <p>Emergency underground work or temporary utility installation where you want the tree to make a quick recovery:</p>
+                                <ul style="margin-left: 1.5rem;">
+                                    <li>Leave stubs to maximize regrowth</li>
+                                    <li>Backfill with good quality soil</li>
+                                    <li>Tree will aggressively regrow roots</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Expected Response</h4>
+                        <div class="data-card">
+                            <p><strong>Based on study results:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Significantly more new roots than reduction cuts</li>
+                                <li>Most roots emerge within 10mm of the cut</li>
+                                <li>Ring of callus formation around wound</li>
+                                <li>Greater total cross-sectional area recovery</li>
+                                <li>Roots preferentially grow in lower quadrants (if soil moisture is favorable there)</li>
+                            </ul>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">Best Practices</h4>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Make clean cuts with sharp tools</li>
+                            <li>Cut perpendicular to root direction</li>
+                            <li>Backfill with quality soil (preferably native to site)</li>
+                            <li>Moisten soil to encourage root initiation</li>
+                            <li>Consider timing: autumn may still be preferable to minimize decay</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Summary: Decision Tree for Root Pruning</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>🌳 Quick Reference Guide</h4>
+                        
+                        <div style="background: white; border: 2px solid var(--primary); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;">
+                            <h4 style="color: var(--primary); margin-bottom: 1rem;">STEP 1: Determine Your Goal</h4>
+                            
+                            <div style="margin-bottom: 1.5rem;">
+                                <h5 style="color: var(--accent);">🎯 Goal A: Minimize Internal Decay</h5>
+                                <p><strong>→ Prune in AUTUMN</strong></p>
+                                <p style="margin-left: 1.5rem;">Less discoloration, better compartmentalization</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 1.5rem;">
+                                <h5 style="color: var(--accent);">🎯 Goal B: Minimize New Root Growth</h5>
+                                <p><strong>→ Make REDUCTION CUTS to side roots</strong></p>
+                                <p style="margin-left: 1.5rem;">Use for: Sewer conflicts, permanent infrastructure</p>
+                            </div>
+                            
+                            <div>
+                                <h5 style="color: var(--accent);">🎯 Goal C: Maximize New Root Growth</h5>
+                                <p><strong>→ Leave STUBS (internode cuts)</strong></p>
+                                <p style="margin-left: 1.5rem;">Use for: Transplanting, temporary conflicts, quick recovery</p>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 2rem;">💡 Can You Combine These?</h4>
+                        <div class="highlight-box">
+                            <p><strong>YES!</strong> For optimal results, consider combining recommendations:</p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li><strong>Transplanting in autumn + leave stubs</strong> = Minimal decay + maximum regrowth</li>
+                                <li><strong>Sewer clearing in autumn + reduction cuts</strong> = Minimal decay + minimal regrowth</li>
+                            </ul>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">⚠️ Reality Check</h4>
+                        <div class="data-card">
+                            <p>Dr. Benson acknowledges that <strong>"it's not always possible to coordinate the timing of your root pruning."</strong></p>
+                            <p>Emergency work, construction schedules, weather conditions, and other factors may override ideal timing. These recommendations apply <strong>"where possible"</strong>—use professional judgment to balance research-based best practices with real-world constraints.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Accessing the Full Publication</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>📄 Recent Publication</h4>
+                        <p>This research was published approximately two weeks before the conference presentation in the journal <em>Urban Forestry & Urban Greening</em> (or similar—specific journal not stated in transcript).</p>
+                        
+                        <div class="data-card">
+                            <h4>How to Access</h4>
+                            <p><strong>Dr. Andrew Benson</strong> invited attendees to email him directly for access to the publication:</p>
+                            <p style="margin-left: 1.5rem; font-style: italic;">"If anybody wants that publication, please send me an email."</p>
+                            <p>Contact information was presumably provided during the conference or is available through:</p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>ISA Hong Kong Chapter conference materials</li>
+                                <li>The Tree Consultancy Company, New Zealand</li>
+                                <li>Professional arboricultural networks</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h4>🙏 Acknowledgments (from Dr. Benson)</h4>
+                            <p><strong>Funding:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li><strong>TREE Fund:</strong> Funded both Dr. Benson's PhD work and this project</li>
+                                <li><strong>NZ Arboricultural Association (NZAA):</strong> Provided additional funding</li>
+                            </ul>
+                            <p><strong>Support:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li><strong>Christchurch City Council:</strong> Permission to work in Hagley Park on four separate occasions</li>
+                                <li><strong>Dr. Justin Morgenroth:</strong> Research collaborator and co-author (University of Canterbury, New Zealand)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Speaker Bio Tab -->
+        <section id="speaker" class="tab-content">
+            <h2><span class="emoji">👤</span>About Dr. Andrew Benson</h2>
+            
+            <div class="data-card" style="background: linear-gradient(135deg, rgba(125, 143, 63, 0.1) 0%, rgba(196, 162, 76, 0.1) 100%); border-left: 4px solid var(--accent); margin-bottom: 2rem;">
+                <h3 style="color: var(--primary);">Urban Tree Ecophysiologist</h3>
+                <p><strong>The Tree Consultancy Company, New Zealand</strong></p>
+            </div>
+
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Career Journey</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" style="max-height: 1000px;">
+                    <div class="accordion-inner">
+                        <h4>🌱 Early Career</h4>
+                        <p>Andrew began his career as a <strong>climbing arborist in North Wales, UK</strong>, giving him hands-on experience with tree care and management from the ground up—literally.</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">🌏 Move to New Zealand</h4>
+                        <p>In <strong>2006</strong>, Andrew relocated to New Zealand, where he transitioned from practical arboriculture into academic research and consulting.</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">🎓 Academic Phase</h4>
+                        <p>Andrew spent time in academia, conducting research and teaching. During this period, he completed his PhD (funded by the TREE Fund), studying tree root responses and urban tree physiology.</p>
+                        
+                        <div class="highlight-box">
+                            <h4>Research Partnership</h4>
+                            <p><strong>Dr. Justin Morgenroth</strong> (University of Canterbury, Christchurch, NZ) served as Andrew's PhD supervisor. The two remain close friends and research collaborators.</p>
+                            <p>Andrew fondly describes Justin as always smiling (he's Canadian!) and particularly enthusiastic when Andrew proposes "wacky ideas that involve getting covered in filth."</p>
+                        </div>
+                        
+                        <h4 style="margin-top: 1.5rem;">💼 Current Role</h4>
+                        <p>Andrew is now a <strong>practising consultant in Auckland</strong>, though he occasionally collaborates on research projects with the University of Canterbury.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Areas of Specialization</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <h4>🌳 Urban Tree Integration</h4>
+                                <p>Finding ways to integrate trees in urban environments through:</p>
+                                <ul style="margin-left: 1.5rem;">
+                                    <li>Design solutions</li>
+                                    <li>Engineering approaches</li>
+                                    <li>Evidence-based planning</li>
+                                </ul>
+                            </div>
+                            <div class="data-card">
+                                <h4>🤝 Interdisciplinary Communication</h4>
+                                <p>Helping non-tree professionals (engineers, planners, developers) understand:</p>
+                                <ul style="margin-left: 1.5rem;">
+                                    <li>What trees need</li>
+                                    <li>How to work <em>with</em> trees, not against them</li>
+                                    <li>Integrating tree biology into infrastructure design</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box" style="margin-top: 1.5rem;">
+                            <h4>🔬 Primary Research Interest: Tree Roots</h4>
+                            <p>Andrew's passion lies in understanding:</p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li><strong>Root systems:</strong> Structure, function, and growth patterns</li>
+                                <li><strong>Human impacts:</strong> Effects of construction, pruning, and urban disturbances</li>
+                                <li><strong>Practical applications:</strong> Translating research into actionable guidance for practitioners</li>
+                            </ul>
+                        </div>
+                        
+                        <p style="margin-top: 1.5rem;">This presentation on root pruning responses is a perfect example of Andrew's approach: rigorous scientific investigation addressing a practical knowledge gap in arboriculture.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Conference Presentation Context</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>🌏 First Trip to Hong Kong</h4>
+                        <p>This conference marked Andrew's first visit to Hong Kong. He expressed gratitude to the ISA Hong Kong Chapter for their "unbelievable level of hospitality."</p>
+                        
+                        <h4 style="margin-top: 1.5rem;">🎤 The "Arboretum of Andrews"</h4>
+                        <p>Andrew was the third and final "Andrew" to present at the conference. He humorously noted:</p>
+                        <blockquote style="border-left: 4px solid var(--accent); padding-left: 1rem; font-style: italic; margin: 1rem 0;">
+                            "I asked ChatGPT what the collective noun was for Andrew. Suffice to say, it didn't know. So I had a bit of a think about it this morning. I came up with an <strong>arboretum of Andrews</strong>, which I thought was quite nice."
+                        </blockquote>
+                        
+                        <h4 style="margin-top: 1.5rem;">🔗 Connection to Previous Speaker</h4>
+                        <p>Dr. Andrew Koeser's presentation provided a "nice segue" into Andrew Benson's topic. Dr. Koeser also works extensively with tree roots and research methodology, creating a natural flow between presentations.</p>
+                        
+                        <div class="highlight-box">
+                            <h4>Research Philosophy</h4>
+                            <p>Throughout the presentation, Andrew demonstrated:</p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li><strong>Rigor:</strong> Meticulous methodology and data collection</li>
+                                <li><strong>Transparency:</strong> Clear acknowledgment of limitations and hypotheses</li>
+                                <li><strong>Practicality:</strong> Focus on actionable recommendations</li>
+                                <li><strong>Humor:</strong> Self-deprecating wit about the challenges of root research</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Personal Touches from the Talk</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h4>😄 Memorable Moments</h4>
+                        
+                        <div class="data-card">
+                            <h4>The "Filth" Theme</h4>
+                            <p>Andrew repeatedly emphasized how dirty root research is:</p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>"Operating an air spade for seven days... how filthy you can get"</li>
+                                <li>Photo of himself "covered in filth" to prove he actually did the work</li>
+                                <li>Justin's enthusiasm for "wacky ideas that involve getting covered in filth"</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="data-card">
+                            <h4>Unexpected Discoveries</h4>
+                            <p><strong>The 1.87-meter root:</strong> When asked by the audience if his colleague's roots grew similarly long, Andrew confirmed: "Yes, they were kind of the same as that."</p>
+                            <p>He humorously noted this root was about as long as he is tall—a completely unexpected finding that forced them to abandon root length measurements.</p>
+                        </div>
+                        
+                        <div class="data-card">
+                            <h4>The Metal Detector Incident</h4>
+                            <p>The team initially planned to mark roots with washers or low-denomination coins and locate them with metal detectors.</p>
+                            <p><strong>Problem:</strong> Hagley Park is a popular spot for treasure hunters with metal detectors!</p>
+                            <p><strong>Solution:</strong> Abandoned this idea for a "slightly more rudimentary approach" of extensive photographs and measurements.</p>
+                        </div>
+                        
+                        <div class="data-card">
+                            <h4>Justin's Skepticism</h4>
+                            <p>Andrew showed a photo of Justin "looking skeptically at my route mapping... wondering whether or not we will actually find these routes three years later."</p>
+                            <p>Spoiler: They did find them!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeShareModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 style="margin-bottom: 1rem;">Share This Presentation</h3>
+            <div class="share-buttons">
+                <button class="share-btn" style="background-color: #1DA1F2;" onclick="shareOn('twitter')">
+                    <i class="fab fa-twitter"></i> Twitter
+                </button>
+                <button class="share-btn" style="background-color: #4267B2;" onclick="shareOn('facebook')">
+                    <i class="fab fa-facebook"></i> Facebook
+                </button>
+                <button class="share-btn" style="background-color: #0077B5;" onclick="shareOn('linkedin')">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </button>
+                <button class="share-btn" style="background-color: #25D366;" onclick="shareOn('whatsapp')">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                <button class="share-btn" style="background-color: #666;" onclick="copyLink()">
+                    <i class="fas fa-link"></i> Copy Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip Box -->
+    <div id="tooltipBox" class="tooltip-box"></div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html" style="color: var(--primary); text-decoration: underline; font-weight: 600;">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html" style="color: var(--primary); text-decoration: underline;">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        
+        function showSlide(n) {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === n) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        setInterval(nextSlide, 6000);
+        
+        // Tab switching
+        function switchTab(tabName) {
+            // Update buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.tab-button').classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            
+            // Scroll to top of content
+            window.scrollTo({ top: document.querySelector('.sticky-tabs').offsetTop, behavior: 'smooth' });
+        }
+        
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const item = header.closest('.accordion-item');
+            const content = item.querySelector('.accordion-content');
+            const isActive = item.classList.contains('active');
+            
+            if (isActive) {
+                item.classList.remove('active');
+                content.style.maxHeight = '0';
+            } else {
+                item.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        }
+        
+        // Tooltip functionality
+        const tooltips = {
+            platanus: "Platanus × acerifolia, commonly known as the London Plane tree, is a hybrid between American sycamore (P. occidentalis) and Oriental plane (P. orientalis). It's widely used as a street tree due to its tolerance of urban pollution and compacted soil.",
+            internode: "Internode: The section of a root or stem between two nodes (branching points). An internode cut leaves a stub with no side branches, similar to topping.",
+            junction: "Junction: A branching point where a side root emerges. A junction cut is made back to this side root, similar to a reduction cut in branch pruning.",
+            airspade: "Air Spade: A pneumatic excavation tool that uses compressed air to break up and remove soil without damaging tree roots. It's the gold standard for non-destructive root excavation.",
+            compartment: "Compartmentalization: The process by which trees isolate injured or infected tissue by creating chemical and physical barriers. Described by Dr. Alex Shigo as CODIT (Compartmentalization of Decay in Trees)."
+        };
+        
+        document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+            trigger.addEventListener('mouseenter', function(e) {
+                const term = this.getAttribute('data-tooltip');
+                const tooltipBox = document.getElementById('tooltipBox');
+                tooltipBox.innerHTML = `<strong>${term.charAt(0).toUpperCase() + term.slice(1)}:</strong><br/>${tooltips[term]}`;
+                tooltipBox.classList.add('show');
+            });
+            
+            trigger.addEventListener('mouseleave', function() {
+                const tooltipBox = document.getElementById('tooltipBox');
+                tooltipBox.classList.remove('show');
+            });
+        });
+        
+        // Share modal
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('show');
+        }
+        
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('show');
+        }
+        
+        function shareOn(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('Optimising Tree Responses to Root Pruning - Dr. Andrew Benson');
+            
+            const urls = {
+                twitter: `https://twitter.com/intent/tweet?text=${title}&url=${url}`,
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+                linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+                whatsapp: `https://wa.me/?text=${title}%20${url}`
+            };
+            
+            if (urls[platform]) {
+                window.open(urls[platform], '_blank', 'width=600,height=400');
+            }
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copied to clipboard!');
+            });
+        }
+        
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('shareModal');
+            if (event.target === modal) {
+                closeShareModal();
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeShareModal();
+                document.getElementById('tooltipBox').classList.remove('show');
+            }
+        });
+        
+        // Initialize accordion max-heights
+        window.addEventListener('load', function() {
+            document.querySelectorAll('.accordion-item.active .accordion-content').forEach(content => {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Above-Ground Biomass (AGB) Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .header-background {
+            background: linear-gradient(135deg, #1e4620 0%, #2d5a2e 50%, #3a6b3c 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M50 10 L55 30 L75 30 L60 42 L65 62 L50 50 L35 62 L40 42 L25 30 L45 30 Z" fill="%23ffffff" opacity="0.03"/%3E%3C/svg%3E');
+            background-size: 200px 200px;
+            opacity: 0.5;
+            animation: kenburns 20s ease-in-out infinite alternate;
+        }
+        
+        @keyframes kenburns {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.1) translate(-5%, -5%); }
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .tab-button.active {
+            color: #166534;
+            font-weight: 600;
+        }
+        
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #166534;
+            border-radius: 2px;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: #1f2937;
+            color: #fff;
+            text-align: left;
+            border-radius: 8px;
+            padding: 12px;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+            line-height: 1.5;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1f2937 transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext,
+        .tooltip:focus .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content.active {
+            max-height: 2000px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #374151;
+            transition: all 0.3s ease;
+            z-index: 999;
+            max-width: 300px;
+        }
+        
+        .attribution-badge.short {
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        .attribution-badge:hover {
+            transform: translateX(-10px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .attribution-badge a {
+            color: #166534;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .attribution-badge {
+                position: static;
+                margin: 20px auto;
+                max-width: 90%;
+            }
+            
+            .attribution-badge:hover {
+                transform: none;
+            }
+        }
+        
+        input:focus, select:focus, button:focus {
+            outline: 2px solid #166534;
+            outline-offset: 2px;
+        }
+        
+        .sort-indicator {
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 0.9em;
+            transition: color 0.2s;
+        }
+        
+        th[data-sort]:hover .sort-indicator {
+            color: #166534;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            .header-background::before {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="header-background text-white py-16 px-4 sm:py-20">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Above-Ground Biomass (AGB) Calculator</h1>
+            <p class="text-base sm:text-lg md:text-xl opacity-90 mb-8">Estimate tree biomass using Chave et al. (2014) allometric models</p>
+            
+            <!-- Tab Navigation -->
+            <nav class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6" role="tablist">
+                <button class="tab-button active px-4 py-2 sm:px-6 sm:py-3 bg-white bg-opacity-20 rounded-lg hover:bg-opacity-30 transition text-sm sm:text-base" data-tab="calculator" role="tab" aria-selected="true" aria-controls="calculator-panel">Calculator</button>
+                <button class="tab-button px-4 py-2 sm:px-6 sm:py-3 bg-white bg-opacity-20 rounded-lg hover:bg-opacity-30 transition text-sm sm:text-base" data-tab="equations" role="tab" aria-selected="false" aria-controls="equations-panel">Equations</button>
+                <button class="tab-button px-4 py-2 sm:px-6 sm:py-3 bg-white bg-opacity-20 rounded-lg hover:bg-opacity-30 transition text-sm sm:text-base" data-tab="species" role="tab" aria-selected="false" aria-controls="species-panel">Species Data</button>
+                <button class="tab-button px-4 py-2 sm:px-6 sm:py-3 bg-white bg-opacity-20 rounded-lg hover:bg-opacity-30 transition text-sm sm:text-base" data-tab="citations" role="tab" aria-selected="false" aria-controls="citations-panel">Citations</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-8 sm:py-12">
+        <!-- Calculator Tab -->
+        <section id="calculator-panel" class="tab-content" role="tabpanel" aria-labelledby="calculator-tab">
+            <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Calculate Above-Ground Biomass</h2>
+                
+                <form id="agb-form" class="space-y-6">
+                    <!-- Species Selector -->
+                    <div>
+                        <label for="species-select" class="block text-sm font-medium text-gray-700 mb-2">
+                            Tree Species 
+                            <span class="tooltip">
+                                <span class="text-green-700 cursor-help">ⓘ</span>
+                                <span class="tooltiptext">Select a species to auto-fill wood density, or choose "Custom" to enter manually</span>
+                            </span>
+                        </label>
+                        <select id="species-select" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" aria-label="Select tree species">
+                            <option value="">Select a species...</option>
+                            <option value="custom">Custom (Manual Entry)</option>
+                        </select>
+                    </div>
+
+                    <!-- Wood Density -->
+                    <div>
+                        <label for="wood-density" class="block text-sm font-medium text-gray-700 mb-2">
+                            Wood Density (ρ) 
+                            <span class="tooltip">
+                                <span class="text-green-700 cursor-help">ⓘ</span>
+                                <span class="tooltiptext">Wood density in g/cm³. Typical range: 0.3-0.9 g/cm³</span>
+                            </span>
+                        </label>
+                        <input type="number" id="wood-density" step="0.0001" min="0.1" max="2" placeholder="e.g., 0.65" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" aria-label="Wood density in grams per cubic centimeter">
+                        <p class="text-xs text-gray-500 mt-1">Units: g/cm³</p>
+                    </div>
+
+                    <!-- DBH Input -->
+                    <div>
+                        <label for="dbh-value" class="block text-sm font-medium text-gray-700 mb-2">
+                            Diameter at Breast Height (DBH) 
+                            <span class="tooltip">
+                                <span class="text-green-700 cursor-help">ⓘ</span>
+                                <span class="tooltiptext">Tree diameter measured at 1.3 meters above ground level</span>
+                            </span>
+                        </label>
+                        <div class="flex gap-2">
+                            <input type="number" id="dbh-value" step="0.1" min="0" placeholder="e.g., 45.5" class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" aria-label="DBH value">
+                            <select id="dbh-unit" class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" aria-label="DBH unit">
+                                <option value="mm">mm</option>
+                                <option value="cm" selected>cm</option>
+                                <option value="m">m</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Height Input -->
+                    <div>
+                        <label for="height-value" class="block text-sm font-medium text-gray-700 mb-2">
+                            Tree Height (H) 
+                            <span class="tooltip">
+                                <span class="text-green-700 cursor-help">ⓘ</span>
+                                <span class="tooltiptext">Total height of the tree from ground to top</span>
+                            </span>
+                        </label>
+                        <div class="flex gap-2">
+                            <input type="number" id="height-value" step="0.1" min="0" placeholder="e.g., 15.2" class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" aria-label="Height value">
+                            <select id="height-unit" class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" aria-label="Height unit">
+                                <option value="mm">mm</option>
+                                <option value="cm">cm</option>
+                                <option value="m" selected>m</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Environmental Factor -->
+                    <div>
+                        <label for="env-factor" class="block text-sm font-medium text-gray-700 mb-2">
+                            Environmental Stress Factor (E) 
+                            <span class="text-gray-500 text-xs">(Optional)</span>
+                            <span class="tooltip">
+                                <span class="text-green-700 cursor-help">ⓘ</span>
+                                <span class="tooltiptext">Climate-based stress factor. Range: -1 to 2. Default is 0 for moderate conditions. Leave blank if unknown.</span>
+                            </span>
+                        </label>
+                        <input type="number" id="env-factor" step="0.01" min="-1" max="2" placeholder="Optional (default: 0)" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" aria-label="Environmental stress factor">
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button type="submit" class="flex-1 bg-green-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-800 transition focus:ring-4 focus:ring-green-300" aria-label="Calculate biomass">Calculate AGB</button>
+                        <button type="button" id="reset-btn" class="flex-1 bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 transition focus:ring-4 focus:ring-gray-300" aria-label="Reset form">Reset</button>
+                        <button type="button" id="share-btn" class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition focus:ring-4 focus:ring-blue-300 hidden" aria-label="Share results">Share Results</button>
+                    </div>
+                </form>
+
+                <!-- Results Section -->
+                <div id="results" class="mt-8 hidden">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Results</h3>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div class="bg-green-50 border-l-4 border-green-600 p-4 rounded">
+                            <p class="text-sm text-gray-600 mb-1">Pan-tropical Model (with Height)</p>
+                            <p class="text-2xl font-bold text-green-700" id="result-eq1">0 kg</p>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded">
+                            <p class="text-sm text-gray-600 mb-1">Height-Independent Model</p>
+                            <p class="text-2xl font-bold text-blue-700" id="result-eq2">0 kg</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded">
+                        <p class="text-sm text-gray-600">Difference between estimates</p>
+                        <p class="text-lg font-semibold text-gray-800" id="result-diff">0%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Box -->
+            <div class="bg-green-50 border border-green-200 rounded-xl p-6 sm:p-8">
+                <h3 class="text-lg font-semibold text-green-900 mb-3">About Allometric Equations</h3>
+                <p class="text-gray-700 leading-relaxed">Allometric equations are statistical models developed by destructively sampling trees (cutting and weighing) to relate easily measured parameters such as DBH, height, and wood density to total above-ground biomass (AGB). These models help estimate carbon storage in forests without destructive sampling.</p>
+            </div>
+        </section>
+
+        <!-- Equations Tab -->
+        <section id="equations-panel" class="tab-content hidden" role="tabpanel" aria-labelledby="equations-tab">
+            <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 space-y-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Allometric Equations (Chave et al. 2014)</h2>
+                
+                <!-- Equation 1 -->
+                <div class="accordion-item border border-gray-200 rounded-lg">
+                    <button class="accordion-header w-full text-left px-6 py-4 font-semibold text-gray-800 hover:bg-gray-50 rounded-lg transition flex justify-between items-center" aria-expanded="true">
+                        <span>Equation 1: Pan-tropical Model (with Height)</span>
+                        <span class="accordion-icon text-2xl">−</span>
+                    </button>
+                    <div class="accordion-content active px-6 pb-4">
+                        <div class="bg-gray-50 p-4 rounded mt-2 mb-4 overflow-x-auto">
+                            <code class="text-sm sm:text-base">AGB = 0.0673 × (ρ × D² × H)<sup>0.976</sup></code>
+                        </div>
+                        <dl class="space-y-2">
+                            <div>
+                                <dt class="font-medium text-gray-700">ρ (rho)</dt>
+                                <dd class="text-gray-600 ml-4">Wood density in g/cm³</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-gray-700">D</dt>
+                                <dd class="text-gray-600 ml-4">Diameter at breast height (DBH) in cm</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-gray-700">H</dt>
+                                <dd class="text-gray-600 ml-4">Tree height in meters</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-gray-700">Output</dt>
+                                <dd class="text-gray-600 ml-4">Above-ground biomass in kg of dry weight</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Equation 2 -->
+                <div class="accordion-item border border-gray-200 rounded-lg">
+                    <button class="accordion-header w-full text-left px-6 py-4 font-semibold text-gray-800 hover:bg-gray-50 rounded-lg transition flex justify-between items-center" aria-expanded="false">
+                        <span>Equation 2: Height-Independent Model</span>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </button>
+                    <div class="accordion-content px-6 pb-4">
+                        <div class="bg-gray-50 p-4 rounded mt-2 mb-4 overflow-x-auto">
+                            <code class="text-sm sm:text-base">AGB = exp[−1.803 − 0.976E + 0.976ln(ρ) + 2.676ln(DBH) − 0.0299[ln(DBH)]²]</code>
+                        </div>
+                        <dl class="space-y-2">
+                            <div>
+                                <dt class="font-medium text-gray-700">E</dt>
+                                <dd class="text-gray-600 ml-4">Environmental stress factor based on climate data</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-gray-700">ρ (rho)</dt>
+                                <dd class="text-gray-600 ml-4">Wood density in g/cm³</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-gray-700">DBH</dt>
+                                <dd class="text-gray-600 ml-4">Diameter at breast height in cm</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-gray-700">Output</dt>
+                                <dd class="text-gray-600 ml-4">Above-ground biomass in kg of dry weight</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Species Data Tab -->
+        <section id="species-panel" class="tab-content hidden" role="tabpanel" aria-labelledby="species-tab">
+            <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Species Wood Density Database (Mak et al. 2025)</h2>
+                <p class="text-gray-600 mb-6">Select from common tree species with pre-loaded wood density values.</p>
+                
+                <div class="mb-4">
+                    <input type="text" id="species-search" placeholder="Search species..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" aria-label="Search species database">
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b-2 border-gray-300">
+                                <th class="px-4 py-3 font-semibold text-gray-700 cursor-pointer hover:bg-gray-100 select-none" data-sort="index" data-sort-type="number">
+                                    # <span class="sort-indicator">⇅</span>
+                                </th>
+                                <th class="px-4 py-3 font-semibold text-gray-700 cursor-pointer hover:bg-gray-100 select-none" data-sort="Family" data-sort-type="text">
+                                    Family <span class="sort-indicator">⇅</span>
+                                </th>
+                                <th class="px-4 py-3 font-semibold text-gray-700 cursor-pointer hover:bg-gray-100 select-none" data-sort="Species" data-sort-type="text">
+                                    Species <span class="sort-indicator">⇅</span>
+                                </th>
+                                <th class="px-4 py-3 font-semibold text-gray-700 cursor-pointer hover:bg-gray-100 select-none" data-sort="Chinese name" data-sort-type="text">
+                                    Chinese Name <span class="sort-indicator">⇅</span>
+                                </th>
+                                <th class="px-4 py-3 font-semibold text-gray-700 cursor-pointer hover:bg-gray-100 select-none" data-sort="Wood density (g/cm3)" data-sort-type="number">
+                                    Wood Density (g/cm³) <span class="sort-indicator">⇅</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="species-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Citations Tab -->
+        <section id="citations-panel" class="tab-content hidden" role="tabpanel" aria-labelledby="citations-tab">
+            <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">References</h2>
+                
+                <div class="space-y-6">
+                    <div class="border-l-4 border-green-600 pl-4">
+                        <p class="font-medium text-gray-800 mb-2">Chave, J., Réjou-Méchain, M., Búrquez, A., Chidumayo, E., Colgan, M. S., Delitti, W. B. C., Duque, A., Eid, T., Fearnside, P. M., Goodman, R. C., Henry, M., Martínez-Yrízar, A., Mugasha, W. A., Muller-Landau, H. C., Mencuccini, M., Nelson, B. W., Ngomanda, A., Nogueira, E. M., Ortiz-Malavassi, E., ... Vieilledent, G. (2014).</p>
+                        <p class="text-gray-700 mb-2">Improved allometric models to estimate the aboveground biomass of tropical trees.</p>
+                        <p class="text-gray-600 italic mb-2">Global Change Biology, 20(10), 3177–3190.</p>
+                        <a href="https://doi.org/10.1111/gcb.12629" target="_blank" rel="noopener noreferrer" class="text-green-700 hover:text-green-800 underline">https://doi.org/10.1111/gcb.12629</a>
+                    </div>
+                    
+                    <div class="border-l-4 border-blue-600 pl-4">
+                        <p class="font-medium text-gray-800 mb-2">Mak, N. P. L., Siu, T. Y., Law, Y. K., Zhang, H., Sui, S., Yip, F. T., Ng, Y. S., Ye, Y., Cheung, T. C., Wa, K. C., Chan, L. H., So, K. Y., Hau, B. C. H., Lee, C. K. F., & Wu, J. (2025).</p>
+                        <p class="text-gray-700 mb-2">Mapping Individual Tree- and Plot-Level Biomass Using Handheld Mobile Laser Scanning in Complex Subtropical Secondary and Old-Growth Forests.</p>
+                        <p class="text-gray-600 italic mb-2">Remote Sensing, 17(8), 1354.</p>
+                        <a href="https://doi.org/10.3390/rs17081354" target="_blank" rel="noopener noreferrer" class="text-blue-700 hover:text-blue-800 underline">https://doi.org/10.3390/rs17081354</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Share Modal -->
+    <div id="share-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <div class="modal-content">
+            <div class="bg-green-700 text-white px-6 py-4 rounded-t-xl flex justify-between items-center">
+                <h3 id="modal-title" class="text-xl font-bold">Share Results</h3>
+                <button id="close-modal" class="text-2xl hover:text-gray-200" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-700 mb-4">Copy the calculation summary below:</p>
+                <textarea id="share-text" rows="8" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" readonly></textarea>
+                <button id="copy-btn" class="mt-4 w-full bg-green-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-800 transition">Copy to Clipboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge no-print" id="attribution-badge">
+        <div class="short-content text-xl" id="short-badge">ℹ️</div>
+        <div class="full-content hidden" id="full-badge">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Species database - loaded from external JSON file
+        let speciesData = [];
+
+        // Load species data from external JSON file
+        async function loadSpeciesData() {
+            try {
+                const response = await fetch('tree-density-hong-kong.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load species data: ${response.statusText}`);
+                }
+                speciesData = await response.json();
+                initializeSpeciesUI();
+            } catch (error) {
+                console.error('Error loading species data:', error);
+                // Show error message to user
+                const speciesSelect = document.getElementById('species-select');
+                const errorOption = document.createElement('option');
+                errorOption.value = '';
+                errorOption.textContent = 'Error loading species data';
+                errorOption.disabled = true;
+                speciesSelect.appendChild(errorOption);
+            }
+        }
+
+        // Sorting state
+        let currentSort = {
+            field: 'index',
+            direction: 'asc',
+            type: 'number'
+        };
+        let filteredSpeciesData = [];
+
+        // Initialize species UI after data is loaded
+        function initializeSpeciesUI() {
+            // Populate species selector
+            const speciesSelect = document.getElementById('species-select');
+            speciesData.forEach(species => {
+                const option = document.createElement('option');
+                option.value = species["Wood density (g/cm3)"];
+                // Extract text from HTML for display (remove <i> tags for dropdown)
+                const speciesText = species.Species.replace(/<\/?i>/g, '');
+                option.textContent = `${speciesText} (${species["Chinese name"]}) - ${species["Wood density (g/cm3)"]} g/cm³`;
+                option.dataset.species = species.Species.replace(/<\/?i>/g, ''); // Store plain text for sharing
+                speciesSelect.appendChild(option);
+            });
+
+            // Species selection handler
+            speciesSelect.addEventListener('change', function() {
+                const woodDensityInput = document.getElementById('wood-density');
+                if (this.value === 'custom') {
+                    woodDensityInput.value = '';
+                    woodDensityInput.readOnly = false;
+                    woodDensityInput.focus();
+                } else if (this.value) {
+                    woodDensityInput.value = this.value;
+                    woodDensityInput.readOnly = true;
+                } else {
+                    woodDensityInput.value = '';
+                    woodDensityInput.readOnly = false;
+                }
+            });
+
+            // Initialize filtered data
+            filteredSpeciesData = [...speciesData];
+
+            // Populate species table
+            const speciesTableBody = document.getElementById('species-table-body');
+            function renderSpeciesTable(data) {
+                speciesTableBody.innerHTML = '';
+                data.forEach(species => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-gray-200 hover:bg-gray-50';
+                    // Use innerHTML for Species column to render HTML tags
+                    row.innerHTML = `
+                        <td class="px-4 py-3">${species.index || ''}</td>
+                        <td class="px-4 py-3">${species.Family || ''}</td>
+                        <td class="px-4 py-3">${species.Species}</td>
+                        <td class="px-4 py-3">${species["Chinese name"] || ''}</td>
+                        <td class="px-4 py-3">${species["Wood density (g/cm3)"]}</td>
+                    `;
+                    speciesTableBody.appendChild(row);
+                });
+            }
+            renderSpeciesTable(filteredSpeciesData);
+
+            // Sorting functionality
+            function sortSpeciesData(field, type) {
+                const direction = currentSort.field === field && currentSort.direction === 'asc' ? 'desc' : 'asc';
+                currentSort = { field, direction, type };
+
+                filteredSpeciesData.sort((a, b) => {
+                    let aVal = a[field];
+                    let bVal = b[field];
+
+                    // Handle HTML content - extract text for comparison
+                    if (typeof aVal === 'string' && aVal.includes('<')) {
+                        aVal = aVal.replace(/<[^>]*>/g, '').toLowerCase();
+                        bVal = bVal.replace(/<[^>]*>/g, '').toLowerCase();
+                    }
+
+                    // Handle number type
+                    if (type === 'number') {
+                        aVal = parseFloat(aVal) || 0;
+                        bVal = parseFloat(bVal) || 0;
+                    } else {
+                        // Text comparison
+                        if (typeof aVal !== 'string') aVal = String(aVal || '').toLowerCase();
+                        if (typeof bVal !== 'string') bVal = String(bVal || '').toLowerCase();
+                    }
+
+                    if (aVal < bVal) return direction === 'asc' ? -1 : 1;
+                    if (aVal > bVal) return direction === 'asc' ? 1 : -1;
+                    return 0;
+                });
+
+                // Update sort indicators
+                document.querySelectorAll('th[data-sort]').forEach(th => {
+                    const indicator = th.querySelector('.sort-indicator');
+                    if (th.dataset.sort === field) {
+                        indicator.textContent = direction === 'asc' ? '↑' : '↓';
+                        indicator.classList.add('text-green-600', 'font-bold');
+                    } else {
+                        indicator.textContent = '⇅';
+                        indicator.classList.remove('text-green-600', 'font-bold');
+                    }
+                });
+
+                renderSpeciesTable(filteredSpeciesData);
+            }
+
+            // Add click handlers to table headers
+            document.querySelectorAll('th[data-sort]').forEach(th => {
+                th.addEventListener('click', () => {
+                    const field = th.dataset.sort;
+                    const type = th.dataset.sortType || 'text';
+                    sortSpeciesData(field, type);
+                });
+            });
+
+            // Species search
+            const speciesSearchInput = document.getElementById('species-search');
+            // Remove any existing listeners by cloning and replacing
+            const newSearchInput = speciesSearchInput.cloneNode(true);
+            speciesSearchInput.parentNode.replaceChild(newSearchInput, speciesSearchInput);
+            newSearchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                filteredSpeciesData = speciesData.filter(species => {
+                    // Extract text from HTML for searching
+                    const speciesText = species.Species.replace(/<[^>]*>/g, '').toLowerCase();
+                    const chineseName = (species["Chinese name"] || '').toLowerCase();
+                    const familyName = (species.Family || '').toLowerCase();
+                    return speciesText.includes(searchTerm) || chineseName.includes(searchTerm) || familyName.includes(searchTerm);
+                });
+                // Apply current sort to filtered data
+                const { field, type } = currentSort;
+                filteredSpeciesData.sort((a, b) => {
+                    let aVal = a[field];
+                    let bVal = b[field];
+
+                    // Handle HTML content - extract text for comparison
+                    if (typeof aVal === 'string' && aVal.includes('<')) {
+                        aVal = aVal.replace(/<[^>]*>/g, '').toLowerCase();
+                        bVal = bVal.replace(/<[^>]*>/g, '').toLowerCase();
+                    }
+
+                    // Handle number type
+                    if (type === 'number') {
+                        aVal = parseFloat(aVal) || 0;
+                        bVal = parseFloat(bVal) || 0;
+                    } else {
+                        // Text comparison
+                        if (typeof aVal !== 'string') aVal = String(aVal || '').toLowerCase();
+                        if (typeof bVal !== 'string') bVal = String(bVal || '').toLowerCase();
+                    }
+
+                    if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
+                    if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
+                    return 0;
+                });
+                renderSpeciesTable(filteredSpeciesData);
+            });
+        }
+
+        // Load species data when page loads
+        loadSpeciesData();
+
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                // Update buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
+                });
+                button.classList.add('active');
+                button.setAttribute('aria-selected', 'true');
+                
+                // Update content
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(`${targetTab}-panel`).classList.remove('hidden');
+            });
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('.accordion-icon');
+                const isOpen = content.classList.contains('active');
+                
+                // Close all accordions
+                document.querySelectorAll('.accordion-content').forEach(c => {
+                    c.classList.remove('active');
+                });
+                document.querySelectorAll('.accordion-icon').forEach(i => {
+                    i.textContent = '+';
+                });
+                document.querySelectorAll('.accordion-header').forEach(h => {
+                    h.setAttribute('aria-expanded', 'false');
+                });
+                
+                // Toggle current accordion
+                if (!isOpen) {
+                    content.classList.add('active');
+                    icon.textContent = '−';
+                    this.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        // Unit conversion functions
+        function convertToMeters(value, unit) {
+            const conversions = {
+                'mm': 0.001,
+                'cm': 0.01,
+                'm': 1
+            };
+            return value * conversions[unit];
+        }
+
+        function convertToCm(value, unit) {
+            const conversions = {
+                'mm': 0.1,
+                'cm': 1,
+                'm': 100
+            };
+            return value * conversions[unit];
+        }
+
+        // AGB calculation functions
+        function calculatePanTropical(rho, dbh, height) {
+            // AGB = 0.0673 × (ρ × D² × H)^0.976
+            return 0.0673 * Math.pow(rho * dbh * dbh * height, 0.976);
+        }
+
+        function calculateHeightIndependent(rho, dbh, E = 0) {
+            // AGB = exp[−1.803 − 0.976E + 0.976ln(ρ) + 2.676ln(DBH) − 0.0299[ln(DBH)]²]
+            const lnRho = Math.log(rho);
+            const lnDBH = Math.log(dbh);
+            const exponent = -1.803 - 0.976 * E + 0.976 * lnRho + 2.676 * lnDBH - 0.0299 * Math.pow(lnDBH, 2);
+            return Math.exp(exponent);
+        }
+
+        // Form submission
+        document.getElementById('agb-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const rho = parseFloat(document.getElementById('wood-density').value);
+            const dbhValue = parseFloat(document.getElementById('dbh-value').value);
+            const dbhUnit = document.getElementById('dbh-unit').value;
+            const heightValue = parseFloat(document.getElementById('height-value').value);
+            const heightUnit = document.getElementById('height-unit').value;
+            const envFactor = document.getElementById('env-factor').value;
+            
+            // Validation
+            if (!rho || !dbhValue || !heightValue) {
+                alert('Please fill in all required fields (Wood Density, DBH, and Height)');
+                return;
+            }
+            
+            // Convert units
+            const dbhCm = convertToCm(dbhValue, dbhUnit);
+            const heightM = convertToMeters(heightValue, heightUnit);
+            const E = envFactor ? parseFloat(envFactor) : 0;
+            
+            // Calculate AGB
+            const agb1 = calculatePanTropical(rho, dbhCm, heightM);
+            const agb2 = calculateHeightIndependent(rho, dbhCm, E);
+            
+            // Calculate difference
+            const difference = ((Math.abs(agb1 - agb2) / ((agb1 + agb2) / 2)) * 100).toFixed(2);
+            
+            // Display results
+            document.getElementById('result-eq1').textContent = `${agb1.toFixed(2)} kg`;
+            document.getElementById('result-eq2').textContent = `${agb2.toFixed(2)} kg`;
+            document.getElementById('result-diff').textContent = `${difference}%`;
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('share-btn').classList.remove('hidden');
+            
+            // Store results for sharing
+            window.currentResults = {
+                species: document.getElementById('species-select').selectedOptions[0].dataset.species || 'Custom',
+                rho,
+                dbhValue,
+                dbhUnit,
+                heightValue,
+                heightUnit,
+                E,
+                agb1,
+                agb2,
+                difference
+            };
+        });
+
+        // Reset button
+        document.getElementById('reset-btn').addEventListener('click', function() {
+            document.getElementById('agb-form').reset();
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('share-btn').classList.add('hidden');
+            document.getElementById('wood-density').readOnly = false;
+            window.currentResults = null;
+        });
+
+        // Share functionality
+        document.getElementById('share-btn').addEventListener('click', function() {
+            if (!window.currentResults) return;
+            
+            const r = window.currentResults;
+            const shareText = `Above-Ground Biomass Calculation Results
+
+Species: ${r.species}
+Wood Density: ${r.rho} g/cm³
+DBH: ${r.dbhValue} ${r.dbhUnit}
+Height: ${r.heightValue} ${r.heightUnit}
+Environmental Factor: ${r.E}
+
+Results:
+- Pan-tropical Model: ${r.agb1.toFixed(2)} kg
+- Height-Independent Model: ${r.agb2.toFixed(2)} kg
+- Difference: ${r.difference}%
+
+Calculated using Chave et al. (2014) allometric equations`;
+            
+            document.getElementById('share-text').value = shareText;
+            document.getElementById('share-modal').classList.add('active');
+        });
+
+        // Close modal
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('share-modal').classList.remove('active');
+        });
+
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('share-modal');
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // Copy to clipboard
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const shareText = document.getElementById('share-text');
+            shareText.select();
+            document.execCommand('copy');
+            this.textContent = 'Copied!';
+            setTimeout(() => {
+                this.textContent = 'Copy to Clipboard';
+            }, 2000);
+        });
+
+        // Attribution badge toggle
+        const badge = document.getElementById('attribution-badge');
+        const shortBadge = document.getElementById('short-badge');
+        const fullBadge = document.getElementById('full-badge');
+
+        if (window.innerWidth > 768) {
+            badge.classList.add('short');
+            badge.addEventListener('mouseenter', function() {
+                shortBadge.classList.add('hidden');
+                fullBadge.classList.remove('hidden');
+            });
+            badge.addEventListener('mouseleave', function() {
+                shortBadge.classList.remove('hidden');
+                fullBadge.classList.add('hidden');
+            });
+        } else {
+            shortBadge.classList.add('hidden');
+            fullBadge.classList.remove('hidden');
+        }
+
+        // Keyboard navigation for accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('share-modal').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
