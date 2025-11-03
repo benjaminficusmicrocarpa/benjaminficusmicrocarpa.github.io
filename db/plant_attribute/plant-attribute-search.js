@@ -102,6 +102,29 @@ class FuzzySearchEngine {
     }
 
     /**
+     * Calculate word-level fuzzy similarity
+     * Compares query against individual words in the target string
+     */
+    calculateWordLevelSimilarity(targetString, query) {
+        const targetTokens = this.tokenize(targetString);
+        const queryTokens = this.tokenize(query);
+        
+        if (targetTokens.length === 0 || queryTokens.length === 0) return 0;
+        
+        let maxWordSimilarity = 0;
+        
+        // For each query token, find the best matching word in the target
+        queryTokens.forEach(queryToken => {
+            targetTokens.forEach(targetToken => {
+                const similarity = this.calculateSimilarity(targetToken, queryToken);
+                maxWordSimilarity = Math.max(maxWordSimilarity, similarity);
+            });
+        });
+        
+        return maxWordSimilarity;
+    }
+
+    /**
      * Calculate comprehensive fuzzy score for a plant
      */
     calculateFuzzyScore(plant, query) {
@@ -130,29 +153,38 @@ class FuzzySearchEngine {
             familyPrefix: familyNorm.startsWith(queryNorm) ? 1.0 : 0,
             attributesPrefix: attributesNorm.startsWith(queryNorm) ? 1.0 : 0,
             
-            // Fuzzy string similarity
+            // Fuzzy string similarity (full string)
             plantNameFuzzy: this.calculateSimilarity(plantNameNorm, queryNorm),
             familyFuzzy: this.calculateSimilarity(familyNorm, queryNorm),
-            attributesFuzzy: this.calculateSimilarity(attributesNorm, queryNorm)
+            attributesFuzzy: this.calculateSimilarity(attributesNorm, queryNorm),
+            
+            // Word-level fuzzy similarity (matches individual words)
+            plantNameWordFuzzy: this.calculateWordLevelSimilarity(plantNameNorm, queryNorm),
+            familyWordFuzzy: this.calculateWordLevelSimilarity(familyNorm, queryNorm),
+            attributesWordFuzzy: this.calculateWordLevelSimilarity(attributesNorm, queryNorm)
         };
         
         // Calculate weighted final score
+        // Use the maximum of full string similarity and word-level similarity
         const plantNameScore = Math.max(
             scores.plantNameExact + this.options.exactMatchBonus,
             scores.plantNamePrefix + this.options.prefixBonus,
-            scores.plantNameFuzzy
+            scores.plantNameFuzzy,
+            scores.plantNameWordFuzzy // Add word-level matching
         );
         
         const familyScore = Math.max(
             scores.familyExact + this.options.exactMatchBonus,
             scores.familyPrefix + this.options.prefixBonus,
-            scores.familyFuzzy
+            scores.familyFuzzy,
+            scores.familyWordFuzzy // Add word-level matching
         );
         
         const attributesScore = Math.max(
             scores.attributesExact + this.options.exactMatchBonus,
             scores.attributesPrefix + this.options.prefixBonus,
-            scores.attributesFuzzy
+            scores.attributesFuzzy,
+            scores.attributesWordFuzzy // Add word-level matching
         );
         
         const finalScore = (
@@ -226,6 +258,11 @@ class FuzzySearchEngine {
             const familyNorm = this.normalizeString(plant.family);
             const attributesString = this.getAttributesAsString(plant);
             const attributesNorm = this.normalizeString(attributesString);
+            
+            // Tokenize for word-level checking
+            const plantNameTokens = this.tokenize(plantNameNorm);
+            const familyTokens = this.tokenize(familyNorm);
+            const queryTokens = this.tokenize(queryNorm);
     
             // Check for exact full matches
             if (plantNameNorm === queryNorm || 
@@ -242,7 +279,12 @@ class FuzzySearchEngine {
                 attributesNorm.includes(queryNorm) ||
                 plantNameNorm.startsWith(queryNorm) || 
                 familyNorm.startsWith(queryNorm) || 
-                attributesNorm.startsWith(queryNorm);
+                attributesNorm.startsWith(queryNorm) ||
+                // Word-level substring matching (e.g., query word matches any plant name word)
+                queryTokens.some(qToken => 
+                    plantNameTokens.some(pToken => pToken.includes(qToken) || qToken.includes(pToken)) ||
+                    familyTokens.some(fToken => fToken.includes(qToken) || qToken.includes(fToken))
+                );
     
             if (isPartialExact) {
                 partialExactMatches.push(plant);
@@ -369,6 +411,7 @@ class PlantAttributeSearchManager {
             this.updateResultsTable();
             this.updateResultsInfo();
             this.renderPagination();
+            this.updateActiveFiltersDisplay();
             console.log('JSON data loaded successfully');
         } catch (error) {
             console.error('Error loading JSON data:', error);
@@ -490,11 +533,120 @@ class PlantAttributeSearchManager {
     }
 
     /**
+     * Get filter display name from attribute
+     */
+    getFilterDisplayName(attribute) {
+        const filterMap = {
+            'is_tree': 'Tree',
+            'is_shrub': 'Shrub',
+            'is_herb': 'Herb',
+            'is_climber': 'Climber',
+            'is_creeping': 'Creeping',
+            'is_water_plant': 'Water Plant',
+            'is_succulent': 'Succulent',
+            'requires_full_sun': 'Full Sun',
+            'requires_semi_shade': 'Semi Shade',
+            'requires_shade': 'Shade',
+            'requires_moist_soil': 'Moist Soil',
+            'requires_lots_of_water': 'Lots of Water',
+            'is_drought_tolerant': 'Drought Tolerant',
+            'is_drought_sensitive': 'Drought Sensitive',
+            'heat_cold': 'Cold Tolerant',
+            'heat_warm': 'Warm Climate',
+            'heat_hot': 'Hot Climate',
+            'is_toxic': 'Toxic',
+            'is_lightly_toxic': 'Lightly Toxic',
+            'is_heavily_toxic': 'Heavily Toxic',
+            'has_cold_phobia': 'Cold Phobia',
+            'has_moist_phobia': 'Moist Phobia',
+            'is_wind_tolerant': 'Wind Tolerant',
+            'is_wind_sensitive': 'Wind Sensitive',
+            'has_bulbous_root': 'Bulbous Root',
+            'is_rhizomatous': 'Rhizomatous'
+        };
+        return filterMap[attribute] || attribute;
+    }
+
+    /**
+     * Get filter emoji from attribute
+     */
+    getFilterEmoji(attribute) {
+        const emojiMap = {
+            'is_tree': '🌳',
+            'is_shrub': '🌴',
+            'is_herb': '🌿',
+            'is_climber': '🌱',
+            'is_creeping': '🌾',
+            'is_water_plant': '🌊',
+            'is_succulent': '🌵',
+            'requires_full_sun': '☀️',
+            'requires_semi_shade': '🌤️',
+            'requires_shade': '🌥️',
+            'requires_moist_soil': '💧',
+            'requires_lots_of_water': '🌧️',
+            'is_drought_tolerant': '🏜️',
+            'is_drought_sensitive': '💦',
+            'heat_cold': '❄️',
+            'heat_warm': '🌡️',
+            'heat_hot': '🔥',
+            'is_toxic': '🟠',
+            'is_lightly_toxic': '🟡',
+            'is_heavily_toxic': '🔴',
+            'has_cold_phobia': '😨',
+            'has_moist_phobia': '💧',
+            'is_wind_tolerant': '💨',
+            'is_wind_sensitive': '🌪️',
+            'has_bulbous_root': '🧅',
+            'is_rhizomatous': '🌱'
+        };
+        return emojiMap[attribute] || '';
+    }
+
+    /**
+     * Update active filters display
+     */
+    updateActiveFiltersDisplay() {
+        const container = document.getElementById('activeFiltersContainer');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (this.activeFilters.size === 0) {
+            container.style.display = 'none';
+            return;
+        }
+
+        container.style.display = 'flex';
+        container.style.flexWrap = 'wrap';
+        container.style.gap = '8px';
+        container.style.marginTop = '12px';
+
+        this.activeFilters.forEach(attribute => {
+            const badge = document.createElement('button');
+            badge.className = 'active-filter-badge';
+            badge.setAttribute('data-attribute', attribute);
+            badge.innerHTML = `
+                <span class="filter-emoji">${this.getFilterEmoji(attribute)}</span>
+                <span class="filter-label">${this.getFilterDisplayName(attribute)}</span>
+                <span class="filter-remove">×</span>
+            `;
+            
+            badge.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.removeFilter(attribute);
+            });
+            
+            container.appendChild(badge);
+        });
+    }
+
+    /**
      * Add filter
      */
     addFilter(attribute) {
         this.activeFilters.add(attribute);
         this.updateFilterButtons();
+        this.updateActiveFiltersDisplay();
         this.performFuzzySearch();
     }
 
@@ -504,6 +656,7 @@ class PlantAttributeSearchManager {
     removeFilter(attribute) {
         this.activeFilters.delete(attribute);
         this.updateFilterButtons();
+        this.updateActiveFiltersDisplay();
         this.performFuzzySearch();
     }
 
@@ -513,6 +666,7 @@ class PlantAttributeSearchManager {
     clearAllFilters() {
         this.activeFilters.clear();
         this.updateFilterButtons();
+        this.updateActiveFiltersDisplay();
         this.performFuzzySearch();
     }
 
