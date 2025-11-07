@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WKCD Tree Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow: hidden;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Top Left Controls */
+        .top-left-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-group {
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+        }
+
+        .zoom-controls {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .zoom-controls button {
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .zoom-controls button:hover {
+            background: #f4f4f4;
+        }
+
+        .zoom-controls button:first-child {
+            border-bottom: 1px solid #ccc;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .zoom-controls button:last-child {
+            border-radius: 0 0 4px 4px;
+        }
+
+        .layer-selector {
+            padding: 10px;
+            min-width: 150px;
+        }
+
+        .layer-selector h4 {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .layer-selector label {
+            display: block;
+            padding: 4px 0;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .layer-selector input[type="radio"] {
+            margin-right: 6px;
+        }
+
+        .collapsed {
+            display: none;
+        }
+
+        .toggle-btn {
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        .toggle-btn:hover {
+            background: #f4f4f4;
+        }
+
+        /* Bottom Left Panel */
+        .main-panel {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 350px;
+            max-height: 70vh;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 12px 15px;
+            background: #2c5f2d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .panel-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .panel-content {
+            overflow-y: auto;
+            max-height: calc(70vh - 48px);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            background: #f8f8f8;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .tab:hover {
+            background: #e8e8e8;
+        }
+
+        .tab.active {
+            background: white;
+            border-bottom: 2px solid #2c5f2d;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            padding: 15px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .filter-section {
+            margin-bottom: 15px;
+        }
+
+        .filter-section h4 {
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .filter-option label {
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .species-color {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            border: 2px solid white;
+            box-shadow: 0 0 2px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+
+        .species-color.circle {
+            border-radius: 50%;
+        }
+
+        .species-color.square {
+            transform: rotate(45deg);
+        }
+
+        .species-color.triangle {
+            width: 0;
+            height: 0;
+            border: none;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 14px solid;
+            box-shadow: none;
+            position: relative;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .stat-card {
+            background: #f8f8f8;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5f2d;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .tree-detail {
+            padding: 15px;
+        }
+
+        .tree-detail h4 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #2c5f2d;
+        }
+
+        .detail-row {
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn-primary {
+            background: #2c5f2d;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Bottom Right Legend */
+        .legend {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 250px;
+        }
+
+        .legend h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .legend-item .species-color {
+            margin-right: 8px;
+        }
+
+        #legendContent {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        #legendContent::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #legendContent::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        #legendContent::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        #legendContent::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .legend-name-toggle {
+            margin-top: 8px;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+
+        .legend-name-toggle select {
+            width: 100%;
+            padding: 4px;
+            font-size: 11px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Photo Viewer Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 2001;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.3);
+            color: white;
+            padding: 15px 20px;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .modal-nav:hover {
+            background: rgba(255,255,255,0.5);
+        }
+
+        .modal-prev {
+            left: 20px;
+        }
+
+        .modal-next {
+            right: 20px;
+        }
+
+        .modal-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Weather Widget */
+        .weather-widget {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .weather-widget h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .weather-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .weather-temp {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5f2d;
+        }
+
+        .weather-desc {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Coordinate Display */
+        .coordinate-display {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .coordinate-display.active {
+            display: block;
+        }
+
+        /* Measurement Info */
+        .measurement-info {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            font-size: 13px;
+            max-width: 200px;
+        }
+
+        .measurement-label {
+            font-weight: 600;
+            color: #2c5f2d;
+            margin-bottom: 4px;
+        }
+
+        /* Leaflet overrides */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+        }
+
+        .leaflet-popup-content {
+            margin: 12px 15px;
+            font-size: 13px;
+        }
+
+        .tree-popup h5 {
+            margin-bottom: 8px;
+            color: #2c5f2d;
+            font-size: 14px;
+        }
+
+        .tree-popup p {
+            margin: 4px 0;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-panel {
+                width: calc(100% - 20px);
+                max-height: 50vh;
+            }
+
+            .legend {
+                max-width: 150px;
+                font-size: 11px;
+            }
+
+            .weather-widget {
+                min-width: 150px;
+            }
+
+            .top-left-controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2c5f2d;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Viewshed cone styling */
+        .viewshed-cone {
+            fill: rgba(44, 95, 45, 0.2);
+            stroke: #2c5f2d;
+            stroke-width: 2;
+        }
+
+        /* Toolbar */
+        .leaflet-draw-toolbar {
+            margin-top: 10px !important;
+        }
+
+        .scientific-name {
+            font-style: italic;
+        }
+
+        .home-button {
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #333;
+            transition: background 0.2s;
+        }
+
+        .home-button:hover {
+            background: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div id="map" role="application" aria-label="Interactive tree map"></div>
+
+    <!-- Top Left Controls -->
+    <div class="top-left-controls">
+        <!-- Zoom Controls -->
+        <div class="control-group zoom-controls">
+            <button onclick="map.zoomIn()" aria-label="Zoom in" title="Zoom in">+</button>
+            <button onclick="map.zoomOut()" aria-label="Zoom out" title="Zoom out">−</button>
+        </div>
+
+        <!-- Layer Selector Toggle -->
+        <button class="toggle-btn" onclick="toggleLayerSelector()" aria-label="Toggle layer selector" title="Map layers">
+            <i class="fas fa-layer-group"></i>
+        </button>
+        <div id="layerSelector" class="control-group layer-selector collapsed">
+            <h4>Base Map</h4>
+            <label>
+                <input type="radio" name="basemap" value="osm" checked onchange="changeBaseMap(this.value)">
+                Street Map
+            </label>
+            <label>
+                <input type="radio" name="basemap" value="satellite" onchange="changeBaseMap(this.value)">
+                Satellite
+            </label>
+            <label>
+                <input type="radio" name="basemap" value="topo" onchange="changeBaseMap(this.value)">
+                Topographic
+            </label>
+        </div>
+
+        <!-- Utility Buttons -->
+        <button class="toggle-btn" onclick="zoomToExtent()" aria-label="Zoom to all trees" title="Fit all trees">
+            <i class="fas fa-expand"></i>
+        </button>
+        <button class="toggle-btn" onclick="geolocate()" aria-label="Find my location" title="My location">
+            <i class="fas fa-location-crosshairs"></i>
+        </button>
+        <a href="../index.html" class="home-button" aria-label="Go to home page" title="Home">
+            <i class="fas fa-home"></i>
+        </a>
+    </div>
+
+    <!-- Bottom Left Main Panel -->
+    <div class="main-panel" id="mainPanel">
+        <div class="panel-header" onclick="togglePanel()">
+            <h3>WKCD Tree Map</h3>
+            <i class="fas fa-chevron-down" id="panelToggleIcon"></i>
+        </div>
+        <div class="panel-content" id="panelContent">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('search')" aria-label="Search tab">
+                    <i class="fas fa-search"></i> Search
+                </button>
+                <button class="tab" onclick="switchTab('filters')" aria-label="Filters tab">
+                    <i class="fas fa-filter"></i> Filters
+                </button>
+                <button class="tab" onclick="switchTab('stats')" aria-label="Statistics tab">
+                    <i class="fas fa-chart-bar"></i> Stats
+                </button>
+                <button class="tab" onclick="switchTab('tools')" aria-label="Tools tab">
+                    <i class="fas fa-tools"></i> Tools
+                </button>
+            </div>
+
+            <!-- Search Tab -->
+            <div class="tab-content active" id="searchTab">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search by botanical or Chinese name..." 
+                           oninput="searchTrees(this.value)" aria-label="Search trees">
+                </div>
+                <div id="searchResults"></div>
+                <div id="treeDetail" class="tree-detail" style="display:none;"></div>
+            </div>
+
+            <!-- Filters Tab -->
+            <div class="tab-content" id="filtersTab">
+                <div class="filter-section">
+                    <h4>Display Options</h4>
+                    <div class="filter-option">
+                        <input type="checkbox" id="showTrees" checked onchange="toggleTreeMarkers()" aria-label="Show tree markers">
+                        <label for="showTrees">Tree Markers</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="showViewpoints" checked onchange="toggleViewpoints()" aria-label="Show viewpoints">
+                        <label for="showViewpoints">Photo Viewpoints</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="enableClustering" checked onchange="toggleClustering()" aria-label="Enable clustering">
+                        <label for="enableClustering">Cluster Trees</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="showLabels" onchange="toggleLabels()" aria-label="Show tree labels">
+                        <label for="showLabels">Show Tree Labels</label>
+                    </div>
+                    <div class="filter-option">
+                        <label>
+                            Label Type:
+                            <select id="labelType" onchange="updateLabels()" aria-label="Label type">
+                                <option value="short">Short Scientific</option>
+                                <option value="chinese">Chinese Name</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Species Filter</h4>
+                    <div id="speciesFilter"></div>
+                </div>
+            </div>
+
+            <!-- Stats Tab -->
+            <div class="tab-content" id="statsTab">
+                <div class="stats-grid" id="statsGrid"></div>
+            </div>
+
+            <!-- Tools Tab -->
+            <div class="tab-content" id="toolsTab">
+                <div class="filter-section">
+                    <h4>Measurement Tools</h4>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="startMeasurement('distance')" aria-label="Measure distance">
+                            <i class="fas fa-ruler"></i> Distance
+                        </button>
+                        <button class="btn btn-primary" onclick="startMeasurement('area')" aria-label="Measure area">
+                            <i class="fas fa-draw-polygon"></i> Area
+                        </button>
+                    </div>
+                    <div class="action-buttons" style="margin-top: 10px;">
+                        <button class="btn btn-danger" onclick="clearMeasurements()" aria-label="Clear measurements">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Coordinate System</h4>
+                    <div class="filter-option">
+                        <label>
+                            <input type="radio" name="coordSystem" value="WGS84" checked onchange="updateCoordSystem()">
+                            WGS84
+                        </label>
+                    </div>
+                    <div class="filter-option">
+                        <label>
+                            <input type="radio" name="coordSystem" value="HK1980" onchange="updateCoordSystem()">
+                            HK1980 Grid
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Export Data</h4>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="exportData('csv')" aria-label="Export as CSV">
+                            <i class="fas fa-file-csv"></i> CSV
+                        </button>
+                        <button class="btn btn-primary" onclick="exportData('geojson')" aria-label="Export as GeoJSON">
+                            <i class="fas fa-file-code"></i> GeoJSON
+                        </button>
+                    </div>
+                    <div class="action-buttons" style="margin-top: 10px;">
+                        <button class="btn btn-secondary" onclick="shareMap()" aria-label="Share map">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <button class="btn btn-secondary" onclick="printMap()" aria-label="Print map">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Right Legend -->
+    <div class="legend" id="legend">
+        <h4>
+            Legend
+            <i class="fas fa-chevron-down" onclick="toggleLegend()" style="cursor: pointer;" aria-label="Toggle legend"></i>
+        </h4>
+        <div id="legendContent">
+            <div class="legend-item">
+                <i class="fas fa-tree" style="color: #2c5f2d; margin-right: 8px;"></i>
+                <span>Tree</span>
+            </div>
+            <div class="legend-item">
+                <i class="fas fa-eye" style="color: #4a90e2; margin-right: 8px;"></i>
+                <span>Photo Viewpoint</span>
+            </div>
+            <div class="legend-name-toggle">
+                <label for="legendNameType" style="display: block; margin-bottom: 4px; font-size: 11px; color: #666;">Name Type:</label>
+                <select id="legendNameType" onchange="updateLegendNames()" aria-label="Legend name type">
+                    <option value="short">Short Scientific</option>
+                    <option value="full">Full Scientific</option>
+                    <option value="chinese">Chinese Name</option>
+                </select>
+            </div>
+            <div id="speciesLegend"></div>
+        </div>
+    </div>
+
+    <!-- Weather Widget -->
+    <div class="weather-widget">
+        <h4><i class="fas fa-cloud-sun"></i> Weather</h4>
+        <div class="weather-info">
+            <div class="weather-temp">24°C</div>
+            <div class="weather-desc">Partly Cloudy<br>Humidity: 65%</div>
+        </div>
+    </div>
+
+    <!-- Coordinate Display -->
+    <div class="coordinate-display" id="coordinateDisplay"></div>
+
+    <!-- Photo Viewer Modal -->
+    <div class="modal" id="photoModal" onclick="closeModal(event)">
+        <span class="modal-close" onclick="closePhotoModal()" aria-label="Close photo viewer">&times;</span>
+        <button class="modal-nav modal-prev" onclick="previousPhoto(); event.stopPropagation();" aria-label="Previous photo">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="modal-content" onclick="event.stopPropagation();">
+            <img id="modalImage" src="" alt="Tree photo">
+            <div class="modal-info" id="modalInfo"></div>
+        </div>
+        <button class="modal-nav modal-next" onclick="nextPhoto(); event.stopPropagation();" aria-label="Next photo">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+
+    <script>
+        // Global variables
+        let map;
+        let treesData;
+        let viewpointsData;
+        let treeMarkers = L.layerGroup();
+        let viewpointMarkers = L.layerGroup();
+        let clusterGroup;
+        let baseMaps = {};
+        let currentBaseMap = 'osm';
+        let labelsEnabled = false;
+        let labelType = 'short';
+        let speciesColors = {};
+        let speciesShapes = {};
+        let drawnItems;
+        let currentPhotoIndex = 0;
+        let currentViewpoint = null;
+        let coordSystem = 'WGS84';
+        let currentViewshed = null;
+        let legendNameType = 'short';
+
+        // Placeholder photos (royalty-free from Unsplash)
+        const placeholderPhotos = [
+            'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800',
+            'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=800',
+            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800',
+            'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800',
+            'https://images.unsplash.com/photo-1511497584788-876760111969?w=800',
+            'https://images.unsplash.com/photo-1425913397330-cf8af2ff40a1?w=800',
+            'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=800',
+            'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800'
+        ];
+
+
+        // Initialize map
+        function initMap() {
+            map = L.map('map', {
+                center: [22.2998, 114.1570],
+                zoom: 18,
+                maxZoom: 25,
+                minZoom: 10,
+                zoomControl: false
+            });
+
+            // Base maps
+            baseMaps.osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxNativeZoom: 19,
+                maxZoom: 25
+            });
+
+            baseMaps.satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics',
+                maxNativeZoom: 19,
+                maxZoom: 25
+            });
+
+            baseMaps.topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenTopoMap contributors',
+                maxNativeZoom: 17,
+                maxZoom: 25
+            });
+
+            baseMaps.osm.addTo(map);
+
+            // Initialize drawn items
+            drawnItems = new L.FeatureGroup();
+            map.addLayer(drawnItems);
+
+            // Draw control
+            const drawControl = new L.Control.Draw({
+                draw: {
+                    polyline: {
+                        shapeOptions: {
+                            color: '#2c5f2d',
+                            weight: 3
+                        },
+                        metric: true
+                    },
+                    polygon: {
+                        shapeOptions: {
+                            color: '#2c5f2d',
+                            fillOpacity: 0.2
+                        },
+                        allowIntersection: false,
+                        metric: true
+                    },
+                    circle: {
+                        shapeOptions: {
+                            color: '#2c5f2d',
+                            fillOpacity: 0.2
+                        },
+                        metric: true
+                    },
+                    rectangle: {
+                        shapeOptions: {
+                            color: '#2c5f2d',
+                            fillOpacity: 0.2
+                        },
+                        metric: true
+                    },
+                    marker: false,
+                    circlemarker: false
+                },
+                edit: {
+                    featureGroup: drawnItems,
+                    remove: true
+                }
+            });
+
+            // Coordinate display on mouse move
+            map.on('mousemove', function(e) {
+                const coordDisplay = document.getElementById('coordinateDisplay');
+                let coordText = '';
+                
+                if (coordSystem === 'WGS84') {
+                    coordText = `Lat: ${e.latlng.lat.toFixed(6)}, Lng: ${e.latlng.lng.toFixed(6)}`;
+                } else {
+                    // Simplified HK1980 Grid conversion (approximate)
+                    const hkN = 800000 + (e.latlng.lat - 22.2) * 110000;
+                    const hkE = 830000 + (e.latlng.lng - 114.1) * 110000;
+                    coordText = `N: ${hkN.toFixed(0)}, E: ${hkE.toFixed(0)} (HK1980)`;
+                }
+                
+                coordDisplay.textContent = coordText;
+                coordDisplay.classList.add('active');
+            });
+
+            map.on('mouseout', function() {
+                document.getElementById('coordinateDisplay').classList.remove('active');
+            });
+
+            // Draw events
+            map.on(L.Draw.Event.CREATED, function(e) {
+                const layer = e.layer;
+                drawnItems.addLayer(layer);
+
+                // Calculate measurements
+                let measurement = '';
+                if (e.layerType === 'polyline') {
+                    const distance = calculateDistance(layer.getLatLngs());
+                    measurement = `Distance: ${distance.toFixed(2)} m`;
+                } else if (e.layerType === 'polygon' || e.layerType === 'rectangle') {
+                    const area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
+                    measurement = `Area: ${area.toFixed(2)} m²`;
+                } else if (e.layerType === 'circle') {
+                    const radius = layer.getRadius();
+                    const area = Math.PI * radius * radius;
+                    measurement = `Radius: ${radius.toFixed(2)} m<br>Area: ${area.toFixed(2)} m²`;
+                }
+
+                layer.bindPopup(`<div class="measurement-info"><div class="measurement-label">Measurement</div>${measurement}</div>`);
+            });
+
+            loadData();
+        }
+
+        // Load data
+        async function loadData() {
+            try {
+                // Load tree data from external GeoJSON file
+                const treeResponse = await fetch('wkcd_tree.geojson');
+                if (!treeResponse.ok) {
+                    throw new Error(`Failed to load tree data: ${treeResponse.statusText}`);
+                }
+                treesData = await treeResponse.json();
+
+                // Load viewpoint data from external GeoJSON file
+                const viewpointResponse = await fetch('viewphoto.geojson');
+                if (!viewpointResponse.ok) {
+                    throw new Error(`Failed to load viewpoint data: ${viewpointResponse.statusText}`);
+                }
+                viewpointsData = await viewpointResponse.json();
+
+                processSpecies();
+                loadTrees();
+                loadViewpoints();
+                updateStats();
+                updateSpeciesFilter();
+                updateSpeciesLegend();
+
+                // Check for shared tree on load
+                const params = new URLSearchParams(window.location.search);
+                const treeId = params.get('tree');
+                if (treeId) {
+                    const tree = treesData.features.find(f => f.properties.fid == treeId);
+                    if (tree) {
+                        const coords = tree.geometry.coordinates;
+                        map.setView([coords[1], coords[0]], 20);
+                        showTreeDetail(tree);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('Failed to load map data. Please check that the GeoJSON files are available.');
+            }
+        }
+
+        // Generate a diverse color palette
+        function generateColorPalette(count) {
+            const colors = [];
+            const hueStep = 360 / count;
+            
+            for (let i = 0; i < count; i++) {
+                const hue = (i * hueStep) % 360;
+                // Use HSL to create vibrant, distinct colors
+                // Vary saturation (60-90%) and lightness (40-60%) for better distinction
+                const saturation = 60 + (i % 3) * 10; // 60, 70, 80
+                const lightness = 40 + (Math.floor(i / 3) % 3) * 8; // 40, 48, 56
+                
+                // Convert HSL to RGB
+                const h = hue / 360;
+                const s = saturation / 100;
+                const l = lightness / 100;
+                
+                let r, g, b;
+                if (s === 0) {
+                    r = g = b = l;
+                } else {
+                    const hue2rgb = (p, q, t) => {
+                        if (t < 0) t += 1;
+                        if (t > 1) t -= 1;
+                        if (t < 1/6) return p + (q - p) * 6 * t;
+                        if (t < 1/2) return q;
+                        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                        return p;
+                    };
+                    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                    const p = 2 * l - q;
+                    r = Math.round(hue2rgb(p, q, h + 1/3) * 255);
+                    g = Math.round(hue2rgb(p, q, h) * 255);
+                    b = Math.round(hue2rgb(p, q, h - 1/3) * 255);
+                }
+                
+                colors.push(`#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`);
+            }
+            
+            return colors;
+        }
+
+        // Process unique species and assign colors and shapes
+        function processSpecies() {
+            const species = new Set();
+            treesData.features.forEach(feature => {
+                species.add(feature.properties.botanical_name);
+            });
+
+            const speciesArray = Array.from(species);
+            const colorPalette = generateColorPalette(speciesArray.length);
+            const shapes = ['circle', 'square', 'triangle'];
+            
+            speciesArray.forEach((sp, index) => {
+                speciesColors[sp] = colorPalette[index];
+                speciesShapes[sp] = shapes[index % shapes.length];
+            });
+        }
+
+        // Load trees
+        function loadTrees() {
+            clusterGroup = L.markerClusterGroup({
+                maxClusterRadius: 50,
+                spiderfyOnMaxZoom: true,
+                showCoverageOnHover: false
+            });
+
+            treesData.features.forEach((feature, index) => {
+                const coords = feature.geometry.coordinates;
+                const props = feature.properties;
+                
+                const color = speciesColors[props.botanical_name] || '#2c5f2d';
+                const shape = speciesShapes[props.botanical_name] || 'circle';
+                
+                // Generate HTML for different shapes
+                let shapeHtml = '';
+                if (shape === 'circle') {
+                    shapeHtml = `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 3px rgba(0,0,0,0.4);"></div>`;
+                } else if (shape === 'square') {
+                    shapeHtml = `<div style="background-color: ${color}; width: 10px; height: 10px; border: 2px solid white; box-shadow: 0 0 3px rgba(0,0,0,0.4); transform: rotate(45deg);"></div>`;
+                } else if (shape === 'triangle') {
+                    shapeHtml = `<div style="width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 14px solid ${color}; filter: drop-shadow(0 0 2px white) drop-shadow(0 2px 4px rgba(0,0,0,0.4));"></div>`;
+                }
+                
+                const icon = L.divIcon({
+                    className: 'tree-marker',
+                    html: shapeHtml,
+                    iconSize: shape === 'triangle' ? [16, 14] : [12, 12]
+                });
+
+                const marker = L.marker([coords[1], coords[0]], { icon: icon });
+                
+                const popupContent = `
+                    <div class="tree-popup">
+                        <h5 class="scientific-name">${props.botanical_name}</h5>
+                        <p><strong>Chinese:</strong> ${props.chinese_name}</p>
+                        <p><strong>ID:</strong> ${props.fid}</p>
+                        ${props.remarks ? `<p><strong>Remarks:</strong> ${props.remarks}</p>` : ''}
+                    </div>
+                `;
+                
+                marker.bindPopup(popupContent);
+                marker.on('click', () => showTreeDetail(feature));
+                
+                marker.treeData = feature;
+                clusterGroup.addLayer(marker);
+                treeMarkers.addLayer(marker);
+            });
+
+            map.addLayer(clusterGroup);
+        }
+
+        // Load viewpoints
+        function loadViewpoints() {
+            viewpointsData.features.forEach((feature, index) => {
+                const coords = feature.geometry.coordinates;
+                const props = feature.properties;
+                
+                const icon = L.divIcon({
+                    className: 'viewpoint-marker',
+                    html: `<div style="transform: rotate(${props.rotation}deg);"><i class="fas fa-eye" style="color: #4a90e2; font-size: 18px; filter: drop-shadow(0 0 2px white);"></i></div>`,
+                    iconSize: [18, 18]
+                });
+
+                const marker = L.marker([coords[1], coords[0]], { icon: icon });
+                
+                const photoUrl = placeholderPhotos[index % placeholderPhotos.length];
+                
+                const popupContent = `
+                    <div class="tree-popup">
+                        <h5>Photo: ${props.filename}</h5>
+                        <p><strong>Rotation:</strong> ${props.rotation}°</p>
+                        <img src="${photoUrl}" style="max-width: 200px; margin-top: 8px; cursor: pointer;" onclick="openPhotoModal(${index})">
+                    </div>
+                `;
+                
+                marker.bindPopup(popupContent);
+                
+                marker.on('mouseover', function() {
+                    drawViewshed(coords, props.rotation);
+                });
+                
+                marker.on('mouseout', function() {
+                    if (currentViewshed) {
+                        map.removeLayer(currentViewshed);
+                        currentViewshed = null;
+                    }
+                });
+                
+                marker.viewpointData = { feature, photoUrl, index };
+                viewpointMarkers.addLayer(marker);
+            });
+
+            map.addLayer(viewpointMarkers);
+        }
+
+        // Draw viewshed cone
+        function drawViewshed(coords, rotation) {
+            if (currentViewshed) {
+                map.removeLayer(currentViewshed);
+            }
+
+            const center = [coords[1], coords[0]];
+            const radius = 50; // meters
+            const fov = 60; // field of view in degrees
+            
+            const startAngle = rotation - fov / 2;
+            const endAngle = rotation + fov / 2;
+            
+            const points = [center];
+            for (let angle = startAngle; angle <= endAngle; angle += 5) {
+                const rad = angle * Math.PI / 180;
+                const lat = center[0] + (radius / 111320) * Math.cos(rad);
+                const lng = center[1] + (radius / (111320 * Math.cos(center[0] * Math.PI / 180))) * Math.sin(rad);
+                points.push([lat, lng]);
+            }
+            points.push(center);
+
+            currentViewshed = L.polygon(points, {
+                color: '#2c5f2d',
+                fillColor: '#2c5f2d',
+                fillOpacity: 0.2,
+                weight: 2,
+                className: 'viewshed-cone'
+            }).addTo(map);
+        }
+
+        // Calculate distance for polyline
+        function calculateDistance(latlngs) {
+            let distance = 0;
+            for (let i = 0; i < latlngs.length - 1; i++) {
+                distance += map.distance(latlngs[i], latlngs[i + 1]);
+            }
+            return distance;
+        }
+
+        // Show tree detail
+        function showTreeDetail(feature) {
+            const props = feature.properties;
+            const coords = feature.geometry.coordinates;
+            
+            const detailHtml = `
+                <h4 class="scientific-name">${props.botanical_name}</h4>
+                <div class="detail-row">
+                    <span class="detail-label">Chinese Name:</span>
+                    <span class="detail-value">${props.chinese_name}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tree ID:</span>
+                    <span class="detail-value">#${props.fid}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Coordinates:</span>
+                    <span class="detail-value">${coords[1].toFixed(6)}, ${coords[0].toFixed(6)}</span>
+                </div>
+                ${props.remarks ? `
+                <div class="detail-row">
+                    <span class="detail-label">Remarks:</span>
+                    <span class="detail-value">${props.remarks}</span>
+                </div>
+                ` : ''}
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="map.setView([${coords[1]}, ${coords[0]}], 20)">
+                        <i class="fas fa-location-arrow"></i> Locate
+                    </button>
+                    <button class="btn btn-secondary" onclick="shareTree(${props.fid})">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('treeDetail').innerHTML = detailHtml;
+            document.getElementById('treeDetail').style.display = 'block';
+            switchTab('search');
+        }
+
+        // Search trees
+        function searchTrees(query) {
+            const resultsDiv = document.getElementById('searchResults');
+            
+            if (!query.trim()) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            const results = treesData.features.filter(feature => {
+                const botanical = feature.properties.botanical_name.toLowerCase();
+                const chinese = feature.properties.chinese_name;
+                const q = query.toLowerCase();
+                return botanical.includes(q) || chinese.includes(q);
+            });
+
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<p style="color: #666; font-size: 13px;">No trees found</p>';
+                return;
+            }
+
+            let html = '<div style="max-height: 300px; overflow-y: auto;">';
+            results.forEach(feature => {
+                const props = feature.properties;
+                const coords = feature.geometry.coordinates;
+                html += `
+                    <div style="padding: 8px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 13px;" 
+                         onclick="map.setView([${coords[1]}, ${coords[0]}], 20); showTreeDetail(treesData.features.find(f => f.properties.fid === ${props.fid}))">
+                        <strong class="scientific-name">${props.botanical_name}</strong><br>
+                        <span style="color: #666;">${props.chinese_name} (ID: ${props.fid})</span>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        }
+
+        // Update statistics
+        function updateStats() {
+            const speciesCount = {};
+            treesData.features.forEach(feature => {
+                const species = feature.properties.botanical_name;
+                speciesCount[species] = (speciesCount[species] || 0) + 1;
+            });
+
+            let html = `
+                <div class="stat-card">
+                    <div class="stat-value">${treesData.features.length}</div>
+                    <div class="stat-label">Total Trees</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${Object.keys(speciesCount).length}</div>
+                    <div class="stat-label">Species</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${viewpointsData.features.length}</div>
+                    <div class="stat-label">Photo Points</div>
+                </div>
+            `;
+
+            Object.entries(speciesCount).forEach(([species, count]) => {
+                html += `
+                    <div class="stat-card">
+                        <div class="stat-value">${count}</div>
+                        <div class="stat-label scientific-name" style="font-size: 11px;">${species}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('statsGrid').innerHTML = html;
+        }
+
+        // Update species filter
+        function updateSpeciesFilter() {
+            const species = Object.keys(speciesColors);
+            let html = '';
+            
+            species.forEach(sp => {
+                const color = speciesColors[sp];
+                const shape = speciesShapes[sp] || 'circle';
+                let shapeHtml = '';
+                
+                if (shape === 'circle') {
+                    shapeHtml = `<span class="species-color circle" style="background: ${color};"></span>`;
+                } else if (shape === 'square') {
+                    shapeHtml = `<span class="species-color square" style="background: ${color};"></span>`;
+                } else if (shape === 'triangle') {
+                    shapeHtml = `<span class="species-color triangle" style="border-bottom: 14px solid ${color};"></span>`;
+                }
+                
+                html += `
+                    <div class="filter-option">
+                        <input type="checkbox" id="species_${sp.replace(/[^a-zA-Z0-9]/g, '_')}" checked onchange="filterSpecies()">
+                        <label for="species_${sp.replace(/[^a-zA-Z0-9]/g, '_')}">
+                            ${shapeHtml}
+                            <span class="scientific-name">${sp}</span>
+                        </label>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('speciesFilter').innerHTML = html;
+        }
+
+        // Update species legend
+        function updateSpeciesLegend() {
+            const species = Object.keys(speciesColors);
+            let html = '';
+            
+            // Get Chinese name mapping from tree data
+            const speciesChineseNames = {};
+            treesData.features.forEach(feature => {
+                const botName = feature.properties.botanical_name;
+                if (!speciesChineseNames[botName] && feature.properties.chinese_name) {
+                    speciesChineseNames[botName] = feature.properties.chinese_name;
+                }
+            });
+            
+            species.forEach(sp => {
+                let displayName = '';
+                if (legendNameType === 'short') {
+                    displayName = getShortScientificName(sp);
+                } else if (legendNameType === 'full') {
+                    displayName = sp;
+                } else if (legendNameType === 'chinese') {
+                    displayName = speciesChineseNames[sp] || sp;
+                }
+                
+                const color = speciesColors[sp];
+                const shape = speciesShapes[sp] || 'circle';
+                let shapeHtml = '';
+                
+                if (shape === 'circle') {
+                    shapeHtml = `<span class="species-color circle" style="background: ${color};"></span>`;
+                } else if (shape === 'square') {
+                    shapeHtml = `<span class="species-color square" style="background: ${color};"></span>`;
+                } else if (shape === 'triangle') {
+                    shapeHtml = `<span class="species-color triangle" style="border-bottom: 14px solid ${color};"></span>`;
+                }
+                
+                const nameClass = legendNameType === 'chinese' ? '' : 'scientific-name';
+                html += `
+                    <div class="legend-item">
+                        ${shapeHtml}
+                        <span class="${nameClass}" style="font-size: 11px;">${displayName}</span>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('speciesLegend').innerHTML = html;
+        }
+
+        // Update legend names based on selected type
+        function updateLegendNames() {
+            legendNameType = document.getElementById('legendNameType').value;
+            updateSpeciesLegend();
+        }
+
+        // Get short scientific name
+        function getShortScientificName(fullName) {
+            const parts = fullName.split(' ');
+            if (parts.length >= 2) {
+                return parts[0].substring(0, 3) + '. ' + parts[1].substring(0, 3) + '.';
+            }
+            return fullName;
+        }
+
+        // Filter species
+        function filterSpecies() {
+            const species = Object.keys(speciesColors);
+            const checkedSpecies = species.filter(sp => {
+                const id = `species_${sp.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                const checkbox = document.getElementById(id);
+                return checkbox && checkbox.checked;
+            });
+
+            clusterGroup.clearLayers();
+            treeMarkers.eachLayer(marker => {
+                if (checkedSpecies.includes(marker.treeData.properties.botanical_name)) {
+                    clusterGroup.addLayer(marker);
+                }
+            });
+        }
+
+        // Toggle functions
+        function toggleTreeMarkers() {
+            if (document.getElementById('showTrees').checked) {
+                map.addLayer(clusterGroup);
+            } else {
+                map.removeLayer(clusterGroup);
+            }
+        }
+
+        function toggleViewpoints() {
+            if (document.getElementById('showViewpoints').checked) {
+                map.addLayer(viewpointMarkers);
+            } else {
+                map.removeLayer(viewpointMarkers);
+            }
+        }
+
+        function toggleClustering() {
+            const clustering = document.getElementById('enableClustering').checked;
+            
+            if (clustering) {
+                map.removeLayer(treeMarkers);
+                clusterGroup.clearLayers();
+                treeMarkers.eachLayer(marker => {
+                    clusterGroup.addLayer(marker);
+                });
+                map.addLayer(clusterGroup);
+            } else {
+                map.removeLayer(clusterGroup);
+                map.addLayer(treeMarkers);
+            }
+        }
+
+        function toggleLabels() {
+            labelsEnabled = document.getElementById('showLabels').checked;
+            updateLabels();
+        }
+
+        function updateLabels() {
+            labelType = document.getElementById('labelType').value;
+            
+            treeMarkers.eachLayer(marker => {
+                if (labelsEnabled) {
+                    const props = marker.treeData.properties;
+                    let label = labelType === 'short' 
+                        ? getShortScientificName(props.botanical_name)
+                        : props.chinese_name;
+                    
+                    marker.bindTooltip(label, { 
+                        permanent: true, 
+                        direction: 'top',
+                        className: 'tree-label',
+                        offset: [0, -10]
+                    });
+                } else {
+                    marker.unbindTooltip();
+                }
+            });
+        }
+
+        function togglePanel() {
+            const content = document.getElementById('panelContent');
+            const icon = document.getElementById('panelToggleIcon');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                icon.className = 'fas fa-chevron-down';
+            } else {
+                content.style.display = 'none';
+                icon.className = 'fas fa-chevron-up';
+            }
+        }
+
+        function toggleLegend() {
+            const content = document.getElementById('legendContent');
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        }
+
+        function toggleLayerSelector() {
+            const selector = document.getElementById('layerSelector');
+            selector.classList.toggle('collapsed');
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`.tab:nth-child(${
+                tabName === 'search' ? 1 : tabName === 'filters' ? 2 : tabName === 'stats' ? 3 : 4
+            })`).classList.add('active');
+            
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+
+        // Base map change
+        function changeBaseMap(type) {
+            Object.values(baseMaps).forEach(layer => map.removeLayer(layer));
+            baseMaps[type].addTo(map);
+            currentBaseMap = type;
+        }
+
+        // Zoom to extent
+        function zoomToExtent() {
+            const bounds = L.latLngBounds(
+                treesData.features.map(f => [f.geometry.coordinates[1], f.geometry.coordinates[0]])
+            );
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+
+        // Geolocation
+        function geolocate() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    map.setView([position.coords.latitude, position.coords.longitude], 18);
+                    L.marker([position.coords.latitude, position.coords.longitude], {
+                        icon: L.divIcon({
+                            className: 'user-location',
+                            html: '<i class="fas fa-circle" style="color: #4a90e2; font-size: 12px;"></i>',
+                            iconSize: [12, 12]
+                        })
+                    }).addTo(map).bindPopup('Your location');
+                }, error => {
+                    alert('Unable to get your location');
+                });
+            } else {
+                alert('Geolocation not supported');
+            }
+        }
+
+        // Measurement tools
+        function startMeasurement(type) {
+            if (type === 'distance') {
+                new L.Draw.Polyline(map).enable();
+            } else if (type === 'area') {
+                new L.Draw.Polygon(map).enable();
+            }
+        }
+
+        function clearMeasurements() {
+            drawnItems.clearLayers();
+        }
+
+        // Coordinate system
+        function updateCoordSystem() {
+            coordSystem = document.querySelector('input[name="coordSystem"]:checked').value;
+        }
+
+        // Export data
+        function exportData(format) {
+            const speciesChecked = Object.keys(speciesColors).filter(sp => {
+                const id = `species_${sp.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                const checkbox = document.getElementById(id);
+                return checkbox && checkbox.checked;
+            });
+            
+            const filteredTrees = treesData.features.filter(f => 
+                speciesChecked.includes(f.properties.botanical_name)
+            );
+
+            if (format === 'csv') {
+                let csv = 'ID,Botanical Name,Chinese Name,Latitude,Longitude,Remarks\n';
+                filteredTrees.forEach(f => {
+                    const coords = f.geometry.coordinates;
+                    csv += `${f.properties.fid},"${f.properties.botanical_name}","${f.properties.chinese_name}",${coords[1]},${coords[0]},"${f.properties.remarks || ''}"\n`;
+                });
+                
+                downloadFile(csv, 'trees.csv', 'text/csv');
+            } else if (format === 'geojson') {
+                const geojson = {
+                    type: 'FeatureCollection',
+                    features: filteredTrees
+                };
+                downloadFile(JSON.stringify(geojson, null, 2), 'trees.geojson', 'application/json');
+            }
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type: type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Share functionality
+        function shareMap() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Map link copied to clipboard!');
+            });
+        }
+
+        function shareTree(fid) {
+            const url = `${window.location.origin}${window.location.pathname}?tree=${fid}`;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Tree link copied to clipboard!');
+            });
+        }
+
+        // Print map
+        function printMap() {
+            window.print();
+        }
+
+        // Photo modal
+        function openPhotoModal(index) {
+            currentPhotoIndex = index;
+            updatePhotoModal();
+            document.getElementById('photoModal').classList.add('active');
+        }
+
+        function closePhotoModal() {
+            document.getElementById('photoModal').classList.remove('active');
+        }
+
+        function closeModal(event) {
+            if (event.target.id === 'photoModal') {
+                closePhotoModal();
+            }
+        }
+
+        function previousPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + viewpointsData.features.length) % viewpointsData.features.length;
+            updatePhotoModal();
+        }
+
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % viewpointsData.features.length;
+            updatePhotoModal();
+        }
+
+        function updatePhotoModal() {
+            const feature = viewpointsData.features[currentPhotoIndex];
+            const photoUrl = placeholderPhotos[currentPhotoIndex % placeholderPhotos.length];
+            
+            document.getElementById('modalImage').src = photoUrl;
+            document.getElementById('modalInfo').innerHTML = `
+                Photo: ${feature.properties.filename}<br>
+                Rotation: ${feature.properties.rotation}°<br>
+                ${currentPhotoIndex + 1} / ${viewpointsData.features.length}
+            `;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('photoModal').classList.contains('active')) {
+                if (e.key === 'Escape') closePhotoModal();
+                if (e.key === 'ArrowLeft') previousPhoto();
+                if (e.key === 'ArrowRight') nextPhoto();
+            }
+        });
+
+        // Initialize on load
+        window.addEventListener('load', initMap);
+    </script>
+</body>
+</html>
