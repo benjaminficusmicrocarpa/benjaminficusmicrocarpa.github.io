@@ -340,7 +340,7 @@
             color: white;
         }
 
-        /* Bottom Right Legend */
+        /* Bottom Right Legend - Now integrated into weather widget */
         .legend {
             position: absolute;
             bottom: 10px;
@@ -351,6 +351,13 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
             z-index: 1000;
             max-width: 250px;
+        }
+
+        /* Hide standalone legend on mobile, show integrated version */
+        @media (max-width: 768px) {
+            .legend {
+                display: none;
+            }
         }
 
         .legend h4 {
@@ -394,6 +401,24 @@
         }
 
         #legendContent::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .weather-legend-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .weather-legend-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .weather-legend-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .weather-legend-content::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
 
@@ -494,11 +519,26 @@
             top: 10px;
             right: 10px;
             background: white;
-            padding: 12px 15px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
             z-index: 1000;
             min-width: 200px;
+            max-width: 250px;
+        }
+
+        /* On mobile, show integrated weather+legend widget */
+        @media (max-width: 768px) {
+            .weather-widget {
+                display: flex;
+                flex-direction: column;
+                max-height: 70vh;
+                overflow: hidden;
+            }
+        }
+
+        .weather-content {
+            padding: 12px 15px;
+            flex-shrink: 0;
         }
 
         .weather-widget h4 {
@@ -522,6 +562,49 @@
         .weather-desc {
             font-size: 12px;
             color: #666;
+        }
+
+        .weather-legend-divider {
+            border-top: 1px solid #e0e0e0;
+            margin: 0;
+            display: none;
+        }
+
+        .weather-legend-header {
+            padding: 10px 15px;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .weather-legend-header h4 {
+            font-size: 14px;
+            margin: 0;
+            color: #333;
+        }
+
+        .weather-legend-content {
+            overflow-y: auto;
+            max-height: calc(70vh - 120px);
+            padding: 0 15px 15px 15px;
+            display: none;
+        }
+
+        /* Show legend section on mobile */
+        @media (max-width: 768px) {
+            .weather-legend-divider {
+                display: block;
+            }
+
+            .weather-legend-header {
+                display: flex;
+            }
+
+            .weather-legend-content {
+                display: none; /* Hidden by default, toggled by JavaScript */
+            }
         }
 
         /* Coordinate Display */
@@ -562,11 +645,57 @@
         /* Leaflet overrides */
         .leaflet-popup-content-wrapper {
             border-radius: 8px;
+            max-width: min(90vw, 400px);
+            max-height: min(80vh, 500px);
         }
 
         .leaflet-popup-content {
             margin: 12px 15px;
             font-size: 13px;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        /* Viewpoint popup specific styles */
+        .viewpoint-popup {
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .viewpoint-popup img {
+            max-width: 100%;
+            max-height: min(60vh, 400px);
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            margin-top: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        /* Responsive popup sizing */
+        @media (max-width: 768px) {
+            .leaflet-popup-content-wrapper {
+                max-width: 85vw;
+                max-height: 70vh;
+            }
+
+            .viewpoint-popup img {
+                max-height: min(50vh, 300px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .leaflet-popup-content-wrapper {
+                max-width: 80vw;
+                max-height: 60vh;
+            }
+
+            .viewpoint-popup img {
+                max-height: min(40vh, 250px);
+            }
         }
 
         .tree-popup h5 {
@@ -594,11 +723,12 @@
 
             .weather-widget {
                 min-width: 150px;
+                max-width: 200px;
             }
 
+            /* Keep controls vertical on mobile */
             .top-left-controls {
-                flex-direction: row;
-                flex-wrap: wrap;
+                flex-direction: column;
             }
         }
 
@@ -848,12 +978,38 @@
         </div>
     </div>
 
-    <!-- Weather Widget -->
-    <div class="weather-widget">
-        <h4><i class="fas fa-cloud-sun"></i> Weather</h4>
-        <div class="weather-info">
-            <div class="weather-temp">24°C</div>
-            <div class="weather-desc">Partly Cloudy<br>Humidity: 65%</div>
+    <!-- Weather Widget with Integrated Legend (Mobile) -->
+    <div class="weather-widget" id="weatherWidget">
+        <div class="weather-content">
+            <h4><i class="fas fa-cloud-sun"></i> Weather</h4>
+            <div class="weather-info">
+                <div class="weather-temp">24°C</div>
+                <div class="weather-desc">Partly Cloudy<br>Humidity: 65%</div>
+            </div>
+        </div>
+        <div class="weather-legend-divider"></div>
+        <div class="weather-legend-header" onclick="toggleWeatherLegend()">
+            <h4>Legend</h4>
+            <i class="fas fa-chevron-down" id="weatherLegendToggleIcon" aria-label="Toggle legend"></i>
+        </div>
+        <div class="weather-legend-content" id="weatherLegendContent" style="display: none;">
+            <div class="legend-item">
+                <i class="fas fa-tree" style="color: #2c5f2d; margin-right: 8px;"></i>
+                <span>Tree</span>
+            </div>
+            <div class="legend-item">
+                <i class="fas fa-eye" style="color: #4a90e2; margin-right: 8px;"></i>
+                <span>Photo Viewpoint</span>
+            </div>
+            <div class="legend-name-toggle">
+                <label for="weatherLegendNameType" style="display: block; margin-bottom: 4px; font-size: 11px; color: #666;">Name Type:</label>
+                <select id="weatherLegendNameType" onchange="updateWeatherLegendNames()" aria-label="Legend name type">
+                    <option value="short">Short Scientific</option>
+                    <option value="full">Full Scientific</option>
+                    <option value="chinese">Chinese Name</option>
+                </select>
+            </div>
+            <div id="weatherSpeciesLegend"></div>
         </div>
     </div>
 
@@ -900,17 +1056,16 @@
         let currentViewshed = null;
         let legendNameType = 'short';
 
-        // Placeholder photos (royalty-free from Unsplash)
-        const placeholderPhotos = [
-            'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800',
-            'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=800',
-            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800',
-            'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800',
-            'https://images.unsplash.com/photo-1511497584788-876760111969?w=800',
-            'https://images.unsplash.com/photo-1425913397330-cf8af2ff40a1?w=800',
-            'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=800',
-            'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800'
-        ];
+        // Cloudflare Images configuration
+        const CLOUDFLARE_IMAGE_DELIVERY_URL = 'https://imagedelivery.net/w8B9Irt4MxIF11C23YczhQ';
+        const CLOUDFLARE_IMAGE_VARIANT_THUMBNAIL = 'H400';  // For popup thumbnails
+        const CLOUDFLARE_IMAGE_VARIANT_FULL = 'H2160';      // For modal full-size images
+
+        // Helper function to get Cloudflare image URL
+        function getCloudflareImageUrl(imageId, variant = CLOUDFLARE_IMAGE_VARIANT_THUMBNAIL) {
+            if (!imageId) return null;
+            return `${CLOUDFLARE_IMAGE_DELIVERY_URL}/${imageId}/${variant}`;
+        }
 
 
         // Initialize map
@@ -1059,6 +1214,7 @@
                 updateStats();
                 updateSpeciesFilter();
                 updateSpeciesLegend();
+                updateWeatherSpeciesLegend();
 
                 // Check for shared tree on load
                 const params = new URLSearchParams(window.location.search);
@@ -1203,13 +1359,14 @@
 
                 const marker = L.marker([coords[1], coords[0]], { icon: icon });
                 
-                const photoUrl = placeholderPhotos[index % placeholderPhotos.length];
+                // Use H400 variant for popup thumbnails
+                const photoUrl = props.image_id ? getCloudflareImageUrl(props.image_id, CLOUDFLARE_IMAGE_VARIANT_THUMBNAIL) : null;
                 
                 const popupContent = `
-                    <div class="tree-popup">
+                    <div class="tree-popup viewpoint-popup">
                         <h5>Photo: ${props.filename}</h5>
                         <p><strong>Rotation:</strong> ${props.rotation}°</p>
-                        <img src="${photoUrl}" style="max-width: 200px; margin-top: 8px; cursor: pointer;" onclick="openPhotoModal(${index})">
+                        ${photoUrl ? `<img src="${photoUrl}" loading="lazy" onclick="openPhotoModal(${index})" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" alt="Viewpoint photo"><p style="display:none; color: #999; font-size: 12px;">Image not available</p>` : '<p style="color: #999; font-size: 12px;">Image not available</p>'}
                     </div>
                 `;
                 
@@ -1462,13 +1619,73 @@
                 `;
             });
             
-            document.getElementById('speciesLegend').innerHTML = html;
+            const speciesLegendEl = document.getElementById('speciesLegend');
+            if (speciesLegendEl) {
+                speciesLegendEl.innerHTML = html;
+            }
+        }
+
+        // Update weather species legend (for mobile integrated version)
+        function updateWeatherSpeciesLegend() {
+            const species = Object.keys(speciesColors);
+            let html = '';
+            
+            // Get Chinese name mapping from tree data
+            const speciesChineseNames = {};
+            treesData.features.forEach(feature => {
+                const botName = feature.properties.botanical_name;
+                if (!speciesChineseNames[botName] && feature.properties.chinese_name) {
+                    speciesChineseNames[botName] = feature.properties.chinese_name;
+                }
+            });
+            
+            species.forEach(sp => {
+                let displayName = '';
+                if (legendNameType === 'short') {
+                    displayName = getShortScientificName(sp);
+                } else if (legendNameType === 'full') {
+                    displayName = sp;
+                } else if (legendNameType === 'chinese') {
+                    displayName = speciesChineseNames[sp] || sp;
+                }
+                
+                const color = speciesColors[sp];
+                const shape = speciesShapes[sp] || 'circle';
+                let shapeHtml = '';
+                
+                if (shape === 'circle') {
+                    shapeHtml = `<span class="species-color circle" style="background: ${color};"></span>`;
+                } else if (shape === 'square') {
+                    shapeHtml = `<span class="species-color square" style="background: ${color};"></span>`;
+                } else if (shape === 'triangle') {
+                    shapeHtml = `<span class="species-color triangle" style="border-bottom: 14px solid ${color};"></span>`;
+                }
+                
+                const nameClass = legendNameType === 'chinese' ? '' : 'scientific-name';
+                html += `
+                    <div class="legend-item">
+                        ${shapeHtml}
+                        <span class="${nameClass}" style="font-size: 11px;">${displayName}</span>
+                    </div>
+                `;
+            });
+            
+            const weatherSpeciesLegendEl = document.getElementById('weatherSpeciesLegend');
+            if (weatherSpeciesLegendEl) {
+                weatherSpeciesLegendEl.innerHTML = html;
+            }
         }
 
         // Update legend names based on selected type
         function updateLegendNames() {
             legendNameType = document.getElementById('legendNameType').value;
+            // Also update the weather legend selector if it exists
+            const weatherSelector = document.getElementById('weatherLegendNameType');
+            if (weatherSelector) {
+                weatherSelector.value = legendNameType;
+            }
             updateSpeciesLegend();
+            updateWeatherSpeciesLegend();
         }
 
         // Get short scientific name
@@ -1577,6 +1794,29 @@
             } else {
                 content.style.display = 'none';
             }
+        }
+
+        function toggleWeatherLegend() {
+            const content = document.getElementById('weatherLegendContent');
+            const icon = document.getElementById('weatherLegendToggleIcon');
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                content.style.display = 'none';
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+
+        function updateWeatherLegendNames() {
+            legendNameType = document.getElementById('weatherLegendNameType').value;
+            // Also update the desktop legend selector if it exists
+            const desktopSelector = document.getElementById('legendNameType');
+            if (desktopSelector) {
+                desktopSelector.value = legendNameType;
+            }
+            updateSpeciesLegend();
+            updateWeatherSpeciesLegend();
         }
 
         function toggleLayerSelector() {
@@ -1740,14 +1980,42 @@
 
         function updatePhotoModal() {
             const feature = viewpointsData.features[currentPhotoIndex];
-            const photoUrl = placeholderPhotos[currentPhotoIndex % placeholderPhotos.length];
+            // Use H2160 variant for full-size modal images
+            const photoUrl = feature.properties.image_id 
+                ? getCloudflareImageUrl(feature.properties.image_id, CLOUDFLARE_IMAGE_VARIANT_FULL) 
+                : null;
             
-            document.getElementById('modalImage').src = photoUrl;
-            document.getElementById('modalInfo').innerHTML = `
+            const modalImage = document.getElementById('modalImage');
+            const modalInfo = document.getElementById('modalInfo');
+            
+            // Update info text
+            modalInfo.innerHTML = `
                 Photo: ${feature.properties.filename}<br>
                 Rotation: ${feature.properties.rotation}°<br>
                 ${currentPhotoIndex + 1} / ${viewpointsData.features.length}
             `;
+            
+            if (photoUrl) {
+                modalImage.style.display = 'block';
+                modalImage.src = photoUrl;
+                modalImage.onerror = function() {
+                    this.style.display = 'none';
+                    modalInfo.innerHTML = `
+                        Photo: ${feature.properties.filename}<br>
+                        Rotation: ${feature.properties.rotation}°<br>
+                        ${currentPhotoIndex + 1} / ${viewpointsData.features.length}<br>
+                        <span style="color: #ff6b6b;">Image not available</span>
+                    `;
+                };
+            } else {
+                modalImage.style.display = 'none';
+                modalInfo.innerHTML = `
+                    Photo: ${feature.properties.filename}<br>
+                    Rotation: ${feature.properties.rotation}°<br>
+                    ${currentPhotoIndex + 1} / ${viewpointsData.features.length}<br>
+                    <span style="color: #ff6b6b;">Image not available</span>
+                `;
+            }
         }
 
         // Keyboard navigation
