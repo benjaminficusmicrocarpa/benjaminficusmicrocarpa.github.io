@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swallowed by Grace | Jonah 2 | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .header-bg {
+            position: relative;
+            overflow: hidden;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            animation: kenBurns 20s ease-in-out infinite;
+        }
+
+        .carousel-image.active {
+            opacity: 0.4;
+        }
+
+        @keyframes kenBurns {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.95));
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 1000px;
+            padding: 0 2rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wave-divider {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            z-index: 2;
+        }
+
+        .wave-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px;
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid #334155;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .sticky-tabs .overflow-x-auto {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(71, 85, 105, 0.3) transparent;
+        }
+
+        .sticky-tabs .overflow-x-auto::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .sticky-tabs .overflow-x-auto::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sticky-tabs .overflow-x-auto::-webkit-scrollbar-thumb {
+            background: rgba(71, 85, 105, 0.3);
+            border-radius: 2px;
+        }
+
+        .sticky-tabs .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+            background: rgba(71, 85, 105, 0.5);
+        }
+
+        .tab-button {
+            position: relative;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            color: #94a3b8;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            color: #60a5fa;
+            background: rgba(96, 165, 250, 0.1);
+        }
+
+        .tab-button.active {
+            color: #60a5fa;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .accordion-button {
+            width: 100%;
+            text-align: left;
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #475569;
+            border-radius: 12px;
+            color: #e2e8f0;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .accordion-button:hover {
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+            border-color: #60a5fa;
+            transform: translateX(4px);
+        }
+
+        .accordion-button.active {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            border-color: #60a5fa;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .accordion-button.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 1.5rem;
+        }
+
+        .accordion-content.active {
+            max-height: 5000px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .tooltip-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+        }
+
+        .tooltip-trigger {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tooltip-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+        }
+
+        .tooltip-content {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 320px;
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(12px);
+            border: 1px solid #475569;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            animation: tooltipFadeIn 0.3s ease;
+        }
+
+        .tooltip-content.active {
+            display: block;
+        }
+
+        @keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 60;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 2.5rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid #475569;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #60a5fa;
+            border: 2px solid #60a5fa;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(96, 165, 250, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 45;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .attribution-full {
+            display: none;
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(12px);
+            border: 1px solid #475569;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            font-size: 0.875rem;
+            color: #cbd5e1;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            max-width: 280px;
+        }
+
+        .attribution-badge:hover .attribution-short {
+            transform: translateX(-10px);
+            opacity: 0;
+        }
+
+        .attribution-badge:hover .attribution-full {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #475569;
+            border-left: 4px solid #3b82f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .verse-card:hover {
+            border-left-color: #60a5fa;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
+            transform: translateX(4px);
+        }
+
+        .quote-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            font-family: 'Playfair Display', serif;
+            color: rgba(59, 130, 246, 0.2);
+            line-height: 1;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #60a5fa;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .key-point {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .header-bg {
+                min-height: 70vh;
+            }
+
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .tooltip-container {
+                top: 10px;
+                right: 10px;
+            }
+
+            .tooltip-content {
+                width: calc(100vw - 40px);
+                right: -10px;
+            }
+
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                text-align: center;
+            }
+
+            .attribution-badge:hover .attribution-short {
+                transform: none;
+                opacity: 1;
+            }
+
+            .attribution-full {
+                display: block;
+                margin-top: 1rem;
+            }
+        }
+
+        @media print {
+            .sticky-tabs,
+            .tooltip-container,
+            .attribution-badge,
+            .btn {
+                display: none;
+            }
+
+            .tab-content {
+                display: block !important;
+            }
+
+            .accordion-content {
+                max-height: none !important;
+                display: block !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-bg">
+        <div class="header-carousel" id="carousel">
+            <img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&q=80" alt="Ocean depths" class="carousel-image active">
+            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&q=80" alt="Underwater light" class="carousel-image">
+            <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=1920&q=80" alt="Ocean waves" class="carousel-image">
+        </div>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <div class="text-blue-400 text-sm font-semibold tracking-wider uppercase mb-3">🌊 Turning Tides Series</div>
+            <h1 class="serif text-5xl md:text-7xl font-black mb-6 leading-tight">
+                Swallowed by Grace
+            </h1>
+            <div class="text-slate-300 text-lg mb-2">
+                <span class="font-semibold">Jonah 2</span> • 09 Nov 2025
+            </div>
+            <div class="text-blue-300 text-base mb-8">
+                Pastor Tim • Island ECC
+            </div>
+            <p class="text-slate-200 text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
+                In his darkest moment, trapped in the belly of a fish, Jonah discovers that God's grace pursues us even in our rebellion. When we can't find our own words in life's storms, we can use God's.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://www.youtube.com/watch?v=PJFjF-NC8t0" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="./index.html" class="btn btn-secondary">
+                    📋 View All Sermons
+                </a>
+                <button onclick="openShareModal()" class="btn btn-secondary">
+                    🔗 Share Infographic
+                </button>
+            </div>
+        </div>
+        <div class="wave-divider">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#0f172a"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="overflow-x-auto">
+            <div class="flex min-w-max justify-center">
+                <button class="tab-button active" onclick="switchTab(0)">📖 Overview</button>
+                <button class="tab-button" onclick="switchTab(1)">🎤 Main Sermon</button>
+                <button class="tab-button" onclick="switchTab(2)">📜 Bible Verses</button>
+                <button class="tab-button" onclick="switchTab(3)">💡 Key Takeaways</button>
+                <button class="tab-button" onclick="switchTab(4)">🙏 Prayer & Reflection</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tooltip -->
+    <div class="tooltip-container">
+        <button class="tooltip-trigger" onclick="toggleTooltip()">💡</button>
+        <div class="tooltip-content" id="tooltip">
+            <h3 class="font-bold text-blue-400 mb-2">📚 Key Terms</h3>
+            <div class="space-y-2 text-sm">
+                <div><strong>Sheol:</strong> Hebrew term for the realm of the dead, the lowest place imaginable</div>
+                <div><strong>Psalm:</strong> Ancient songs of worship and prayer in the Bible</div>
+                <div><strong>Prophet:</strong> God's messenger called to speak His word to people</div>
+                <div><strong>Nineveh:</strong> Capital city of the brutal Assyrian Empire</div>
+                <div><strong>Grace:</strong> God's undeserved favor and love toward us</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-12">
+        <!-- Tab 1: Overview -->
+        <div class="tab-content active">
+            <div class="section-title">📖 Sermon Overview</div>
+            
+            <div class="verse-card">
+                <div class="flex items-start gap-3 mb-4">
+                    <span class="text-3xl">🐋</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-blue-300 mb-2">The Context: Jonah's Desperate Prayer</h3>
+                        <p class="text-slate-300">
+                            After running from God's call to preach to Nineveh, Jonah is thrown overboard and swallowed by a great fish. In this unlikely sanctuary, he spends three days and nights—not in punishment, but in God's protective grace. From the belly of the fish, Jonah prays a remarkable prayer composed entirely of quotations and references from the Psalms.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 my-8">
+                <div class="verse-card">
+                    <div class="text-2xl mb-3">⚓</div>
+                    <h4 class="font-bold text-lg text-blue-300 mb-2">Central Theme</h4>
+                    <p class="text-slate-300">God's relentless grace pursues us even in our rebellion, and when we're drowning in life's storms, we can anchor ourselves in God's Word.</p>
+                </div>
+                <div class="verse-card">
+                    <div class="text-2xl mb-3">💪</div>
+                    <h4 class="font-bold text-lg text-blue-300 mb-2">Core Truth</h4>
+                    <p class="text-slate-300">In the middle of a storm, when you can't find your own words, use God's. The scripture we hide in our hearts becomes our lifeline in desperate times.</p>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="flex items-start gap-3">
+                    <span class="text-2xl">🎯</span>
+                    <div>
+                        <h4 class="font-bold text-lg mb-2">Main Question</h4>
+                        <p class="text-slate-300">Is Jonah's prayer one of true repentance and transformation, or merely desperate deliverance? The text reveals a man who remembers God at his lowest point but hasn't fully surrendered his pride, control, comfort, and bitterness.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-card">
+                <p class="text-lg text-slate-200 italic relative z-10">
+                    "We don't rise to the level of our expectations, we fall to the level of our training."
+                </p>
+                <p class="text-sm text-slate-400 mt-3">— Archilochus, Greek Poet (c. 650 BC)</p>
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-900/30 to-blue-800/20 border border-blue-700/50 rounded-xl p-6 my-8">
+                <h4 class="font-bold text-xl text-blue-300 mb-4">📊 Sermon Structure</h4>
+                <div class="space-y-3 text-slate-300">
+                    <div class="flex items-start gap-3">
+                        <span class="text-blue-400 font-bold">1.</span>
+                        <span>Jonah's backstory: Called to preach to Israel's brutal enemy</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-blue-400 font-bold">2.</span>
+                        <span>The fish as grace, not punishment—God saving Jonah's life</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-blue-400 font-bold">3.</span>
+                        <span>Verse-by-verse analysis of Jonah's prayer (all from Psalms)</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-blue-400 font-bold">4.</span>
+                        <span>Modern applications: falling back on training in crisis</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-blue-400 font-bold">5.</span>
+                        <span>Personal stories: memorization saves lives (literally)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Main Sermon -->
+        <div class="tab-content">
+            <div class="section-title">🎤 Main Sermon Content</div>
+
+            <button class="accordion-button active">
+                <span>🏃 Jonah's Flight: Understanding His Rebellion</span>
+                <span class="accordion-icon">⌄</span>
+            </button>
+            <div class="accordion-content active">
+                <p class="mb-4">
+                    God called Jonah to go to Nineveh, the capital of Assyria, to preach repentance. But understanding why Jonah refused requires understanding just how evil Nineveh was. This wasn't fear—it was hatred.
+                </p>
+                <div class="key-point">
+                    <p class="font-semibold mb-2">🔥 The Assyrian Empire's Brutality</p>
+                    <p class="text-sm">
+                        In the 8th century BC, Assyria was known for unimaginable violence: impaling captives, flaying skin to display on city walls, stacking heads outside conquered cities. King Ashur-Nasirpal II declared: <em>"I am the merciless weapon that strikes down the land of his enemies."</em>
+                    </p>
+                </div>
+                <p class="mt-4">
+                    A modern comparison: it would be like asking a Jewish person during WWII to go to Berlin and preach repentance to Hitler. That's the magnitude of what God asked Jonah to do.
+                </p>
+                <div class="bg-red-900/20 border border-red-700/50 rounded-lg p-4 mt-4">
+                    <p class="font-semibold text-red-300 mb-2">⚠️ Jonah's Real Problem (Spoiler Alert)</p>
+                    <p class="text-sm text-slate-300">
+                        Jonah didn't refuse because he was scared. He refused because he knew God would show them mercy if they repented—and he didn't think they deserved it. Jonah's issue wasn't fear; it was a bitter, unforgiving heart.
+                    </p>
+                </div>
+            </div>
+
+            <button class="accordion-button">
+                <span>🌊 Swallowed by Grace, Not Punishment</span>
+                <span class="accordion-icon">⌄</span>
+            </button>
+            <div class="accordion-content">
+                <p class="mb-4">
+                    After fleeing to Tarshish (modern-day Spain—as far as possible from Nineveh), Jonah ends up on a ship in a violent storm. He tells the sailors to throw him overboard, preferring death to obedience. But God provides a great fish to swallow him.
+                </p>
+                <div class="verse-card">
+                    <div class="flex items-start gap-3">
+                        <span class="text-3xl">💙</span>
+                        <div>
+                            <p class="text-slate-200 mb-2">
+                                This wasn't punishment—it was rescue. Jonah was drowning, dying. The fish saved his life. God was saying, <strong>"I'm not done with you yet."</strong>
+                            </p>
+                            <p class="text-sm text-slate-400">
+                                The Hebrew word for "belly" shares roots with "womb"—a place of rebirth. Jesus later compared Jonah's three days in the fish to His own burial and resurrection.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="accordion-button">
+                <span>📿 Jonah's Prayer: A Masterclass in Scripture Memory</span>
+                <span class="accordion-icon">⌄</span>
+            </button>
+            <div class="accordion-content">
+                <p class="mb-4">
+                    Inside the fish for three days, Jonah prays—but notice what's missing: there's no apology, no confession of sin, no repentance. Instead, every line of his prayer quotes or references a Psalm. Let's break it down:
+                </p>
+
+                <div class="space-y-4">
+                    <div class="verse-card">
+                        <p class="font-semibold text-blue-300 mb-2">📖 Jonah 2:2 (Past Tense)</p>
+                        <p class="italic mb-2">"I called out to the Lord out of my distress, and he answered me. Out of the belly of Sheol I cried, and you heard my voice."</p>
+                        <p class="text-sm text-slate-400">
+                            This happened while drowning, not in the fish. Sheol = realm of the dead. Jonah was at the absolute bottom.
+                        </p>
+                    </div>
+
+                    <div class="verse-card">
+                        <p class="font-semibold text-blue-300 mb-2">📖 Jonah 2:3 — God in Control</p>
+                        <p class="italic mb-2">"For you cast me into the deep... your breakers and your waves passed over me."</p>
+                        <p class="text-sm text-slate-400">
+                            Jonah volunteered to be thrown overboard, but here he acknowledges: <em>You did this, God. You're in control.</em>
+                        </p>
+                    </div>
+
+                    <div class="verse-card">
+                        <p class="font-semibold text-blue-300 mb-2">📖 Jonah 2:4 — Quoting Psalm 31:22</p>
+                        <p class="italic mb-2">"I am driven away from your sight; yet I shall again look upon your holy temple."</p>
+                        <p class="text-sm text-slate-400 mb-2">
+                            David's Psalm 31 is about God as refuge. But here's the powerful part: Psalm 31:5 says <em>"Into your hands I commit my spirit"</em>—the same words Jesus spoke on the cross. Jonah, at his lowest, surrenders control to God.
+                        </p>
+                    </div>
+
+                    <div class="verse-card">
+                        <p class="font-semibold text-blue-300 mb-2">📖 Jonah 2:5-6 — Vivid Imagery</p>
+                        <p class="italic mb-2">"The waters closed in over me... weeds were wrapped around my head. I went down to the roots of the mountains..."</p>
+                        <p class="text-sm text-slate-400">
+                            "Roots of mountains" = tectonic plates, the deepest point on earth. This echoes Psalm 40:2: <em>"He lifted me out of the slimy pit... and set my feet on a rock."</em>
+                        </p>
+                    </div>
+
+                    <div class="verse-card">
+                        <p class="font-semibold text-blue-300 mb-2">📖 Jonah 2:7 — The Turning Point</p>
+                        <p class="italic mb-2">"When my life was fainting away, I remembered the Lord, and my prayer came to you."</p>
+                        <p class="text-sm text-slate-400">
+                            At the very end—unable to breathe, about to faint—<em>that's</em> when Jonah remembered God and cried out.
+                        </p>
+                    </div>
+
+                    <div class="verse-card">
+                        <p class="font-semibold text-blue-300 mb-2">📖 Jonah 2:8-9 — The Vow</p>
+                        <p class="italic mb-2">"Those who pay regard to vain idols forsake their hope... But I will sacrifice to you; what I have vowed I will pay. Salvation belongs to the Lord."</p>
+                        <p class="text-sm text-slate-400 mb-3">
+                            Jonah recognizes his idols: pride, control, comfort, bitterness. He makes a deal with God: <em>"I'll do what I vowed. I'll go to Nineveh—because salvation belongs to You, not me."</em>
+                        </p>
+                        <div class="bg-yellow-900/20 border border-yellow-700/50 rounded p-3">
+                            <p class="text-xs font-semibold text-yellow-300 mb-1">⚠️ Have You Prayed This?</p>
+                            <p class="text-xs text-slate-300">"God, if you just get me through this, I promise I'll go to church more, read my Bible more..." We've all made desperate deals with God, forgetting that grace is a gift, not a transaction.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-card mt-6">
+                    <p class="text-lg text-slate-200 relative z-10">
+                        <strong>Jonah 2:10:</strong> "And the Lord spoke to the fish, and it vomited Jonah out upon the dry land."
+                    </p>
+                    <p class="text-sm text-slate-400 mt-3">
+                        Not "spit"—<em>vomited</em>. How humiliating for this prophet. Yet this is how God brings us back: humbled, saved, but still needing transformation.
+                    </p>
+                </div>
+            </div>
+
+            <button class="accordion-button">
+                <span>✈️ Captain Sully & the Miracle on the Hudson</span>
+                <span class="accordion-icon">⌄</span>
+            </button>
+            <div class="accordion-content">
+                <p class="mb-4">
+                    In 2009, US Airways Flight 1549 hit geese, lost all engines, and glided over New York City with 155 souls aboard. Captain Chesley "Sully" Sullenberger had mere minutes to decide: attempt a return to LaGuardia, head to Teterborough, or... land in the Hudson River.
+                </p>
+                <div class="verse-card">
+                    <p class="mb-3">
+                        <strong>Listening to the cockpit recordings is stunning.</strong> Sully's voice is calm, methodical. No panic. Just decisions. Why? Because he fell back on his training.
+                    </p>
+                    <div class="bg-blue-900/30 border border-blue-700/50 rounded p-4">
+                        <p class="text-blue-300 font-semibold mb-2">💬 Captain Sully's Words:</p>
+                        <p class="italic text-sm">"You don't have time to think. You only have time to act. You have to rely on what you've learned."</p>
+                    </div>
+                </div>
+                <p class="mt-4 text-slate-300">
+                    Every passenger survived—the "Miracle on the Hudson." Another beast in the water became salvation for 155 people. And the lesson? <strong>In crisis, we fall to the level of our training.</strong>
+                </p>
+            </div>
+
+            <button class="accordion-button">
+                <span>📞 When You Can't Find Your Own Words, Use God's</span>
+                <span class="accordion-icon">⌄</span>
+            </button>
+            <div class="accordion-content">
+                <p class="mb-4">
+                    Pastor Tim shared two powerful personal stories about relying on memorized truth in moments of terror:
+                </p>
+
+                <div class="verse-card mb-4">
+                    <h4 class="font-bold text-blue-300 mb-3">🏰 Lost Kids at Disneyland</h4>
+                    <p class="mb-3">
+                        During a rainy night exodus from Disneyland, two kids from their group got separated in the chaos. Panicked parents searched frantically. Then—a phone rang. The kids had memorized their dad's number, found a cast member, and called.
+                    </p>
+                    <p class="text-sm text-slate-400">
+                        <strong>The lesson:</strong> In desperation, they had the number to call their father. Jonah, in desperation, had God's "numbers"—the Psalms—to call his Heavenly Father.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h4 class="font-bold text-blue-300 mb-3">🩺 Cindy's Medical Crisis</h4>
+                    <p class="mb-3">
+                        Five years ago, during a Zoom counseling session, Pastor Tim's wife Cindy experienced a transient ischemic attack (mini-stroke) caused by an aneurysm. Her vision went dark. She was terrified but couldn't speak—she was on a call with a client.
+                    </p>
+                    <p class="mb-3">
+                        Lying flat on her office floor, she grabbed a notebook and pen. Over and over, she wrote:
+                    </p>
+                    <div class="bg-slate-800/50 border border-slate-600 rounded p-4 italic text-center">
+                        <p>"Our Father, who art in heaven, hallowed be thy name..."</p>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-400">
+                        The Lord's Prayer—taught by Jesus, memorized in childhood—became her anchor. That prayer, written silently on paper, brought peace in absolute terror. (She's fine now—give her a high five if you see her!)
+                    </p>
+                </div>
+
+                <div class="key-point mt-6">
+                    <p class="font-semibold mb-2">📿 The Rosary Connection</p>
+                    <p class="text-sm">
+                        Pastor Tim grew up Catholic, learning to pray the rosary—repetition of the Lord's Prayer and Hail Mary prayers. As a young boy, he didn't understand it. He confessed a made-up sin to a priest, was told to say 20 Hail Marys and 10 Our Fathers, and just "checked the box." His heart wasn't in it. But that repetition? It built something. In Cindy's darkest hour, that prayer returned.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Bible Verses -->
+        <div class="tab-content">
+            <div class="section-title">📜 Scripture References</div>
+
+            <div class="verse-card">
+                <h3 class="font-bold text-xl text-blue-300 mb-3">📖 Primary Text: Jonah 2 (NIV)</h3>
+                <div class="space-y-4 text-slate-200">
+                    <p><strong>Verse 1:</strong> From inside the fish Jonah prayed to the Lord his God.</p>
+                    <p><strong>Verse 2:</strong> He said: "In my distress I called to the Lord, and he answered me. From deep in the realm of the dead I called for help, and you listened to my cry.</p>
+                    <p><strong>Verse 3:</strong> You hurled me into the depths, into the very heart of the seas, and the currents swirled about me; all your waves and breakers swept over me.</p>
+                    <p><strong>Verse 4:</strong> I said, 'I have been banished from your sight; yet I will look again toward your holy temple.'</p>
+                    <p><strong>Verse 5:</strong> The engulfing waters threatened me, the deep surrounded me; seaweed was wrapped around my head.</p>
+                    <p><strong>Verse 6:</strong> To the roots of the mountains I sank down; the earth beneath barred me in forever. But you, Lord my God, brought my life up from the pit.</p>
+                    <p><strong>Verse 7:</strong> When my life was ebbing away, I remembered you, Lord, and my prayer rose to you, to your holy temple.</p>
+                    <p><strong>Verse 8:</strong> Those who cling to worthless idols turn away from God's love for them.</p>
+                    <p><strong>Verse 9:</strong> But I, with shouts of grateful praise, will sacrifice to you. What I have vowed I will make good. I will say, 'Salvation comes from the Lord.'"</p>
+                    <p><strong>Verse 10:</strong> And the Lord commanded the fish, and it vomited Jonah onto dry land.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 space-y-4">
+                <h3 class="text-2xl font-bold text-blue-300 mb-4">🔗 Psalms Referenced in Jonah's Prayer</h3>
+
+                <div class="verse-card">
+                    <h4 class="font-semibold text-blue-300 mb-2">Psalm 31:22 (NIV)</h4>
+                    <p class="italic mb-2">"In my alarm I said, 'I am cut off from your sight!' Yet you heard my cry for mercy when I called to you for help."</p>
+                    <p class="text-sm text-slate-400">Connection: Jonah 2:4 echoes this feeling of being cut off from God's presence.</p>
+                </div>
+
+                <div class="verse-card">
+                    <h4 class="font-semibold text-blue-300 mb-2">Psalm 31:5 (NIV)</h4>
+                    <p class="italic mb-2">"Into your hands I commit my spirit; deliver me, Lord, my faithful God."</p>
+                    <p class="text-sm text-slate-400">Significance: The same words Jesus spoke on the cross (Luke 23:46). Jonah, at his lowest, surrenders completely to God.</p>
+                </div>
+
+                <div class="verse-card">
+                    <h4 class="font-semibold text-blue-300 mb-2">Psalm 40:2 (NIV)</h4>
+                    <p class="italic mb-2">"He lifted me out of the slimy pit, out of the mud and mire; he set my feet on a rock and gave me a firm place to stand."</p>
+                    <p class="text-sm text-slate-400">Connection: Jonah 2:6 references the "pit" and God bringing him up from the depths.</p>
+                </div>
+
+                <div class="verse-card">
+                    <h4 class="font-semibold text-blue-300 mb-2">Psalm 119:11 (NIV)</h4>
+                    <p class="italic mb-2">"I have hidden your word in my heart that I might not sin against you."</p>
+                    <p class="text-sm text-slate-400">Application: David's practice of memorizing God's Word is exactly what saved Jonah—and what saves us in our storms.</p>
+                </div>
+            </div>
+
+            <div class="verse-card mt-8">
+                <h4 class="font-bold text-blue-300 mb-3">📖 Other Key Verses from the Sermon</h4>
+                <div class="space-y-3 text-sm">
+                    <div>
+                        <p class="font-semibold">Psalm 51:4 (NIV) — True Repentance</p>
+                        <p class="italic text-slate-300">"Against you, you only, have I sinned and done what is evil in your sight; so you are right in your verdict and justified when you judge."</p>
+                        <p class="text-xs text-slate-400 mt-1">David's model of confession, which Jonah's prayer lacks.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Psalm 119:105 (NIV)</p>
+                        <p class="italic text-slate-300">"Your word is a lamp for my feet, a light on my path."</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Matthew 6:9-13 (NIV) — The Lord's Prayer</p>
+                        <p class="italic text-slate-300">"Our Father in heaven, hallowed be your name, your kingdom come, your will be done, on earth as it is in heaven..."</p>
+                        <p class="text-xs text-slate-400 mt-1">The prayer Cindy wrote during her medical crisis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Key Takeaways -->
+        <div class="tab-content">
+            <div class="section-title">💡 Key Takeaways</div>
+
+            <div class="key-point">
+                <div class="flex items-start gap-3">
+                    <span class="text-3xl">👂</span>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">1. God Hears You—Even in Rebellion</h4>
+                        <p class="mb-2">
+                            Jonah disobeyed God, ran away, sinned against Him—yet when he cried out from the depths, God answered. No matter how far you've run, God hears your cry.
+                        </p>
+                        <p class="text-sm text-slate-400 italic">
+                            "In my distress I called to the Lord, and he answered me." (Jonah 2:2)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="flex items-start gap-3">
+                    <span class="text-3xl">🎛️</span>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">2. God Is Always in Control</h4>
+                        <p class="mb-2">
+                            Jonah volunteered to be thrown overboard, but he recognized: "You cast me into the deep" (Jonah 2:3). God orchestrated everything—the storm, the fish, the three days. He's in control of your storm, too.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="flex items-start gap-3">
+                    <span class="text-3xl">🛟</span>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">3. God Will Deliver You</h4>
+                        <p class="mb-2">
+                            The fish wasn't punishment—it was rescue. God saved Jonah's life and gave him time to process. The situation may not be perfect (being vomited out isn't exactly glamorous), but God delivers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="flex items-start gap-3">
+                    <span class="text-3xl">📚</span>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">4. Lean on What You've Learned</h4>
+                        <p class="mb-2">
+                            In crisis, you fall to the level of your training. Jonah leaned on the Psalms he'd memorized. Captain Sully leaned on his pilot training. Cindy leaned on the Lord's Prayer. What have you hidden in your heart?
+                        </p>
+                        <p class="text-sm text-slate-400 italic">
+                            "We don't rise to the level of our expectations, we fall to the level of our training." — Archilochus
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="flex items-start gap-3">
+                    <span class="text-3xl">🗣️</span>
+                    <div>
+                        <h4 class="font-bold text-xl mb-2">5. When You Can't Find Your Words, Use God's</h4>
+                        <p class="mb-2">
+                            Storms leave us speechless. Trauma steals our words. But God's Word—Scripture, prayers, worship songs—becomes our voice when we have none.
+                        </p>
+                        <div class="bg-blue-900/30 border border-blue-700/50 rounded p-3 mt-3">
+                            <p class="text-sm font-semibold text-blue-300 mb-1">💡 Practical Step:</p>
+                            <p class="text-sm">Memorize one verse or prayer this week. Write it down. Repeat it. Let it sink in. You never know when you'll need it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-card mt-8">
+                <h4 class="font-bold text-xl text-blue-300 mb-4">🪞 Mirror Questions: How Are You Like Jonah?</h4>
+                <div class="space-y-3 text-slate-300">
+                    <p>• Are you running from something God has asked you to do?</p>
+                    <p>• Are you holding onto idols: pride, control, comfort, bitterness?</p>
+                    <p>• Do you struggle to show grace to people you think don't "deserve" it?</p>
+                    <p>• Have you made deals with God instead of resting in His grace?</p>
+                    <p>• When was the last time you cried out to God in desperation?</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-green-900/30 to-green-800/20 border border-green-700/50 rounded-xl p-6 mt-8">
+                <h4 class="font-bold text-xl text-green-300 mb-4">✅ Action Steps</h4>
+                <div class="space-y-4 text-slate-300">
+                    <div class="flex items-start gap-3">
+                        <span class="text-green-400 text-xl">1.</span>
+                        <div>
+                            <p class="font-semibold">Memorize Scripture</p>
+                            <p class="text-sm text-slate-400">Start with one verse. Try Psalm 40:2, Jonah 2:9, or the Lord's Prayer.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-green-400 text-xl">2.</span>
+                        <div>
+                            <p class="font-semibold">Sing Worship Songs</p>
+                            <p class="text-sm text-slate-400">Melodies help memory. Let the lyrics of songs like "When I Cannot Stand" anchor you.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-green-400 text-xl">3.</span>
+                        <div>
+                            <p class="font-semibold">Confess Your "Nineveh"</p>
+                            <p class="text-sm text-slate-400">Where is God calling you that you're avoiding? Who do you need to extend grace to?</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-green-400 text-xl">4.</span>
+                        <div>
+                            <p class="font-semibold">Share Your Story</p>
+                            <p class="text-sm text-slate-400">Tell someone how God has rescued you in your storms. Your testimony matters.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Prayer & Reflection -->
+        <div class="tab-content">
+            <div class="section-title">🙏 Prayer & Reflection</div>
+
+            <div class="quote-card">
+                <h3 class="font-bold text-2xl text-blue-300 mb-4">💬 Closing Prayer from Pastor Tim</h3>
+                <p class="text-lg leading-relaxed text-slate-200 italic">
+                    "God, we thank you for this lesson from Jonah. God, I thank you for his prayer—that even though he never apologized, he never fully repented of what he did wrong, his prayer was still extremely powerful. And to show that he trusted you, he believed in you. And even though, as a human being just like us, maybe he didn't want to fully do exactly what you asked him to do, he eventually did.
+                </p>
+                <p class="text-lg leading-relaxed text-slate-200 italic mt-4">
+                    And God, we thank you that he was trusting in you. And God, we pray for all of us—that if our heart is maybe sometimes in the wrong place, maybe here at church or maybe at other times in our study of God's Word or in our prayer life, maybe sometimes our heart can be in the wrong place—but I do pray, God, that this renewing of the mind, the repetition that we have of going to church on Sunday, singing these songs, praying these prayers, reading our Bible, just that motion, just that repetition, that renewing of our minds would pierce our hearts and stay there, and be the place we go to in our time of need.
+                </p>
+                <p class="text-lg leading-relaxed text-slate-200 italic mt-4">
+                    We thank you, God, and we pray this in Jesus' name. Amen."
+                </p>
+            </div>
+
+            <div class="verse-card mt-8">
+                <h3 class="font-bold text-xl text-blue-300 mb-4">🤔 Reflection Questions</h3>
+                <div class="space-y-4">
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <p class="font-semibold mb-2">1. Your "Belly of the Fish" Moment</p>
+                        <p class="text-slate-300 text-sm">
+                            When have you been in a desperate situation where you felt like you were drowning? How did you respond? Did you cry out to God, or try to handle it yourself?
+                        </p>
+                    </div>
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <p class="font-semibold mb-2">2. What Have You Memorized?</p>
+                        <p class="text-slate-300 text-sm">
+                            If you faced a crisis today and couldn't form your own words, what Scripture, prayer, or worship song could you fall back on? If the answer is "nothing," what will you start memorizing this week?
+                        </p>
+                    </div>
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <p class="font-semibold mb-2">3. Who Is Your "Nineveh"?</p>
+                        <p class="text-slate-300 text-sm">
+                            Is there someone or a group of people you struggle to show grace to because you don't think they "deserve" it? How might God be calling you to extend His mercy anyway?
+                        </p>
+                    </div>
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <p class="font-semibold mb-2">4. Deliverance vs. Transformation</p>
+                        <p class="text-slate-300 text-sm">
+                            Jonah prayed for rescue but didn't fully repent. Have you ever asked God to fix your situation without being willing to change your heart? What would true transformation look like for you?
+                        </p>
+                    </div>
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <p class="font-semibold mb-2">5. Hidden Idols</p>
+                        <p class="text-slate-300 text-sm">
+                            Jonah clung to pride, control, comfort, and bitterness. Which of these (or other idols) do you find yourself clinging to instead of trusting God's steadfast love?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 border border-purple-700/50 rounded-xl p-6 mt-8">
+                <h3 class="font-bold text-xl text-purple-300 mb-4">📖 Suggested Scripture Meditation</h3>
+                <p class="text-slate-300 mb-4">
+                    This week, slowly read and meditate on one of these passages each day:
+                </p>
+                <div class="space-y-2 text-sm text-slate-300">
+                    <p><strong>Monday:</strong> Psalm 31 (God as refuge)</p>
+                    <p><strong>Tuesday:</strong> Psalm 40:1-3 (Lifted from the pit)</p>
+                    <p><strong>Wednesday:</strong> Psalm 51 (True repentance)</p>
+                    <p><strong>Thursday:</strong> Psalm 119:9-16 (Hiding God's Word in your heart)</p>
+                    <p><strong>Friday:</strong> Jonah 2 (Jonah's prayer)</p>
+                    <p><strong>Saturday:</strong> Matthew 6:9-13 (The Lord's Prayer)</p>
+                    <p><strong>Sunday:</strong> Romans 5:6-8 (God's grace while we were still sinners)</p>
+                </div>
+            </div>
+
+            <div class="verse-card mt-8">
+                <h3 class="font-bold text-xl text-blue-300 mb-4">✍️ Journal Prompt</h3>
+                <p class="text-slate-300 mb-4">
+                    Write a letter to God from your own "belly of the fish"—your current struggle, fear, or place of desperation. Be honest. Then, find a Psalm that speaks to your situation and incorporate its words into your prayer.
+                </p>
+                <div class="bg-slate-800/50 border border-slate-600 rounded p-4 mt-4">
+                    <p class="text-sm text-slate-400 italic">
+                        "When my life was ebbing away, I remembered you, Lord, and my prayer rose to you, to your holy temple." — Jonah 2:7
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Share Modal -->
+    <div class="modal" id="shareModal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4 text-blue-300">🔗 Share This Sermon</h2>
+            <p class="text-slate-300 mb-6">Spread the word about God's relentless grace!</p>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="shareOn('twitter')" class="btn btn-primary flex-1">
+                    🐦 Twitter
+                </button>
+                <button onclick="shareOn('facebook')" class="btn btn-primary flex-1">
+                    📘 Facebook
+                </button>
+                <button onclick="shareOn('whatsapp')" class="btn btn-primary flex-1">
+                    💬 WhatsApp
+                </button>
+            </div>
+            <button onclick="closeShareModal()" class="btn btn-secondary w-full mt-4">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html" class="text-blue-400 hover:underline">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html" class="text-blue-400 hover:underline">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Carousel
+        let currentSlide = 0;
+        const images = document.querySelectorAll('.carousel-image');
+        
+        function nextSlide() {
+            images[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % images.length;
+            images[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 6000);
+
+        // Tabs
+        const tabs = document.querySelectorAll('.tab-button');
+        const contents = document.querySelectorAll('.tab-content');
+        
+        function switchTab(index) {
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            tabs[index].classList.add('active');
+            contents[index].classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+        const accordionContents = document.querySelectorAll('.accordion-content');
+        
+        function toggleAccordion(index) {
+            const button = accordionButtons[index];
+            const content = accordionContents[index];
+            
+            button.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        accordionButtons.forEach((button, index) => {
+            button.addEventListener('click', () => toggleAccordion(index));
+        });
+
+        // Tooltip
+        function toggleTooltip() {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.classList.toggle('active');
+        }
+
+        document.addEventListener('click', (e) => {
+            const tooltip = document.getElementById('tooltip');
+            const trigger = document.querySelector('.tooltip-trigger');
+            if (!trigger.contains(e.target) && !tooltip.contains(e.target)) {
+                tooltip.classList.remove('active');
+            }
+        });
+
+        // Share Modal
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('active');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('active');
+        }
+
+        function shareOn(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('Swallowed by Grace - Jonah 2 Sermon');
+            const text = encodeURIComponent('When we can\'t find our own words in life\'s storms, we can use God\'s. Check out this powerful sermon on Jonah\'s prayer from the belly of the fish.');
+            
+            let shareUrl;
+            switch(platform) {
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${text}%20${url}`;
+                    break;
+            }
+            window.open(shareUrl, '_blank');
+        }
+
+        // Close modal on outside click
+        document.getElementById('shareModal').addEventListener('click', (e) => {
+            if (e.target.id === 'shareModal') {
+                closeShareModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeShareModal();
+                document.getElementById('tooltip').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
