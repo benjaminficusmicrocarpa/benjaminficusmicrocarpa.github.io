@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turning Tides: The God of Second Chances | Island ECC Sermon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #1e293b;
+            --text-gray: #475569;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Crimson Text', serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .header-section {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            max-height: 900px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+            animation: kenBurns 20s ease-out infinite;
+        }
+
+        @keyframes kenBurns {
+            0% { transform: scale(1) translateX(0); }
+            50% { transform: scale(1.1) translateX(-2%); }
+            100% { transform: scale(1) translateX(0); }
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.85) 0%, rgba(8, 145, 178, 0.75) 100%);
+            z-index: 2;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .header-meta {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            border-bottom: 2px solid var(--border);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .tabs-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tabs-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .tabs-container::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        .tabs-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 600;
+            color: var(--text-gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+            background: var(--bg-light);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 2px 8px var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: background 0.3s ease;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-light);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: var(--bg-light);
+        }
+
+        .accordion-content-inner {
+            padding: 1.5rem;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 5000px;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .verse-reference {
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+        }
+
+        .verse-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .tooltip-trigger {
+            border-bottom: 1px dotted var(--primary);
+            cursor: help;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .floating-tooltip {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 320px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            box-shadow: 0 8px 24px var(--shadow);
+            z-index: 1000;
+            display: none;
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .tooltip-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .tooltip-text {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .tooltip-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-gray);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .tooltip-close:hover {
+            background: var(--bg-light);
+            color: var(--primary);
+        }
+
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short:hover {
+            transform: scale(1.1) translateX(-10px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .attribution-full {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            max-width: 320px;
+            box-shadow: 0 8px 24px var(--shadow);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--text-gray);
+            display: none;
+        }
+
+        .attribution-full a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .attribution-full a:hover {
+            text-decoration: underline;
+        }
+
+        .quote-card {
+            background: var(--bg-light);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            font-style: italic;
+        }
+
+        .quote-text {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-dark);
+        }
+
+        .quote-author {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        .reflection-question {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow);
+            margin: 2rem 0;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-caption {
+            padding: 1.5rem;
+            background: var(--bg-light);
+        }
+
+        .image-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .image-description {
+            font-size: 0.9375rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .header-section {
+                height: 70vh;
+                min-height: 500px;
+            }
+
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .header-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .floating-tooltip {
+                position: relative;
+                top: auto;
+                right: auto;
+                max-width: 100%;
+                margin: 1rem 0;
+            }
+
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                text-align: center;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+                max-width: 100%;
+            }
+
+            .tab {
+                padding: 0.875rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media print {
+            .sticky-tabs,
+            .header-buttons,
+            .attribution-badge,
+            .floating-tooltip {
+                display: none !important;
+            }
+
+            .header-section {
+                height: auto;
+                min-height: auto;
+                page-break-after: always;
+            }
+
+            .tab-content {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+
+            .accordion-content {
+                max-height: none !important;
+            }
+        }
+
+        .section-intro {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(8, 145, 178, 0.05) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .key-point-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .emoji {
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .bento-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.75rem;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .bento-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .bento-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .bento-text {
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header-section">
+        <div class="header-carousel">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1920&q=80" alt="Ocean waves" class="carousel-image active" loading="eager">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&q=80" alt="Person looking at horizon" class="carousel-image" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1502899576159-f224dc2349fa?w=1920&q=80" alt="Open Bible" class="carousel-image" loading="lazy">
+        </div>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <h1 class="header-title">🌊 Turning Tides: The God of Second Chances</h1>
+            <div class="header-meta">
+                📅 16 November 2025 | 🎤 Pastor Brett | 🏛️ Island ECC
+            </div>
+            <div class="header-buttons">
+                <a href="https://www.youtube.com/watch?v=Jkdz3U6uxw0" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <span>▶️</span>
+                    <span>Watch Original Sermon</span>
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <span>📚</span>
+                    <span>View All Sermons</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs Navigation -->
+    <nav class="sticky-tabs">
+        <div class="tabs-container" role="tablist">
+            <div class="tab active" role="tab" data-tab="overview" tabindex="0">📋 Overview</div>
+            <div class="tab" role="tab" data-tab="sermon" tabindex="0">📖 Main Sermon</div>
+            <div class="tab" role="tab" data-tab="verses" tabindex="0">✝️ Bible Verses</div>
+            <div class="tab" role="tab" data-tab="application" tabindex="0">💡 Application</div>
+            <div class="tab" role="tab" data-tab="reflection" tabindex="0">🤔 Reflection</div>
+            <div class="tab" role="tab" data-tab="context" tabindex="0">🗺️ Historical Context</div>
+        </div>
+    </nav>
+
+    <!-- Tab Content Sections -->
+    <main>
+        <!-- Overview Tab -->
+        <section id="overview" class="tab-content active">
+            <div class="card">
+                <h2 class="card-title">📋 Sermon Overview</h2>
+                <p class="section-intro">
+                    In this powerful message from the book of Jonah, Pastor Brett explores one of the most profound themes in Scripture: God's limitless mercy and His willingness to give second chances. Through Jonah's reluctant obedience and the surprising repentance of Nineveh, we discover that no one is beyond the reach of God's grace.
+                </p>
+
+                <div class="bento-grid">
+                    <div class="bento-item">
+                        <span class="bento-icon">🎯</span>
+                        <h3 class="bento-title">Central Theme</h3>
+                        <p class="bento-text">God is a God of second chances who extends mercy beyond our comprehension, transforming hearts and lives through His grace.</p>
+                    </div>
+                    <div class="bento-item">
+                        <span class="bento-icon">📍</span>
+                        <h3 class="bento-title">Key Passage</h3>
+                        <p class="bento-text">Jonah Chapter 3 - The second call, the simple message, and the remarkable repentance of an entire city.</p>
+                    </div>
+                    <div class="bento-item">
+                        <span class="bento-icon">⚡</span>
+                        <h3 class="bento-title">Main Challenge</h3>
+                        <p class="bento-text">Step down from the throne of your life and urgently respond to God's call, trusting in His goodness and mercy.</p>
+                    </div>
+                    <div class="bento-item">
+                        <span class="bento-icon">❤️</span>
+                        <h3 class="bento-title">Gospel Connection</h3>
+                        <p class="bento-text">Just as Jonah spent three days in the fish, Jesus spent three days in the tomb, bringing ultimate mercy through His resurrection.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">🔑 Key Takeaways</h2>
+                
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🙏</span>The Word Came a Second Time</div>
+                    <p>God's mercy is demonstrated in giving Jonah another opportunity after his disobedience. This reminds us that God doesn't give up on us after our first failure—or even our fiftieth. His grace is limitless, and His patience endures.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">💬</span>The Power of a Simple Message</div>
+                    <p>Jonah's sermon was remarkably brief—"Forty more days and Nineveh will be overthrown." Yet this simple proclamation brought an entire city to repentance. It wasn't eloquence or persuasion, but God's power working through obedience that transformed hearts.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">👑</span>Getting Off Your Throne</div>
+                    <p>The king of Nineveh's response—rising from his throne, removing his royal robes, and covering himself with sackcloth—illustrates the humility required to receive God's mercy. We must surrender control and acknowledge God as the true King.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">⏰</span>The Urgency of Response</div>
+                    <p>The king commanded everyone to call urgently upon God. One of the enemy's greatest strategies is to make us delay: "Maybe later." But there has never been a better moment than right now to respond to God's call.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🌟</span>Never Beyond God's Reach</div>
+                    <p>The Ninevites were considered the most wicked people of their time, yet they believed and repented. No one is too far gone, too hardened, or too lost for God's mercy to reach them.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Sermon Tab -->
+        <section id="sermon" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">📖 Main Sermon Content</h2>
+
+                <div class="accordion-item active">
+                    <div class="accordion-header">
+                        <span>Introduction: Jonah's Journey and God's Mercy</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>The book of Jonah stands unique among the prophetic books. Unlike other prophets who spent most of their time prophesying and speaking on behalf of God to His people, Jonah's book is primarily about his own story—his inner turmoil, his struggle with disobedience, and his personal walk with God.</p>
+                            
+                            <p>Pastor Brett begins by reminding us of Jonah's journey: God commanded him to go 885 kilometers to Nineveh in Assyria, a nation known for its savage brutality. The Assyrians were reputed to skin people alive and string them through their mouths like fish. Understandably, Jonah had reservations. But his response wasn't mild pushback—it was defiant rebellion.</p>
+                            
+                            <p>Instead of going to Nineveh, Jonah traveled 4,000 miles in the opposite direction to Tarshish (modern-day Spain), the furthest point in the known world at that time. In chapter 1, after Jonah's self-confession that he served Yahweh, maker of the heavens and the sea, the crew reluctantly threw him overboard. In chapter 2, God provided a great fish that swallowed Jonah, where he prayed for three days and three nights before being vomited onto the beach.</p>
+
+                            <div class="quote-card">
+                                <div class="quote-text">"My favorite verse in the book says: the word of the Lord came to Jonah a second time. Jonah gets a second chance, and we do as well. Aren't we grateful that we have this thing called grace and mercy that lightens our load, removes performance, and instills in us a sense of freedom and joy?"</div>
+                                <div class="quote-author">— Pastor Brett</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>The Reliability of Jonah's Story</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>For those who may have heard skepticism about whether this story actually happened, Pastor Brett offers compelling evidence. While many scholars support the account from a literary perspective, the most convincing proof comes from Jesus Himself.</p>
+
+                            <div class="quote-card">
+                                <div class="quote-text">"For as Jonah was three days and three nights in the belly of a huge fish, so the Son of Man will be three days and three nights in the heart of the earth."</div>
+                                <div class="quote-author">— Jesus (Matthew 12:40)</div>
+                            </div>
+
+                            <p>Jesus not only believed Jonah's story actually happened, but He used it as a prophetic parallel to His own death and resurrection. When Jesus spoke these words, people had no idea what He was talking about—that He would be crucified and resurrected. But this prophetic word, referring back to Jonah, authenticated the historical reality of Jonah's experience.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>God's Mercy Throughout Scripture</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>The story of Jonah isn't an isolated instance of God's mercy. Pastor Brett takes us on a journey through Scripture, showing how mercy is woven throughout the biblical narrative:</p>
+
+                            <p><strong>Adam and Eve:</strong> Given provision and one simple rule, they chose to disobey. Yet God covered them, forgave them, and restored them to relationship.</p>
+
+                            <p><strong>Moses:</strong> Committed murder, yet God used him to free the nation of Israel from slavery.</p>
+
+                            <p><strong>David:</strong> Committed adultery with Bathsheba and then murdered her husband to cover it up. Despite this, he's known as "a man after God's own heart" and wrote the majority of Psalms.</p>
+
+                            <p><strong><span class="tooltip-trigger" data-term="rahab">Rahab</span>:</strong> Lived her life as a prostitute, yet she appears in the lineage of Jesus Christ in the New Testament.</p>
+
+                            <p><strong>Zacchaeus:</strong> A corrupt tax collector who cheated and robbed people. Jesus said, "I'd like to have dinner with you in your home."</p>
+
+                            <p><strong>Peter:</strong> Denied knowing Jesus three times after vowing he never would. God used him to lead and establish the early church.</p>
+
+                            <p><strong>Paul:</strong> Hunted and killed Christians—that was his life's mission. God used him to write the majority of the New Testament.</p>
+
+                            <p><strong>Thomas:</strong> Doubted against overwhelming evidence. Jesus appeared to him in His resurrected state and restored him.</p>
+
+                            <div class="quote-card">
+                                <div class="quote-text">"When the kindness and love of God our Savior appeared, he saved us, not because of the righteous things we had done, but because of his mercy."</div>
+                                <div class="quote-author">— Titus 3:4-5</div>
+                            </div>
+
+                            <p>Pastor Brett reminds us: "When you die and stand before the Lord and He were to say, 'Why should I let you into heaven?' Your answer should not be 'because I went to Island ECC' or 'because I gave money to charity' or 'I was moral and helpful and kind.' No, no. Your answer is: because of Jesus."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Jonah's Obedience and the Simple Message</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>In chapter 3, Jonah finally obeys. He goes to Nineveh, described as "an exceedingly great city, three days' journey in breadth." When he reaches the very heart of the city after a day's journey, Jonah delivers what might be the worst sermon ever to bring about revival among the worst people ever.</p>
+
+                            <p>The totality of his sermon? <strong>"Forty more days and Nineveh will be overthrown."</strong></p>
+
+                            <p>That's it. No illustration, no humor, no well-choreographed three-point alliteration. Nothing. Perhaps it was longer, but the text suggests this reflects the state of Jonah's heart. He actually looked forward to this judgment. He felt they deserved it. They didn't deserve God's relenting. He didn't want them to repent. He just wanted to be barely faithful.</p>
+
+                            <p>Pastor Brett paints the scene: "Did you get the sense that he went and had a little glee about delivering this message of impending doom? 'Forty days. Get it together. Or don't.'"</p>
+
+                            <p>Yet despite this lackluster delivery, the result was astounding: "The Ninevites believed God."</p>
+
+                            <p>Not believed <em>in</em> God—they believed <em>God</em>. This is crucial. To believe in God is to make mental assent, an awareness, a concession that it makes sense scientifically and historically. But to believe God is to make a personal decision, a decision of trust based on character. It's not just dogma or data, but something that woos you into relationship.</p>
+
+                            <div class="quote-card">
+                                <div class="quote-text">"You believe that there is one God. Good! Even the demons believe that—and shudder."</div>
+                                <div class="quote-author">— James 2:19</div>
+                            </div>
+
+                            <p>The point is that believing in the concept of a God is not enough. God sent Jesus as a personal representation to invite us into an organic, ongoing relationship. This is the difference between religion and relationship.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Never Underestimate God's Power</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Pastor Brett asks a convicting question: "Have you got anybody in your life—maybe a relative or colleague, somebody from your past—that comes to mind when you think, 'Oh, they will never believe'? Their heart is so hard. They are so anti-God, so not spiritual, so rebellious against the things of God. You're not going to invite them to church. You're not going to bring up faith. You know where they stand. They're like the Ninevites."</p>
+
+                            <p>Yet to the Ninevites, God delivers a simple message and they respond. The application is powerful and personal:</p>
+
+                            <div class="key-point">
+                                <div class="key-point-title">Never underestimate the power of God, nor the reach of His hand.</div>
+                                <p>"I'm convicted by this passage to think about people that I've kind of written off. People that I think they're just not worth having the conversation, not investing time in. I'm not going to pray for them anymore. Have you given up praying for somebody? I'm renewed in my vigor to bring those lost souls before God and ask Him to deliver a Jonah, a message, someone that would crack open that heart."</p>
+                            </div>
+
+                            <p>Why? Because at the core, every human being was made in the image of God, has value and worth and dignity, and God is busy wooing them to Himself. He hasn't written off anyone. So why should we?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>The King's Response: Getting Off the Throne</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>When Jonah's warning reached the king of Nineveh, his response was extraordinary. The king:</p>
+                            
+                            <ul style="margin-left: 1.5rem; margin-top: 1rem; margin-bottom: 1rem;">
+                                <li><strong>Rose from his throne</strong> — An act of humility, putting aside his power, authority, and identity</li>
+                                <li><strong>Took off his royal robes</strong> — Removed the symbols of his status and replaced them with sackcloth, a symbol of mourning and repentance</li>
+                                <li><strong>Sat down in the dust</strong> — Humbled himself completely before God</li>
+                                <li><strong>Called a citywide fast</strong> — Led his entire city in denying physical nourishment to focus on spiritual rejuvenation</li>
+                            </ul>
+
+                            <p>Pastor Brett draws out the spiritual application: "It could just be that this act is what God may be asking you to do: to get off your throne. To get off that place that we all long to be—that throne of our lives where we make the shots, we call the demands, we do what we want to do. We seek God's blessing, but not His direction. We're welcoming of anything He wants to pour down on us, but not so eager to hear His full message. We prefer to be king in our own lives."</p>
+
+                            <p>Yet to believe in God is to recognize that there is only one King, only one Lord. One day every knee will bow and every tongue will confess, but we have the access and privilege to know now that He in fact is Lord.</p>
+
+                            <div class="key-point">
+                                <div class="key-point-title">Your reluctance to leave your throne only reveals your misunderstanding of the real King.</div>
+                                <p>"Who, when they ask God for a fish, would be given a stone instead? He is the giver of all good things. Every good and perfect gift comes from the Father of lights above. And so He beckons us with our white-knuckled grip to step down off the control center of our lives, to remove our own credentials and royalty, and to realize what identifies us and brings dignity and worth to us more than any other thing is the fact that you belong to the King. You are the King's son or daughter."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>The Urgency of Now</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>The king's edict included a crucial element: "Let everyone call urgently upon God." There was a sense of urgency. He was told forty days—we don't know how far into those forty days this act occurred, but nonetheless, after leaving the throne and proclaiming the fast, he urged everyone: "You must call upon God, but don't delay. Don't wait, don't procrastinate, don't put it off."</p>
+
+                            <p>Pastor Brett identifies one of the enemy's greatest strategies: "I'm really convinced that one of the enemy's greatest strategies to believers and those considering belief is to say, 'Maybe later.' To kick it down the road a little bit and say, 'You know, I'm gonna really get serious about my faith, but right now I've got this career and this new job and this is kind of my priority right now, but my intentions are good. Maybe later.'"</p>
+
+                            <p>The problem? Later never comes, because later is always later. You get through one phase and you've got another set of issues or excuses to say "later." Those wonderful intentions never get fulfilled because you politely said "later."</p>
+
+                            <div class="key-point">
+                                <div class="key-point-title">You've never had a better moment, a more timely moment than right now.</div>
+                                <p>"Because what awaits you is the goodness of God. What awaits you is unchained, joyful freedom. Why would you wait? Why delay?"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>God's Heart: He Relents</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>"When God saw what they did and how they turned from their evil ways, He relented and did not bring on them the destruction He had threatened."</p>
+
+                            <p>Pastor Brett finds this remarkable: "It's so interesting to me that God so quickly relented. This reputation of this evil group of people that for generations had passed down this horrific way of life. And now they turn, they quickly observe a fast, and God relents."</p>
+
+                            <p>He continues: "It's as if God is leaning in saying, 'Oh, I want you to do this. Just the slightest hint of obedience, and I'm there. I will relent. I do not want to bring destruction.' His heart is leaning in, kind of cheering on your tepid heart, saying, 'You can do it. Do it. Now's good. Urgently. Do it.'"</p>
+
+                            <p>If Pastor Brett were making the calls, he admits he'd want to see some track record: "Really cool on that repentance thing, but let's check back in a month and see how you're doing. Are you just going right back to those same old things, those old habits? Are you really shaking them that fast? Is this repentance sincere? Is this gonna have some sticking power?"</p>
+
+                            <p>But God's response is immediate: "A God who is so filled with mercy can't help but take even the most feeble of repentant hearts and say, 'I got you.' And so when they repent, He relents. It's in His nature. It's what He wants to do. He doesn't want to bring judgment and destruction. He wants repentance to occur. He wants His mercy to be embraced."</p>
+
+                            <div class="quote-card">
+                                <div class="quote-text">"I take no pleasure in the death of the wicked, but rather that they turn from their ways and live."</div>
+                                <div class="quote-author">— Ezekiel 33:11</div>
+                            </div>
+
+                            <div class="quote-card">
+                                <div class="quote-text">"He longs to be gracious to you; therefore He will rise up to show you compassion."</div>
+                                <div class="quote-author">— Isaiah 30:18</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Who Needs God's Mercy?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Pastor Brett poses several penetrating questions:</p>
+
+                            <p><strong>Who do you struggle to be gracious to?</strong> Is there a relationship, a person, something that weighs heavy on your heart that is hard for you to extend grace to? A wrong that's hard for you to erase or forget or to quit punishing? Maybe it's a group of people, as it was for Jonah. Maybe it's an individual.</p>
+
+                            <p><strong>Or what if it's you?</strong> What if it's so hard for you to receive mercy from God because secretly you're kind of racked with guilt or regret or shame? Perhaps you've repeated sins or said "God forgive me" so many times that you think there's no way He thinks you're serious. So you stopped. You're just kind of hoping for the best and going, "God, I'm not even gonna confess sin anymore because You must be tired of hearing it."</p>
+
+                            <p>Good intentions that didn't get fulfilled—anybody done that? Has there been anybody that you've prayed for, said "I'm going to pray for them. I'm going to do it. God can move mountains," and then you stopped?</p>
+
+                            <p>Pastor Brett gets vulnerable: "Let me tell you this. In my office, I got a stack of about eight or nine journals that have about four or five pages filled out: January 1, 2008. Look for February—it's not there. So many times our good intentions aren't fulfilled. Our promises of diligence and discipline don't actually occur."</p>
+
+                            <p>That bad habit that's just a part of who we are, you haven't been able to shake it, and you just realize maybe it's just the way I am. Maybe I'm just a critical person. God can't change that.</p>
+
+                            <p><strong>Really?</strong></p>
+
+                            <div class="key-point">
+                                <div class="key-point-title">Maybe you're the one that needs a fresh dose of the mercy of God.</div>
+                                <p>"This God who separates your sin as far as the East is from the West. This God who is so lavish in His love, so creative in His reach, that He includes in our Bibles this four-chapter minor prophet Jonah who exemplifies mercy and grace beyond what makes sense. So that we will go, 'Wow. Maybe I can come back into the presence of God. Maybe He's not looking at me with a sense of disappointment. Maybe He's not rehearsing all my wrongs to see if I'm sincere this time. Maybe He's exuberant over my timid step toward Him.'"</p>
+                            </div>
+
+                            <p>Maybe it's you.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Conclusion: Every Chance Demands a Choice</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Pastor Brett brings his message to a powerful close with this truth: "Every chance from God demands a choice from you. And God keeps giving chances, doesn't He? It's not just the God of the second chance. It's not like the third time He's like, 'I'm good for two.' It's a God that is filled with mercy and over and over longs to extend grace."</p>
+
+                            <p>Why can God ask us to forgive seventy times seven (or seventy times seventy)? The point isn't 490—like on number 491, "Sorry, you're out." It's endless. The only way He can ask you and I to be endless in our forgiveness of others is if we have received endless forgiveness from Him.</p>
+
+                            <p>If we're aware of His mercy in our own lives, if we're moved by gratitude and worship because He has loved you still, it then takes you to a place of lavish kindness and goodness to those around you. You can stop keeping score.</p>
+
+                            <div class="key-point">
+                                <div class="key-point-title">You don't have to walk with that dread or guilt or shame.</div>
+                                <p>"You don't have to feel like you're an imposter in the house of God. You are flawed and loved at the same time. Every chance He gives is a choice for you. So what do I do with it now? How do I respond to it now when the word of the Lord comes a second, third, fourth, fiftieth time? What will I do now?"</p>
+                            </div>
+
+                            <p>The invitation is clear: Receive the abundance of His grace and His mercy, and let that shape every engagement you have, every relationship, every conversation, every disposition of your heart. Let you be deeply aware of His mercy that goes way beyond your capacity to even comprehend.</p>
+
+                            <div class="quote-card">
+                                <div class="quote-text">"Father, we are grateful. We are unworthy, and yet You've declared us worthy. It is not because of our performance, not because of our goodness, not because of our achievements—even spiritual ones—that somehow tips Your hand to love us or accept us. It is by Your grace. It is through Your mercy. And so God, as people that are desperate before a holy God, You invite us to come boldly before the throne of grace. May our steps not be timid. May we step boldly, not with arrogance or pride, but step boldly because of what Jesus has accomplished, because You have invited, because You yearn for us to come near. And with the slightest hint of repentance, You relent. You gather. You welcome us into Your presence. And so we are grateful."</div>
+                                <div class="quote-author">— Pastor Brett's Closing Prayer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bible Verses Tab -->
+        <section id="verses" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">✝️ Key Bible Verses (NIV)</h2>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Jonah 3:1-3</div>
+                    <div class="verse-text">
+                        "Then the word of the LORD came to Jonah a second time: 'Go to the great city of Nineveh and proclaim to it the message I give you.' Jonah obeyed the word of the LORD and went to Nineveh. Now Nineveh was a very large city; it took three days to go through it."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Jonah 3:4-5</div>
+                    <div class="verse-text">
+                        "Jonah began by going a day's journey into the city, proclaiming, 'Forty more days and Nineveh will be overthrown.' The Ninevites believed God. A fast was proclaimed, and all of them, from the greatest to the least, put on sackcloth."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Jonah 3:6-9</div>
+                    <div class="verse-text">
+                        "When Jonah's warning reached the king of Nineveh, he rose from his throne, took off his royal robes, covered himself with sackcloth and sat down in the dust. This is the proclamation he issued in Nineveh: 'By the decree of the king and his nobles: Do not let people or animals, herds or flocks, taste anything; do not let them eat or drink. But let people and animals be covered with sackcloth. Let everyone call urgently on God. Let them give up their evil ways and their violence. Who knows? God may yet relent and with compassion turn from his fierce anger so that we will not perish.'"
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Jonah 3:10</div>
+                    <div class="verse-text">
+                        "When God saw what they did and how they turned from their evil ways, he relented and did not bring on them the destruction he had threatened."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Matthew 12:40</div>
+                    <div class="verse-text">
+                        "For as Jonah was three days and three nights in the belly of a huge fish, so the Son of Man will be three days and three nights in the heart of the earth."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Titus 3:4-5</div>
+                    <div class="verse-text">
+                        "But when the kindness and love of God our Savior appeared, he saved us, not because of righteous things we had done, but because of his mercy. He saved us through the washing of rebirth and renewal by the Holy Spirit."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Ezekiel 33:11</div>
+                    <div class="verse-text">
+                        "Say to them, 'As surely as I live, declares the Sovereign LORD, I take no pleasure in the death of the wicked, but rather that they turn from their ways and live. Turn! Turn from your evil ways! Why will you die, people of Israel?'"
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Isaiah 30:18</div>
+                    <div class="verse-text">
+                        "Yet the LORD longs to be gracious to you; therefore he will rise up to show you compassion. For the LORD is a God of justice. Blessed are all who wait for him!"
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">James 2:19</div>
+                    <div class="verse-text">
+                        "You believe that there is one God. Good! Even the demons believe that—and shudder."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Psalm 103:12</div>
+                    <div class="verse-text">
+                        "As far as the east is from the west, so far has he removed our transgressions from us."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">James 1:17</div>
+                    <div class="verse-text">
+                        "Every good and perfect gift is from above, coming down from the Father of the heavenly lights, who does not change like shifting shadows."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Hebrews 4:16</div>
+                    <div class="verse-text">
+                        "Let us then approach God's throne of grace with confidence, so that we may receive mercy and find grace to help us in our time of need."
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Tab -->
+        <section id="application" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">💡 Practical Application</h2>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🔍</span>Identify Your "Ninevites"</div>
+                    <p>Who have you written off as "too far gone" for God's grace? Make a list of people you've stopped praying for or inviting to church because you've decided they'll never believe. This week, commit to praying for one person on that list daily, asking God to soften their heart and yours.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">👑</span>Step Down from Your Throne</div>
+                    <p>Like the king of Nineveh, identify one area where you're clinging to control. What does it look like for you to "take off your royal robes" and humble yourself before God? This might mean surrendering a decision, a relationship, your career path, or a dream to God's direction rather than seeking only His blessing.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">⏰</span>Stop Saying "Later"</div>
+                    <p>What spiritual commitment have you been putting off? Reading your Bible consistently? Joining a small group? Having that difficult conversation? Forgiving someone? Make a specific, time-bound commitment this week—not "someday" but "this Tuesday at 6:30 AM" or "this Friday evening."</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">💭</span>Examine Your View of God's Character</div>
+                    <p>Do you truly believe God is eager to extend mercy, or do you secretly think He's keeping score? Journal about your honest view of God's heart toward you. Where does your understanding align with Scripture? Where might you be projecting human limitations onto God's unlimited grace?</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🎁</span>Extend the Mercy You've Received</div>
+                    <p>If you've truly grasped God's endless forgiveness toward you, it should overflow to others. Who needs to experience your forgiveness this week? Consider the person who's hurt you, the family member you're keeping score against, or the colleague you've labeled as difficult. How can you tangibly demonstrate grace?</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">📝</span>Confess and Release</div>
+                    <p>Are you carrying guilt or shame that God has already forgiven? Write down the sins, failures, or regrets you're struggling to release. After each one, write "FORGIVEN" across it and speak Psalm 103:12 over yourself: "As far as the east is from the west, so far has he removed our transgressions from us."</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🗣️</span>Share Your "Second Chance" Story</div>
+                    <p>God's mercy is meant to be proclaimed, not hidden. This week, share with someone how God has given you a second (or twentieth) chance. Your vulnerability might be exactly what someone else needs to hear to believe that God's grace extends to them too.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🙏</span>Practice Urgent Prayer</div>
+                    <p>The king called for people to "call urgently on God." Set aside time this week for urgent, focused prayer—not routine or casual, but desperate and earnest. Approach God's throne boldly, as Hebrews 4:16 invites us to do, knowing that He longs to be gracious.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">🎯 This Week's Challenge</h2>
+                <p class="section-intro">Choose one of these applications and commit to it for the next seven days. Share your commitment with a friend or small group for accountability. Remember: God is leaning in, cheering you on, eager to see even the smallest step of obedience. Don't delay—now is the perfect time to respond to His mercy.</p>
+            </div>
+        </section>
+
+        <!-- Reflection Tab -->
+        <section id="reflection" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">🤔 Reflection Questions</h2>
+                <p class="section-intro">Take time to thoughtfully consider these questions. You might journal your responses, discuss them with a small group, or simply meditate on them in prayer.</p>
+
+                <div class="reflection-question">
+                    <span class="question-number">1</span>
+                    <span class="question-text">What does the phrase "the word of the LORD came to Jonah a second time" reveal about God's character? How does this impact your view of your own failures or disobedience?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">2</span>
+                    <span class="question-text">Jonah's sermon was just eight words: "Forty more days and Nineveh will be overthrown." Yet an entire city repented. What does this teach us about the power of simple obedience versus eloquent performance?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">3</span>
+                    <span class="question-text">Pastor Brett asks, "Have you got anybody in your life that you've written off—thinking they'll never believe?" Who comes to mind? What would change if you truly believed no one is beyond God's reach?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">4</span>
+                    <span class="question-text">The king of Nineveh rose from his throne, took off his royal robes, and sat in dust and ashes. What "throne" in your life is God asking you to step down from? What would humility look like in that area?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">5</span>
+                    <span class="question-text">Reflect on the difference between believing IN God versus believing God. Which best describes your current relationship with Him? What would it look like to move from mental assent to personal trust?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">6</span>
+                    <span class="question-number">6</span>
+                    <span class="question-text">The enemy's strategy is often to make us say "maybe later" about spiritual commitments. What have you been putting off in your relationship with God? What's preventing you from responding urgently?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">7</span>
+                    <span class="question-text">God relented immediately when He saw the Ninevites' repentance—no probation period, no waiting to see if they'd stick with it. How does this challenge your view of God's eagerness to extend mercy?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">8</span>
+                    <span class="question-text">Pastor Brett confessed having journals with just a few pages filled out. Where have your good spiritual intentions fallen short? How does understanding God's mercy free you from shame about these failures?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">9</span>
+                    <span class="question-text">Who in your life struggles to extend grace to: others, or themselves? What might change if you truly internalized that "you are flawed and loved at the same time"?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">10</span>
+                    <span class="question-text">The sermon reminds us that we can only forgive others endlessly because we've received endless forgiveness from God. Are you keeping score in any relationship? What would it look like to "stop keeping score"?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">11</span>
+                    <span class="question-text">Ezekiel 33:11 says God takes "no pleasure in the death of the wicked." How does this challenge any tendencies you have toward judgment or wanting others to "get what they deserve"?</span>
+                </div>
+
+                <div class="reflection-question">
+                    <span class="question-number">12</span>
+                    <span class="question-text">If you were to stand before God today and He asked, "Why should I let you into heaven?" what would your honest answer be? Does your heart align with "because of Jesus," or are you still relying on your own merit?</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historical Context Tab -->
+        <section id="context" class="tab-content">
+            <div class="card">
+                <h2 class="card-title">🗺️ Historical and Geographic Context</h2>
+
+                <div class="image-card">
+                    <img src="https://www.worldhistory.org/uploads/images/15148.png?v=1755750785-1747238390" alt="Map of Neo-Assyrian Empire expansion" loading="lazy" style="aspect-ratio: 1115 / 627;">
+                    <div class="image-caption">
+                        <div class="image-title">The Rise of the Neo-Assyrian Empire (911-609 BCE)</div>
+                        <div class="image-description">
+                            This map illustrates the rise and territorial expansion of the Neo-Assyrian Empire (circa 911–609 BCE), a dominant Mesopotamian power that emerged after earlier phases of Assyrian history. Unlike their predecessors, Neo-Assyrian kings pursued deliberate and sustained military campaigns aimed at imperial conquest. Through successive reigns, the empire grew into the most extensive political entity the world had seen up to that point.
+                            <br><br>
+                            At its height, the Neo-Assyrian Empire controlled a vast region—from the Taurus Mountains in the north to the Persian Gulf and Arabian desert in the south, and from Egypt and the Levant in the west to the Zagros Mountains in the east. This territory was ruled from a series of centralized capitals in Assyria proper: first Assur, then Kalhu (Nimrud), followed by Dur-Sharrukin, and finally <strong>Nineveh</strong>. The empire's power rested on a combination of advanced military organization, siege technology, and a sophisticated bureaucratic system. As a result, many historians regard the Neo-Assyrian Empire not only as the largest of its time but also as the world's first true empire in terms of scale and centralized administration.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🏛️</span>Understanding Nineveh's Significance</div>
+                    <p>Nineveh was not just any city—it was the capital of the world's first true empire. When God called Jonah to go there, He was sending him to the heart of the most powerful, feared, and brutal civilization of its time. The Assyrians were known for their extreme cruelty in warfare, including the practices Pastor Brett mentioned: skinning captives alive and stringing them through their mouths like fish.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">📏</span>The Size of Nineveh</div>
+                    <p>The Bible describes Nineveh as "an exceedingly great city, three days' journey in breadth" (Jonah 3:3). Archaeological evidence suggests the greater Nineveh area, including its surrounding towns and agricultural zones, could indeed take three days to traverse. The city proper was massive for its time, with walls that stretched for miles and housed hundreds of thousands of people.</p>
+                </div>
+
+                <div class="image-card">
+                    <img src="https://www.lookandlearn.com/history-images/preview/YR/YR0/YR0145/YR0145849_Jonah-predicts-the-downfall-of-Nineveh.jpg" alt="Jonah predicting the downfall of Nineveh" loading="lazy" style="width: 512px; height: 366px; max-width: 100%; height: auto;">
+                    <div class="image-caption">
+                        <div class="image-title">Jonah Predicts the Downfall of Nineveh</div>
+                        <div class="image-description">
+                            This 18th-century etching by Jan Luyken (1703-1762) depicts Jonah delivering his prophetic message to the people of Nineveh. Notice the architectural grandeur in the background, representing Nineveh's status as an imperial capital. The image captures the moment of proclamation—when a simple message from an unlikely prophet brought an entire empire to its knees in repentance.
+                            <br><br>
+                            <em>Creator: Jan Luyken (1649-1712) | Medium: Etching on paper | Source: Rijksmuseum | Public Domain</em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">⚔️</span>Assyria's Reputation for Violence</div>
+                    <p>The Assyrian Empire was infamous for its policy of terror. They deliberately cultivated a reputation for extreme brutality to discourage rebellion. Their own royal inscriptions boast of:
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Flaying conquered leaders alive and displaying their skins</li>
+                        <li>Impaling captives on stakes around city walls</li>
+                        <li>Mass deportations of entire populations</li>
+                        <li>Systematic destruction of conquered cities</li>
+                    </ul>
+                    Understanding this context makes Jonah's reluctance more understandable—and God's mercy toward Nineveh even more astounding.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🕰️</span>When Did This Happen?</div>
+                    <p>Most scholars date Jonah's ministry to around 785-760 BCE, during the reign of Jeroboam II of Israel. This was a period of relative prosperity for Israel but also growing Assyrian power. The Ninevites' repentance was likely temporary (as chapter 4 hints at Jonah's frustration), and within a few generations, Assyria would become Israel's conqueror and destroyer.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🗺️</span>Jonah's Journey: The Numbers</div>
+                    <p>Pastor Brett mentioned the specific distances:
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li><strong>Joppa to Nineveh:</strong> Approximately 885 kilometers (550 miles) northeast—the direction God commanded</li>
+                        <li><strong>Joppa to Tarshish:</strong> Approximately 4,000 kilometers (2,500 miles) west—the opposite direction Jonah fled</li>
+                    </ul>
+                    Jonah literally went to the ends of the known world to avoid God's call. Tarshish was believed to be in modern-day Spain, the westernmost point of civilization known to ancient Israelites.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">📖</span>Why This Story Matters</div>
+                    <p>The book of Jonah is unique among the prophetic books because it's primarily narrative rather than prophetic oracles. It serves several purposes:
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li><strong>Universal Scope of God's Mercy:</strong> God's compassion extends even to Israel's worst enemies</li>
+                        <li><strong>Challenge to Ethnocentrism:</strong> God cares about all nations, not just Israel</li>
+                        <li><strong>Prophetic Type:</strong> Jesus directly connected Jonah's three days in the fish to His own death and resurrection</li>
+                        <li><strong>Human Nature:</strong> Even prophets struggle with obedience and can harbor prejudice</li>
+                    </ul>
+                    </p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-title"><span class="emoji">🎭</span>The Irony of the Story</div>
+                    <p>Throughout the book of Jonah, there's repeated irony:
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Pagan sailors fear God while God's prophet runs from Him</li>
+                        <li>Wicked Ninevites repent while the prophet remains bitter</li>
+                        <li>Those who "should" be far from God draw near, while the one who "should" be close remains distant</li>
+                        <li>The "hero" of the story is the most flawed character</li>
+                    </ul>
+                    This irony serves to challenge readers' assumptions about who deserves God's mercy and who is truly obedient.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Tooltip -->
+    <div id="floating-tooltip" class="floating-tooltip">
+        <button class="tooltip-close" aria-label="Close tooltip">×</button>
+        <div class="tooltip-title" id="tooltip-title"></div>
+        <div class="tooltip-text" id="tooltip-text"></div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short" id="attribution-icon">ℹ️</div>
+        <div class="attribution-full" id="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            tab.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    tab.click();
+                }
+            });
+        });
+
+        // Accordion Functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all accordions in the same container
+                const container = item.parentElement;
+                container.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Open clicked accordion if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Header Carousel
+        const carouselImages = document.querySelectorAll('.carousel-image');
+        let currentImageIndex = 0;
+
+        function rotateCarousel() {
+            carouselImages[currentImageIndex].classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
+            carouselImages[currentImageIndex].classList.add('active');
+        }
+
+        // Rotate every 8 seconds
+        setInterval(rotateCarousel, 8000);
+
+        // Tooltip Definitions
+        const tooltipData = {
+            'rahab': {
+                title: 'Rahab',
+                text: 'A Canaanite woman who lived in Jericho and helped Israelite spies. Despite her profession as a prostitute, she demonstrated faith in God and is listed in the genealogy of Jesus (Matthew 1:5) and in the "Hall of Faith" (Hebrews 11:31).'
+            }
+        };
+
+        // Tooltip Triggers
+        const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
+        const floatingTooltip = document.getElementById('floating-tooltip');
+        const tooltipTitle = document.getElementById('tooltip-title');
+        const tooltipText = document.getElementById('tooltip-text');
+        const tooltipClose = document.querySelector('.tooltip-close');
+
+        tooltipTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                const term = trigger.getAttribute('data-term');
+                const data = tooltipData[term];
+                
+                if (data) {
+                    tooltipTitle.textContent = data.title;
+                    tooltipText.textContent = data.text;
+                    floatingTooltip.style.display = 'block';
+                }
+            });
+        });
+
+        tooltipClose.addEventListener('click', () => {
+            floatingTooltip.style.display = 'none';
+        });
+
+        // Close tooltip when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!floatingTooltip.contains(e.target) && !e.target.classList.contains('tooltip-trigger')) {
+                floatingTooltip.style.display = 'none';
+            }
+        });
+
+        // Attribution Badge
+        const attributionIcon = document.getElementById('attribution-icon');
+        const attributionFull = document.getElementById('attribution-full');
+        let attributionExpanded = false;
+
+        // Desktop hover behavior
+        if (window.innerWidth > 768) {
+            attributionIcon.addEventListener('mouseenter', () => {
+                attributionIcon.style.display = 'none';
+                attributionFull.style.display = 'block';
+            });
+
+            document.querySelector('.attribution-badge').addEventListener('mouseleave', () => {
+                if (!attributionExpanded) {
+                    attributionIcon.style.display = 'flex';
+                    attributionFull.style.display = 'none';
+                }
+            });
+
+            attributionIcon.addEventListener('click', () => {
+                attributionExpanded = !attributionExpanded;
+                if (attributionExpanded) {
+                    attributionIcon.style.display = 'none';
+                    attributionFull.style.display = 'block';
+                }
+            });
+        }
+
+        // Keyboard Navigation for Tabs
+        document.addEventListener('keydown', (e) => {
+            if (e.target.classList.contains('tab')) {
+                const currentIndex = Array.from(tabs).indexOf(e.target);
+                let newIndex;
+
+                if (e.key === 'ArrowRight') {
+                    newIndex = (currentIndex + 1) % tabs.length;
+                } else if (e.key === 'ArrowLeft') {
+                    newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                } else {
+                    return;
+                }
+
+                tabs[newIndex].focus();
+                tabs[newIndex].click();
+            }
+        });
+
+        // Smooth Scroll for Internal Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Respect prefers-reduced-motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            document.querySelectorAll('*').forEach(el => {
+                el.style.animation = 'none';
+                el.style.transition = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
