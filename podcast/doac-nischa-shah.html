@@ -1,0 +1,2733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nischa Shah: The 65-20-15 Rule to Financial Freedom | Interactive Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+        
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+        }
+        
+        .header-carousel {
+            position: relative;
+            height: 70vh;
+            min-height: 500px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        }
+        
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            animation: kenBurns 20s ease-in-out infinite;
+        }
+        
+        .carousel-image.active {
+            opacity: 0.3;
+        }
+        
+        @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-2%, -2%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+        
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(31, 41, 55, 0.8) 0%, rgba(17, 24, 39, 0.95) 100%);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .tab-button.active::after {
+            width: 100%;
+        }
+        
+        .tooltip-float {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 50;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .tooltip-float.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .term {
+            cursor: help;
+            border-bottom: 2px dotted var(--primary);
+            transition: all 0.2s ease;
+        }
+        
+        .term:hover {
+            color: var(--primary);
+            border-bottom-style: solid;
+        }
+        
+        .calculator-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .result-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .accordion-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .accordion-header {
+            background: white;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: #f9fafb;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #fafafa;
+        }
+        
+        .accordion-item.active .accordion-content {
+            max-height: 3000px;
+        }
+        
+        .quote-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .quote-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 1rem;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: #e5e7eb;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .comparison-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+        }
+        
+        .myth-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .tip-card {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(31, 41, 55, 0.95);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.75rem;
+            max-width: 250px;
+            transform: translateX(calc(100% + 20px));
+            transition: transform 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .attribution-badge:hover {
+            transform: translateX(0);
+        }
+        
+        .attribution-badge::before {
+            content: 'ℹ️';
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(31, 41, 55, 0.95);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .header-carousel {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .tooltip-float {
+                position: fixed;
+                top: auto;
+                bottom: 80px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+            
+            .attribution-badge {
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                transform: none;
+                padding: 0.5rem;
+            }
+            
+            .attribution-badge::before {
+                display: none;
+            }
+            
+            .result-value {
+                font-size: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media print {
+            .sticky-tabs,
+            .attribution-badge,
+            .tooltip-float,
+            button {
+                display: none !important;
+            }
+            
+            .accordion-content {
+                max-height: none !important;
+            }
+            
+            .header-carousel {
+                height: 30vh;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Carousel -->
+    <header class="header-carousel">
+        <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=1920&h=1080&fit=crop" alt="Financial planning" class="carousel-image active">
+        <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1920&h=1080&fit=crop" alt="Investing" class="carousel-image">
+        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1920&h=1080&fit=crop" alt="Wealth building" class="carousel-image">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&h=1080&fit=crop" alt="Money management" class="carousel-image">
+        
+        <div class="header-overlay"></div>
+        
+        <div class="header-content">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-emerald-400 font-semibold text-sm mb-3 tracking-wide">💰 FINANCIAL FREEDOM BLUEPRINT</div>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                    The 65-20-15 Rule to<br>Financial Freedom
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-4">
+                    Nischa Shah's Blueprint to Building Wealth & Passive Income
+                </p>
+                <div class="text-gray-400 text-sm mb-8">
+                    <span>📅 18 Nov 2025</span>
+                    <span class="mx-2">•</span>
+                    <span>🎙️ The Diary of a CEO</span>
+                    <span class="mx-2">•</span>
+                    <span>👤 Nischa Shah</span>
+                </div>
+                
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="https://www.youtube.com/watch?v=NxTsA72O5x0" target="_blank" 
+                       class="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-full transition transform hover:scale-105 shadow-lg">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/>
+                        </svg>
+                        Watch Original Video
+                    </a>
+                    <a href="index.html" 
+                       class="inline-flex items-center gap-2 px-8 py-4 bg-white hover:bg-gray-100 text-gray-800 font-bold rounded-full transition transform hover:scale-105 shadow-lg">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                        </svg>
+                        View All Infographics
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation Tabs -->
+    <nav class="sticky-tabs">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex overflow-x-auto hide-scrollbar">
+                <button onclick="switchTab('overview')" class="tab-button active px-6 py-4 font-semibold text-gray-700 hover:text-emerald-600 whitespace-nowrap">
+                    📊 Overview
+                </button>
+                <button onclick="switchTab('framework')" class="tab-button px-6 py-4 font-semibold text-gray-700 hover:text-emerald-600 whitespace-nowrap">
+                    🎯 65-20-15 Framework
+                </button>
+                <button onclick="switchTab('investing')" class="tab-button px-6 py-4 font-semibold text-gray-700 hover:text-emerald-600 whitespace-nowrap">
+                    📈 Investing Guide
+                </button>
+                <button onclick="switchTab('income')" class="tab-button px-6 py-4 font-semibold text-gray-700 hover:text-emerald-600 whitespace-nowrap">
+                    💼 Income Strategies
+                </button>
+                <button onclick="switchTab('calculators')" class="tab-button px-6 py-4 font-semibold text-gray-700 hover:text-emerald-600 whitespace-nowrap">
+                    🧮 Calculators
+                </button>
+                <button onclick="switchTab('wisdom')" class="tab-button px-6 py-4 font-semibold text-gray-700 hover:text-emerald-600 whitespace-nowrap">
+                    💡 Key Wisdom
+                </button>
+                <button onclick="switchTab('journey')" class="tab-button px-6 py-4 font-semibold text-gray-700 hover:text-emerald-600 whitespace-nowrap">
+                    🚀 Nischa's Journey
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tooltip Float (Top Right) -->
+    <div id="tooltip" class="tooltip-float">
+        <div class="bg-gray-900 text-white p-4 rounded-lg shadow-2xl">
+            <div class="flex justify-between items-start mb-2">
+                <h4 class="font-bold text-emerald-400" id="tooltip-title"></h4>
+                <button onclick="hideTooltip()" class="text-gray-400 hover:text-white">✕</button>
+            </div>
+            <p class="text-sm" id="tooltip-content"></p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        
+        <!-- Overview Tab -->
+        <div id="tab-overview" class="tab-content">
+            <div class="mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-6">🎯 What You'll Learn</h2>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-12">
+                    <div class="stat-card">
+                        <div class="text-5xl mb-3">💰</div>
+                        <div class="stat-number">£220k</div>
+                        <div class="text-gray-600 font-semibold">Banking Salary She Left Behind</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-5xl mb-3">📉</div>
+                        <div class="stat-number">84%</div>
+                        <div class="text-gray-600 font-semibold">Pay Cut to Follow Her Passion</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-5xl mb-3">👥</div>
+                        <div class="stat-number">2M</div>
+                        <div class="text-gray-600 font-semibold">YouTube Subscribers</div>
+                    </div>
+                </div>
+
+                <div class="quote-card mb-8">
+                    <p class="text-lg italic text-gray-800 mb-3">
+                        "Money touches almost every part of our life and impacts so many choices from where we choose to live, what we choose to do for a living, what our weekends even look like."
+                    </p>
+                    <p class="text-sm font-semibold text-emerald-700">— Nischa Shah</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">📚 About Nischa Shah</h3>
+                    <p class="text-gray-700 mb-4">
+                        Nischa Shah is a qualified chartered accountant who spent 9 years in investment banking before walking away from a £220,000 salary (plus a 6-figure bonus she negotiated but never received) to help millions of people understand money. Her mission is simple: take complicated financial jargon and turn it into easy, practical, actionable money tips that anyone can implement.
+                    </p>
+                    <p class="text-gray-700 mb-4">
+                        Her YouTube channel has grown to nearly 2 million subscribers in an incredibly short time, proving that people are hungry for honest, accessible financial education. She breaks down everything from debt management to investing, budgeting to building passive income — all through the lens of someone who's lived both sides: the corporate high-earner and the passionate educator.
+                    </p>
+                    <p class="text-gray-700">
+                        What makes Nischa unique is her transparency. She shares her actual salary progression over 9 years, her investment portfolio breakdown, and even the emotional pain of feeling trapped in a career that looked successful from the outside but left her unfulfilled. Her authenticity resonates because she's not selling a lifestyle — she's sharing real knowledge that changed her life.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-8 border-2 border-emerald-200 mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">🎓 Core Principles You'll Master</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="flex gap-3">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <h4 class="font-bold text-gray-900">The 65-20-15 Money Framework</h4>
+                                <p class="text-sm text-gray-700">How to allocate every pound/dollar you earn for maximum impact</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <h4 class="font-bold text-gray-900">The 4-Step Financial Foundation</h4>
+                                <p class="text-sm text-gray-700">Peace of mind fund, debt elimination, emergency buffer, investing</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Index Fund Investing Made Simple</h4>
+                                <p class="text-sm text-gray-700">The power of compound growth and long-term thinking</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <h4 class="font-bold text-gray-900">The House Buying Truth</h4>
+                                <p class="text-sm text-gray-700">Why property isn't always the best wealth-building strategy</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Income Maximization Strategies</h4>
+                                <p class="text-sm text-gray-700">How to ask for raises, switch jobs, and build passive income</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Money Psychology & Mindset</h4>
+                                <p class="text-sm text-gray-700">Understanding your relationship with money and breaking free</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">📊 Shocking Financial Statistics</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-red-50 p-6 rounded-lg border-2 border-red-200">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-4xl">🚨</span>
+                                <div>
+                                    <div class="text-3xl font-bold text-red-700">59%</div>
+                                    <p class="text-sm text-gray-700">of Americans can't cover a $1,000 emergency expense</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-600">This means more than half of Americans are one car breakdown or medical bill away from financial crisis.</p>
+                        </div>
+                        
+                        <div class="bg-orange-50 p-6 rounded-lg border-2 border-orange-200">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-4xl">⚠️</span>
+                                <div>
+                                    <div class="text-3xl font-bold text-orange-700">30%</div>
+                                    <p class="text-sm text-gray-700">of UK residents can't cover one month's living expenses</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-600">Nearly a third of people in the UK are living paycheck to paycheck with zero financial cushion.</p>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-6 rounded-lg border-2 border-blue-200">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-4xl">📉</span>
+                                <div>
+                                    <div class="text-3xl font-bold text-blue-700">75%</div>
+                                    <p class="text-sm text-gray-700">of people in the UK aren't investing at all</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-600">Three-quarters of the population are missing out on the compounding power of the stock market.</p>
+                        </div>
+                        
+                        <div class="bg-green-50 p-6 rounded-lg border-2 border-green-200">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-4xl">💚</span>
+                                <div>
+                                    <div class="text-3xl font-bold text-green-700">3-6x</div>
+                                    <p class="text-sm text-gray-700">better emotional well-being than earning $200k+</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-600">Vanguard research shows having an emergency fund impacts happiness more than a high salary.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="myth-card">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">🚫 Common Money Myths Nischa Debunks</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex gap-3">
+                            <span class="text-red-600 font-bold">❌</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Myth: You need to buy a house to build wealth</p>
+                                <p class="text-gray-700">Reality: Nischa's property gained 10% in 8 years while the S&P 500 doubled in the same period</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="text-red-600 font-bold">❌</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Myth: You should save for retirement</p>
+                                <p class="text-gray-700">Reality: You need to INVEST for retirement — saving alone won't beat inflation</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="text-red-600 font-bold">❌</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Myth: Your employer will take care of you</p>
+                                <p class="text-gray-700">Reality: Nischa's mentor was made redundant overnight after years of dedication</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="text-red-600 font-bold">❌</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Myth: You need to pick winning stocks to get rich</p>
+                                <p class="text-gray-700">Reality: Dead people outperform active traders — buy index funds and hold</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Framework Tab -->
+        <div id="tab-framework" class="tab-content hidden">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">🎯 The 65-20-15 Money Framework</h2>
+            
+            <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-xl p-8 mb-8 shadow-xl">
+                <h3 class="text-3xl font-bold mb-4">The Three Numbers Everyone Should Know</h3>
+                <p class="text-xl opacity-90 mb-6">
+                    This framework divides your net income (after-tax take-home pay) into three strategic buckets that create financial stability and freedom.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                        <div class="text-6xl font-black mb-2">65%</div>
+                        <div class="text-lg font-bold mb-2">Fundamentals</div>
+                        <div class="text-sm opacity-90">Essential living costs: rent, mortgage, utilities, groceries, minimum debt payments, car payments</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                        <div class="text-6xl font-black mb-2">20%</div>
+                        <div class="text-lg font-bold mb-2">Fun Money</div>
+                        <div class="text-sm opacity-90">Guilt-free spending: restaurants, entertainment, hobbies, travel, spontaneous experiences</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                        <div class="text-6xl font-black mb-2">15%</div>
+                        <div class="text-lg font-bold mb-2">Future You</div>
+                        <div class="text-sm opacity-90">Savings, investments, extra debt payments beyond minimums, wealth building</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg mb-8">
+                <div class="flex gap-3">
+                    <span class="text-2xl">⚠️</span>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">If You're Living Paycheck to Paycheck</h4>
+                        <p class="text-gray-700 mb-3">
+                            These percentages might look different for you. If your essentials are taking 80-90% of your income, don't give up. Start with saving just 2-3% for your future. The habit matters more than the amount. As your income grows, you can adjust the ratios.
+                        </p>
+                        <p class="text-sm text-gray-600 italic">
+                            Remember: <span class="term" data-term="Lifestyle Inflation" data-definition="When your spending increases at the same rate as your income, leaving no gap for wealth building. The enemy of financial freedom.">lifestyle inflation</span> is your enemy. When you earn more, don't let your fundamentals percentage stay at 80% — reduce it to 70%, then 65% as your income grows.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-3xl font-bold text-gray-900 mb-6">📋 The 4-Step Financial Foundation</h3>
+            
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg mb-6">
+                <h4 class="font-bold text-blue-900 mb-2">🎯 Why This Order Matters</h4>
+                <p class="text-sm text-gray-700">
+                    These steps are deliberately sequenced. Don't skip ahead to investing before you have your foundation. If you invest without an emergency fund and the market crashes, you'll be forced to sell at a loss or go into debt. Complete each step before moving to the next.
+                </p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="accordion-item active">
+                    <div class="accordion-header">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">1️⃣</span>
+                            <div>
+                                <h4 class="font-bold text-lg">Build Your Peace of Mind Fund</h4>
+                                <p class="text-sm text-gray-600">Your psychological safety net</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <span class="badge badge-info">🎯 Target: 1 Month of Core Living Expenses</span>
+                            </div>
+                            <p class="text-gray-700 mb-4">
+                                This isn't about mathematical optimization — it's about psychology. Calculate your last 30 days of essential expenses (mortgage/rent, utilities, minimum debt payments, car payments). That total is your peace of mind fund.
+                            </p>
+                            <div class="bg-emerald-50 p-4 rounded-lg mb-4">
+                                <h5 class="font-bold text-emerald-900 mb-2">Why This Matters:</h5>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>✓ When your boiler breaks or car dies, you won't panic about paying for it</li>
+                                    <li>✓ You eliminate financial stress from life's inevitable curveballs</li>
+                                    <li>✓ Puts you ahead of <span class="term" data-term="59% Statistic" data-definition="59% of Americans cannot cover a $1,000 emergency expense without going into debt">59% of Americans</span> who can't cover a $1,000 expense</li>
+                                    <li>✓ Ahead of 30% of UK residents who can't cover one month's expenses</li>
+                                </ul>
+                            </div>
+                            <div class="quote-card">
+                                <p class="italic text-gray-800">
+                                    "Whatever life throws at me, I can handle it. That's what this covers. It's not optional, it's not for a holiday — it's your financial airbag."
+                                </p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border-2 border-gray-200 mt-4">
+                                <h5 class="font-semibold text-gray-900 mb-2">📝 How to Calculate It:</h5>
+                                <ol class="text-sm text-gray-700 space-y-1 list-decimal list-inside">
+                                    <li>Review your last 30 days of bank statements</li>
+                                    <li>Add up ONLY essential expenses (rent/mortgage, utilities, food, minimum debt payments, transport)</li>
+                                    <li>Exclude all discretionary spending (restaurants, entertainment, subscriptions)</li>
+                                    <li>That total = your Peace of Mind Fund target</li>
+                                    <li>Save this amount in a separate, easily accessible account</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">2️⃣</span>
+                            <div>
+                                <h4 class="font-bold text-lg">Cut the Financial Bleeding</h4>
+                                <p class="text-sm text-gray-600">Eliminate high-interest debt</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <span class="badge badge-danger">⚠️ Priority: Debts Above 8% Interest Rate</span>
+                            </div>
+                            <p class="text-gray-700 mb-4">
+                                Having savings earning 4% while carrying credit card debt at 20% is like pouring water into a bucket with holes. You're losing money faster than you're making it. This is the mathematical optimization step.
+                            </p>
+                            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded mb-4">
+                                <h5 class="font-bold text-red-900 mb-2">The Debt Avalanche Strategy:</h5>
+                                <ol class="text-sm text-gray-700 space-y-2 list-decimal list-inside">
+                                    <li>List all debts with their interest rates (credit cards, personal loans, car loans)</li>
+                                    <li>Rank from highest to lowest interest rate</li>
+                                    <li>Make minimum payments on everything (never miss a minimum payment)</li>
+                                    <li>Throw all extra money at the highest interest debt first</li>
+                                    <li>Once paid off, move to the next highest (the snowball effect)</li>
+                                </ol>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                                <h5 class="font-bold text-gray-900 mb-2">Credit Card Smart Use:</h5>
+                                <p class="text-sm text-gray-700 mb-2">
+                                    Credit cards are ONLY beneficial if you pay them off in full every month. The rewards and points are worthless if you're paying 20% interest on the balance.
+                                </p>
+                                <p class="text-sm text-emerald-700 font-semibold mb-2">
+                                    Rule: Only put on your credit card what you can pay for in cash today.
+                                </p>
+                                <p class="text-xs text-gray-600 italic">
+                                    Credit card companies want you to miss payments — that's how they make money. Don't fall into the trap. If you can't manage a credit card responsibly, cut it up until you can.
+                                </p>
+                            </div>
+                            <div class="tip-card">
+                                <h5 class="font-bold text-blue-900 mb-2">💡 Negotiation Tip:</h5>
+                                <p class="text-sm text-gray-700">
+                                    Call your credit card company and negotiate a lower interest rate. Say: "I have a plan to pay off my debt over 12-18 months. Can you reduce my interest rate to help me achieve this?" Many will agree — it costs nothing to ask.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">3️⃣</span>
+                            <div>
+                                <h4 class="font-bold text-lg">Build Your Emergency Buffer</h4>
+                                <p class="text-sm text-gray-600">The ultimate financial security</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <div class="mb-4 flex gap-2 flex-wrap">
+                                <span class="badge badge-info">👤 Single: 3 Months</span>
+                                <span class="badge badge-warning">👨‍👩‍👧‍👦 Head of Household: 6 Months</span>
+                            </div>
+                            <p class="text-gray-700 mb-4">
+                                Take your core living expenses (from Step 1) and multiply by 3 (if single with predictable income) or 6 (if you have dependents, mortgage, or unpredictable income). This protects you from job loss, health scares, or major life disruptions.
+                            </p>
+                            <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                                <h5 class="font-bold text-blue-900 mb-2">🔬 Research Finding (Vanguard Study):</h5>
+                                <p class="text-sm text-gray-700 mb-2">
+                                    Saving 3-6 months of living expenses does MORE for your emotional well-being than earning over $200,000. The breathing room, peace of mind, and security it provides is transformative.
+                                </p>
+                                <p class="text-xs text-gray-600 italic">
+                                    This isn't just about numbers — it's about freedom. Freedom to leave a toxic job. Freedom to take calculated risks. Freedom from the anxiety that keeps you up at night.
+                                </p>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                <div class="bg-white p-4 rounded-lg border-2 border-emerald-200">
+                                    <h5 class="font-semibold text-emerald-900 mb-2">Benefits at Work:</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>✓ Productivity increases without financial stress</li>
+                                        <li>✓ Better decision-making from a place of security</li>
+                                        <li>✓ Negotiating power when you don't need the job</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border-2 border-emerald-200">
+                                    <h5 class="font-semibold text-emerald-900 mb-2">Benefits at Home:</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>✓ Relationship quality improves without money fights</li>
+                                        <li>✓ Mental health improves dramatically</li>
+                                        <li>✓ Sleep better knowing you're protected</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="myth-card">
+                                <h5 class="font-bold text-gray-900 mb-2">🚫 Common Mistake to Avoid:</h5>
+                                <p class="text-sm text-gray-700">
+                                    Don't count your "fun money" or discretionary spending in this calculation. If you lose your job, you won't be dining out or buying new clothes. This is SURVIVAL money only — rent, utilities, food, minimum debt payments, essential transport.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">4️⃣</span>
+                            <div>
+                                <h4 class="font-bold text-lg">Start Investing</h4>
+                                <p class="text-sm text-gray-600">Only after completing steps 1-3</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <span class="badge badge-success">⏰ Time is Your Greatest Asset</span>
+                            </div>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded mb-4">
+                                <h5 class="font-bold text-yellow-900 mb-2">⚠️ Critical Warning:</h5>
+                                <p class="text-sm text-gray-700 mb-2">
+                                    Do NOT start investing before completing steps 1-3. If you invest without your emergency fund and the market drops 30%, you'll be forced to sell at a loss or go into debt when life happens.
+                                </p>
+                                <p class="text-xs text-gray-600 italic">
+                                    The foundation isn't optional — it's what allows you to weather market volatility without panic selling. Investing is a long-term game, and you can only play long-term if you're financially stable.
+                                </p>
+                            </div>
+                            <p class="text-gray-700 mb-4">
+                                You cannot save your way to retirement anymore. With inflation averaging 3-4% and savings accounts paying 2-3%, you're actually losing purchasing power. Investing is essential, not optional.
+                            </p>
+                            <div class="quote-card mb-4">
+                                <p class="italic text-gray-800">
+                                    "The phrase should be 'invest for retirement,' not 'save for retirement.' Saving is defense. Investing is offense. You need both, but you can't win the game playing only defense."
+                                </p>
+                            </div>
+                            <div class="bg-emerald-50 p-4 rounded-lg mb-4">
+                                <h5 class="font-bold text-emerald-900 mb-3">Two Main Investment Avenues:</h5>
+                                <div class="space-y-4">
+                                    <div class="flex gap-3">
+                                        <span class="text-xl">🏢</span>
+                                        <div>
+                                            <h6 class="font-semibold text-gray-900">Employer Retirement Account</h6>
+                                            <p class="text-sm text-gray-700 mb-2">Automatically enrolled in UK (workplace pension), check with HR in US (401k). Pre-tax contributions that compound tax-free. Always contribute enough to get the full employer match — it's literally free money with guaranteed 100% returns!</p>
+                                            <p class="text-xs text-gray-600 italic">Example: If your employer matches 3%, contribute at least 3%. That's an instant 100% return before any market growth.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <span class="text-xl">💼</span>
+                                        <div>
+                                            <h6 class="font-semibold text-gray-900">Individual Tax-Advantaged Account</h6>
+                                            <p class="text-sm text-gray-700 mb-2">ISA in UK (£20k annual limit), Roth IRA in US ($7-8k limit). After-tax contributions that grow tax-free and can be withdrawn tax-free. Max this out before any taxable investing.</p>
+                                            <p class="text-xs text-gray-600 italic">If you invest £20k at age 25 and it grows to £100k by age 65, that entire £80k gain is TAX-FREE in an ISA. In a taxable account, you'd pay capital gains tax on that £80k.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h5 class="font-bold text-purple-900 mb-2">🎯 Investment Priority Order:</h5>
+                                <ol class="text-sm text-gray-700 space-y-1 list-decimal list-inside">
+                                    <li>Contribute to employer plan up to the match (free money)</li>
+                                    <li>Max out tax-advantaged accounts (ISA/Roth IRA)</li>
+                                    <li>Increase employer plan contributions above the match</li>
+                                    <li>Only then consider taxable investment accounts</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-8 border-2 border-indigo-300 mt-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">📈 Why This Framework Works</h3>
+                <div class="space-y-3 text-gray-700">
+                    <p class="flex gap-2">
+                        <span class="text-emerald-600 font-bold">✓</span>
+                        <span><strong>Balances present and future:</strong> You're not sacrificing today for tomorrow or vice versa — you're living a good life while building wealth</span>
+                    </p>
+                    <p class="flex gap-2">
+                        <span class="text-emerald-600 font-bold">✓</span>
+                        <span><strong>Removes guilt from spending:</strong> When you know your future is handled, you can enjoy your 20% fun money without anxiety</span>
+                    </p>
+                    <p class="flex gap-2">
+                        <span class="text-emerald-600 font-bold">✓</span>
+                        <span><strong>Creates intentionality:</strong> Every dollar has a job, so you're not wondering where your money went at the end of the month</span>
+                    </p>
+                    <p class="flex gap-2">
+                        <span class="text-emerald-600 font-bold">✓</span>
+                        <span><strong>Flexible to your situation:</strong> Adapt the percentages based on your income level, life stage, and goals</span>
+                    </p>
+                    <p class="flex gap-2">
+                        <span class="text-emerald-600 font-bold">✓</span>
+                        <span><strong>Prevents lifestyle creep:</strong> As you earn more, the framework keeps you disciplined about not inflating your lifestyle proportionally</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investing Tab -->
+        <div id="tab-investing" class="tab-content hidden">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">📈 Investing Made Simple</h2>
+            
+            <div class="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl p-8 mb-8 shadow-xl">
+                <h3 class="text-3xl font-bold mb-4">Nischa's Investing Philosophy</h3>
+                <p class="text-xl opacity-90 mb-4">
+                    "Keep it simple. Do it for the long term. Early and often."
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <h4 class="font-bold mb-2">🎯 What to Invest In</h4>
+                        <p class="text-sm opacity-90">Index funds (S&P 500, FTSE 100) and target-date retirement funds</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <h4 class="font-bold mb-2">📊 Expected Returns</h4>
+                        <p class="text-sm opacity-90">8-10% average annual returns over the long term (20+ years)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">📚 What is an Index Fund?</h3>
+                    <div class="space-y-3 text-gray-700">
+                        <p><strong>Index:</strong> A list of companies (e.g., S&P 500 = top 500 US companies by market cap)</p>
+                        <p><strong>Fund:</strong> A pot of money that invests in those companies on your behalf</p>
+                        <p><strong>Result:</strong> By investing in an S&P 500 index fund, you own a small piece of 500 companies — Apple, Microsoft, Amazon, Google, Tesla, and 495 others</p>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-lg mt-4">
+                        <h4 class="font-semibold text-emerald-900 mb-2">Why This Works:</h4>
+                        <p class="text-sm text-gray-700 mb-2">Even if one company fails (like Lehman Brothers in 2008), you're diversified across hundreds of others. The market trend is upward over time — always has been, always will be.</p>
+                        <p class="text-xs text-gray-600 italic">Historical fact: The S&P 500 has never had a negative 20-year period. Ever. If you hold long enough, you win.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">🎯 Target-Date Retirement Funds</h3>
+                    <div class="space-y-3 text-gray-700">
+                        <p>These funds automatically rebalance as you approach retirement, becoming more conservative over time to protect your gains.</p>
+                        <p><strong>How to choose:</strong> Pick the year closest to when you plan to retire (e.g., Target 2050 Fund if retiring around 2050)</p>
+                        <p><strong>What it does:</strong> Starts 90% stocks/10% bonds when you're young, gradually shifts to 40% stocks/60% bonds as you approach retirement</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg mt-4">
+                        <h4 class="font-semibold text-blue-900 mb-2">Set It & Forget It:</h4>
+                        <p class="text-sm text-gray-700">Perfect for hands-off investors who want professional rebalancing without thinking about it. The fund managers do all the work for a tiny fee (usually 0.1-0.2%).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg mb-8">
+                <h3 class="text-2xl font-bold text-red-900 mb-4">🧠 The Behavior Factor: Your Biggest Risk</h3>
+                <div class="quote-card bg-white">
+                    <p class="italic text-gray-800 mb-2">
+                        "Fidelity found that people who invested in funds underperformed the fund they were in."
+                    </p>
+                    <p class="text-sm font-semibold text-gray-700">How is this mathematically possible?</p>
+                </div>
+                <p class="text-gray-700 my-4">
+                    When fear and anxiety took over during market drops, people sold. When greed kicked in during market highs, they bought. They essentially bought high and sold low — the exact opposite of what you should do. Their emotions destroyed their returns.
+                </p>
+                <div class="bg-gray-900 text-white p-6 rounded-lg mb-4">
+                    <h4 class="font-bold text-emerald-400 mb-3">🏆 The Best Performing Investors (Fidelity Study)</h4>
+                    <div class="space-y-3">
+                        <div class="flex gap-3 items-center">
+                            <span class="text-3xl">1️⃣</span>
+                            <div>
+                                <p class="font-bold text-xl">Dead People</p>
+                                <p class="text-sm opacity-75">They didn't touch their accounts, panic sell, or chase trends</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <span class="text-3xl">2️⃣</span>
+                            <div>
+                                <p class="font-bold text-xl">People Who Forgot They Had Accounts</p>
+                                <p class="text-sm opacity-75">They never logged in, traded, or checked balances</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm mt-4 text-emerald-300 font-semibold">
+                        Lesson: Remove emotions from investing. Buy, hold, and don't look at your account during crashes. Time in the market > timing the market.
+                    </p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border-2 border-red-300">
+                    <h4 class="font-bold text-red-900 mb-3">💡 How to Invest Like a Dead Person (While Alive):</h4>
+                    <ol class="text-sm text-gray-700 space-y-2 list-decimal list-inside">
+                        <li>Set up automatic monthly investments (you can't panic sell if it's automatic)</li>
+                        <li>Delete your investing app from your phone's home screen</li>
+                        <li>Check your portfolio maximum once per quarter</li>
+                        <li>When the market crashes 30%, invest MORE, don't sell (stocks are on sale)</li>
+                        <li>Remember: you're not investing for next year, you're investing for 20-40 years from now</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">💼 Nischa's Personal Portfolio Breakdown</h3>
+                <p class="text-gray-700 mb-6">
+                    Transparency is powerful. Here's exactly how Nischa allocates her wealth, and why each decision makes sense for her situation and risk tolerance.
+                </p>
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4">
+                        <div class="w-24 h-24 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-emerald-700">40%</div>
+                                <div class="text-xs text-emerald-600">Index</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Index Funds & Target-Date Funds</h4>
+                            <p class="text-sm text-gray-700 mb-2">S&P 500, international markets (UK, emerging markets), diversified across all sectors. These are her "set it and forget it" investments for long-term retirement wealth.</p>
+                            <p class="text-xs text-gray-600 italic">Why 40%? It's the foundation — steady, predictable, tax-advantaged growth that doesn't require active management.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-700">30%</div>
+                                <div class="text-xs text-blue-600">Property</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Real Estate (UK Property)</h4>
+                            <p class="text-sm text-gray-700 mb-2">Her primary residence in North London. While it hasn't outperformed the stock market, it provides psychological security and a place to live without landlord risk.</p>
+                            <p class="text-xs text-gray-600 italic">The lesson: Sometimes the "best" financial decision isn't purely about ROI — peace of mind has value too.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-24 h-24 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-700">25%</div>
+                                <div class="text-xs text-purple-600">Business</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Reinvesting in Her Business</h4>
+                            <p class="text-sm text-gray-700 mb-2">YouTube channel, course creation, education platform. The highest risk but also highest potential return. She's betting on herself and her unique skills.</p>
+                            <p class="text-xs text-gray-600 italic">This percentage will likely decrease as her business matures and she shifts more to passive investments.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-24 h-24 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-yellow-700">5%</div>
+                                <div class="text-xs text-yellow-600">Other</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Crypto & Cash Reserves</h4>
+                            <p class="text-sm text-gray-700 mb-2">Less than 2% in crypto (amount she can afford to lose completely), rest in high-interest savings for liquidity and opportunities.</p>
+                            <p class="text-xs text-gray-600 italic">Her crypto philosophy: "I've invested the amount that won't make a difference if I lose it, but if it goes to the moon, great."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-8 border-2 border-yellow-300 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">🏠 The House Buying Truth: Numbers Don't Lie</h3>
+                <p class="text-gray-700 mb-4">
+                    Nischa bought a flat in North London for £530,000 in 2017. Eight years later, it's worth about £580,000 — a 10% increase. If she'd invested that deposit (roughly £50k) into the S&P 500 instead, it would have doubled.
+                </p>
+                <div class="bg-white p-6 rounded-lg mb-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-2">🏠 Property Investment (2017-2025)</h4>
+                            <div class="text-4xl font-bold text-gray-700 mb-1">+10%</div>
+                            <p class="text-sm text-gray-600 mb-2">8-year return on London property</p>
+                            <p class="text-xs text-gray-500">£50k deposit → now worth ~£55k in equity growth</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-2">📈 S&P 500 Investment (Same Period)</h4>
+                            <div class="text-4xl font-bold text-emerald-600 mb-1">+100%</div>
+                            <p class="text-sm text-gray-600 mb-2">8-year return on index fund</p>
+                            <p class="text-xs text-gray-500">£50k investment → would be ~£100k today</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded mb-4">
+                    <h4 class="font-bold text-emerald-900 mb-2">The Nuance (This is Important):</h4>
+                    <p class="text-sm text-gray-700 mb-2">
+                        She still values owning the property for the psychological comfort: no landlord can serve notice, it's her space to customize, she has stability for her family, and she owns a piece of earth that belongs to her.
+                    </p>
+                    <p class="text-xs text-gray-600 italic">
+                        The invisible peace of mind has value beyond the numbers. Financial optimization isn't everything — quality of life matters too.
+                    </p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-blue-900 mb-3">🧮 The Full Property Math Most People Ignore:</h4>
+                    <ul class="text-sm text-gray-700 space-y-1">
+                        <li>✓ Stamp duty (tax on purchase): ~£15,000</li>
+                        <li>✓ Mortgage interest over 8 years: ~£80,000</li>
+                        <li>✓ Maintenance, repairs, insurance: ~£20,000</li>
+                        <li>✓ Opportunity cost of down payment: £50,000</li>
+                        <li>✓ Total actual cost: ~£165,000 for £50,000 in equity growth</li>
+                    </ul>
+                    <p class="text-xs text-gray-600 italic mt-3">
+                        This doesn't mean don't buy a house — it means be honest about why you're buying. If it's for stability and a home, great. If it's purely for wealth building, the math often favors investing.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">🎓 Advanced Investing Concepts Simplified</h3>
+                
+                <div class="space-y-6">
+                    <div class="border-l-4 border-emerald-500 pl-4">
+                        <h4 class="font-bold text-gray-900 mb-2"><span class="term" data-term="Compound Interest" data-definition="Interest earned on both your principal investment and on previously accumulated interest. Einstein allegedly called it 'the eighth wonder of the world.'">Compound Interest</span>: The Eighth Wonder</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            If you invest £500/month at 10% annual return starting at age 25, by age 65 you'll have £3.16 million. Total contributed: £240,000. Total earned from growth: £2.92 million.
+                        </p>
+                        <p class="text-xs text-gray-600 italic">
+                            The first £240k you control. The £2.92 million is compound interest working for you while you sleep. That's the power of time.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <h4 class="font-bold text-gray-900 mb-2"><span class="term" data-term="Dollar-Cost Averaging" data-definition="Investing a fixed amount regularly regardless of market price, which means you buy more shares when prices are low and fewer when prices are high. Removes emotion from timing.">Dollar-Cost Averaging</span>: Remove Emotion</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            Instead of trying to time the market (which professionals fail at), invest the same amount every month. When the market crashes, you're buying stocks "on sale." When it's high, you're still investing but buying fewer shares.
+                        </p>
+                        <p class="text-xs text-gray-600 italic">
+                            Over decades, this strategy has outperformed lump-sum investing for most people because it removes the temptation to panic sell or wait for the "perfect" time.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-purple-500 pl-4">
+                        <h4 class="font-bold text-gray-900 mb-2"><span class="term" data-term="Diversification" data-definition="Spreading investments across different assets to reduce risk. Don't put all your eggs in one basket.">Diversification</span>: Risk Management</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            An S&P 500 index fund gives you instant diversification across 500 companies, 11 sectors, and the entire US economy. If tech crashes but energy booms, you're balanced. If Apple fails but Microsoft thrives, you're protected.
+                        </p>
+                        <p class="text-xs text-gray-600 italic">
+                            Individual stock picking is gambling unless you have insider knowledge (which is illegal) or devote 60+ hours per week to research. Index funds give you the market average, which beats 90% of professional fund managers over 20 years.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Income Strategies Tab -->
+        <div id="tab-income" class="tab-content hidden">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">💼 Income Maximization Strategies</h2>
+            
+            <div class="quote-card mb-8">
+                <p class="text-lg italic text-gray-800 mb-3">
+                    "Think of your income as a river and your financial goals as buckets. Those buckets will fill up faster the wider and faster that river flows. Focus on widening the river."
+                </p>
+                <p class="text-sm font-semibold text-emerald-700">— Nischa Shah on Income vs. Savings</p>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg mb-8">
+                <h3 class="font-bold text-blue-900 mb-2">🎯 When to Focus on Income vs. Investing</h3>
+                <p class="text-sm text-gray-700 mb-3">
+                    If it's taken you a long time to save £2,000 or £5,000, Nischa recommends putting 90% toward increasing your income and only 10% (like £100) toward investing just to feel the emotions and start the habit.
+                </p>
+                <p class="text-xs text-gray-600 italic">
+                    Why? Because if it takes you 2 years to save £2,000, the compound growth on that is minimal compared to what you could earn by increasing your income by £5,000-£10,000 per year first.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">📈 Strategy 1: Ask for a Raise (The Easiest Method)</h3>
+                
+                <div class="bg-emerald-50 p-6 rounded-lg mb-4">
+                    <h4 class="font-bold text-emerald-900 mb-3">💡 Nischa's Personal Raise Strategy</h4>
+                    <p class="text-sm text-gray-700 mb-3">
+                        In her 9 years at banking, Nischa asked for raises multiple times. She increased her salary from roughly £50k to £220k using this exact approach.
+                    </p>
+                    <div class="bg-white p-4 rounded border-2 border-emerald-200">
+                        <h5 class="font-semibold text-gray-900 mb-2">📋 Her Exact Script:</h5>
+                        <p class="text-sm text-gray-700 mb-3 italic">
+                            "Hey [Manager], three/six months ago we discussed the things I needed to do to get promoted/get a raise. We mentioned X, Y, and Z. I've completed all of those, and here's the feedback I've received. Here's where I've gone above and beyond. Based on our conversation and the 360 feedback, do you think [the raise/promotion we discussed] is fair?"
+                        </p>
+                        <p class="text-xs text-gray-600">
+                            Notice: She references a PREVIOUS conversation, provides EVIDENCE, and asks for THEIR opinion. This makes it collaborative, not confrontational.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">📝</span>
+                                <div>
+                                    <h4 class="font-bold text-lg">Step 1: Build Your Case (Before the Conversation)</h4>
+                                </div>
+                            </div>
+                            <svg class="accordion-icon w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="p-6">
+                                <ul class="space-y-3 text-sm text-gray-700">
+                                    <li class="flex gap-2">
+                                        <span class="text-emerald-600 font-bold">✓</span>
+                                        <span><strong>Document your wins:</strong> Keep a running list of accomplishments, projects completed, revenue generated, costs saved</span>
+                                    </li>
+                                    <li class="flex gap-2">
+                                        <span class="text-emerald-600 font-bold">✓</span>
+                                        <span><strong>Research market rates:</strong> Use Glassdoor, LinkedIn Salary, or industry reports for your role, experience level, and location</span>
+                                    </li>
+                                    <li class="flex gap-2">
+                                        <span class="text-emerald-600 font-bold">✓</span>
+                                        <span><strong>Ask HR about ranges:</strong> "Am I aligned to the average for my department and role?" They can tell you without revealing others' salaries</span>
+                                    </li>
+                                    <li class="flex gap-2">
+                                        <span class="text-emerald-600 font-bold">✓</span>
+                                        <span><strong>Gather 360 feedback:</strong> Get testimonials from colleagues, clients, other managers about your contributions</span>
+                                    </li>
+                                    <li class="flex gap-2">
+                                        <span class="text-emerald-600 font-bold">✓</span>
+                                        <span><strong>Align to company goals:</strong> Show how your work directly contributed to company objectives and revenue</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">🗣️</span>
+                                <div>
+                                    <h4 class="font-bold text-lg">Step 2: Have the Conversation (Timing & Delivery)</h4>
+                                </div>
+                            </div>
+                            <svg class="accordion-icon w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="p-6">
+                                <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                                    <h5 class="font-semibold text-yellow-900 mb-2">⏰ Best Timing:</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• After a major win or successful project</li>
+                                        <li>• During annual review cycles</li>
+                                        <li>• When you've taken on new responsibilities</li>
+                                        <li>• NOT when the company just announced layoffs or budget cuts</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <h5 class="font-semibold text-blue-900 mb-2">💬 Conversation Framework:</h5>
+                                    <ol class="text-sm text-gray-700 space-y-2 list-decimal list-inside">
+                                        <li>Start with gratitude: "I really appreciate the opportunities I've had here..."</li>
+                                        <li>Reference previous discussions: "In our last review, we talked about X, Y, Z..."</li>
+                                        <li>Present evidence: "Since then, I've accomplished A, B, C..."</li>
+                                        <li>Show market data: "My research shows the market rate for this role is..."</li>
+                                        <li>Make the ask: "Based on this, I'd like to discuss a raise to [specific number]"</li>
+                                        <li>Ask for their perspective: "What are your thoughts on this?"</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">🚫</span>
+                                <div>
+                                    <h4 class="font-bold text-lg">Common Mistakes to Avoid</h4>
+                                </div>
+                            </div>
+                            <svg class="accordion-icon w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="p-6">
+                                <div class="space-y-3">
+                                    <div class="flex gap-3 items-start">
+                                        <span class="text-red-600 text-xl">❌</span>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Making it personal</p>
+                                            <p class="text-sm text-gray-700">Don't say "I need more money because my rent went up." Focus on your value, not your expenses.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3 items-start">
+                                        <span class="text-red-600 text-xl">❌</span>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Threatening to leave</p>
+                                            <p class="text-sm text-gray-700">Never use another offer as leverage unless you're willing to actually leave. It damages trust.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3 items-start">
+                                        <span class="text-red-600 text-xl">❌</span>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Comparing to colleagues</p>
+                                            <p class="text-sm text-gray-700">"Sarah makes more than me" is unprofessional. Use market data instead.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3 items-start">
+                                        <span class="text-red-600 text-xl">❌</span>
+                                        <div>
+                                            <p class="font-semibold text-gray-900">Being vague</p>
+                                            <p class="text-sm text-gray-700">Don't say "I'd like to discuss a raise." Say "I'd like to discuss a 15% raise to £58,000."</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-purple-50 p-6 rounded-lg mt-6">
+                    <h4 class="font-bold text-purple-900 mb-3">📊 The Statistics on Asking</h4>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+                        <div>
+                            <p class="font-semibold mb-1">Women & Raises:</p>
+                            <p class="text-xs">Women are less likely to ask for raises, and when they do, they're less likely to receive them. Combat this by being even more prepared with data.</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-1">Success Rate:</p>
+                            <p class="text-xs">75% of people who ask for a raise receive something, even if not the full amount. But 100% of people who don't ask receive nothing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">🔄 Strategy 2: Switch Companies (The 20-30% Jump)</h3>
+                
+                <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg mb-6">
+                    <h4 class="font-bold text-red-900 mb-2">📈 The Loyalty Penalty</h4>
+                    <p class="text-sm text-gray-700 mb-3">
+                        Research cited by Forbes shows that people who stay at the same company for 2+ years earn 50% less over their lifetime compared to those who switch every 2-3 years strategically.
+                    </p>
+                    <p class="text-xs text-gray-600 italic">
+                        Nischa's personal experience: Staying at the same company = 3-5% annual raises (sometimes 10% with promotion). Switching companies = 20-30% salary jumps every time.
+                    </p>
+                </div>
+
+                <div class="comparison-grid mb-6">
+                    <div class="comparison-card">
+                        <h4 class="font-bold text-gray-900 mb-3">📉 Staying at Same Company</h4>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p><strong>Year 1:</strong> £50,000</p>
+                            <p><strong>Year 3:</strong> £52,500 (5% raise)</p>
+                            <p><strong>Year 5:</strong> £55,125 (5% raise)</p>
+                            <p><strong>Year 7:</strong> £60,637 (10% promotion)</p>
+                            <div class="pt-2 border-t-2 border-gray-200">
+                                <p class="font-bold text-gray-900">7-Year Total: £60,637</p>
+                                <p class="text-xs text-gray-600">21% increase over 7 years</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h4 class="font-bold text-gray-900 mb-3">📈 Switching Companies Strategically</h4>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p><strong>Year 1:</strong> £50,000</p>
+                            <p><strong>Year 3:</strong> £62,500 (25% jump switching)</p>
+                            <p><strong>Year 5:</strong> £78,125 (25% jump switching)</p>
+                            <p><strong>Year 7:</strong> £93,750 (20% jump switching)</p>
+                            <div class="pt-2 border-t-2 border-emerald-200">
+                                <p class="font-bold text-emerald-900">7-Year Total: £93,750</p>
+                                <p class="text-xs text-emerald-700">87.5% increase over 7 years</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h4 class="font-bold text-blue-900 mb-3">🎯 How to Switch Strategically (Not Recklessly)</h4>
+                    <ul class="text-sm text-gray-700 space-y-2">
+                        <li class="flex gap-2">
+                            <span class="text-blue-600">•</span>
+                            <span><strong>Stay 2-3 years minimum:</strong> Anything less looks like job-hopping and raises red flags</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <span class="text-blue-600">•</span>
+                            <span><strong>Build skills at each role:</strong> Don't just chase money — ensure you're gaining valuable experience</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <span class="text-blue-600">•</span>
+                            <span><strong>Leave on good terms:</strong> Give proper notice, train your replacement, maintain relationships</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <span class="text-blue-600">•</span>
+                            <span><strong>Negotiate hard:</strong> The best time to negotiate salary is BEFORE you accept the offer, not after</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <span class="text-blue-600">•</span>
+                            <span><strong>Consider total comp:</strong> Look at salary + benefits + equity + work-life balance, not just base salary</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">💰 Strategy 3: Build Passive Income Streams</h3>
+                
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg mb-6">
+                    <h4 class="font-bold text-yellow-900 mb-2">⚠️ The "Passive Income" Myth</h4>
+                    <p class="text-sm text-gray-700">
+                        Nischa is brutally honest: "The word passive income gets thrown around a lot and people forget that the things you see that might be passive income streams required A LOT of work upfront to start with."
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="border-l-4 border-emerald-500 pl-4">
+                        <h4 class="font-bold text-gray-900 mb-2">📈 Easiest "Passive" Income: Investing</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            This is truly passive. Put money in S&P 500, let it compound for 20-30 years, and it works while you sleep. No additional effort required beyond the initial setup.
+                        </p>
+                        <div class="text-xs text-gray-600 italic bg-white p-3 rounded">
+                            Example: £500/month invested at 10% = £3.16M in 40 years. That's £2.92M in passive growth you didn't have to work for.
+                        </div>
+                    </div>
+
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <h4 class="font-bold text-gray-900 mb-2">⚡ "Tap and Go" Income (Immediate but Time-Limited)</h4>
+                        <p class="text-sm text-gray-700 mb-3">
+                            These are ways to increase income immediately but require trading time for money:
+                        </p>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• Airbnb spare room (requires hosting, cleaning, management)</li>
+                            <li>• Dog walking or pet sitting (requires time and energy)</li>
+                            <li>• Uber/delivery driving (requires vehicle and time)</li>
+                            <li>• Freelance work on Fiverr/Upwork (requires skills and time)</li>
+                        </ul>
+                        <p class="text-xs text-gray-600 italic mt-2">
+                            Downside: There's a cap to earnings because you're trading hours for money. Not scalable long-term.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-purple-500 pl-4">
+                        <h4 class="font-bold text-gray-900 mb-2">🚀 Value-Based Income (Scalable but Slow to Build)</h4>
+                        <p class="text-sm text-gray-700 mb-3">
+                            These lean into your unique skills and can scale, but take time to build:
+                        </p>
+                        <ul class="text-sm text-gray-700 space-y-2">
+                            <li class="flex gap-2">
+                                <span>•</span>
+                                <span><strong>Digital products:</strong> Online courses, eBooks, templates, presets (Nischa's example: Stan Store user with 1,000 followers made £4-5k in 30 days selling digital products about binge eating recovery)</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span>•</span>
+                                <span><strong>Content creation:</strong> YouTube, newsletter, podcast (Nischa's path: spent 2+ years building before quitting her job)</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span>•</span>
+                                <span><strong>Consulting/coaching:</strong> Package your expertise from your 9-5 into paid advice</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span>•</span>
+                                <span><strong>Software/apps:</strong> Build once, sell infinitely (requires technical skills or capital to hire developers)</span>
+                            </li>
+                        </ul>
+                        <p class="text-xs text-gray-600 italic mt-2">
+                            Advantage: Not capped by your time. One product can sell to 1,000 people. Disadvantage: Takes months/years to build audience and systems.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-6 rounded-lg border-2 border-pink-200 mt-6">
+                    <h4 class="font-bold text-gray-900 mb-3">💡 How to Find YOUR Income Opportunity</h4>
+                    <p class="text-sm text-gray-700 mb-3">
+                        Ask your friends: "What do you come to me for advice on?" Their answers reveal your expertise that others value.
+                    </p>
+                    <div class="bg-white p-4 rounded">
+                        <p class="text-xs text-gray-700 mb-2">
+                            <strong>Example:</strong> If people always ask you about Excel formulas, budgeting spreadsheets, organizing events, back pain solutions, or relationship advice — those are potential income streams.
+                        </p>
+                        <p class="text-xs text-gray-600 italic">
+                            You're sitting on a mountain of knowledge but don't realize it until you step back. What's obvious to you is valuable to others.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculators Tab -->
+        <div id="tab-calculators" class="tab-content hidden">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">🧮 Financial Calculators</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 65-20-15 Calculator -->
+                <div class="calculator-card">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">💰 65-20-15 Budget Calculator</h3>
+                    <div class="input-group">
+                        <label class="input-label">Monthly Net Income (After Tax)</label>
+                        <input type="number" id="income-652015" class="input-field" placeholder="e.g., 3500" oninput="calculate652015()">
+                    </div>
+                    <div id="result-652015" class="hidden">
+                        <div class="result-box">
+                            <div class="text-sm opacity-90 mb-2">Your Budget Breakdown</div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold">65% Fundamentals:</span>
+                                    <span class="result-value" id="fundamentals" style="font-size: 1.5rem;"></span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold">20% Fun Money:</span>
+                                    <span class="result-value" id="fun" style="font-size: 1.5rem;"></span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold">15% Future You:</span>
+                                    <span class="result-value" id="future" style="font-size: 1.5rem;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Fund Calculator -->
+                <div class="calculator-card">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">🛡️ Emergency Fund Calculator</h3>
+                    <div class="input-group">
+                        <label class="input-label">Monthly Core Expenses</label>
+                        <input type="number" id="monthly-expenses" class="input-field" placeholder="e.g., 2000" oninput="calculateEmergency()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Your Situation</label>
+                        <select id="situation" class="input-field" onchange="calculateEmergency()">
+                            <option value="">Select...</option>
+                            <option value="3">Single / Predictable Income</option>
+                            <option value="6">Head of Household / Unpredictable Income</option>
+                        </select>
+                    </div>
+                    <div id="result-emergency" class="hidden">
+                        <div class="result-box">
+                            <div class="text-sm opacity-90">Your Emergency Fund Target</div>
+                            <div class="result-value" id="emergency-amount"></div>
+                            <div class="text-sm opacity-90" id="emergency-months"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compound Interest Calculator -->
+                <div class="calculator-card">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">📈 Compound Interest Calculator</h3>
+                    <div class="input-group">
+                        <label class="input-label">Initial Investment</label>
+                        <input type="number" id="initial-investment" class="input-field" placeholder="e.g., 5000" oninput="calculateCompound()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Monthly Contribution</label>
+                        <input type="number" id="monthly-contribution" class="input-field" placeholder="e.g., 500" oninput="calculateCompound()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Annual Return (%)</label>
+                        <input type="number" id="return-rate" class="input-field" placeholder="e.g., 10" value="10" oninput="calculateCompound()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Years</label>
+                        <input type="number" id="years" class="input-field" placeholder="e.g., 30" oninput="calculateCompound()">
+                    </div>
+                    <div id="result-compound" class="hidden">
+                        <div class="result-box">
+                            <div class="text-sm opacity-90">Future Value</div>
+                            <div class="result-value" id="compound-result"></div>
+                            <div class="text-sm opacity-90 mt-3">
+                                <span id="total-contributed"></span> contributed<br>
+                                <span id="total-earned"></span> earned from growth
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Debt Payoff Calculator -->
+                <div class="calculator-card">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">💳 Debt Payoff Calculator</h3>
+                    <div class="input-group">
+                        <label class="input-label">Total Debt</label>
+                        <input type="number" id="total-debt" class="input-field" placeholder="e.g., 10000" oninput="calculateDebt()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Interest Rate (%)</label>
+                        <input type="number" id="interest-rate" class="input-field" placeholder="e.g., 18" oninput="calculateDebt()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Monthly Payment</label>
+                        <input type="number" id="monthly-payment" class="input-field" placeholder="e.g., 300" oninput="calculateDebt()">
+                    </div>
+                    <div id="debt-error" class="hidden mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                        <p class="text-red-700 text-sm">⚠️ Monthly payment is too low to pay off debt. Increase your payment amount.</p>
+                    </div>
+                    <div id="result-debt" class="hidden">
+                        <div class="result-box">
+                            <div class="text-sm opacity-90">Payoff Timeline</div>
+                            <div class="result-value" id="debt-months"></div>
+                            <div class="text-sm opacity-90 mt-3">
+                                Total interest paid: <span id="total-interest" class="font-bold"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opportunity Cost Calculator -->
+                <div class="calculator-card">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">⚖️ Opportunity Cost Calculator</h3>
+                    <div class="input-group">
+                        <label class="input-label">Purchase Amount</label>
+                        <input type="number" id="purchase-amount" class="input-field" placeholder="e.g., 100" oninput="calculateOpportunity()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Years (if invested instead)</label>
+                        <input type="number" id="opportunity-years" class="input-field" placeholder="e.g., 40" value="40" oninput="calculateOpportunity()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Expected Annual Return (%)</label>
+                        <input type="number" id="opportunity-return" class="input-field" placeholder="e.g., 10" value="10" oninput="calculateOpportunity()">
+                    </div>
+                    <div id="result-opportunity" class="hidden">
+                        <div class="result-box">
+                            <div class="text-sm opacity-90">True Cost of This Purchase</div>
+                            <div class="result-value" id="opportunity-cost"></div>
+                            <div class="text-sm opacity-90 mt-3">
+                                If invested at <span id="opportunity-rate"></span>% for <span id="opportunity-time"></span> years
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Salary Increase Impact -->
+                <div class="calculator-card">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">💼 Salary Increase Impact</h3>
+                    <div class="input-group">
+                        <label class="input-label">Current Annual Salary</label>
+                        <input type="number" id="current-salary" class="input-field" placeholder="e.g., 50000" oninput="calculateSalaryImpact()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Raise Percentage (%)</label>
+                        <input type="number" id="raise-percent" class="input-field" placeholder="e.g., 10" oninput="calculateSalaryImpact()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Years to Invest the Increase</label>
+                        <input type="number" id="invest-years" class="input-field" placeholder="e.g., 20" oninput="calculateSalaryImpact()">
+                    </div>
+                    <div id="result-salary" class="hidden">
+                        <div class="result-box">
+                            <div class="text-sm opacity-90">Annual Increase</div>
+                            <div class="result-value" id="annual-increase"></div>
+                            <div class="text-sm opacity-90 mt-3">
+                                If you invest this raise at 10% return for <span id="salary-years"></span> years:<br>
+                                <span class="font-bold text-2xl" id="raise-invested"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- House vs Stock Calculator -->
+                <div class="calculator-card">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">🏠 House vs Stock Market Calculator</h3>
+                    <div class="input-group">
+                        <label class="input-label">House Deposit Amount</label>
+                        <input type="number" id="house-deposit" class="input-field" placeholder="e.g., 50000" oninput="calculateHouseVsStock()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Years of Ownership</label>
+                        <input type="number" id="ownership-years" class="input-field" placeholder="e.g., 8" oninput="calculateHouseVsStock()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Expected House Appreciation (%/year)</label>
+                        <input type="number" id="house-appreciation" class="input-field" placeholder="e.g., 1.25" value="1.25" oninput="calculateHouseVsStock()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Stock Market Return (%/year)</label>
+                        <input type="number" id="stock-return" class="input-field" placeholder="e.g., 10" value="10" oninput="calculateHouseVsStock()">
+                    </div>
+                    <div id="result-house-stock" class="hidden">
+                        <div class="result-box">
+                            <div class="grid grid-cols-2 gap-4 text-left">
+                                <div>
+                                    <div class="text-sm opacity-90">House Investment</div>
+                                    <div class="result-value" id="house-value" style="font-size: 1.5rem;"></div>
+                                </div>
+                                <div>
+                                    <div class="text-sm opacity-90">Stock Investment</div>
+                                    <div class="result-value" id="stock-value" style="font-size: 1.5rem;"></div>
+                                </div>
+                            </div>
+                            <div class="text-sm opacity-90 mt-3">
+                                Difference: <span id="investment-difference" class="font-bold"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lifestyle Inflation Calculator -->
+                <div class="calculator-card">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">📊 Lifestyle Inflation Calculator</h3>
+                    <div class="input-group">
+                        <label class="input-label">Current Annual Income</label>
+                        <input type="number" id="current-income-inflation" class="input-field" placeholder="e.g., 60000" oninput="calculateLifestyleInflation()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Current Annual Spending</label>
+                        <input type="number" id="current-spending" class="input-field" placeholder="e.g., 50000" oninput="calculateLifestyleInflation()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">New Annual Income (after raise)</label>
+                        <input type="number" id="new-income" class="input-field" placeholder="e.g., 75000" oninput="calculateLifestyleInflation()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">New Annual Spending (planned)</label>
+                        <input type="number" id="new-spending" class="input-field" placeholder="e.g., 60000" oninput="calculateLifestyleInflation()">
+                    </div>
+                    <div id="result-lifestyle" class="hidden">
+                        <div class="result-box">
+                            <div class="text-sm opacity-90">Wealth Gap Analysis</div>
+                            <div class="grid grid-cols-2 gap-4 text-left mt-3">
+                                <div>
+                                    <div class="text-xs opacity-75">Old Gap</div>
+                                    <div class="text-2xl font-bold" id="old-gap"></div>
+                                </div>
+                                <div>
+                                    <div class="text-xs opacity-75">New Gap</div>
+                                    <div class="text-2xl font-bold" id="new-gap"></div>
+                                </div>
+                            </div>
+                            <div class="text-sm mt-3">
+                                <span id="lifestyle-verdict" class="font-bold"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg mt-8">
+                <h3 class="font-bold text-blue-900 mb-2">💡 Calculator Tips</h3>
+                <ul class="text-sm text-gray-700 space-y-1">
+                    <li>✓ Use these as planning tools, not absolute predictions</li>
+                    <li>✓ Investment returns vary year-to-year; 8-10% is a long-term average</li>
+                    <li>✓ Adjust the numbers to match your personal situation</li>
+                    <li>✓ Remember: starting early matters more than starting perfectly</li>
+                    <li>✓ Run multiple scenarios to see how small changes compound over time</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Wisdom Tab (keeping original content as is, since it's already comprehensive) -->
+        <div id="tab-wisdom" class="tab-content hidden">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">💡 Key Wisdom from Nischa</h2>
+            
+            <div class="space-y-6">
+                <div class="quote-card">
+                    <p class="text-lg italic text-gray-800 mb-3">
+                        "The most important thing when it comes to money is understanding what you want and then making sure your money backs those decisions."
+                    </p>
+                    <p class="text-sm font-semibold text-emerald-700">— On Aligning Money with Values</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic text-gray-800 mb-3">
+                        "The wrong choice isn't choosing the wrong path, it's just not knowing that you even had a choice in this whole thing."
+                    </p>
+                    <p class="text-sm font-semibold text-emerald-700">— On Financial Awareness</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic text-gray-800 mb-3">
+                        "Everything is trying to pull you away from your money. Cost of living going up, prices going up, fighting against marketing to keep your money in your pocket."
+                    </p>
+                    <p class="text-sm font-semibold text-emerald-700">— On Modern Financial Challenges</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic text-gray-800 mb-3">
+                        "If you give someone else the power to feed you, you're also giving them the power to starve you."
+                    </p>
+                    <p class="text-sm font-semibold text-emerald-700">— On Financial Independence</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">🎓 Money Mindset Lessons</h3>
+                
+                <div class="space-y-6">
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-gray-900 mb-2">💭 Know Your "Why"</h4>
+                        <p class="text-gray-700">
+                            Nischa watched two colleagues in banking: one drove a Ferrari and lived large, the other (Phil) packed lunches and retired early with freedom. Neither was wrong — they were chasing different goals. Define what YOU want.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-gray-900 mb-2">🧠 Understand Your Money Story</h4>
+                        <p class="text-gray-700">
+                            Your relationship with money comes from your upbringing — it's an invisible backpack you carry. Become aware of it. Are you a saver or spender? Do you seek external validation through purchases? Understanding this helps you break free from patterns that don't serve you.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-gray-900 mb-2">⏰ Time > Money (When You're Young)</h4>
+                        <p class="text-gray-700">
+                            In your 20s, you can play the long-term game. Take risks, try experiments, invest early. The decades of compounding are your greatest asset. Everything feels urgent, but nothing actually is.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-gray-900 mb-2">📉 Avoid Lifestyle Inflation</h4>
+                        <p class="text-gray-700">
+                            As your income rises, don't let your spending rise at the same pace. The gap between what you earn and what you spend is where wealth is built. Treat yourself, but don't trap yourself.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-gray-900 mb-2">🎁 The Hedonic Treadmill</h4>
+                        <p class="text-gray-700">
+                            Buying things for happiness creates temporary spikes, not lasting fulfillment. The first iPhone was exciting, the 15th upgrade isn't. Law of diminishing returns applies to purchases.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-gray-900 mb-2">💼 Your Job ≠ Your Identity</h4>
+                        <p class="text-gray-700">
+                            Nischa struggled to let go of her banking title. She'd wrapped her identity around external validation. When she quit, she had to reframe: "I'm not letting anything else dictate the way my life goes from here."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-8 border-2 border-purple-300 mt-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">💰 Practical Money Tips</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-5 rounded-lg shadow">
+                        <h4 class="font-bold text-gray-900 mb-2">📱 Use AI for Financial Advice</h4>
+                        <p class="text-sm text-gray-700">Upload bank statements to ChatGPT and ask it to be your brutally honest financial advisor. It can spot overspending, recommend savings accounts, and keep you accountable.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow">
+                        <h4 class="font-bold text-gray-900 mb-2">💳 Check Your Credit Score</h4>
+                        <p class="text-sm text-gray-700">Free online, takes 5 minutes. Register to vote to boost it. Call credit card companies to increase limits (lowers utilization). Negotiate interest rates if you have a payoff plan.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow">
+                        <h4 class="font-bold text-gray-900 mb-2">🚗 The Car Trap</h4>
+                        <p class="text-sm text-gray-700">Buy 3-5 year old cars (they've depreciated on someone else's dime). Never buy more car than your income supports. Lease only if you value new cars every few years and accept the cost.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow">
+                        <h4 class="font-bold text-gray-900 mb-2">🏪 Grocery Store Psychology</h4>
+                        <p class="text-sm text-gray-700">Essentials are at the back to make you walk past temptations. Premium products at eye level. Kids' sweets at kids' eye level. Shop with a list at cheaper stores (Aldi vs. Waitrose).</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow">
+                        <h4 class="font-bold text-gray-900 mb-2">💼 Ask for a Raise</h4>
+                        <p class="text-sm text-gray-700">Build a case: show value added, compare market rates, ask HR about department averages. If denied, switch companies (20-30% jump vs. 3-5% staying).</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow">
+                        <h4 class="font-bold text-gray-900 mb-2">💑 Money & Relationships</h4>
+                        <p class="text-sm text-gray-700">Team fund (joint expenses, proportional to income) + Me fund (personal spending, no judgment). Maintain autonomy while building together.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">🚫 Money Mistakes to Avoid</h3>
+                
+                <div class="space-y-4">
+                    <div class="myth-card">
+                        <h4 class="font-bold text-gray-900 mb-2">Mistake #1: Waiting for the "Perfect Time" to Invest</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            People wait for market crashes, perfect knowledge, or larger amounts. Meanwhile, they miss years of compounding. Start with £50/month if that's all you have.
+                        </p>
+                        <p class="text-xs text-gray-600 italic">
+                            The perfect time was yesterday. The second best time is today. Even professionals can't time the market perfectly.
+                        </p>
+                    </div>
+
+                    <div class="myth-card">
+                        <h4 class="font-bold text-gray-900 mb-2">Mistake #2: Thinking Budgets Are Restrictive</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            Budgets aren't about deprivation — they're about permission. The 65-20-15 framework gives you PERMISSION to spend 20% on fun without guilt because you know your future is handled.
+                        </p>
+                        <p class="text-xs text-gray-600 italic">
+                            A budget is telling your money where to go instead of wondering where it went.
+                        </p>
+                    </div>
+
+                    <div class="myth-card">
+                        <h4 class="font-bold text-gray-900 mb-2">Mistake #3: Comparing Your Financial Journey to Others</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            Everyone's starting point, family support, student debt, and luck are different. Your only competition is who you were yesterday. Focus on YOUR progress.
+                        </p>
+                        <p class="text-xs text-gray-600 italic">
+                            Social media shows highlight reels. You're comparing your behind-the-scenes to someone else's edited performance.
+                        </p>
+                    </div>
+
+                    <div class="myth-card">
+                        <h4 class="font-bold text-gray-900 mb-2">Mistake #4: Ignoring Small Expenses</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            £5 daily coffee = £1,825/year. If invested at 10% for 30 years = £328,000. Not saying don't buy coffee — saying be AWARE of the trade-offs.
+                        </p>
+                        <p class="text-xs text-gray-600 italic">
+                            The latte factor is real, but so is enjoying life. Balance awareness with living.
+                        </p>
+                    </div>
+
+                    <div class="myth-card">
+                        <h4 class="font-bold text-gray-900 mb-2">Mistake #5: Taking Financial Advice from Broke People</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            Your well-meaning parents might not understand modern investing. Your friend who's in debt might have terrible money habits. Seek advice from people who have what you want financially.
+                        </p>
+                        <p class="text-xs text-gray-600 italic">
+                            Would you take fitness advice from someone who doesn't exercise? Apply the same logic to money.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-8 border-2 border-indigo-300 mt-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">🎯 Action Steps You Can Take Today</h3>
+                
+                <div class="space-y-4">
+                    <div class="flex gap-4 items-start bg-white p-4 rounded-lg shadow">
+                        <div class="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold">1</div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Check Your Bank Balance RIGHT NOW</h4>
+                            <p class="text-sm text-gray-700">Don't avoid it out of anxiety. Awareness is the first step to control. Log in, look at the numbers, breathe.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start bg-white p-4 rounded-lg shadow">
+                        <div class="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold">2</div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Calculate Your 65-20-15 Budget</h4>
+                            <p class="text-sm text-gray-700">Use the calculator above. Know your numbers. Write them down. Put them somewhere visible.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start bg-white p-4 rounded-lg shadow">
+                        <div class="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold">3</div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Open a High-Interest Savings Account</h4>
+                            <p class="text-sm text-gray-700">Takes 10 minutes online. Compare rates. Move your emergency fund there to earn interest while it sits.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start bg-white p-4 rounded-lg shadow">
+                        <div class="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold">4</div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Check Your Employer's Retirement Match</h4>
+                            <p class="text-sm text-gray-700">Email HR or check your benefits portal. If they match 3%, contribute at least 3%. It's free money.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start bg-white p-4 rounded-lg shadow">
+                        <div class="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold">5</div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Set Up ONE Automatic Transfer</h4>
+                            <p class="text-sm text-gray-700">£50, £100, £200 — whatever you can afford. Automate it the day after payday. You'll never miss what you don't see.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start bg-white p-4 rounded-lg shadow">
+                        <div class="flex-shrink-0 w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold">6</div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Cancel One Unused Subscription</h4>
+                            <p class="text-sm text-gray-700">Go through bank statements. Find that gym membership, streaming service, or app you forgot about. Cancel it. Redirect to savings.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Journey Tab -->
+        <div id="tab-journey" class="tab-content hidden">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">🚀 Nischa's Career Journey</h2>
+            
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-xl p-8 mb-8 shadow-xl">
+                <h3 class="text-3xl font-bold mb-4">From £220k Banker to YouTube Educator</h3>
+                <p class="text-xl opacity-90 mb-4">
+                    The story of walking away from corporate success to build something meaningful
+                </p>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <div class="text-4xl font-bold mb-1">9 years</div>
+                        <div class="text-sm opacity-90">In Investment Banking</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <div class="text-4xl font-bold mb-1">84% cut</div>
+                        <div class="text-sm opacity-90">In Salary to Follow Passion</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <div class="text-4xl font-bold mb-1">2M+</div>
+                        <div class="text-sm opacity-90">People Helped</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">💼 Her Salary Progression (Full Transparency)</h3>
+                <p class="text-gray-700 mb-6">
+                    Nischa shared her exact salary over 9 years in banking to show what's possible and help others negotiate. This level of transparency is rare and valuable.
+                </p>
+                
+                <div class="space-y-4">
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-lg text-gray-900">Year 1-2: Analyst</h4>
+                            <div class="badge badge-info">Entry Level</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="text-3xl font-bold text-emerald-600 mb-2">~£50,000</div>
+                            <p class="text-sm text-gray-700">Base salary as a graduate trainee. Long hours (60-80/week), steep learning curve, proving herself in a male-dominated industry.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-lg text-gray-900">Year 3-4: Senior Analyst</h4>
+                            <div class="badge badge-info">First Promotion</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="text-3xl font-bold text-emerald-600 mb-2">~£70,000</div>
+                            <p class="text-sm text-gray-700">40% increase from first promotion. Started taking on more responsibility, managing junior team members, leading smaller deals.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-lg text-gray-900">Year 5-6: Associate</h4>
+                            <div class="badge badge-warning">Major Jump</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="text-3xl font-bold text-emerald-600 mb-2">~£120,000</div>
+                            <p class="text-sm text-gray-700">71% increase. Now managing deals, client relationships, and team members. The hours didn't decrease but the autonomy increased.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-lg text-gray-900">Year 7-8: Vice President</h4>
+                            <div class="badge badge-warning">Senior Role</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="text-3xl font-bold text-emerald-600 mb-2">~£180,000</div>
+                            <p class="text-sm text-gray-700">50% increase. Managing major deals worth hundreds of millions. High responsibility, high pressure, high reward.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-lg text-gray-900">Year 9: Executive Director</h4>
+                            <div class="badge badge-success">Peak Salary</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="text-3xl font-bold text-emerald-600 mb-2">£220,000 + Bonus</div>
+                            <p class="text-sm text-gray-700 mb-3">22% increase. This is where most people would be thrilled. This is where Nischa felt trapped.</p>
+                            <p class="text-xs text-gray-600 italic">
+                                The bonus she negotiated (£100k+) was never paid due to how she left. She walked away from significant money because staying would have cost her soul.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg mt-6">
+                    <h4 class="font-bold text-blue-900 mb-2">📊 The Math: 340% Increase Over 9 Years</h4>
+                    <p class="text-sm text-gray-700 mb-3">
+                        From £50k to £220k represents a 340% increase. Averaged out, that's roughly 18% year-over-year growth — impressive by any standard.
+                    </p>
+                    <p class="text-xs text-gray-600 italic">
+                        But here's what the numbers don't show: the emotional toll, the Sunday scaries, the feeling of being a cog in a machine, the identity crisis of "If I'm not a banker, who am I?"
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">💔 The Breaking Point</h3>
+                
+                <div class="quote-card mb-6">
+                    <p class="text-lg italic text-gray-800 mb-3">
+                        "I always thought that money would make me happy. And then when I realized that I was really unhappy at the job that was paying me a lot of money, I didn't know what to do."
+                    </p>
+                    <p class="text-sm font-semibold text-emerald-700">— Nischa on her crisis moment</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-red-50 p-6 rounded-lg border-2 border-red-200">
+                        <h4 class="font-bold text-red-900 mb-3">⚠️ The Wake-Up Call: Her Mentor's Redundancy</h4>
+                        <p class="text-sm text-gray-700 mb-3">
+                            Nischa watched someone she deeply respected — someone who had given their life to the company — get made redundant overnight. Phil, the man who packed lunches and lived below his means, was let go after decades of dedication.
+                        </p>
+                        <p class="text-xs text-gray-600 italic mb-3">
+                            "If you give someone else the power to feed you, you're also giving them the power to starve you."
+                        </p>
+                        <p class="text-sm text-gray-700">
+                            That moment shattered the illusion of corporate loyalty. No matter how good you are, no matter how long you've been there, you're expendable. It terrified her and liberated her simultaneously.
+                        </p>
+                    </div>
+
+                    <div class="bg-yellow-50 p-6 rounded-lg border-2 border-yellow-200">
+                        <h4 class="font-bold text-yellow-900 mb-3">🎭 The Identity Crisis</h4>
+                        <p class="text-sm text-gray-700 mb-3">
+                            When people asked "What do you do?" Nischa would proudly say "I'm an investment banker." Her job wasn't just what she did — it WAS her. Her identity, her worth, her social status were all wrapped up in that title.
+                        </p>
+                        <p class="text-xs text-gray-600 italic mb-3">
+                            She remembers the fear: "If I'm not a banker, who am I? What will people think? What will my parents think?"
+                        </p>
+                        <p class="text-sm text-gray-700">
+                            Letting go of that identity was harder than leaving the salary. The ego death of walking away from something that looked successful from the outside was brutal.
+                        </p>
+                    </div>
+
+                    <div class="bg-purple-50 p-6 rounded-lg border-2 border-purple-200">
+                        <h4 class="font-bold text-purple-900 mb-3">⏰ The Sunday Scaries</h4>
+                        <p class="text-sm text-gray-700 mb-3">
+                            Every Sunday evening, Nischa would feel her chest tighten thinking about Monday morning. She'd wake up and go "Oh God, it's Monday." The dread was real and constant.
+                        </p>
+                        <p class="text-xs text-gray-600 italic mb-3">
+                            She remembers thinking: "I'm not old enough to feel this old. I'm not meant to hate my life at 30. This can't be it."
+                        </p>
+                        <p class="text-sm text-gray-700">
+                            The breaking point came when she realized the money wasn't making up for the misery anymore. The trade-off had tipped.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">🌱 The Transition: Building in Secret</h3>
+                
+                <div class="space-y-6">
+                    <div class="bg-emerald-50 p-6 rounded-lg border-2 border-emerald-200">
+                        <h4 class="font-bold text-emerald-900 mb-3">📹 Started YouTube as a Side Project</h4>
+                        <p class="text-sm text-gray-700 mb-3">
+                            While still working 60-80 hour weeks in banking, Nischa started filming videos on weekends. She didn't tell anyone at work — it felt like a rebellion, a secret escape plan.
+                        </p>
+                        <p class="text-xs text-gray-600 italic mb-3">
+                            The first videos got 100 views. Then 500. Then 5,000. She saw the potential but knew she couldn't quit yet.
+                        </p>
+                        <p class="text-sm text-gray-700">
+                            She spent 2+ years building her channel while working full-time. This wasn't impulsive — it was strategic. She built the parachute before jumping.
+                        </p>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-lg border-2 border-blue-200">
+                        <h4 class="font-bold text-blue-900 mb-3">💰 The Financial Calculation</h4>
+                        <p class="text-sm text-gray-700 mb-3">
+                            Before quitting, Nischa did the math:
+                        </p>
+                        <ul class="text-sm text-gray-700 space-y-2 mb-3">
+                            <li>• Her emergency fund was solid (6 months of expenses)</li>
+                            <li>• Her investments were generating passive income</li>
+                            <li>• Her YouTube revenue was growing month-over-month</li>
+                            <li>• Her house was paid off (no mortgage pressure)</li>
+                            <li>• Her husband had stable income (safety net)</li>
+                        </ul>
+                        <p class="text-xs text-gray-600 italic">
+                            She practiced what she preached: only took the leap when her financial foundation was rock-solid.
+                        </p>
+                    </div>
+
+                    <div class="bg-orange-50 p-6 rounded-lg border-2 border-orange-200">
+                        <h4 class="font-bold text-orange-900 mb-3">💼 The Bonus She Never Got</h4>
+                        <p class="text-sm text-gray-700 mb-3">
+                            Nischa negotiated a 6-figure bonus before leaving. She had it in writing. But when she resigned, the company found a way to deny it (legal but unethical).
+                        </p>
+                        <p class="text-xs text-gray-600 italic mb-3">
+                            She could have fought it legally, but she chose peace. Walking away from £100k+ was painful, but staying would have been worse.
+                        </p>
+                        <p class="text-sm text-gray-700">
+                            Lesson: Companies will protect their interests over yours. Always. That's not personal, it's business. Protect yourself.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-8 border-2 border-green-300 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">🎯 Life After Banking: The Results</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div class="stat-card">
+                        <div class="text-5xl mb-3">📈</div>
+                        <div class="stat-number">2M</div>
+                        <div class="text-gray-600 font-semibold mb-2">YouTube Subscribers</div>
+                        <p class="text-xs text-gray-600">Growing at 100k+ per month at peak</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="text-5xl mb-3">🎓</div>
+                        <div class="stat-number">100k+</div>
+                        <div class="text-gray-600 font-semibold mb-2">Course Students</div>
+                        <p class="text-xs text-gray-600">Teaching personal finance and YouTube growth</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="text-5xl mb-3">💰</div>
+                        <div class="stat-number">7 Streams</div>
+                        <div class="text-gray-600 font-semibold mb-2">Income Sources</div>
+                        <p class="text-xs text-gray-600">YouTube ads, sponsorships, courses, affiliates, consulting</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="text-5xl mb-3">😊</div>
+                        <div class="stat-number">∞</div>
+                        <div class="text-gray-600 font-semibold mb-2">Happiness Level</div>
+                        <p class="text-xs text-gray-600">Immeasurable improvement in quality of life</p>
+                    </div>
+                </div>
+
+                <div class="quote-card bg-white">
+                    <p class="text-lg italic text-gray-800 mb-3">
+                        "I'm not going to lie and say the money doesn't matter. But the freedom, the flexibility, the ability to help millions of people understand money — that's worth more than the £220k ever was."
+                    </p>
+                    <p class="text-sm font-semibold text-emerald-700">— Nischa on her current life</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-8 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">💡 Lessons from Her Journey</h3>
+                
+                <div class="space-y-4">
+                    <div class="tip-card">
+                        <h4 class="font-bold text-blue-900 mb-2">1. Build the Bridge Before You Cross</h4>
+                        <p class="text-sm text-gray-700">
+                            Don't quit your job to "find yourself." Build your next thing while you still have income. Test, validate, grow — then make the leap when it's less risky.
+                        </p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4 class="font-bold text-blue-900 mb-2">2. Money Buys Options, Not Happiness</h4>
+                        <p class="text-sm text-gray-700">
+                            The £220k gave Nischa options to leave and pursue her passion. But the salary itself didn't make her happy. Financial security enables choices.
+                        </p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4 class="font-bold text-blue-900 mb-2">3. Your Identity Isn't Your Job Title</h4>
+                        <p class="text-sm text-gray-700">
+                            "Investment banker" was a label, not who Nischa truly was. When you leave a prestigious career, you discover who you are without the external validation.
+                        </p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4 class="font-bold text-blue-900 mb-2">4. Sunk Cost Fallacy is Real</h4>
+                        <p class="text-sm text-gray-700">
+                            "I spent 9 years building this career, I can't walk away now" is flawed thinking. Don't let past investment dictate future happiness. The 9 years taught valuable lessons — they weren't wasted.
+                        </p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4 class="font-bold text-blue-900 mb-2">5. Corporate Loyalty is a Myth</h4>
+                        <p class="text-sm text-gray-700">
+                            Phil's redundancy proved: you can give your life to a company and be let go overnight. Invest in yourself, your skills, your network — those can't be taken away.
+                        </p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4 class="font-bold text-blue-900 mb-2">6. Success Redefined</h4>
+                        <p class="text-sm text-gray-700">
+                            Society's definition of success (title, salary, corner office) might not align with YOUR definition (freedom, impact, fulfillment). Define it for yourself.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <p class="text-xs">
+            Generated by LLM with supervision by <a href="../index.html" class="text-emerald-400 hover:text-emerald-300 underline">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html" class="text-emerald-400 hover:text-emerald-300 underline">MIT License</a>
+        </p>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-image');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 5000);
+
+        // Tab Switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+            
+            // Add active to clicked button
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const item = this.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all accordions
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Open clicked one if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Tooltip System
+        function showTooltip(term, definition) {
+            const tooltip = document.getElementById('tooltip');
+            document.getElementById('tooltip-title').textContent = term;
+            document.getElementById('tooltip-content').textContent = definition;
+            tooltip.classList.add('show');
+            
+            setTimeout(() => hideTooltip(), 8000);
+        }
+
+        function hideTooltip() {
+            document.getElementById('tooltip').classList.remove('show');
+        }
+
+        document.querySelectorAll('.term').forEach(term => {
+            term.addEventListener('click', function() {
+                const termText = this.dataset.term;
+                const definition = this.dataset.definition;
+                showTooltip(termText, definition);
+            });
+        });
+
+        // Calculator Functions
+        function calculate652015() {
+            const income = parseFloat(document.getElementById('income-652015').value);
+            if (!income || income <= 0) {
+                document.getElementById('result-652015').classList.add('hidden');
+                return;
+            }
+            
+            const fundamentals = income * 0.65;
+            const fun = income * 0.20;
+            const future = income * 0.15;
+            
+            document.getElementById('fundamentals').textContent = '£' + fundamentals.toFixed(0);
+            document.getElementById('fun').textContent = '£' + fun.toFixed(0);
+            document.getElementById('future').textContent = '£' + future.toFixed(0);
+            document.getElementById('result-652015').classList.remove('hidden');
+        }
+
+        function calculateEmergency() {
+            const expenses = parseFloat(document.getElementById('monthly-expenses').value);
+            const situation = parseFloat(document.getElementById('situation').value);
+            
+            if (!expenses || !situation || expenses <= 0) {
+                document.getElementById('result-emergency').classList.add('hidden');
+                return;
+            }
+            
+            const total = expenses * situation;
+            document.getElementById('emergency-amount').textContent = '£' + total.toLocaleString();
+            document.getElementById('emergency-months').textContent = situation + ' months of expenses';
+            document.getElementById('result-emergency').classList.remove('hidden');
+        }
+
+        function calculateCompound() {
+            const initial = parseFloat(document.getElementById('initial-investment').value) || 0;
+            const monthly = parseFloat(document.getElementById('monthly-contribution').value) || 0;
+            const rate = parseFloat(document.getElementById('return-rate').value) / 100 || 0.10;
+            const years = parseFloat(document.getElementById('years').value) || 0;
+            
+            if (years <= 0) {
+                document.getElementById('result-compound').classList.add('hidden');
+                return;
+            }
+            
+            const monthlyRate = rate / 12;
+            const months = years * 12;
+            
+            // Future value of initial investment
+            const fvInitial = initial * Math.pow(1 + monthlyRate, months);
+            
+            // Future value of monthly contributions
+            const fvMonthly = monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+            
+            const total = fvInitial + fvMonthly;
+            const contributed = initial + (monthly * months);
+            const earned = total - contributed;
+            
+            document.getElementById('compound-result').textContent = '£' + total.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('total-contributed').textContent = '£' + contributed.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('total-earned').textContent = '£' + earned.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('result-compound').classList.remove('hidden');
+        }
+
+        function calculateDebt() {
+            const debt = parseFloat(document.getElementById('total-debt').value);
+            const rate = parseFloat(document.getElementById('interest-rate').value) / 100 / 12;
+            const payment = parseFloat(document.getElementById('monthly-payment').value);
+            
+            if (!debt || !rate || !payment || debt <= 0 || payment <= 0) {
+                document.getElementById('result-debt').classList.add('hidden');
+                document.getElementById('debt-error').classList.add('hidden');
+                return;
+            }
+            
+            // Check if payment is too low
+            if (payment <= debt * rate) {
+                document.getElementById('debt-error').classList.remove('hidden');
+                document.getElementById('result-debt').classList.add('hidden');
+                return;
+            }
+            
+            // Hide error message if payment is valid
+            document.getElementById('debt-error').classList.add('hidden');
+            
+            const months = Math.log(payment / (payment - debt * rate)) / Math.log(1 + rate);
+            const totalPaid = payment * months;
+            const interest = totalPaid - debt;
+            
+            const years = Math.floor(months / 12);
+            const remainingMonths = Math.ceil(months % 12);
+            
+            let timeline = '';
+            if (years > 0) {
+                timeline = years + ' year' + (years > 1 ? 's' : '');
+                if (remainingMonths > 0) {
+                    timeline += ' ' + remainingMonths + ' month' + (remainingMonths > 1 ? 's' : '');
+                }
+            } else {
+                timeline = Math.ceil(months) + ' months';
+            }
+            
+            document.getElementById('debt-months').textContent = timeline;
+            document.getElementById('total-interest').textContent = '£' + interest.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('result-debt').classList.remove('hidden');
+        }
+
+        function calculateOpportunity() {
+            const amount = parseFloat(document.getElementById('purchase-amount').value);
+            const years = parseFloat(document.getElementById('opportunity-years').value);
+            const rate = parseFloat(document.getElementById('opportunity-return').value) / 100;
+            
+            if (!amount || !years || !rate || amount <= 0 || years <= 0) {
+                document.getElementById('result-opportunity').classList.add('hidden');
+                return;
+            }
+            
+            const futureValue = amount * Math.pow(1 + rate, years);
+            
+            document.getElementById('opportunity-cost').textContent = '£' + futureValue.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('opportunity-rate').textContent = (rate * 100).toFixed(0);
+            document.getElementById('opportunity-time').textContent = years;
+            document.getElementById('result-opportunity').classList.remove('hidden');
+        }
+
+        function calculateSalaryImpact() {
+            const salary = parseFloat(document.getElementById('current-salary').value);
+            const raisePercent = parseFloat(document.getElementById('raise-percent').value) / 100;
+            const years = parseFloat(document.getElementById('invest-years').value);
+            
+            if (!salary || !raisePercent || !years || salary <= 0 || years <= 0) {
+                document.getElementById('result-salary').classList.add('hidden');
+                return;
+            }
+            
+            const increase = salary * raisePercent;
+            const monthlyIncrease = increase / 12;
+            const rate = 0.10 / 12; // 10% annual return
+            const months = years * 12;
+            
+            // Future value of monthly contributions
+            const invested = monthlyIncrease * ((Math.pow(1 + rate, months) - 1) / rate);
+            
+            document.getElementById('annual-increase').textContent = '£' + increase.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('salary-years').textContent = years;
+            document.getElementById('raise-invested').textContent = '£' + invested.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('result-salary').classList.remove('hidden');
+        }
+
+        function calculateHouseVsStock() {
+            const deposit = parseFloat(document.getElementById('house-deposit').value);
+            const years = parseFloat(document.getElementById('ownership-years').value);
+            const houseRate = parseFloat(document.getElementById('house-appreciation').value) / 100;
+            const stockRate = parseFloat(document.getElementById('stock-return').value) / 100;
+            
+            if (!deposit || !years || deposit <= 0 || years <= 0) {
+                document.getElementById('result-house-stock').classList.add('hidden');
+                return;
+            }
+            
+            const houseValue = deposit * Math.pow(1 + houseRate, years);
+            const stockValue = deposit * Math.pow(1 + stockRate, years);
+            const difference = stockValue - houseValue;
+            
+            document.getElementById('house-value').textContent = '£' + houseValue.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('stock-value').textContent = '£' + stockValue.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('investment-difference').textContent = '£' + Math.abs(difference).toLocaleString(undefined, {maximumFractionDigits: 0}) + (difference > 0 ? ' more in stocks' : ' more in property');
+            document.getElementById('result-house-stock').classList.remove('hidden');
+        }
+
+        function calculateLifestyleInflation() {
+            const currentIncome = parseFloat(document.getElementById('current-income-inflation').value);
+            const currentSpending = parseFloat(document.getElementById('current-spending').value);
+            const newIncome = parseFloat(document.getElementById('new-income').value);
+            const newSpending = parseFloat(document.getElementById('new-spending').value);
+            
+            if (!currentIncome || !currentSpending || !newIncome || !newSpending) {
+                document.getElementById('result-lifestyle').classList.add('hidden');
+                return;
+            }
+            
+            const oldGap = currentIncome - currentSpending;
+            const newGap = newIncome - newSpending;
+            
+            document.getElementById('old-gap').textContent = '£' + oldGap.toLocaleString();
+            document.getElementById('new-gap').textContent = '£' + newGap.toLocaleString();
+            
+            let verdict = '';
+            if (newGap > oldGap) {
+                const increase = ((newGap - oldGap) / oldGap * 100).toFixed(0);
+                verdict = '✅ Great! Your wealth gap increased by ' + increase + '%. You avoided lifestyle inflation!';
+                document.getElementById('lifestyle-verdict').className = 'font-bold text-emerald-700';
+            } else if (newGap === oldGap) {
+                verdict = '⚠️ Your wealth gap stayed the same. You could save more with higher income.';
+                document.getElementById('lifestyle-verdict').className = 'font-bold text-yellow-700';
+            } else {
+                const decrease = ((oldGap - newGap) / oldGap * 100).toFixed(0);
+                verdict = '❌ Warning! Your wealth gap decreased by ' + decrease + '%. Lifestyle inflation detected!';
+                document.getElementById('lifestyle-verdict').className = 'font-bold text-red-700';
+            }
+            
+            document.getElementById('lifestyle-verdict').textContent = verdict;
+            document.getElementById('result-lifestyle').classList.remove('hidden');
+        }
+
+        // Hide scrollbar for tabs
+        const style = document.createElement('style');
+        style.textContent = `
+            .hide-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .hide-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

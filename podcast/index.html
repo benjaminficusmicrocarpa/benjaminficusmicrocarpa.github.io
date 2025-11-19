@@ -3,416 +3,829 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podcast Notes - Benjamin Ficus Microcarpa</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Podcast Notes - Educational Audio Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        /* Accordion Styles for Podcast Channels */
-        .accordion {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Header Background Carousel */
+        .header-bg {
+            position: absolute;
+            inset: 0;
             overflow: hidden;
-            margin-bottom: 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .accordion-item {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        .bg-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            animation: kenBurns 20s ease-in-out infinite;
         }
 
-        .accordion-item:last-child {
-            border-bottom: none;
+        .bg-slide.active {
+            opacity: 1;
         }
 
-        .accordion-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 1.5rem 2rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 1.3rem;
+        @keyframes kenBurns {
+            0%, 100% {
+                transform: scale(1) translateX(0);
+            }
+            50% {
+                transform: scale(1.1) translateX(-20px);
+            }
         }
 
-        .accordion-header:hover {
-            background: linear-gradient(135deg, #5a6fd8, #6a4190);
-            transform: translateY(-2px);
+        .bg-slide:nth-child(1) { background-image: linear-gradient(rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1920&q=80'); }
+        .bg-slide:nth-child(2) { background-image: linear-gradient(rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=1920&q=80'); animation-delay: 5s; }
+        .bg-slide:nth-child(3) { background-image: linear-gradient(rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1920&q=80'); animation-delay: 10s; }
+        .bg-slide:nth-child(4) { background-image: linear-gradient(rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=1920&q=80'); animation-delay: 15s; }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out;
         }
 
-        .accordion-header.active {
-            background: linear-gradient(135deg, #5a6fd8, #6a4190);
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            33% { transform: translateY(-30px) translateX(20px); }
+            66% { transform: translateY(-10px) translateX(-20px); }
         }
 
+        /* Accordion animations */
         .accordion-content {
-            padding: 0 2rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-            background: rgba(255, 255, 255, 0.95);
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .accordion-content.active {
-            max-height: 1000px;
-            padding: 2rem;
+            max-height: 5000px;
         }
 
-        .podcast-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
+        /* Card hover effects */
         .podcast-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .podcast-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px) scale(1.02);
         }
 
-        .podcast-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
+        /* Tooltip */
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
         }
 
-        .podcast-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            color: #333;
-            line-height: 1.4;
+        .tooltip.show {
+            visibility: visible;
+            opacity: 1;
         }
 
-        .podcast-description {
-            color: #666;
-            line-height: 1.5;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
+        /* Print styles */
+        @media print {
+            .no-print { display: none !important; }
+            .accordion-content { max-height: none !important; }
+            body { background: white; }
         }
 
-        .podcast-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
-        .podcast-tag {
-            font-size: 1.1rem;
-        }
-
-        .podcast-arrow {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #667eea;
+        /* Attribution badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            font-size: 0.75rem;
+            max-width: 280px;
+            z-index: 1000;
             transition: transform 0.3s ease;
         }
 
-        .podcast-card:hover .podcast-arrow {
-            transform: translateX(5px);
+        @media (min-width: 768px) {
+            .attribution-badge {
+                transform: translateX(calc(100% - 40px));
+            }
+            .attribution-badge:hover {
+                transform: translateX(0);
+            }
         }
 
-        .channel-icon {
-            font-size: 1.5rem;
-            margin-right: 0.5rem;
+        @media (max-width: 767px) {
+            .attribution-badge {
+                font-size: 0.65rem;
+                padding: 0.5rem 0.75rem;
+                max-width: 200px;
+            }
         }
 
-        .accordion-toggle {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
+        /* Stats counter animation */
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .accordion-header.active .accordion-toggle {
-            transform: rotate(180deg);
+        .stat-item {
+            animation: countUp 0.6s ease-out forwards;
+        }
+
+        /* Icon pulse */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .pulse-icon {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header class="header">
-            <div class="header-content">
-                <h1 class="title">
-                    <span class="title-icon">🎧</span>
-                    Podcast Notes
-                </h1>
-                <p class="subtitle">Key takeaways from various educational podcasts</p>
-            </div>
-            <div class="floating-elements">
-                <div class="floating-icon">🧠</div>
-                <div class="floating-icon">🎙️</div>
-                <div class="floating-icon">📚</div>
-                <div class="floating-icon">💡</div>
-                <div class="floating-icon">🎯</div>
-            </div>
-        </header>
-
-        <main class="main-content">
-            <!-- Andrew Huberman Section -->
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span><span class="channel-icon">🧠</span>Andrew Huberman</span>
-                        <span class="accordion-toggle">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="podcast-grid">
-                            <div class="podcast-card" data-link="adhd_andrew_hubermann.html">
-                                <div class="podcast-icon">🧠</div>
-                                <h3 class="podcast-title">ADHD: How Anyone Can Improve Their Focus</h3>
-                                <p class="podcast-description">Andrew Huberman's insights on improving focus and attention through neuroscience-based approaches</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">🧠</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-
-                            <div class="podcast-card" data-link="optimal_study_protocols_andrew_huberman.html">
-                                <div class="podcast-icon">📚</div>
-                                <h3 class="podcast-title">Optimal Study Protocols</h3>
-                                <p class="podcast-description">Andrew Huberman's research-based study techniques and protocols for maximum learning efficiency</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">📚</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chris Williamson Section -->
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span><span class="channel-icon">🎧</span>Chris Williamson</span>
-                        <span class="accordion-toggle">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="podcast-grid">
-                            <div class="podcast-card" data-link="chris_williamson_anne_laure_le_cunff.html">
-                                <div class="podcast-icon">🎧</div>
-                                <h3 class="podcast-title">How To Live Freely In A Goal-Obsessed World</h3>
-                                <p class="podcast-description">Chris Williamson with Anne-Laure Le Cunff on living freely and finding balance in a goal-driven society</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">🎧</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-
-                            <div class="podcast-card" data-link="chris_williamson_alain_de_botton_loneliness_negative_thoughts_childhood_wounds_healing.html">
-                                <div class="podcast-icon">🧠</div>
-                                <h3 class="podcast-title">Understanding Ourselves: A Journey Through Inner Voices</h3>
-                                <p class="podcast-description">Chris Williamson with Alain de Botton on loneliness, negative thoughts, and healing childhood wounds</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">💡</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-
-                            <div class="podcast-card" data-link="chris_williamson_esther_perel.html">
-                                <div class="podcast-icon">💕</div>
-                                <h3 class="podcast-title">How Love Dies: The Psychology of Cheating & Attraction</h3>
-                                <p class="podcast-description">Chris Williamson with Esther Perel on modern relationship challenges, attachment theory, and the psychology behind infidelity</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">💕</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Joe Rogan Experience Section -->
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span><span class="channel-icon">🎙️</span>Joe Rogan Experience</span>
-                        <span class="accordion-toggle">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="podcast-grid">
-                            <div class="podcast-card" data-link="jre_2252_wesley_huff.html">
-                                <div class="podcast-icon">📜</div>
-                                <h3 class="podcast-title">JRE #2252: Wesley Huff - Biblical Scholar & Ancient Manuscript Expert</h3>
-                                <p class="podcast-description">Christian Apologist and Biblical Scholar discussion on ancient manuscripts and biblical scholarship</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">📜</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-
-                            <div class="podcast-card" data-link="jre_2345_roman_roman_yampolskiy.html">
-                                <div class="podcast-icon">🤖</div>
-                                <h3 class="podcast-title">JRE #2345 - Roman Yampolskiy - AI Safety Expert Warns Humanity</h3>
-                                <p class="podcast-description">AI Safety Expert's warnings about artificial intelligence and its potential risks to humanity</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">🤖</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lex Fridman Section -->
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span><span class="channel-icon">🤖</span>Lex Fridman</span>
-                        <span class="accordion-toggle">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="podcast-grid">
-                            <div class="podcast-card" data-link="lex_fridman_dave_plummer_479.html">
-                                <div class="podcast-icon">💻</div>
-                                <h3 class="podcast-title">Dave Plummer: From TRS-80 to Task Manager</h3>
-                                <p class="podcast-description">Interactive exploration of a legendary programmer's journey through autism, Microsoft, and creating software used by billions</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">💻</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Melissa Dougherty Section -->
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span><span class="channel-icon">🏰</span>Melissa Dougherty</span>
-                        <span class="accordion-toggle">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="podcast-grid">
-                            <div class="podcast-card" data-link="melissa_dougherty_robert_h_schuller2.html">
-                                <div class="podcast-icon">🏰</div>
-                                <h3 class="podcast-title">Robert Schuller & The Movement That Rebranded Church</h3>
-                                <p class="podcast-description">Analysis of Robert Schuller's impact on modern church movements and the rebranding of Christianity</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">🏰</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-
-                            <div class="podcast-card" data-link="melissa_dougherty_i_am_affirmation.html">
-                                <div class="podcast-icon">🎯</div>
-                                <h3 class="podcast-title">The Truth About "I AM" Affirmations</h3>
-                                <p class="podcast-description">Understanding the origins, theology, and biblical response to "I AM" affirmations</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">🎯</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mike Winger Section -->
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span><span class="channel-icon">🚨</span>Mike Winger</span>
-                        <span class="accordion-toggle">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="podcast-grid">
-                            <div class="podcast-card" data-link="mike_winger_spiritual_abuse.html">
-                                <div class="podcast-icon">🚨</div>
-                                <h3 class="podcast-title">Understanding Spiritual Abuse</h3>
-                                <p class="podcast-description">Mike Winger's insights on recognizing and addressing spiritual abuse in religious contexts</p>
-                                <div class="podcast-footer">
-                                    <span class="podcast-tag">🚨</span>
-                                    <span class="podcast-arrow">→</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <footer class="footer">
-            <div class="footer-content">
-                <p>🎧 Learning from voices that inspire and educate</p>
-                <div class="footer-icons">
-                    <span class="footer-icon">🧠</span>
-                    <span class="footer-icon">🎙️</span>
-                    <span class="footer-icon">📚</span>
-                    <span class="footer-icon">💡</span>
-                    <span class="footer-icon">🎯</span>
-                </div>
-                <div class="footer-license">
-                    <a href="../index.html" style="color: #7f8c8d; text-decoration: none; font-size: 0.9rem; margin-top: 1rem; display: inline-block;">
-                        ← Back to Home
-                    </a>
-                </div>
-            </div>
-        </footer>
+<body class="antialiased">
+    <!-- Floating Particles -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden no-print" aria-hidden="true">
+        <div class="particle" style="width: 80px; height: 80px; top: 10%; left: 15%; animation-delay: 0s;"></div>
+        <div class="particle" style="width: 60px; height: 60px; top: 60%; left: 80%; animation-delay: 2s;"></div>
+        <div class="particle" style="width: 100px; height: 100px; top: 30%; left: 70%; animation-delay: 4s;"></div>
+        <div class="particle" style="width: 50px; height: 50px; top: 80%; left: 20%; animation-delay: 6s;"></div>
+        <div class="particle" style="width: 70px; height: 70px; top: 50%; left: 40%; animation-delay: 8s;"></div>
     </div>
 
-    <div class="particles-container">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+    <!-- Tooltip Container -->
+    <div id="tooltip" class="tooltip fixed top-4 right-4 bg-white rounded-lg shadow-2xl p-4 max-w-xs z-50 no-print" role="tooltip">
+        <button onclick="hideTooltip()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" aria-label="Close tooltip">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div id="tooltip-content" class="text-sm text-gray-700"></div>
     </div>
 
-    <script src="../script.js"></script>
+    <!-- Header -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="header-bg">
+            <div class="bg-slide active"></div>
+            <div class="bg-slide"></div>
+            <div class="bg-slide"></div>
+            <div class="bg-slide"></div>
+        </div>
+
+        <div class="relative z-10 text-center text-white px-4 py-12 max-w-5xl mx-auto">
+            <div class="mb-6 pulse-icon inline-block text-6xl md:text-8xl" aria-hidden="true">🎧</div>
+            <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+                Podcast Notes
+            </h1>
+            <p class="text-xl md:text-2xl lg:text-3xl mb-8 font-light opacity-95">
+                Key takeaways from voices that inspire and educate
+            </p>
+            <p class="text-base md:text-lg mb-12 max-w-2xl mx-auto opacity-90">
+                A curated collection of insights from leading podcasts across neuroscience, psychology, technology, philosophy, and faith. Distilled wisdom from hours of conversations.
+            </p>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <div class="stat-item bg-white bg-opacity-20 backdrop-blur-md rounded-xl p-6" style="animation-delay: 0.1s;">
+                    <div class="text-4xl font-bold mb-2">6</div>
+                    <div class="text-sm uppercase tracking-wide opacity-90">Channels</div>
+                </div>
+                <div class="stat-item bg-white bg-opacity-20 backdrop-blur-md rounded-xl p-6" style="animation-delay: 0.2s;">
+                    <div class="text-4xl font-bold mb-2">12</div>
+                    <div class="text-sm uppercase tracking-wide opacity-90">Episodes</div>
+                </div>
+                <div class="stat-item bg-white bg-opacity-20 backdrop-blur-md rounded-xl p-6" style="animation-delay: 0.3s;">
+                    <div class="text-4xl font-bold mb-2">8</div>
+                    <div class="text-sm uppercase tracking-wide opacity-90">Topics</div>
+                </div>
+                <div class="stat-item bg-white bg-opacity-20 backdrop-blur-md rounded-xl p-6" style="animation-delay: 0.4s;">
+                    <div class="text-4xl font-bold mb-2">∞</div>
+                    <div class="text-sm uppercase tracking-wide opacity-90">Insights</div>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center no-print">
+                <a href="#content" class="bg-white text-purple-700 px-8 py-4 rounded-full font-semibold text-lg hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg">
+                    Explore Notes
+                </a>
+                <button onclick="scrollToRandom()" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-purple-700 transition-all transform hover:scale-105">
+                    Surprise Me
+                </button>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce no-print" aria-hidden="true">
+                <svg class="w-8 h-8 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="content" class="relative py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Filter Tabs (Sticky) -->
+            <div class="sticky top-0 z-40 bg-white bg-opacity-95 backdrop-blur-lg rounded-2xl shadow-xl mb-12 p-2 no-print">
+                <div class="flex flex-wrap gap-2 justify-center" role="tablist">
+                    <button onclick="filterPodcasts('all')" class="filter-btn active px-6 py-3 rounded-xl font-semibold transition-all text-sm md:text-base" data-filter="all">
+                        All Podcasts
+                    </button>
+                    <button onclick="filterPodcasts('neuroscience')" class="filter-btn px-6 py-3 rounded-xl font-semibold transition-all text-sm md:text-base" data-filter="neuroscience">
+                        🧠 Neuroscience
+                    </button>
+                    <button onclick="filterPodcasts('psychology')" class="filter-btn px-6 py-3 rounded-xl font-semibold transition-all text-sm md:text-base" data-filter="psychology">
+                        💡 Psychology
+                    </button>
+                    <button onclick="filterPodcasts('technology')" class="filter-btn px-6 py-3 rounded-xl font-semibold transition-all text-sm md:text-base" data-filter="technology">
+                        🤖 Technology
+                    </button>
+                    <button onclick="filterPodcasts('faith')" class="filter-btn px-6 py-3 rounded-xl font-semibold transition-all text-sm md:text-base" data-filter="faith">
+                        📜 Faith
+                    </button>
+                </div>
+            </div>
+
+            <!-- Andrew Huberman -->
+            <div class="accordion-wrapper mb-8 podcast-category" data-categories="neuroscience psychology">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="accordion-header w-full text-left bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 md:p-8 flex items-center justify-between hover:from-purple-700 hover:to-indigo-700 transition-all" aria-expanded="false">
+                        <div class="flex items-center gap-4">
+                            <span class="text-4xl" aria-hidden="true">🧠</span>
+                            <div>
+                                <h2 class="text-2xl md:text-3xl font-bold">Andrew Huberman</h2>
+                                <p class="text-sm md:text-base opacity-90 mt-1">Neuroscience & Behavioral Science</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-8 h-8 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 md:p-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Card 1 -->
+                                <article class="podcast-card bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-indigo-300" onclick="window.location.href='adhd_andrew_hubermann.html'" tabindex="0" role="button" aria-label="Navigate to ADHD podcast notes">
+                                    <div class="text-5xl mb-4" aria-hidden="true">🧠</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        ADHD: How Anyone Can Improve Their Focus
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Neuroscience-based approaches to enhancing focus and attention, with practical protocols for managing ADHD symptoms and improving cognitive performance.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full">Neuroscience</span>
+                                        <svg class="w-6 h-6 text-indigo-600 transform transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+
+                                <!-- Card 2 -->
+                                <article class="podcast-card bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-purple-300" onclick="window.location.href='optimal_study_protocols_andrew_huberman.html'" tabindex="0" role="button" aria-label="Navigate to Optimal Study Protocols podcast notes">
+                                    <div class="text-5xl mb-4" aria-hidden="true">📚</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        Optimal Study Protocols
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Research-based study techniques and protocols for maximum learning efficiency, including timing, environment optimization, and memory consolidation strategies.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-purple-600 bg-purple-100 px-3 py-1 rounded-full">Learning</span>
+                                        <svg class="w-6 h-6 text-purple-600 transform transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chris Williamson -->
+            <div class="accordion-wrapper mb-8 podcast-category" data-categories="psychology">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="accordion-header w-full text-left bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-6 md:p-8 flex items-center justify-between hover:from-teal-700 hover:to-cyan-700 transition-all" aria-expanded="true">
+                        <div class="flex items-center gap-4">
+                            <span class="text-4xl" aria-hidden="true">🎧</span>
+                            <div>
+                                <h2 class="text-2xl md:text-3xl font-bold">Chris Williamson</h2>
+                                <p class="text-sm md:text-base opacity-90 mt-1">Modern Wisdom</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-8 h-8 transform transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content active">
+                        <div class="p-6 md:p-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                <!-- Card 1 -->
+                                <article class="podcast-card bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-teal-300" onclick="window.location.href='chris_williamson_anne_laure_le_cunff.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">🎧</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        How To Live Freely In A Goal-Obsessed World
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Anne-Laure Le Cunff on finding balance and living authentically in a society obsessed with achievement and productivity.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-teal-600 bg-teal-100 px-3 py-1 rounded-full">Psychology</span>
+                                        <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+
+                                <!-- Card 2 -->
+                                <article class="podcast-card bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-amber-300" onclick="window.location.href='chris_williamson_alain_de_botton_loneliness_negative_thoughts_childhood_wounds_healing.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">🧠</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        Understanding Ourselves: A Journey Through Inner Voices
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Alain de Botton explores loneliness, negative thoughts, and healing childhood wounds through philosophical and psychological insights.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-amber-600 bg-amber-100 px-3 py-1 rounded-full">Philosophy</span>
+                                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+
+                                <!-- Card 3 -->
+                                <article class="podcast-card bg-gradient-to-br from-rose-50 to-pink-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-rose-300" onclick="window.location.href='chris_williamson_esther_perel.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">💕</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        How Love Dies: The Psychology of Cheating & Attraction
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Esther Perel on modern relationship challenges, attachment theory, and the complex psychology behind infidelity and attraction.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-rose-600 bg-rose-100 px-3 py-1 rounded-full">Relationships</span>
+                                        <svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Joe Rogan Experience -->
+            <div class="accordion-wrapper mb-8 podcast-category" data-categories="technology faith psychology">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="accordion-header w-full text-left bg-gradient-to-r from-red-600 to-pink-600 text-white p-6 md:p-8 flex items-center justify-between hover:from-red-700 hover:to-pink-700 transition-all" aria-expanded="false">
+                        <div class="flex items-center gap-4">
+                            <span class="text-4xl" aria-hidden="true">🎙️</span>
+                            <div>
+                                <h2 class="text-2xl md:text-3xl font-bold">Joe Rogan Experience</h2>
+                                <p class="text-sm md:text-base opacity-90 mt-1">Long-form Conversations</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-8 h-8 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 md:p-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                <!-- Card 1 -->
+                                <article class="podcast-card bg-gradient-to-br from-slate-50 to-gray-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-slate-300" onclick="window.location.href='jre_2252_wesley_huff.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">📜</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        JRE #2252: Wesley Huff
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Biblical scholar and Christian apologist discusses ancient manuscripts, biblical scholarship, and historical evidence.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-full">Faith</span>
+                                        <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+
+                                <!-- Card 2 -->
+                                <article class="podcast-card bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-violet-300" onclick="window.location.href='jre_2345_roman_roman_yampolskiy.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">🤖</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        JRE #2345: Roman Yampolskiy
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        AI safety expert warns about artificial intelligence risks and potential existential threats to humanity.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-violet-600 bg-violet-100 px-3 py-1 rounded-full">Technology</span>
+                                        <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+
+                                <!-- Card 3 -->
+                                <article class="podcast-card bg-gradient-to-br from-sky-50 to-blue-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-sky-300" onclick="window.location.href='jre_2398_francis_foster_konstantin_kisin.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">🇬🇧</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        JRE #2398: Francis Foster & Konstantin Kisin
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        British perspective on free speech, social media impacts, UK politics, AI development, and global issues.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-sky-600 bg-sky-100 px-3 py-1 rounded-full">Politics</span>
+                                        <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lex Fridman -->
+            <div class="accordion-wrapper mb-8 podcast-category" data-categories="technology">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="accordion-header w-full text-left bg-gradient-to-r from-gray-800 to-slate-800 text-white p-6 md:p-8 flex items-center justify-between hover:from-gray-900 hover:to-slate-900 transition-all" aria-expanded="false">
+                        <div class="flex items-center gap-4">
+                            <span class="text-4xl" aria-hidden="true">🤖</span>
+                            <div>
+                                <h2 class="text-2xl md:text-3xl font-bold">Lex Fridman</h2>
+                                <p class="text-sm md:text-base opacity-90 mt-1">AI, Technology & Philosophy</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-8 h-8 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 md:p-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Card 1 -->
+                                <article class="podcast-card bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-indigo-300" onclick="window.location.href='lex_fridman_dave_plummer_479.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">💻</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        Dave Plummer: From TRS-80 to Task Manager
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Interactive exploration of a legendary programmer's journey through autism, Microsoft, and creating software used by billions.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full">Technology</span>
+                                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diary of a CEO -->
+            <div class="accordion-wrapper mb-8 podcast-category" data-categories="psychology">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="accordion-header w-full text-left bg-gradient-to-r from-yellow-600 to-orange-600 text-white p-6 md:p-8 flex items-center justify-between hover:from-yellow-700 hover:to-orange-700 transition-all" aria-expanded="false">
+                        <div class="flex items-center gap-4">
+                            <span class="text-4xl" aria-hidden="true">💼</span>
+                            <div>
+                                <h2 class="text-2xl md:text-3xl font-bold">Diary of a CEO</h2>
+                                <p class="text-sm md:text-base opacity-90 mt-1">Business & Personal Growth</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-8 h-8 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 md:p-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Card 1 -->
+                                <article class="podcast-card bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-green-300" onclick="window.location.href='doac-nischa-shah.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">💰</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        Nischa Shah: The 65-20-15 Rule to Financial Freedom
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Blueprint to building wealth and passive income through the proven 65-20-15 financial framework.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-green-600 bg-green-100 px-3 py-1 rounded-full">Finance</span>
+                                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Melissa Dougherty -->
+            <div class="accordion-wrapper mb-8 podcast-category" data-categories="faith">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="accordion-header w-full text-left bg-gradient-to-r from-pink-600 to-rose-600 text-white p-6 md:p-8 flex items-center justify-between hover:from-pink-700 hover:to-rose-700 transition-all" aria-expanded="false">
+                        <div class="flex items-center gap-4">
+                            <span class="text-4xl" aria-hidden="true">🏰</span>
+                            <div>
+                                <h2 class="text-2xl md:text-3xl font-bold">Melissa Dougherty</h2>
+                                <p class="text-sm md:text-base opacity-90 mt-1">Faith & Culture Analysis</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-8 h-8 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 md:p-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Card 1 -->
+                                <article class="podcast-card bg-gradient-to-br from-red-50 to-pink-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-red-300" onclick="window.location.href='melissa_dougherty_robert_h_schuller2.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">🏰</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        Robert Schuller & The Movement That Rebranded Church
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Analysis of Robert Schuller's profound impact on modern church movements and the rebranding of Christianity.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-red-600 bg-red-100 px-3 py-1 rounded-full">Faith</span>
+                                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+
+                                <!-- Card 2 -->
+                                <article class="podcast-card bg-gradient-to-br from-fuchsia-50 to-purple-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-fuchsia-300" onclick="window.location.href='melissa_dougherty_i_am_affirmation.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">🎯</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        The Truth About "I AM" Affirmations
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Understanding the origins, theological implications, and biblical response to the "I AM" affirmation movement.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-fuchsia-600 bg-fuchsia-100 px-3 py-1 rounded-full">Theology</span>
+                                        <svg class="w-6 h-6 text-fuchsia-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mike Winger -->
+            <div class="accordion-wrapper mb-8 podcast-category" data-categories="faith">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="accordion-header w-full text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-6 md:p-8 flex items-center justify-between hover:from-orange-700 hover:to-red-700 transition-all" aria-expanded="false">
+                        <div class="flex items-center gap-4">
+                            <span class="text-4xl" aria-hidden="true">🚨</span>
+                            <div>
+                                <h2 class="text-2xl md:text-3xl font-bold">Mike Winger</h2>
+                                <p class="text-sm md:text-base opacity-90 mt-1">Biblical Teaching & Discernment</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-icon w-8 h-8 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 md:p-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Card 1 -->
+                                <article class="podcast-card bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-orange-300" onclick="window.location.href='mike_winger_spiritual_abuse.html'" tabindex="0" role="button">
+                                    <div class="text-5xl mb-4" aria-hidden="true">🚨</div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 leading-tight">
+                                        Understanding Spiritual Abuse
+                                    </h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        Insights on recognizing patterns and addressing spiritual abuse in religious contexts with biblical wisdom.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                                        <span class="text-sm font-semibold text-orange-600 bg-orange-100 px-3 py-1 rounded-full">Faith</span>
+                                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative bg-gradient-to-r from-purple-900 to-indigo-900 text-white py-12 px-4">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="text-4xl mb-4" aria-hidden="true">🎧</div>
+            <p class="text-xl mb-6 font-light">Learning from voices that inspire and educate</p>
+            <div class="flex justify-center gap-6 mb-8 text-3xl" aria-hidden="true">
+                <span class="pulse-icon">🧠</span>
+                <span class="pulse-icon" style="animation-delay: 0.5s;">🎙️</span>
+                <span class="pulse-icon" style="animation-delay: 1s;">📚</span>
+                <span class="pulse-icon" style="animation-delay: 1.5s;">💡</span>
+                <span class="pulse-icon" style="animation-delay: 2s;">🎯</span>
+            </div>
+            <a href="../index.html" class="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 px-6 py-3 rounded-full transition-all no-print">
+                ← Back to Home
+            </a>
+            <p class="mt-8 text-sm opacity-75">Updated 18 Nov 2025</p>
+        </div>
+    </footer>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge" role="contentinfo">
+        <p class="text-gray-700 leading-relaxed">
+            Generated by LLM with supervision by 
+            <a href="../index.html" class="text-purple-600 hover:text-purple-800 font-semibold underline">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html" class="text-purple-600 hover:text-purple-800 font-semibold underline">MIT License</a>
+        </p>
+    </div>
+
     <script>
-        // Accordion functionality for podcast channels
+        // Header Background Carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.bg-slide');
+        
+        function rotateSlides() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(rotateSlides, 5000);
+
+        // Accordion Toggle
         function toggleAccordion(header) {
             const content = header.nextElementSibling;
-            const icon = header.querySelector('.accordion-toggle');
+            const icon = header.querySelector('.accordion-icon');
+            const isExpanded = header.getAttribute('aria-expanded') === 'true';
             
-            // Close all other accordion items
-            document.querySelectorAll('.accordion-content').forEach(item => {
-                if (item !== content) {
-                    item.classList.remove('active');
-                    item.previousElementSibling.classList.remove('active');
-                    item.previousElementSibling.querySelector('.accordion-toggle').textContent = '▼';
-                }
-            });
-            
-            // Toggle current item
+            // Toggle current accordion
             content.classList.toggle('active');
-            header.classList.toggle('active');
-            icon.textContent = content.classList.contains('active') ? '▲' : '▼';
+            icon.classList.toggle('rotate-180');
+            header.setAttribute('aria-expanded', !isExpanded);
         }
 
-        // Add click functionality to podcast cards
-        document.addEventListener('DOMContentLoaded', function() {
-            const podcastCards = document.querySelectorAll('.podcast-card');
-            podcastCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const link = this.getAttribute('data-link');
-                    if (link) {
-                        window.location.href = link;
+        // Filter Functionality
+        function filterPodcasts(category) {
+            const categories = document.querySelectorAll('.podcast-category');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update button states
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-purple-600', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+            });
+            
+            const activeBtn = document.querySelector(`[data-filter="${category}"]`);
+            activeBtn.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+            activeBtn.classList.add('active', 'bg-purple-600', 'text-white');
+            
+            // Filter categories
+            categories.forEach(cat => {
+                if (category === 'all') {
+                    cat.style.display = 'block';
+                } else {
+                    const cats = cat.getAttribute('data-categories');
+                    if (cats.includes(category)) {
+                        cat.style.display = 'block';
+                    } else {
+                        cat.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Initialize first filter button as active
+        document.querySelector('[data-filter="all"]').classList.add('active', 'bg-purple-600', 'text-white');
+
+        // Scroll to Random Podcast
+        function scrollToRandom() {
+            const cards = document.querySelectorAll('.podcast-card');
+            const randomCard = cards[Math.floor(Math.random() * cards.length)];
+            randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            randomCard.focus();
+        }
+
+        // Tooltip Functions
+        function showTooltip(term, definition) {
+            const tooltip = document.getElementById('tooltip');
+            const content = document.getElementById('tooltip-content');
+            content.innerHTML = `<strong>${term}:</strong> ${definition}`;
+            tooltip.classList.add('show');
+        }
+
+        function hideTooltip() {
+            document.getElementById('tooltip').classList.remove('show');
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hideTooltip();
+            }
+        });
+
+        // Lazy Load Images (if any are added later)
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
                     }
                 });
+            });
+
+            document.querySelectorAll('img.lazy').forEach(img => imageObserver.observe(img));
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Accessibility: Allow Enter key on cards
+        document.querySelectorAll('.podcast-card').forEach(card => {
+            card.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    card.click();
+                }
+            });
+        });
+
+        // Accessibility: Allow Enter key on accordion headers
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    header.click();
+                }
             });
         });
     </script>
