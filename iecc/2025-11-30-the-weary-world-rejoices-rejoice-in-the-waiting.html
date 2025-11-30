@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Weary World Rejoices : Rejoice in the Waiting | Island ECC Sermon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --advent-purple: #4a1a4a;
+            --advent-gold: #d4af37;
+            --advent-cream: #f8f6f0;
+            --advent-navy: #1a2a4a;
+            --text-primary: #2a2a2a;
+            --text-secondary: #5a5a5a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            background: var(--advent-cream);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .header-section {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--advent-purple) 0%, var(--advent-navy) 100%);
+        }
+
+        .background-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            animation: kenBurns 20s infinite;
+        }
+
+        .background-image.active {
+            opacity: 0.3;
+        }
+
+        @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-2%, -2%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(74, 26, 74, 0.7) 0%, rgba(26, 42, 74, 0.85) 100%);
+            z-index: 2;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .advent-candle {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            position: relative;
+            animation: flicker 3s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2.5rem;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--advent-gold);
+            color: var(--advent-navy);
+            border-color: var(--advent-gold);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--advent-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--advent-navy);
+            transform: translateY(-2px);
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs-container {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tabs-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 140px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: rgba(74, 26, 74, 0.05);
+        }
+
+        .tab.active {
+            border-bottom-color: var(--advent-purple);
+            color: var(--advent-purple);
+            background: rgba(74, 26, 74, 0.05);
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .tab-content {
+            display: block;
+            min-height: 50vh;
+            scroll-margin-top: 70px;
+            padding-bottom: 4rem;
+            border-bottom: 1px solid rgba(74, 26, 74, 0.1);
+        }
+
+        .tab-content:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scripture-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--advent-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .scripture-reference {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--advent-purple);
+            margin-bottom: 1rem;
+        }
+
+        .scripture-text {
+            font-style: italic;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .soundbite-card {
+            background: linear-gradient(135deg, var(--advent-purple) 0%, var(--advent-navy) 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .soundbite-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 120px;
+            font-family: 'Cormorant Garamond', serif;
+            opacity: 0.2;
+        }
+
+        .soundbite-title {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .soundbite-description {
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--advent-purple), var(--advent-gold));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 0.5rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--advent-gold);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--advent-purple);
+        }
+
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--advent-purple);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            max-width: 300px;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .attribution-full a {
+            color: var(--advent-purple);
+            text-decoration: underline;
+        }
+
+        .reflection-prompt {
+            background: rgba(74, 26, 74, 0.05);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--advent-purple);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--advent-purple);
+        }
+
+        .prose p {
+            margin-bottom: 1.25rem;
+        }
+
+        .prose strong {
+            color: var(--advent-purple);
+            font-weight: 600;
+        }
+
+        .emoji-accent {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-section {
+                min-height: 70vh;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .tab {
+                min-width: 100px;
+                padding: 0.875rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                display: flex;
+                justify-content: center;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+                position: relative;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .timeline-item::before {
+                left: -2.5rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header-section">
+        <div class="background-carousel">
+            <div class="background-image active" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxyYWRpYWxHcmFkaWVudCBpZD0iZyIgY3g9IjUwJSIgY3k9IjUwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRhMWE0YSIgc3RvcC1vcGFjaXR5PSIwLjgiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxYTJhNGEiIHN0b3Atb3BhY2l0eT0iMSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=');"></div>
+            <div class="background-image" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJhMWE0YSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFhMmE1YSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=');"></div>
+            <div class="background-image" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM0YTFhNGEiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxYTJhNGEiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2cpIi8+PC9zdmc+');"></div>
+        </div>
+        <div class="overlay"></div>
+        <div class="header-content">
+            <div class="advent-candle">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="85" rx="15" ry="8" fill="#d4af37" opacity="0.3"/>
+                    <rect x="42" y="40" width="16" height="50" rx="2" fill="#8b4513"/>
+                    <ellipse cx="50" cy="40" rx="8" ry="4" fill="#6b3410"/>
+                    <path d="M 45 25 Q 50 15 55 25" fill="#ffa500" opacity="0.8"/>
+                    <path d="M 47 20 Q 50 12 53 20" fill="#ffff00"/>
+                </svg>
+            </div>
+            <p style="font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.9; margin-bottom: 0.75rem;">First Sunday of Advent</p>
+            <h1 style="font-size: 3.5rem; margin-bottom: 1rem; font-weight: 700;">The Weary World Rejoices: Rejoice in the Waiting</h1>
+            <p style="font-size: 1.15rem; opacity: 0.95; margin-bottom: 0.5rem;">30 November 2025 | Pastor Rick</p>
+            <p style="font-size: 1rem; opacity: 0.85;">Island ECC</p>
+            <div class="header-buttons">
+                <a href="https://www.youtube.com/watch?v=uTaZUfTbj7o" target="_blank" class="btn btn-primary">
+                    <span>▶</span> Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <span>📖</span> View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="tabs-container">
+            <div class="tab active" data-tab="overview">Overview</div>
+            <div class="tab" data-tab="main-sermon">Main Sermon</div>
+            <div class="tab" data-tab="bible-verses">Bible Verses</div>
+            <div class="tab" data-tab="soundbites">Six Soundbites</div>
+            <div class="tab" data-tab="application">Application</div>
+            <div class="tab" data-tab="reflection">Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-section">
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content">
+            <h2 class="section-title"><span class="emoji-accent">🕯️</span>Overview</h2>
+            <div class="scripture-card">
+                <p style="font-size: 1.15rem; line-height: 1.8;">Pastor Rick explores the profound theme of waiting during Advent, drawing parallels between the ancient Israelites' centuries-long wait for the Messiah and our modern struggles with patience. Through the story of Mary's humble acceptance of God's plan and practical wisdom about rejoicing in difficult seasons, he invites us to transform our weariness into worship by understanding God's sovereignty, keeping eternity in view, and remembering whose we are as beloved children of God.</p>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); margin-top: 2rem;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--advent-purple);">Key Themes</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div>
+                        <p style="font-weight: 600; color: var(--advent-purple); margin-bottom: 0.5rem;">⏳ The Challenge of Waiting</p>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary);">We hate waiting, yet Advent calls us to prepare and wait for Christmas</p>
+                    </div>
+                    <div>
+                        <p style="font-weight: 600; color: var(--advent-purple); margin-bottom: 0.5rem;">👑 God's Sovereignty</p>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary);">Trusting in God's unchanging nature and perfect timing</p>
+                    </div>
+                    <div>
+                        <p style="font-weight: 600; color: var(--advent-purple); margin-bottom: 0.5rem;">🎄 Mary's Example</p>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary);">Humble acceptance despite social cost and personal difficulty</p>
+                    </div>
+                    <div>
+                        <p style="font-weight: 600; color: var(--advent-purple); margin-bottom: 0.5rem;">💫 Rejoicing in Waiting</p>
+                        <p style="font-size: 0.95rem; color: var(--text-secondary);">Finding joy rooted in spiritual reality, not circumstances</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="main-sermon" class="tab-content">
+            <h2 class="section-title"><span class="emoji-accent">📜</span>Main Sermon</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--advent-purple);">The Season of Advent</h3>
+                    <div class="prose">
+                        <p>This is the first Sunday of Advent, the easiest season in the Christian calendar to understand: four Sundays before Christmas. Advent is the season when we prepare for and wait for Christmas, a time when our weary world can rejoice as we move toward celebrating Christ's birth. The purpose of Advent is to prepare us for Christmas and to help us wait expectantly.</p>
+                        <p>But there's a problem: we hate waiting. Whether it's a late MTR train, a delayed flight, or waiting for someone who's late to a reservation, waiting frustrates us. Yet waiting is exactly what Advent calls us to do.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--advent-purple);">Israel's Long Wait</h3>
+                    <div class="prose">
+                        <p>Christmas represents the culmination of the Israelite people's waiting for the Messiah. Their history was marked by periods of waiting: waiting for deliverance from Egyptian slavery, grumbling during their forty years in the desert, crying out during the time of the kings, and lamenting through the prophets. The prophet Habakkuk captured this struggle perfectly when he asked God, "How long, Lord, must I call for help? You do not listen."</p>
+                        <p>After the Old Testament prophets, there were 400 years of silence from God. The Israelites waited and waited. Then, unexpectedly, angels appeared to shepherds proclaiming, "Do not be afraid. I bring you good news that will cause great joy for all the people. Today in the town of David a Savior has been born to you; he is the Messiah, the Lord."</p>
+                        <p>God's timetable is not the same as ours, yet His timing is always perfect.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--advent-purple);">Mary's Humble Yes</h3>
+                    <div class="prose">
+                        <p>At the heart of this story is a young virgin named Mary. God chose her to conceive and bear the Messiah through divine intervention. When the angel told her this impossible news, she didn't argue, she simply asked, "How will this be?" After receiving God's explanation, she responded with remarkable humility: "My soul glorifies the Lord, and my spirit rejoices in God my Savior, for he has been mindful of the humble state of his servant."</p>
+                        <p>Mary understood something crucial: even though her name would be blessed through generations, the credit belonged entirely to God. "The mighty one has done great things for me. Holy is his name."</p>
+                        <p>We must understand the social cost Mary faced. In her culture, virginity was a badge of honor and moral faithfulness. When people saw she was pregnant and asked about the father, what could she say? "God did this through divine conception"? Most would have thought she'd lost her mind. There was no way society would understand. Yet Mary accepted this hard road, willing to let God work through her despite the personal cost.</p>
+                        <p>Her pregnancy wasn't easy. She had to travel approximately 90 miles (145 kilometers) from Nazareth to Bethlehem while in late-term pregnancy. That's like walking from TST in Hong Kong to Guangzhou City, or from southern Los Angeles to San Diego. We have no details about that difficult journey, only that Joseph helped her along the way.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--advent-purple);">The Reality of Childbirth</h3>
+                    <div class="prose">
+                        <p>Pastor Rick shared a personal story about his wife Jane's labor with their son David. He had been playing softball, called to check on her, and she said everything was fine. So he went to the pub with his teammates. When he finally got home, her water had broken and she was ready to give birth. In his panic to get to the hospital, he faced arguments about parking, rushed paperwork, and barely made it to the delivery room.</p>
+                        <p>The point of sharing this story is twofold: First, we have no idea how difficult the journey and delivery were for Mary and Joseph. We only know the highlights at each end. This was an awful, weary time for these two young people bringing forth the person of Jesus. Second, the waiting for birth serves as an analogy for understanding the difficulty of all waiting. Women especially know the agony, pain, and exhausting wait that comes with carrying and delivering a child.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--advent-purple);">The Many Forms of Waiting</h3>
+                    <div class="prose">
+                        <p>Today, we face many different kinds of waiting. Some in our congregation are waiting for solutions after the devastating typhoon in Hong Kong. Others may be waiting for a wedding, enduring the discipline of abstinence. Some are waiting for a painful divorce to finalize, dealing with the financial and legal complexities. People wait for medical test results, for healing after treatment, for financial provision, for job changes, for their difficult boss to leave, or simply for any employment during a season of unemployment.</p>
+                        <p>Whatever we're waiting for, whether big or small, there are principles in Scripture and insights from human understanding that can help us be more positive during the wait. These principles help us rejoice in the waiting, even in our weary world.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="bible-verses" class="tab-content">
+            <h2 class="section-title"><span class="emoji-accent">📖</span>Scripture References</h2>
+            
+            <div class="scripture-card">
+                <p class="scripture-reference">Isaiah 40:31 (NIV)</p>
+                <p class="scripture-text">"Those who wait for the Lord will renew their strength. They will soar on wings like eagles. They will run and not grow weary. They will walk and not faint."</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">Habakkuk 3:16-19 (NIV)</p>
+                <p class="scripture-text">"I heard and my heart pounded, my lips quivered at the sound; decay crept into my bones, and my legs trembled. Yet I will wait patiently for the day of calamity to come on the nation invading us. Though the fig tree does not bud and there are no grapes on the vines, though the olive crop fails and the fields produce no food, though there are no sheep in the pen and no cattle in the stalls, yet I will rejoice in the Lord, I will be joyful in God my Savior. The Sovereign Lord is my strength; he makes my feet like the feet of a deer, he enables me to tread on the heights."</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">Luke 2:10-11 (NIV)</p>
+                <p class="scripture-text">"But the angel said to them, 'Do not be afraid. I bring you good news that will cause great joy for all the people. Today in the town of David a Savior has been born to you; he is the Messiah, the Lord.'"</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">Luke 1:46-49 (NIV) - Mary's Magnificat</p>
+                <p class="scripture-text">"And Mary said: 'My soul glorifies the Lord and my spirit rejoices in God my Savior, for he has been mindful of the humble state of his servant. From now on all generations will call me blessed, for the Mighty One has done great things for me—holy is his name.'"</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">2 Corinthians 4:16-18 (NIV)</p>
+                <p class="scripture-text">"Therefore we do not lose heart. Though outwardly we are wasting away, yet inwardly we are being renewed day by day. For our light and momentary troubles are achieving for us an eternal glory that far outweighs them all. So we fix our eyes not on what is seen, but on what is unseen, since what is seen is temporary, but what is unseen is eternal."</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">Revelation 21:3-4 (NIV)</p>
+                <p class="scripture-text">"And I heard a loud voice from the throne saying, 'Look! God's dwelling place is now among the people, and he will dwell with them. They will be his people, and God himself will be with them and be their God. He will wipe every tear from their eyes. There will be no more death or mourning or crying or pain, for the old order of things has passed away.'"</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">Philippians 2:3-4 (NIV)</p>
+                <p class="scripture-text">"Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves, not looking to your own interests but each of you to the interests of the others."</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">Lamentations 3:19-24 (NIV)</p>
+                <p class="scripture-text">"I remember my affliction and my wandering, the bitterness and the gall. I well remember them, and my soul is downcast within me. Yet this I call to mind and therefore I have hope: Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness. I say to myself, 'The Lord is my portion; therefore I will wait for him.'"</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">Numbers 11:4-6 (NIV) - Israelites Grumbling</p>
+                <p class="scripture-text">"The rabble with them began to crave other food, and again the Israelites started wailing and said, 'If only we had meat to eat! We remember the fish we ate in Egypt at no cost—also the cucumbers, melons, leeks, onions and garlic. But now we have lost our appetite; we never see anything but this manna!'"</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">Psalm 130:5-6 (NIV) - David's Waiting</p>
+                <p class="scripture-text">"I wait for the Lord, my whole being waits, and in his word I put my hope. I wait for the Lord more than watchmen wait for the morning, more than watchmen wait for the morning."</p>
+            </div>
+
+            <div class="scripture-card">
+                <p class="scripture-reference">Habakkuk 1:2-3 (NIV)</p>
+                <p class="scripture-text">"How long, Lord, must I call for help, but you do not listen? Or cry out to you, 'Violence!' but you do not save? Why do you make me look at injustice? Why do you tolerate wrongdoing? Destruction and violence are before me; there is strife, and conflict abounds."</p>
+            </div>
+        </div>
+
+        <!-- Six Soundbites Tab -->
+        <div id="soundbites" class="tab-content">
+            <h2 class="section-title"><span class="emoji-accent">💡</span>Six Ways to Rejoice in the Waiting</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.05rem; color: var(--text-secondary);">These soundbites are founded on Christian principles and help us move from where we are to where God is, transforming our perspective during seasons of waiting.</p>
+
+            <div class="soundbite-card">
+                <h3 class="soundbite-title">1. Keep the End in View</h3>
+                <p class="soundbite-description">When we keep the end in view, we maintain perspective that what we're doing is worthwhile. For believers, this means keeping eternity in view. Our light and momentary troubles are achieving an eternal glory that far outweighs them all. Whatever we're waiting for, whatever difficulty we face, these are light and momentary compared to eternal glory. Fixing our eyes not on what is seen but what is unseen—since what is seen is temporary but what is unseen is eternal—helps us endure any waiting with hope.</p>
+            </div>
+
+            <div class="soundbite-card">
+                <h3 class="soundbite-title">2. Reframe Your Timetable</h3>
+                <p class="soundbite-description">Sometimes we need to adjust our expectations about timing. Pastor Rick shared how he learned to reframe his experience in hospital waiting rooms. Instead of anxiously watching the number system, growing frustrated at the wait, he reframed the time as an opportunity to be with his wife. The wait became a gift rather than a burden. When we stop fixating on our preferred timeline and accept the present moment, we can find peace and even joy in the waiting itself.</p>
+            </div>
+
+            <div class="soundbite-card">
+                <h3 class="soundbite-title">3. Lament Hard Realities to God</h3>
+                <p class="soundbite-description">As believers, we're entitled to acknowledge hard realities and voice them to God. Lamenting doesn't mean complaining to others endlessly; it means bringing our honest struggles directly to God. The book of Lamentations models this: "My endurance is gone... I remember my affliction and my soul is downcast within me. Yet this I call to mind and therefore I have hope." When we lament to God, He either reminds us He understands our pain or shows us perspectives we're missing. This practice builds our belief in God's character and helps us persevere.</p>
+            </div>
+
+            <div class="soundbite-card">
+                <h3 class="soundbite-title">4. Search for Blessings</h3>
+                <p class="soundbite-description">Even in difficult seasons, we can find unexpected gifts. Pastor Rick shared how when his wife was recovering from a stroke and couldn't do crossword puzzles alone anymore, helping her became a daily blessing that brought them closer together. Sometimes the search for blessings requires intentionality, but those small discoveries of goodness can sustain us through long waits and bring more joy to our present circumstances.</p>
+            </div>
+
+            <div class="soundbite-card">
+                <h3 class="soundbite-title">5. Connect with Love</h3>
+                <p class="soundbite-description">This isn't just about receiving God's love (though that's vital), but about actively giving love to others. There's a paradoxical truth: when we unselfishly help others, our own spirits improve. Scripture tells us to value others above ourselves, looking not only to our own interests but to the interests of others. Hong Kong has demonstrated this beautifully in response to recent tragedy—people connecting with strangers out of love. This outward focus, this active compassion, lifts our own hearts even as we wait through our own difficulties.</p>
+            </div>
+
+            <div class="soundbite-card">
+                <h3 class="soundbite-title">6. Know Whose You Are</h3>
+                <p class="soundbite-description">This isn't about knowing who you are (your identity) or who God is (His character), though both matter. It's about knowing whose you are—understanding your belonging. You are adopted and welcomed into God's loving family. You are beloved by Jesus Christ Himself. Mary understood this profoundly when she said, "The Sovereign Lord is my strength." When we remember whose we are, that we belong to God and Christ, it transforms our waiting from endurance into worship. Worship changes us—it doesn't change God, but it moves us from where we are to where God is, giving us His perspective on our circumstances.</p>
+            </div>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <h2 class="section-title"><span class="emoji-accent">🌱</span>Application for Today</h2>
+            
+            <div class="reflection-prompt">
+                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--advent-purple);">What Are You Waiting For?</h3>
+                <p style="margin-bottom: 1rem;">All of us are waiting for something. Consider these common areas of waiting that people in our congregation might be experiencing:</p>
+                <ul style="list-style-position: inside; color: var(--text-secondary); line-height: 1.9;">
+                    <li>Relief and solutions for those affected by the recent typhoon devastation</li>
+                    <li>A wedding day to arrive after a long engagement</li>
+                    <li>Finalization of a necessary but painful divorce</li>
+                    <li>Medical test results or healing after treatment</li>
+                    <li>Financial provision for a specific need</li>
+                    <li>A job change or waiting for difficult leadership to change</li>
+                    <li>Completion of studies that will open new career opportunities</li>
+                    <li>Employment during a season of job searching</li>
+                </ul>
+                <p style="margin-top: 1rem; font-style: italic;">Whatever you're waiting for, big or small, the principles from this sermon can help you be more positive in that waiting and learn to rejoice even in the midst of difficulty.</p>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); margin-bottom: 2rem;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--advent-purple);">This Advent Season</h3>
+                <p style="margin-bottom: 1rem;">Advent is a time to wait and prepare for Christmas with purpose. Use this season intentionally:</p>
+                <div class="prose">
+                    <p><strong>Center on Christ:</strong> Like the church practiced through communion in this service, make Jesus the centerplace of your church community, your personal life, and certainly your Christmas celebration.</p>
+                    <p><strong>Practice Waiting with Worship:</strong> Instead of letting waiting frustrate you, let it become an opportunity for worship. As Martin Radford said, "Worship changes us. It doesn't change God. Rejoicing moves us from where we are to where God is."</p>
+                    <p><strong>Choose One Soundbite:</strong> Select one of the six ways to rejoice in waiting that resonates most with your current situation. Practice it intentionally throughout Advent.</p>
+                    <p><strong>Remember Mary's Example:</strong> When facing difficult circumstances, recall how Mary humbly accepted God's plan despite the social cost and personal hardship, trusting in God's sovereignty and goodness.</p>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(74, 26, 74, 0.05) 0%, rgba(26, 42, 74, 0.05) 100%); padding: 2rem; border-radius: 12px; border-left: 4px solid var(--advent-gold);">
+                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--advent-purple);">A Prayer for Advent Waiting</h3>
+                <p style="font-style: italic; line-height: 1.8; color: var(--text-secondary);">
+                    "God, I thank You that we can think about how we can in our weary world rejoice. I thank You that we can also think about how we can rejoice in the waiting. Be with us today. We thank You for being with us, and we thank You for this time we can share together in celebration, in worship, and in communion. I pray this in the precious, present name of Christ. Amen."
+                </p>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <h2 class="section-title"><span class="emoji-accent">🙏</span>Personal Reflection</h2>
+            
+            <div class="reflection-prompt">
+                <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Examine Your Heart</h3>
+                <p style="margin-bottom: 1rem;">Take time to honestly reflect on these questions:</p>
+                <ol style="list-style-position: inside; color: var(--text-secondary); line-height: 2;">
+                    <li>What am I currently waiting for? How has this waiting affected my spirit?</li>
+                    <li>How do I typically respond when forced to wait? Do I grumble like the Israelites in the desert, or do I seek God like David and Habakkuk?</li>
+                    <li>Can I identify ways God has been at work even during past seasons of waiting?</li>
+                    <li>Which of the six soundbites speaks most directly to my current situation?</li>
+                    <li>Am I keeping the end—eternity—in view, or am I fixated only on my immediate circumstances?</li>
+                </ol>
+            </div>
+
+            <div class="reflection-prompt">
+                <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Deepen Your Understanding</h3>
+                <p style="margin-bottom: 1rem;">Consider these questions about God's character and your relationship with Him:</p>
+                <ol style="list-style-position: inside; color: var(--text-secondary); line-height: 2;">
+                    <li>Do I truly believe in God's sovereignty—that He is in control even when I don't understand His timing?</li>
+                    <li>How does understanding God's unchanging nature and goodness help me trust Him in my waiting?</li>
+                    <li>Like Mary, am I willing to accept God's plan even when it's costly, difficult, or misunderstood by others?</li>
+                    <li>What does it mean to me personally that I am "beloved by Jesus Christ" and "adopted into God's loving family"?</li>
+                    <li>How might my life look different if I truly knew—deep in my bones—whose I am?</li>
+                </ol>
+            </div>
+
+            <div class="reflection-prompt">
+                <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Commit to Action</h3>
+                <p style="margin-bottom: 1rem;">Move from reflection to transformation:</p>
+                <ol style="list-style-position: inside; color: var(--text-secondary); line-height: 2;">
+                    <li>Choose one specific way you will practice rejoicing in your current season of waiting this week.</li>
+                    <li>Identify one blessing you can search for in your present circumstances, however small.</li>
+                    <li>Find one person or cause you can connect with in active love, even while dealing with your own difficulties.</li>
+                    <li>Schedule time this Advent to lament honestly to God about your hard realities, then listen for His response.</li>
+                    <li>Write down a reminder of whose you are and place it somewhere you'll see it daily during Advent.</li>
+                </ol>
+            </div>
+
+            <div style="background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); margin-top: 2rem; text-align: center;">
+                <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--advent-purple); margin-bottom: 1rem; font-style: italic;">
+                    "A thrill of hope, the weary world rejoices,<br>For yonder breaks a new and glorious morn."
+                </p>
+                <p style="font-size: 0.95rem; color: var(--text-secondary);">
+                    May this Advent season transform your waiting into worship, your weariness into wonder, and your present struggles into perspective as you anticipate the celebration of Christ's birth.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short" onclick="toggleAttribution()">ℹ️</div>
+        <div class="attribution-full" id="attributionFull">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const stickyTabs = document.querySelector('.sticky-tabs');
+        let isScrollingProgrammatically = false;
+
+        // Click handler for tabs - scroll to section
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                const targetSection = document.getElementById(tabId);
+                
+                if (targetSection) {
+                    isScrollingProgrammatically = true;
+                    const offsetTop = targetSection.offsetTop - stickyTabs.offsetHeight - 10;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    
+                    // Reset flag after scroll animation
+                    setTimeout(() => {
+                        isScrollingProgrammatically = false;
+                    }, 1000);
+                }
+            });
+        });
+
+        // Scroll spy functionality
+        function updateActiveTab() {
+            if (isScrollingProgrammatically) return;
+            
+            const scrollPosition = window.scrollY + stickyTabs.offsetHeight + 100;
+            
+            let currentSection = null;
+            tabContents.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    currentSection = section;
+                }
+            });
+            
+            if (currentSection) {
+                const currentId = currentSection.getAttribute('id');
+                tabs.forEach(tab => {
+                    if (tab.getAttribute('data-tab') === currentId) {
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        // Scroll tab into view if needed (for mobile horizontal scroll)
+                        tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }
+                });
+            }
+        }
+
+        // Throttle scroll event for better performance
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (scrollTimeout) {
+                window.cancelAnimationFrame(scrollTimeout);
+            }
+            scrollTimeout = window.requestAnimationFrame(() => {
+                updateActiveTab();
+            });
+        });
+
+        // Initial check on page load
+        updateActiveTab();
+
+        // Background carousel
+        const backgrounds = document.querySelectorAll('.background-image');
+        let currentBg = 0;
+
+        function rotateBackground() {
+            backgrounds[currentBg].classList.remove('active');
+            currentBg = (currentBg + 1) % backgrounds.length;
+            backgrounds[currentBg].classList.add('active');
+        }
+
+        setInterval(rotateBackground, 6000);
+
+        // Attribution toggle for desktop
+        function toggleAttribution() {
+            const full = document.getElementById('attributionFull');
+            const short = document.querySelector('.attribution-short');
+            
+            if (full.style.display === 'block') {
+                full.style.display = 'none';
+                short.style.display = 'flex';
+            } else {
+                full.style.display = 'block';
+                short.style.display = 'none';
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                const currentTab = document.querySelector('.tab.active');
+                const nextTab = currentTab.nextElementSibling;
+                if (nextTab) nextTab.click();
+            } else if (e.key === 'ArrowLeft') {
+                const currentTab = document.querySelector('.tab.active');
+                const prevTab = currentTab.previousElementSibling;
+                if (prevTab) prevTab.click();
+            }
+        });
+
+        // Mobile attribution display
+        if (window.innerWidth <= 768) {
+            document.getElementById('attributionFull').style.display = 'block';
+            document.querySelector('.attribution-short').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

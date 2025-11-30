@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turning Tides: Not-So-Righteous, Righteous Anger | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --ocean-deep: #1a2332;
+            --ocean-mid: #2d4a6b;
+            --ocean-surface: #4a7ba7;
+            --foam-white: #e8f4f8;
+            --storm-red: #c44536;
+            --sand-gold: #d4a574;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, var(--ocean-deep), var(--ocean-mid));
+            color: var(--foam-white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+        }
+        
+        /* Animated Wave Background */
+        .wave-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 200px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 Q300,0 600,60 T1200,60 L1200,120 L0,120 Z' fill='%234a7ba7'/%3E%3C/svg%3E") repeat-x;
+            animation: wave 15s linear infinite;
+        }
+        
+        .wave:nth-child(2) {
+            bottom: 10px;
+            opacity: 0.5;
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Header Styles */
+        header {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(26, 35, 50, 0.9), rgba(45, 74, 107, 0.85)),
+                        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='1' fill='%23e8f4f8' opacity='0.3'/%3E%3C/svg%3E");
+            border-bottom: 4px solid var(--storm-red);
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(26, 35, 50, 0.7) 100%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+        
+        .header-content h1 {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            letter-spacing: -0.02em;
+        }
+        
+        .header-meta {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: var(--storm-red);
+            color: white;
+            box-shadow: 0 4px 12px rgba(196, 69, 54, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: #a33828;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(196, 69, 54, 0.6);
+        }
+        
+        .btn-secondary {
+            background: rgba(232, 244, 248, 0.1);
+            color: var(--foam-white);
+            border: 2px solid var(--foam-white);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(232, 244, 248, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Sticky Navigation */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 35, 50, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(232, 244, 248, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--ocean-surface) transparent;
+        }
+        
+        .nav-tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .nav-tabs::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .nav-tabs::-webkit-scrollbar-thumb {
+            background: var(--ocean-surface);
+            border-radius: 2px;
+        }
+        
+        .nav-tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            color: rgba(232, 244, 248, 0.7);
+        }
+        
+        .nav-tab:hover {
+            background: rgba(74, 123, 167, 0.1);
+            color: var(--foam-white);
+        }
+        
+        .nav-tab.active {
+            border-bottom-color: var(--storm-red);
+            color: var(--foam-white);
+            background: rgba(74, 123, 167, 0.15);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-card {
+            background: rgba(45, 74, 107, 0.3);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(232, 244, 248, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+        
+        .content-card h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            color: var(--sand-gold);
+        }
+        
+        .content-card h3 {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--foam-white);
+        }
+        
+        .content-card p {
+            margin-bottom: 1.25rem;
+            opacity: 0.95;
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--storm-red);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            opacity: 0.9;
+            background: rgba(196, 69, 54, 0.1);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* Accordion for Reflection Questions */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(232, 244, 248, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(45, 74, 107, 0.2);
+        }
+        
+        .accordion-header {
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: rgba(74, 123, 167, 0.2);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.25rem;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+        
+        .accordion-body {
+            padding: 1.25rem;
+            border-top: 1px solid rgba(232, 244, 248, 0.1);
+        }
+        
+        /* Timeline for Sermon Structure */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--storm-red), var(--ocean-surface));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.25rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--storm-red);
+            border: 3px solid var(--ocean-deep);
+        }
+        
+        .timeline-item h3 {
+            margin-top: 0;
+            color: var(--sand-gold);
+        }
+        
+        /* Masonry Grid for Bible Verses */
+        .verse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .verse-card {
+            background: rgba(45, 74, 107, 0.3);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--sand-gold);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .verse-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .verse-reference {
+            font-weight: 600;
+            color: var(--sand-gold);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .verse-text {
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+        
+        /* Floating Tooltip */
+        .tooltip-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .tooltip-trigger {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--storm-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(196, 69, 54, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .tooltip-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(196, 69, 54, 0.6);
+        }
+        
+        .tooltip-content {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 320px;
+            background: rgba(26, 35, 50, 0.98);
+            border: 1px solid rgba(232, 244, 248, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            display: none;
+        }
+        
+        .tooltip-content.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tooltip-content h4 {
+            margin-bottom: 1rem;
+            color: var(--sand-gold);
+        }
+        
+        .tooltip-content p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Attribution Badge */
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short {
+            width: 40px;
+            height: 40px;
+            background: rgba(45, 74, 107, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.25rem;
+            border: 1px solid rgba(232, 244, 248, 0.2);
+        }
+        
+        .attribution-full {
+            display: none;
+            background: rgba(26, 35, 50, 0.95);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(232, 244, 248, 0.2);
+            font-size: 0.85rem;
+            max-width: 300px;
+        }
+        
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+        
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+        
+        .attribution a {
+            color: var(--sand-gold);
+            text-decoration: none;
+        }
+        
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-tab {
+                padding: 0.875rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .content-card {
+                padding: 1.5rem;
+            }
+            
+            .timeline {
+                padding-left: 1.5rem;
+            }
+            
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+            
+            .verse-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tooltip-content {
+                width: 280px;
+                right: -10px;
+            }
+            
+            .attribution {
+                position: static;
+                margin: 2rem auto;
+                width: fit-content;
+            }
+            
+            .attribution-short {
+                display: none;
+            }
+            
+            .attribution-full {
+                display: block;
+                text-align: center;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Infographic Styles */
+        .infographic {
+            width: 100%;
+            max-width: 1000px;
+            margin: 2.5rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(232, 244, 248, 0.2);
+        }
+        
+        .infographic img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Print Styles */
+        @media print {
+            .wave-container, .sticky-nav, .tooltip-container, .attribution, .header-buttons {
+                display: none;
+            }
+            
+            header {
+                min-height: auto;
+                page-break-after: always;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+            
+            .accordion-content {
+                max-height: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Wave Background -->
+    <div class="wave-container">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1>🌊 Turning Tides: Not-So-Righteous, Righteous Anger</h1>
+            <div class="header-meta">
+                <p>📅 23 November 2025 | 🎤 Pastor Kevin | 🏛️ Island ECC</p>
+            </div>
+            <p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.9;">
+                When Jonah watched Nineveh repent, he became furious—not because God showed mercy, but because his worldview demanded their destruction. This final chapter reveals how our "righteous" anger often masks selfish desires, preventing us from seeing people as God does: worthy of compassion, even when they threaten everything we hold dear.
+            </p>
+            <div class="header-buttons">
+                <a href="https://www.youtube.com/watch?v=SBq0gRtRaZU" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="../index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav">
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-tab="overview">📖 Overview</div>
+            <div class="nav-tab" data-tab="sermon">⛵ Main Sermon</div>
+            <div class="nav-tab" data-tab="verses">📜 Bible Verses</div>
+            <div class="nav-tab" data-tab="context">🏛️ Historical Context</div>
+            <div class="nav-tab" data-tab="application">💡 Application</div>
+            <div class="nav-tab" data-tab="reflection">🤔 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="content-card">
+                <h2>📖 Sermon Overview</h2>
+                <p><strong>Speaker:</strong> Pastor Kevin</p>
+                <p><strong>Date:</strong> 23 November 2025</p>
+                <p><strong>Series:</strong> Turning Tides (Jonah)</p>
+                <p><strong>Main Passage:</strong> Jonah 4:1-11</p>
+                
+                <h3>🎯 Core Message</h3>
+                <p>Jonah's anger at God's mercy toward Nineveh exposes a universal human tendency: we disguise selfish desires as righteous indignation. When our worldview places hope in a solution that demands the destruction of "bad people," we stop seeing them as God's creation worthy of compassion. True Christianity diagnoses the problem not as any group of people, but as sin itself—requiring God's grace as the only solution.</p>
+                
+                <h3>🔑 Key Takeaways</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>Every Worldview Has Misplaced Hope</h3>
+                        <p>Whether it's political power, social justice, economic systems, or national security, every ideology diagnoses a problem and places hope in a human solution. When that solution unravels, despair follows.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Selfishness Blinds Us to People</h3>
+                        <p>Jonah couldn't see 120,000 Ninevites as individuals made in God's image because his selfish desire for Israel's security trumped compassion. Our anger often reveals we care more about our comfort than others' souls.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>God Loves People We Hate</h3>
+                        <p>The shocking ending asks: "Should I not care for Nineveh?" God's question to us today: If I love the people who hurt you, threaten you, oppose you—why can't you?</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>The Gospel Changes Everything</h3>
+                        <p>Christianity uniquely identifies sin—not any people group—as the problem, and Jesus' grace as the only solution. This truth makes compassion for enemies not just possible, but necessary.</p>
+                    </div>
+                </div>
+                
+                <div class="infographic">
+                    <img src="img/2025-11-23-infographic-1.webp" alt="Infographic: Key Takeaways from Jonah 4">
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <div class="content-card">
+                <h2>⛵ The Sermon Journey</h2>
+                
+                <h3>I. Jonah's Shocking Anger (Jonah 4:1-4)</h3>
+                <p>After an entire city repents—including the king—Jonah becomes "very angry." This isn't confusion or disappointment; it's rage. He tells God, "This is exactly why I ran to Tarshish! I knew you were gracious and compassionate, slow to anger and abounding in love."</p>
+                <blockquote>
+                    "Salvation for Nineveh meant almost certain doom for Israel. The only thing worse than bad people doing bad things is when bad people do bad things and get away with it."
+                    <br><em>— Pastor Kevin</em>
+                </blockquote>
+                <p><strong>Historical Reality:</strong> Within 40 years of Jonah's prophecy, Assyria would destroy the northern kingdom of Israel, scattering the ten tribes forever. Jonah knew the geopolitical threat. His anger wasn't irrational—it was protective of his people.</p>
+                
+                <h3>II. Every Worldview Misplaces Hope</h3>
+                <p>Pastor Kevin frames a crucial insight: every ideology tells a story with three parts:</p>
+                <ol style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                    <li><strong>What life should be</strong> (the ideal)</li>
+                    <li><strong>What knocked it off balance</strong> (the problem)</li>
+                    <li><strong>What can make it right</strong> (the solution)</li>
+                </ol>
+                <p>Examples given:</p>
+                <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                    <li><strong>Social Justice:</strong> Problem = oppression; Solution = redistribute power</li>
+                    <li><strong>Plato:</strong> Problem = weak bodies; Solution = recover virtue</li>
+                    <li><strong>Marx:</strong> Problem = unjust economics; Solution = redistribute wealth</li>
+                    <li><strong>Freud:</strong> Problem = repressed desires; Solution = remove repressive institutions</li>
+                </ul>
+                <p>Jonah's worldview: Problem = Nineveh's existence; Solution = their destruction. When God dismantled this solution, Jonah said, "It's better for me to die."</p>
+                
+                <div class="infographic">
+                    <img src="img/2025-11-23-infographic-2.webp" alt="Infographic: Every Worldview Misplaces Hope">
+                </div>
+                
+                <h3>III. God's Object Lesson: The Plant (Jonah 4:5-8)</h3>
+                <p>Jonah camps east of Nineveh, waiting—hoping—destruction might still come. God provides a plant for shade. Jonah is "very happy." The next morning, a worm destroys the plant. Then God sends a scorching east wind.</p>
+                <blockquote>
+                    "God did to Jonah what Jonah wanted God to do to Nineveh."
+                    <br><em>— Bible Commentary cited by Pastor Kevin</em>
+                </blockquote>
+                <p>The irony: Jonah was furious when God showed mercy to Nineveh, then furious when God removed mercy from him. He wanted compassion for himself, destruction for enemies.</p>
+                
+                <h3>IV. The Final Question (Jonah 4:9-11)</h3>
+                <p>God asks: "Do you have a right to be angry about the plant?"</p>
+                <p>Jonah: "Yes! Angry enough to die!"</p>
+                <p>God's response cuts to the heart:</p>
+                <blockquote>
+                    "You cared about a plant you didn't tend or make grow, that came and went overnight. Should I not care for Nineveh, with 120,000 people who cannot tell their right hand from their left—and also many animals?"
+                </blockquote>
+                <p><strong>The book ends here.</strong> No response from Jonah. No resolution. Just the question hanging in the air.</p>
+                
+                <div class="infographic">
+                    <img src="img/2025-11-23-infographic-3.webp" alt="Infographic: The Final Question">
+                </div>
+                
+                <h3>V. Why the Cliffhanger Ending?</h3>
+                <p>Pastor Kevin believes Jonah wrote this himself—because only a repentant man would publish such a self-deprecating story. He wrote it for Israel (and for us) to answer God's question:</p>
+                <p style="font-size: 1.25rem; font-weight: 600; color: var(--sand-gold); margin: 2rem 0;">
+                    "If God loves the people we hate, why can't we?"
+                </p>
+                
+                <h3>VI. The Gospel Changes Everything</h3>
+                <p>Unlike every other worldview, Christianity doesn't blame any human group for the world's problems. The problem is sin. The solution is Jesus' grace. When we grasp this:</p>
+                <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                    <li>We stop villainizing people who "aren't bad enough" to explain the world's mess</li>
+                    <li>We stop placing hope in solutions "not powerful enough" to save us</li>
+                    <li>We recognize: even our enemies need Jesus</li>
+                </ul>
+                <blockquote>
+                    "When we were still sinners, when we were God's enemies, Christ died for us. If God showed compassion to us at our worst, who are we to withhold it from others?"
+                    <br><em>— Pastor Kevin</em>
+                </blockquote>
+                
+                <h3>VII. The Challenge: Will You Go?</h3>
+                <p>God's final question to Jonah becomes His question to us:</p>
+                <p><strong>Will you go to your version of Nineveh?</strong></p>
+                <ul style="margin-left: 2rem;">
+                    <li>The people who hurt you</li>
+                    <li>The group that opposes you</li>
+                    <li>The culture that threatens you</li>
+                    <li>The individual you can't stand</li>
+                </ul>
+                <p>Will you extend the same compassion God extended to you?</p>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses" class="tab-content">
+            <div class="content-card">
+                <h2>📜 Key Scripture References</h2>
+                
+                <div class="verse-grid">
+                    <div class="verse-card">
+                        <div class="verse-reference">Jonah 4:1-3 (NIV)</div>
+                        <div class="verse-text">
+                            But to Jonah this seemed very wrong, and he became angry. He prayed to the LORD, "Isn't this what I said, LORD, when I was still at home? That is what I tried to forestall by fleeing to Tarshish. I knew that you are a gracious and compassionate God, slow to anger and abounding in love, a God who relents from sending calamity. Now, LORD, take away my life, for it is better for me to die than to live."
+                        </div>
+                    </div>
+                    
+                    <div class="verse-card">
+                        <div class="verse-reference">Jonah 4:4 (NIV)</div>
+                        <div class="verse-text">
+                            But the LORD replied, "Is it right for you to be angry?"
+                        </div>
+                    </div>
+                    
+                    <div class="verse-card">
+                        <div class="verse-reference">Jonah 4:5-8 (NIV)</div>
+                        <div class="verse-text">
+                            Jonah had gone out and sat down at a place east of the city. There he made himself a shelter, sat in its shade and waited to see what would happen to the city. Then the LORD God provided a leafy plant and made it grow up over Jonah to give shade for his head to ease his discomfort, and Jonah was very happy about the plant. But at dawn the next day God provided a worm, which chewed the plant so that it withered. When the sun rose, God provided a scorching east wind, and the sun blazed on Jonah's head so that he grew faint. He wanted to die, and said, "It would be better for me to die than to live."
+                        </div>
+                    </div>
+                    
+                    <div class="verse-card">
+                        <div class="verse-reference">Jonah 4:9-11 (NIV)</div>
+                        <div class="verse-text">
+                            But God said to Jonah, "Is it right for you to be angry about the plant?" "It is," he said. "And I'm so angry I wish I were dead." But the LORD said, "You have been concerned about this plant, though you did not tend it or make it grow. It sprang up overnight and died overnight. And should I not have concern for the great city of Nineveh, in which there are more than a hundred and twenty thousand people who cannot tell their right hand from their left—and also many animals?"
+                        </div>
+                    </div>
+                    
+                    <div class="verse-card">
+                        <div class="verse-reference">Referenced: Romans 5:8 (NIV)</div>
+                        <div class="verse-text">
+                            But God demonstrates his own love for us in this: While we were still sinners, Christ died for us.
+                        </div>
+                    </div>
+                    
+                    <div class="verse-card">
+                        <div class="verse-reference">Referenced: 2 Peter 3:9 (NIV)</div>
+                        <div class="verse-text">
+                            The Lord is not slow in keeping his promise, as some understand slowness. Instead he is patient with you, not wanting anyone to perish, but everyone to come to repentance.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historical Context Tab -->
+        <div id="context" class="tab-content">
+            <div class="content-card">
+                <h2>🏛️ Historical Context: Why Jonah's Anger Made Sense</h2>
+                
+                <h3>The Geopolitical Situation</h3>
+                <p>Jonah prophesied during the reign of Jeroboam II (793–753 BC) in the northern kingdom of Israel. At this time:</p>
+                
+                <div style="background: rgba(196, 69, 54, 0.1); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+                    <h4 style="color: var(--storm-red); margin-bottom: 1rem;">⚠️ Assyria's Threat</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Nineveh was the capital</strong> of the Assyrian Empire, which was expanding westward and northward</li>
+                        <li><strong>Known for extreme cruelty:</strong> They would destroy entire cities, impale captives, and deport populations to prevent rebellion</li>
+                        <li><strong>Israel was paying tribute</strong> to Assyria to avoid military conflict</li>
+                        <li><strong>The writing was on the wall:</strong> Assyria had Israel in its crosshairs</li>
+                    </ul>
+                </div>
+                
+                <h3>What Happened After Jonah</h3>
+                <p><strong>Only 40 years after Jonah's prophecy,</strong> in 722 BC, Assyria conquered the northern kingdom of Israel:</p>
+                <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                    <li>Every city was destroyed</li>
+                    <li>All inhabitants were deported to various parts of the empire</li>
+                    <li>The ten tribes of Israel became known as the "lost tribes" because they never meaningfully returned</li>
+                    <li>They assimilated and intermarried, losing their tribal identity forever</li>
+                </ul>
+                
+                <h3>Jonah's Dilemma</h3>
+                <p>As a prophet, Jonah could see the future. He knew:</p>
+                <blockquote>
+                    <strong>Nineveh's survival = Israel's destruction</strong>
+                </blockquote>
+                <p>This wasn't abstract theology. This was his family, his people, his nation facing annihilation. His anger at God's mercy toward Nineveh was rooted in legitimate fear for Israel's future.</p>
+                
+                <h3>Why This Matters for Us</h3>
+                <p>Jonah's anger wasn't irrational hatred. It was <strong>protective love for his own people</strong> mixed with selfishness. This is the dangerous cocktail we all face:</p>
+                <ul style="margin-left: 2rem;">
+                    <li>Wanting safety for "our people"</li>
+                    <li>Seeing enemies as threats, not souls</li>
+                    <li>Believing justice means their destruction, not their redemption</li>
+                </ul>
+                <p>God's challenge: <em>Can you care about them too?</em></p>
+            </div>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <div class="content-card">
+                <h2>💡 Practical Application</h2>
+                
+                <h3>1. Examine Your Worldview's Solution</h3>
+                <p><strong>Question to ask yourself:</strong> What do I believe would "fix the world"?</p>
+                <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                    <li>Is it a political outcome?</li>
+                    <li>Is it social equality?</li>
+                    <li>Is it the defeat of a particular group?</li>
+                    <li>Is it economic reform?</li>
+                </ul>
+                <p><strong>Warning sign:</strong> If your solution requires certain people to be destroyed, silenced, or excluded, you've misplaced your hope.</p>
+                <p><strong>Gospel truth:</strong> The only solution is Jesus' grace changing hearts—including yours.</p>
+                
+                <h3>2. Identify Your "Nineveh"</h3>
+                <p><strong>Who are the people you struggle to see with compassion?</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                    <li>Political opponents?</li>
+                    <li>A different race or culture?</li>
+                    <li>Someone who hurt you personally?</li>
+                    <li>A group that threatens your values?</li>
+                </ul>
+                <p><strong>God's question:</strong> "Should I not have concern for them?"</p>
+                <p><strong>Your response:</strong> Ask God to soften your heart. Pray for them (Matthew 5:44). Look for their humanity.</p>
+                
+                <h3>3. Check Your Anger</h3>
+                <p><strong>When you feel "righteous" anger, pause and ask:</strong></p>
+                <ol style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                    <li>Is this really about justice, or is it about my comfort/safety/pride?</li>
+                    <li>Am I angrier about sin or about how it affects me?</li>
+                    <li>Do I want their repentance or their punishment?</li>
+                </ol>
+                <blockquote>
+                    "Righteous anger wants redemption. Selfish anger wants revenge."
+                </blockquote>
+                
+                <h3>4. Extend the Compassion You've Received</h3>
+                <p><strong>Remember:</strong> You were God's enemy when Christ died for you (Romans 5:8-10).</p>
+                <p><strong>Application:</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                    <li>Don't withhold from others what God freely gave you</li>
+                    <li>Share Jesus with people you'd rather avoid</li>
+                    <li>Practice hospitality toward "the other"</li>
+                    <li>Advocate for justice without dehumanizing the oppressor</li>
+                </ul>
+                
+                <h3>5. Answer the Call: "Will You Go?"</h3>
+                <p><strong>Practical steps this week:</strong></p>
+                <ol style="margin-left: 2rem;">
+                    <li><strong>Pray</strong> for someone you dislike or fear</li>
+                    <li><strong>Serve</strong> a community you've avoided</li>
+                    <li><strong>Listen</strong> to someone with opposing views without arguing</li>
+                    <li><strong>Share your faith</strong> with someone outside your comfort zone</li>
+                    <li><strong>Give</strong> to a cause that helps "the other"</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <div class="content-card">
+                <h2>🤔 Reflection Questions</h2>
+                <p style="margin-bottom: 2rem;">Click each question to expand and explore deeper.</p>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>1. What "solution" have you placed your hope in to fix the world's problems?</span>
+                        <span class="accordion-icon">⌄</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Think about what makes you angriest in society. Is it injustice? Corruption? Immorality? Oppression? Now ask: what do I believe would solve this? Be honest—is your solution rooted in Jesus' gospel (hearts changed by grace) or in human power (laws, policies, defeat of "the enemy")?</p>
+                            <p><strong>Follow-up:</strong> How would your life change if that solution unraveled tomorrow? Would you still have hope?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>2. Who is your "Nineveh"—the person or group you struggle to see with compassion?</span>
+                        <span class="accordion-icon">⌄</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Name them specifically. Don't spiritualize this. Is it a family member? A political party? A race? A religion? Someone who wronged you? Write their name down. Then read Jonah 4:11 and replace "Nineveh" with their name: "Should I not care for [name], with all their people who need my grace?"</p>
+                            <p><strong>Challenge:</strong> Pray for them by name every day this week. Ask God to help you see them as He does.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>3. When was the last time your "righteous" anger revealed selfish desires?</span>
+                        <span class="accordion-icon">⌄</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Jonah was angry about God's mercy to Nineveh, then angry about God removing mercy from him. Recall a recent moment when you were angry at injustice or sin. Now dig deeper: were you angrier about the sin itself, or about how it affected you personally? Did you want repentance or punishment?</p>
+                            <p><strong>Reflection:</strong> How does recognizing your own selfishness change the way you approach that situation now?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>4. How does the gospel change the way you view "the other"?</span>
+                        <span class="accordion-icon">⌄</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Romans 5:8 says Christ died for you while you were still a sinner—God's enemy. If God extended grace to you at your worst, how should that shape your response to people who oppose you, hurt you, or threaten you? Does the gospel merely inform your compassion, or transform it?</p>
+                            <p><strong>Application:</strong> How would your relationships change this week if you truly believed everyone—even your enemies—deserves to hear about Jesus?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>5. God asks Jonah: "Is it right for you to be angry?" How would you answer?</span>
+                        <span class="accordion-icon">⌄</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Jonah said yes—and stayed angry. The book ends without resolution, leaving the question for us. What anger are you holding onto? Is it "right"? Or is it masking unforgiveness, bitterness, pride, or fear? God doesn't ask this to shame you—He asks to invite you into freedom.</p>
+                            <p><strong>Prayer prompt:</strong> "God, show me where my anger is righteous and where it's selfish. Give me the courage to release what I'm clutching."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Tooltip -->
+    <div class="tooltip-container">
+        <div class="tooltip-trigger">💡</div>
+        <div class="tooltip-content">
+            <h4>Key Terms</h4>
+            <p><strong>Nineveh:</strong> Capital of the Assyrian Empire, located in modern-day Iraq. Known for extreme violence and cruelty.</p>
+            <p><strong>Righteous Anger:</strong> Anger motivated by genuine concern for justice and God's holiness—not personal offense.</p>
+            <p><strong>Worldview:</strong> A comprehensive perspective on reality that shapes how we understand problems and solutions in the world.</p>
+            <p><strong>The Lost Tribes:</strong> The ten tribes of the northern kingdom of Israel, scattered by Assyria in 722 BC and never restored.</p>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.dataset.tab;
+                
+                navTabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Accordion
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all accordions
+                document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+                
+                // Open clicked accordion if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+        // Tooltip
+        const tooltipTrigger = document.querySelector('.tooltip-trigger');
+        const tooltipContent = document.querySelector('.tooltip-content');
+        
+        tooltipTrigger.addEventListener('click', () => {
+            tooltipContent.classList.toggle('active');
+        });
+        
+        // Close tooltip when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.tooltip-container')) {
+                tooltipContent.classList.remove('active');
+            }
+        });
+        
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                tooltipContent.classList.remove('active');
+            }
+        });
+        
+        // Smooth Scroll for Internal Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
