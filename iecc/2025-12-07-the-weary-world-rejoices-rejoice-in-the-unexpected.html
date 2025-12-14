@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Weary World Rejoices: Rejoice in the Unexpected | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1a365d;
+            --color-secondary: #744210;
+            --color-accent: #c05621;
+            --color-light: #f7fafc;
+            --color-muted: #718096;
+            --color-overlay: rgba(26, 54, 93, 0.85);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2d3748;
+            line-height: 1.7;
+            background: var(--color-light);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-bg.active {
+            opacity: 0.3;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(26, 54, 93, 0.7) 0%, rgba(26, 54, 93, 0.9) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 1200px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem 1.5rem;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--color-muted);
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: #f7fafc;
+            color: var(--color-primary);
+        }
+
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-accent);
+            background: #f7fafc;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .verse-card {
+            background: white;
+            border-left: 4px solid var(--color-accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .verse-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transform: translateX(4px);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--color-primary), var(--color-accent));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--color-accent);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--color-accent);
+        }
+
+        .accordion-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+            background: var(--color-light);
+        }
+
+        .accordion-header:hover {
+            background: #e2e8f0;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 1.5rem;
+        }
+
+        .accordion-content.active {
+            max-height: 5000px;
+            padding: 1.5rem;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-icon.active {
+            transform: rotate(180deg);
+        }
+
+        .quote-block {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-left: 4px solid var(--color-accent);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--color-accent);
+            opacity: 0.2;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            color: white;
+            box-shadow: 0 4px 12px rgba(192, 86, 33, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #9c4221;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(192, 86, 33, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            max-width: 50px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+        }
+
+        .attribution:hover {
+            max-width: 400px;
+            transform: translateX(-10px);
+        }
+
+        .attribution-short {
+            padding: 12px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .attribution-full {
+            padding: 1rem 1.25rem;
+            font-size: 0.875rem;
+            color: var(--color-muted);
+            line-height: 1.5;
+            display: none;
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 80vh;
+            }
+
+            .timeline {
+                padding-left: 1.5rem;
+            }
+
+            .tab {
+                min-width: 100px;
+                padding: 0.875rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .attribution {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                max-width: 100%;
+            }
+
+            .attribution:hover {
+                transform: none;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+            }
+        }
+
+        @media print {
+            .tabs-container, .btn, .attribution, .hero-bg {
+                display: none;
+            }
+
+            .tab-content {
+                display: block !important;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 2rem 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1920&q=80');" data-index="0"></div>
+        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?w=1920&q=80');" data-index="1"></div>
+        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1499728603263-13726abce5fd?w=1920&q=80');" data-index="2"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
+                The Weary World Rejoices:<br>
+                Rejoice in the Unexpected
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-200 mb-4">
+                07 Dec 2025 | Pastor Brett | Island ECC
+            </p>
+            <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                Life brings unexpected surprises that challenge our plans, but true peace comes from trusting in God's sovereignty, His perfect timing, and His constant presence through the Holy Spirit—even when circumstances don't align with our expectations.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://www.youtube.com/watch?v=r6TUk9X46aI" target="_blank" class="btn btn-primary">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    Watch Original Sermon
+                </a>
+                <a href="../index.html" class="btn btn-secondary">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs Navigation -->
+    <nav class="tabs-container">
+        <div class="tabs">
+            <button type="button" class="tab active" onclick="switchTab(0)">📖 Overview</button>
+            <button type="button" class="tab" onclick="switchTab(1)">🎤 Main Sermon</button>
+            <button type="button" class="tab" onclick="switchTab(2)">✝️ Bible Verses</button>
+            <button type="button" class="tab" onclick="switchTab(3)">💡 Application</button>
+            <button type="button" class="tab" onclick="switchTab(4)">🙏 Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto px-4 py-12">
+        
+        <!-- Overview Tab -->
+        <section class="tab-content active" id="tab-0">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">Sermon Overview 🎯</h2>
+                
+                <div class="prose prose-lg max-w-none">
+                    <p class="text-xl text-gray-700 leading-relaxed mb-6">
+                        In this Advent message, Pastor Brett explores how the first Christmas was far from the peaceful, serene scene often portrayed in Christmas carols. Through examining the unexpected disruptions faced by the shepherds, Mary, and Joseph, we learn that rejoicing always—even in unexpected circumstances—requires surrendering our need for control and trusting in God's sovereignty, presence, and perfect timing.
+                    </p>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-600 p-6 my-8">
+                        <h3 class="text-2xl font-bold text-blue-900 mb-4">Key Message 🔑</h3>
+                        <p class="text-lg text-blue-800">
+                            True peace isn't found in predictability or control, but in trusting God's character when life brings unexpected surprises. We can rejoice always because God is sovereign, His timing is perfect, and His presence through the Holy Spirit is our greatest gift.
+                        </p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-8 mb-4">Four Foundational Truths 🌟</h3>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-2">1. Control is an Illusion</h4>
+                            <p class="text-gray-700">We cannot control everything in life. While we can make plans, we must hold them loosely, submitting them to God's greater purposes. <em>"Plan in pencil"</em> knowing God may redirect.</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-2">2. Life Isn't Random</h4>
+                            <p class="text-gray-700">God is sovereign, omniscient, and omnipresent. He never sleeps or slumbers, and nothing—not even the smallest detail—escapes His notice or care.</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-2">3. God's Presence is Your Greatest Gift</h4>
+                            <p class="text-gray-700">The answer to every "how will I make it through?" is the same: the Holy Spirit. God's presence with us is more valuable than any circumstance we desire from Him.</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-2">4. Timing is Everything</h4>
+                            <p class="text-gray-700">God is never late and never early. Our disappointment often stems from timelines we've set for God, but His timing is always perfect for our growth and His glory.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Sermon Tab -->
+        <section class="tab-content" id="tab-1">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">Main Sermon Content 📜</h2>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-gray-800">The Myth of the Silent Night 🌙</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            Christmas carols paint an idealized picture of the nativity: "Silent Night, Holy Night, All is Calm, All is Bright" and "Away in a Manger" where "the cattle are lowing, the baby awakes, but little Lord Jesus, no crying he makes." But this portrayal is unrealistic.
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            The reality? The first Christmas was chaotic, disruptive, and filled with anxiety. Jesus was a real baby who likely cried when cattle mooed. The gathering was far from serene.
+                        </p>
+                        <div class="quote-block">
+                            Just like our lives aren't always peaceful and serene, neither was the first Christmas. Sometimes holidays turn up the tension with family gatherings, financial pressures, time starvation, and sleep deprivation.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-gray-800">Creating God in Our Image ⚠️</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            Pastor Brett showed a nativity scene with blonde-haired, blue-eyed Jesus—clearly not historically accurate. This illustrates a deeper problem: we often create God in our own image.
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            We place our own expectations on God:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-4">
+                            <li>What He should do</li>
+                            <li>How He should act</li>
+                            <li>How He should answer our prayers</li>
+                            <li>The timing in which prayers should be answered</li>
+                            <li>What He should care about</li>
+                        </ul>
+                        <div class="quote-block">
+                            We must submit our expectations under the understanding of who God actually is, rather than putting our expectations on Him and nursing our wounds when He doesn't fulfill them according to our timeline.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-gray-800">The Shepherds: Unexpected Invitation 🐑</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            Shepherds were the least respected profession of their day—requiring little education, given to societal underachievers, and their testimony was dismissed in court as unreliable.
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            Yet these shepherds, while doing their normal work, were visited by an angel. The glory of the Lord shone around them, and they were terrified. They experienced:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-4">
+                            <li><strong>Job disruption</strong> – Their ordinary night became extraordinary</li>
+                            <li><strong>Relocation</strong> – They had to leave their sheep to see Jesus</li>
+                            <li><strong>Insecurity</strong> – Smelly shepherds standing next to magi and kings</li>
+                        </ul>
+                        <p class="text-gray-700">
+                            They likely felt, "We don't belong. I'm an imposter. I wish I'd showered."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-gray-800">Mary: Surprise, Shame, and Future Grief 💔</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            Mary, a teenage engaged girl, received shocking news: "You will conceive and give birth to a son... He will be great and will be called the Son of the Most High."
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            After Jesus' birth, Simeon spoke words of life over them, but then added devastating prophecy to Mary: "A sword will pierce your own soul too." He spoke of Jesus' death 33 years in the future.
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            Mary carried:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-4">
+                            <li><strong>Surprise pregnancy</strong> with all the difficult conversations that followed</li>
+                            <li><strong>Undeserved shame</strong> from gossip and disbelief ("Right, an angel...")</li>
+                            <li><strong>Future grief</strong> knowing her son would die horribly</li>
+                        </ul>
+                        <div class="quote-block">
+                            Would you want to know that about your own child 33 years in advance? Mary had to carry that knowledge for three decades.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-gray-800">Joseph: Fleeing for Their Lives 🏃</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            An angel appeared to Joseph in a dream: "Get up, take the child and his mother, and escape to Egypt."
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            King Herod, worried about losing his throne, ordered all male children under three killed. Joseph had to flee immediately. He faced:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-4">
+                            <li><strong>Relocation</strong> to Egypt after already traveling so much</li>
+                            <li><strong>Financial insecurity</strong> trying to provide while on the move</li>
+                            <li><strong>Death threat</strong> from the king himself</li>
+                        </ul>
+                        <div class="quote-block">
+                            Joseph had to think: "I did not sign up for this. I just wanted to marry Mary and have a simple life." But everything changed.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-gray-800">Do You Like Surprises? 🎁</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            People are divided on surprise parties. Some love them ("I felt so loved!"), others hate them ("Don't ever surprise me!").
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            We like certain surprises:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-4">
+                            <li>Monetary surprises (extra $10,000 in the account!)</li>
+                            <li>Promotion surprises (early advancement!)</li>
+                            <li>Friendly surprises (a friend visiting unexpectedly)</li>
+                        </ul>
+                        <p class="text-gray-700 mb-4">
+                            But we don't like:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-4">
+                            <li>Health diagnoses we didn't see coming</li>
+                            <li>Relational breakups or divorce</li>
+                            <li>Being overlooked for expected promotions</li>
+                        </ul>
+                        <div class="quote-block">
+                            Whether good or bad, surprises are coming your way. You cannot predict the future or control all circumstances. Rejoicing in good circumstances is easy—but rejoicing always means rejoicing when you don't feel like it.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-gray-800">Peace vs. Predictability ☮️</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            Having peace is tested when circumstances aren't good. It's easy to have peace when everything is fantastic. But true peace is supernatural—it's not something you manufacture.
+                        </p>
+                        <div class="quote-block">
+                            Peace is not the same as predictability. Peace comes in the midst of uncertainty when we cling to faith, knowing Jesus is the rock and anchor of our soul.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-gray-800">Mary's Question: "How?" 🤔</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            When the angel told Mary about her pregnancy and Jesus' birth, she had four words: "How will this be?"
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            Maybe you've asked God the same:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-4">
+                            <li>"How am I going to make it through this?"</li>
+                            <li>"How will I ever forgive them?"</li>
+                            <li>"How will I let go of this grief, anger, rage?"</li>
+                        </ul>
+                        <p class="text-gray-700 mb-4">
+                            The angel's answer to Mary is the same answer God gives you: <strong>The Holy Spirit.</strong>
+                        </p>
+                        <div class="quote-block">
+                            You're not going to be able to do it in your own strength. But the Holy Spirit in you can. God never calls you to something He doesn't also strengthen you for.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-semibold text-gray-800">God's Perfect Timing ⏰</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            Timing is important in tennis (Pastor Brett's forehand struggles), and it's important in faith.
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            Our disappointment with God often comes from timing:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-4">
+                            <li>"I can't believe I'm still single"</li>
+                            <li>"I haven't been promoted yet"</li>
+                            <li>"God hasn't answered this prayer yet"</li>
+                            <li>"I'm not healed yet"</li>
+                        </ul>
+                        <p class="text-gray-700 mb-4">
+                            Galatians reminds us: "When the set time had fully come, God sent his Son."
+                        </p>
+                        <div class="quote-block">
+                            God is never late and never early. His timing is always perfect. When you feel anxious, recognize you may have set a timeline for God. Maybe He has something for you in the waiting—a purpose. His timing allows you to de-escalate, exhale, and trust afresh.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bible Verses Tab -->
+        <section class="tab-content" id="tab-2">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">Key Scripture References ✝️</h2>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Proverbs 19:21 (NIV)</h3>
+                    <p class="text-lg text-gray-700 italic mb-3">
+                        "Many are the plans in a person's heart, but it is the LORD's purpose that prevails."
+                    </p>
+                    <p class="text-gray-600">
+                        <strong>Context:</strong> This verse reminds us to hold our plans loosely, submitting them to God's greater purposes. We can make plans, but ultimate control belongs to God.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Psalm 121:3-4 (NIV)</h3>
+                    <p class="text-lg text-gray-700 italic mb-3">
+                        "He will not let your foot slip—he who watches over you will not slumber; indeed, he who watches over Israel will neither slumber nor sleep."
+                    </p>
+                    <p class="text-gray-600">
+                        <strong>Context:</strong> God never sleeps or becomes inattentive. You never have to wake God up or get His attention—He is always aware, always caring, always watching.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Matthew 10:29-30 (NIV)</h3>
+                    <p class="text-lg text-gray-700 italic mb-3">
+                        "Are not two sparrows sold for a penny? Yet not one of them will fall to the ground outside your Father's care. And even the very hairs of your head are all numbered."
+                    </p>
+                    <p class="text-gray-600">
+                        <strong>Context:</strong> God cares about the smallest, most insignificant details. If He notices when a cheap sparrow falls, how much more does He care about every detail of your life?
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Luke 1:34-35 (NIV)</h3>
+                    <p class="text-lg text-gray-700 italic mb-3">
+                        "'How will this be,' Mary asked the angel, 'since I am a virgin?' The angel answered, 'The Holy Spirit will come on you, and the power of the Most High will overshadow you.'"
+                    </p>
+                    <p class="text-gray-600">
+                        <strong>Context:</strong> When Mary asked "how?" God's answer was "the Holy Spirit." Whatever you're facing, the answer to your "how" is the same—God's power working in you.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Galatians 4:4-5 (NIV)</h3>
+                    <p class="text-lg text-gray-700 italic mb-3">
+                        "But when the set time had fully come, God sent his Son, born of a woman, born under the law, to redeem those under the law, that we might receive adoption to sonship."
+                    </p>
+                    <p class="text-gray-600">
+                        <strong>Context:</strong> God's timing is perfect. Jesus came at exactly the right moment in history. God's timing in your life is equally perfect—never early, never late.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Philippians 4:4 (NIV)</h3>
+                    <p class="text-lg text-gray-700 italic mb-3">
+                        "Rejoice in the Lord always. I will say it again: Rejoice!"
+                    </p>
+                    <p class="text-gray-600">
+                        <strong>Context:</strong> Paul commands us to rejoice always—not just when circumstances are good. This requires supernatural faith that trusts God's character regardless of our situation.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">2 Corinthians 5:7 (NIV)</h3>
+                    <p class="text-lg text-gray-700 italic mb-3">
+                        "For we live by faith, not by sight."
+                    </p>
+                    <p class="text-gray-600">
+                        <strong>Context:</strong> Walking by faith means trusting God's character even when circumstances don't make sense. Walking by sight is easy—anyone can do that.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Tab -->
+        <section class="tab-content" id="tab-3">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">Practical Application 💡</h2>
+
+                <div class="bg-amber-50 border-l-4 border-amber-600 p-6 mb-8">
+                    <h3 class="text-2xl font-bold text-amber-900 mb-3">Central Challenge</h3>
+                    <p class="text-lg text-amber-800">
+                        How can you learn to rejoice in unexpected circumstances by trusting God's sovereignty, presence, and timing rather than demanding predictability and control?
+                    </p>
+                </div>
+
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Four Practical Steps 👣</h3>
+
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-lg">
+                        <h4 class="text-xl font-semibold text-blue-900 mb-3">1. Plan in Pencil, Not Pen ✏️</h4>
+                        <p class="text-gray-700 mb-3">
+                            Make your plans—use your Excel spreadsheets, create your outlines—but hold them loosely. Submit every plan to God with an open hand, asking Him to redirect you as He sees fit.
+                        </p>
+                        <p class="text-gray-700 mb-3"><strong>Action Step:</strong></p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                            <li>Write down your major plans for the next 6-12 months</li>
+                            <li>For each one, pray: "God, protect me from myself. Redirect this plan if it's not Your will."</li>
+                            <li>Identify one plan you're gripping too tightly and practice releasing it to God</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-lg">
+                        <h4 class="text-xl font-semibold text-green-900 mb-3">2. Pray About Everything—Even "Small" Things 🙏</h4>
+                        <p class="text-gray-700 mb-3">
+                            God cares about sparrows falling. He knows the number of hairs on your head. Nothing is too insignificant for Him. Bring everything to Him—even your "embarrassing" prayers.
+                        </p>
+                        <p class="text-gray-700 mb-3"><strong>Action Step:</strong></p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                            <li>Start a prayer list that includes both "big" and "small" requests</li>
+                            <li>For one week, pray about every decision before making it—even mundane ones</li>
+                            <li>Notice how this practice increases your awareness of God's presence</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-6 rounded-lg">
+                        <h4 class="text-xl font-semibold text-purple-900 mb-3">3. Replace "How?" with "Holy Spirit" 🕊️</h4>
+                        <p class="text-gray-700 mb-3">
+                            When you're facing something that feels impossible, remember Mary's question and God's answer. The Holy Spirit is how you'll make it through—not your own strength.
+                        </p>
+                        <p class="text-gray-700 mb-3"><strong>Action Step:</strong></p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                            <li>Identify your current "How will I ever...?" question</li>
+                            <li>Journal about what trusting the Holy Spirit looks like in that specific situation</li>
+                            <li>Each morning this week, pray: "Holy Spirit, I need Your power today for..."</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-red-50 to-red-100 p-6 rounded-lg">
+                        <h4 class="text-xl font-semibold text-red-900 mb-3">4. Surrender Your Timeline to God's Timing ⏱️</h4>
+                        <p class="text-gray-700 mb-3">
+                            Your anxiety often reveals a timeline you've set for God. When the set time had fully come, God sent His Son—His timing is always perfect.
+                        </p>
+                        <p class="text-gray-700 mb-3"><strong>Action Step:</strong></p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                            <li>Identify one area where you're frustrated with God's timing</li>
+                            <li>Ask yourself: "What timeline have I set for God? Where did this expectation come from?"</li>
+                            <li>Practice this prayer: "God, I release my timeline. I trust Your timing is perfect, even when I don't understand it."</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Questions for Reflection 🤔</h3>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-3 ml-4">
+                        <li class="mb-2">What unexpected circumstance are you currently facing? How have you been responding to it?</li>
+                        <li class="mb-2">Where in your life are you trying to maintain control instead of trusting God?</li>
+                        <li class="mb-2">What "small" prayers have you been hesitant to bring to God? Why?</li>
+                        <li class="mb-2">Can you identify a time when God's timing was different from yours, but ultimately proved to be better?</li>
+                        <li class="mb-2">How would your emotional state change if you truly believed "God is never late and never early"?</li>
+                        <li class="mb-2">What would it look like practically to walk by faith rather than by sight in your current season?</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reflection Tab -->
+        <section class="tab-content" id="tab-4">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">Reflections & Quotes 🙏</h2>
+
+                <div class="quote-block">
+                    <p class="text-lg text-gray-800 mb-2">
+                        "Faith is the art of holding on to things in spite of your changing moods and circumstances."
+                    </p>
+                    <p class="text-sm text-gray-600">— C.S. Lewis (paraphrased)</p>
+                </div>
+
+                <div class="prose prose-lg max-w-none mb-8">
+                    <p class="text-gray-700">
+                        This quote captures the essence of what it means to rejoice always. Faith isn't a science with formulas and guarantees—it's an art that's perfected over time. It's the ability to choose to walk in faith even when your mood is terrible and your circumstances are worse. Anyone can have good faith when life is good. The test comes when the waves are tossing you around.
+                    </p>
+                </div>
+
+                <div class="quote-block">
+                    <p class="text-lg text-gray-800 mb-2">
+                        "Life with God is not immunity from all trouble, but rather the assurance that we will not be swept away by it."
+                    </p>
+                    <p class="text-sm text-gray-600">— C.S. Lewis</p>
+                </div>
+
+                <div class="prose prose-lg max-w-none mb-8">
+                    <p class="text-gray-700">
+                        Following Jesus doesn't mean life becomes easy or trouble-free. The shepherds, Mary, and Joseph all experienced tremendous disruption after encountering God's plan. But through it all, they weren't swept away. God's presence was their anchor. The promise isn't a life without storms—it's the promise that you won't drown in them.
+                    </p>
+                </div>
+
+                <div class="bg-indigo-50 border-l-4 border-indigo-600 p-6 mb-8">
+                    <h3 class="text-2xl font-bold text-indigo-900 mb-3">The Danger of Creating God in Our Image</h3>
+                    <p class="text-gray-700 mb-3">
+                        Just as nativity scenes often portray Jesus incorrectly (blonde-haired, blue-eyed), we often create a version of God that looks like what we want rather than who He actually is. We decide:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                        <li>What prayers He should answer</li>
+                        <li>When He should answer them</li>
+                        <li>What He should care about</li>
+                        <li>How He should act in our circumstances</li>
+                    </ul>
+                    <p class="text-gray-700 mt-3">
+                        When our manufactured God doesn't perform as expected, we become disappointed, disillusioned, and begin to doubt His reliability. The solution isn't to lower our expectations of God—it's to submit our expectations to the reality of who He actually is: sovereign, good, loving, and trustworthy.
+                    </p>
+                </div>
+
+                <div class="bg-teal-50 border-l-4 border-teal-600 p-6 mb-8">
+                    <h3 class="text-2xl font-bold text-teal-900 mb-3">The Gift of Disruption</h3>
+                    <p class="text-gray-700">
+                        Every biblical figure at the first Christmas experienced massive disruption to their plans. The shepherds had their night interrupted. Mary had her life trajectory completely altered. Joseph had to flee as a refugee. Yet through these disruptions, God accomplished His greatest work—bringing salvation to the world. Your disruptions may not feel like gifts, but God often grows our faith most when our plans are thwarted. The question isn't whether disruption will come, but whether you'll trust the Disruptor.
+                    </p>
+                </div>
+
+                <div class="bg-rose-50 border-l-4 border-rose-600 p-6 mb-8">
+                    <h3 class="text-2xl font-bold text-rose-900 mb-3">Peace in Uncertainty</h3>
+                    <p class="text-gray-700 mb-3">
+                        We confuse peace with predictability. We think if we can just control enough variables, we'll have peace. But true peace—the peace that surpasses understanding—comes precisely when we can't control the variables. It's supernatural. It's a gift from God through the Holy Spirit.
+                    </p>
+                    <p class="text-gray-700">
+                        Peace isn't the absence of chaos or uncertainty. Peace is knowing that Jesus is the anchor of your soul even when the ship is being tossed by waves. It's trust that runs deeper than your circumstances.
+                    </p>
+                </div>
+
+                <div class="bg-amber-50 border-l-4 border-amber-600 p-6 mb-8">
+                    <h3 class="text-2xl font-bold text-amber-900 mb-3">A Prayer for Trusting God's Timing</h3>
+                    <p class="text-gray-700 italic">
+                        "Father, I confess that I often set timelines for You and become frustrated when You don't meet them. I want control and predictability, but You're calling me to faith and trust. Help me remember that You're never late and never early. Your timing is always perfect, even when I can't see it. When anxiety rises because of waiting, help me recognize it as evidence of a timeline I've created rather than submitted to You. Give me patience. Give me peace. Give me faith that holds on in spite of my changing moods and circumstances. In Jesus' name, Amen."
+                    </p>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-6">
+                    <h3 class="text-2xl font-bold text-blue-900 mb-3">The "How" Question</h3>
+                    <p class="text-gray-700 mb-3">
+                        Mary's question to the angel—"How will this be?"—is the same question we ask God in impossible situations:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-3">
+                        <li>"How will I make it through this diagnosis?"</li>
+                        <li>"How will I ever forgive this betrayal?"</li>
+                        <li>"How will I provide for my family?"</li>
+                        <li>"How will I let go of this grief?"</li>
+                    </ul>
+                    <p class="text-gray-700">
+                        God's answer never changes: <strong>The Holy Spirit.</strong> You won't make it through in your own strength. You're not supposed to. God's power is made perfect in weakness. His Spirit provides what you lack. The "how" is always supernatural—it's God working in you to will and to act according to His good purpose.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html" class="text-blue-600 hover:underline">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html" class="text-blue-600 hover:underline">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Background image carousel
+        let currentBgIndex = 0;
+        const bgImages = document.querySelectorAll('.hero-bg');
+        
+        if (bgImages.length > 0) {
+            function rotateBackground() {
+                bgImages[currentBgIndex].classList.remove('active');
+                currentBgIndex = (currentBgIndex + 1) % bgImages.length;
+                bgImages[currentBgIndex].classList.add('active');
+            }
+            
+            bgImages[0].classList.add('active');
+            setInterval(rotateBackground, 5000);
+        }
+
+        // Tab switching
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            if (tabs.length === 0 || contents.length === 0) return;
+            if (index < 0 || index >= tabs.length) return;
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            tabs[index].classList.add('active');
+            contents[index].classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Ensure initial tab is active on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstTab = document.querySelector('.tab.active');
+            const firstContent = document.querySelector('.tab-content.active');
+            if (!firstTab || !firstContent) {
+                switchTab(0);
+            }
+        });
+
+        // Accordion toggle
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const tabs = document.querySelectorAll('.tab');
+            const activeIndex = Array.from(tabs).findIndex(tab => tab.classList.contains('active'));
+            
+            if (e.key === 'ArrowRight' && activeIndex < tabs.length - 1) {
+                switchTab(activeIndex + 1);
+            } else if (e.key === 'ArrowLeft' && activeIndex > 0) {
+                switchTab(activeIndex - 1);
+            }
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
