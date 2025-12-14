@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jensen Huang on JRE #2422 - Interactive Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #e5e5e5;
+            overflow-x: hidden;
+        }
+        
+        /* Header Background Carousel */
+        .hero-carousel {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+        }
+        
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+        
+        .carousel-image.active {
+            opacity: 1;
+            animation: kenBurns 20s ease-out infinite;
+        }
+        
+        @keyframes kenBurns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(10,10,10,0.9) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Sticky Tabs */
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .tab-button {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+        }
+        
+        .tab-button:hover {
+            background: rgba(118, 209, 0, 0.1);
+            color: #76d100;
+        }
+        
+        .tab-button.active {
+            color: #76d100;
+            border-bottom-color: #76d100;
+        }
+        
+        /* Tooltip */
+        .tooltip-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 200;
+            max-width: 300px;
+            background: #1a1a1a;
+            border: 1px solid #76d100;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            display: none;
+        }
+        
+        .tooltip-container.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .tooltip-term {
+            cursor: help;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-decoration-color: #76d100;
+            color: #76d100;
+        }
+        
+        /* Accordion */
+        .accordion-item {
+            border: 1px solid #333;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .accordion-item:hover {
+            border-color: #76d100;
+        }
+        
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background: #222;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background: #0f0f0f;
+        }
+        
+        .accordion-content.open {
+            max-height: 2000px;
+        }
+        
+        .accordion-inner {
+            padding: 1.5rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Attribution Badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 150;
+            max-width: 60px;
+            transition: max-width 0.3s ease;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .attribution-badge:hover {
+            max-width: 400px;
+        }
+        
+        .badge-icon {
+            font-size: 1.5rem;
+            display: inline-block;
+        }
+        
+        .badge-text {
+            display: none;
+            margin-left: 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .attribution-badge:hover .badge-text {
+            display: inline-block;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #76d100, #333);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding: 0 2rem;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            text-align: right;
+            padding-right: calc(50% + 2rem);
+        }
+        
+        .timeline-item:nth-child(even) {
+            text-align: left;
+            padding-left: calc(50% + 2rem);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: #76d100;
+            border: 3px solid #0a0a0a;
+            border-radius: 50%;
+            z-index: 10;
+        }
+        
+        /* Quote Cards */
+        .quote-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-left: 4px solid #76d100;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .quote-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 4rem;
+            color: #76d100;
+            opacity: 0.2;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: #76d100;
+            color: #0a0a0a;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            border: 2px solid #76d100;
+        }
+        
+        .btn-primary:hover {
+            background: transparent;
+            color: #76d100;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(118, 209, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #76d100;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            border: 2px solid #76d100;
+        }
+        
+        .btn-secondary:hover {
+            background: #76d100;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-carousel {
+                height: 80vh;
+                min-height: 500px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                padding-left: 60px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+                transform: translateX(-50%);
+            }
+            
+            .tooltip-container {
+                position: static;
+                max-width: 100%;
+                margin: 1rem;
+            }
+            
+            .attribution-badge {
+                max-width: 100%;
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+            }
+            
+            .attribution-badge .badge-text {
+                display: inline-block;
+            }
+            
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+        
+        @media print {
+            .sticky-tabs, .attribution-badge, .tooltip-container {
+                display: none;
+            }
+            
+            .accordion-content {
+                max-height: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Carousel Header -->
+    <div class="hero-carousel">
+        <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1920&h=1080&fit=crop" alt="Technology background" class="carousel-image active" loading="eager">
+
+        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1920&h=1080&fit=crop" alt="Computer chips" class="carousel-image" loading="lazy">
+
+        <img src="https://images.unsplash.com/photo-1535223289827-42f1e9919769?w=1920&h=1080&fit=crop" alt="AI neural network" class="carousel-image" loading="lazy">
+
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&h=1080&fit=crop" alt="Innovation" class="carousel-image" loading="lazy">
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">
+                Jensen Huang on JRE #2422
+            </h1>
+            <p class="text-xl md:text-2xl mb-4 text-gray-300">
+                The NVIDIA Story: From Near-Bankruptcy to AI Revolution
+            </p>
+            <p class="text-sm md:text-base mb-8 text-gray-400">
+                04 Dec 2025 • PowerfulJRE • Joe Rogan Experience
+            </p>
+            
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://www.youtube.com/watch?v=3hptKYix4X8" target="_blank" class="btn-primary">
+                    <span>▶</span> Watch Original Video
+                </a>
+                <a href="index.html" class="btn-secondary">
+                    <span>📋</span> View All Summaries
+                </a>
+                <button onclick="openShareModal()" class="btn-secondary">
+                    <span>↗</span> Share
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation Tabs -->
+    <div class="sticky-tabs">
+        <div class="flex overflow-x-auto">
+            <button class="tab-button active" onclick="switchTab('overview')">📖 Overview</button>
+            <button class="tab-button" onclick="switchTab('journey')">🚀 Jensen's Journey</button>
+            <button class="tab-button" onclick="switchTab('nvidia')">💻 NVIDIA Story</button>
+            <button class="tab-button" onclick="switchTab('ai')">🤖 AI & Future</button>
+            <button class="tab-button" onclick="switchTab('insights')">💡 Key Insights</button>
+            <button class="tab-button" onclick="switchTab('quotes')">💬 Notable Quotes</button>
+        </div>
+    </div>
+
+    <!-- Floating Tooltip -->
+    <div id="tooltip" class="tooltip-container">
+        <div class="flex justify-between items-start mb-2">
+            <h4 class="font-bold text-lg text-green-400">Term Definition</h4>
+            <button onclick="closeTooltip()" class="text-gray-400 hover:text-white">✕</button>
+        </div>
+        <p id="tooltip-content" class="text-sm text-gray-300"></p>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="max-w-6xl mx-auto px-4 py-12">
+        
+        <!-- Overview Tab -->
+        <div id="tab-overview" class="tab-content">
+            <div class="mb-12">
+                <h2 class="text-4xl font-bold mb-6 text-green-400">Episode Overview</h2>
+                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    In this extraordinary conversation, <span class="tooltip-term" data-term="Jensen Huang is the founder, president, and CEO of NVIDIA, leading the company from near-bankruptcy in the 1990s to becoming one of the world's most valuable technology companies.">Jensen Huang</span> shares the remarkable story of NVIDIA's journey from a struggling startup to the forefront of the AI revolution. From cleaning toilets at age 9 in rural Kentucky to building the <span class="tooltip-term" data-term="GPU (Graphics Processing Unit): A specialized processor originally designed for rendering graphics, now essential for AI and machine learning computations due to its parallel processing capabilities.">GPU</span> that powers modern AI, Huang reveals the mindset, decisions, and close calls that shaped his path.
+                </p>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-green-900 to-green-950 p-6 rounded-lg border border-green-700">
+                        <div class="text-4xl mb-3">🎯</div>
+                        <h3 class="font-bold text-xl mb-2">Main Theme</h3>
+                        <p class="text-sm text-gray-300">Innovation through adversity and the American Dream realized through relentless perseverance</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-900 to-green-950 p-6 rounded-lg border border-green-700">
+                        <div class="text-4xl mb-3">⏱️</div>
+                        <h3 class="font-bold text-xl mb-2">Duration</h3>
+                        <p class="text-sm text-gray-300">2+ hours of deep conversation covering tech, AI, leadership, and personal history</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-900 to-green-950 p-6 rounded-lg border border-green-700">
+                        <div class="text-4xl mb-3">🌟</div>
+                        <h3 class="font-bold text-xl mb-2">Impact</h3>
+                        <p class="text-sm text-gray-300">981K+ views revealing the human side of tech leadership and AI's future</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Topics Accordion -->
+            <div class="mb-12">
+                <h3 class="text-3xl font-bold mb-6 text-green-400">Key Discussion Topics</h3>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">🎮 The Birth of Modern Gaming & GPUs</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">
+                                Huang describes how NVIDIA pioneered the <span class="tooltip-term" data-term="GPU: Graphics Processing Unit - A specialized electronic circuit designed to rapidly process and render graphics. NVIDIA's innovation was adapting this parallel processing power for general computation.">GPU</span> by solving what was considered an impossible problem: creating a consumer-grade supercomputer for gaming. The journey from two <span class="tooltip-term" data-term="GTX 580: An early NVIDIA graphics card that became instrumental in the AI revolution. It was affordable enough for students but powerful enough to train neural networks.">GTX 580 graphics cards</span> to powering the entire AI industry.
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-400">
+                                <li>Originally focused on 3D gaming when the industry barely existed</li>
+                                <li>Partnership with Sega that nearly destroyed the company</li>
+                                <li>The revolutionary RIVA 128 chip that saved NVIDIA</li>
+                                <li>How gaming technology accidentally enabled AI breakthroughs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">🤖 AI Revolution & Future Predictions</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">
+                                A fascinating discussion on AI's trajectory, addressing fears of <span class="tooltip-term" data-term="AI Sentience: The hypothetical point where AI develops consciousness and self-awareness. Huang argues this is fundamentally different from intelligence and knowledge.">AI sentience</span>, the race for <span class="tooltip-term" data-term="AGI (Artificial General Intelligence): AI that matches or exceeds human intelligence across all domains. Huang believes progress will be gradual rather than a sudden breakthrough.">AGI</span>, and why Huang believes the future will be more gradual than apocalyptic.
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-400">
+                                <li>Why AI won't achieve consciousness (intelligence ≠ experience)</li>
+                                <li>Cybersecurity as a model for AI safety through collaboration</li>
+                                <li>The importance of energy infrastructure for AI growth</li>
+                                <li>How 90% of future knowledge will be AI-generated</li>
+                                <li>Universal Basic Income debate and job transformation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">💼 Leadership & Corporate Philosophy</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">
+                                Huang reveals his unconventional leadership approach: driven by fear of failure rather than ambition for success, working seven days a week, and maintaining a mindset of being "30 days from going out of business" despite NVIDIA's massive valuation.
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-400">
+                                <li>The importance of vulnerability in leadership</li>
+                                <li>Reading thousands of emails daily to stay alert</li>
+                                <li>Building a culture where the world's best want to work</li>
+                                <li>Why suffering and humiliation are part of innovation</li>
+                                <li>Being the longest-running tech CEO in the world</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">🌍 Technology Policy & National Security</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">
+                                Discussion of Trump administration's tech policy, particularly the "drill baby drill" energy stance that Huang credits with enabling AI infrastructure growth. Also covers military applications and defense technology partnerships.
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-400">
+                                <li>Why energy growth is essential for AI advancement</li>
+                                <li>The case for onshore manufacturing and national security</li>
+                                <li>Support for military AI applications (Anduril, Palmer Luckey)</li>
+                                <li>How NVIDIA serves every industry as early warning radar</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jensen's Journey Tab -->
+        <div id="tab-journey" class="tab-content" style="display:none;">
+            <h2 class="text-4xl font-bold mb-8 text-green-400">Jensen Huang's Journey</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Born in Taiwan 🇹🇼</h3>
+                        <p class="text-sm text-gray-400 mb-3">Early 1960s</p>
+                        <p class="text-gray-300">Born in Taiwan, moved to Thailand where his father worked as a chemical and instrumentation engineer at an oil refinery.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Sent to America at Age 9 🎒</h3>
+                        <p class="text-sm text-gray-400 mb-3">1973-1974</p>
+                        <p class="text-gray-300 mb-3">
+                            During political unrest in Thailand, parents sent Jensen and his brother to Tacoma, Washington to live with an uncle they'd never met. Enrolled at <span class="tooltip-term" data-term="Oneida Baptist Institute: A boarding school in rural Kentucky serving troubled youth and international students. Jensen lived in dorm conditions he compared to a penitentiary.">Oneida Baptist Institute</span> in Clark County, Kentucky - the poorest county in America.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"My first thought was, gosh, there are a lot of cigarette butts on the ground. A hundred percent of the kids smoked... My roommate was seventeen years old, just turned seventeen. And he was jacked... he had all this tape all over his body. Turned out he was in a knife fight."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Life in Rural Kentucky 🏫</h3>
+                        <p class="text-sm text-gray-400 mb-3">1973-1975</p>
+                        <p class="text-gray-300 mb-3">
+                            Youngest student in a tough boarding school. Cleaned toilets for 100 boys as his chore. Brother worked tobacco farms. Tried smoking at age 9, chose popsicles instead. Communicated with parents via monthly cassette tape recordings sent by mail.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"I was nine years old. I was cleaning toilets for a dorm of a hundred boys. I cleaned more bathrooms than anybody."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Parents Arrive in America 👨‍👩‍👦</h3>
+                        <p class="text-sm text-gray-400 mb-3">1975</p>
+                        <p class="text-gray-300 mb-3">
+                            Parents came to the US in their late 30s with only suitcases and pocket money. Father found job through newspaper classifieds as consulting engineer. Mother worked as a maid. Family started from absolute scratch.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"My parents are incredible... they left everything behind and all they had was their suitcase and the money that they had in their pocket when they came to the United States. This is the American dream. I'm the first generation of the American dream."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Engineering Education 🎓</h3>
+                        <p class="text-sm text-gray-400 mb-3">1980-1984</p>
+                        <p class="text-gray-300">Graduated in 1984 at the very beginning of the PC Revolution and microprocessor era - perfect timing for what would become his life's work.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">NVIDIA Founded 🚀</h3>
+                        <p class="text-sm text-gray-400 mb-3">1993</p>
+                        <p class="text-gray-300 mb-3">
+                            Co-founded NVIDIA with mission to create new type of computing for problems normal computers couldn't solve. Initial challenge: the applications didn't exist yet because the technology didn't exist. Classic chicken-and-egg problem.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"We had a mission statement for a company that has no chance of success... If we created this thing that can solve problems, you actually have to go create the problem."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">The Sega Partnership ⚡</h3>
+                        <p class="text-sm text-gray-400 mb-3">1993-1995</p>
+                        <p class="text-gray-300">
+                            Traveled to Japan, convinced Sega to partner: NVIDIA would build chip for Sega's game console in exchange for Sega porting games to PC and funding. This initial success nearly destroyed the company when their technology approach proved fundamentally flawed.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Near-Death Experience 💀</h3>
+                        <p class="text-sm text-gray-400 mb-3">1995</p>
+                        <p class="text-gray-300 mb-3">
+                            Discovered all three major technology choices were wrong: inverse vs forward texture mapping, curved vs flat surfaces, sorted vs Z-buffer architecture. Company running out of money. Had to tell Sega CEO the technology didn't work and asked to be released from contract while still needing the $5M payment.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"I was 33 years old, I still had acne... I said, Listen, I've got some bad news for you. First, the technology that we promised you doesn't work. And second, we shouldn't finish your contract... And third, even though you're gonna let me out of the contract, I still need the money. Because if you didn't give me the money, we'd vaporize overnight."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">The $5M Miracle 🙏</h3>
+                        <p class="text-sm text-gray-400 mb-3">1995</p>
+                        <p class="text-gray-300 mb-3">
+                            Sega CEO Shoichiro Irimajiri (former Honda USA CEO) invested $5M despite zero probability of return, simply because "Jensen was a young man he liked." This kept NVIDIA alive. Today that stake would be worth ~$1 trillion, but Sega sold at $300M IPO valuation.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"If you invested that $5 million in us, it is most likely to be lost. But if you didn't invest that money, we'd be out of business and we would have no chance."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Learning from Textbooks 📚</h3>
+                        <p class="text-sm text-gray-400 mb-3">1995</p>
+                        <p class="text-gray-300 mb-3">
+                            With $200 in pocket, bought three $60 Silicon Graphics textbooks. Gave them to architects: "Read that and let's go save the company." Team learned best-known methods but reimplemented from first principles, creating modern 3D graphics architecture.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">The Emulator Gamble 🎰</h3>
+                        <p class="text-sm text-gray-400 mb-3">1996-1997</p>
+                        <p class="text-gray-300 mb-3">
+                            Company down to fumes. Took half remaining cash (~$500K) to buy IKOS emulator machine - from a company going out of business. Used it to test chip design without expensive fab runs. Convinced TSMC's Morris Chang to go straight to production without testing physical chips first - unprecedented in industry.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"Nobody has ever taped out a chip that worked the first time. And nobody starts production without looking at it... But I knew that if I didn't start the production, I'd be out of business anyways."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">RIVA 128 Success 🎯</h3>
+                        <p class="text-sm text-gray-400 mb-3">1997</p>
+                        <p class="text-gray-300 mb-3">
+                            Chip worked perfectly on first production run. Revolutionary performance/cost ratio for 3D gaming. NVIDIA became fastest-growing tech company in history from $0 to $1B. The emulator methodology they developed to save the company is now standard industry practice worldwide.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"That methodology that we developed to save the company is used throughout the world today."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">The CUDA Revolution 🔬</h3>
+                        <p class="text-sm text-gray-400 mb-3">2005-2006</p>
+                        <p class="text-gray-300 mb-3">
+                            Added <span class="tooltip-term" data-term="CUDA (Compute Unified Device Architecture): NVIDIA's parallel computing platform that allows GPUs to be programmed for general-purpose processing, not just graphics. This enabled the AI revolution.">CUDA</span> to graphics chips, doubling costs with zero immediate revenue. Stock price crashed from $12B to $2-3B valuation. Board supported the vision despite market not understanding. This "wrong" decision enabled entire AI revolution 7 years later.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">AlexNet Breakthrough 🧠</h3>
+                        <p class="text-sm text-gray-400 mb-3">2012</p>
+                        <p class="text-gray-300 mb-3">
+                            Geoffrey Hinton's students (Ilya Sutskever, Alex Krizhevsky) trained AlexNet neural network using two GTX 580 graphics cards in SLI configuration - the same setup Joe Rogan used for Quake. This was the "Big Bang of modern AI" and proved NVIDIA's GPU architecture was perfect for deep learning.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"That GTX 580 SLI was the revolutionary computer that put deep learning on the map. That was 2018 and you were using it to play Quake... That was the moment. That was the big bang of modern AI."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">First DGX to OpenAI 🎁</h3>
+                        <p class="text-sm text-gray-400 mb-3">2016</p>
+                        <p class="text-gray-300 mb-3">
+                            Built DGX-1 supercomputer ($300K, cost billions to develop). Announced at GTC to complete silence - nobody wanted it. Elon Musk was only customer, for his non-profit OpenAI. Jensen personally delivered first unit to San Francisco office with Ilya Sutskever and team present.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"I had no purchase orders. Not one. Nobody wanted to buy it. Nobody wanted to be part of it. Except for Elon... I just spent a few billion dollars building this thing, cost three hundred thousand dollars and the chances of a nonprofit being able to pay for this thing is approximate zero."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">DGX Spark to Elon 📦</h3>
+                        <p class="text-sm text-gray-400 mb-3">2024-2025</p>
+                        <p class="text-gray-300">Nine years after DGX-1, delivered DGX Spark to Elon at SpaceX: same 1 petaflop performance, size of small book, $4,000 instead of $300,000. Perfect demonstration of Moore's Law on steroids.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Longest-Running Tech CEO 👑</h3>
+                        <p class="text-sm text-gray-400 mb-3">Present (33 years)</p>
+                        <p class="text-gray-300 mb-3">
+                            Still leads NVIDIA as longest-running tech CEO in the world. Works 7 days/week, every waking moment. Reads thousands of emails daily. Maintains mindset of being "30 days from going out of business" despite multi-trillion dollar valuation. Both children work at NVIDIA.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-gray-300">"I have a greater drive from not wanting to fail than the drive of wanting to succeed... I'm not ambitious... I just want to stay alive, Joe. I want the company to thrive... The feeling I'm not having this morning is no different than the feeling I had this morning when I woke up, that you're going to be out of business soon."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NVIDIA Story Tab -->
+        <div id="tab-nvidia" class="tab-content" style="display:none;">
+            <h2 class="text-4xl font-bold mb-8 text-green-400">The NVIDIA Story</h2>
+            
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-4 text-green-300">The Three Major Pivots That Changed Everything</h3>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-red-900 to-red-950 p-6 rounded-lg border border-red-700">
+                        <h4 class="font-bold text-xl mb-3">❌ Wrong Technology (1995)</h4>
+                        <p class="text-sm text-gray-300 mb-3">All three major architectural choices were backwards:</p>
+                        <ul class="text-xs text-gray-400 space-y-1">
+                            <li>• Forward vs inverse texture mapping</li>
+                            <li>• Curved surfaces vs triangles</li>
+                            <li>• Manual sorting vs Z-buffers</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-yellow-900 to-yellow-950 p-6 rounded-lg border border-yellow-700">
+                        <h4 class="font-bold text-xl mb-3">⚡ Bold Pivot (1995-1997)</h4>
+                        <p class="text-sm text-gray-300 mb-3">Learned from textbooks, bet everything on emulator, convinced TSMC to go straight to production</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-900 to-green-950 p-6 rounded-lg border border-green-700">
+                        <h4 class="font-bold text-xl mb-3">✅ RIVA 128 Success (1997)</h4>
+                        <p class="text-sm text-gray-300 mb-3">Worked perfectly first time. Became fastest-growing tech company $0→$1B. Method now industry standard.</p>
+                    </div>
+                </div>
+
+                <div class="quote-card mb-8">
+                    <p class="italic text-gray-300 text-lg mb-3">
+                        "We were the first company to start. We found ourselves essentially dead last with the wrong answer. We have to make several decisions... we know what the wrong technology is. So let's stop doing it the wrong way and let's give ourselves a chance to go figure out what the strategy is."
+                    </p>
+                    <p class="text-sm text-gray-400">— Jensen Huang on the 1995 near-death crisis</p>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-green-300">How NVIDIA Accidentally Enabled AI 🤖</h3>
+                
+                <div class="space-y-6">
+                    <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500">
+                        <h4 class="font-bold text-lg mb-3">1️⃣ Gamers Funded AI Research (1990s-2000s)</h4>
+                        <p class="text-gray-300">
+                            NVIDIA built GPUs for 3D gaming (Quake, etc.). These were actually "consumer supercomputers" using <span class="tooltip-term" data-term="Parallel Processing: Instead of doing tasks sequentially (step 1, 2, 3), NVIDIA GPUs break problems into thousands of pieces and solve them simultaneously across thousands of cores.">parallel processing</span> instead of sequential CPU computation. Gamers bought millions, funding the R&D.
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500">
+                        <h4 class="font-bold text-lg mb-3">2️⃣ CUDA Created Programmable GPUs (2005-2006)</h4>
+                        <p class="text-gray-300 mb-3">
+                            Added general-purpose computing capability to graphics chips. Cost doubled, revenue zero, stock crashed. But this made GPUs programmable for any parallel computing problem, not just graphics.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-sm">"We added this thing called CUDA to the chip. Nobody paid for it. But our cost doubled... I crushed it. Our valuation went down to like two or three billion dollars from about twelve."</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500">
+                        <h4 class="font-bold text-lg mb-3">3️⃣ Two Students Changed The World (2012)</h4>
+                        <p class="text-gray-300 mb-3">
+                            Alex Krizhevsky and Ilya Sutskever at University of Toronto used two GTX 580 gaming cards (the same SLI setup Joe Rogan used for Quake) to train <span class="tooltip-term" data-term="AlexNet: The breakthrough neural network that won the 2012 ImageNet competition, dramatically outperforming all previous computer vision algorithms and proving deep learning's potential.">AlexNet</span>. This neural network crushed 30 years of traditional computer vision research.
+                        </p>
+                        <div class="quote-card">
+                            <p class="italic text-sm">"That GTX 580 SLI was the revolutionary computer that put deep learning on the map. It was 2018 and you were using it to play Quake. That was the moment. That was the big bang of modern AI."</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500">
+                        <h4 class="font-bold text-lg mb-3">4️⃣ NVIDIA Bet Everything on AI (2012-2016)</h4>
+                        <p class="text-gray-300">
+                            Huang recognized this wasn't just computer vision - it was a "universal function approximator" that could solve any problem with input/output examples. Spent billions developing DGX systems. First customer: OpenAI (nonprofit with no money). Rest is history.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-green-300">The People Who Saved NVIDIA</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-600">
+                        <h4 class="font-bold text-xl mb-3">🇯🇵 Shoichiro Irimajiri (Sega CEO)</h4>
+                        <p class="text-sm text-gray-300 mb-3">Former Honda USA CEO. In 1995, gave NVIDIA $5M investment despite:</p>
+                        <ul class="text-xs text-gray-400 space-y-1 mb-3">
+                            <li>✗ Technology didn't work</li>
+                            <li>✗ Contract being cancelled</li>
+                            <li>✗ ~0% chance of return</li>
+                            <li>✓ "Liked Jensen as a young man"</li>
+                        </ul>
+                        <div class="text-xs text-green-400 bg-green-950 p-2 rounded">
+                            Impact: That $5M would be worth ~$1 trillion today (Sega sold at $300M IPO)
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-600">
+                        <h4 class="font-bold text-xl mb-3">🇹🇼 Morris Chang (TSMC Founder)</h4>
+                        <p class="text-sm text-gray-300 mb-3">Father of foundry industry. In 1996-97, agreed to:</p>
+                        <ul class="text-xs text-gray-400 space-y-1 mb-3">
+                            <li>✓ Go straight to production (unprecedented)</li>
+                            <li>✓ Skip physical chip testing phase</li>
+                            <li>✓ Risk capital on untested design</li>
+                            <li>✓ Trust emulator methodology (new)</li>
+                        </ul>
+                        <div class="text-xs text-green-400 bg-green-950 p-2 rounded">
+                            Impact: Enabled RIVA 128 to ship on time, revolutionized industry chip design process
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-600">
+                        <h4 class="font-bold text-xl mb-3">🧠 Geoffrey Hinton & Students</h4>
+                        <p class="text-sm text-gray-300 mb-3">U of Toronto AI lab. Invented/refined:</p>
+                        <ul class="text-xs text-gray-400 space-y-1 mb-3">
+                            <li>• Backpropagation (training method)</li>
+                            <li>• Deep learning architectures</li>
+                            <li>• AlexNet (using NVIDIA GPUs)</li>
+                            <li>• Modern AI foundation</li>
+                        </ul>
+                        <div class="text-xs text-green-400 bg-green-950 p-2 rounded">
+                            Impact: Proved GPUs were perfect for AI, created entire field of deep learning
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-600">
+                        <h4 class="font-bold text-xl mb-3">🚀 Elon Musk</h4>
+                        <p class="text-sm text-gray-300 mb-3">First DGX-1 customer when nobody else would buy:</p>
+                        <ul class="text-xs text-gray-400 space-y-1 mb-3">
+                            <li>• Only person at 2016 GTC announcement who wanted it</li>
+                            <li>• For OpenAI (non-profit, no money)</li>
+                            <li>• Also partnered on Tesla FSD computers</li>
+                            <li>• Continues to order thousands of GPUs</li>
+                        </ul>
+                        <div class="text-xs text-green-400 bg-green-950 p-2 rounded">
+                            Impact: Gave NVIDIA first AI customer when market didn't exist yet
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-6 text-green-300">Moore's Law vs NVIDIA's Law 📈</h3>
+                
+                <div class="bg-gray-900 p-8 rounded-lg border border-gray-700">
+                    <div class="grid md:grid-cols-2 gap-8 mb-6">
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 text-blue-400">📊 Moore's Law (Traditional)</h4>
+                            <ul class="space-y-2 text-sm text-gray-300">
+                                <li>• Computing doubles every ~18 months</li>
+                                <li>• Cost halves every ~18 months</li>
+                                <li>• Energy per computation halves</li>
+                                <li>• Enabled PC revolution (1984-present)</li>
+                                <li>• 10 years = 10x improvement</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 text-green-400">⚡ NVIDIA's Law (Accelerated Computing)</h4>
+                            <ul class="space-y-2 text-sm text-gray-300">
+                                <li>• <span class="tooltip-term" data-term="Accelerated Computing: NVIDIA's approach of using specialized parallel processors (GPUs) instead of general-purpose CPUs for computation-heavy tasks.">Accelerated computing</span> via parallel processing</li>
+                                <li>• <strong>100,000x improvement in 10 years</strong></li>
+                                <li>• AI computing energy will be "minuscule" in 10 years</li>
+                                <li>• "Moore's Law on energy drinks"</li>
+                                <li>• DGX-1 to DGX Spark: $300K → $4K (same performance)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="quote-card">
+                        <p class="italic text-gray-300 text-lg">
+                            "In the last 10 years, we improved the performance of computing by 100,000 times. Imagine a car over the course of 10 years it became 100,000 times faster. Or at the same speed, 100,000 times cheaper. Or at the same speed, 100,000 times less energy."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI & Future Tab -->
+        <div id="tab-ai" class="tab-content" style="display:none;">
+            <h2 class="text-4xl font-bold mb-8 text-green-400">AI & The Future</h2>
+            
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-green-300">Huang's Take: Why AI Won't Be Apocalyptic 🤖</h3>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">Intelligence ≠ Consciousness</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content open">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">
+                                Huang draws clear distinction between <span class="tooltip-term" data-term="Artificial Intelligence: The ability to perceive, recognize, understand, plan, and perform tasks based on knowledge. Different from consciousness which involves self-awareness and experience.">artificial intelligence</span> (knowledge, pattern recognition, task performance) and consciousness (experience, feelings, self-awareness).
+                            </p>
+                            <div class="quote-card mb-4">
+                                <p class="italic text-gray-300">"Consciousness is a collection of feelings, I think. Experience is a collection of feelings. I don't think interactions is experience... AI has knowledge, it has intelligence. Artificial intelligence. We don't call it artificial consciousness."</p>
+                            </div>
+                            <div class="bg-gray-800 p-4 rounded-lg">
+                                <h5 class="font-bold mb-2">Key Argument:</h5>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li>✓ AI can mimic consciousness perfectly (like fake Rolex)</li>
+                                    <li>✓ But imitation ≠ actual experience/feelings</li>
+                                    <li>✓ Dogs have consciousness, not necessarily higher intelligence</li>
+                                    <li>✓ AI may have superior intelligence without consciousness</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">Progress Will Be Gradual, Not Sudden</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">
+                                Counters the "AGI will suddenly appear" narrative. Argues we're all advancing together with AI, not watching from sidelines.
+                            </p>
+                            <div class="quote-card mb-4">
+                                <p class="italic text-gray-300">"AI is not gonna pop out of nowhere... Every single day we're getting better and smarter because we have AI. We're stepping on our own AI's shoulders. So when that AI threat comes, it's a click ahead. It's not a galaxy ahead."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">The Cybersecurity Model for AI Safety</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">
+                                Just as cybersecurity works through global collaboration despite constant attacks, AI safety will function similarly. Your AI defends against their AI.
+                            </p>
+                            <div class="quote-card mb-4">
+                                <p class="italic text-gray-300">"Your AI is conscious and my AI is conscious... maybe your AI wants to do something surprising. My AI is so smart that it won't be surprising to my AI. It's much more like cybersecurity... We all work together as one. The moment something has been breached, it is shared by everybody."</p>
+                            </div>
+                            <div class="bg-gray-800 p-4 rounded-lg">
+                                <h5 class="font-bold mb-2 text-green-400">How It Works Today:</h5>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li>• Constant cyber attacks happening right now globally</li>
+                                    <li>• Yet we're safely talking, systems functioning</li>
+                                    <li>• Cybersecurity community shares threats instantly</li>
+                                    <li>• Patches distributed globally within hours</li>
+                                    <li>• Everyone's back watching everyone's back</li>
+                                    <li>• No single company can stand alone</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">Multiple AIs = Balance of Power</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">
+                                Even if AIs were "life forms," they wouldn't all agree. Competition and disagreement = safety through balance.
+                            </p>
+                            <div class="quote-card">
+                                <p class="italic text-gray-300">"If it's like life form... all life forms don't agree. My life form is going to want to be the super life form. Now we have disagreeing life forms, we're back again to where we are."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-green-300">The Energy Challenge ⚡</h3>
+                
+                <div class="bg-gradient-to-br from-red-900 to-orange-950 p-6 rounded-lg border border-orange-700 mb-6">
+                    <h4 class="font-bold text-xl mb-3">🚨 Current Bottleneck: Energy Infrastructure</h4>
+                    <p class="text-gray-300 mb-4">
+                        Without energy growth, no industrial growth. Without industrial growth, no AI factories, chip fabs, or supercomputers. Trump's "drill baby drill" policy, according to Huang, "saved the AI industry."
+                    </p>
+                    <div class="quote-card">
+                        <p class="italic text-gray-300">"If not for his pro-growth energy policy, we would not be able to build factories for AI. We'd not be able to build chip factories. We won't surely won't be able to build supercomputer factories."</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h4 class="font-bold text-lg mb-3 text-green-400">☢️ Nuclear Solution (6-7 years)</h4>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>• Small modular reactors (hundreds of megawatts)</li>
+                            <li>• Companies become own power generators</li>
+                            <li>• Takes burden off grid</li>
+                            <li>• Can contribute surplus back to grid</li>
+                            <li>• Similar to farms having generators</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-900 p-6 rounded-lg border border-gray-700">
+                        <h4 class="font-bold text-lg mb-3 text-blue-400">📉 Efficiency Will Solve Long-Term</h4>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>• 100,000x improvement in 10 years</li>
+                            <li>• AI on phones already "fairly decent"</li>
+                            <li>• In 10 years, energy needs "minuscule"</li>
+                            <li>• Yesterday's AI = amazing (9-year-old AI future)</li>
+                            <li>• Most countries won't need frontier AI</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-green-300">The Future of Work 💼</h3>
+                
+                <div class="mb-6">
+                    <h4 class="text-xl font-bold mb-4">The Radiologist Paradox</h4>
+                    <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500">
+                        <p class="text-gray-300 mb-4">
+                            Geoffrey Hinton predicted radiologists would be obsolete in 5 years. What actually happened:
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h5 class="font-bold mb-2 text-red-400">❌ Prediction (Wrong)</h5>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• AI replaces radiologists</li>
+                                    <li>• 30M radiologists out of work</li>
+                                    <li>• Hospitals need fewer staff</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-bold mb-2 text-green-400">✓ Reality</h5>
+                                <ul class="text-sm text-gray-300 space-y-1">
+                                    <li>• Every radiologist uses AI now</li>
+                                    <li>• Number of radiologists GREW</li>
+                                    <li>• Can diagnose more patients</li>
+                                    <li>• 3D/4D analysis, never tired</li>
+                                    <li>• Hospital economics improved</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-4 bg-green-950 rounded">
+                            <p class="text-sm text-green-300">
+                                <strong>Key Insight:</strong> Job ≠ Task. Radiologists' job is diagnosing disease, not studying images. When image analysis got easier, they could serve more patients, hospitals made more money, hired MORE radiologists.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">Jobs Will Transform, Not Disappear</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="quote-card mb-4">
+                                <p class="italic text-gray-300">"What is the purpose of the lawyer? Has the purpose changed? For some chauffeurs, they could be protectors. Some people, they're part of the experience, part of the service... You have to go back to what is the purpose of a job?"</p>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-gray-800 p-4 rounded">
+                                    <h5 class="font-bold mb-2 text-red-400">If Your Job IS The Task</h5>
+                                    <p class="text-sm text-gray-300">Automation will replace you. Example: "If your job is just to chop vegetables, Cuisinart is going to replace you."</p>
+                                </div>
+                                <div class="bg-gray-800 p-4 rounded">
+                                    <h5 class="font-bold mb-2 text-green-400">If Your Job Uses The Task</h5>
+                                    <p class="text-sm text-gray-300">AI makes you more productive. Your job transforms to higher-value work. More people can be served.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">New Industries Will Emerge</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">Huang's robot example: When humanoid robots arrive (Optimus, etc.):</p>
+                            <ul class="text-sm text-gray-300 space-y-2 mb-4">
+                                <li>📦 Robot manufacturing jobs (didn't exist before)</li>
+                                <li>🔧 Robot mechanics and technicians</li>
+                                <li>👔 Robot apparel industry ("I want my robot to look different than your robot")</li>
+                                <li>🏥 Robot maintenance services</li>
+                                <li>📱 Robot accessories and upgrades</li>
+                                <li>🎓 Robot training and programming</li>
+                            </ul>
+                            <p class="text-sm text-gray-400">Just like cars created mechanics, gas stations, auto parts stores - robots will create entirely new industries we can't fully imagine yet.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4 class="font-bold text-lg">Universal Basic Income: Both Scenarios Can't Exist</h4>
+                        <span class="accordion-icon text-2xl">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p class="text-gray-300 mb-4">
+                                Huang points out logical inconsistency in UBI debate:
+                            </p>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-blue-950 p-4 rounded border border-blue-700">
+                                    <h5 class="font-bold mb-2">💰 Scenario A: Universal Wealth</h5>
+                                    <p class="text-sm text-gray-300">"So much abundance of resource that nobody needs a job and we'll all be wealthy"</p>
+                                </div>
+                                <div class="bg-purple-950 p-4 rounded border border-purple-700">
+                                    <h5 class="font-bold mb-2">💸 Scenario B: Universal Basic Income</h5>
+                                    <p class="text-sm text-gray-300">"We're gonna need universal basic income" (implies scarcity)</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 p-4 bg-gray-800 rounded">
+                                <p class="text-sm text-gray-300">
+                                    <strong>Huang's Point:</strong> "Both ideas don't exist at the same time. We're either going to be all wealthy or we're going to be all [needing UBI]. Things will probably be in the middle."
+                                </p>
+                                <p class="text-xs text-gray-400 mt-2">
+                                    Also: Wealth = abundance of resources, not just dollars. We're already "wealthy" in information (something only elites had centuries ago).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-6 text-green-300">Closing the Technology Divide 🌍</h3>
+                
+                <div class="bg-gradient-to-br from-green-900 to-green-950 p-6 rounded-lg border border-green-700">
+                    <h4 class="font-bold text-xl mb-4">Why Huang Believes AI Will Democratize Technology</h4>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex gap-4 items-start">
+                            <span class="text-3xl">✅</span>
+                            <div>
+                                <h5 class="font-bold mb-1">Easiest App in History</h5>
+                                <p class="text-sm text-gray-300">ChatGPT reached ~1 billion users practically overnight. No tool in history grew this fast.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <span class="text-3xl">✅</span>
+                            <div>
+                                <h5 class="font-bold mb-1">Self-Teaching</h5>
+                                <p class="text-sm text-gray-300">"If you don't know how to use ChatGPT, you ask ChatGPT how to use it. A Cuisinart can't do that."</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <span class="text-3xl">✅</span>
+                            <div>
+                                <h5 class="font-bold mb-1">Any Language</h5>
+                                <p class="text-sm text-gray-300">Don't speak Python or C++? Speak human in any language. AI learns your language if it doesn't know it.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <span class="text-3xl">✅</span>
+                            <div>
+                                <h5 class="font-bold mb-1">Old AI = Still Amazing</h5>
+                                <p class="text-sm text-gray-300">"In ten years, nine-year-old AI is gonna be amazing. You don't need frontier AI like we need frontier AI."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quote-card">
+                        <p class="italic text-gray-300">
+                            "I believe the technology divide will be substantially collapsed. The more vulnerable we are as a leader, the more able other people are to tell you that Jensen, that's not exactly right... If you're always right, how can you possibly pivot? Because pivoting requires you to be wrong."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Insights Tab -->
+        <div id="tab-insights" class="tab-content" style="display:none;">
+            <h2 class="text-4xl font-bold mb-8 text-green-400">Key Insights & Lessons</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-12">
+                <div class="bg-gradient-to-br from-purple-900 to-purple-950 p-6 rounded-lg border border-purple-700">
+                    <h3 class="text-xl font-bold mb-3">💡 On Leadership</h3>
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li>• Driven by fear of failure, not ambition for success</li>
+                        <li>• Works every waking moment, 7 days/week for 33 years</li>
+                        <li>• Reads thousands of emails daily to stay alert</li>
+                        <li>• Maintains "30 days from bankruptcy" mindset always</li>
+                        <li>• Vulnerability in leadership enables pivoting</li>
+                        <li>• "Don't get fired, don't get bored"</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-900 to-blue-950 p-6 rounded-lg border border-blue-700">
+                    <h3 class="text-xl font-bold mb-3">🎯 On Strategy</h3>
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li>• Focus narrowly to reject complexities</li>
+                        <li>• Build platforms, not just products</li>
+                        <li>• When wrong, admit it and pivot completely</li>
+                        <li>• Invent the market if it doesn't exist</li>
+                        <li>• First principles thinking always</li>
+                        <li>• Reassess continuously = continuous anxiety</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-red-900 to-red-950 p-6 rounded-lg border border-red-700">
+                    <h3 class="text-xl font-bold mb-3">⚡ On Crisis Management</h3>
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li>• Be radically honest about failures</li>
+                        <li>• Take bold risks when out of options</li>
+                        <li>• Relationships matter more than contracts</li>
+                        <li>• Remove all waste, work from essentials only</li>
+                        <li>• Develop methods that change the industry</li>
+                        <li>• Stay calm, think systematically</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-900 to-green-950 p-6 rounded-lg border border-green-700">
+                    <h3 class="text-xl font-bold mb-3">🚀 On Innovation</h3>
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li>• Learn best practices, reimagine from scratch</li>
+                        <li>• Hard problems worth doing if you're right people</li>
+                        <li>• Grounded belief > following trends</li>
+                        <li>• Be willing to tank stock price for long-term vision</li>
+                        <li>• Suffering is part of creating something new</li>
+                        <li>• Humiliation and disbelief are normal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-green-300">The Three Decisions That Defined NVIDIA</h3>
+                
+                <div class="space-y-6">
+                    <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-yellow-500">
+                        <h4 class="font-bold text-lg mb-3">1️⃣ Admitting Wrong Technology (1995)</h4>
+                        <p class="text-gray-300 mb-3">
+                            Instead of continuing with flawed approach, stopped everything. "We don't know what the right strategy is, but we know what the wrong technology is."
+                        </p>
+                        <div class="text-sm text-gray-400 bg-gray-800 p-3 rounded">
+                            <strong>Lesson:</strong> Pivoting requires admitting you're wrong. If you're "always right," you can't change direction.
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-yellow-500">
+                        <h4 class="font-bold text-lg mb-3">2️⃣ Investing in CUDA Despite Market Rejection (2005-06)</h4>
+                        <p class="text-gray-300 mb-3">
+                            Added programmable computing to graphics chips, doubled costs, zero revenue, crashed stock. Believed it was essential for future even though market didn't see it.
+                        </p>
+                        <div class="text-sm text-gray-400 bg-gray-800 p-3 rounded">
+                            <strong>Lesson:</strong> If you deeply believe something based on first principles, pursue it even when nobody else does. Market will catch up.
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-yellow-500">
+                        <h4 class="font-bold text-lg mb-3">3️⃣ Building DGX-1 When Nobody Wanted It (2016)</h4>
+                        <p class="text-gray-300 mb-3">
+                            Spent billions developing AI supercomputer. Announced to silence. Only customer was non-profit with no money. Delivered it anyway because future was clear.
+                        </p>
+                        <div class="text-sm text-gray-400 bg-gray-800 p-3 rounded">
+                            <strong>Lesson:</strong> Sometimes you have to create the market before customers know they need the product. Build the future you see.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-green-300">Understanding Huang's Philosophy</h3>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-600">
+                        <h4 class="font-bold text-lg mb-3 text-yellow-400">⚖️ Balance of Emotions</h4>
+                        <p class="text-sm text-gray-300 mb-3">
+                            "It's not always enthusiasm. Sometimes it's enthusiasm, sometimes it's good old-fashioned fear, and sometimes a healthy dose of frustration."
+                        </p>
+                        <p class="text-xs text-gray-400">Leadership isn't superhuman confidence. It's feeling everything intensely on behalf of everyone.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-600">
+                        <h4 class="font-bold text-lg mb-3 text-blue-400">🎯 Purpose Over Process</h4>
+                        <p class="text-sm text-gray-300 mb-3">
+                            "What is the purpose of a job? A lawyer's purpose is to help people. Studying legal documents is part of the job, not the job."
+                        </p>
+                        <p class="text-xs text-gray-400">When AI automates tasks, it reveals true purpose. Those whose job IS the task will need to evolve.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-600">
+                        <h4 class="font-bold text-lg mb-3 text-green-400">🌊 Surfing vs Predicting</h4>
+                        <p class="text-sm text-gray-300 mb-3">
+                            "You can't predict the waves. You gotta deal with the ones you have. But skill matters."
+                        </p>
+                        <p class="text-xs text-gray-400">33 years of experience = better surfing. Can't control future, but can respond with skill earned through repetition.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-6 text-green-300">The Immigrant Perspective 🌍</h3>
+                
+                <div class="bg-gradient-to-br from-blue-900 to-blue-950 p-8 rounded-lg border border-blue-700">
+                    <p class="text-lg text-gray-300 mb-6">
+                        Throughout the conversation, Huang returns to gratitude for America's opportunities. From cleaning toilets at 9 to leading a company reshaping civilization, his story embodies what many call the "American Dream" - though he lived the "American Reality."
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <h4 class="font-bold mb-3 text-blue-300">What America Gave Him:</h4>
+                            <ul class="text-sm text-gray-300 space-y-2">
+                                <li>✓ Education opportunity (no Ivy League needed)</li>
+                                <li>✓ Access to capital and risk-takers</li>
+                                <li>✓ Culture that accepts failure and pivoting</li>
+                                <li>✓ Industrial ecosystem for manufacturing</li>
+                                <li>✓ Energy infrastructure for growth</li>
+                                <li>✓ Meritocracy where ideas compete</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-3 text-blue-300">What He Brought:</h4>
+                            <ul class="text-sm text-gray-300 space-y-2">
+                                <li>✓ Work ethic from humble beginnings</li>
+                                <li>✓ No sense of entitlement</li>
+                                <li>✓ Gratitude that fuels drive</li>
+                                <li>✓ Perspective on what matters</li>
+                                <li>✓ Immigrant hunger and appreciation</li>
+                                <li>✓ Global worldview from lived experience</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="quote-card">
+                        <p class="italic text-gray-300 text-lg">
+                            "It's hard not to love this country. It's hard not to be romantic about this country. You don't have to go to Ivy League schools to succeed. This country creates opportunities, has opportunities for all of us. You do have to strive. You have to claw your way here."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quotes Tab -->
+        <div id="tab-quotes" class="tab-content" style="display:none;">
+            <h2 class="text-4xl font-bold mb-8 text-green-400">Notable Quotes</h2>
+            
+            <div class="space-y-6">
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "I have a greater drive from not wanting to fail than the drive of wanting to succeed. The world has just heard me say that out loud for a first time. But it's true. The fear of failure drives me more than the greed or whatever it is."
+                    </p>
+                    <p class="text-sm text-gray-400">— On his core motivation after 33 years as CEO</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "I'm not ambitious. I just want to stay alive, Joe. I want the company to thrive. The feeling I had this morning when I woke up is no different than every morning for 33 years: that you're going to be out of business soon."
+                    </p>
+                    <p class="text-sm text-gray-400">— On maintaining urgency despite massive success</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "We had a mission statement for a company that has no chance of success. We wanted to create a new type of computing that can solve problems that normal computers can't solve. Well, if the normal computers can't solve them, why would the application exist?"
+                    </p>
+                    <p class="text-sm text-gray-400">— On NVIDIA's impossible beginning in 1993</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "I was 33 years old, I still had acne. I told the Sega CEO: 'The technology we promised you doesn't work. We shouldn't finish your contract. And even though you're letting me out of the contract, I still need the money. Because if you didn't give me the money, we'd vaporize overnight.'"
+                    </p>
+                    <p class="text-sm text-gray-400">— The 1995 conversation that saved NVIDIA ($5M investment on failed project)</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "We don't know what the right strategy is, but we know what the wrong technology is. So let's stop doing it the wrong way and let's give ourselves a chance to go figure out what the strategy is."
+                    </p>
+                    <p class="text-sm text-gray-400">— Decision to pivot when all three core technologies proved wrong</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "Nobody has ever taped out a chip that worked the first time. And nobody starts production without looking at it. But I knew that if I didn't start the production, I'd be out of business anyways. And if I could start the production, I might have a chance."
+                    </p>
+                    <p class="text-sm text-gray-400">— Convincing TSMC's Morris Chang to go straight to production (1996-97)</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "That GTX 580 SLI was the revolutionary computer that put deep learning on the map. It was 2018 and you were using it to play Quake. That was the moment. That was the big bang of modern AI."
+                    </p>
+                    <p class="text-sm text-gray-400">— How gamers accidentally funded the AI revolution</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "I had no purchase orders. Not one. Nobody wanted to buy it. Nobody wanted to be part of it. Except for Elon. And it was for his non-profit company. All the blood drained out of my face. I just spent a few billion dollars building this thing, cost three hundred thousand dollars..."
+                    </p>
+                    <p class="text-sm text-gray-400">— Announcing DGX-1 at 2016 GTC to complete silence</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "In the last 10 years, we improved the performance of computing by 100,000 times. Imagine a car over the course of 10 years it became 100,000 times faster. Or at the same speed, 100,000 times cheaper. Or at the same speed, 100,000 times less energy."
+                    </p>
+                    <p class="text-sm text-gray-400">— On accelerated computing vs Moore's Law</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "AI is not gonna pop out of nowhere. Every single day we're getting better and smarter because we have AI. We're stepping on our own AI's shoulders. So when that AI threat comes, it's a click ahead. It's not a galaxy ahead."
+                    </p>
+                    <p class="text-sm text-gray-400">— Why AI advancement will be gradual, not sudden</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "Consciousness is a collection of feelings, I think. Experience is a collection of feelings. AI has knowledge, it has intelligence. Artificial intelligence. We don't call it artificial consciousness."
+                    </p>
+                    <p class="text-sm text-gray-400">— On why AI won't become conscious</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "If not for his pro-growth energy policy, we would not be able to build factories for AI. We'd not be able to build chip factories. We won't surely won't be able to build supercomputer factories. That saved the AI industry."
+                    </p>
+                    <p class="text-sm text-gray-400">— On Trump's "drill baby drill" policy</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "What is the purpose of a job? A lawyer's purpose is to help people. Studying legal documents, generating documents, it's part of the job, not the job. If your job is just to chop vegetables, Cuisinart is going to replace you."
+                    </p>
+                    <p class="text-sm text-gray-400">— On AI and the future of work</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "You can't predict the waves. You gotta deal with the ones you have. But skill matters. I've been doing this for 33 years. I'm the longest running tech CEO in the world."
+                    </p>
+                    <p class="text-sm text-gray-400">— On navigating uncertainty with experience</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "If you don't know how to use ChatGPT, you ask ChatGPT how to use it. No tool in history has ever had this capability. A Cuisinart, if you don't know how to use it, you're kind of screwed."
+                    </p>
+                    <p class="text-sm text-gray-400">— On AI democratizing technology access</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "My parents left everything behind and all they had was their suitcase and the money that they had in their pocket when they came to the United States. This is the American dream. I'm the first generation of the American dream."
+                    </p>
+                    <p class="text-sm text-gray-400">— Reflecting on his immigrant family's journey</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "It's hard not to love this country. It's hard not to be romantic about this country. You don't have to go to Ivy League schools to succeed. This country creates opportunities for all of us. You do have to strive. You have to claw your way here."
+                    </p>
+                    <p class="text-sm text-gray-400">— On America's opportunity and meritocracy</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "There's nothing inconsistent with being a leader and being vulnerable. The company doesn't need me to be a genius right all along, right all the time. The company wants me to succeed. The more vulnerable we are as a leader, the more able we're actually able to pivot."
+                    </p>
+                    <p class="text-sm text-gray-400">— On leadership philosophy</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "How do you stay enthusiastic? It's not always enthusiasm. Sometimes it's enthusiasm, sometimes it's good old-fashioned fear, and sometimes a healthy dose of frustration. Whatever keeps you moving. I have all the emotions. It's not just a job."
+                    </p>
+                    <p class="text-sm text-gray-400">— On the reality of long-term leadership</p>
+                </div>
+
+                <div class="quote-card">
+                    <p class="text-lg italic mb-3 text-gray-200">
+                        "People forget that part of success. Suffering is part of the journey. It's good that we pass that forward and let people know. There's long periods of suffering and loneliness and uncertainty and fear and embarrassment and humiliation."
+                    </p>
+                    <p class="text-sm text-gray-400">— On the hidden cost of innovation</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-green-400">Share This Infographic</h3>
+                <button onclick="closeShareModal()" class="text-gray-400 hover:text-white text-2xl">✕</button>
+            </div>
+            <div class="space-y-4">
+                <button onclick="shareOn('twitter')" class="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-lg transition">
+                    Share on Twitter
+                </button>
+                <button onclick="shareOn('facebook')" class="w-full bg-blue-700 hover:bg-blue-800 text-white p-3 rounded-lg transition">
+                    Share on Facebook
+                </button>
+                <button onclick="shareOn('linkedin')" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition">
+                    Share on LinkedIn
+                </button>
+                <button onclick="copyLink()" class="w-full bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-lg transition">
+                    📋 Copy Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <span class="badge-icon">ℹ️</span>
+        <span class="badge-text">
+            Generated by LLM with supervision by <a href="../index.html" class="text-green-400 hover:underline">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html" class="text-green-400 hover:underline">MIT License</a>
+        </span>
+    </div>
+
+    <script>
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-image');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 8000);
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById('tab-' + tabName).style.display = 'block';
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Scroll to top of content
+            window.scrollTo({ top: document.querySelector('.sticky-tabs').offsetTop, behavior: 'smooth' });
+        }
+
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.textContent = '+';
+            } else {
+                content.classList.add('open');
+                icon.textContent = '−';
+            }
+        }
+
+        // Tooltip functionality
+        const tooltipTerms = {
+            'Jensen Huang': 'Jensen Huang is the founder, president, and CEO of NVIDIA, leading the company from near-bankruptcy in the 1990s to becoming one of the world\'s most valuable technology companies.',
+            'GPU': 'GPU (Graphics Processing Unit): A specialized processor originally designed for rendering graphics, now essential for AI and machine learning computations due to its parallel processing capabilities.',
+            'GTX 580': 'An early NVIDIA graphics card that became instrumental in the AI revolution. It was affordable enough for students but powerful enough to train neural networks.',
+            'CUDA': 'CUDA (Compute Unified Device Architecture): NVIDIA\'s parallel computing platform that allows GPUs to be programmed for general-purpose processing, not just graphics. This enabled the AI revolution.',
+            'Oneida Baptist Institute': 'A boarding school in rural Kentucky serving troubled youth and international students. Jensen lived in dorm conditions he compared to a penitentiary.',
+            'AlexNet': 'The breakthrough neural network that won the 2012 ImageNet competition, dramatically outperforming all previous computer vision algorithms and proving deep learning\'s potential.',
+            'Parallel Processing': 'Instead of doing tasks sequentially (step 1, 2, 3), NVIDIA GPUs break problems into thousands of pieces and solve them simultaneously across thousands of cores.',
+            'AI Sentience': 'The hypothetical point where AI develops consciousness and self-awareness. Huang argues this is fundamentally different from intelligence and knowledge.',
+            'AGI': 'AGI (Artificial General Intelligence): AI that matches or exceeds human intelligence across all domains. Huang believes progress will be gradual rather than a sudden breakthrough.',
+            'Artificial Intelligence': 'The ability to perceive, recognize, understand, plan, and perform tasks based on knowledge. Different from consciousness which involves self-awareness and experience.',
+            'Accelerated Computing': 'NVIDIA\'s approach of using specialized parallel processors (GPUs) instead of general-purpose CPUs for computation-heavy tasks.'
+        };
+
+        document.querySelectorAll('.tooltip-term').forEach(term => {
+            term.addEventListener('click', function(e) {
+                e.preventDefault();
+                const termText = this.getAttribute('data-term') || this.textContent;
+                const definition = this.getAttribute('data-term') || tooltipTerms[this.textContent] || 'Definition not available.';
+                showTooltip(definition);
+            });
+        });
+
+        function showTooltip(content) {
+            const tooltip = document.getElementById('tooltip');
+            document.getElementById('tooltip-content').textContent = content;
+            tooltip.classList.add('show');
+        }
+
+        function closeTooltip() {
+            document.getElementById('tooltip').classList.remove('show');
+        }
+
+        // Modal functionality
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('show');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('show');
+        }
+
+        function shareOn(platform) {
+            const url = window.location.href;
+            const title = 'Jensen Huang on JRE #2422 - Interactive Infographic';
+            
+            let shareUrl;
+            switch(platform) {
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+                    break;
+            }
+            
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+            closeShareModal();
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copied to clipboard!');
+                closeShareModal();
+            });
+        }
+
+        // Close modal on outside click
+        document.getElementById('shareModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareModal();
+            }
+        });
+
+        // Close tooltip on outside click
+        document.addEventListener('click', function(e) {
+            const tooltip = document.getElementById('tooltip');
+            if (!tooltip.contains(e.target) && !e.target.classList.contains('tooltip-term')) {
+                closeTooltip();
+            }
+        });
+    </script>
+</body>
+</html>
