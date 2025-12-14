@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Weary World Rejoices: Choosing Joy in the Struggle | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700;900&display=swap');
+        
+        :root {
+            --primary: #8B4513;
+            --primary-light: #A0522D;
+            --secondary: #2F4F4F;
+            --accent: #DAA520;
+            --cream: #FFF8DC;
+            --sage: #8FBC8F;
+            --navy: #1a2332;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--navy);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+        }
+        
+        .display-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+        }
+        
+        /* Header Styles - Split Screen with Piano Keys Visual */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+        
+        .hero-left {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(90deg, 
+                    transparent, transparent 60px, 
+                    rgba(255,255,255,0.03) 60px, rgba(255,255,255,0.03) 70px);
+            pointer-events: none;
+        }
+        
+        .hero-right {
+            background: var(--cream);
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hero-right::before {
+            content: '🎹';
+            position: absolute;
+            font-size: 20rem;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--cream);
+        }
+        
+        .hero-right h1 {
+            color: var(--primary);
+        }
+        
+        .subtitle {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-family: 'Crimson Pro', serif;
+            font-style: italic;
+        }
+        
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .hero-right .meta-item {
+            color: var(--secondary);
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: var(--navy);
+        }
+        
+        .btn-primary:hover {
+            background: #FFD700;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(218, 165, 32, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--cream);
+            border-color: var(--cream);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--cream);
+            color: var(--primary);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-ghost:hover {
+            background: var(--primary);
+            color: var(--cream);
+        }
+        
+        /* Sticky Navigation */
+        .tabs {
+            position: sticky;
+            top: 0;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            z-index: 100;
+            padding: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tabs-container {
+            display: flex;
+            min-width: max-content;
+        }
+        
+        .tab {
+            padding: 1.25rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        .tab:hover {
+            background: rgba(139, 69, 19, 0.05);
+            color: var(--primary);
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+            background: rgba(139, 69, 19, 0.05);
+        }
+        
+        /* Content Sections */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Two Hands Visual Metaphor */
+        .two-hands-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+            padding: 3rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .hand-card {
+            padding: 2rem;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hand-left {
+            background: linear-gradient(135deg, var(--secondary) 0%, #3a5f5f 100%);
+            color: white;
+        }
+        
+        .hand-right {
+            background: linear-gradient(135deg, var(--accent) 0%, #FFD700 100%);
+            color: var(--navy);
+        }
+        
+        .hand-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .hand-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        /* Bible Verse Cards */
+        .verse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .verse-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--accent);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .verse-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .verse-reference {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .verse-text {
+            font-style: italic;
+            color: var(--secondary);
+            line-height: 1.8;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .verse-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-size: 3rem;
+            color: var(--accent);
+            opacity: 0.3;
+        }
+        
+        /* Timeline for Main Sermon */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 3rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.75rem;
+            top: 2rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px var(--accent);
+        }
+        
+        .timeline-item h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .timeline-item p {
+            color: var(--secondary);
+            line-height: 1.8;
+        }
+        
+        /* Quote Blocks */
+        .quote-block {
+            background: linear-gradient(135deg, var(--cream) 0%, #fff 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .quote-block::before {
+            content: '💬';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 3rem;
+            opacity: 0.1;
+        }
+        
+        .quote-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .quote-author {
+            font-weight: 600;
+            color: var(--primary);
+            font-style: normal;
+        }
+        
+        /* Key Points Grid */
+        .key-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .key-point {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .key-point:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .key-point-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .key-point h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        
+        .key-point p {
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
+        
+        /* Reflection Questions */
+        .reflection-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--sage);
+        }
+        
+        .reflection-card h4 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .reflection-card p {
+            color: var(--secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        /* Attribution Badge */
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short:hover {
+            transform: scale(1.1);
+        }
+        
+        .attribution-full {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 300px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+        
+        .attribution-full a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .attribution-full a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-left, .hero-right {
+                padding: 2rem;
+                min-height: 50vh;
+            }
+            
+            .two-hands-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 2rem;
+            }
+            
+            .timeline {
+                padding-left: 2rem;
+            }
+            
+            .timeline-item::before {
+                left: -2.75rem;
+            }
+            
+            .attribution {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                width: fit-content;
+            }
+            
+            .tab {
+                padding: 1rem 1.5rem;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .hero, .tabs, .attribution, .button-group {
+                display: none;
+            }
+            
+            .content-wrapper {
+                max-width: 100%;
+                padding: 1rem;
+            }
+            
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-left">
+            <div class="hero-content">
+                <h1 class="display-title">The Weary World Rejoices 🎄</h1>
+                <p class="subtitle">Choosing Joy in the Struggle</p>
+                <div class="meta">
+                    <span class="meta-item">📅 14 December 2025</span>
+                    <span class="meta-item">🎙️ Pastor Tim</span>
+                    <span class="meta-item">⛪ Island ECC</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-content">
+                <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: var(--secondary);">
+                    The Christmas season is a time when we pause and reflect on the year. But for many of us, we're just tired. We're weary because this year was hard. What if joy isn't the absence of struggle, but the presence of God in the struggle?
+                </p>
+                <div class="button-group">
+                    <a href="https://www.youtube.com/watch?v=1mVjezIbunE" target="_blank" class="btn btn-primary">
+                        ▶️ Watch Sermon
+                    </a>
+                    <a href="../index.html" class="btn btn-ghost">
+                        📋 View All Sermons
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="tabs">
+        <div class="tabs-container">
+            <div class="tab active" data-tab="overview">📖 Overview</div>
+            <div class="tab" data-tab="sermon">🎹 Main Sermon</div>
+            <div class="tab" data-tab="verses">📜 Bible Verses</div>
+            <div class="tab" data-tab="lessons">💡 Key Lessons</div>
+            <div class="tab" data-tab="application">🌱 Application</div>
+            <div class="tab" data-tab="reflection">🤔 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <main class="content-wrapper">
+        <!-- Overview Tab -->
+        <section id="overview" class="tab-content active">
+            <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 2rem;">Sermon Overview</h2>
+            
+            <div class="two-hands-section">
+                <div class="hand-card hand-left">
+                    <h3>🎹 Life is Hard</h3>
+                    <p>The daily struggles, the bills, the monotony, the pain. The low rumbling bass notes that never stop. The scandalous pregnancy, the challenging journey, the difficult birth. The waves that crash against us.</p>
+                </div>
+                <div class="hand-card hand-right">
+                    <h3>✨ God is Good</h3>
+                    <p>The celebrations, the holidays, the dancing melody. God's presence in our suffering. The hope that builds endurance. The joy we can choose even in the darkest moments.</p>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p class="quote-text">"The weary world rejoices not because suffering has disappeared, but because God appears in the suffering."</p>
+                <p class="quote-author">— Pastor Tim</p>
+            </div>
+
+            <h3 style="font-size: 2rem; color: var(--primary); margin: 3rem 0 1.5rem;">Central Theme</h3>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--secondary);">
+                Just as playing the piano requires holding two melodies at once—the bass line and the treble melody—our Christian life requires us to hold two truths simultaneously: <strong>life is hard, but God is good</strong>. We can encounter struggles and still choose joy because God enters into our pain and walks with us through it.
+            </p>
+        </section>
+
+        <!-- Main Sermon Tab -->
+        <section id="sermon" class="tab-content">
+            <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 2rem;">Main Sermon 🎹</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>🎄 The Christmas Story's Struggle</h3>
+                    <p>Mary and Joseph's journey to Jesus' birth was filled with hardship:</p>
+                    <ul style="margin: 1rem 0 0 1.5rem; color: var(--secondary); line-height: 1.8;">
+                        <li><strong>Scandalous Pregnancy:</strong> Mary was found pregnant before marriage, causing Joseph to consider divorcing her quietly (Matthew 1:18-19)</li>
+                        <li><strong>Challenging Journey:</strong> A 150km walk from Nazareth to Bethlehem while heavily pregnant—equivalent to walking from Hong Kong to Guangzhou</li>
+                        <li><strong>Difficult Birth:</strong> No room available, giving birth in a stable, placing the Savior of the world in a feeding trough</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">Yet the angel told Mary: <em>"Do not be afraid, Mary, you have found favor with God"</em> (Luke 1:30). They endured because they knew God was with them.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>🎹 The Piano Metaphor</h3>
+                    <p>Learning "Linus and Lucy" from Charlie Brown Christmas taught Pastor Tim about holding two things simultaneously. The left hand plays the low, rumbling bass—representing daily struggles, monotony, and pain. The right hand plays the bright, dancing melody—representing joy, celebration, and hope.</p>
+                    <p style="margin-top: 1rem;"><strong>Life requires us to play both hands at once.</strong> The struggles don't stop for Christmas. The bills don't pause. But God's goodness continues throughout all of it.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>😭 Permission to Grieve</h3>
+                    <p>Psalm 88 is the most depressing psalm in the Bible—and it's okay. It ends with: <em>"Darkness is my closest friend"</em> (Psalm 88:18). The psalmist offers no resolution, no turn to praise, just raw pain expressed to God.</p>
+                    <p style="margin-top: 1rem;">Even Jesus in the Garden of Gethsemane said: <em>"My soul is overwhelmed with sorrow to the point of death"</em> (Matthew 26:38).</p>
+                    <p style="margin-top: 1rem;"><strong>It's okay to go there.</strong> God doesn't just hear our praise—He hears our pain. The important thing is that we're still talking to God, even in the pit of despair.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>🔥 Trials Refine Our Faith</h3>
+                    <p>James 1:2-4 teaches us to <em>"consider it pure joy"</em> when we face trials. Not because the trials themselves are good, but because:</p>
+                    <ul style="margin: 1rem 0 0 1.5rem; color: var(--secondary); line-height: 1.8;">
+                        <li>Testing produces <strong>perseverance</strong></li>
+                        <li>Perseverance leads to <strong>maturity</strong></li>
+                        <li>Maturity makes us <strong>complete, lacking nothing</strong></li>
+                    </ul>
+                    <p style="margin-top: 1rem;">Like gold refined by fire (1 Peter 1:6-7), our struggles remove impurities and make our faith more genuine.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>🌊 Kissing the Wave</h3>
+                    <div class="quote-block">
+                        <p class="quote-text">"I've learned to kiss the wave that throws me against the rock of ages."</p>
+                        <p class="quote-author">— Charles Spurgeon</p>
+                    </div>
+                    <p>The waves of hardship are powerful and dangerous, but they push us closer to God—the everlasting Rock. We can <strong>count these trials as joy</strong> because they bring us nearer to Him.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>✅ Choose to Rejoice</h3>
+                    <p>Just as marriage requires choosing to love even when feelings fade, our faith requires <strong>choosing joy</strong> even when we don't feel like it.</p>
+                    <p style="margin-top: 1rem;">This week, when struggles hit—whether a difficult bill, bad news, or ongoing hardship—<strong>make the choice to rejoice</strong>. Not because the pain is good, but because God is with you in it, building your character and drawing you closer to Himself.</p>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p class="quote-text">"Suffering is unbearable if you aren't certain that God is for you and with you."</p>
+                <p class="quote-author">— Tim Keller, <em>Walking with God Through Pain and Suffering</em></p>
+            </div>
+        </section>
+
+        <!-- Bible Verses Tab -->
+        <section id="verses" class="tab-content">
+            <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 2rem;">Key Bible Verses 📜</h2>
+            
+            <div class="verse-grid">
+                <div class="verse-card">
+                    <div class="verse-reference">Matthew 1:18-19 (NIV)</div>
+                    <div class="verse-text">This is how the birth of Jesus the Messiah came about: His mother Mary was pledged to be married to Joseph, but before they came together, she was found to be pregnant through the Holy Spirit. Because Joseph her husband was faithful to the law, and yet did not want to expose her to public disgrace, he had in mind to divorce her quietly.</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Luke 1:30 (NIV)</div>
+                    <div class="verse-text">But the angel said to her, "Do not be afraid, Mary; you have found favor with God."</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Luke 2:4-7 (NIV)</div>
+                    <div class="verse-text">So Joseph also went up from the town of Nazareth in Galilee to Judea, to Bethlehem the town of David, because he belonged to the house and line of David. He went there to register with Mary, who was pledged to be married to him and was expecting a child. While they were there, the time came for the baby to be born, and she gave birth to her firstborn, a son. She wrapped him in cloths and placed him in a manger, because there was no guest room available for them.</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">James 1:2-4 (NIV)</div>
+                    <div class="verse-text">Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds, because you know that the testing of your faith produces perseverance. Let perseverance finish its work so that you may be mature and complete, not lacking anything.</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Romans 5:1-4 (NIV)</div>
+                    <div class="verse-text">Therefore, since we have been justified through faith, we have peace with God through our Lord Jesus Christ... Not only so, but we also glory in our sufferings, because we know that suffering produces perseverance; perseverance, character; and character, hope.</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">1 Peter 1:6-7 (NIV)</div>
+                    <div class="verse-text">In all this you greatly rejoice, though now for a little while you may have had to suffer grief in all kinds of trials. These have come so that the proven genuineness of your faith—of greater worth than gold, which perishes even though refined by fire—may result in praise, glory and honor when Jesus Christ is revealed.</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Psalm 88:18 (NIV)</div>
+                    <div class="verse-text">You have taken from me friend and neighbor—darkness is my closest friend.</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Psalm 42:5, 11 (NIV)</div>
+                    <div class="verse-text">Why, my soul, are you downcast? Why so disturbed within me? Put your hope in God, for I will yet praise him, my Savior and my God.</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Matthew 26:38 (NIV)</div>
+                    <div class="verse-text">Then he said to them, "My soul is overwhelmed with sorrow to the point of death. Stay here and keep watch with me."</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Psalm 34:18 (NIV)</div>
+                    <div class="verse-text">The LORD is close to the brokenhearted and saves those who are crushed in spirit.</div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Matthew 11:28 (NIV)</div>
+                    <div class="verse-text">Come to me, all you who are weary and burdened, and I will give you rest.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Lessons Tab -->
+        <section id="lessons" class="tab-content">
+            <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 2rem;">Key Lessons 💡</h2>
+            
+            <div class="key-points">
+                <div class="key-point">
+                    <div class="key-point-icon">🙏</div>
+                    <h4>Dependence</h4>
+                    <p>Struggles teach us to trust God completely, especially when we hit rock-bottom moments and have nowhere else to turn.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-icon">💎</div>
+                    <h4>Humility</h4>
+                    <p>Our character is refined through hardship, making us more humble and moldable in God's hands.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-icon">💪</div>
+                    <h4>Endurance</h4>
+                    <p>We grow stronger through challenges, building spiritual muscle that prepares us for future trials.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-icon">✨</div>
+                    <h4>Transformation</h4>
+                    <p>Struggles shape us to become more like Christ, mirroring His perseverance through suffering.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-icon">✅</div>
+                    <h4>Validation</h4>
+                    <p>Our faith is proven genuine through trials, like gold refined by fire that emerges purer.</p>
+                </div>
+
+                <div class="key-point">
+                    <div class="key-point-icon">🎯</div>
+                    <h4>Choice</h4>
+                    <p>Joy is not a feeling but a decision. We actively choose to rejoice even when we don't feel like it.</p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 2rem; color: var(--primary); margin: 3rem 0 1.5rem;">What Struggles Teach Us (Martin Luther's Framework)</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>📚 A School for the Soul</h3>
+                    <p>Martin Luther described suffering as a "school" that teaches us in ways prosperity cannot. Through hardship, our faith moves from something we talk about to something deeply embedded in our soul—tested, proven, and real.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>🔥 The Refining Process</h3>
+                    <p>Like a goldsmith heating gold to remove impurities, God uses trials to purify our faith. The heat is intense, but the result is a more precious, genuine faith that reflects His glory.</p>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p class="quote-text">"While other worldviews lead us to sit in the midst of life's joys foreseeing the coming sorrows, Christianity empowers its people to sit in the midst of the world's sorrows, tasting the coming joy."</p>
+                <p class="quote-author">— Tim Keller</p>
+            </div>
+        </section>
+
+        <!-- Application Tab -->
+        <section id="application" class="tab-content">
+            <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 2rem;">Application 🌱</h2>
+            
+            <h3 style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;">Three Core Truths to Hold</h3>
+            
+            <div class="two-hands-section" style="grid-template-columns: 1fr;">
+                <div style="background: white; padding: 2.5rem; border-radius: 15px; border-left: 5px solid var(--primary);">
+                    <h4 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        💔 The Lord is Close to the Brokenhearted
+                    </h4>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--secondary);">
+                        <em>"The LORD is close to the brokenhearted and saves those who are crushed in spirit."</em> (Psalm 34:18)
+                    </p>
+                    <p style="margin-top: 1rem; color: var(--secondary); line-height: 1.8;">
+                        When you're in pain, God doesn't distance Himself—He draws near. Your suffering doesn't repel Him; it invites His comfort and presence.
+                    </p>
+                </div>
+            </div>
+
+            <div class="two-hands-section" style="grid-template-columns: 1fr;">
+                <div style="background: white; padding: 2.5rem; border-radius: 15px; border-left: 5px solid var(--sage);">
+                    <h4 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        ⚖️ Trials Test, but God Gives Rest
+                    </h4>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--secondary);">
+                        <em>"Come to me, all you who are weary and burdened, and I will give you rest."</em> (Matthew 11:28)
+                    </p>
+                    <p style="margin-top: 1rem; color: var(--secondary); line-height: 1.8;">
+                        The trials will test you—they're designed to. But God offers rest in the midst of them. Not escape, but peace. Not avoidance, but His presence.
+                    </p>
+                </div>
+            </div>
+
+            <div class="two-hands-section" style="grid-template-columns: 1fr;">
+                <div style="background: white; padding: 2.5rem; border-radius: 15px; border-left: 5px solid var(--accent);">
+                    <h4 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        ✨ In Every Struggle, Make the Choice to Rejoice
+                    </h4>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--secondary);">
+                        <em>"Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds."</em> (James 1:2)
+                    </p>
+                    <p style="margin-top: 1rem; color: var(--secondary); line-height: 1.8;">
+                        Joy is not a feeling that happens to us—it's a choice we make. When the bill arrives, when the diagnosis comes, when the relationship breaks, <strong>choose joy</strong>. Not because the circumstance is good, but because God is good and He's with you in it.
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 2rem; color: var(--primary); margin: 3rem 0 1.5rem;">Practical Steps This Week</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>📝 Journal Your Two Hands</h3>
+                    <p>Take time each day to write down both:</p>
+                    <ul style="margin: 1rem 0 0 1.5rem; color: var(--secondary); line-height: 1.8;">
+                        <li><strong>Left Hand (Struggles):</strong> What's hard right now? What's weighing on you?</li>
+                        <li><strong>Right Hand (God's Goodness):</strong> Where do you see God's presence, even faintly, in those struggles?</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">Practice holding both truths simultaneously without dismissing either.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>🙏 Pray Like the Psalmists</h3>
+                    <p>Give yourself permission to bring your raw emotions to God. Use Psalm 88 as a template—pour out your pain honestly. Then follow with Psalm 42—remind your soul to hope in God.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>💬 Share Your Struggle</h3>
+                    <p>Identify one trusted person this week and be honest about what you're going through. Don't pretend it's fine. Community carries burdens together (Galatians 6:2).</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>🎯 Practice the "Choice" Moment</h3>
+                    <p>When a struggle hits this week—big or small—pause before reacting. Verbally say: <em>"This is hard, but God is good. I choose to count this as joy because it's building endurance in me."</em></p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>📖 Read Tim Keller's Book</h3>
+                    <p><em>Walking with God Through Pain and Suffering</em> is available at Quench (Island ECC's bookstore on the first floor). It provides theological depth and practical wisdom for navigating hardship.</p>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p class="quote-text">"Nonstop joy doesn't mean no problems. It means choosing to see God's presence in both the celebrations and the struggles, playing both hands of the piano simultaneously."</p>
+                <p class="quote-author">— Inspired by Pastor Tim's message</p>
+            </div>
+        </section>
+
+        <!-- Reflection Tab -->
+        <section id="reflection" class="tab-content">
+            <h2 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 2rem;">Reflection Questions 🤔</h2>
+            
+            <div class="reflection-card">
+                <h4>🔍 Question 1: Where Do You See God?</h4>
+                <p>In the struggles you are facing right now, where do you see God's presence and goodness even if it is hard to recognize?</p>
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: var(--cream); border-radius: 10px;">
+                    <p style="font-size: 0.95rem; color: var(--secondary); font-style: italic;">
+                        <strong>Reflection Prompt:</strong> Consider the recent tragedy in your city, or a personal hardship you're facing. What small moments of grace have appeared? Where have you seen community, love, or unexpected provision? Sometimes God's presence is in the friend who showed up, the strength you didn't know you had, or the peace that doesn't make logical sense.
+                    </p>
+                </div>
+            </div>
+
+            <div class="reflection-card">
+                <h4>🌱 Question 2: How Are Trials Shaping You?</h4>
+                <p>How could your current trials be shaping your faith, character, or endurance for the future, and how might you choose to count it all as joy in the process?</p>
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: var(--cream); border-radius: 10px;">
+                    <p style="font-size: 0.95rem; color: var(--secondary); font-style: italic;">
+                        <strong>Reflection Prompt:</strong> Think about a past hardship that, looking back, clearly strengthened you or deepened your faith. What similarities exist between that experience and what you're facing now? What character qualities (patience, humility, dependence on God) might be forming in you through this current trial? How can you actively choose to view this as a "credit" rather than a "debit" in your spiritual account?
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 2rem; color: var(--primary); margin: 3rem 0 1.5rem;">Deeper Reflection</h3>
+            
+            <div class="two-hands-section">
+                <div class="hand-card hand-left">
+                    <h3>💭 For Those in Deep Pain</h3>
+                    <p>If you're in a season of profound grief or struggle, it's okay to rest in Psalm 88. You don't have to force yourself to "find the silver lining." Simply stay in conversation with God, even if it's just to say, "I'm here, and I'm hurting."</p>
+                </div>
+                <div class="hand-card hand-right">
+                    <h3>🎁 For Those Experiencing Joy</h3>
+                    <p>If you're in a good season, how can you support someone in their struggle? How can you be God's presence to them? Consider reaching out to someone you know is hurting and simply being present with them.</p>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p class="quote-text">"My soul is downcast within me; therefore I will remember you."</p>
+                <p class="quote-author">— Psalm 42:6 (NIV)</p>
+            </div>
+
+            <div style="margin-top: 3rem; padding: 2.5rem; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 15px; color: white; text-align: center;">
+                <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--cream);">Prayer for the Week</h3>
+                <p style="font-size: 1.2rem; line-height: 1.8; font-style: italic;">
+                    "God, we thank You that You enter into our pain. Help us to hold both hands—the struggles and Your goodness—simultaneously. Teach us to choose joy not because the trial is good, but because You are good and You are with us. Build in us perseverance, character, and hope. We choose to rejoice, even when we don't feel like it, because we trust that You are refining us. Amen."
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution" id="attribution">
+        <div class="attribution-short" onclick="toggleAttribution()">ℹ️</div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Attribution Toggle
+        function toggleAttribution() {
+            const attribution = document.getElementById('attribution');
+            const currentContent = attribution.innerHTML;
+            
+            if (currentContent.includes('attribution-short')) {
+                attribution.innerHTML = `
+                    <div class="attribution-full" onclick="toggleAttribution()" style="cursor: pointer;">
+                        Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+                        <a href="../license.html">MIT License</a>
+                        <div style="margin-top: 1rem; font-size: 0.75rem; opacity: 0.7;">Click to minimize</div>
+                    </div>
+                `;
+            } else {
+                attribution.innerHTML = `<div class="attribution-short" onclick="toggleAttribution()">ℹ️</div>`;
+            }
+        }
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all timeline items and cards
+        document.querySelectorAll('.timeline-item, .verse-card, .key-point, .reflection-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
