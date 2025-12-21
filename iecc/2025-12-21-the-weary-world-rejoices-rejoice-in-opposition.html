@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejoice in Opposition | Island ECC Sermon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Courier+Prime:wght@400;700&display=swap');
+        
+        :root {
+            --deep-space: #0a0e27;
+            --cosmic-purple: #2d1b69;
+            --star-gold: #d4af37;
+            --nebula-blue: #4a5f8f;
+            --light-text: #e8e6f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--deep-space);
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+        }
+        
+        .mono {
+            font-family: 'Courier Prime', monospace;
+        }
+        
+        /* Starfield Background */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, var(--cosmic-purple) 0%, var(--deep-space) 70%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 1200px;
+        }
+        
+        .jupiter-orbit {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 2px dashed var(--star-gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: rotate 30s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .jupiter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #c88b3a 0%, #e6b35c 50%, #f4d79e 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Sticky Tabs */
+        .tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--star-gold);
+        }
+        
+        .tab-button {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .tab-button:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .tab-button.active {
+            border-bottom-color: var(--star-gold);
+            color: var(--star-gold);
+        }
+        
+        /* Content Sections */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--star-gold), transparent);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--star-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--star-gold);
+        }
+        
+        /* Cards */
+        .card {
+            background: rgba(74, 95, 143, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            border-color: var(--star-gold);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        /* Accordion */
+        .accordion-item {
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .accordion-header {
+            padding: 1.5rem;
+            background: rgba(74, 95, 143, 0.1);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background: rgba(74, 95, 143, 0.2);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+        }
+        
+        .accordion-content.active {
+            max-height: 2000px;
+            padding: 1.5rem;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+        
+        .accordion-icon.active {
+            transform: rotate(180deg);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .btn-primary {
+            background: var(--star-gold);
+            color: var(--deep-space);
+            border-color: var(--star-gold);
+        }
+        
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--star-gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--star-gold);
+            border-color: var(--star-gold);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--star-gold);
+            color: var(--deep-space);
+        }
+        
+        /* Quote Blocks */
+        .quote-block {
+            border-left: 4px solid var(--star-gold);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(74, 95, 143, 0.1);
+            font-style: italic;
+        }
+        
+        /* Response Sections */
+        .response-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .response-card {
+            background: rgba(74, 95, 143, 0.15);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .response-card.desired {
+            border-color: rgba(52, 211, 153, 0.5);
+        }
+        
+        .response-card.dreadful {
+            border-color: rgba(248, 113, 113, 0.5);
+        }
+        
+        .response-card.desperate {
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        
+        .response-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Attribution Badge */
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            background: var(--star-gold);
+            color: var(--deep-space);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .attribution-full {
+            display: none;
+            background: rgba(10, 14, 39, 0.95);
+            border: 1px solid var(--star-gold);
+            border-radius: 12px;
+            padding: 1rem;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+        
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .timeline::before {
+                left: 15px;
+            }
+            
+            .timeline-item {
+                padding-left: 50px;
+            }
+            
+            .timeline-marker {
+                left: 5px;
+                width: 16px;
+                height: 16px;
+            }
+            
+            .response-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .attribution {
+                position: static;
+                margin: 2rem auto;
+                text-align: center;
+            }
+            
+            .attribution-short {
+                display: none;
+            }
+            
+            .attribution-full {
+                display: block;
+                margin: 0 auto;
+            }
+        }
+        
+        @media print {
+            .tabs, .attribution, .btn {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Starfield Background -->
+    <div class="starfield" id="starfield"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="jupiter-orbit">
+            <div class="jupiter"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="mono text-sm mb-4 text-gold-300">⭐ ADVENT SERIES 2025</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Rejoice in<br/>Opposition
+            </h1>
+            <p class="text-xl md:text-2xl mb-4 text-gray-300">
+                The Weary World Rejoices
+            </p>
+            <div class="mono text-sm mb-8">
+                21 December 2025 | Pastor Kevin | Island ECC
+            </div>
+            <p class="text-lg mb-8 max-w-2xl mx-auto text-gray-300">
+                We often embrace the concept of following a guiding star, but what happens when it leads us into opposition and uncertainty? How do we stay steadfast when following God brings hardship?
+            </p>
+            
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://www.youtube.com/watch?v=mPTcXEgBS8Q" target="_blank" class="btn btn-primary">
+                    <span>▶️</span>
+                    Watch Original Sermon
+                </a>
+                <a href="../index.html" class="btn btn-secondary">
+                    <span>📋</span>
+                    View All Sermons
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Tabs -->
+    <nav class="tabs">
+        <div class="flex overflow-x-auto">
+            <button class="tab-button active" onclick="switchTab('overview')">✨ Overview</button>
+            <button class="tab-button" onclick="switchTab('sermon')">📖 Main Sermon</button>
+            <button class="tab-button" onclick="switchTab('astronomy')">🔭 Star of Bethlehem</button>
+            <button class="tab-button" onclick="switchTab('verses')">📜 Bible Verses</button>
+            <button class="tab-button" onclick="switchTab('application')">💡 Application</button>
+            <button class="tab-button" onclick="switchTab('reflection')">🙏 Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <h2 class="text-4xl font-bold mb-8 text-center">✨ Three Responses to Opposition</h2>
+            
+            <div class="response-grid">
+                <div class="response-card desired">
+                    <h3 class="text-2xl font-bold mb-4">🌟 The Desired Response</h3>
+                    <p class="text-xl font-semibold mb-3 text-green-300">The Wise Men</p>
+                    <p class="mb-4">Despite doubt and uncertainty, they held fast to their conviction. They faced an unprepared Jerusalem, a hostile king, and manipulation—yet they pressed on to worship Jesus.</p>
+                    <div class="quote-block">
+                        "When they saw the star, they were overjoyed. On coming to the house they saw the child with his mother Mary, and they bowed down and worshipped him."
+                    </div>
+                </div>
+                
+                <div class="response-card dreadful">
+                    <h3 class="text-2xl font-bold mb-4">⚠️ The Dreadful Response</h3>
+                    <p class="text-xl font-semibold mb-3 text-red-300">King Herod</p>
+                    <p class="mb-4">He responded to opposition by building monuments of power, control, and security. His Herodium stood 5km from Bethlehem—an artificial mountain of glory that now lies in ruins.</p>
+                    <div class="quote-block">
+                        "We all build our own Herodiums. We all build our own artificial mountains of glory."
+                    </div>
+                </div>
+                
+                <div class="response-card desperate">
+                    <h3 class="text-2xl font-bold mb-4">🆘 The Desperate Response</h3>
+                    <p class="text-xl font-semibold mb-3" style="color: var(--star-gold)">We Must Remember</p>
+                    <p class="mb-4">The Israelites were desperate—like their ancestors in Egypt. Only by recognizing our depravity and desperate need for a Savior can we truly worship like the wise men.</p>
+                    <div class="quote-block">
+                        "The more we recognize the reality of our depravity, the greater our need for Jesus Christ."
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-8">
+                <h3 class="text-2xl font-bold mb-4">🎯 Central Question</h3>
+                <p class="text-xl text-center py-4">
+                    <em>"Will you choose Jesus as king of your life? Or will you clutch onto your thrones as kings of your own lives?"</em>
+                </p>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <h2 class="text-4xl font-bold mb-8">📖 When Following God Brings Hardship</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4">Introduction: Two Great Loves</h3>
+                        <p class="mb-3">Pastor Kevin shares his passion for Christmas and astronomy, setting the stage for exploring the Star of Bethlehem—where these two loves converge in the Christmas story.</p>
+                        <p class="text-gray-400">"Sometimes following God can feel like you're on the wrong path because everything in your life is falling apart."</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4">The Wise Men's Journey</h3>
+                        <p class="mb-3">The wise men had only astrological signs—Jupiter circling Regulus three times. Yet this was enough to compel them on a 5-6 month journey to Jerusalem.</p>
+                        <p class="mb-3"><strong>Their First Doubt:</strong> When they arrived in Jerusalem, the city was unprepared and disturbed by the news. The king knew nothing. The priests had to search the scriptures.</p>
+                        <p class="text-gray-400">"Why is it that everybody in this country... treats this newborn king with so much hostility and contempt?"</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4">Opposition Today</h3>
+                        <p class="mb-4">Opposition isn't always overt persecution. It's often having our belief systems dismissed and met with suspicion:</p>
+                        <ul class="space-y-2 ml-6 list-disc">
+                            <li>"You sure you want to believe in this Jesus person?"</li>
+                            <li>"You telling me that a virgin gave birth?"</li>
+                            <li>"You want me to believe that a star stopped over Bethlehem?"</li>
+                        </ul>
+                        <p class="mt-4 text-gray-400">These questions chip away at our belief systems until tragedy strikes and they become more convincing.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4">Herod: The World's Response</h3>
+                        <p class="mb-3">Herod was history's greatest builder—temples, cities, fortresses, aqueducts. He literally moved mountains for his own glory.</p>
+                        <p class="mb-3"><strong>His Herodium:</strong> A massive fortress-mountain built 5km from Bethlehem, standing defiantly against the newborn king.</p>
+                        <p class="text-gray-400">"The world teaches us that the way you respond to opposition is that you amass for yourselves these monuments of power, control, status and security."</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4">Remembering Desperation</h3>
+                        <p class="mb-3">Matthew draws parallels to Moses and Egypt—the same desperation, the same need for a savior. But Jesus rescues us from something far worse: our depravity.</p>
+                        <p class="mb-3"><strong>Depravity:</strong> Not just making mistakes, but every fiber of our being in rebellion against God. We had no capacity to even desire God.</p>
+                        <p class="text-gray-400">"Unless we understand the true nature of our former state, then our salvation is not going to be all that great."</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4">The Final Contrast</h3>
+                        <p class="mb-3">Today, all of Herod's monuments lay in ruins. The temple is replaced by a mosque. Masada and Caesarea crumble. Tour buses drive past the forgotten Herodium to visit little Bethlehem.</p>
+                        <div class="quote-block mt-4">
+                            "The crown jewel of Herod's legacy sits forgotten as people drive on by to go visit the little town of Bethlehem."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-opacity-20" style="background: rgba(212, 175, 55, 0.1); border-color: var(--star-gold);">
+                <h3 class="text-2xl font-bold mb-4 text-center">⚖️ The Choice</h3>
+                <p class="text-lg text-center mb-4">
+                    If we choose to be kings of our own lives, we choose a very temporary kingdom.
+                </p>
+                <p class="text-lg text-center">
+                    If we choose Jesus, we choose an eternal kingdom where the last shall be first and the least shall be the greatest.
+                </p>
+            </div>
+        </div>
+
+        <!-- Astronomy Tab -->
+        <div id="astronomy" class="tab-content">
+            <h2 class="text-4xl font-bold mb-8 text-center">🔭 The Star of Bethlehem: An Astronomical Investigation</h2>
+            
+            <p class="text-lg mb-6 text-center text-gray-300">
+                Based on research by Rick Larson's documentary "The Star of Bethlehem"
+            </p>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="text-xl font-bold">Problem #1: How did they know a king was born in Israel?</h3>
+                    <span class="accordion-icon text-2xl">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="mb-4">What the wise men saw was not actually a star—it was what the ancients called a "wandering star," which we now know as planets.</p>
+                    
+                    <p class="mb-4"><strong>Around 3 BC:</strong></p>
+                    <ul class="space-y-2 ml-6 list-disc mb-4">
+                        <li><strong>Jupiter</strong> (the King Planet - largest of all planets)</li>
+                        <li>Passed by <strong>Regulus</strong> (the King Star)</li>
+                        <li>Within the constellation <strong>Leo</strong> (the Lion)</li>
+                        <li>In a <strong>triple conjunction</strong> (passing three times)</li>
+                    </ul>
+                    
+                    <p class="mb-4">Jerusalem was the capital of Judah, which was represented by a lion. So:</p>
+                    <div class="quote-block">
+                        The King Planet + circling the King Star + in the constellation of a Lion = A new king born in Israel
+                    </div>
+                    
+                    <p class="mt-4 text-gray-400">For people in Babylon who looked to the stars for messages, this was not far-fetched.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="text-xl font-bold">Problem #2: How was it the brightest star they'd ever seen?</h3>
+                    <span class="accordion-icon text-2xl">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="mb-4">About nine months after Caesar's census (around the time Jesus was born):</p>
+                    
+                    <ul class="space-y-2 ml-6 list-disc mb-4">
+                        <li><strong>Venus</strong> caught up with Jupiter in the night sky</li>
+                        <li>The two planets came so close they appeared as one single star to the naked eye</li>
+                        <li>The light from both planets amplified each other</li>
+                        <li>It became the brightest thing they had ever seen in their lifetime</li>
+                    </ul>
+                    
+                    <div class="quote-block">
+                        This was their cue. This is when they knew something had happened. So they began their 5-6 month journey to Jerusalem.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="text-xl font-bold">Problem #3: How does a star stop over a location?</h3>
+                    <span class="accordion-icon text-2xl">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="mb-4"><strong>Retrograde Motion:</strong> Planets don't move in a linear fashion across the night sky. They move in a loopy direction because Earth's orbit is faster or slower than other planets.</p>
+                    
+                    <p class="mb-4"><strong>Example:</strong> Like driving on a highway next to a slower car—it looks like that car is moving backwards. That's retrograde motion.</p>
+                    
+                    <p class="mb-4">When the wise men arrived in Jerusalem around November/December 2 BC:</p>
+                    <ul class="space-y-2 ml-6 list-disc mb-4">
+                        <li>Jupiter was moving across the sky</li>
+                        <li>It stopped in retrograde motion</li>
+                        <li>Directly over Bethlehem</li>
+                    </ul>
+                    
+                    <div class="quote-block">
+                        Computer programs that recreate the ancient night sky confirm this astronomical phenomenon occurred exactly as described.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-8" style="background: rgba(212, 175, 55, 0.1); border-color: var(--star-gold);">
+                <h3 class="text-2xl font-bold mb-4">🎯 Pastor Kevin's Theory: The Complete Timeline</h3>
+                <ol class="space-y-3 ml-6 list-decimal">
+                    <li><strong>In Babylon:</strong> The wise men see Jupiter circle Regulus three times in the constellation Leo → They know a king will be born in Judah</li>
+                    <li><strong>Nine months later:</strong> Venus catches up to Jupiter, creating the brightest star ever seen → The king is born</li>
+                    <li><strong>5-6 months journey:</strong> They travel from Babylon to Jerusalem</li>
+                    <li><strong>Arrival in Jerusalem:</strong> Jupiter moves ahead of them in retrograde motion and stops over Bethlehem</li>
+                </ol>
+                
+                <p class="mt-6 text-center text-xl font-semibold">
+                    The guiding star was none other than the planet Jupiter 🪐
+                </p>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses" class="tab-content">
+            <h2 class="text-4xl font-bold mb-8">📜 Scripture References</h2>
+            
+            <div class="card">
+                <h3 class="text-xl font-bold mb-3">Matthew 2:1-3 (NIV)</h3>
+                <p class="mb-2 text-gray-400">The Wise Men Arrive</p>
+                <p class="italic">
+                    "After Jesus was born in Bethlehem in Judea, during the time of King Herod, Magi from the east came to Jerusalem and asked, 'Where is the one who has been born king of the Jews? We saw his star when it rose and have come to worship him.' When King Herod heard this he was disturbed, and all Jerusalem with him."
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 class="text-xl font-bold mb-3">Matthew 2:4-6 (NIV)</h3>
+                <p class="mb-2 text-gray-400">The Priests Search Scripture</p>
+                <p class="italic">
+                    "When he had called together all the people's chief priests and teachers of the law, he asked them where the Messiah was to be born. 'In Bethlehem in Judea,' they replied, 'for this is what the prophet has written: "But you, Bethlehem, in the land of Judah, are by no means least among the rulers of Judah; for out of you will come a ruler who will shepherd my people Israel."'"
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 class="text-xl font-bold mb-3">Matthew 2:7-12 (NIV)</h3>
+                <p class="mb-2 text-gray-400">The Journey to Bethlehem</p>
+                <p class="italic mb-3">
+                    "Then Herod called the Magi secretly and found out from them the exact time the star had appeared. He sent them to Bethlehem and said, 'Go and search carefully for the child. As soon as you find him, report to me, so that I too may go and worship him.'"
+                </p>
+                <p class="italic mb-3">
+                    "After they had heard the king, they went on their way, and the star they had seen when it rose went ahead of them until it stopped over the place where the child was. When they saw the star, they were overjoyed."
+                </p>
+                <p class="italic">
+                    "On coming to the house, they saw the child with his mother Mary, and they bowed down and worshiped him. Then they opened their treasures and presented him with gifts of gold, frankincense and myrrh. And having been warned in a dream not to go back to Herod, they returned to their country by another route."
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 class="text-xl font-bold mb-3">Matthew 2:13-15 (NIV)</h3>
+                <p class="mb-2 text-gray-400">The Escape to Egypt</p>
+                <p class="italic">
+                    "When they had gone, an angel of the Lord appeared to Joseph in a dream. 'Get up,' he said, 'take the child and his mother and escape to Egypt. Stay there until I tell you, for Herod is going to search for the child to kill him.' So he got up, took the child and his mother during the night and left for Egypt, where he stayed until the death of Herod. And so was fulfilled what the Lord had said through the prophet: 'Out of Egypt I called my son.'"
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 class="text-xl font-bold mb-3">Matthew 2:16-18 (NIV)</h3>
+                <p class="mb-2 text-gray-400">Herod's Massacre</p>
+                <p class="italic">
+                    "When Herod realized that he had been outwitted by the Magi, he was furious, and he gave orders to kill all the boys in Bethlehem and its vicinity who were two years old and under, in accordance with the time he had learned from the Magi. Then what was said through the prophet Jeremiah was fulfilled: 'A voice is heard in Ramah, weeping and great mourning, Rachel weeping for her children and refusing to be comforted, because they are no more.'"
+                </p>
+            </div>
+
+            <div class="card">
+                <h3 class="text-xl font-bold mb-3">Isaiah 9:2 (NIV)</h3>
+                <p class="mb-2 text-gray-400">The Promise of Light</p>
+                <p class="italic">
+                    "The people walking in darkness have seen a great light; on those living in the land of deep darkness a light has dawned."
+                </p>
+                <p class="mt-3 text-gray-400">This verse appears throughout the Advent series, reminding us that hope came in darkness.</p>
+            </div>
+
+            <div class="card">
+                <h3 class="text-xl font-bold mb-3">Colossians 1:15-17 (NIV)</h3>
+                <p class="mb-2 text-gray-400">The Supremacy of Christ</p>
+                <p class="italic">
+                    "He is the image of the invisible God, the firstborn of all creation. For by him all things were created, in heaven and on earth, visible and invisible, whether thrones or dominions or rulers or authorities—all things were created through him and for him. And he is before all things, and in him all things hold together."
+                </p>
+                <p class="mt-3 text-gray-400">Proclaimed at the end of the service, declaring Jesus as the eternal King.</p>
+            </div>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <h2 class="text-4xl font-bold mb-8">💡 How This Applies to Us</h2>
+            
+            <div class="card">
+                <h3 class="text-2xl font-bold mb-4">🔍 Recognize Your Herodiums</h3>
+                <p class="mb-4">We all build our own artificial mountains of glory. The world conditions us to do this—if we aren't achieving, making an impact, leaving a legacy, creating a name for ourselves, we're failing at life.</p>
+                <p class="mb-4"><strong>Ask yourself:</strong></p>
+                <ul class="space-y-2 ml-6 list-disc">
+                    <li>What monuments of power, control, status, and security am I building?</li>
+                    <li>What am I clutching onto that says "I don't need saving"?</li>
+                    <li>Where am I trying to be king of my own life instead of surrendering to Jesus as King?</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3 class="text-2xl font-bold mb-4">⚠️ Understanding Opposition</h3>
+                <p class="mb-4">Opposition isn't always persecution. Often it's more subtle:</p>
+                <ul class="space-y-3 ml-6 list-disc">
+                    <li><strong>Dismissal:</strong> Having your beliefs treated as foolish or backwards</li>
+                    <li><strong>Doubt:</strong> Questions that chip away at your faith ("You sure you believe that?")</li>
+                    <li><strong>Isolation:</strong> Feeling alone when the world around you doesn't celebrate what you celebrate</li>
+                    <li><strong>Tragedy:</strong> When hard times make those doubting questions more convincing</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3 class="text-2xl font-bold mb-4">✨ The Path to Conviction</h3>
+                <p class="mb-4">How do we move from being like Herod to being like the wise men?</p>
+                <p class="mb-4"><strong>Remember your desperation.</strong></p>
+                <ul class="space-y-3 ml-6 list-disc">
+                    <li>Recognize the true weight of depravity—not just "making mistakes" but being in complete rebellion against God</li>
+                    <li>Understand that you had no capacity to even desire God on your own</li>
+                    <li>Marvel at the miracle of your salvation—that God pursued you when you couldn't pursue Him</li>
+                    <li>Remember you are co-heirs with Christ, adopted as sons and daughters</li>
+                </ul>
+                <div class="quote-block mt-4">
+                    "The more we recognize the reality of our depravity, the greater our need for Jesus Christ."
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="text-2xl font-bold mb-4">🙏 For Those Who've Lost Their Fire</h3>
+                <p class="mb-4">If you feel stagnant in your faith, if you've lost that initial passion:</p>
+                <p class="mb-4"><strong>You may have lost sight of your own depravity.</strong></p>
+                <ul class="space-y-2 ml-6 list-disc">
+                    <li>We've lost sight of our desperate state and how much we need a Savior</li>
+                    <li>We've started thinking too highly of ourselves</li>
+                    <li>We've begun clutching our achievements and legacies</li>
+                    <li>We're essentially saying, "We don't need saving"</li>
+                </ul>
+                <p class="mt-4"><strong>The solution:</strong> Return to the reality of who you were without Christ and the miracle of what He's done for you.</p>
+            </div>
+
+            <div class="card" style="background: rgba(212, 175, 55, 0.1); border-color: var(--star-gold);">
+                <h3 class="text-2xl font-bold mb-4 text-center">🎯 The Central Choice</h3>
+                <p class="text-xl text-center mb-6">
+                    Will you choose Jesus as king of your life?<br/>
+                    Or will you clutch onto your throne as king of your own life?
+                </p>
+                <p class="text-center mb-4">Remember the contrast:</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-red-900 bg-opacity-20 rounded-lg">
+                        <p class="font-bold mb-2">👑 King of Your Own Life</p>
+                        <p class="text-sm">A very temporary kingdom. All monuments eventually crumble. Even Herod's greatest works lie forgotten in ruins.</p>
+                    </div>
+                    <div class="p-4 bg-green-900 bg-opacity-20 rounded-lg">
+                        <p class="font-bold mb-2">✝️ Jesus as King</p>
+                        <p class="text-sm">An eternal kingdom. No death, no sin. The last shall be first. The least shall be greatest.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <h2 class="text-4xl font-bold mb-8 text-center">🙏 Reflection Questions</h2>
+            
+            <div class="card">
+                <h3 class="text-2xl font-bold mb-4">1. What forms of opposition are you currently encountering?</h3>
+                <p class="mb-4">Consider the opposition that challenges your resolve and faith:</p>
+                <ul class="space-y-3 ml-6 list-disc text-gray-300">
+                    <li>Are people dismissing or questioning your beliefs?</li>
+                    <li>Are you facing uncertainty about the path God has you on?</li>
+                    <li>Are circumstances making you doubt whether you've heard from God correctly?</li>
+                    <li>Are you experiencing the discomfort of being "out of step" with the world around you?</li>
+                </ul>
+                <div class="mt-6 p-4 bg-gray-800 rounded-lg">
+                    <p class="text-sm text-gray-400 mb-2">Take a moment to write or pray through your answer:</p>
+                    <textarea class="w-full p-3 bg-gray-900 border border-gray-700 rounded text-white min-h-32" placeholder="Your reflection..."></textarea>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="text-2xl font-bold mb-4">2. What are the various Herodiums you have built in your own life?</h3>
+                <p class="mb-4">Think about your own "artificial mountains of glory":</p>
+                <ul class="space-y-3 ml-6 list-disc text-gray-300">
+                    <li><strong>Career achievements:</strong> Are you building your identity on professional success?</li>
+                    <li><strong>Financial security:</strong> Is your net worth your safety net instead of God?</li>
+                    <li><strong>Social status:</strong> Are you curating an image or reputation to maintain?</li>
+                    <li><strong>Family legacy:</strong> Are you building a name for yourself and your children?</li>
+                    <li><strong>Ministry impact:</strong> Even in serving God, are you building monuments to yourself?</li>
+                    <li><strong>Control systems:</strong> What structures have you created to feel safe and in control?</li>
+                </ul>
+                <div class="mt-6 p-4 bg-gray-800 rounded-lg">
+                    <p class="text-sm text-gray-400 mb-2">Be honest—what are you clutching onto?</p>
+                    <textarea class="w-full p-3 bg-gray-900 border border-gray-700 rounded text-white min-h-32" placeholder="Your reflection..."></textarea>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="text-2xl font-bold mb-4">3. Have you recognized the reality of your depravity?</h3>
+                <p class="mb-4">This is the key to passionate, steadfast faith:</p>
+                <ul class="space-y-3 ml-6 list-disc text-gray-300">
+                    <li>Do you see your sinfulness as just "falling short" or as complete rebellion?</li>
+                    <li>Do you understand you had no capacity to even desire God without His intervention?</li>
+                    <li>Can you marvel at the miracle that God pursued you when you couldn't pursue Him?</li>
+                    <li>Does your salvation feel like a ticket to heaven or an incredible rescue from death?</li>
+                </ul>
+                <div class="quote-block mt-4">
+                    "Greater than any gift you could have ever received is God sending his son to be your Savior King to rescue you from depravity, to make you co-heirs with him, to adopt you into his family as sons and daughters."
+                </div>
+                <div class="mt-6 p-4 bg-gray-800 rounded-lg">
+                    <p class="text-sm text-gray-400 mb-2">Reflect on the weight of what has been accomplished for you:</p>
+                    <textarea class="w-full p-3 bg-gray-900 border border-gray-700 rounded text-white min-h-32" placeholder="Your reflection..."></textarea>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(212, 175, 55, 0.1); border-color: var(--star-gold);">
+                <h3 class="text-2xl font-bold mb-4 text-center">🌟 Closing Prayer</h3>
+                <p class="italic text-center mb-6">
+                    "This Christmas week, may we come and bow at his feet as the wise men did and worship him, no matter the opposition that is around us."
+                </p>
+                
+                <div class="space-y-4 text-gray-300">
+                    <p><strong>Pray that God would:</strong></p>
+                    <ul class="space-y-2 ml-6 list-disc">
+                        <li>Help you identify and tear down the monuments you've created for yourself</li>
+                        <li>Give you direction in how to live for Him instead of building spotlights on yourself</li>
+                        <li>Speak that still, quiet voice in your heart about how to respond to Him in faith</li>
+                        <li>Help you live a worshipful life no matter the opposition around you</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="text-2xl font-bold mb-4 text-center">📚 Additional Resources</h3>
+                <ul class="space-y-3">
+                    <li>
+                        <strong>🎥 The Star of Bethlehem Documentary</strong> by Rick Larson
+                        <p class="text-sm text-gray-400">Explore the astronomical evidence discussed in this sermon</p>
+                    </li>
+                    <li>
+                        <strong>🎄 Christmas Eve Services</strong>
+                        <p class="text-sm text-gray-400">Rejoice In The Hope - Candlelight Services at Island ECC</p>
+                    </li>
+                    <li>
+                        <strong>💝 Love Offering</strong>
+                        <p class="text-sm text-gray-400">Support global outreach projects including Faith Comes by Hearing's Vision 2033</p>
+                    </li>
+                    <li>
+                        <strong>🫀 Journey of the Heart Workshop</strong>
+                        <p class="text-sm text-gray-400">Starting January 8, 2026 - A 6-week workshop on paying attention to your heart</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            <p class="text-sm">
+                Generated by LLM with supervision by <a href="../index.html" class="text-gold-300 hover:underline">benjaminficusmicrocarpa</a>.
+            </p>
+            <p class="text-sm mt-2">
+                <a href="../license.html" class="text-gold-300 hover:underline">MIT License</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Generate Starfield
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starfield.appendChild(star);
+            }
+        }
+        
+        createStarfield();
+        
+        // Tab Switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activate button
+            event.target.classList.add('active');
+            
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+        
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Respect prefers-reduced-motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('*').forEach(el => {
+                el.style.animation = 'none';
+                el.style.transition = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
