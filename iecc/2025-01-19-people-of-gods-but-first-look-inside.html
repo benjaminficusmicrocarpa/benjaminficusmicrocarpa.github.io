@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People of God: But First, Look Inside | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #8B6F47;
+            --primary-light: #A68A64;
+            --primary-dark: #6B5537;
+            --secondary: #5A7B6F;
+            --accent: #C9A86A;
+            --bg-main: #FAF8F5;
+            --bg-card: #FFFFFF;
+            --text-dark: #2C2416;
+            --text-medium: #5C5248;
+            --text-light: #8C7E6F;
+            --border: #E8E3DC;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        /* Header Styles */
+        .hero {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #8B6F47 0%, #5A7B6F 100%);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(201, 168, 106, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(90, 123, 111, 0.2) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+        
+        .hero-meta {
+            color: rgba(255,255,255,0.9);
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.6);
+        }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .tab-nav-inner {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .tab-nav-inner::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            min-width: max-content;
+            padding: 1.25rem 2rem;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-medium);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            color: var(--primary);
+            background: rgba(139, 111, 71, 0.05);
+        }
+        
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: rgba(139, 111, 71, 0.08);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        /* Card Styles */
+        .card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        
+        .card h2 {
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        .card h3 {
+            font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+            color: var(--primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card p {
+            margin-bottom: 1.25rem;
+            color: var(--text-medium);
+        }
+        
+        /* Flip Cards for Contrasts */
+        .flip-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .flip-card {
+            perspective: 1000px;
+            height: 200px;
+            cursor: pointer;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .flip-card-front {
+            background: linear-gradient(135deg, var(--text-medium) 0%, var(--text-dark) 100%);
+            color: white;
+        }
+        
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card h4 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+            margin: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 2.5rem;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: 18px;
+            top: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 4px solid var(--bg-main);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+        
+        .timeline-content {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .timeline-content h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .timeline-content p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        
+        /* Accordion */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+        
+        .accordion-header {
+            width: 100%;
+            padding: 1.5rem;
+            background: transparent;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: rgba(139, 111, 71, 0.05);
+        }
+        
+        .accordion-header.active {
+            background: rgba(139, 111, 71, 0.1);
+            color: var(--primary);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.25rem;
+        }
+        
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .accordion-content.active {
+            max-height: 5000px;
+        }
+        
+        .accordion-body {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-medium);
+        }
+        
+        /* Bible Verse Styling */
+        .verse {
+            background: linear-gradient(135deg, rgba(139, 111, 71, 0.08) 0%, rgba(90, 123, 111, 0.08) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-style: italic;
+        }
+        
+        .verse-ref {
+            display: block;
+            margin-top: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-style: normal;
+            font-size: 0.9rem;
+        }
+        
+        /* Quote Styling */
+        .quote {
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(90, 123, 111, 0.05);
+            border-radius: 8px;
+            font-size: 1.05rem;
+        }
+        
+        .quote-author {
+            display: block;
+            margin-top: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Attribution Badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+        }
+        
+        .attribution-full {
+            display: none;
+            background: var(--bg-card);
+            padding: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            max-width: 300px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-medium);
+            border: 1px solid var(--border);
+        }
+        
+        .attribution-full a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .attribution-full a:hover {
+            text-decoration: underline;
+        }
+        
+        .attribution-badge:hover .attribution-short {
+            display: none;
+        }
+        
+        .attribution-badge:hover .attribution-full {
+            display: block;
+        }
+        
+        /* Emphasis */
+        em {
+            font-style: italic;
+            color: var(--primary);
+        }
+        
+        strong {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.75rem;
+            color: var(--text-medium);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 70vh;
+            }
+            
+            .hero-content {
+                padding: 1.5rem;
+            }
+            
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .tab-btn {
+                padding: 1rem 1.25rem;
+                font-size: 0.9rem;
+            }
+            
+            .timeline::before {
+                left: 15px;
+            }
+            
+            .timeline-item {
+                padding-left: 50px;
+            }
+            
+            .timeline-marker {
+                left: 3px;
+            }
+            
+            .attribution-badge {
+                bottom: 10px;
+                right: 10px;
+                position: relative;
+                margin: 2rem auto 1rem;
+                width: fit-content;
+            }
+            
+            .attribution-short {
+                display: none;
+            }
+            
+            .attribution-full {
+                display: block;
+                position: static;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .hero, .tab-nav, .attribution-badge, .btn {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>People of God:<br>But First, Look Inside</h1>
+            <div class="hero-meta">
+                <span>🗓 19 January 2025</span>
+                <span style="margin: 0 1rem;">•</span>
+                <span>🎤 Pastor Brett</span>
+                <span style="margin: 0 1rem;">•</span>
+                <span>⛪️ Island ECC</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=Mj_NSNQd5Mk" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+        <div class="tab-nav-inner">
+            <button class="tab-btn active" data-tab="overview">📋 Overview</button>
+            <button class="tab-btn" data-tab="sermon">💬 Main Sermon</button>
+            <button class="tab-btn" data-tab="verses">📖 Bible Verses</button>
+            <button class="tab-btn" data-tab="application">✨ Application</button>
+            <button class="tab-btn" data-tab="reflection">🙏 Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Tab Contents -->
+    <main>
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="container">
+                <div class="card">
+                    <h2>🎯 Sermon Overview</h2>
+                    <p>In this powerful message, Pastor Brett challenges us to examine not just our outward behaviors, but the deeper motivations of our hearts. Using Jesus's confrontation with the Pharisees, we discover that authentic faith requires internal transformation, not just external performance.</p>
+                    
+                    <h3>Central Theme 🌟</h3>
+                    <p>God calls us to wholeness—not merely behavioral modification, but genuine heart change. The Christian life isn't about managing appearances or performing for others; it's about allowing God to transform us from the inside out.</p>
+                    
+                    <h3>Key Scripture Foundation 📖</h3>
+                    <div class="verse">
+                        "You are a chosen people, a royal priesthood, a holy nation, God's special possession, that you may declare the praises of him who called you out of darkness into his wonderful light."
+                        <span class="verse-ref">— 1 Peter 2:9 (NIV)</span>
+                    </div>
+                    
+                    <h3>The Radical Contrasts ⚡</h3>
+                    <p>Peter describes our identity change using stark before-and-after language. Let's explore these transformations:</p>
+                    
+                    <div class="flip-container">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <h4>😔 Powerless</h4>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>💪 Empowered</h4>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <h4>😵 Confused</h4>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>💡 Enlightened</h4>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <h4>🚧 Limited</h4>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>🌈 Expanded</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>These aren't just theoretical concepts—they represent real spiritual realities that shape how we live, love, and engage with the world around us.</p>
+                    
+                    <h3>The Core Message 🎭</h3>
+                    <div class="quote">
+                        "Practice what you preach."
+                        <span class="quote-author">— Matthew 23:3, paraphrased</span>
+                    </div>
+                    
+                    <p>This phrase, originating from Jesus's confrontation with the Pharisees, challenges us to examine the gap between what we profess and how we live. Jesus wasn't concerned with occasional inconsistency—He was exposing systematic hypocrisy where religious leaders performed spirituality for public approval while neglecting genuine heart devotion.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <div class="container">
+                <div class="card">
+                    <h2>💬 The Full Message</h2>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header active">
+                            <span>🎬 Introduction: What Does It Mean to Be God's People?</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content active">
+                            <div class="accordion-body">
+                                <p>Pastor Brett begins by asking a fundamental question: <em>What does it mean to be a people of God?</em> The congregation's responses reveal the breadth of Christian identity—words like joyful, authentic, loving, obedient, focused, and generous pour forth.</p>
+                                
+                                <p>But Peter gives us four profound descriptors in 1 Peter 2:9:</p>
+                                <ul>
+                                    <li><strong>A chosen people</strong> — not by our merit, but by God's grace</li>
+                                    <li><strong>A royal priesthood</strong> — we have direct access to God and represent Him to others</li>
+                                    <li><strong>A holy nation</strong> — set apart, distinct, different</li>
+                                    <li><strong>God's special possession</strong> — treasured, valued, belonging to Him</li>
+                                </ul>
+                                
+                                <p>This identity isn't just about eternal destiny—it's about who we are <em>now</em>, in this life. God changes us, and that change should be evident in how we live.</p>
+                                
+                                <div class="verse">
+                                    "Once you were not a people, but now you are the people of God."
+                                    <span class="verse-ref">— 1 Peter 2:10 (NIV)</span>
+                                </div>
+                                
+                                <p>There's a clear line of demarcation. You <em>were</em> something, but now you <em>are</em> something entirely different. This isn't gradual improvement—it's transformation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>⚡ New Identity Creates New Capacity</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>When God changes our identity, He also changes our capacity. Pastor Brett shares personally:</p>
+                                
+                                <div class="quote">
+                                    "I remember as a young kid going to church like at eight or nine years old and thinking, this is the most boring place I've ever been... I remember thinking this is so irrelevant. What a waste of time. When I'm a grown-up, I will never go to this kind of place. And here we are. And I love being here. It's a change of affections."
+                                    <span class="quote-author">— Pastor Brett</span>
+                                </div>
+                                
+                                <p>This isn't merely maturity from childhood to adulthood—it's a supernatural heart change. God gives us:</p>
+                                <ul>
+                                    <li>New desires for things we once found boring</li>
+                                    <li>New energy for kingdom priorities</li>
+                                    <li>New insight into truth and wisdom</li>
+                                    <li>New stability and grounding for our souls</li>
+                                    <li>New burdens for what matters to God</li>
+                                </ul>
+                                
+                                <p><strong>New identity → New capacities → New expectations</strong></p>
+                                
+                                <p>God doesn't just change what we can do—He changes what we <em>want</em> to do. And with that comes a holy expectation that we'll live differently.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>😤 Jesus's Confrontation with the Pharisees</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Nothing makes Jesus more irritated than overt hypocrisy. When religious leaders—those who've made faith their career—live inconsistently with what they teach, Jesus unleashes righteous anger.</p>
+                                
+                                <p>In Matthew 23, Jesus addresses both the crowds and His disciples about the teachers of the law and Pharisees. His message contains a critical distinction:</p>
+                                
+                                <div class="verse">
+                                    "The teachers of the law and the Pharisees sit in Moses' seat. So you must be careful to do everything they tell you. But do not do what they do, for they do not practice what they preach."
+                                    <span class="verse-ref">— Matthew 23:2-3 (NIV)</span>
+                                </div>
+                                
+                                <p><strong>Listen to the truth they teach, but don't emulate their hypocrisy.</strong></p>
+                                
+                                <p>Jesus is essentially saying: "Don't let bad messengers prevent you from receiving a good message." This is profound pastoral wisdom. How many people have abandoned faith because of disappointing experiences with church leaders or fellow believers?</p>
+                                
+                                <p>Pastor Brett offers a helpful analogy: Have you ever had a bad restaurant experience? Of course. Did you boycott all restaurants forever? Of course not. Don't let one bad church experience cause you to abandon the whole faith.</p>
+                                
+                                <h4>The Pharisees' Fatal Flaw 🎭</h4>
+                                
+                                <div class="verse">
+                                    "Everything they do is done for people to see: They make their phylacteries wide and the tassels on their garments long."
+                                    <span class="verse-ref">— Matthew 23:5 (NIV)</span>
+                                </div>
+                                
+                                <p>Their motivation was <em>appearance</em>. Reputation. Public approval. They wore oversized phylacteries (boxes containing Scripture worn on the forehead—"like a Jewish GoPro") and extra-long tassels so people would notice their supposed devotion.</p>
+                                
+                                <p>Jesus sees through it all:</p>
+                                <ul>
+                                    <li>They love the place of honor at banquets</li>
+                                    <li>They crave the most important seats in synagogues</li>
+                                    <li>They delight in respectful greetings in marketplaces</li>
+                                </ul>
+                                
+                                <p>Everything is performance. Everything is external. And Jesus will not tolerate it.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>⚠️ The Seven "Woes"</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Seven times Jesus pronounces "Woe to you!" on the religious leaders. This ancient pronouncement carries weight—it's a declaration of coming judgment and deep grief over spiritual blindness.</p>
+                                
+                                <p>Let's examine these devastating critiques:</p>
+                                
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-content">
+                                            <h4>Woe #1: Missing What Matters Most</h4>
+                                            <p>"You give a tenth of your spices—mint, dill and cumin. But you have neglected the more important matters of the law—justice, mercy and faithfulness." (Matthew 23:23)</p>
+                                            <p><strong>The Issue:</strong> They meticulously tithed even the smallest herbs while ignoring the weightier commands of loving justice, showing mercy, and living faithfully. Measurable obedience without heart transformation.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-content">
+                                            <h4>Woe #2: Blind Guides</h4>
+                                            <p>"You blind guides! You strain out a gnat but swallow a camel." (Matthew 23:24)</p>
+                                            <p><strong>The Issue:</strong> They obsess over microscopic details while committing massive injustices. It's absurd—like carefully filtering out a tiny insect while gulping down a whole camel. They can't see their own contradictions.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-content">
+                                            <h4>Woe #3: Clean Outside, Filthy Inside</h4>
+                                            <p>"You clean the outside of the cup and dish, but inside they are full of greed and self-indulgence. Blind Pharisee! First clean the inside of the cup and dish, and then the outside also will be clean." (Matthew 23:25-26)</p>
+                                            <p><strong>The Issue:</strong> They focus on external purity rituals while their hearts remain corrupt. Jesus says work from the inside out—when the heart is clean, the behavior naturally follows.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-marker"></div>
+                                        <div class="timeline-content">
+                                            <h4>Woe #4: Whitewashed Tombs</h4>
+                                            <p>"You are like whitewashed tombs, which look beautiful on the outside but on the inside are full of the bones of the dead and everything unclean." (Matthew 23:27)</p>
+                                            <p><strong>The Issue:</strong> Wealthy families would plaster tombs with brilliant white coating that gleamed in the sun—impressive from the outside, but inside? Death and decay. The Pharisees were spiritually dead despite their polished exterior.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <p>Jesus then delivers His harshest words:</p>
+                                
+                                <div class="verse">
+                                    "You snakes! You brood of vipers! How will you escape being condemned to hell?"
+                                    <span class="verse-ref">— Matthew 23:33 (NIV)</span>
+                                </div>
+                                
+                                <p>"Snakes" references the cursed serpent in Genesis. "Brood of vipers" means they're raising up a whole generation of hypocrites. And "Gehenna" (translated "hell") referred to a literal valley southwest of Jerusalem—a place of burning garbage, historical child sacrifice, and metaphorical final judgment.</p>
+                                
+                                <p>These aren't just insults. They're grief-filled warnings from a Savior who desperately wants hearts to change.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>💡 The Heart of the Matter</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Mark's Gospel gives us a condensed version that gets to the core issue:</p>
+                                
+                                <div class="verse">
+                                    "Listen to me, everyone, and understand this. Nothing outside a person can defile them by going into them. Rather, it is what comes out of a person that defiles them... For it is from within, out of a person's heart, that evil thoughts come—sexual immorality, theft, murder, adultery, greed, malice, deceit, lewdness, envy, slander, arrogance and folly. All these evils come from inside and defile a person."
+                                    <span class="verse-ref">— Mark 7:14-15, 21-23 (NIV)</span>
+                                </div>
+                                
+                                <p><strong>The problem isn't external compliance—it's internal corruption.</strong></p>
+                                
+                                <p>Jesus isn't finger-wagging or condemning people for their struggles. He's lovingly saying: "You're miserable when you can't overcome these patterns. Let's address the root cause. Let's go to your heart."</p>
+                                
+                                <p>Every behavior listed—sexual sin, theft, murder, greed, deceit, envy, arrogance—has an internal source:</p>
+                                <ul>
+                                    <li>What fear drives this reaction?</li>
+                                    <li>What insecurity fuels this behavior?</li>
+                                    <li>What wound remains unhealed?</li>
+                                    <li>What lie do I believe about myself or God?</li>
+                                </ul>
+                                
+                                <p>We all have a private self that others can't see. Jesus isn't asking us to broadcast every thought (we couldn't handle that!). He's inviting us to courageously examine: <em>What's really happening inside? Why do I do what I do?</em></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🫧 First Clean the Inside</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Jesus's instruction is simple but revolutionary:</p>
+                                
+                                <div class="quote">
+                                    "First clean the inside of the cup and dish, and then the outside also will be clean."
+                                    <span class="quote-author">— Matthew 23:26 (NIV)</span>
+                                </div>
+                                
+                                <p>This is how you always wash dishes! Nobody sprays only the outside and puts it back on the shelf. You clean the interior first, and the exterior follows naturally.</p>
+                                
+                                <p>When you focus on internal transformation:</p>
+                                <ul>
+                                    <li>External behaviors align organically</li>
+                                    <li>You do right things for right reasons</li>
+                                    <li>You're not performing—you're being authentic</li>
+                                    <li>Consistency emerges naturally, not through willpower alone</li>
+                                </ul>
+                                
+                                <p>But if you only focus on behavior modification without heart change, you'll robotically perform to impress others while remaining spiritually empty.</p>
+                                
+                                <h4>Why Internal Work Matters for Others 🤝</h4>
+                                
+                                <p>Pastor Brett challenges us with uncomfortable truth:</p>
+                                
+                                <div class="quote">
+                                    "There's probably people in your life that are wishing that you would do a hard look in the mirror. That you would understand you and why that temper flares up, why you're so impatient about silly things, why you spend the way that you spend... those things that you are not responsible for in your life, that you've not done the work with, they spill out onto other people."
+                                    <span class="quote-author">— Pastor Brett</span>
+                                </div>
+                                
+                                <p>We don't live in isolation. Our unexamined hearts, unprocessed wounds, and unchecked patterns affect everyone around us:</p>
+                                <ul>
+                                    <li>Our spouses absorb our unresolved anger</li>
+                                    <li>Our children inherit our unhealthy coping mechanisms</li>
+                                    <li>Our colleagues endure our insecurities</li>
+                                    <li>Our friends carry burdens we should address ourselves</li>
+                                </ul>
+                                
+                                <p>Conversely, when we do the internal work, we become burden-carriers instead of burden-creators.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>❤️ The Law of Christ</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Paul beautifully captures what Jesus is calling us toward:</p>
+                                
+                                <div class="verse">
+                                    "Carry each other's burdens, and in this way you will fulfill the law of Christ."
+                                    <span class="verse-ref">— Galatians 6:2 (NIV)</span>
+                                </div>
+                                
+                                <p>The law of Christ isn't a complex code of behavioral rules. It's gloriously simple:</p>
+                                
+                                <p><strong>As God has loved you → Love others the same way</strong></p>
+                                
+                                <ul>
+                                    <li>As you've experienced grace → Extend grace</li>
+                                    <li>As you've received forgiveness → Quickly forgive</li>
+                                    <li>As you've known mercy → Show mercy</li>
+                                    <li>As God has carried your burden → Carry others' burdens</li>
+                                </ul>
+                                
+                                <p>This is vertical-to-horizontal living. God's love for you compels your love for others. When you internalize how much you've been forgiven, patience with others flows naturally.</p>
+                                
+                                <p>This is the integration Jesus desires—not a split personality with "church you" and "real you," but wholeness where your public life matches your private heart because Christ has transformed both.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🌱 Conclusion: Wholeness, Not Performance</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Pastor Brett closes with this liberating vision:</p>
+                                
+                                <div class="quote">
+                                    "Imagine how liberating it would be if you were a little more in touch with that. If those around you were emotionally aware and spiritually courageous enough to recognize: I'm complete in Christ. My identity has been secured. And therefore I don't have to be threatened. I don't have to be perfect. I can admit a mistake. I can say I'm sorry."
+                                    <span class="quote-author">— Pastor Brett</span>
+                                </div>
+                                
+                                <p>When your identity is secure in Christ:</p>
+                                <ul>
+                                    <li>You're not defensive when criticized</li>
+                                    <li>You can admit faults without shame</li>
+                                    <li>You don't need to prove yourself constantly</li>
+                                    <li>Apologies come easily because you're already forgiven</li>
+                                    <li>Vulnerability becomes strength, not weakness</li>
+                                </ul>
+                                
+                                <p>This softens your entire demeanor. You engage the world differently because you're not protecting a fragile self-image—you're resting in God's complete acceptance.</p>
+                                
+                                <div class="verse">
+                                    "All the ways of a man are clean in his own sight, but the LORD weighs the motives."
+                                    <span class="verse-ref">— Proverbs 16:2 (NIV)</span>
+                                </div>
+                                
+                                <p>We can deceive ourselves about our reasons, but God isn't fooled. And in His love, He invites us to see ourselves clearly—not to condemn us, but to free us.</p>
+                                
+                                <p><strong>God wants all of you, not just behavioral compliance.</strong> He's calling you to wholeness, integration, authenticity. To be the same person alone in your car, in your office, at home, and at church.</p>
+                                
+                                <p>That's the natural overflow of grace—when His goodness dwells within you, it can't help but impact everything around you.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses" class="tab-content">
+            <div class="container">
+                <div class="card">
+                    <h2>📖 Key Scripture References</h2>
+                    <p>This sermon draws from multiple passages that reveal God's heart for authentic, internal transformation. Here are the primary texts explored:</p>
+                    
+                    <h3>Foundation: Our New Identity</h3>
+                    <div class="verse">
+                        "But you are a chosen people, a royal priesthood, a holy nation, God's special possession, that you may declare the praises of him who called you out of darkness into his wonderful light. Once you were not a people, but now you are the people of God; once you had not received mercy, but now you have received mercy."
+                        <span class="verse-ref">— 1 Peter 2:9-10 (NIV)</span>
+                    </div>
+                    
+                    <h3>Jesus Confronts Hypocrisy</h3>
+                    <div class="verse">
+                        "Then Jesus said to the crowds and to his disciples: 'The teachers of the law and the Pharisees sit in Moses' seat. So you must be careful to do everything they tell you. But do not do what they do, for they do not practice what they preach. They tie up heavy, cumbersome loads and put them on other people's shoulders, but they themselves are not willing to lift a finger to move them. Everything they do is done for people to see: They make their phylacteries wide and the tassels on their garments long; they love the place of honor at banquets and the most important seats in the synagogues; they love to be greeted with respect in the marketplaces and to be called "Rabbi" by others.'"
+                        <span class="verse-ref">— Matthew 23:1-7 (NIV)</span>
+                    </div>
+                    
+                    <h3>The Seven Woes</h3>
+                    <div class="verse">
+                        "Woe to you, teachers of the law and Pharisees, you hypocrites! You give a tenth of your spices—mint, dill and cumin. But you have neglected the more important matters of the law—justice, mercy and faithfulness. You should have practiced the latter, without neglecting the former. You blind guides! You strain out a gnat but swallow a camel."
+                        <span class="verse-ref">— Matthew 23:23-24 (NIV)</span>
+                    </div>
+                    
+                    <div class="verse">
+                        "Woe to you, teachers of the law and Pharisees, you hypocrites! You clean the outside of the cup and dish, but inside they are full of greed and self-indulgence. Blind Pharisee! First clean the inside of the cup and dish, and then the outside also will be clean."
+                        <span class="verse-ref">— Matthew 23:25-26 (NIV)</span>
+                    </div>
+                    
+                    <div class="verse">
+                        "Woe to you, teachers of the law and Pharisees, you hypocrites! You are like whitewashed tombs, which look beautiful on the outside but on the inside are full of the bones of the dead and everything unclean. In the same way, on the outside you appear to people as righteous but on the inside you are full of hypocrisy and wickedness."
+                        <span class="verse-ref">— Matthew 23:27-28 (NIV)</span>
+                    </div>
+                    
+                    <div class="verse">
+                        "You snakes! You brood of vipers! How will you escape being condemned to hell?"
+                        <span class="verse-ref">— Matthew 23:33 (NIV)</span>
+                    </div>
+                    
+                    <h3>The Heart is the Source</h3>
+                    <div class="verse">
+                        "Again Jesus called the crowd to him and said, 'Listen to me, everyone, and understand this. Nothing outside a person can defile them by going into them. Rather, it is what comes out of a person that defiles them... For it is from within, out of a person's heart, that evil thoughts come—sexual immorality, theft, murder, adultery, greed, malice, deceit, lewdness, envy, slander, arrogance and folly. All these evils come from inside and defile a person.'"
+                        <span class="verse-ref">— Mark 7:14-15, 21-23 (NIV)</span>
+                    </div>
+                    
+                    <h3>Motives Matter to God</h3>
+                    <div class="verse">
+                        "All a person's ways seem pure to them, but motives are weighed by the LORD."
+                        <span class="verse-ref">— Proverbs 16:2 (NIV)</span>
+                    </div>
+                    
+                    <div class="verse">
+                        "Therefore judge nothing before the appointed time; wait until the Lord comes. He will bring to light what is hidden in darkness and will expose the motives of the heart. At that time each will receive their praise from God."
+                        <span class="verse-ref">— 1 Corinthians 4:5 (NIV)</span>
+                    </div>
+                    
+                    <h3>Living the Law of Christ</h3>
+                    <div class="verse">
+                        "Carry each other's burdens, and in this way you will fulfill the law of Christ."
+                        <span class="verse-ref">— Galatians 6:2 (NIV)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <div class="container">
+                <div class="card">
+                    <h2>✨ Living It Out</h2>
+                    <p>This sermon isn't meant to simply inform—it's designed to transform. Here are practical ways to apply these truths to your daily life:</p>
+                    
+                    <h3>1. Examine Your Motivations 🔍</h3>
+                    <p>Jesus calls us to look beneath our behaviors and ask: <em>Why do I do what I do?</em></p>
+                    
+                    <p><strong>Reflective Questions:</strong></p>
+                    <ul>
+                        <li>When I serve at church or help others, what am I hoping to receive in return? Approval? Recognition? A sense of worthiness?</li>
+                        <li>What behaviors do I perform primarily when others are watching?</li>
+                        <li>Are there spiritual disciplines I practice to impress others rather than connect with God?</li>
+                        <li>What parts of my Christian life feel like performance rather than genuine devotion?</li>
+                    </ul>
+                    
+                    <p><strong>Action Step:</strong> Spend 15 minutes journaling about a recent moment when you felt proud of your spiritual behavior. Ask God to reveal the true motivation behind it.</p>
+                    
+                    <h3>2. Identify Your Internal Triggers ⚡</h3>
+                    <p>Mark 7 reminds us that external behaviors flow from internal realities. What's happening inside you?</p>
+                    
+                    <p><strong>Common Patterns to Explore:</strong></p>
+                    <ul>
+                        <li><strong>Anger:</strong> What situations consistently trigger your temper? What fear or hurt lies beneath?</li>
+                        <li><strong>Anxiety:</strong> What circumstances make you spiral? What do you believe about God's control in those moments?</li>
+                        <li><strong>Envy:</strong> Who do you compare yourself to? What insecurity drives the comparison?</li>
+                        <li><strong>Withdrawal:</strong> When do you hide or retreat? What are you protecting yourself from?</li>
+                    </ul>
+                    
+                    <p><strong>Action Step:</strong> This week, when you notice a strong emotional reaction, pause and ask: "What's really happening inside me right now? What am I afraid of? What do I need?"</p>
+                    
+                    <h3>3. Practice Authentic Confession 💬</h3>
+                    <p>Pastor Brett said: "I can admit a mistake. I can say I'm sorry." When your identity is secure in Christ, confession becomes natural, not threatening.</p>
+                    
+                    <p><strong>Where to Start:</strong></p>
+                    <ul>
+                        <li>Identify one person you've wronged or hurt this week (even unintentionally)</li>
+                        <li>Reach out and offer a genuine apology without justification or excuse</li>
+                        <li>Simply say: "I was wrong. I'm sorry. Will you forgive me?"</li>
+                        <li>Don't expect immediate reconciliation—just obey God's call to humility</li>
+                    </ul>
+                    
+                    <p><strong>Remember:</strong> You're not earning God's favor through this—you're responding to His grace that's already secured your worth.</p>
+                    
+                    <h3>4. Choose One Internal Work Area 🛠️</h3>
+                    <p>Jesus said "first clean the inside." Pick ONE internal issue to address this month:</p>
+                    
+                    <ul>
+                        <li><strong>Pride:</strong> Practice celebrating others' successes without comparing to your own</li>
+                        <li><strong>Greed:</strong> Give sacrificially to someone in need without telling anyone</li>
+                        <li><strong>Lust:</strong> Identify the emotional needs you're trying to meet inappropriately and bring them to God</li>
+                        <li><strong>Bitterness:</strong> Write a letter of forgiveness to someone who hurt you (you don't have to send it)</li>
+                        <li><strong>Anxiety:</strong> Memorize and meditate on one promise of God's provision each day</li>
+                    </ul>
+                    
+                    <p><strong>Action Step:</strong> Share your chosen area with one trusted friend who can pray for you and check in weekly.</p>
+                    
+                    <h3>5. Carry Someone Else's Burden 🤝</h3>
+                    <p>Galatians 6:2 calls us to "carry each other's burdens." When you've experienced God carrying yours, you're equipped to help others.</p>
+                    
+                    <p><strong>Practical Ways:</strong></p>
+                    <ul>
+                        <li>Text a friend going through difficulty: "I'm thinking of you. How can I specifically pray today?"</li>
+                        <li>Offer tangible help: childcare, meal preparation, errands, financial assistance</li>
+                        <li>Listen without trying to fix—sometimes people need presence, not solutions</li>
+                        <li>Check in consistently, not just during the crisis but in the long recovery</li>
+                    </ul>
+                    
+                    <p><strong>Action Step:</strong> Identify one person in your life carrying a heavy load. This week, reach out and offer one specific, practical way you can lighten their burden.</p>
+                    
+                    <h3>6. Create Space for Self-Examination 🪞</h3>
+                    <p>Regular spiritual inventory prevents hypocrisy from taking root.</p>
+                    
+                    <p><strong>Weekly Rhythm:</strong></p>
+                    <ul>
+                        <li><strong>Sunday evening:</strong> Review the week. Where did you see Christ-like character? Where did you fall short?</li>
+                        <li><strong>Mid-week:</strong> Assess your heart posture. Are you performing or genuinely seeking God?</li>
+                        <li><strong>Before major decisions:</strong> Ask "Am I doing this to impress others or to honor God?"</li>
+                    </ul>
+                    
+                    <p><strong>David's Prayer:</strong></p>
+                    <div class="verse">
+                        "Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me, and lead me in the way everlasting."
+                        <span class="verse-ref">— Psalm 139:23-24 (NIV)</span>
+                    </div>
+                    
+                    <h3>7. Refuse to Let Others' Hypocrisy Derail You ⚠️</h3>
+                    <p>Jesus told the crowd: "Do what they say, not what they do." Don't abandon truth because messengers fail.</p>
+                    
+                    <p><strong>When You're Disappointed by Church Leaders or Fellow Believers:</strong></p>
+                    <ul>
+                        <li>Remember they're human and flawed, just like you</li>
+                        <li>Separate the message of the Gospel from the messenger's failures</li>
+                        <li>Pray for them rather than gossip about them</li>
+                        <li>If necessary, establish healthy boundaries while maintaining grace</li>
+                        <li>Don't use their failures as permission for your own compromise</li>
+                    </ul>
+                    
+                    <p><strong>Remember:</strong> Your faith is in Christ, not in people. Keep your eyes on Him.</p>
+                    
+                    <h3>Integration Over Perfection 🎯</h3>
+                    <p>The goal isn't flawless behavior—it's wholeness. Jesus wants you to be the same person everywhere:</p>
+                    
+                    <ul>
+                        <li>In church and alone in your car</li>
+                        <li>At work and at home</li>
+                        <li>In public and in private</li>
+                        <li>When praised and when criticized</li>
+                    </ul>
+                    
+                    <p>When Christ transforms your heart, external consistency flows naturally. You're not managing multiple personas—you're being authentically you, redeemed and loved by God.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <div class="container">
+                <div class="card">
+                    <h2>🙏 Prayer & Personal Reflection</h2>
+                    
+                    <h3>Guided Reflection Questions</h3>
+                    <p>Take time in solitude to honestly consider these questions. Invite the Holy Spirit to search your heart:</p>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🎭 On Hypocrisy and Authenticity</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li>Are there areas where my public persona doesn't match my private reality?</li>
+                                    <li>What aspects of my spiritual life am I performing for others rather than for God?</li>
+                                    <li>When do I feel most tempted to manage my reputation rather than pursue genuine transformation?</li>
+                                    <li>What would change if I cared more about God's approval than people's opinions?</li>
+                                    <li>How does the gap between who I appear to be and who I truly am affect my relationships?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>❤️ On Internal Transformation</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li>What patterns of sin or dysfunction do I keep trying to fix externally without addressing the root?</li>
+                                    <li>What fears, wounds, or insecurities drive my unhealthy behaviors?</li>
+                                    <li>When I react strongly to something, what does that reveal about my heart?</li>
+                                    <li>What lies do I believe about myself that contradict God's truth?</li>
+                                    <li>Where is God inviting me to do deeper heart work right now?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🎯 On Motives and Priorities</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li>Am I more concerned with appearing spiritual than actually growing spiritually?</li>
+                                    <li>Do I focus on measurable obedience (tithing, attendance, ministry activity) while neglecting justice, mercy, and faithfulness?</li>
+                                    <li>What am I hoping to gain from my service and spiritual activities?</li>
+                                    <li>How would my spiritual practices change if no one ever knew about them?</li>
+                                    <li>Am I straining out gnats (obsessing over minor issues) while swallowing camels (ignoring major character flaws)?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🤝 On Impact and Relationships</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li>What burdens am I creating for others through my unexamined heart and unresolved issues?</li>
+                                    <li>How do my unprocessed emotions affect my spouse, children, coworkers, or friends?</li>
+                                    <li>Where am I asking others to carry what God wants me to bring to Him?</li>
+                                    <li>Whose burden could I help carry this week?</li>
+                                    <li>Am I quicker to judge others' hypocrisy than acknowledge my own?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🌟 On Identity in Christ</span>
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li>Do I truly believe my identity is secure in Christ, or am I still trying to earn approval?</li>
+                                    <li>How does understanding myself as "chosen, royal, holy, treasured" change how I view my failures?</li>
+                                    <li>What would soften in my demeanor if I fully rested in God's acceptance?</li>
+                                    <li>Am I defensive when criticized because I'm protecting a fragile self-image?</li>
+                                    <li>How does knowing I was once "powerless, confused, limited" but am now "empowered, enlightened, expanded" shape my gratitude?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>Prayers for Inner Transformation</h3>
+                    
+                    <div class="quote">
+                        <strong>Prayer for Honest Self-Examination</strong><br><br>
+                        Lord, I confess that I often focus on externals—what others see, what looks good, what earns approval. But You see my heart. You know my true motivations. Search me, God, and reveal what I'm afraid to see. Show me where performance has replaced authenticity, where reputation management has replaced genuine transformation. Give me courage to look honestly at myself without shame, because my worth is already secure in You. Help me trust that You love me enough to show me the truth, and powerful enough to change me from the inside out. Amen.
+                    </div>
+                    
+                    <div class="quote">
+                        <strong>Prayer for Freedom from Hypocrisy</strong><br><br>
+                        Jesus, You had no patience for religious performance, yet You showed endless compassion for honest sinners. I don't want to be a whitewashed tomb—beautiful outside, dead inside. I want to be whole, integrated, authentic. Break down the walls between my public and private self. Help me care more about Your opinion than anyone else's. Free me from the exhausting work of image management. Teach me to walk humbly, confess quickly, and love genuinely. Let my life be a natural overflow of Your grace, not a carefully crafted performance. Amen.
+                    </div>
+                    
+                    <div class="quote">
+                        <strong>Prayer for Heart Transformation</strong><br><br>
+                        Father, I'm tired of trying to change my behavior without addressing my heart. You said to first clean the inside of the cup. So I bring You my fears, my wounds, my insecurities, my anger, my envy, my pride. I acknowledge that all my sin flows from something broken within me. Heal me at the source. Transform my motives. Change what I love and what I hate. Give me new affections, new desires, new capacities. Make me more like Jesus—not just in what I do, but in who I am. Work from the inside out, and let my life reflect Your glory authentically. Amen.
+                    </div>
+                    
+                    <div class="quote">
+                        <strong>Prayer for Burden-Carrying Love</strong><br><br>
+                        Lord Jesus, You carried my burden when I couldn't. You bore my sin, my shame, my brokenness. In response, teach me to carry others' burdens. Open my eyes to the heavy loads people around me are carrying. Give me compassion that moves beyond sympathy to practical help. Show me when to listen, when to serve, when to give, when to pray. Help me stop creating burdens for others through my own unresolved issues. Make me a source of relief, not stress. Let me fulfill the law of Christ by loving as I've been loved. Amen.
+                    </div>
+                    
+                    <h3>Closing Benediction</h3>
+                    <p style="font-style: italic; color: var(--primary); font-size: 1.1rem; text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, rgba(139, 111, 71, 0.1) 0%, rgba(90, 123, 111, 0.1) 100%); border-radius: 12px;">
+                        May you know deeply that you are chosen, royal, holy, and treasured.<br>
+                        May you courageously examine your heart without fear of condemnation.<br>
+                        May you experience the freedom of authenticity over performance.<br>
+                        May Christ transform you from the inside out,<br>
+                        so your whole life declares His praises—<br>
+                        not through striving, but through the natural overflow of His grace within you.<br><br>
+                        Go in peace. Be whole. Love well.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTab = btn.dataset.tab;
+                
+                // Update buttons
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Update content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === targetTab) {
+                        content.classList.add('active');
+                    }
+                });
+                
+                // Scroll to top smoothly
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Accordion Functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const isActive = header.classList.contains('active');
+                
+                // Toggle active state
+                header.classList.toggle('active');
+                content.classList.toggle('active');
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Add keyboard navigation for tabs
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                const activeBtn = document.querySelector('.tab-btn.active');
+                const allBtns = Array.from(tabBtns);
+                const currentIndex = allBtns.indexOf(activeBtn);
+                
+                let nextIndex;
+                if (e.key === 'ArrowLeft') {
+                    nextIndex = currentIndex > 0 ? currentIndex - 1 : allBtns.length - 1;
+                } else {
+                    nextIndex = currentIndex < allBtns.length - 1 ? currentIndex + 1 : 0;
+                }
+                
+                allBtns[nextIndex].click();
+            }
+        });
+    </script>
+</body>
+</html>

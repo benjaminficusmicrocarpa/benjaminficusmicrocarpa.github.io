@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christianity Sermons | benjaminficusmicrocarpa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1a2332;
+            --deep-red: #8b2635;
+            --gold: #d4af37;
+            --cream: #faf8f3;
+            --warm-gray: #5a5a5a;
+            --light-gold: #f4e8c1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--navy);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .header-bg {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--deep-red) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .ornament {
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            position: relative;
+            margin: 1.5rem auto;
+        }
+
+        .ornament::before,
+        .ornament::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            top: -3px;
+        }
+
+        .ornament::before {
+            left: -12px;
+        }
+
+        .ornament::after {
+            right: -12px;
+        }
+
+        .sermon-card {
+            background: white;
+            border-left: 4px solid var(--gold);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sermon-card:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--deep-red);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--deep-red);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--deep-red);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold);
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--gold);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: var(--navy);
+            transform: translateY(-2px);
+        }
+
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50px;
+            padding: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 50;
+            max-width: 50px;
+            overflow: hidden;
+        }
+
+        .attribution:hover {
+            max-width: 400px;
+            padding: 12px 20px;
+        }
+
+        .attribution-short {
+            font-size: 1.5rem;
+        }
+
+        .attribution-full {
+            display: none;
+            font-size: 0.875rem;
+            color: var(--warm-gray);
+            white-space: nowrap;
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+
+        .attribution a {
+            color: var(--deep-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .attribution {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                max-width: 100%;
+                border-radius: 8px;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+                white-space: normal;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-bg text-white">
+        <div class="max-w-4xl mx-auto px-6 py-20 text-center relative z-10">
+            <div class="mb-4 text-sm font-medium tracking-wide opacity-90">
+                📖 Christianity Sermons
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                Sermon Collection
+            </h1>
+            <div class="ornament"></div>
+            <p class="text-xl md:text-2xl mb-8 opacity-95 max-w-2xl mx-auto leading-relaxed">
+                Deep theological insights and biblical teachings from influential Christian speakers
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="../index.html" class="btn-secondary">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <h2 class="text-4xl font-bold mb-6 text-center">Available Sermons</h2>
+        <div class="ornament"></div>
+
+        <!-- Sermon Card -->
+        <div class="sermon-card">
+            <div class="mb-4">
+                <span class="text-sm font-medium text-gray-500">📅 September 16, 2007</span>
+            </div>
+            <h3 class="text-2xl font-bold mb-3">
+                A New Heart
+            </h3>
+            <p class="text-lg text-gray-700 mb-4">
+                <strong>Timothy Keller</strong> | Gospel in Life Series
+            </p>
+            <p class="text-gray-600 mb-6">
+                God's solution to the ultimate human problem: knowing what's right but being powerless to do it. 
+                This powerful sermon from Deuteronomy 30 addresses the need for a transformed heart—not just 
+                more willpower or knowledge, but a fundamental change where what you ought to do becomes what 
+                you want to do.
+            </p>
+            <div class="flex flex-wrap gap-3 mb-4">
+                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">Deuteronomy 30</span>
+                <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm font-medium">New Heart</span>
+                <span class="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium">Transformation</span>
+                <span class="px-3 py-1 bg-amber-50 text-amber-700 rounded-full text-sm font-medium">Circumcision of Heart</span>
+            </div>
+            <div class="flex flex-wrap gap-4">
+                <a href="2007-09-11-tim-keller-a-new-heart.html" class="btn-primary">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Read Full Sermon
+                </a>
+                <a href="https://gospelinlife.com/sermon/a-new-heart/" class="btn-secondary" target="_blank" rel="noopener">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    Original Sermon
+                </a>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="bg-gradient-to-br from-red-50 to-amber-50 p-8 rounded-lg border-l-4 border-red-800 mt-12">
+            <h3 class="text-2xl font-bold mb-4">About This Collection</h3>
+            <p class="text-lg mb-4">
+                This collection features detailed notes and summaries from influential Christian sermons, 
+                carefully curated to preserve key theological insights and practical applications.
+            </p>
+            <p class="text-lg">
+                Each sermon is presented with comprehensive notes, Bible verse references, practical applications, 
+                and reflection questions to help deepen understanding and spiritual growth.
+            </p>
+        </div>
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+</body>
+</html>
+

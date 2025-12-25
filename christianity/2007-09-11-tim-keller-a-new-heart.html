@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A New Heart - Tim Keller | September 16, 2007</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1a2332;
+            --deep-red: #8b2635;
+            --gold: #d4af37;
+            --cream: #faf8f3;
+            --warm-gray: #5a5a5a;
+            --light-gold: #f4e8c1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--navy);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .header-bg {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--deep-red) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .ornament {
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            position: relative;
+            margin: 1.5rem auto;
+        }
+
+        .ornament::before,
+        .ornament::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            top: -3px;
+        }
+
+        .ornament::before {
+            left: -12px;
+        }
+
+        .ornament::after {
+            right: -12px;
+        }
+
+        .tab-nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: white;
+            border-bottom: 2px solid var(--gold);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button {
+            position: relative;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--warm-gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .tab-button:hover {
+            color: var(--deep-red);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .tab-button.active {
+            color: var(--deep-red);
+            font-weight: 600;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--deep-red);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verse-card {
+            background: white;
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .verse-card:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .quote-block {
+            border-left: 4px solid var(--deep-red);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--warm-gray);
+        }
+
+        .btn-primary {
+            background: var(--deep-red);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--deep-red);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--deep-red);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold);
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--gold);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: var(--navy);
+            transform: translateY(-2px);
+        }
+
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50px;
+            padding: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 50;
+            max-width: 50px;
+            overflow: hidden;
+        }
+
+        .attribution:hover {
+            max-width: 400px;
+            padding: 12px 20px;
+        }
+
+        .attribution-short {
+            font-size: 1.5rem;
+        }
+
+        .attribution-full {
+            display: none;
+            font-size: 0.875rem;
+            color: var(--warm-gray);
+            white-space: nowrap;
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+
+        .attribution a {
+            color: var(--deep-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .accordion-header {
+            background: var(--light-gold);
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: var(--gold);
+        }
+
+        .accordion-header h3 {
+            font-size: 1.25rem;
+            color: var(--navy);
+            margin: 0;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+            color: var(--deep-red);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 5000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+        }
+
+        .tooltip {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--navy);
+            color: white;
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            max-width: 300px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            z-index: 60;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .tooltip.show {
+            display: block;
+        }
+
+        .tooltip-term {
+            color: var(--gold);
+            cursor: help;
+            border-bottom: 1px dotted var(--gold);
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .attribution {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                max-width: 100%;
+                border-radius: 8px;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+                white-space: normal;
+            }
+
+            .tooltip {
+                right: 10px;
+                left: 10px;
+                max-width: calc(100% - 20px);
+            }
+        }
+
+        .section-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            color: var(--navy);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-right: 1rem;
+            font-family: 'Crimson Pro', serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-bg text-white">
+        <div class="max-w-4xl mx-auto px-6 py-20 text-center relative z-10">
+            <div class="mb-4 text-sm font-medium tracking-wide opacity-90">
+                📖 Gospel in Life - Timothy Keller
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                A New Heart
+            </h1>
+            <div class="ornament"></div>
+            <p class="text-xl md:text-2xl mb-8 opacity-95 max-w-2xl mx-auto leading-relaxed">
+                God's solution to the ultimate human problem: knowing what's right but being powerless to do it.
+            </p>
+            <div class="text-sm opacity-80 mb-2">
+                🕊️ September 16, 2007 • Deuteronomy 30:1-10
+            </div>
+            <div class="text-sm opacity-80 mb-8">
+                Series: The New Heart God Gives
+            </div>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://gospelinlife.com/sermon/a-new-heart/" class="btn-primary" target="_blank" rel="noopener">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn-secondary">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+        <div class="max-w-6xl mx-auto flex overflow-x-auto">
+            <button class="tab-button active" data-tab="overview">Overview</button>
+            <button class="tab-button" data-tab="sermon">Main Sermon</button>
+            <button class="tab-button" data-tab="verses">Bible Verses</button>
+            <button class="tab-button" data-tab="application">Application</button>
+            <button class="tab-button" data-tab="reflection">Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <h2 class="text-4xl font-bold mb-6 text-center">💡 Sermon Overview</h2>
+            <div class="ornament"></div>
+            
+            <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+                <p class="text-lg mb-6">
+                    In this powerful sermon from Deuteronomy 30, Tim Keller addresses what he calls "the ultimate human problem": we know what's right, but we can't consistently do it. The solution isn't more willpower or knowledge—it's a transformed heart.
+                </p>
+                
+                <h3 class="text-2xl font-bold mb-4 mt-8">🎯 Key Questions Addressed:</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <span class="section-number">1</span>
+                        <div>
+                            <h4 class="font-bold text-lg">What's the problem?</h4>
+                            <p class="text-gray-700">Humanity knows how to live rightly but lacks the power to do it consistently (Deuteronomy 30:1-4)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="section-number">2</span>
+                        <div>
+                            <h4 class="font-bold text-lg">What's the solution?</h4>
+                            <p class="text-gray-700">God promises to circumcise our hearts—to transform our deepest desires (Deuteronomy 30:6)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="section-number">3</span>
+                        <div>
+                            <h4 class="font-bold text-lg">How do you know if you have it?</h4>
+                            <p class="text-gray-700">Three signs: loving God for who He is, changing behavior, and organic spiritual growth</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="section-number">4</span>
+                        <div>
+                            <h4 class="font-bold text-lg">How can you receive it?</h4>
+                            <p class="text-gray-700">Look to Christ's cross, where He was "cut off" so we could receive new hearts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-red-50 to-amber-50 p-8 rounded-lg border-l-4 border-red-800">
+                <h3 class="text-2xl font-bold mb-4">✨ Central Theme</h3>
+                <p class="text-lg italic">
+                    "Our pleasure and our duty, though opposite before, since we have seen his beauty, are joined to part no more."
+                </p>
+                <p class="mt-4">
+                    A circumcised heart means what you <em>ought</em> to do becomes what you <em>want</em> to do—not through willpower, but through a transformation of desire accomplished by God's grace through Christ.
+                </p>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <h2 class="text-4xl font-bold mb-6 text-center">📜 Main Sermon Points</h2>
+            <div class="ornament"></div>
+
+            <div class="accordion-item active">
+                <div class="accordion-header">
+                    <h3>I. The Ultimate Human Problem (vv. 1-4)</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p class="mb-4">
+                            Moses prophesies that Israel will fail to obey God's law and will be dispersed and banished. But this isn't just about Israel—it's the story of all humanity written large.
+                        </p>
+                        
+                        <div class="quote-block mb-6">
+                            <p>
+                                "Human beings who know what is good, nevertheless remain mysteriously helpless to internally adopt and do the ethical, moral, and religious ideas bequeathed to them."
+                                <br><span class="text-sm not-italic">— Jacob Needleman, <em>Why Can't We Be Good</em></span>
+                            </p>
+                        </div>
+
+                        <p class="mb-4">
+                            Keller illustrates this with philosopher Jacob Needleman's observation: social theorists, therapists, and political leaders keep writing books about how we ought to live, but they miss one crucial point—<strong>we already know how we ought to live. We just can't do it.</strong>
+                        </p>
+
+                        <div class="bg-blue-50 p-6 rounded-lg mb-4">
+                            <h4 class="font-bold mb-3">📖 Story: The Harvard Psychology Class</h4>
+                            <p>
+                                Becky Pippert was auditing a counseling psychology course at Harvard. After hearing a case study about a man who hated his mother but didn't know it, she asked how the therapist would help him forgive his mother. The professor shocked everyone by saying, "That's not therapy... If you're looking for a forgiving heart, you're in the wrong department."
+                            </p>
+                            <p class="mt-3 italic">
+                                Psychology can help us understand our problems, but it cannot give us a new heart.
+                            </p>
+                        </div>
+
+                        <p>
+                            This is humanity's fundamental predicament: knowing the good but being powerless to consistently do it. We need more than information or willpower—we need transformation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>II. God's Solution: A Circumcised Heart (v. 6)</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p class="mb-4">
+                            <strong>"The Lord your God will circumcise your hearts and the hearts of your descendants, so that you may love him with all your heart and with all your soul and live."</strong>
+                        </p>
+
+                        <h4 class="text-xl font-bold mb-3 mt-6">Understanding the Heart</h4>
+                        <p class="mb-4">
+                            In modern culture, we think of the "heart" as the source of emotions and feelings, as opposed to the "head" which is the source of thoughts. But the Bible uses "heart" differently.
+                        </p>
+                        
+                        <div class="bg-amber-50 p-6 rounded-lg mb-6 border-l-4 border-amber-600">
+                            <p class="font-semibold mb-2">Biblical Definition of "Heart":</p>
+                            <p>
+                                The heart is the <span class="tooltip-term" data-tooltip="seat">seat of your entire acting self</span>—controlling not just emotions, but also thoughts and actions. It's where your most fundamental commitments reside: the things you most hope in, believe in, look to, and live for.
+                            </p>
+                            <p class="mt-3 italic">
+                                Whatever you look at and say, "If I had that, then I would be happy, then I would have meaning, then I would have value"—that's what shapes everything else in your life.
+                            </p>
+                        </div>
+
+                        <h4 class="text-xl font-bold mb-3 mt-6">Understanding Circumcision</h4>
+                        <p class="mb-4">
+                            <span class="tooltip-term" data-tooltip="circumcision">Circumcision</span> was the physical ritual representing Israel's commitment to obey God in His covenant. So what does a "circumcised heart" mean?
+                        </p>
+                        
+                        <p class="mb-4">
+                            <strong>It means serving God not just because you have to, but because you want to.</strong> Not out of external duty alone, but from internal desire and love.
+                        </p>
+
+                        <div class="quote-block mb-6">
+                            <p>
+                                "The being of God, the greatness of the being of God, demands a love that can't be the response to a demand."
+                                <br><span class="text-sm not-italic">— An older minister mentor to Tim Keller</span>
+                            </p>
+                        </div>
+
+                        <p class="mb-4">
+                            God's greatness requires a love that cannot just be a response to a requirement. When you have a circumcised heart, <strong>what you most ought to do becomes what you most want to do.</strong>
+                        </p>
+
+                        <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-700">
+                            <h4 class="font-bold mb-3">🎵 The Hymn That Captures It</h4>
+                            <p class="italic mb-3">
+                                "Our pleasure and our duty,<br>
+                                Though opposite before,<br>
+                                Since we have seen his beauty,<br>
+                                Are joined to part no more."
+                            </p>
+                            <p>
+                                — John Newton
+                            </p>
+                            <p class="mt-3">
+                                This is what a new heart looks like: pleasure and duty united. You delight in what you ought to do.
+                            </p>
+                        </div>
+
+                        <h4 class="text-xl font-bold mb-3 mt-6">Other Biblical Terms for This Reality</h4>
+                        <ul class="space-y-2 ml-6">
+                            <li>• <strong>A New Heart</strong> (Ezekiel 36:26)</li>
+                            <li>• <strong>The Law Written on Your Heart</strong> (Jeremiah 31:33)</li>
+                            <li>• <strong>Being Born Again</strong> (John 3:3-7)</li>
+                            <li>• <strong>Born of the Spirit</strong> (John 3:5-8)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>III. Three Signs of a Changed Heart</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p class="mb-6">
+                            Verses 6-8 reveal three key signs embedded in the words: <strong>love, obey, and live</strong>. These help us assess whether we have truly received this new heart.
+                        </p>
+
+                        <div class="mb-8">
+                            <h4 class="text-xl font-bold mb-4 flex items-center gap-3">
+                                <span class="text-3xl">❤️</span>
+                                Sign #1: A New Quality of Spiritual Awareness (Love)
+                            </h4>
+                            <p class="mb-4">
+                                "The Lord your God will circumcise your hearts... so that you may <strong>love</strong> him with all your heart and with all your soul."
+                            </p>
+                            
+                            <div class="bg-blue-50 p-6 rounded-lg mb-4">
+                                <p class="font-semibold mb-2">Key Distinction:</p>
+                                <p>
+                                    The new heart is not a change in the <em>quantity</em> of religious knowledge, but in the <em>quality</em> of spiritual awareness. It's not just learning new religious facts—it's a whole new way of perceiving spiritual reality.
+                                </p>
+                            </div>
+
+                            <p class="mb-4">
+                                Scripture uses sensory language to describe this transformation. Deuteronomy 29:3-4 speaks of "a heart to understand, eyes to see, and ears to hear." You move from knowing <em>about</em> God to actually <em>seeing</em>, <em>tasting</em>, and <em>hearing</em> Him.
+                            </p>
+
+                            <h5 class="font-bold mb-3 mt-6">📖 The Mozart Illustration</h5>
+                            <div class="bg-white p-6 rounded-lg border-2 border-blue-200 mb-4">
+                                <p class="mb-3">
+                                    "When I was in college, I took a music appreciation course and I had to listen to a lot of Mozart because it was on the test. I listened to Mozart to get a passing grade in the class, so I could get my degree, so I could get out and get a good job. <strong>I listened to Mozart to make money.</strong>
+                                </p>
+                                <p class="mb-3">
+                                    But today, my wife and I will spend a lot of money just to listen to Mozart. What happened?
+                                </p>
+                                <p class="mb-3">
+                                    Mozart used to be <strong>useful</strong>. Now Mozart is <strong>beautiful</strong>. Beautiful means it's satisfying in and of itself. It's attractive. It's what you want. It's one of the things that gives you meaning in life."
+                                </p>
+                            </div>
+
+                            <div class="bg-amber-50 p-6 rounded-lg border-l-4 border-amber-600">
+                                <p class="font-semibold mb-2">Jonathan Edwards' Insight:</p>
+                                <p>
+                                    People with a new heart love and obey God <strong>for the beauty and attractiveness of who He is in Himself</strong>—not because they have to, not to get things, not as a means to an end. They love Him aesthetically, as an end in and of Himself.
+                                </p>
+                                <p class="mt-3">
+                                    People without a new heart obey God <em>to get things</em>—forgiveness, blessing, heaven. But people with new hearts obey God <strong>just to get God</strong>, just to be near Him, just to delight Him.
+                                </p>
+                            </div>
+
+                            <p class="mt-4">
+                                When you receive a new heart, doctrines you've known for years suddenly come alive. Abstractions become realities. You don't just know about God's love—you <em>see</em> it. You don't just believe in God's power—you <em>taste</em> it.
+                            </p>
+                        </div>
+
+                        <div class="mb-8">
+                            <h4 class="text-xl font-bold mb-4 flex items-center gap-3">
+                                <span class="text-3xl">🔄</span>
+                                Sign #2: A Changed Life (Obey)
+                            </h4>
+                            <p class="mb-4">
+                                "You will again <strong>obey</strong> the Lord and follow all his commands" (v. 8)
+                            </p>
+
+                            <div class="bg-red-50 p-6 rounded-lg mb-4 border-l-4 border-red-700">
+                                <p class="font-semibold mb-2">Critical Understanding:</p>
+                                <p>
+                                    You don't obey to <em>get</em> the changed heart. The changed heart is <strong>not</strong> the result of obedience. Rather, <strong>obedience is the result of the changed heart</strong>. The changed heart comes as a gift of grace, and from it flows a life of joyful obedience.
+                                </p>
+                            </div>
+
+                            <p class="mb-4">
+                                If you really have a new heart, you get changed. Jonathan Edwards warns against being satisfied with emotional experiences alone:
+                            </p>
+
+                            <div class="quote-block mb-4">
+                                <p>
+                                    "I'm glad you like the sermons. I'm glad they make you weep. That's wonderful. But let's see: Do the people who know you best—the people around you who really see you—are they saying you are becoming more and more unselfish, more and more generous, more and more kind, more and more self-controlled, more and more courageous as the weeks go by?"
+                                </p>
+                            </div>
+
+                            <p class="mb-4">
+                                <strong>If you're not changing in the way you actually live, then you don't have that new heart.</strong> Your emotions are being stirred, but that's all.
+                            </p>
+
+                            <p>
+                                The new heart produces the fruit of the Spirit in your life: love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control (Galatians 5:22-23). Those around you will notice the difference.
+                            </p>
+                        </div>
+
+                        <div class="mb-8">
+                            <h4 class="text-xl font-bold mb-4 flex items-center gap-3">
+                                <span class="text-3xl">🌱</span>
+                                Sign #3: Organic Spiritual Growth (Live)
+                            </h4>
+                            <p class="mb-4">
+                                "The Lord your God will circumcise your hearts... so that you may love him with all your heart and with all your soul and <strong>live</strong>." (v. 6)
+                            </p>
+
+                            <p class="mb-4">
+                                This isn't talking about biological life—it's spiritual life. And like biological life, spiritual life comes <strong>gradually and organically</strong>.
+                            </p>
+
+                            <h5 class="font-bold mb-3 mt-6">The Baby Analogy</h5>
+                            <div class="bg-blue-50 p-6 rounded-lg mb-4">
+                                <p class="mb-3">
+                                    Think about babies. They're basket cases! They can't do anything. They just take and take. You have to take them everywhere and protect them from themselves all the time.
+                                </p>
+                                <p class="mb-3">
+                                    Keller recalls: "I can't tell you how many times when my kids were eighteen months old they were screaming and crying about something and I said, 'If only I could reason with you.' Didn't help."
+                                </p>
+                                <p>
+                                    Growth is slow. But it's real, and it's organic.
+                                </p>
+                            </div>
+
+                            <div class="bg-amber-50 p-6 rounded-lg mb-4 border-l-4 border-amber-600">
+                                <p class="font-semibold mb-2">Paul's Testimony (Romans 7):</p>
+                                <p class="mb-3">
+                                    "I delight in the law of God in my inmost self." — This is evidence of a circumcised heart.
+                                </p>
+                                <p>
+                                    Yet Paul also says: "I see all these other desires still in my life that vie with that and draw me away from doing what I should do in many cases. I'm improving, but it's gradual, it's fits and starts. It takes time."
+                                </p>
+                            </div>
+
+                            <h5 class="font-bold mb-3 mt-6">Organic vs. Mechanical Growth</h5>
+                            <div class="grid md:grid-cols-2 gap-6 mb-4">
+                                <div class="bg-gray-100 p-6 rounded-lg">
+                                    <h6 class="font-bold mb-3 text-red-800">❌ Mechanical Growth</h6>
+                                    <ul class="space-y-2">
+                                        <li>• External actions only</li>
+                                        <li>• Growth in quantity alone</li>
+                                        <li>• Like stacking bricks higher</li>
+                                        <li>• More Bible verses memorized</li>
+                                        <li>• More perfect attendance</li>
+                                        <li>• Heaping up good deeds</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-green-50 p-6 rounded-lg border-2 border-green-600">
+                                    <h6 class="font-bold mb-3 text-green-800">✅ Organic Growth</h6>
+                                    <ul class="space-y-2">
+                                        <li>• Growth from the inside out</li>
+                                        <li>• Growth in quality and complexity</li>
+                                        <li>• Like a bulb becoming a tulip</li>
+                                        <li>• Becoming wiser and deeper</li>
+                                        <li>• Happier and sadder simultaneously</li>
+                                        <li>• More tender-hearted and sensitive</li>
+                                        <li>• Tougher and tender at once</li>
+                                        <li>• More able to admit you're wrong</li>
+                                        <li>• Growing in grace and character</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <p>
+                                Real spiritual growth means you don't just accumulate more religious activities or knowledge. You become a different kind of person—wiser, more compassionate, more humble, more joyful even in suffering. You grow in spiritual character in ways that can't be measured by external metrics alone.
+                            </p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-lg border-2 border-blue-300">
+                            <h4 class="text-xl font-bold mb-4">🔍 Self-Examination Questions</h4>
+                            <ol class="space-y-3">
+                                <li><strong>1. Love:</strong> Is God becoming more beautiful to you, or is He mainly useful? Do you find yourself wanting to please Him for His own sake?</li>
+                                <li><strong>2. Obey:</strong> Are the people closest to you noticing real changes in your character—growing unselfishness, kindness, patience, courage?</li>
+                                <li><strong>3. Live:</strong> Over the years, are you becoming deeper, wiser, more gracious? Or are you just accumulating religious activities?</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>IV. How to Receive a New Heart</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p class="mb-6">
+                            The most crucial question: If you don't have a circumcised heart, how do you get one? Keller's answer is profound: <strong>Don't just ask God for a new heart. See how God procured it.</strong>
+                        </p>
+
+                        <h4 class="text-xl font-bold mb-4">The Theology of Circumcision</h4>
+                        <p class="mb-4">
+                            Why circumcision? Why such a bloody, painful ritual to represent covenant commitment to God? The answer lies in understanding what circumcision symbolized.
+                        </p>
+
+                        <div class="bg-amber-50 p-6 rounded-lg mb-6 border-l-4 border-amber-600">
+                            <h5 class="font-bold mb-3">📖 Genesis 15: Abraham's Covenant</h5>
+                            <p class="mb-3">
+                                When Abraham made his covenant with God, he walked between the torn pieces of a dead animal. This was a visual enactment of the penalty for disobedience.
+                            </p>
+                            <p class="mb-3">
+                                By walking through the pieces, Abraham was essentially saying: <em>"I promise you my allegiance, and Lord, if I don't do what I'm promising today, may I be torn to pieces."</em>
+                            </p>
+                            <p class="font-semibold">
+                                Circumcision was a reenactment and dramatization of this curse of the covenant.
+                            </p>
+                        </div>
+
+                        <div class="bg-red-50 p-6 rounded-lg mb-6 border-l-4 border-red-700">
+                            <h5 class="font-bold mb-3">⚔️ The Meaning of "Being Cut Off"</h5>
+                            <p class="mb-3">
+                                When the Israelites were circumcised, they were saying: <strong>"We will obey you, and if we are not obedient to you, may we be cut off."</strong>
+                            </p>
+                            <p class="mb-3">
+                                The punishment for sin—the curse of the covenant—is being cut off:
+                            </p>
+                            <ul class="space-y-2 ml-6">
+                                <li>• Cut off from other people (isolation)</li>
+                                <li>• Cut off from your country (exile)</li>
+                                <li>• Cut off from God (spiritual death)</li>
+                            </ul>
+                            <p class="mt-3 italic">
+                                When you lie, it cuts you off from people. When you cheat or are cruel, it isolates you. The penalty of sin is banishment and exile.
+                            </p>
+                        </div>
+
+                        <h4 class="text-xl font-bold mb-4 mt-8">🕊️ The Cross: Christ's Circumcision</h4>
+                        <p class="mb-4">
+                            How did God give us a new heart? On the cross, centuries after Deuteronomy 30, on an afternoon that turned into a dark and stormy night:
+                        </p>
+
+                        <div class="bg-white p-8 rounded-lg border-4 border-red-800 mb-6">
+                            <p class="text-lg mb-4">
+                                <strong>Jesus was cut:</strong>
+                            </p>
+                            <ul class="space-y-2 ml-6 mb-6">
+                                <li>• Thorns pressed into His brow</li>
+                                <li>• A spear pierced His side</li>
+                                <li>• Nails driven through His hands and feet</li>
+                            </ul>
+                            
+                            <p class="text-lg mb-4">
+                                But He wasn't just being physically cut. When He cried out, <strong>"My God, my God, why have you forsaken me?"</strong> (Matthew 27:46), something far more profound was happening.
+                            </p>
+
+                            <div class="quote-block text-lg">
+                                <p class="mb-3">
+                                    "He was pierced for our transgressions,<br>
+                                    he was crushed for our iniquities;<br>
+                                    the punishment that brought us peace was on him,<br>
+                                    and by his wounds we are healed...
+                                </p>
+                                <p>
+                                    <strong>For he was cut off from the land of the living;</strong><br>
+                                    for the transgression of my people he was punished."
+                                </p>
+                                <p class="text-sm not-italic mt-3">— Isaiah 53:5, 8 (NIV)</p>
+                            </div>
+                        </div>
+
+                        <p class="mb-6">
+                            Jesus experienced the <strong>cosmic cutting off</strong> that circumcision represented. He was experiencing the circumcision of judgment—being cut off from the Father, from life, from heaven itself. He was taking the penalty we deserve for not doing the good we know we ought to do.
+                        </p>
+
+                        <h4 class="text-xl font-bold mb-4">⚔️ The Flaming Sword</h4>
+                        <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                            <p class="mb-3">
+                                At the gate of the Garden of Eden, barring Adam and Eve from returning, was a <span class="tooltip-term" data-tooltip="flaming-sword">flaming sword</span>—the sword of God's judgment (Genesis 3:24).
+                            </p>
+                            <p>
+                                <strong>But the sword came down on Jesus.</strong> He was cut. He was cut off. So that now we can go in.
+                            </p>
+                        </div>
+
+                        <h4 class="text-xl font-bold mb-4 mt-8">📖 Understanding Colossians 2:11-12</h4>
+                        <div class="verse-card">
+                            <p class="mb-3">
+                                "In him you were also circumcised with a circumcision not performed by human hands. Your whole self ruled by the flesh was put off when you were circumcised by Christ, having been buried with him in baptism, in which you were also raised with him through your faith in the working of God, who raised him from the dead."
+                            </p>
+                            <p class="text-sm text-gray-600">— Colossians 2:11-12 (NIV)</p>
+                        </div>
+
+                        <p class="mb-6">
+                            This strange passage now makes sense. Christians have been "circumcised in the circumcision of Christ on the cross." Jesus experienced the cosmic cutting off—the judgment we deserved—so we could receive the circumcised heart we need.
+                        </p>
+
+                        <h4 class="text-xl font-bold mb-4 mt-8">💎 How to Receive the New Heart</h4>
+                        <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-lg border-2 border-purple-300 mb-6">
+                            <p class="text-lg mb-4">
+                                Don't simply pray: <em>"God, give me a new heart because I want to be a better person."</em> That won't work.
+                            </p>
+                            
+                            <p class="text-lg mb-4">
+                                Instead, <strong>look at what Jesus Christ did.</strong> Think about Him experiencing the cosmic cutting off for you. Meditate on His experience, His sacrifice, what He did to procure your new heart.
+                            </p>
+
+                            <div class="bg-white p-6 rounded-lg mb-4">
+                                <p class="font-semibold mb-3 text-xl">Here's the key insight:</p>
+                                <p class="text-lg italic">
+                                    "If the way Jesus procured the new heart moves you, that's the beginning of the new heart in you."
+                                </p>
+                            </div>
+
+                            <p class="text-lg mb-4">
+                                Do you understand? If what Jesus Christ did—His cutting off, His experience, His sacrifice for you—if that moves you, <strong>that's the beginning of the new heart in you.</strong>
+                            </p>
+
+                            <p class="text-lg font-semibold">
+                                Why? Because that's the beauty that makes pleasure and duty one.
+                            </p>
+                        </div>
+
+                        <div class="quote-block text-lg mb-6">
+                            <p class="mb-3">
+                                "Our pleasure and our duty,<br>
+                                Though opposite before,<br>
+                                Since we have seen his beauty,<br>
+                                Are joined to part no more.
+                            </p>
+                            <p class="mb-3">
+                                To see the law by Christ fulfilled<br>
+                                And hear his pardoning voice<br>
+                                Transforms a slave into a child<br>
+                                And duty into choice."
+                            </p>
+                            <p class="text-sm not-italic">— John Newton</p>
+                        </div>
+
+                        <p class="mb-6">
+                            The beauty of what Jesus Christ did on the cross—taking your cosmic cutting off for you—when that moves you, then you can pray: <em>"Now give me this new heart, not because of anything I have done, but because of what Jesus Christ has done. He took it all for me."</em>
+                        </p>
+
+                        <div class="bg-green-50 p-8 rounded-lg border-l-4 border-green-700">
+                            <h5 class="font-bold mb-4 text-xl">✨ The Beautiful Mystery</h5>
+                            <p class="mb-3">
+                                If you're asking for a new heart in response to Christ's sacrifice, that's evidence that <strong>God is already working in you.</strong> You wouldn't even be asking except God has already begun the work.
+                            </p>
+                            <p class="mb-3 italic">
+                                Birth isn't something you decide to do. Nobody says, "I think I'll get born." Birth is something that happens to you—but you're active in it.
+                            </p>
+                            <p class="font-semibold">
+                                That's what's happening when Christ's sacrifice moves you to seek a new heart. God is already at work. The new birth is beginning.
+                            </p>
+                        </div>
+
+                        <h4 class="text-xl font-bold mb-4 mt-8">🔥 For Those Who Already Have New Life</h4>
+                        <p class="mb-4">
+                            If you've already received the new heart and have had it for many years, this same truth is how your new life is stirred up to greater organic growth.
+                        </p>
+                        
+                        <p class="mb-4">
+                            Keep looking at what Jesus did. Continue receiving the beauty of His sacrifice. This is what fuels ongoing transformation and deepening spiritual life.
+                        </p>
+
+                        <div class="bg-gradient-to-r from-red-100 to-amber-100 p-8 rounded-lg border-2 border-red-400 mt-8">
+                            <h5 class="font-bold mb-4 text-2xl text-center">The Gospel Summary</h5>
+                            <p class="text-lg text-center italic mb-4">
+                                Look at what Jesus did. See the beauty of His sacrifice. Receive it. Let it transform you.
+                            </p>
+                            <p class="text-center text-xl font-bold">
+                                That's how you get a new heart. That's how the new life grows.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses" class="tab-content">
+            <h2 class="text-4xl font-bold mb-6 text-center">📖 Scripture References</h2>
+            <div class="ornament"></div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Primary Text: Deuteronomy 30:1-10</h3>
+                <p class="mb-3 italic">
+                    "When all these blessings and curses I have set before you come on you and you take them to heart wherever the Lord your God disperses you among the nations, and when you and your children return to the Lord your God and obey him with all your heart and with all your soul according to everything I command you today, then the Lord your God will restore your fortunes and have compassion on you and gather you again from all the nations where he scattered you. Even if you have been banished to the most distant land under the heavens, from there the Lord your God will gather you and bring you back. He will bring you to the land that belonged to your ancestors, and you will take possession of it. He will make you more prosperous and numerous than your ancestors. <strong>The Lord your God will circumcise your hearts and the hearts of your descendants, so that you may love him with all your heart and with all your soul, and live.</strong> The Lord your God will put all these curses on your enemies who hate and persecute you. You will again obey the Lord and follow all his commands I am giving you today. Then the Lord your God will make you most prosperous in all the work of your hands and in the fruit of your womb, the young of your livestock and the crops of your land. The Lord will again delight in you and make you prosperous, just as he delighted in your ancestors, if you obey the Lord your God and keep his commands and decrees that are written in this Book of the Law and turn to the Lord your God with all your heart and with all your soul."
+                </p>
+                <p class="text-sm text-gray-600">Deuteronomy 30:1-10 (NIV)</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Deuteronomy 29:3-4</h3>
+                <p class="mb-3 italic">
+                    "But to this day the Lord has not given you a mind that understands or eyes that see or ears that hear."
+                </p>
+                <p class="text-sm text-gray-600">Deuteronomy 29:4 (NIV) - Showing the need for God's transforming work</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Isaiah 53:5, 8</h3>
+                <p class="mb-3 italic">
+                    "But he was pierced for our transgressions, he was crushed for our iniquities; the punishment that brought us peace was on him, and by his wounds we are healed... For he was cut off from the land of the living; for the transgression of my people he was punished."
+                </p>
+                <p class="text-sm text-gray-600">Isaiah 53:5, 8 (NIV) - Christ's substitutionary sacrifice</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Ezekiel 36:26</h3>
+                <p class="mb-3 italic">
+                    "I will give you a new heart and put a new spirit in you; I will remove from you your heart of stone and give you a heart of flesh."
+                </p>
+                <p class="text-sm text-gray-600">Ezekiel 36:26 (NIV) - God's promise of transformation</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Jeremiah 31:33</h3>
+                <p class="mb-3 italic">
+                    "This is the covenant I will make with the people of Israel after that time," declares the Lord. "I will put my law in their minds and write it on their hearts. I will be their God, and they will be my people."
+                </p>
+                <p class="text-sm text-gray-600">Jeremiah 31:33 (NIV) - The New Covenant promise</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">John 3:3-7</h3>
+                <p class="mb-3 italic">
+                    "Jesus replied, 'Very truly I tell you, no one can see the kingdom of God unless they are born again.' 'How can someone be born when they are old?' Nicodemus asked. 'Surely they cannot enter a second time into their mother's womb to be born!' Jesus answered, 'Very truly I tell you, no one can enter the kingdom of God unless they are born of water and the Spirit. Flesh gives birth to flesh, but the Spirit gives birth to spirit. You should not be surprised at my saying, "You must be born again."'"
+                </p>
+                <p class="text-sm text-gray-600">John 3:3-7 (NIV) - Jesus' teaching on the new birth</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Romans 7:22</h3>
+                <p class="mb-3 italic">
+                    "For in my inner being I delight in God's law."
+                </p>
+                <p class="text-sm text-gray-600">Romans 7:22 (NIV) - Paul's testimony of a circumcised heart</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Colossians 2:11-12</h3>
+                <p class="mb-3 italic">
+                    "In him you were also circumcised with a circumcision not performed by human hands. Your whole self ruled by the flesh was put off when you were circumcised by Christ, having been buried with him in baptism, in which you were also raised with him through your faith in the working of God, who raised him from the dead."
+                </p>
+                <p class="text-sm text-gray-600">Colossians 2:11-12 (NIV) - The spiritual circumcision through Christ</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Genesis 3:24</h3>
+                <p class="mb-3 italic">
+                    "After he drove the man out, he placed on the east side of the Garden of Eden cherubim and a flaming sword flashing back and forth to guard the way to the tree of life."
+                </p>
+                <p class="text-sm text-gray-600">Genesis 3:24 (NIV) - The flaming sword of judgment</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Matthew 27:46</h3>
+                <p class="mb-3 italic">
+                    "About three in the afternoon Jesus cried out in a loud voice, 'Eli, Eli, lema sabachthani?' (which means 'My God, my God, why have you forsaken me?')."
+                </p>
+                <p class="text-sm text-gray-600">Matthew 27:46 (NIV) - Christ's cry of abandonment on the cross</p>
+            </div>
+
+            <div class="verse-card">
+                <h3 class="text-xl font-bold mb-3">Galatians 5:22-23</h3>
+                <p class="mb-3 italic">
+                    "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law."
+                </p>
+                <p class="text-sm text-gray-600">Galatians 5:22-23 (NIV) - Evidence of the Spirit's work</p>
+            </div>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <h2 class="text-4xl font-bold mb-6 text-center">🎯 Practical Application</h2>
+            <div class="ornament"></div>
+
+            <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-lg mb-8 border-2 border-blue-300">
+                <h3 class="text-2xl font-bold mb-4">💡 Key Takeaways</h3>
+                <div class="space-y-4">
+                    <div>
+                        <p class="font-bold mb-2">1. Your Heart Determines Everything</p>
+                        <p>The heart in Scripture isn't just emotions—it's the control center of your entire life. What you most hope in, believe in, and live for shapes all your thoughts, feelings, and actions. Examine what truly captures your imagination and desire.</p>
+                    </div>
+                    <div>
+                        <p class="font-bold mb-2">2. Knowledge Alone Is Not Enough</p>
+                        <p>The ultimate human problem isn't ignorance—it's powerlessness. We know how we ought to live, but we can't consistently do it. Therapy can help us understand ourselves; education can inform us; but only God can transform our hearts.</p>
+                    </div>
+                    <div>
+                        <p class="font-bold mb-2">3. True Change Is Heart-Deep</p>
+                        <p>Real spiritual transformation isn't about trying harder or knowing more. It's about receiving a new heart from God—one where duty and desire align, where what you ought to do becomes what you want to do.</p>
+                    </div>
+                    <div>
+                        <p class="font-bold mb-2">4. The Cross Is the Key</p>
+                        <p>You don't earn a new heart through performance. Jesus was "cut off" on the cross—experiencing the cosmic judgment we deserved—so we could receive the circumcised heart we need. Meditation on His sacrifice is what stirs the heart to life.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+                <h3 class="text-2xl font-bold mb-6">🔍 Self-Examination Questions</h3>
+                
+                <div class="space-y-6">
+                    <div class="border-l-4 border-gold pl-6">
+                        <h4 class="font-bold text-lg mb-2">On Love (New Spiritual Awareness)</h4>
+                        <ul class="space-y-2">
+                            <li>• Is God becoming more real to you, or just more familiar?</li>
+                            <li>• Do you obey God because you have to, or because you find Him beautiful?</li>
+                            <li>• When you read Scripture or worship, do doctrines feel like abstractions or living realities?</li>
+                            <li>• Are you pursuing God to get things from Him, or to get more of Him?</li>
+                            <li>• What do you daydream about when you have free time? Where does your mind naturally wander?</li>
+                        </ul>
+                    </div>
+
+                    <div class="border-l-4 border-deep-red pl-6">
+                        <h4 class="font-bold text-lg mb-2">On Obedience (Changed Life)</h4>
+                        <ul class="space-y-2">
+                            <li>• Would the people closest to you say you're becoming more Christlike over time?</li>
+                            <li>• Are you growing in unselfishness, kindness, patience, and courage?</li>
+                            <li>• Do you find yourself more able to forgive others than you were a year ago?</li>
+                            <li>• Are you becoming more generous with your time, money, and attention?</li>
+                            <li>• When you fail, do you quickly admit it and seek reconciliation?</li>
+                        </ul>
+                    </div>
+
+                    <div class="border-l-4 border-navy pl-6">
+                        <h4 class="font-bold text-lg mb-2">On Growth (Organic Spiritual Life)</h4>
+                        <ul class="space-y-2">
+                            <li>• Are you becoming wiser and deeper, not just more knowledgeable?</li>
+                            <li>• Can you experience greater joy and appropriate sorrow simultaneously?</li>
+                            <li>• Are you becoming both tougher (in conviction) and more tender (in compassion)?</li>
+                            <li>• Is your faith producing internal character transformation, not just external religious activity?</li>
+                            <li>• Looking back over years, can you see God's shaping work in your life?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 p-8 rounded-lg mb-8 border-l-4 border-amber-600">
+                <h3 class="text-2xl font-bold mb-4">🛠️ Practical Steps Forward</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-lg mb-2">For Those Without a New Heart:</h4>
+                        <ol class="space-y-3 ml-6">
+                            <li><strong>1. Stop asking for a new heart to become a better person.</strong> That approach treats God as useful rather than beautiful.</li>
+                            <li><strong>2. Meditate deeply on Christ's sacrifice.</strong> Read Isaiah 53, the crucifixion accounts, and Colossians 2:11-12. Let the reality sink in: Jesus was cut off so you wouldn't be.</li>
+                            <li><strong>3. When His sacrifice moves you, pray:</strong> "Give me this new heart, not because of anything I've done, but because of what Jesus has done. He took it all for me."</li>
+                            <li><strong>4. Trust that if you're drawn to Christ's beauty, God is already working in you.</strong> The new birth is beginning.</li>
+                        </ol>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-lg mb-2">For Those With a New Heart:</h4>
+                        <ol class="space-y-3 ml-6">
+                            <li><strong>1. Keep returning to the cross.</strong> Your ongoing growth comes from continually seeing and receiving Christ's beauty.</li>
+                            <li><strong>2. Don't measure your growth mechanically.</strong> Look for organic changes: deeper wisdom, greater compassion, more joy in God Himself.</li>
+                            <li><strong>3. Be patient with the process.</strong> Spiritual growth is gradual, like a baby growing into adulthood.</li>
+                            <li><strong>4. Let others see the changes.</strong> The new heart produces visible fruit in how you treat people, handle conflict, and navigate suffering.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-red-50 to-pink-50 p-8 rounded-lg border-2 border-red-300">
+                <h3 class="text-2xl font-bold mb-4">⚠️ Warning Signs of Counterfeit Religion</h3>
+                <p class="mb-4">Jonathan Edwards taught that many people have religious experiences but lack a truly circumcised heart. Watch for these indicators:</p>
+                <ul class="space-y-3">
+                    <li>
+                        <strong>✗ Emotional highs without life change:</strong> Sermons move you to tears, but your family sees no growing kindness or patience.
+                    </li>
+                    <li>
+                        <strong>✗ Loving God for what He gives rather than who He is:</strong> You're primarily interested in blessings, not in God Himself.
+                    </li>
+                    <li>
+                        <strong>✗ Mechanical rather than organic growth:</strong> You're stacking up religious activities (Bible reading, church attendance) but not becoming a different kind of person.
+                    </li>
+                    <li>
+                        <strong>✗ Inability to admit fault:</strong> You're defensive when confronted and rarely seek reconciliation.
+                    </li>
+                    <li>
+                        <strong>✗ Head knowledge without heart transformation:</strong> You can articulate doctrines perfectly but they don't move or change you.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-green-50 p-8 rounded-lg mt-8 border-l-4 border-green-700">
+                <h3 class="text-2xl font-bold mb-4">✅ The Daily Practice</h3>
+                <p class="mb-4">Build this habit into your life:</p>
+                <div class="space-y-4">
+                    <div>
+                        <p class="font-bold mb-2">Morning: Look to the Cross</p>
+                        <p>Start each day by remembering what Christ did for you. Read a portion of Scripture about His sacrifice. Let it move you afresh.</p>
+                    </div>
+                    <div>
+                        <p class="font-bold mb-2">Throughout the Day: Monitor Your Heart</p>
+                        <p>Ask: What am I most excited about right now? What captures my imagination? Is it God, or something else?</p>
+                    </div>
+                    <div>
+                        <p class="font-bold mb-2">Evening: Examine Your Life</p>
+                        <p>Review the day. Where did you see evidence of the new heart? Where did you see the old patterns? Repent and rejoice accordingly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <h2 class="text-4xl font-bold mb-6 text-center">🌟 Personal Reflection</h2>
+            <div class="ornament"></div>
+
+            <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+                <h3 class="text-2xl font-bold mb-4">💭 The Ultimate Question</h3>
+                <p class="text-lg mb-4">
+                    Tim Keller frames this sermon around a profound reality that every person must face: <strong>Do you have a new heart?</strong>
+                </p>
+                <p class="mb-4">
+                    This isn't asking whether you believe in God, attend church, or try to be good. It's asking whether your heart has been fundamentally transformed—whether what you ought to do has become what you most want to do.
+                </p>
+                <p class="mb-4">
+                    Jesus told Nicodemus, a religious leader and Bible teacher, "You must be born again" (John 3:7). If Nicodemus needed it with all his knowledge and morality, then everyone needs it.
+                </p>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-50 to-blue-50 p-8 rounded-lg mb-8 border-2 border-purple-300">
+                <h3 class="text-2xl font-bold mb-4">🎨 The Beauty That Changes Everything</h3>
+                <p class="mb-4">
+                    The turning point in this sermon is the shift from <em>usefulness</em> to <em>beauty</em>. Keller's Mozart illustration captures this perfectly:
+                </p>
+                <div class="bg-white p-6 rounded-lg mb-4">
+                    <p class="italic mb-3">
+                        "Mozart used to be useful—I listened to get good grades. Now Mozart is beautiful—I spend money just to hear it."
+                    </p>
+                </div>
+                <p class="mb-4">
+                    When you begin to see God not as useful (someone who gives you things) but as beautiful (someone you want for His own sake), everything changes. This is the essence of the new heart.
+                </p>
+                <p>
+                    The hymn Keller quotes captures this transformation: <em>"Our pleasure and our duty, though opposite before, since we have seen his beauty, are joined to part no more."</em>
+                </p>
+            </div>
+
+            <div class="bg-red-50 p-8 rounded-lg mb-8 border-l-4 border-red-700">
+                <h3 class="text-2xl font-bold mb-4">✝️ The Cross: Where Beauty and Justice Meet</h3>
+                <p class="mb-4">
+                    The most powerful section of this sermon is Keller's explanation of how God provided the new heart through Christ's crucifixion.
+                </p>
+                <div class="quote-block mb-4">
+                    <p>
+                        "On the cross, Jesus Christ was experiencing the cosmic cutting off that circumcision represented. He was experiencing this circumcision of judgment. He was being cut off from us. He was getting what we deserve for not doing the good we know we ought to do."
+                    </p>
+                </div>
+                <p class="mb-4">
+                    This isn't just theological information—it's meant to move us. Keller's point is profound: <strong>If the way Jesus procured the new heart moves you, that's the beginning of the new heart in you.</strong>
+                </p>
+                <p>
+                    You wouldn't be moved by Christ's sacrifice unless God were already working in you. That's the mysterious grace of the new birth.
+                </p>
+            </div>
+
+            <div class="bg-amber-50 p-8 rounded-lg mb-8 border-l-4 border-amber-600">
+                <h3 class="text-2xl font-bold mb-4">🌱 The Patience of Organic Growth</h3>
+                <p class="mb-4">
+                    One of the most comforting aspects of this sermon is Keller's teaching on spiritual growth. He reminds us:
+                </p>
+                <ul class="space-y-3 mb-4">
+                    <li>• <strong>Growth is gradual.</strong> Like babies learning to walk, spiritual maturity takes time.</li>
+                    <li>• <strong>Growth is organic, not mechanical.</strong> It's not about stacking up religious activities but becoming a different kind of person.</li>
+                    <li>• <strong>Growth includes setbacks.</strong> Paul himself said, "I see desires in me that vie with my love for God."</li>
+                </ul>
+                <p>
+                    This means you shouldn't be discouraged if you don't see instant transformation. The new heart is like a seed planted that grows into a tree—it takes time, but the life is real.
+                </p>
+            </div>
+
+            <div class="bg-blue-50 p-8 rounded-lg mb-8">
+                <h3 class="text-2xl font-bold mb-4">🔥 The Test of Reality</h3>
+                <p class="mb-4">
+                    Keller doesn't let us settle for emotional experiences alone. Following Jonathan Edwards, he insists on a reality check:
+                </p>
+                <div class="bg-white p-6 rounded-lg mb-4 border-2 border-blue-400">
+                    <p class="mb-3">
+                        "I'm glad you like the sermons. I'm glad they make you weep. That's wonderful. <strong>But let's see: Do the people who know you best—the people around you who really see you—are they saying you are becoming more and more unselfish, more and more generous, more and more kind, more and more self-controlled, more and more courageous as the weeks go by?</strong>"
+                    </p>
+                    <p>
+                        If you're not changing in the way you actually live, then you don't have that new heart. Your emotions are being stirred, but that's all.
+                    </p>
+                </div>
+                <p>
+                    This is sobering but necessary. True spiritual life produces visible fruit in how we treat others, handle conflict, and respond to suffering.
+                </p>
+            </div>
+
+            <div class="bg-gradient-to-r from-green-50 to-teal-50 p-8 rounded-lg mb-8 border-2 border-green-400">
+                <h3 class="text-2xl font-bold mb-4">💎 The Central Paradox</h3>
+                <p class="mb-4">
+                    This sermon revolves around a beautiful paradox:
+                </p>
+                <div class="bg-white p-6 rounded-lg mb-4">
+                    <p class="text-lg font-semibold mb-3">
+                        You cannot manufacture a new heart through effort, yet you must actively receive it through faith in Christ's work.
+                    </p>
+                    <p>
+                        It's not passive ("God will do everything") nor active in a self-reliant way ("I must earn it"). Rather, you actively look to what Christ has done, and in that looking—in that being moved by His beauty and sacrifice—the new heart is born.
+                    </p>
+                </div>
+                <p>
+                    As Keller says, "Birth isn't something you decide to do. Nobody says, 'I think I'll get born.' Birth is something that happens to you—but you're active in it."
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-gold">
+                <h3 class="text-2xl font-bold mb-4 text-center">📝 A Prayer to Close</h3>
+                <div class="ornament mb-6"></div>
+                <div class="bg-gradient-to-br from-red-50 to-amber-50 p-8 rounded-lg">
+                    <p class="italic text-lg leading-relaxed">
+                        "Thank you, Father, for giving us what we need in order to have new hearts, and then to have that new life in us stirred up. So we pray that you would show us the beauty of what Jesus did and weld together our pleasure and our duty, so that you, O Lord Jesus Christ, become the center of our lives. We pray this in Jesus' name. Amen."
+                    </p>
+                    <p class="text-right mt-4 font-semibold">— Tim Keller's closing prayer</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-navy to-deep-red text-white p-8 rounded-lg mt-8">
+                <h3 class="text-2xl font-bold mb-4 text-center">🕊️ Final Reflection</h3>
+                <p class="text-center text-lg mb-4">
+                    Do you see the beauty of what Christ did for you?
+                </p>
+                <p class="text-center text-lg mb-4">
+                    Does His being "cut off" so you could be brought in move your heart?
+                </p>
+                <p class="text-center text-lg font-semibold">
+                    If it does, that's the beginning—or the continued growth—of the new heart in you.
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+                
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({ top: document.querySelector('.tab-nav').offsetTop, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all accordion items
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Tooltip functionality
+        const tooltipTerms = document.querySelectorAll('.tooltip-term');
+        const tooltip = document.getElementById('tooltip');
+
+        const tooltipContent = {
+            'seat': 'In biblical language, the "seat" refers to the source or control center—the place from which something originates and governs everything else.',
+            'circumcision': 'A physical sign of covenant commitment to God in the Old Testament, performed on male Israelites as a permanent mark of their relationship with God and their promise to obey Him.',
+            'flaming-sword': 'The cherubim with the flaming sword guarded the entrance to Eden after the Fall, representing God\'s judgment that barred humanity from the tree of life. This sword came down on Christ at the cross.'
+        };
+
+        tooltipTerms.forEach(term => {
+            term.addEventListener('mouseenter', (e) => {
+                const key = term.dataset.tooltip;
+                tooltip.textContent = tooltipContent[key];
+                tooltip.classList.add('show');
+            });
+
+            term.addEventListener('mouseleave', () => {
+                tooltip.classList.remove('show');
+            });
+
+            // Mobile support
+            term.addEventListener('click', (e) => {
+                e.preventDefault();
+                const key = term.dataset.tooltip;
+                tooltip.textContent = tooltipContent[key];
+                tooltip.classList.toggle('show');
+            });
+        });
+
+        // Close tooltip when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('tooltip-term') && !tooltip.contains(e.target)) {
+                tooltip.classList.remove('show');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
