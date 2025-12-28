@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I AM: The Vine | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vine-green: #2d5016;
+            --leaf-green: #4a7c2f;
+            --berry-purple: #6b4c7a;
+            --earth-brown: #8b6f47;
+            --cream: #f5f1e8;
+            --bark-dark: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--bark-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+        }
+
+        /* Header with Image Carousel */
+        .header-vine {
+            position: relative;
+            min-height: 85vh;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(45, 80, 22, 0.82) 0%, rgba(74, 124, 47, 0.72) 50%, rgba(107, 76, 122, 0.65) 100%);
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 15;
+        }
+
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .carousel-indicator:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .carousel-indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 10;
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--cream);
+        }
+
+        .vine-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Sticky Tab Navigation */
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            border-bottom: 2px solid var(--leaf-green);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-button {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--vine-green);
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            font-size: 0.95rem;
+        }
+
+        .tab-button:hover {
+            background: rgba(74, 124, 47, 0.05);
+        }
+
+        .tab-button.active {
+            border-bottom-color: var(--berry-purple);
+            color: var(--berry-purple);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Organic Card Design */
+        .content-card {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            box-shadow: 0 4px 20px rgba(45, 80, 22, 0.08);
+            border: 1px solid rgba(74, 124, 47, 0.1);
+        }
+
+        /* Accordion for Sermon Sections */
+        .accordion-item {
+            border: 1px solid rgba(74, 124, 47, 0.2);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            background: linear-gradient(to right, rgba(74, 124, 47, 0.05), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--vine-green);
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(74, 124, 47, 0.1);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 5000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* Masonry Grid for Bible Verses */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--berry-purple);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Floating Tooltip */
+        .tooltip-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+
+        .tooltip-trigger {
+            background: var(--berry-purple);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(107, 76, 122, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tooltip-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(107, 76, 122, 0.4);
+        }
+
+        .tooltip-content {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .tooltip-content.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Attribution Badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 150;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            background: var(--earth-brown);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            font-size: 0.875rem;
+            max-width: 300px;
+            border: 1px solid var(--earth-brown);
+        }
+
+        .attribution-badge:hover .attribution-short {
+            transform: translateX(-10px);
+            opacity: 0;
+        }
+
+        .attribution-badge:hover .attribution-full {
+            display: block;
+            animation: slideLeft 0.3s ease;
+        }
+
+        @keyframes slideLeft {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: var(--berry-purple);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--vine-green);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(107, 76, 122, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--vine-green);
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            border: 2px solid var(--vine-green);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--vine-green);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-vine {
+                min-height: 75vh;
+            }
+
+            .carousel-indicators {
+                bottom: 15px;
+                gap: 8px;
+            }
+
+            .carousel-indicator {
+                width: 10px;
+                height: 10px;
+            }
+
+            .header-content {
+                padding: 4rem 1.5rem;
+            }
+
+            .content-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+                border-radius: 16px;
+            }
+
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .tooltip-container {
+                position: static;
+                margin: 1rem;
+            }
+
+            .tooltip-content {
+                position: static;
+                width: 100%;
+            }
+
+            .attribution-badge {
+                position: static;
+                margin: 2rem auto;
+                text-align: center;
+            }
+
+            .attribution-badge:hover .attribution-short {
+                transform: none;
+                opacity: 1;
+            }
+
+            .attribution-full {
+                display: block;
+                margin-top: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .sticky-tabs, .tooltip-container, .attribution-badge, .btn-primary, .btn-secondary, .carousel-indicators {
+                display: none !important;
+            }
+
+            .header-vine {
+                min-height: auto;
+                background: var(--vine-green) !important;
+            }
+
+            .carousel-container {
+                display: none !important;
+            }
+
+            .tab-content {
+                display: block !important;
+            }
+
+            .accordion-content {
+                max-height: none !important;
+            }
+
+            body {
+                background: white;
+            }
+        }
+
+        /* Accessibility */
+        *:focus {
+            outline: 3px solid var(--berry-purple);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Scripture Styling */
+        .scripture-ref {
+            font-weight: 600;
+            color: var(--berry-purple);
+            margin-bottom: 0.5rem;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--leaf-green);
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: var(--vine-green);
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Image Carousel -->
+    <header class="header-vine">
+        <div class="carousel-container" id="carousel">
+            <!-- Lush vineyard rows at golden hour -->
+            <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1920&q=80');"></div>
+            <!-- Beautiful grape clusters on the vine -->
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1596363505729-4190a9506133?w=1920&q=80');"></div>
+            <!-- Mediterranean vineyard landscape -->
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1920&q=80');"></div>
+            <!-- Close-up of grapevines with sunlight -->
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&q=80');"></div>
+            <!-- Stunning vineyard at sunset -->
+            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1464638681648-68702e9dd9eb?w=1920&q=80');"></div>
+        </div>
+        <div class="carousel-indicators">
+            <span class="carousel-indicator active" data-slide="0"></span>
+            <span class="carousel-indicator" data-slide="1"></span>
+            <span class="carousel-indicator" data-slide="2"></span>
+            <span class="carousel-indicator" data-slide="3"></span>
+            <span class="carousel-indicator" data-slide="4"></span>
+        </div>
+        <div class="header-content">
+            <div class="vine-icon">🍇</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">I AM: The Vine</h1>
+            <p class="text-xl md:text-2xl mb-2 opacity-90">Pastor Tim</p>
+            <p class="text-lg mb-6 opacity-75">06 Apr 2025 | Island ECC</p>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed opacity-90">
+                As Jesus prepared for His arrest and crucifixion, He left His disciples with a profound illustration: 
+                the vine and the branches. A simple yet powerful message about staying connected to Him—the source of all spiritual life and fruitfulness.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://www.youtube.com/watch?v=PoK_v2aQRIM" class="btn-primary" target="_blank" rel="noopener">
+                    ▶ Watch Original Sermon
+                </a>
+                <a href="../index.html" class="btn-secondary">
+                    📋 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Floating Tooltip for Key Terms -->
+    <div class="tooltip-container">
+        <button class="tooltip-trigger" id="tooltipBtn" aria-label="Key Terms">📖</button>
+        <div class="tooltip-content" id="tooltipContent">
+            <h3 class="text-lg font-bold mb-3 text-vine-green" style="color: var(--vine-green);">Key Terms 🌿</h3>
+            <div class="space-y-3">
+                <div>
+                    <strong>Abide/Remain:</strong>
+                    <p class="text-sm mt-1">To stay connected, dwell continuously, maintain intimate relationship with Christ.</p>
+                </div>
+                <div>
+                    <strong>Prune (Catharsis):</strong>
+                    <p class="text-sm mt-1">Greek: <em>kathairo</em> - to cleanse, purify. Removing what hinders growth, not punishment.</p>
+                </div>
+                <div>
+                    <strong>True Vine:</strong>
+                    <p class="text-sm mt-1">Jesus fulfills what Israel was meant to be—the choice vineyard of God.</p>
+                </div>
+                <div>
+                    <strong>Bear Fruit:</strong>
+                    <p class="text-sm mt-1">Producing love, spiritual maturity, and drawing others to Christ through our lives.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Tab Navigation -->
+    <nav class="sticky-tabs">
+        <div class="flex overflow-x-auto">
+            <button class="tab-button active" onclick="switchTab('overview')">🌱 Overview</button>
+            <button class="tab-button" onclick="switchTab('sermon')">🎤 Main Sermon</button>
+            <button class="tab-button" onclick="switchTab('verses')">📖 Bible Verses</button>
+            <button class="tab-button" onclick="switchTab('context')">🏛️ Historical Context</button>
+            <button class="tab-button" onclick="switchTab('application')">💡 Application</button>
+            <button class="tab-button" onclick="switchTab('reflection')">🙏 Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Tab Contents -->
+    <main class="py-8">
+        <!-- Overview Tab -->
+        <section id="overview" class="tab-content active">
+            <div class="content-card">
+                <h2 class="text-4xl font-bold mb-6" style="color: var(--vine-green);">Sermon Overview 🍇</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-3" style="color: var(--berry-purple);">Central Message</h3>
+                        <p class="text-lg leading-relaxed">
+                            Jesus uses the metaphor of a vine and branches to teach the essential truth of Christian life: 
+                            <strong>we must remain connected to Him</strong>. Just as branches cannot bear fruit apart from the vine, 
+                            we cannot live fruitful spiritual lives apart from Christ. This isn't just about belief—it's about 
+                            abiding, dwelling, staying constantly connected to our source of life.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-3" style="color: var(--berry-purple);">Key Scripture</h3>
+                        <blockquote class="text-lg">
+                            "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; 
+                            apart from me you can do nothing." <span class="scripture-ref">— John 15:5 (NIV)</span>
+                        </blockquote>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-3" style="color: var(--berry-purple);">Main Points</h3>
+                        <ul class="space-y-3 text-lg">
+                            <li>✅ <strong>Jesus is the True Vine</strong> - fulfilling Israel's failed vineyard</li>
+                            <li>✅ <strong>God the Father is the Gardener</strong> - who prunes and cultivates</li>
+                            <li>✅ <strong>We are the Branches</strong> - displaying fruit for God's glory</li>
+                            <li>✅ <strong>Remaining = Fruitfulness</strong> - connection produces spiritual growth</li>
+                            <li>✅ <strong>Pruning ≠ Punishment</strong> - removing what hinders, not what we need</li>
+                            <li>✅ <strong>The Command: Love</strong> - staying connected enables sacrificial love</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-3" style="color: var(--berry-purple);">Practical Takeaways</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-green-50 rounded-lg border-l-4 border-green-600">
+                                <h4 class="font-semibold mb-2">🌱 Plant in Truth</h4>
+                                <p>Abide in Jesus' words, fill your mind with Scripture, keep His command to love.</p>
+                            </div>
+                            <div class="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-600">
+                                <h4 class="font-semibold mb-2">🌿 Tend Your Garden</h4>
+                                <p>Practice spiritual disciplines daily—prayer, worship, community, service.</p>
+                            </div>
+                            <div class="p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-600">
+                                <h4 class="font-semibold mb-2">✂️ Trust the Gardener</h4>
+                                <p>Let God prune what hinders your growth—habits, relationships, past burdens.</p>
+                            </div>
+                            <div class="p-4 bg-pink-50 rounded-lg border-l-4 border-pink-600">
+                                <h4 class="font-semibold mb-2">🌸 Bloom Together</h4>
+                                <p>Grow in community—we're stronger when supporting each other.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Sermon Tab -->
+        <section id="sermon" class="tab-content">
+            <div class="content-card">
+                <h2 class="text-4xl font-bold mb-6" style="color: var(--vine-green);">Full Sermon Teaching 🎤</h2>
+
+                <!-- Accordion Structure -->
+                <div class="space-y-4">
+                    <!-- Introduction -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🌱 Introduction: The Best Gardener I Know</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="mb-4">
+                                    Pastor Tim begins by sharing about his mother—the best gardener he knows. She worked tirelessly 
+                                    every weekend on her yard, meticulously caring for flowers and pulling weeds. After Tim got married, 
+                                    she helped set up his garden, but he neglected it during winter, thinking plants just naturally died 
+                                    and came back.
+                                </p>
+                                <p class="mb-4">
+                                    When he asked his mom if plants needed water in winter, she responded with a profound question: 
+                                    <strong>"Do you need to drink water in winter?"</strong> This became a spiritual lesson—even in our 
+                                    spiritual winters and desert seasons, we need water. We need God.
+                                </p>
+                                <p>
+                                    His mother also taught him about <strong>pruning</strong>—removing dead branches so plants can direct 
+                                    energy to living parts, producing more blossoms and fruit. This agricultural principle becomes the 
+                                    foundation for understanding Jesus' teaching about the vine.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The True Vine -->
+                    <div class="accordion-item active">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🍇 "I Am the True Vine" - Historical Fulfillment</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="mb-4">
+                                    When Jesus declares <strong>"I am the true vine"</strong> (John 15:1), His disciples immediately 
+                                    understood the weight of this statement. The word "true" packed their entire Old Testament history.
+                                </p>
+                                
+                                <h4 class="font-semibold text-xl mb-3 mt-4" style="color: var(--berry-purple);">Isaiah's Prophecy of the Failed Vineyard</h4>
+                                <p class="mb-3">
+                                    In Isaiah 5, God describes Israel as His vineyard—planted on a fertile hillside with choicest vines, 
+                                    a watchtower, and a winepress. He expected good grapes but received only bad fruit.
+                                </p>
+                                <blockquote class="my-4">
+                                    "My loved one had a vineyard on a fertile hillside. He dug it up and cleared it of stones and planted 
+                                    it with the choicest vines... Then he looked for a crop of good grapes, but it yielded only bad fruit." 
+                                    <span class="scripture-ref">— Isaiah 5:1-2</span>
+                                </blockquote>
+                                <p class="mb-4">
+                                    Because of their unfaithfulness, God removed His protection:
+                                </p>
+                                <blockquote class="my-4">
+                                    "I will take away its hedge, and it will be destroyed; I will break down its wall, and it will be trampled. 
+                                    I will make it a wasteland, neither pruned nor cultivated, and briers and thorns will grow there." 
+                                    <span class="scripture-ref">— Isaiah 5:5-6</span>
+                                </blockquote>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-6" style="color: var(--berry-purple);">The Hebrew Wordplay</h4>
+                                <p class="mb-4">
+                                    Isaiah uses powerful Hebrew wordplay contrasting what God wanted versus what He found:
+                                </p>
+                                <ul class="space-y-2 ml-6">
+                                    <li><strong>Mishpat</strong> (justice/fairness) vs. <strong>Mispach</strong> (bloodshed/violence)</li>
+                                    <li><strong>Tzedakah</strong> (righteousness) vs. <strong>Tze'akah</strong> (cries of distress)</li>
+                                </ul>
+                                <p class="mt-4">
+                                    So close in sound, yet completely opposite in meaning—showing how Israel pursued the wrong things 
+                                    while thinking they were right.
+                                </p>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-6" style="color: var(--berry-purple);">Hope of Restoration</h4>
+                                <p class="mb-3">
+                                    Despite judgment, Isaiah prophesied hope:
+                                </p>
+                                <blockquote class="my-4">
+                                    "A shoot will come up from the stump of Jesse; from his roots a branch will bear fruit. The Spirit 
+                                    of the Lord will rest on him." <span class="scripture-ref">— Isaiah 11:1-2</span>
+                                </blockquote>
+                                <p>
+                                    When Jesus says "I am the <em>true</em> vine," He's declaring: <strong>I am that promised shoot. 
+                                    I am the fulfillment. I am what Israel was meant to be.</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Immediate Context -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🍷 Immediate Context: Fresh from Communion</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="mb-4">
+                                    This teaching wasn't just historically significant—it was <strong>immediately visceral</strong> for the disciples. 
+                                    Just an hour before, they had shared communion with Jesus. They had tasted the wine representing His blood, 
+                                    the new covenant.
+                                </p>
+                                <p class="mb-4">
+                                    After communion, Jesus said "Come, let us leave" (John 14:31). As they walked toward the Garden of Gethsemane—
+                                    perhaps passing vineyards—Jesus gave this teaching. The taste of the choicest wine was still on their tongues.
+                                </p>
+                                <p>
+                                    <strong>Jesus was saying:</strong> "I am the true vine. You just tasted what that means. This is the new 
+                                    covenant in my blood. I have redeemed Israel, and you are now part of this."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Gardener and Pruning -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>✂️ The Father as Gardener: Cutting and Pruning</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <blockquote class="mb-4">
+                                    "I am the true vine, and my Father is the gardener. He cuts off every branch in me that bears no fruit, 
+                                    while every branch that does bear fruit he prunes so that it will be even more fruitful." 
+                                    <span class="scripture-ref">— John 15:1-2</span>
+                                </blockquote>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-4" style="color: var(--berry-purple);">Two Actions of the Gardener</h4>
+                                
+                                <div class="mb-6">
+                                    <p class="font-semibold mb-2">1. Cuts Off Fruitless Branches</p>
+                                    <p>
+                                        These represent people who claim to follow Christ but aren't truly connected—they fake it. 
+                                        Judas was one such example. Jesus said, "Why do you call me 'Lord, Lord,' and do not do what I say?" 
+                                        (Luke 6:46). Superficial connection leads to being cut off.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="font-semibold mb-2">2. Prunes Fruitful Branches</p>
+                                    <p class="mb-3">
+                                        <strong>Critical truth:</strong> Pruning is NOT punishment. It's removing what we don't need so we 
+                                        can put more energy into what we do need.
+                                    </p>
+                                    <p class="mb-3">
+                                        The Greek word is <em>kathairo</em> (καθαίρω) meaning "to cleanse" or "to purify"—where we get 
+                                        "catharsis." It's about <strong>releasing burdens</strong>, not bearing more.
+                                    </p>
+                                </div>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-6" style="color: var(--berry-purple);">What Needs Pruning in Your Life?</h4>
+                                <p class="mb-3">Pastor Tim invites us to reflect right now—we can all think of something:</p>
+                                <ul class="space-y-2 ml-6">
+                                    <li>💭 A bad habit we're trying to shake</li>
+                                    <li>🕰️ Part of our past we're holding onto</li>
+                                    <li>⚠️ A toxic relationship causing harm</li>
+                                    <li>🎭 Burdens or trauma we need catharsis from</li>
+                                </ul>
+                                <p class="mt-4">
+                                    <strong>The promise:</strong> When we let God prune these things, we experience new growth—better growth. 
+                                    Our energy goes to what truly matters.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Remaining in Christ -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🔌 The Power of Remaining Connected</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <blockquote class="mb-4">
+                                    "Remain in me, as I also remain in you. No branch can bear fruit by itself; it must remain in the vine. 
+                                    Neither can you bear fruit unless you remain in me." <span class="scripture-ref">— John 15:4</span>
+                                </blockquote>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-4" style="color: var(--berry-purple);">Modern Analogies</h4>
+                                <p class="mb-4">
+                                    Pastor Tim reimagines Jesus' teaching for our electric age:
+                                </p>
+
+                                <div class="space-y-4 mb-6">
+                                    <div class="p-4 bg-blue-50 rounded-lg">
+                                        <p class="font-semibold mb-2">💡 Power Supply Analogy</p>
+                                        <p>
+                                            "I am the power source, and you are the light bulbs. If you remain connected, you produce light. 
+                                            Disconnected, you do nothing."
+                                        </p>
+                                    </div>
+
+                                    <div class="p-4 bg-purple-50 rounded-lg">
+                                        <p class="font-semibold mb-2">🔋 Phone Charger Analogy (The Problem)</p>
+                                        <p class="mb-2">
+                                            "I am the ultimate charger, and you are the phones." But here's where it breaks down—phones can 
+                                            disconnect and still work... for a while. We do this too!
+                                        </p>
+                                        <p>
+                                            We disconnect from Christ thinking, "I still have power. I can do things without Jesus." But eventually, 
+                                            the battery dies. That's when we rush back to church in crisis: "I need prayer! I need a care group!" 
+                                            We should stay connected constantly, not just when desperate.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-4 bg-green-50 rounded-lg">
+                                        <p class="font-semibold mb-2">📡 Wi-Fi Router Analogy (The Best One)</p>
+                                        <p class="mb-2">
+                                            "I am the ultimate Internet Service Provider, and you are the Wi-Fi routers."
+                                        </p>
+                                        <p class="mb-2">
+                                            Without the Ethernet cable, routers do nothing. But when connected, they don't just receive—they 
+                                            <strong>serve</strong>. They reach out. They connect other devices to the main source.
+                                        </p>
+                                        <p>
+                                            <strong>This is us!</strong> When connected to Christ, we serve others and bring them into connection too. 
+                                            It's not just about our connection—it's about expanding the network for God's glory.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-6" style="color: var(--berry-purple);">The Clear Command</h4>
+                                <blockquote class="my-4">
+                                    "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; 
+                                    apart from me you can do nothing." <span class="scripture-ref">— John 15:5</span>
+                                </blockquote>
+                                <p class="mb-4">
+                                    <strong>Apart from Christ, we can do NOTHING.</strong> Not "some things with difficulty"—nothing of eternal value.
+                                </p>
+                                <p>
+                                    But remaining in Him? We bear <em>much</em> fruit. Not just fruit—<strong>much</strong> fruit.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Withering vs Flourishing -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🍂 Withering vs. 🌸 Flourishing</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <blockquote class="mb-4">
+                                    "If you do not remain in me, you are like a branch that is thrown away and withers; such branches are 
+                                    picked up, thrown into the fire and burned." <span class="scripture-ref">— John 15:6</span>
+                                </blockquote>
+
+                                <p class="mb-4">
+                                    Pastor Tim shares a personal example: "We love grapes at home. Always have a bowl full. But if a grape 
+                                    falls off the vine, it withers. I hate withered grapes—they're nasty! Though strangely, I love raisins."
+                                </p>
+                                <p class="mb-4">
+                                    When disconnected from the vine, branches wither. They become ugly, gross, useless. The same happens to 
+                                    our <strong>spiritual lives</strong> when we're not walking with Christ—we begin to fall apart, sometimes 
+                                    affecting us physically too.
+                                </p>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-4" style="color: var(--berry-purple);">But Remaining Brings Answered Prayer</h4>
+                                <blockquote class="my-4">
+                                    "If you remain in me and my words remain in you, ask whatever you wish, and it will be done for you." 
+                                    <span class="scripture-ref">— John 15:7</span>
+                                </blockquote>
+                                <p class="mb-4">
+                                    This isn't like rubbing a genie lamp. It's Jesus saying: "When you stay connected to me and understand 
+                                    my will, what you pray for will align with my purposes—and I will do it."
+                                </p>
+                                <p>
+                                    It may not come exactly when or how we want, but God answers. Many of us have prayer journals showing 
+                                    how God has faithfully answered over years—sometimes differently than expected, but always good.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bearing Fruit for Glory -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🌸 Bearing Fruit Shows We're Disciples</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <blockquote class="mb-4">
+                                    "This is to my Father's glory, that you bear much fruit, showing yourselves to be my disciples." 
+                                    <span class="scripture-ref">— John 15:8</span>
+                                </blockquote>
+
+                                <p class="mb-4">
+                                    <strong>Beautiful truth:</strong> Which part of a tree bears the fruit? The branches—not the trunk. 
+                                    We get the honor and privilege to be the most beautiful part of God's vine!
+                                </p>
+                                <p class="mb-4">
+                                    Think of cherry blossoms in Japan—people travel from around the world to see their beauty. Why? Because 
+                                    the branches produce stunning blossoms.
+                                </p>
+                                <p class="mb-4">
+                                    When we produce fruit, it's not for our glory—it's for the <strong>Father's glory</strong>. And that fruit 
+                                    proves to the world we are Jesus' disciples. It makes our faith attractive, drawing others to God.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grafted In -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🌳 Grafted In: The Tree of 40 Fruits</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="mb-4">
+                                    The original covenant was with Israel. But through Christ, the new covenant includes everyone—Jews and Gentiles. 
+                                    We in Hong Kong, at "the ends of the earth," are now connected to this same vine!
+                                </p>
+
+                                <blockquote class="my-4">
+                                    "You, though a wild olive shoot, have been grafted in among the others and now share in the nourishing sap 
+                                    from the olive root." <span class="scripture-ref">— Romans 11:17</span>
+                                </blockquote>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-4" style="color: var(--berry-purple);">The Tree of 40 Fruit</h4>
+                                <p class="mb-4">
+                                    Pastor Tim shares about Sam Van Aken, an art professor at Syracuse University, who created an incredible 
+                                    grafting project: a single tree producing <strong>40 different kinds of fruit</strong>.
+                                </p>
+                                <p class="mb-4">
+                                    He chose 40 because it's a biblical number representing bounty. Through careful grafting, different varieties 
+                                    bloom at different times, so the tree constantly changes appearance—sometimes half looking dead while the 
+                                    other half blooms.
+                                </p>
+                                <p class="mb-4">
+                                    <strong>Van Aken said:</strong> "These fruit are our story. None are indigenous—they were brought by people 
+                                    who valued them enough to carry them as a connection to their home."
+                                </p>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-6" style="color: var(--berry-purple);">We Are That Tree</h4>
+                                <p class="mb-4">
+                                    All of us—multicultural, from different backgrounds—are grafted into one vine. We produce different fruit 
+                                    (different gifts and service), bloom at different times, but we're all connected to the same root.
+                                </p>
+                                <p>
+                                    Especially in Hong Kong's international context, we see this living picture: one vine, many branches, 
+                                    diverse fruit, all for God's glory.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Command to Love -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>❤️ The One Command: Love as Jesus Loved</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <blockquote class="mb-4">
+                                    "As the Father has loved me, so have I loved you. Now remain in my love. If you keep my commands, you will 
+                                    remain in my love, just as I have kept my Father's commands and remain in his love." 
+                                    <span class="scripture-ref">— John 15:9-10</span>
+                                </blockquote>
+
+                                <p class="mb-4">
+                                    We might think staying in God's love requires keeping many commands—all the effort, all the trying. But Jesus 
+                                    simplifies it to ONE command:
+                                </p>
+
+                                <blockquote class="my-4">
+                                    "My command is this: Love each other as I have loved you." <span class="scripture-ref">— John 15:12</span>
+                                </blockquote>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-4" style="color: var(--berry-purple);">Love—Sometimes Counter-Cultural</h4>
+                                <p class="mb-4">This means:</p>
+                                <ul class="space-y-2 ml-6 mb-4">
+                                    <li>💔 Loving someone who doesn't love you back</li>
+                                    <li>🤝 Serving someone who doesn't serve you</li>
+                                    <li>😌 Treating people with kindness when they treat you poorly</li>
+                                    <li>🕊️ Loving your enemies</li>
+                                </ul>
+                                <p class="mb-4">
+                                    Often the opposite of what we <em>feel</em> like doing. But it's the truth of what we <em>need</em> to be doing.
+                                </p>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-4" style="color: var(--berry-purple);">Not Just "As You Wish" but "As I Have"</h4>
+                                <p class="mb-4">
+                                    The Golden Rule says love others as you wish to be loved. But Jesus raises the bar: <strong>Love as I have 
+                                    loved you.</strong>
+                                </p>
+                                <blockquote class="my-4">
+                                    "Greater love has no one than this: to lay down one's life for one's friends." 
+                                    <span class="scripture-ref">— John 15:13</span>
+                                </blockquote>
+                                <p>
+                                    Sacrificial love. Costly love. This is how Christ loved us—giving His life. And when we're rooted in Him, 
+                                    connected to Him, we receive the power to love this way too.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Complete Joy -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>😊 The Promise: Complete Joy</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <blockquote class="mb-4">
+                                    "I have told you this so that my joy may be in you and that your joy may be complete." 
+                                    <span class="scripture-ref">— John 15:11</span>
+                                </blockquote>
+
+                                <p class="mb-4">
+                                    Jesus wants our joy to be <strong>complete</strong>—fully satisfied, lacking nothing. Not temporary happiness, 
+                                    but deep, abiding joy that comes from staying connected to Him.
+                                </p>
+                                <p>
+                                    This joy flows naturally when we remain in Christ, when we love as He commanded, when we bear fruit for 
+                                    God's glory. The vine life is the joyful life.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Astronaut Story -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🚀 Staying Connected from Space</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="mb-4">
+                                    Pastor Tim shares a powerful recent story: <strong>Butch Wilmore</strong>, an astronaut who was supposed to 
+                                    spend one week at the International Space Station but got stranded for nine months when his Boeing Starliner 
+                                    malfunctioned.
+                                </p>
+                                <p class="mb-4">
+                                    At a press conference after returning to Earth, a reporter asked about attending church from space. 
+                                    Butch's answer was profound:
+                                </p>
+                                <blockquote class="my-4 italic">
+                                    "The Word of God can continually be filling me. I needed my pastors—the finest pastors on or off, in this case, 
+                                    the planet—and to tie in and to worship with my church family was vital. I mean, it's part of what makes me go.
+                                    <br><br>
+                                    Not only that, I also tied into Grace Baptist Church in Mount Juliet, Tennessee... and I would watch their 
+                                    service as well every single week. And it was invigorating. It was part of what I need as a believer in Jesus 
+                                    Christ to continue that focus. It assisted me day in and day out because I need that fellowship. Even though 
+                                    it's fellowship from afar... I need it."
+                                </blockquote>
+
+                                <h4 class="font-semibold text-xl mb-3 mt-4" style="color: var(--berry-purple);">Two Takeaways</h4>
+                                <div class="space-y-4">
+                                    <div class="p-4 bg-yellow-50 rounded-lg">
+                                        <p class="font-semibold mb-2">1. We Have No Excuse</p>
+                                        <p>
+                                            Butch wasn't just out of the country—he was <strong>off the planet</strong>. And he attended 
+                                            <em>two churches</em> every week! We have absolutely no excuse to miss connecting with our church community.
+                                        </p>
+                                    </div>
+                                    <div class="p-4 bg-green-50 rounded-lg">
+                                        <p class="font-semibold mb-2">2. "Tied In" Language</p>
+                                        <p>
+                                            He kept saying "I needed to be <strong>tied in</strong>." That's exactly what Jesus is talking about—
+                                            staying connected, remaining in the vine. Even from orbit, Butch understood: <em>I NEED this connection.</em>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Practical Application -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🛠️ Four Practical Steps to Stay Connected</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="space-y-6">
+                                    <div class="p-5 bg-green-50 rounded-xl border-l-4 border-green-600">
+                                        <h4 class="font-bold text-xl mb-3" style="color: var(--vine-green);">1. 🌱 Plant Yourself in Truth</h4>
+                                        <p class="mb-2">Abide in Jesus' words. Keep His command to love one another.</p>
+                                        <p class="text-sm">
+                                            Fill your heart and mind with Scripture. Let God's Word be the soil you're planted in. This isn't 
+                                            just Sunday reading—it's daily nourishment.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-5 bg-purple-50 rounded-xl border-l-4 border-purple-600">
+                                        <h4 class="font-bold text-xl mb-3" style="color: var(--berry-purple);">2. 🌿 Tend Your Spiritual Garden</h4>
+                                        <p class="mb-2">Practice spiritual disciplines daily to stay rooted.</p>
+                                        <p class="text-sm mb-2">
+                                            Like gardening, this is never-ending. Weeds come. Pests attack. You must constantly tend:
+                                        </p>
+                                        <ul class="text-sm space-y-1 ml-6">
+                                            <li>• Pray consistently</li>
+                                            <li>• Read Scripture daily</li>
+                                            <li>• Join small groups/care groups</li>
+                                            <li>• Worship weekly (and beyond Sundays!)</li>
+                                            <li>• Serve in your church community</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="p-5 bg-yellow-50 rounded-xl border-l-4 border-yellow-600">
+                                        <h4 class="font-bold text-xl mb-3" style="color: var(--earth-brown);">3. ✂️ Trust the Gardener to Prune</h4>
+                                        <p class="mb-2">Stay humble. Let God remove what hinders your spiritual fruitfulness.</p>
+                                        <p class="text-sm mb-2">
+                                            Our lives aren't in our control. God sees our weaknesses—things that drain us but don't benefit us. 
+                                            Surrender control. Let Him cut away:
+                                        </p>
+                                        <ul class="text-sm space-y-1 ml-6">
+                                            <li>• Destructive habits</li>
+                                            <li>• Toxic relationships</li>
+                                            <li>• Past trauma needing catharsis</li>
+                                            <li>• Anything distracting from fruitfulness</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="p-5 bg-pink-50 rounded-xl border-l-4 border-pink-600">
+                                        <h4 class="font-bold text-xl mb-3" style="color: var(--berry-purple);">4. 🌸 Bloom Together in Faith</h4>
+                                        <p class="mb-2">We're stronger when we support and encourage each other in community.</p>
+                                        <p class="text-sm mb-2">
+                                            Sundays are amazing, but don't stop there. Connect throughout the week:
+                                        </p>
+                                        <ul class="text-sm space-y-1 ml-6">
+                                            <li>• Join a care group or small group</li>
+                                            <li>• Men's Fraternity / Women's Ministry</li>
+                                            <li>• Serve teams and ministries</li>
+                                            <li>• One-on-one discipleship</li>
+                                        </ul>
+                                        <p class="text-sm mt-2 italic">
+                                            Just as plants grow better together, we grow better in community.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bible Verses Tab -->
+        <section id="verses" class="tab-content">
+            <div class="content-card">
+                <h2 class="text-4xl font-bold mb-6" style="color: var(--vine-green);">Complete Scripture References 📖</h2>
+                
+                <div class="masonry-grid">
+                    <!-- John 15:1-17 (Primary) -->
+                    <div class="masonry-item">
+                        <h3 class="scripture-ref text-xl mb-3">John 15:1-17 (NIV)</h3>
+                        <p class="mb-2 font-semibold">The Vine and the Branches</p>
+                        <p class="mb-3 text-sm leading-relaxed">
+                            <sup>1</sup> "I am the true vine, and my Father is the gardener. <sup>2</sup> He cuts off every branch in me 
+                            that bears no fruit, while every branch that does bear fruit he prunes so that it will be even more fruitful. 
+                            <sup>3</sup> You are already clean because of the word I have spoken to you. <sup>4</sup> Remain in me, as I also 
+                            remain in you. No branch can bear fruit by itself; it must remain in the vine. Neither can you bear fruit unless 
+                            you remain in me.
+                        </p>
+                        <p class="mb-3 text-sm leading-relaxed">
+                            <sup>5</sup> "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; 
+                            apart from me you can do nothing. <sup>6</sup> If you do not remain in me, you are like a branch that is thrown 
+                            away and withers; such branches are picked up, thrown into the fire and burned. <sup>7</sup> If you remain in me 
+                            and my words remain in you, ask whatever you wish, and it will be done for you. <sup>8</sup> This is to my Father's 
+                            glory, that you bear much fruit, showing yourselves to be my disciples.
+                        </p>
+                        <p class="mb-3 text-sm leading-relaxed">
+                            <sup>9</sup> "As the Father has loved me, so have I loved you. Now remain in my love. <sup>10</sup> If you keep 
+                            my commands, you will remain in my love, just as I have kept my Father's commands and remain in his love. 
+                            <sup>11</sup> I have told you this so that my joy may be in you and that your joy may be complete. <sup>12</sup> My 
+                            command is this: Love each other as I have loved you. <sup>13</sup> Greater love has no one than this: to lay down 
+                            one's life for one's friends.
+                        </p>
+                        <p class="text-sm leading-relaxed">
+                            <sup>14</sup> You are my friends if you do what I command. <sup>15</sup> I no longer call you servants, because a 
+                            servant does not know his master's business. Instead, I have called you friends, for everything that I learned from 
+                            my Father I have made known to you. <sup>16</sup> You did not choose me, but I chose you and appointed you so that 
+                            you might go and bear fruit—fruit that will last—and so that whatever you ask in my name the Father will give you. 
+                            <sup>17</sup> This is my command: Love each other."
+                        </p>
+                    </div>
+
+                    <!-- Isaiah 5:1-7 -->
+                    <div class="masonry-item">
+                        <h3 class="scripture-ref text-xl mb-3">Isaiah 5:1-7 (NIV)</h3>
+                        <p class="mb-2 font-semibold">The Song of the Vineyard</p>
+                        <p class="text-sm leading-relaxed">
+                            <sup>1</sup> I will sing for the one I love a song about his vineyard: My loved one had a vineyard on a fertile 
+                            hillside. <sup>2</sup> He dug it up and cleared it of stones and planted it with the choicest vines. He built a 
+                            watchtower in it and cut out a winepress as well. Then he looked for a crop of good grapes, but it yielded only 
+                            bad fruit.
+                        </p>
+                        <p class="mt-3 text-sm leading-relaxed">
+                            <sup>3</sup> "Now you dwellers in Jerusalem and people of Judah, judge between me and my vineyard. <sup>4</sup> What 
+                            more could have been done for my vineyard than I have done for it? When I looked for good grapes, why did it yield 
+                            only bad? <sup>5</sup> Now I will tell you what I am going to do to my vineyard: I will take away its hedge, and it 
+                            will be destroyed; I will break down its wall, and it will be trampled. <sup>6</sup> I will make it a wasteland, 
+                            neither pruned nor cultivated, and briers and thorns will grow there. I will command the clouds not to rain on it."
+                        </p>
+                        <p class="mt-3 text-sm leading-relaxed">
+                            <sup>7</sup> The vineyard of the Lord Almighty is the nation of Israel, and the people of Judah are the vines he 
+                            delighted in. And he looked for justice, but saw bloodshed; for righteousness, but heard cries of distress.
+                        </p>
+                    </div>
+
+                    <!-- Isaiah 11:1-2 -->
+                    <div class="masonry-item">
+                        <h3 class="scripture-ref text-xl mb-3">Isaiah 11:1-2 (NIV)</h3>
+                        <p class="mb-2 font-semibold">The Branch from Jesse</p>
+                        <p class="text-sm leading-relaxed">
+                            <sup>1</sup> A shoot will come up from the stump of Jesse; from his roots a Branch will bear fruit. <sup>2</sup> The 
+                            Spirit of the Lord will rest on him—the Spirit of wisdom and of understanding, the Spirit of counsel and of might, 
+                            the Spirit of the knowledge and fear of the Lord.
+                        </p>
+                        <p class="mt-3 text-sm italic">
+                            This prophesies the Messiah—Jesus as the true vine that would come from David's line.
+                        </p>
+                    </div>
+
+                    <!-- Isaiah 27:2-6 -->
+                    <div class="masonry-item">
+                        <h3 class="scripture-ref text-xl mb-3">Isaiah 27:2-6 (NIV)</h3>
+                        <p class="mb-2 font-semibold">Restoration of the Vineyard</p>
+                        <p class="text-sm leading-relaxed">
+                            <sup>2</sup> In that day— "Sing about a fruitful vineyard: <sup>3</sup> I, the Lord, watch over it; I water it 
+                            continually. I guard it day and night so that no one may harm it. <sup>4</sup> I am not angry. If only there were 
+                            briers and thorns confronting me! I would march against them in battle; I would set them all on fire. <sup>5</sup> Or 
+                            else let them come to me for refuge; let them make peace with me, yes, let them make peace with me."
+                        </p>
+                        <p class="mt-3 text-sm leading-relaxed">
+                            <sup>6</sup> In days to come Jacob will take root, Israel will bud and blossom and fill all the world with fruit.
+                        </p>
+                    </div>
+
+                    <!-- Romans 11:17 -->
+                    <div class="masonry-item">
+                        <h3 class="scripture-ref text-xl mb-3">Romans 11:17 (NIV)</h3>
+                        <p class="mb-2 font-semibold">Grafted Into the Olive Tree</p>
+                        <p class="text-sm leading-relaxed">
+                            If some of the branches have been broken off, and you, though a wild olive shoot, have been grafted in among the 
+                            others and now share in the nourishing sap from the olive root...
+                        </p>
+                        <p class="mt-3 text-sm italic">
+                            Paul explains how Gentiles (wild branches) are grafted into God's covenant people, sharing in the same vine.
+                        </p>
+                    </div>
+
+                    <!-- Romans 8:28 -->
+                    <div class="masonry-item">
+                        <h3 class="scripture-ref text-xl mb-3">Romans 8:28 (NIV)</h3>
+                        <p class="mb-2 font-semibold">God Works All Things for Good</p>
+                        <p class="text-sm leading-relaxed">
+                            And we know that in all things God works for the good of those who love him, who have been called according to 
+                            his purpose.
+                        </p>
+                        <p class="mt-3 text-sm italic">
+                            Referenced in worship—when we remain in Christ, God works everything for our good.
+                        </p>
+                    </div>
+
+                    <!-- Luke 6:46 -->
+                    <div class="masonry-item">
+                        <h3 class="scripture-ref text-xl mb-3">Luke 6:46 (NIV)</h3>
+                        <p class="mb-2 font-semibold">Not Just Words, But Action</p>
+                        <p class="text-sm leading-relaxed">
+                            "Why do you call me, 'Lord, Lord,' and do not do what I say?"
+                        </p>
+                        <p class="mt-3 text-sm italic">
+                            Jesus challenges those who claim connection but show no fruit—they're like branches that will be cut off.
+                        </p>
+                    </div>
+
+                    <!-- Matthew 22:14 -->
+                    <div class="masonry-item">
+                        <h3 class="scripture-ref text-xl mb-3">Matthew 22:14 (NIV)</h3>
+                        <p class="mb-2 font-semibold">Many Called, Few Chosen</p>
+                        <p class="text-sm leading-relaxed">
+                            "For many are invited, but few are chosen."
+                        </p>
+                        <p class="mt-3 text-sm italic">
+                            From the Parable of the Wedding Banquet—God chooses those who put Him first and truly respond to His invitation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historical Context Tab -->
+        <section id="context" class="tab-content">
+            <div class="content-card">
+                <h2 class="text-4xl font-bold mb-6" style="color: var(--vine-green);">Historical & Cultural Context 🏛️</h2>
+
+                <div class="space-y-8">
+                    <!-- Israel as God's Vineyard -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4" style="color: var(--berry-purple);">Israel as God's Vineyard</h3>
+                        <p class="mb-4 leading-relaxed">
+                            Throughout the Old Testament, God used vineyard imagery to describe His relationship with Israel. The nation was 
+                            meant to be His "choice vine"—carefully planted, protected, and cultivated to produce good fruit for His glory.
+                        </p>
+                        <p class="mb-4 leading-relaxed">
+                            However, Isaiah's prophecy (Isaiah 5) delivered a shocking indictment: despite God's meticulous care, Israel 
+                            produced only "bad fruit"—injustice instead of justice, cries of distress instead of righteousness.
+                        </p>
+                        <p class="leading-relaxed">
+                            The Hebrew wordplay emphasizes how close they came to what God wanted, yet how far they missed:
+                        </p>
+                        <ul class="mt-3 ml-6 space-y-2">
+                            <li><strong>מִשְׁפָּט (mishpat)</strong> - justice → <strong>מִשְׂפָּח (mispach)</strong> - bloodshed</li>
+                            <li><strong>צְדָקָה (tzedakah)</strong> - righteousness → <strong>צְעָקָה (tze'akah)</strong> - cries of distress</li>
+                        </ul>
+                    </div>
+
+                    <!-- Judgment and Hope -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4" style="color: var(--berry-purple);">From Judgment to Hope</h3>
+                        <p class="mb-4 leading-relaxed">
+                            God's response was to remove His hedge of protection, allowing the vineyard to be trampled and become wasteland. 
+                            This was fulfilled through the Assyrian conquest and later Babylonian exile.
+                        </p>
+                        <p class="mb-4 leading-relaxed">
+                            Yet Isaiah also prophesied restoration (Isaiah 11:1-2, 27:2-6): a "shoot from the stump of Jesse" would come—
+                            a new branch bearing fruit, filled with God's Spirit. This pointed forward to the Messiah.
+                        </p>
+                    </div>
+
+                    <!-- Jesus as True Vine -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4" style="color: var(--berry-purple);">Jesus: The True Vine</h3>
+                        <p class="mb-4 leading-relaxed">
+                            When Jesus declared "I am the <strong>true</strong> vine," His disciples would have immediately connected this to 
+                            centuries of vineyard imagery. He was saying: "I am what Israel was meant to be. I fulfill what the nation failed 
+                            to accomplish."
+                        </p>
+                        <p class="mb-4 leading-relaxed">
+                            The word "true" (ἀληθινός, alethinos) means genuine, real, authentic—not a shadow or type, but the reality itself. 
+                            Jesus is the ultimate, perfect vine.
+                        </p>
+                    </div>
+
+                    <!-- Communion Context -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4" style="color: var(--berry-purple);">Fresh from the Upper Room</h3>
+                        <p class="mb-4 leading-relaxed">
+                            This teaching came immediately after the Last Supper (John 13-14). Jesus had just instituted communion, saying 
+                            "This cup is the new covenant in my blood" (Luke 22:20). The disciples had literally tasted the wine—the fruit 
+                            of the vine.
+                        </p>
+                        <p class="mb-4 leading-relaxed">
+                            As they walked from the upper room toward Gethsemane (John 14:31), possibly passing vineyards in the Kidron Valley, 
+                            Jesus used this vivid, immediate illustration. The taste was still on their tongues. The new covenant was being 
+                            established in real-time.
+                        </p>
+                    </div>
+
+                    <!-- Grafting in the Ancient World -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4" style="color: var(--berry-purple);">Grafting: Ancient Practice, Spiritual Reality</h3>
+                        <p class="mb-4 leading-relaxed">
+                            Grafting was well-known in the ancient Mediterranean world. Farmers would splice branches from one plant onto 
+                            another to improve fruit quality or rescue struggling vines.
+                        </p>
+                        <p class="mb-4 leading-relaxed">
+                            Paul uses this imagery in Romans 11:17-24 to explain how Gentiles (wild olive shoots) are grafted into the 
+                            cultivated olive tree of God's covenant people. Normally, you'd graft cultivated branches onto wild rootstock—
+                            but Paul describes the reverse: wild branches grafted into a cultivated tree. This emphasizes God's supernatural 
+                            grace.
+                        </p>
+                        <p class="leading-relaxed">
+                            Today, the global Church is a living picture of this grafting—people from every nation, tribe, and tongue 
+                            connected to one vine, sharing one life source: Jesus Christ.
+                        </p>
+                    </div>
+
+                    <!-- Agricultural Practices -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4" style="color: var(--berry-purple);">Viticulture in Jesus' Time</h3>
+                        <p class="mb-4 leading-relaxed">
+                            Vineyards were central to the economy and culture of ancient Israel. Grapes were used for fresh eating, raisins, 
+                            and wine production. Good vineyard management required:
+                        </p>
+                        <ul class="ml-6 space-y-2 mb-4">
+                            <li>🪨 <strong>Clearing stones</strong> - preparing soil for planting</li>
+                            <li>🏗️ <strong>Building watchtowers</strong> - protection from thieves and animals</li>
+                            <li>🍷 <strong>Cutting winepresses</strong> - processing the harvest</li>
+                            <li>✂️ <strong>Regular pruning</strong> - removing dead wood to increase yield</li>
+                            <li>💧 <strong>Consistent watering</strong> - even in dry seasons</li>
+                        </ul>
+                        <p class="leading-relaxed">
+                            Jesus' audience would have understood these practices intimately, making the metaphor powerfully accessible. 
+                            Spiritual life requires the same diligence as physical cultivation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Tab -->
+        <section id="application" class="tab-content">
+            <div class="content-card">
+                <h2 class="text-4xl font-bold mb-6" style="color: var(--vine-green);">Practical Application 💡</h2>
+
+                <div class="space-y-8">
+                    <!-- Introduction -->
+                    <div class="p-6 bg-purple-50 rounded-2xl">
+                        <p class="text-lg leading-relaxed italic">
+                            "Just as fruit reveals life within a branch, the love you share reveals the abiding presence of Christ in your life."
+                        </p>
+                        <p class="text-right mt-2 font-semibold">— Pastor Tim</p>
+                    </div>
+
+                    <!-- Four Core Practices -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6" style="color: var(--berry-purple);">Four Ways to Stay Connected</h3>
+
+                        <!-- 1. Plant in Truth -->
+                        <div class="mb-8 p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl border-l-4 border-green-600">
+                            <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <span class="text-3xl">🌱</span> 1. Plant Yourself in Truth
+                            </h4>
+                            <p class="mb-4 leading-relaxed">
+                                Abide in Jesus' words and keep His command to love one another. Fill your heart and mind with Scripture—
+                                this is the soil you're planted in.
+                            </p>
+                            <div class="bg-white p-4 rounded-lg">
+                                <p class="font-semibold mb-2">This Week:</p>
+                                <ul class="space-y-2">
+                                    <li>📖 Read John 15 daily, meditating on one verse each day</li>
+                                    <li>✍️ Journal: "What does remaining in Christ look like for me today?"</li>
+                                    <li>💭 Memorize John 15:5: "Apart from me you can do nothing"</li>
+                                    <li>❤️ Identify one person to love sacrificially this week (even if difficult)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 2. Tend Your Garden -->
+                        <div class="mb-8 p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl border-l-4 border-purple-600">
+                            <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <span class="text-3xl">🌿</span> 2. Tend Your Spiritual Garden
+                            </h4>
+                            <p class="mb-4 leading-relaxed">
+                                Practice spiritual disciplines daily. Like gardening, this is never-ending work—weeds come, pests attack. 
+                                You must constantly tend your spiritual life.
+                            </p>
+                            <div class="bg-white p-4 rounded-lg">
+                                <p class="font-semibold mb-2">Daily Spiritual Disciplines:</p>
+                                <div class="grid md:grid-cols-2 gap-3">
+                                    <div>
+                                        <p class="font-semibold text-sm mb-1">Morning:</p>
+                                        <ul class="text-sm space-y-1">
+                                            <li>☀️ Start with prayer & gratitude</li>
+                                            <li>📖 Read Scripture (even 5 minutes)</li>
+                                            <li>🎵 Worship through music</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-sm mb-1">Throughout Day:</p>
+                                        <ul class="text-sm space-y-1">
+                                            <li>🙏 Pray without ceasing (1 Thess 5:17)</li>
+                                            <li>💚 Practice loving actions</li>
+                                            <li>📱 Limit distractions (phone, media)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-sm mb-1">Evening:</p>
+                                        <ul class="text-sm space-y-1">
+                                            <li>🌙 Reflect on God's faithfulness</li>
+                                            <li>📝 Journal answered prayers</li>
+                                            <li>😌 Confess & surrender burdens</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-sm mb-1">Weekly:</p>
+                                        <ul class="text-sm space-y-1">
+                                            <li>⛪ Attend church (no excuses!)</li>
+                                            <li>👥 Connect with care group</li>
+                                            <li>🤝 Serve in a ministry</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Trust the Gardener -->
+                        <div class="mb-8 p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl border-l-4 border-yellow-600">
+                            <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <span class="text-3xl">✂️</span> 3. Trust the Gardener to Prune You
+                            </h4>
+                            <p class="mb-4 leading-relaxed">
+                                Stay humble and let God remove what hinders your spiritual fruitfulness. Remember: pruning isn't punishment—
+                                it's removing what you don't need so you can flourish.
+                            </p>
+                            <div class="bg-white p-4 rounded-lg">
+                                <p class="font-semibold mb-3">Self-Examination Questions:</p>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-lg">🔍</span>
+                                        <span>What habits drain my energy without producing spiritual fruit?</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-lg">💔</span>
+                                        <span>Are there toxic relationships I need to address or release?</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-lg">⏰</span>
+                                        <span>What am I prioritizing that keeps me from God?</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-lg">🎭</span>
+                                        <span>What burdens from my past do I need catharsis from?</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-lg">🧱</span>
+                                        <span>What fears or control issues am I holding onto instead of surrendering?</span>
+                                    </li>
+                                </ul>
+                                <div class="mt-4 p-3 bg-yellow-50 rounded">
+                                    <p class="text-sm italic">
+                                        <strong>Action:</strong> Choose one area to surrender to God this week. Pray specifically for His 
+                                        pruning work. Consider sharing with a trusted friend or care group leader for accountability.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Bloom Together -->
+                        <div class="p-6 bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl border-l-4 border-pink-600">
+                            <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <span class="text-3xl">🌸</span> 4. Bloom Together in Faith
+                            </h4>
+                            <p class="mb-4 leading-relaxed">
+                                We're stronger when we support and encourage each other in community. Just as plants grow better together, 
+                                we flourish best in Christian fellowship.
+                            </p>
+                            <div class="bg-white p-4 rounded-lg">
+                                <p class="font-semibold mb-3">Community Connection Checklist:</p>
+                                <div class="space-y-3">
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" class="w-5 h-5 rounded">
+                                        <span>I attend church weekly (in-person or online with intention)</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" class="w-5 h-5 rounded">
+                                        <span>I'm part of a care group or small group</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" class="w-5 h-5 rounded">
+                                        <span>I serve in at least one church ministry</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" class="w-5 h-5 rounded">
+                                        <span>I have an accountability partner or mentor</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" class="w-5 h-5 rounded">
+                                        <span>I regularly check in on other believers (not just receiving support)</span>
+                                    </label>
+                                </div>
+                                <div class="mt-4 p-3 bg-pink-50 rounded">
+                                    <p class="text-sm">
+                                        <strong>Challenge:</strong> If you checked fewer than 3 boxes, reach out to your church this week 
+                                        to explore one new way to connect.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Applications -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6" style="color: var(--berry-purple);">Special Applications</h3>
+
+                        <!-- For Those in Spiritual Winter -->
+                        <div class="mb-6 p-5 bg-blue-50 rounded-xl border-l-4 border-blue-600">
+                            <h4 class="font-bold text-lg mb-3">❄️ If You're in a Spiritual Winter</h4>
+                            <p class="mb-3 leading-relaxed">
+                                Remember Pastor Tim's lesson: <em>"Do you need to drink water in winter?"</em> Even in dry seasons, 
+                                desert times, or spiritual winters, you still need God's living water.
+                            </p>
+                            <p class="text-sm italic">
+                                Don't neglect your connection thinking you can "come back when spring arrives." Remain in Christ 
+                                <strong>especially</strong> during winter seasons—this is when roots grow deeper.
+                            </p>
+                        </div>
+
+                        <!-- For Online Worshipers -->
+                        <div class="mb-6 p-5 bg-indigo-50 rounded-xl border-l-4 border-indigo-600">
+                            <h4 class="font-bold text-lg mb-3">🌐 For Those Worshiping Online</h4>
+                            <p class="mb-3 leading-relaxed">
+                                Like Butch Wilmore worshiping from the International Space Station, you can be "tied in" even from afar. 
+                                But remember: online church is a supplement, not a replacement for in-person community when possible.
+                            </p>
+                            <p class="text-sm">
+                                <strong>Tips:</strong> Set aside dedicated worship time, minimize distractions, participate in comments/chat, 
+                                and find ways to serve your local church remotely.
+                            </p>
+                        </div>
+
+                        <!-- Good Friday Fasting -->
+                        <div class="p-5 bg-purple-50 rounded-xl border-l-4 border-purple-600">
+                            <h4 class="font-bold text-lg mb-3">🕊️ Good Friday Practice: Fasting</h4>
+                            <p class="mb-3 leading-relaxed">
+                                Island ECC is practicing fasting on Good Friday as a church. Consider skipping one meal and using that time 
+                                for prayer, Scripture reading, or worship.
+                            </p>
+                            <p class="mb-3 text-sm">
+                                Physical hunger becomes a reminder of our spiritual need for God. We then break fast together during the 
+                                Good Friday service when we take communion—tasting the fruit of the true vine.
+                            </p>
+                            <p class="text-sm italic">
+                                <strong>Connection to sermon:</strong> Fasting is another form of pruning—removing physical nourishment 
+                                temporarily to deepen spiritual nourishment.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reflection Tab -->
+        <section id="reflection" class="tab-content">
+            <div class="content-card">
+                <h2 class="text-4xl font-bold mb-6" style="color: var(--vine-green);">Personal Reflection & Prayer 🙏</h2>
+
+                <div class="space-y-8">
+                    <!-- Opening Reflection -->
+                    <div class="p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl">
+                        <p class="text-lg leading-relaxed mb-4">
+                            Take a moment of quiet before God. Imagine yourself as a branch connected to Jesus, the true vine. 
+                            What does that connection feel like right now? Strong and vibrant? Weak and withering? Somewhere in between?
+                        </p>
+                        <p class="text-lg leading-relaxed italic">
+                            Be honest with God. He already knows. He's the gardener who sees every branch, every leaf, every bud of fruit.
+                        </p>
+                    </div>
+
+                    <!-- Reflection Questions -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6" style="color: var(--berry-purple);">Reflection Questions</h3>
+
+                        <div class="space-y-6">
+                            <div class="p-5 bg-white rounded-xl shadow-sm border-l-4 border-green-600">
+                                <h4 class="font-bold mb-3 text-lg">🌱 On Connection</h4>
+                                <ul class="space-y-3 text-sm">
+                                    <li>• How connected do I feel to Jesus right now? What evidence of connection exists in my life?</li>
+                                    <li>• When do I feel most "plugged in" to Christ? When do I feel disconnected?</li>
+                                    <li>• Am I treating Jesus like a phone charger—connecting only when my "battery" is low?</li>
+                                    <li>• What would it look like for me to "abide" constantly, not just in crisis moments?</li>
+                                </ul>
+                            </div>
+
+                            <div class="p-5 bg-white rounded-xl shadow-sm border-l-4 border-yellow-600">
+                                <h4 class="font-bold mb-3 text-lg">✂️ On Pruning</h4>
+                                <ul class="space-y-3 text-sm">
+                                    <li>• What is God pruning from my life right now? How am I responding—with resistance or surrender?</li>
+                                    <li>• What habits, relationships, or priorities are draining my spiritual energy without producing fruit?</li>
+                                    <li>• Do I trust that God's pruning is for my good, not my harm?</li>
+                                    <li>• What past burdens or trauma do I need catharsis from? Am I willing to seek help (support groups, counseling, prayer)?</li>
+                                </ul>
+                            </div>
+
+                            <div class="p-5 bg-white rounded-xl shadow-sm border-l-4 border-purple-600">
+                                <h4 class="font-bold mb-3 text-lg">🍇 On Fruit-Bearing</h4>
+                                <ul class="space-y-3 text-sm">
+                                    <li>• What fruit is visible in my life? Love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control? (Gal 5:22-23)</li>
+                                    <li>• Am I bearing fruit for God's glory or my own recognition?</li>
+                                    <li>• Do others see Christ in me through the love I show?</li>
+                                    <li>• Where am I trying to produce fruit in my own strength instead of remaining in Christ?</li>
+                                </ul>
+                            </div>
+
+                            <div class="p-5 bg-white rounded-xl shadow-sm border-l-4 border-pink-600">
+                                <h4 class="font-bold mb-3 text-lg">❤️ On Love</h4>
+                                <ul class="space-y-3 text-sm">
+                                    <li>• Who is difficult for me to love right now? How is God calling me to love them "as Christ loved"?</li>
+                                    <li>• Am I loving sacrificially, or only when it's convenient?</li>
+                                    <li>• Where am I showing love in action, not just words?</li>
+                                    <li>• How can I serve someone this week who cannot serve me back?</li>
+                                </ul>
+                            </div>
+
+                            <div class="p-5 bg-white rounded-xl shadow-sm border-l-4 border-blue-600">
+                                <h4 class="font-bold mb-3 text-lg">🌸 On Community</h4>
+                                <ul class="space-y-3 text-sm">
+                                    <li>• Am I "tied in" to a church community, or am I isolated?</li>
+                                    <li>• Who are my fellow branches helping me grow? Who am I helping?</li>
+                                    <li>• Do I view church as optional or vital? Am I making excuses to disconnect?</li>
+                                    <li>• How can I serve others in my church family this month?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Guided Prayer -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6" style="color: var(--berry-purple);">Guided Prayer</h3>
+
+                        <div class="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl">
+                            <p class="mb-6 leading-relaxed">
+                                Pray through each section slowly. Let the Holy Spirit speak to your heart.
+                            </p>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <p class="font-bold mb-2">🙌 Adoration</p>
+                                    <p class="text-sm italic leading-relaxed">
+                                        "Jesus, You are the true vine—the fulfillment of all God's promises. You are the source of all life, 
+                                        all fruitfulness, all spiritual nourishment. I worship You as the one who makes it possible for me to 
+                                        have a relationship with the Father. You are faithful, unchanging, and eternally alive."
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="font-bold mb-2">😔 Confession</p>
+                                    <p class="text-sm italic leading-relaxed">
+                                        "Lord, I confess the times I've tried to bear fruit in my own strength. Forgive me for disconnecting 
+                                        from You and thinking I could manage on my own. I confess [name specific areas where you've been 
+                                        spiritually disconnected]. I've called You 'Lord' with my words but not always with my actions. Cleanse 
+                                        me, prune me, and restore my connection to You."
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="font-bold mb-2">🙏 Petition</p>
+                                    <p class="text-sm italic leading-relaxed">
+                                        "Father, I ask that You help me remain in Christ daily—moment by moment. Give me discipline to tend 
+                                        my spiritual garden through prayer, Scripture, worship, and community. Grant me the humility to let 
+                                        You prune what needs removing from my life. Help me trust Your process, even when it's painful. 
+                                        Empower me to love sacrificially as Jesus loved me. Fill me with Your Spirit so I can bear much fruit 
+                                        for Your glory."
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="font-bold mb-2">🙏 Intercession</p>
+                                    <p class="text-sm italic leading-relaxed">
+                                        "Lord, I pray for my church community—that we would all remain connected to You as branches to a vine. 
+                                        I pray for those who are withering, disconnected, or in spiritual winter—bring them back to life. 
+                                        I pray for [name specific people God brings to mind] who need to experience Your love and connection. 
+                                        Use me as a branch to reach out and bring others into Your vineyard."
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="font-bold mb-2">💚 Thanksgiving</p>
+                                    <p class="text-sm italic leading-relaxed">
+                                        "Thank You, Jesus, for being the true vine. Thank You for the new covenant in Your blood that allows 
+                                        me to be grafted in. Thank You for the promise that when I remain in You, I will bear much fruit. 
+                                        Thank You for the community of believers around the world connected to the same vine. Thank You for 
+                                        the complete joy You offer. I am grateful for [name specific blessings or answered prayers]."
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="font-bold mb-2">✨ Commitment</p>
+                                    <p class="text-sm italic leading-relaxed">
+                                        "Lord, I commit to staying tied in to You this week. I commit to [name specific action from the 
+                                        application section]. I choose to trust You as my Gardener. I surrender control and invite Your 
+                                        pruning work. Help me bloom where I'm planted and serve the branches around me. May my life produce 
+                                        fruit that draws others to You. In Jesus' name, Amen."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scripture Meditation -->
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6" style="color: var(--berry-purple);">Scripture to Meditate On</h3>
+
+                        <div class="space-y-4">
+                            <div class="p-5 bg-white rounded-xl shadow-sm">
+                                <blockquote class="text-lg leading-relaxed mb-2">
+                                    "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; 
+                                    apart from me you can do nothing."
+                                </blockquote>
+                                <p class="text-right text-sm font-semibold" style="color: var(--berry-purple);">— John 15:5</p>
+                                <p class="mt-3 text-sm italic">
+                                    Memorize this verse. Let it be your anchor when you're tempted to disconnect or rely on your own strength.
+                                </p>
+                            </div>
+
+                            <div class="p-5 bg-white rounded-xl shadow-sm">
+                                <blockquote class="text-lg leading-relaxed mb-2">
+                                    "My command is this: Love each other as I have loved you."
+                                </blockquote>
+                                <p class="text-right text-sm font-semibold" style="color: var(--berry-purple);">— John 15:12</p>
+                                <p class="mt-3 text-sm italic">
+                                    Ask God daily: "How can I love someone today the way You love me?"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Closing Encouragement -->
+                    <div class="p-6 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl">
+                        <h3 class="text-xl font-bold mb-4">🌟 Final Encouragement</h3>
+                        <p class="leading-relaxed mb-4">
+                            You are not just any branch—you are part of the <strong>true vine</strong>. You've been chosen, grafted in, 
+                            and positioned to bear beautiful fruit for God's glory.
+                        </p>
+                        <p class="leading-relaxed mb-4">
+                            The same life that flows through Jesus flows through you when you remain connected. The same love, the same 
+                            power, the same Spirit.
+                        </p>
+                        <p class="leading-relaxed font-semibold">
+                            Stay connected. Trust the Gardener. Love sacrificially. Bloom together.
+                        </p>
+                        <p class="text-right mt-4 text-lg">🍇✨</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html" class="underline font-semibold" style="color: var(--berry-purple);">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html" class="underline" style="color: var(--earth-brown);">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switching
+        function switchTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Mark button as active
+            event.target.classList.add('active');
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all accordions
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('active');
+            });
+            
+            // Open clicked one if it wasn't active
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Tooltip Toggle
+        document.getElementById('tooltipBtn').addEventListener('click', function() {
+            const content = document.getElementById('tooltipContent');
+            content.classList.toggle('active');
+        });
+
+        // Close tooltip when clicking outside
+        document.addEventListener('click', function(event) {
+            const tooltip = document.getElementById('tooltipContent');
+            const button = document.getElementById('tooltipBtn');
+            
+            if (!button.contains(event.target) && !tooltip.contains(event.target)) {
+                tooltip.classList.remove('active');
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('tooltipContent').classList.remove('active');
+            }
+        });
+
+        // Open first accordion by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstAccordion = document.querySelector('.accordion-item');
+            if (firstAccordion) {
+                firstAccordion.classList.add('active');
+            }
+        });
+
+        // Image Carousel
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        let currentSlide = 0;
+        let carouselInterval;
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            currentSlide = index;
+            if (currentSlide >= slides.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = slides.length - 1;
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        // Auto-advance carousel
+        function startCarousel() {
+            carouselInterval = setInterval(nextSlide, 5000);
+        }
+
+        // Click on indicators to go to specific slide
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                clearInterval(carouselInterval);
+                goToSlide(index);
+                startCarousel();
+            });
+        });
+
+        // Start the carousel
+        startCarousel();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Roi & Jehovah Jireh: The God Who Sees and Provides | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #2c1810;
+            background: #faf8f5;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        .hero-section {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #d4a574 0%, #8b6f47 50%, #2c5f7d 100%);
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(44, 24, 16, 0.3), rgba(44, 24, 16, 0.6));
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 1000px;
+        }
+        
+        .divider-ornament {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #d4a574, transparent);
+            margin: 1.5rem auto;
+        }
+        
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 2px solid #d4a574;
+            box-shadow: 0 2px 8px rgba(44, 24, 16, 0.1);
+        }
+        
+        .tab-button {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: #5c4033;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button:hover {
+            background: rgba(212, 165, 116, 0.1);
+            color: #2c1810;
+        }
+        
+        .tab-button.active {
+            color: #8b6f47;
+            border-bottom-color: #d4a574;
+            background: rgba(212, 165, 116, 0.05);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid #d4a574;
+        }
+        
+        .timeline-item:last-child {
+            border-left-color: transparent;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -9px;
+            top: 0.5rem;
+            width: 16px;
+            height: 16px;
+            background: #8b6f47;
+            border: 3px solid #faf8f5;
+            border-radius: 50%;
+        }
+        
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e5d5c3;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .accordion-header {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            background: linear-gradient(to right, #f5ebe0, #faf8f5);
+            font-weight: 600;
+            color: #5c4033;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: linear-gradient(to right, #efe3d5, #f5ebe0);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 1.5rem;
+        }
+        
+        .accordion-content.open {
+            max-height: 2000px;
+            padding: 1.5rem;
+        }
+        
+        .verse-card {
+            background: linear-gradient(135deg, #f9f5f0 0%, #ffffff 100%);
+            border-left: 4px solid #8b6f47;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(139, 111, 71, 0.1);
+        }
+        
+        .tooltip-trigger {
+            position: relative;
+            cursor: help;
+            color: #8b6f47;
+            font-weight: 600;
+            border-bottom: 2px dotted #d4a574;
+        }
+        
+        .tooltip-content {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(44, 24, 16, 0.95);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            max-width: 300px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tooltip-content.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #8b6f47 0%, #6b5537 100%);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(139, 111, 71, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #8b6f47;
+            border: 2px solid #8b6f47;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-secondary:hover {
+            background: #8b6f47;
+            color: white;
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #8b6f47, #d4a574);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(139, 111, 71, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(139, 111, 71, 0.4);
+        }
+        
+        .attribution-full {
+            background: rgba(44, 24, 16, 0.95);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            max-width: 300px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+        
+        .attribution-full.show {
+            display: block;
+        }
+        
+        .attribution-full a {
+            color: #d4a574;
+            text-decoration: underline;
+        }
+        
+        .section-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        .dual-names {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .name-card {
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .name-card.elroi {
+            background: linear-gradient(135deg, #2c5f7d 0%, #4a7a95 100%);
+            color: white;
+        }
+        
+        .name-card.jehovah {
+            background: linear-gradient(135deg, #8b6f47 0%, #a88a63 100%);
+            color: white;
+        }
+        
+        blockquote {
+            border-left: 4px solid #d4a574;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #5c4033;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 60vh;
+            }
+            
+            .sticky-tabs {
+                overflow-x: auto;
+            }
+            
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+                white-space: nowrap;
+            }
+            
+            .dual-names {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .timeline-item {
+                padding-left: 2rem;
+            }
+            
+            .tooltip-content {
+                position: fixed;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                max-width: calc(100vw - 40px);
+            }
+            
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                text-align: center;
+            }
+            
+            .section-container {
+                padding: 2rem 1rem;
+            }
+        }
+        
+        @media print {
+            .sticky-tabs, .attribution-badge, .btn-primary, .btn-secondary {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem;">
+                El Roi & Jehovah Jireh
+            </h1>
+            <div class="divider-ornament"></div>
+            <p style="font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 300; margin-bottom: 0.5rem;">
+                The God Who Sees Me & The Lord Will Provide
+            </p>
+            <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 2rem;">
+                18 May 2025 | Jessica & Pastor Tim | Island ECC
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2.5rem;">
+                <a href="https://www.youtube.com/watch?v=q52yad4YlSE" target="_blank" class="btn-primary">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn-secondary">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                    </svg>
+                    View All Sermons
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Navigation Tabs -->
+    <nav class="sticky-tabs">
+        <div style="display: flex; justify-content: center; flex-wrap: nowrap; overflow-x: auto;">
+            <button class="tab-button active" data-tab="overview">📖 Overview</button>
+            <button class="tab-button" data-tab="sermon">✨ Main Sermon</button>
+            <button class="tab-button" data-tab="verses">📜 Bible Verses</button>
+            <button class="tab-button" data-tab="application">💡 Application</button>
+            <button class="tab-button" data-tab="reflection">🙏 Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Tab Content: Overview -->
+    <div class="tab-content active" id="overview">
+        <div class="section-container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: #2c1810;">Two Names, One God 🌟</h2>
+            
+            <div class="dual-names">
+                <div class="name-card elroi">
+                    <h3 style="font-size: 1.75rem; margin-bottom: 1rem;">👁️ El Roi</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">The God Who Sees</p>
+                    <p style="font-size: 0.9rem; opacity: 0.9;">Hebrew: אֵל רֳאִי</p>
+                </div>
+                <div class="name-card jehovah">
+                    <h3 style="font-size: 1.75rem; margin-bottom: 1rem;">🙌 Jehovah Jireh</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">The Lord Will Provide</p>
+                    <p style="font-size: 0.9rem; opacity: 0.9;">Hebrew: יְהוָה יִרְאֶה</p>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; margin: 2rem 0; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #8b6f47;">📝 Sermon Summary</h3>
+                <p style="margin-bottom: 1rem;">
+                    This powerful message explores two profound names of God through the intertwined stories of Hagar and Abraham. We discover how God meets us in our deepest vulnerabilities, sees our pain, and provides for our needs.
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    <strong>Part 1 (Jessica):</strong> The story of Hagar, an Egyptian slave who encountered God in the desert and named Him "El Roi" – the God who sees. In her abandonment and desperation, God saw her, heard her cry, and promised her freedom.
+                </p>
+                <p>
+                    <strong>Part 2 (Pastor Tim):</strong> The story of Abraham and Isaac on Mount Moriah, where God tested Abraham's faith and provided a ram as a substitute. Here we encounter "Jehovah Jireh" – the Lord who provides, foreshadowing the ultimate provision of Jesus.
+                </p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #f5ebe0 0%, #faf8f5 100%); padding: 2rem; border-radius: 12px; border-left: 4px solid #d4a574;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #2c1810;">🔑 Key Themes</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #e5d5c3;">
+                        <strong style="color: #8b6f47;">🌊 God Sees Our Vulnerability:</strong> Even when we feel invisible, abandoned, or alone, God sees us completely
+                    </li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #e5d5c3;">
+                        <strong style="color: #8b6f47;">💧 God Hears Our Cry:</strong> He is attentive to our pain and responds with compassion
+                    </li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #e5d5c3;">
+                        <strong style="color: #8b6f47;">🕊️ God Provides Freedom:</strong> He works even through injustice to bring about redemption
+                    </li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #e5d5c3;">
+                        <strong style="color: #8b6f47;">🐏 God Provides a Substitute:</strong> The ram in the thicket points to Jesus, our ultimate provision
+                    </li>
+                    <li style="padding: 0.75rem 0;">
+                        <strong style="color: #8b6f47;">⛰️ Faith is Tested and Proven:</strong> Abraham's obedience revealed the genuineness of his faith
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Main Sermon -->
+    <div class="tab-content" id="sermon">
+        <div class="section-container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: #2c1810;">The Sermon Journey 🛤️</h2>
+            
+            <div style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: #2c5f7d;">Part 1: El Roi – The God Who Sees (Jessica)</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">📜 The Promise to Abraham</h4>
+                    <p style="margin-bottom: 1rem;">
+                        At 75 years old, Abram received God's call to leave his homeland with an incredible promise: he would become the father of nations. There was just one problem – he had no children. For nine years, Abram and Sarai (65 years old when called) wandered, waiting for this promise to be fulfilled.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">💡 Sarai's Solution</h4>
+                    <p style="margin-bottom: 1rem;">
+                        Sarai proposed a culturally acceptable solution: Abram could have a child through her Egyptian slave Hagar. In ancient Near Eastern culture, any child born to a slave belonged to the master and mistress. Though this seems shocking to us, it was reasonable in their context.
+                    </p>
+                    <p style="font-style: italic; color: #5c4033;">
+                        "Abram, you're to be the father of nations, but I cannot bear children. Take Hagar – she's young. Any child born to her will be my child."
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">⚡ Conflict and Mistreatment</h4>
+                    <p style="margin-bottom: 1rem;">
+                        When Hagar became pregnant, she began to disdain Sarai (slavery, forced marriage, forced pregnancy provide pretty clear reasons). The power dynamic shifted, and Sarai became angry. When she complained to Abram, he responded: "Your slave, your problem." Sarai's solution was to mistreat Hagar so severely that a pregnant slave with no resources chose to flee to the desert.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">👁️ God Sees Hagar</h4>
+                    <div class="verse-card">
+                        <p style="margin-bottom: 1rem;">
+                            <strong>Genesis 16:7-13</strong> – The angel of the Lord found Hagar in the desert and asked, "Where have you come from, and where are you going?"
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            God asked this question not because He didn't know, but to bring Hagar clarity. She knew where she'd come from, but had no idea where she was going. <em>But God did.</em>
+                        </p>
+                        <p style="font-weight: 600; color: #8b6f47;">
+                            God promised Hagar: "I will increase your descendants so much that they will be too numerous to count... You will give birth to a son. Name him <span class="tooltip-trigger" data-tooltip="ishmael">Ishmael</span>, for the Lord has heard your misery."
+                        </p>
+                    </div>
+                    <p style="margin-top: 1rem;">
+                        This was the same promise given to Abram! A lowly slave girl would become the mother of nations. Her son would be "like a wild donkey" – meaning <em>free</em>. In a culture where slave children were slaves for life, this was miraculous.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">🏷️ Hagar Names God</h4>
+                    <p style="margin-bottom: 1rem;">
+                        Remarkably, Hagar didn't name God "El Shema" (God who hears), even though God said He heard her affliction. Instead, she named Him <strong class="tooltip-trigger" data-tooltip="elroi">El Roi</strong> – "You are the God who sees me."
+                    </p>
+                    <blockquote style="margin: 1.5rem 0;">
+                        "This is even more personal because when she names God 'God sees me,' what she's saying is that God has looked at her heart. He knows the deepest desire, the longing that she wants. God has seen her personally. He knows her pain and he knows her heart, and he knows that she desires freedom."
+                        <footer style="margin-top: 0.5rem; font-size: 0.875rem; font-style: normal;">– Jessica</footer>
+                    </blockquote>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">🚪 God Works for Freedom</h4>
+                    <p style="margin-bottom: 1rem;">
+                        Years later, after Sarah gave birth to Isaac, she demanded that Abraham dismiss Hagar and Ishmael. Though this troubled Abraham, God told him to follow through. Here we see God's beautiful work: He used Sarah's disdain and even injustice to grant Hagar and Ishmael the freedom she longed for.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        However, Abraham sent them into the desert with only one skin of water (perhaps 15 liters) and bread – barely enough for three days in the desert heat. When the water ran out, Hagar put Ishmael under a bush because she couldn't bear to watch him die.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">💧 God Sees and Provides</h4>
+                    <div class="verse-card">
+                        <p style="margin-bottom: 1rem;">
+                            <strong>Genesis 21:17-19</strong> – God heard the boy crying, and the angel called to Hagar: "Do not be afraid. God has heard the boy... Lift him up, for I will make him into a great nation."
+                        </p>
+                        <p style="font-weight: 600; color: #8b6f47;">
+                            Then God opened her eyes and she saw a well of water.
+                        </p>
+                    </div>
+                    <p style="margin-top: 1rem;">
+                        El Roi comes in our deepest vulnerabilities and pain. He doesn't just see – He enters into it and provides what we need.
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 3rem;">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: #8b6f47;">Part 2: Jehovah Jireh – The Lord Will Provide (Pastor Tim)</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">🎯 Abraham's Journey of Faith</h4>
+                    <p style="margin-bottom: 1rem;">
+                        Abraham and Sarah were called to leave their homeland at 75 and 65 years old – a huge act of faith. But their journey included moments of doubt: lying to Pharaoh about Sarah being his sister, taking matters into their own hands with Hagar, and laughing at God's promise of a son in their old age.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        When Isaac (whose name means "one who laughs") was finally born, Abraham was 100 years old. After waiting a century for this promise, they finally had their son.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">⚡ The Ultimate Test</h4>
+                    <div class="verse-card">
+                        <p style="margin-bottom: 1rem;">
+                            <strong>Genesis 22:1-2</strong> – "After these things, God tested Abraham and said... 'Take your son, your only son Isaac, whom you love, and go to the land of Moriah and offer him there as a burnt offering.'"
+                        </p>
+                    </div>
+                    <p style="margin-bottom: 1rem;">
+                        Notice the parallel language: "Your son, your only son, whom you love" echoes John 3:16 – "God so loved the world that he gave his one and only Son." This test foreshadows God's ultimate provision of Jesus.
+                    </p>
+                    <blockquote>
+                        "I can't imagine a greater test than that which the Lord applied to Abraham... Surely on this occasion he was tried ten times in one."
+                        <footer style="margin-top: 0.5rem; font-size: 0.875rem; font-style: normal;">– Charles Spurgeon</footer>
+                    </blockquote>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">🌅 Immediate Obedience</h4>
+                    <p style="margin-bottom: 1rem;">
+                        "Abraham rose early in the morning" and immediately obeyed. Through all his experiences – even when he tried to take control – he had learned that God ultimately provides. His experience proved God's faithfulness.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        Isaac, old enough to carry his own wood and understand what was happening, noticed they had everything except a lamb. Abraham's response revealed complete faith: <em>"God will provide a lamb for us, my son."</em>
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">🛡️ Abraham's Dual Faith</h4>
+                    <p style="margin-bottom: 1rem;">
+                        Abraham believed two things simultaneously:
+                    </p>
+                    <ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li style="margin-bottom: 0.5rem;"><strong>God would spare Isaac</strong> – He would provide a substitute</li>
+                        <li><strong>Even if Isaac died</strong> – God would resurrect him, because God's promise was "through Isaac shall your offspring be named" (Hebrews 11:17-19)</li>
+                    </ol>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">🐏 The Provision Revealed</h4>
+                    <div class="verse-card">
+                        <p style="margin-bottom: 1rem;">
+                            <strong>Genesis 22:11-14</strong> – Just as Abraham reached for the knife, the angel stopped him: "Do not lay your hand on the boy... for now I know that you fear God."
+                        </p>
+                        <p style="font-weight: 600; color: #8b6f47; margin-bottom: 1rem;">
+                            Abraham looked up and saw a ram caught in a thicket. He took the ram and offered it as a burnt offering instead of his son.
+                        </p>
+                        <p style="font-style: italic;">
+                            "So Abraham called the name of that place, 'The Lord will provide' – <span class="tooltip-trigger" data-tooltip="jehovah">Jehovah Jireh</span>."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #5c4033;">✅ Faith Proven Genuine</h4>
+                    <p style="margin-bottom: 1rem;">
+                        This wasn't about proving Abraham <em>had</em> faith – Genesis 15 already said he "believed God and it was credited to him as righteousness." This test <em>revealed</em> how much his faith had grown. As James writes, "faith without works is dead" – genuine faith produces fruit.
+                    </p>
+                    <blockquote>
+                        "Abraham believed God and was credited to him as righteousness. But in Genesis 22, Abraham obeyed God and his faith was proven genuine."
+                        <footer style="margin-top: 0.5rem; font-size: 0.875rem; font-style: normal;">– Pastor Tim</footer>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #f9f5f0 0%, #ffffff 100%); padding: 2rem; border-radius: 12px; border-left: 4px solid #d4a574;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #2c1810;">🔗 The Connection: Vision & Provision</h3>
+                <p style="margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600; color: #8b6f47;">
+                    God's vision leads to His provision.
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    Two different sons in two different situations: Hagar with Ishmael needing water and survival, Abraham with Isaac facing the ultimate test of faith. In both stories, we see the same truth: <strong>God sees what we need and provides at exactly the right time.</strong>
+                </p>
+                <p>
+                    El Roi and Jehovah Jireh are not separate attributes but two sides of the same divine nature. First God <em>sees</em>, then He <em>sees to it</em> that our needs are met.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Bible Verses -->
+    <div class="tab-content" id="verses">
+        <div class="section-container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: #2c1810;">Key Scripture Passages 📖</h2>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>Genesis 15:1-6</strong> – God's Promise to Abram</span>
+                    <span style="font-size: 1.25rem;">›</span>
+                </div>
+                <div class="accordion-content">
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        After this, the word of the Lord came to Abram in a vision: "Do not be afraid, Abram. I am your shield, your very great reward." But Abram said, "Sovereign Lord, what can you give me since I remain childless and the one who will inherit my estate is Eliezer of Damascus?" And Abram said, "You have given me no children; so a servant in my household will be my heir."
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        Then the word of the Lord came to him: "This man will not be your heir, but a son who is your own flesh and blood will be your heir." He took him outside and said, "Look up at the sky and count the stars—if indeed you can count them." Then he said to him, "So shall your offspring be."
+                    </p>
+                    <p style="font-weight: 600; color: #8b6f47;">
+                        Abram believed the Lord, and he credited it to him as righteousness.
+                    </p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>Genesis 16:7-13</strong> – Hagar Names God "El Roi"</span>
+                    <span style="font-size: 1.25rem;">›</span>
+                </div>
+                <div class="accordion-content">
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        The angel of the Lord found Hagar near a spring in the desert; it was the spring that is beside the road to Shur. And he said, "Hagar, slave of Sarai, where have you come from, and where are you going?"
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        "I'm running away from my mistress Sarai," she answered.
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        Then the angel of the Lord told her, "Go back to your mistress and submit to her." The angel added, "I will increase your descendants so much that they will be too numerous to count."
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        The angel of the Lord also said to her: "You are now pregnant and you will give birth to a son. You shall name him Ishmael, for the Lord has heard of your misery. He will be a wild donkey of a man; his hand will be against everyone and everyone's hand against him, and he will live in hostility toward all his brothers."
+                    </p>
+                    <p style="font-weight: 600; color: #8b6f47;">
+                        She gave this name to the Lord who spoke to her: "You are the God who sees me," for she said, "I have now seen the One who sees me."
+                    </p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>Genesis 21:14-21</strong> – God Provides Water for Hagar</span>
+                    <span style="font-size: 1.25rem;">›</span>
+                </div>
+                <div class="accordion-content">
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        Early the next morning Abraham took some food and a skin of water and gave them to Hagar. He set them on her shoulders and then sent her off with the boy. She went on her way and wandered in the Desert of Beersheba. When the water in the skin was gone, she put the boy under one of the bushes. Then she went off and sat down about a bowshot away, for she thought, "I cannot watch the boy die." And as she sat there, she began to sob.
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        God heard the boy crying, and the angel of God called to Hagar from heaven and said to her, "What is the matter, Hagar? Do not be afraid; God has heard the boy crying as he lies there. Lift the boy up and take him by the hand, for I will make him into a great nation."
+                    </p>
+                    <p style="font-weight: 600; color: #8b6f47; margin-bottom: 1rem;">
+                        Then God opened her eyes and she saw a well of water. So she went and filled the skin with water and gave the boy a drink.
+                    </p>
+                    <p style="font-style: italic;">
+                        God was with the boy as he grew up. He lived in the desert and became an archer. While he was living in the Desert of Paran, his mother got a wife for him from Egypt.
+                    </p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>Genesis 22:1-14</strong> – Abraham Offers Isaac / Jehovah Jireh</span>
+                    <span style="font-size: 1.25rem;">›</span>
+                </div>
+                <div class="accordion-content">
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        Some time later God tested Abraham. He said to him, "Abraham!" "Here I am," he replied. Then God said, "Take your son, your only son, whom you love—Isaac—and go to the region of Moriah. Sacrifice him there as a burnt offering on a mountain I will show you."
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        Early the next morning Abraham got up and loaded his donkey. He took with him two of his servants and his son Isaac. When he had cut enough wood for the burnt offering, he set out for the place God had told him about. On the third day Abraham looked up and saw the place in the distance. He said to his servants, "Stay here with the donkey while I and the boy go over there. We will worship and then we will come back to you."
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        Abraham took the wood for the burnt offering and placed it on his son Isaac, and he himself carried the fire and the knife. As the two of them went on together, Isaac spoke up and said to his father Abraham, "Father?" "Yes, my son?" Abraham replied. "The fire and wood are here," Isaac said, "but where is the lamb for the burnt offering?" Abraham answered, "God himself will provide the lamb for the burnt offering, my son." And the two of them went on together.
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        When they reached the place God had told him about, Abraham built an altar there and arranged the wood on it. He bound his son Isaac and laid him on the altar, on top of the wood. Then he reached out his hand and took the knife to slay his son.
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        But the angel of the Lord called out to him from heaven, "Abraham! Abraham!" "Here I am," he replied. "Do not lay a hand on the boy," he said. "Do not do anything to him. Now I know that you fear God, because you have not withheld from me your son, your only son."
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        Abraham looked up and there in a thicket he saw a ram caught by its horns. He went over and took the ram and sacrificed it as a burnt offering instead of his son.
+                    </p>
+                    <p style="font-weight: 600; color: #8b6f47;">
+                        So Abraham called that place The Lord Will Provide. And to this day it is said, "On the mountain of the Lord it will be provided."
+                    </p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>John 3:16</strong> – God's Ultimate Provision</span>
+                    <span style="font-size: 1.25rem;">›</span>
+                </div>
+                <div class="accordion-content">
+                    <p style="font-weight: 600; color: #8b6f47; font-size: 1.1rem;">
+                        "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
+                    </p>
+                    <p style="margin-top: 1rem; color: #5c4033;">
+                        The language of "your son, your only son, whom you love" in Genesis 22 directly parallels God's gift of Jesus. Abraham's test foreshadows God's ultimate provision.
+                    </p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>Hebrews 11:17-19</strong> – Abraham's Resurrection Faith</span>
+                    <span style="font-size: 1.25rem;">›</span>
+                </div>
+                <div class="accordion-content">
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        By faith Abraham, when God tested him, offered Isaac as a sacrifice. He who had embraced the promises was about to sacrifice his one and only son, even though God had said to him, "It is through Isaac that your offspring will be reckoned."
+                    </p>
+                    <p style="font-weight: 600; color: #8b6f47;">
+                        Abraham reasoned that God could even raise the dead, and so in a manner of speaking he did receive Isaac back from death.
+                    </p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>James 2:21-23</strong> – Faith and Works Together</span>
+                    <span style="font-size: 1.25rem;">›</span>
+                </div>
+                <div class="accordion-content">
+                    <p style="font-style: italic; margin-bottom: 1rem;">
+                        Was not our father Abraham considered righteous for what he did when he offered his son Isaac on the altar? You see that his faith and his actions were working together, and his faith was made complete by what he did.
+                    </p>
+                    <p style="font-weight: 600; color: #8b6f47;">
+                        And the scripture was fulfilled that says, "Abraham believed God, and it was credited to him as righteousness," and he was called God's friend.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Application -->
+    <div class="tab-content" id="application">
+        <div class="section-container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: #2c1810;">Living It Out 💡</h2>
+            
+            <div style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: #8b6f47;">Three Truths to Remember 🎯</h3>
+                
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #f5ebe0 0%, #faf8f5 100%); border-radius: 8px; border-left: 4px solid #2c5f7d;">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 1rem; color: #2c5f7d;">1. God Sees You Even When You Feel Unseen 👁️</h4>
+                    <p style="margin-bottom: 1rem;">
+                        There are times when you feel like God isn't paying attention, when you feel lost, stranded, or deserted – maybe just like Hagar in the wilderness. But the truth is: <strong>He is there for you.</strong>
+                    </p>
+                    <p style="margin-bottom: 1rem; font-style: italic; color: #5c4033;">
+                        "Do you see the God who sees you?" – Jessica
+                    </p>
+                    <p>
+                        <strong>Practical Step:</strong> In your moments of feeling invisible or abandoned, pause and remember Hagar's story. God saw her in the desert, knew her deepest longing for freedom, and provided for her. He sees you with that same intimate knowledge and care.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #f5ebe0 0%, #faf8f5 100%); border-radius: 8px; border-left: 4px solid #8b6f47;">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 1rem; color: #8b6f47;">2. God Provides Even When You Can't See It 🙌</h4>
+                    <p style="margin-bottom: 1rem;">
+                        Sometimes we see God's provision clearly; other times we don't recognize it until much later. With Hagar, there was a well provided. With Abraham, there was a ram in the thicket. <strong>God always makes a way.</strong>
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Practical Step:</strong> Start a "provision journal" where you record moments when God has provided for you – materially, emotionally, spiritually. When you face new challenges, review these entries to build your faith that God will provide again.
+                    </p>
+                </div>
+
+                <div style="padding: 1.5rem; background: linear-gradient(135deg, #f5ebe0 0%, #faf8f5 100%); border-radius: 8px; border-left: 4px solid #d4a574;">
+                    <h4 style="font-size: 1.25rem; margin-bottom: 1rem; color: #5c4033;">3. God Cares for You No Matter Your Place in the Story 💝</h4>
+                    <p style="margin-bottom: 1rem;">
+                        Whether you're the patriarch of nations or a slave girl with an "illegitimate" son, God sees and cares for you. From the highest high to the lowest low, wherever you place yourself in the story, <strong>God will see you and provide for you.</strong>
+                    </p>
+                    <p style="margin-bottom: 1rem; font-style: italic; color: #5c4033;">
+                        "No matter what circumstance we're in, no matter what situation we're going through, God will be El Roi, the one who sees us, and Jehovah Jireh, the one who provides for us." – Pastor Tim
+                    </p>
+                    <p>
+                        <strong>Practical Step:</strong> If you feel insignificant or unworthy of God's attention, meditate on Hagar's story. God not only saw a slave woman but allowed her to name Him – the only human in Scripture given this privilege. You matter to God.
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #2c5f7d 0%, #4a7a95 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem;">Questions for Reflection 🤔</h3>
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">❓ Where in your life do you feel unseen right now?</p>
+                    <p style="font-size: 0.9rem; opacity: 0.9;">What would it mean for you to truly believe that God sees you in that specific situation?</p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">❓ Are you waiting for God's provision in something?</p>
+                    <p style="font-size: 0.9rem; opacity: 0.9;">How does Abraham's immediate obedience challenge or encourage you in your waiting?</p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 8px;">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">❓ What "matters into your own hands" have you tried to take?</p>
+                    <p style="font-size: 0.9rem; opacity: 0.9;">Like Abraham and Sarah's attempt with Hagar, are there areas where you're trying to fulfill God's promises through your own schemes?</p>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: #8b6f47;">Personal Application Stories 📖</h3>
+                <div style="border-left: 4px solid #d4a574; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+                    <p style="font-style: italic; margin-bottom: 1rem; color: #5c4033;">
+                        "Hagar's story is deeply personal to me because I have met El Roi. There was a season in my life where I was deeply vulnerable, alone, and in a ton of pain. And God saw me in that, and he knew the desires of my heart, and he set me free."
+                    </p>
+                    <p style="font-size: 0.875rem;">– Jessica</p>
+                </div>
+                <div style="border-left: 4px solid #d4a574; padding-left: 1.5rem;">
+                    <p style="margin-bottom: 1rem; color: #5c4033;">
+                        Pastor Tim shared how God provided when he and his wife moved to Hong Kong with no money or possessions, trusting God to serve at Island ECC. God provided secondhand furniture from church members so they could sleep on a bed their first night. He also shared how God provided mentors when he became a Christian as a teenager – people who would call to ask about his spiritual life, check on him, pray for him, and be there for him.
+                    </p>
+                    <p style="font-style: italic; margin-bottom: 1rem; color: #5c4033;">
+                        "God saw me and provided for me in these different ways. It's so powerful to think about it."
+                    </p>
+                    <p style="font-size: 0.875rem;">– Pastor Tim</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Reflection -->
+    <div class="tab-content" id="reflection">
+        <div class="section-container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: #2c1810;">Deeper Reflections 🙏</h2>
+            
+            <div style="background: linear-gradient(135deg, #8b6f47 0%, #a88a63 100%); color: white; padding: 2.5rem; border-radius: 12px; margin-bottom: 2rem; text-align: center;">
+                <h3 style="font-size: 2rem; margin-bottom: 1rem;">The Central Questions ✨</h3>
+                <div class="divider-ornament" style="margin: 1.5rem auto;"></div>
+                <p style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem;">
+                    Do you believe that God sees you?
+                </p>
+                <p style="font-size: 1.5rem; font-weight: 600;">
+                    Do you believe that God will provide for you?
+                </p>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: #2c5f7d;">The Pattern of God's Work 🔄</h3>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #5c4033;">
+                    In both Hagar's and Abraham's stories, we see a consistent pattern:
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div style="padding: 1.5rem; background: #f9f5f0; border-radius: 8px; border-top: 3px solid #2c5f7d;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">1️⃣</div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: #2c5f7d;">Desperate Circumstances</h4>
+                        <p style="font-size: 0.9rem; color: #5c4033;">Hagar fleeing to the desert, Abraham facing the unthinkable command</p>
+                    </div>
+                    <div style="padding: 1.5rem; background: #f9f5f0; border-radius: 8px; border-top: 3px solid #8b6f47;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">2️⃣</div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: #8b6f47;">God's Intervention</h4>
+                        <p style="font-size: 0.9rem; color: #5c4033;">The angel appears at the critical moment, seeing and speaking</p>
+                    </div>
+                    <div style="padding: 1.5rem; background: #f9f5f0; border-radius: 8px; border-top: 3px solid #d4a574;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">3️⃣</div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: #8b6f47;">Divine Provision</h4>
+                        <p style="font-size: 0.9rem; color: #5c4033;">A well appears, a ram is caught – exactly what was needed</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: #8b6f47;">The Mystery of Two Brothers 🤝</h3>
+                <p style="margin-bottom: 1rem;">
+                    The sermon connects two half-brothers – Ishmael and Isaac – who had dramatically different stories but the same father and the same God watching over them:
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <div style="padding: 1.5rem; background: linear-gradient(135deg, #2c5f7d20 0%, #2c5f7d10 100%); border-radius: 8px; border-left: 4px solid #2c5f7d;">
+                        <h4 style="font-size: 1.25rem; margin-bottom: 1rem; color: #2c5f7d;">Ishmael's Story</h4>
+                        <ul style="list-style: none; padding: 0; font-size: 0.95rem;">
+                            <li style="margin-bottom: 0.5rem;">🏜️ Born from human schemes</li>
+                            <li style="margin-bottom: 0.5rem;">💧 Saved by water in the desert</li>
+                            <li style="margin-bottom: 0.5rem;">🕊️ Promised freedom and nationhood</li>
+                            <li style="margin-bottom: 0.5rem;">👁️ God <em>saw</em> his mother's pain</li>
+                        </ul>
+                    </div>
+                    <div style="padding: 1.5rem; background: linear-gradient(135deg, #8b6f4720 0%, #8b6f4710 100%); border-radius: 8px; border-left: 4px solid #8b6f47;">
+                        <h4 style="font-size: 1.25rem; margin-bottom: 1rem; color: #8b6f47;">Isaac's Story</h4>
+                        <ul style="list-style: none; padding: 0; font-size: 0.95rem;">
+                            <li style="margin-bottom: 0.5rem;">⭐ Born from God's promise</li>
+                            <li style="margin-bottom: 0.5rem;">🐏 Saved by a substitute ram</li>
+                            <li style="margin-bottom: 0.5rem;">👑 Promised covenant blessing</li>
+                            <li style="margin-bottom: 0.5rem;">🙌 God <em>provided</em> his redemption</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="font-style: italic; padding: 1.5rem; background: #f9f5f0; border-radius: 8px; color: #5c4033;">
+                    Both stories reveal the same truth: whether you're the "legitimate" heir or feel like an outsider, whether your story began "the right way" or from brokenness, God sees you and provides for you. Your worth to God isn't determined by your origin story but by His character.
+                </p>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: #2c1810;">The Foreshadowing of Jesus ✝️</h3>
+                <p style="margin-bottom: 1rem;">
+                    Genesis 22 powerfully points forward to the cross:
+                </p>
+                <div class="verse-card">
+                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem; align-items: center; margin-bottom: 1.5rem;">
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 0.5rem;">Genesis 22:2</p>
+                            <p style="font-style: italic;">"Take your son, your only son, whom you love"</p>
+                        </div>
+                        <div style="font-size: 2rem;">→</div>
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 0.5rem;">John 3:16</p>
+                            <p style="font-style: italic;">"God gave his one and only Son"</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem; align-items: center;">
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 0.5rem;">Isaac</p>
+                            <p style="font-style: italic;">Carried the wood for his own sacrifice up the mountain</p>
+                        </div>
+                        <div style="font-size: 2rem;">→</div>
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 0.5rem;">Jesus</p>
+                            <p style="font-style: italic;">Carried the cross for our sacrifice up Golgotha</p>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, #f5ebe0 0%, #faf8f5 100%); border-radius: 8px; font-weight: 600; color: #8b6f47;">
+                    But there's a crucial difference: Abraham received a substitute ram and Isaac was spared. Jesus received no substitute – He <em>was</em> the substitute. He is our ram in the thicket, our ultimate provision from Jehovah Jireh.
+                </p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #2c1810 0%, #3d2619 100%); color: white; padding: 2.5rem; border-radius: 12px;">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; text-align: center;">A Closing Prayer 🕊️</h3>
+                <div class="divider-ornament" style="background: linear-gradient(to right, transparent, white, transparent); margin: 1.5rem auto;"></div>
+                <p style="font-style: italic; line-height: 2; text-align: center; font-size: 1.05rem;">
+                    El Roi, thank You for seeing us in our deepest vulnerabilities. You see our pain, our longings, our fears. Help us to truly believe that nothing about us is hidden from Your loving gaze.
+                </p>
+                <p style="font-style: italic; line-height: 2; text-align: center; font-size: 1.05rem; margin-top: 1.5rem;">
+                    Jehovah Jireh, thank You for Your faithful provision. When we can't see the way forward, help us trust that You have already prepared what we need. Like Abraham, may our faith be proven genuine through obedience.
+                </p>
+                <p style="font-style: italic; line-height: 2; text-align: center; font-size: 1.05rem; margin-top: 1.5rem;">
+                    Most of all, thank You for the ultimate provision of Jesus – our ram in the thicket, our substitute, our Savior. May we live in the freedom and security that comes from knowing we are seen and provided for by You.
+                </p>
+                <p style="text-align: center; margin-top: 2rem; font-weight: 600; font-size: 1.1rem;">
+                    In Jesus' name, Amen. 🙏
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip Content (Hidden by default) -->
+    <div id="tooltip" class="tooltip-content"></div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short" id="attr-short">ℹ️</div>
+        <div class="attribution-full" id="attr-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('span:last-child');
+                
+                // Toggle current accordion
+                content.classList.toggle('open');
+                icon.style.transform = content.classList.contains('open') ? 'rotate(90deg)' : 'rotate(0deg)';
+            });
+        });
+
+        // Tooltip functionality
+        const tooltip = document.getElementById('tooltip');
+        const tooltipData = {
+            'ishmael': 'Ishmael (Hebrew: יִשְׁמָעֵאל) means "God hears" or "God will hear." This name was a permanent reminder to Hagar that God heard her affliction in the desert.',
+            'elroi': 'El Roi (Hebrew: אֵל רֳאִי) means "God of seeing" or "God who sees me." This is the only name in Scripture where God allowed Himself to be named by a human – and that human was a slave woman.',
+            'jehovah': 'Jehovah Jireh (Hebrew: יְהוָה יִרְאֶה) literally means "Yahweh will see" but is translated as "The Lord will provide." The seeing and providing are intimately connected in God\'s character.'
+        };
+
+        document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+            trigger.addEventListener('mouseenter', (e) => {
+                const key = trigger.getAttribute('data-tooltip');
+                tooltip.textContent = tooltipData[key];
+                tooltip.classList.add('show');
+            });
+            
+            trigger.addEventListener('mouseleave', () => {
+                tooltip.classList.remove('show');
+            });
+            
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                const key = trigger.getAttribute('data-tooltip');
+                tooltip.textContent = tooltipData[key];
+                tooltip.classList.toggle('show');
+            });
+        });
+
+        // Close tooltip when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('tooltip-trigger')) {
+                tooltip.classList.remove('show');
+            }
+        });
+
+        // Attribution badge functionality
+        const attrShort = document.getElementById('attr-short');
+        const attrFull = document.getElementById('attr-full');
+        
+        attrShort.addEventListener('click', () => {
+            attrShort.style.display = 'none';
+            attrFull.classList.add('show');
+        });
+        
+        attrFull.addEventListener('click', () => {
+            attrFull.classList.remove('show');
+            attrShort.style.display = 'flex';
+        });
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                tooltip.classList.remove('show');
+            }
+        });
+
+        // Add ARIA labels for accessibility
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.setAttribute('role', 'button');
+            header.setAttribute('aria-expanded', 'false');
+            
+            header.addEventListener('click', function() {
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
+            });
+        });
+    </script>
+</body>
+</html>

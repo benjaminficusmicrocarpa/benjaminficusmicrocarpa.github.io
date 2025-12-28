@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I AM: The Way, The Truth and The Life | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary: #1a365d;
+            --secondary: #c7a56e;
+            --accent: #8b5a3c;
+            --bg-light: #faf8f5;
+            --text-dark: #2d3748;
+            --overlay: rgba(26, 54, 93, 0.85);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .hero-section {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .bg-carousel {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        
+        .bg-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .bg-slide.active {
+            opacity: 1;
+            animation: kenBurns 20s ease-in-out infinite;
+        }
+        
+        @keyframes kenBurns {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--overlay) 0%, rgba(139, 90, 60, 0.7) 100%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 900px;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-meta {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--primary);
+            box-shadow: 0 4px 16px rgba(199, 165, 110, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: #d4b887;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(199, 165, 110, 0.5);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 50;
+            border-bottom: 2px solid var(--secondary);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        .tab-container {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .tab-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-dark);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+        
+        .tab-btn:hover {
+            opacity: 0.8;
+            background: rgba(199, 165, 110, 0.05);
+        }
+        
+        .tab-btn.active {
+            opacity: 1;
+            border-bottom-color: var(--secondary);
+            color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+        }
+        
+        .accordion-item {
+            background: white;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-item:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, var(--bg-light), white);
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: var(--bg-light);
+        }
+        
+        .accordion-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .accordion-icon {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .accordion-content-inner {
+            padding: 0 1.5rem 1.5rem;
+        }
+        
+        .verse-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--secondary);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .verse-reference {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .verse-text {
+            font-style: italic;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        .quote-block {
+            background: linear-gradient(135deg, #f7f5f2 0%, #fff 100%);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--accent);
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .quote-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .quote-author {
+            font-weight: 600;
+            color: var(--primary);
+            text-align: right;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--secondary), var(--accent));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 3px solid var(--bg-light);
+        }
+        
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-content {
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short {
+            background: var(--primary);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(26, 54, 93, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(26, 54, 93, 0.4);
+        }
+        
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+            max-width: 300px;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        
+        .attribution-full a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .attribution-full a:hover {
+            text-decoration: underline;
+        }
+        
+        .application-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .application-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+        
+        .application-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        
+        .application-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .application-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+        
+        .application-text {
+            color: #4a5568;
+            line-height: 1.7;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 70vh;
+                min-height: 500px;
+            }
+            
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem 1rem;
+            }
+            
+            .attribution-full {
+                display: block;
+                max-width: 100%;
+            }
+            
+            .attribution-short {
+                display: none;
+            }
+            
+            .timeline {
+                padding-left: 1.5rem;
+            }
+            
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+        }
+        
+        @media print {
+            .sticky-tabs,
+            .btn-group,
+            .attribution-badge {
+                display: none;
+            }
+            
+            .hero-section {
+                height: auto;
+                min-height: auto;
+                padding: 2rem;
+            }
+            
+            .accordion-content {
+                max-height: none !important;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="bg-carousel">
+            <div class="bg-slide active" style="background-image: url('https://images.unsplash.com/photo-1501483029372-625e8b8a83f2?q=80&w=1920');"></div>
+            <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=1920');"></div>
+            <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1472396961693-142e6e269027?q=80&w=1920');"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">I AM: The Way, The Truth and The Life</h1>
+            <div class="hero-meta">
+                13 April 2025 • Pastor Brett • Island ECC
+            </div>
+            <p style="font-size: 1.125rem; opacity: 0.95; max-width: 700px; margin: 0 auto;">Perhaps the most radical statement Jesus ever makes is found in John 14:6. His claim to be the only way to God is extreme, yet it highlights His uniqueness among all other gods.</p>
+            <div class="btn-group">
+                <a href="https://www.youtube.com/watch?v=5bwHRHBnl-E" class="btn btn-primary" target="_blank">
+                    <span>▶️</span> Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <span>📋</span> View All Sermons
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation Tabs -->
+    <div class="sticky-tabs">
+        <div class="tab-container">
+            <button class="tab-btn active" data-tab="overview">📖 Overview</button>
+            <button class="tab-btn" data-tab="sermon">✝️ Main Sermon</button>
+            <button class="tab-btn" data-tab="verses">📜 Bible Verses</button>
+            <button class="tab-btn" data-tab="lies">🎭 Modern Lies vs Truth</button>
+            <button class="tab-btn" data-tab="application">💡 Application</button>
+            <button class="tab-btn" data-tab="reflection">🙏 Reflection</button>
+        </div>
+    </div>
+
+    <!-- Tab Contents -->
+    <div class="container">
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <h2 class="section-title">Sermon Overview</h2>
+            
+            <div class="quote-block">
+                <p class="quote-text">Do not let your heart be troubled. You believe in God; believe also in me.</p>
+                <p class="quote-author">— Jesus Christ, John 14:1</p>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin: 2rem 0;">
+                <h3 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 1rem;">Central Message</h3>
+                <p style="margin-bottom: 1rem;">Jesus makes the most exclusive and radical claim in all of religious history: "I am the way and the truth and the life. No one comes to the Father except through me" (John 14:6).</p>
+                <p style="margin-bottom: 1rem;">This statement is not arrogant presumption—it is truth backed by the resurrection. Jesus doesn't offer Himself as a part-time hobby or spiritual supplement. He claims to be the exclusive pathway to God, the embodiment of truth itself, and the source of all genuine life.</p>
+                <p>What troubles you right now? Jesus speaks directly into our anxieties, our burdens, our fears, saying: "Do not let your heart be troubled." We have responsibility for our emotional responses, and God equips us to face whatever troubles us through faith in Christ.</p>
+            </div>
+
+            <div class="application-grid">
+                <div class="application-card">
+                    <div class="application-icon">🛤️</div>
+                    <h4 class="application-title">The Way</h4>
+                    <p class="application-text">Jesus is not one path among many—He is THE way. The early church was known as "the Way" because of this exclusive claim.</p>
+                </div>
+                <div class="application-card">
+                    <div class="application-icon">✨</div>
+                    <h4 class="application-title">The Truth</h4>
+                    <p class="application-text">In a world of competing narratives and lies, Jesus embodies objective truth. "You will know the truth, and the truth will set you free."</p>
+                </div>
+                <div class="application-card">
+                    <div class="application-icon">🌱</div>
+                    <h4 class="application-title">The Life</h4>
+                    <p class="application-text">Christ is not interested in an hour on Sunday. He offers abundant, purposeful, eternal life that transforms everything.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <h2 class="section-title">Main Sermon Content</h2>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">What Troubles You?</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;">Jesus begins with a question that cuts to the heart: <strong>What troubles you right now?</strong> Not theoretically, but in this very moment—what feels heavy, burdensome, draining?</p>
+                        <p style="margin-bottom: 1rem;">He then gives a directive: <strong>"Do not let your heart be troubled"</strong> (John 14:1). The Greek grammar here is a present imperative passive—meaning "stop being troubled." This places responsibility on us for our emotional responses.</p>
+                        <p style="margin-bottom: 1rem;">Yet Jesus Himself was troubled. In John 13, knowing Judas would betray Him and Peter would deny Him, Scripture says "Jesus was troubled in spirit." So it's not about suppressing emotions or growing numb—it's about <em>what</em> we're troubled about and <em>how</em> we respond.</p>
+                        <p>God never commands us to do something without equipping us for it. We are not innocent bystanders to emotional bursts. We have capacity and responsibility to respond appropriately through faith.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">I AM the Way</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;">When Jesus said "Where I am going, you cannot come," the disciples were confused. Thomas voiced what everyone was thinking: <strong>"Lord, we don't know where you're going, so how can we know the way?"</strong></p>
+                        <p style="margin-bottom: 1rem;">Jesus responds not with logistics, but with identity: <strong>"I am the way and the truth and the life. No one comes to the Father except through me"</strong> (John 14:6).</p>
+                        
+                        <div class="quote-block">
+                            <p class="quote-text">Jesus doesn't say the church is the way. He doesn't say having good theology is the way. Memorizing scripture is the way. Joining a care group is the way. All of these things are good, but these are a means to an end to help us encounter Jesus.</p>
+                            <p class="quote-author">— Pastor Brett</p>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">This is an exclusive claim—offensive to modern ears. But it's backed by something unique: <strong>the resurrection</strong>. There are no bones of Jesus. No tomb where you can pay respects. He conquered death, which validates His claim to be the only way to God.</p>
+                        <p>The early church wasn't called "Christians" at first (that came later as an insult). They were known as <strong>"the Way"</strong>—followers of the one who claimed to be the exclusive path to the Father.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">I AM the Truth</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;">Jesus said: <strong>"You will know the truth, and the truth will set you free"</strong> (John 8:32). The Jewish leaders were offended—"We're not slaves! We don't need freedom!"</p>
+                        <p style="margin-bottom: 1rem;">But Jesus pushed back: <strong>"Everyone who sins is a slave to sin."</strong> Then He escalated: "You belong to your father, the devil, and you want to carry out your father's desires. He was a murderer from the beginning... he is a liar and the father of lies" (John 8:44).</p>
+                        <p style="margin-bottom: 1rem;">There is a cosmic battle between truth and lies, light and darkness. God speaks truth. The enemy seeks to destroy through deception. We live on this battlefield daily, with both vying for our affection and attention.</p>
+                        <p><strong>Truth is liberating.</strong> It provides clarity, removes instability, gives confidence. When we know what Jesus says is true, we can bank our entire life on it.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">I AM the Life</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;"><strong>"For in him we live and move and have our being"</strong> (Acts 17:28). Jesus is not offering Himself as a part-time hobby to fit into your busy schedule. He's not interested in an hour and a half on Sunday only to be forgotten the other 142.5 hours of the week.</p>
+                        <p style="margin-bottom: 1rem;">Jesus says: <strong>"I am life."</strong> And when you come to Him, He is the "transcendental interferer" (C.S. Lewis)—He will disrupt everything, change your affections, shift what brings you joy.</p>
+                        
+                        <div class="quote-block">
+                            <p class="quote-text">Christ, who is your life.</p>
+                            <p class="quote-author">— Colossians 3:4</p>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">You cannot separate secular and sacred. There is no "God's area" and "my area." All of life—career, relationships, passions, hobbies, money, schedule—comes under the beautiful umbrella of life in Christ.</p>
+                        <p>It's scary to surrender completely, to not hold back certain areas. But it's only in that all-out surrender that we realize: <strong>it's so worth it.</strong> He gives purpose, meaning, hope, and contentment. In God's economy, nothing is wasted.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item active">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">C.S. Lewis: Liar, Lunatic, or Lord?</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content" style="max-height: 1000px;">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;">C.S. Lewis, in his journey to faith detailed in <em>Surprised by Joy</em>, wrestled with Jesus's exclusive claims. He called Christ the <strong>"transcendental interferer."</strong></p>
+                        
+                        <div class="quote-block">
+                            <p class="quote-text">What mattered most of all was my deep-seated hatred of authority, my monstrous individualism, my lawlessness. No word in my vocabulary expressed hatred than the word interference. But Christianity placed at the center what then seemed to me a transcendental interferer.</p>
+                            <p class="quote-author">— C.S. Lewis, Surprised by Joy</p>
+                        </div>
+
+                        <p style="margin-bottom: 1rem;">Lewis wanted an area—however small—where he could post a sign: <strong>"No admittance. This is my business alone."</strong> But God would not stay out. Otherwise He's not Lord of all, just Lord of some.</p>
+                        
+                        <p style="margin-bottom: 1rem;">Lewis famously presented three options for understanding Jesus's claims:</p>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h4 class="timeline-title">Liar</h4>
+                                <p class="timeline-content">Jesus knew He was deceiving people but did it purposely with whimsical power.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h4 class="timeline-title">Lunatic</h4>
+                                <p class="timeline-content">He was crazy—didn't know He was lying, just went around making false claims.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h4 class="timeline-title">Lord</h4>
+                                <p class="timeline-content">His outlandish claims are actually true—validated by His resurrection from the dead.</p>
+                            </div>
+                        </div>
+
+                        <p style="margin-top: 1.5rem;">There are no bones of Jesus. No temple in Jerusalem where you can see His remains. If there were, we'd close the church. It would disprove everything. But the empty tomb backs up His claim: <strong>He is the way, the truth, and the life.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses" class="tab-content">
+            <h2 class="section-title">Key Bible Verses</h2>
+
+            <div class="verse-card">
+                <div class="verse-reference">John 14:1-6 (NIV)</div>
+                <div class="verse-text">
+                    "Do not let your hearts be troubled. You believe in God; believe also in me. My Father's house has many rooms; if that were not so, would I have told you that I am going there to prepare a place for you? And if I go and prepare a place for you, I will come back and take you to be with me that you also may be where I am. You know the way to the place where I am going." Thomas said to him, "Lord, we don't know where you are going, so how can we know the way?" Jesus answered, "I am the way and the truth and the life. No one comes to the Father except through me."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">John 8:32 (NIV)</div>
+                <div class="verse-text">
+                    "Then you will know the truth, and the truth will set you free."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">John 8:44 (NIV)</div>
+                <div class="verse-text">
+                    "You belong to your father, the devil, and you want to carry out your father's desires. He was a murderer from the beginning, not holding to the truth, for there is no truth in him. When he lies, he speaks his native language, for he is a liar and the father of lies."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Acts 9:2 (NIV)</div>
+                <div class="verse-text">
+                    "...and asked him for letters to the synagogues in Damascus, so that if he found any there who belonged to the Way, whether men or women, he might take them as prisoners to Jerusalem."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Acts 17:28 (NIV)</div>
+                <div class="verse-text">
+                    "For in him we live and move and have our being."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Colossians 3:4 (NIV)</div>
+                <div class="verse-text">
+                    "When Christ, who is your life, appears, then you also will appear with him in glory."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">John 13:21 (NIV)</div>
+                <div class="verse-text">
+                    "After he had said this, Jesus was troubled in spirit and testified, 'Very truly I tell you, one of you is going to betray me.'"
+                </div>
+            </div>
+        </div>
+
+        <!-- Modern Lies vs Truth Tab -->
+        <div id="lies" class="tab-content">
+            <h2 class="section-title">Modern Lies Versus Biblical Truth</h2>
+
+            <p style="margin-bottom: 2rem; font-size: 1.125rem; color: #4a5568;">Jesus said the enemy is the "father of lies" (John 8:44). We live on a battlefield where truth and deception compete for our hearts. Here are today's greatest lies exposed by Scripture:</p>
+
+            <div class="accordion-item active">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">❌ Independence is the ultimate pursuit</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content" style="max-height: 500px;">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;"><strong>The Lie:</strong> Don't need anybody. Be financially independent. Work for yourself. Do what you want, when you want, how you want. Don't accommodate anyone.</p>
+                        <p style="margin-bottom: 1rem;"><strong>The Truth:</strong> As parents, our goal isn't to make children independent <em>from us</em>—it's to transfer their dependence <em>from us to God</em>. To grow independent is to be stiff-necked, to resist authority, to resent submitting to anyone else's desires. This is anti-Christian.</p>
+                        <p><em>"We are members of one body. When one suffers, we all suffer. When one rejoices, we all rejoice."</em> We were created for interdependence, not independence.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">❌ Vulnerability is weakness</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;"><strong>The Lie:</strong> Don't let people see your weakness. Present an image. Manage your reputation. Show your wins, victories, strengths—then pretend to be humble. But don't actually let people in.</p>
+                        <p style="margin-bottom: 1rem;"><strong>The Truth:</strong> For the Christian, vulnerability IS strength. There's life in being honest, authentic, real. You can admit weakness because you're secure in your faith in Jesus Christ. You don't have to manage a reputation when God is your defender.</p>
+                        <p><em>"My grace is sufficient for you, for my power is made perfect in weakness"</em> (2 Corinthians 12:9).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">❌ Sex can be casual or recreational</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;"><strong>The Lie:</strong> "Friends with benefits." Sex is just physical recreation with no deeper implications.</p>
+                        <p style="margin-bottom: 1rem;"><strong>The Truth:</strong> Sex designed by God is to be monogamous, soul-melting intimacy between two people in marriage. It is sacred, not casual. It always has spiritual and emotional implications.</p>
+                        <p><em>"Flee from sexual immorality. All other sins a person commits are outside the body, but whoever sins sexually, sins against their own body"</em> (1 Corinthians 6:18).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">❌ Sabbath rest is outdated and unrealistic</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;"><strong>The Lie:</strong> "I'm too important to take a day off. I'm just so busy." We wear busyness as a badge of honor.</p>
+                        <p style="margin-bottom: 1rem;"><strong>The Truth:</strong> We should be embarrassed, even ashamed. God, the Creator of the universe, worked six days and rested one. When you say "I can't," you're saying you're more important than God. <strong>Don't be a fool.</strong> You need rest.</p>
+                        <p>Sabbath is a display of faith—saying "I can take a break for 24 hours and the world doesn't fall apart. I don't lose my job." If you have a crisis, please don't have it on Friday (Pastor Brett's day off)!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">❌ Private sin isn't harmful</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;"><strong>The Lie:</strong> If my sin only affects me, if nobody knows about it, it doesn't have a ripple effect.</p>
+                        <p style="margin-bottom: 1rem;"><strong>The Truth:</strong> It ALWAYS has a ripple effect. You cannot sin in a vacuum. Secret sin shapes your character, hardens your heart, damages your relationships with God and others—even when hidden.</p>
+                        <p><em>"Nothing in all creation is hidden from God's sight. Everything is uncovered and laid bare before the eyes of him to whom we must give account"</em> (Hebrews 4:13).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">❌ Relationships can be formed efficiently</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;"><strong>The Lie:</strong> We're Hong Kong—we love efficiency! Let's do relationships faster. Schedule quality time. "Hey 13-year-old son, 6:30-7:00 tonight, let's have quality time where you unveil your soul to me."</p>
+                        <p style="margin-bottom: 1rem;"><strong>The Truth:</strong> No 13-year-old will do that. You have to invest <em>quantity</em> time, and then you might get small nuggets of <em>quality</em> time. Marriage? You gotta spend time together—good time, bad time, easy time, hard time, talk time, goofing-off time. <strong>TIME.</strong></p>
+                        <p>Relationships cannot be squeezed into an efficiency paradigm. Love takes time. Trust takes time. Intimacy takes time.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">❌ Live your truth</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;"><strong>The Lie:</strong> So popular. So many people say it. I kind of know what people mean...</p>
+                        <p style="margin-bottom: 1rem;"><strong>The Truth:</strong> But listen—<strong>you don't have a truth.</strong> There IS truth. And you should live according to truth, but you don't get to declare what is true. You don't get to "live your truth" unless it IS God's truth.</p>
+                        <p><em>"I am the way and the TRUTH and the life"</em> (John 14:6). Jesus doesn't say "live your truth"—He says "I AM the truth." Truth is objective, not subjective.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">❌ All roads lead to God</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p style="margin-bottom: 1rem;"><strong>The Lie:</strong> All religions are basically the same. All paths lead to the same mountaintop. It doesn't matter what you believe as long as you're sincere.</p>
+                        <p style="margin-bottom: 1rem;"><strong>The Truth:</strong> That's really emotionally satisfying, isn't it? But God told us that's not how it works. <strong>Jesus is unique among all gods.</strong> Only He died and rose again. Only He conquered death.</p>
+                        <p style="margin-bottom: 1rem;">Yes, all roads lead to the same mountaintop—but not all faiths lead to the same God. <em>"No one comes to the Father except through me"</em> (John 14:6).</p>
+                        <p>If it weren't necessary to go tell people about Jesus, we could save a lot of money and time. But we go because it's <strong>necessary.</strong> That's why missions matter.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-block" style="margin-top: 2rem;">
+                <p class="quote-text">Perhaps the most famous modern poem is Invictus by William Henley. It ends: "I am the master of my fate, I am the captain of my soul." Great poem. Horrible theology. Great poem, bad mantra for your life.</p>
+                <p class="quote-author">— Pastor Brett</p>
+            </div>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <h2 class="section-title">Personal Application</h2>
+
+            <div style="background: white; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem;">
+                <h3 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 1rem;">💭 Reflect on Your Troubles</h3>
+                <p style="margin-bottom: 1rem;">Jesus asks: <strong>What troubles you right now?</strong> Not theoretically—what feels heavy as you sit here today?</p>
+                <p style="margin-bottom: 1rem;">He commands: <strong>"Do not let your heart be troubled."</strong> You have responsibility for your emotional responses. What would it look like to bring that trouble to Jesus instead of carrying it alone?</p>
+                <p style="font-style: italic; color: #4a5568;">Journaling prompt: Write down what troubles you most right now. Then write a prayer surrendering it to Jesus, the one who was troubled for you.</p>
+            </div>
+
+            <div class="application-grid">
+                <div class="application-card">
+                    <div class="application-icon">🛤️</div>
+                    <h4 class="application-title">Embrace the Exclusive Way</h4>
+                    <p class="application-text">Stop apologizing for the exclusivity of Jesus. His resurrection backs up His claim. How can you graciously but confidently share that Jesus is THE way—not A way—with someone this week?</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">🔍</div>
+                    <h4 class="application-title">Identify the Lies You Believe</h4>
+                    <p class="application-text">Review the list of modern lies. Which one resonates most with you? Where have you been living by cultural wisdom instead of biblical truth? Confess it and ask God to renew your mind.</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">🚪</div>
+                    <h4 class="application-title">Remove the "No Admittance" Signs</h4>
+                    <p class="application-text">C.S. Lewis wanted areas of his life where God couldn't interfere. What area are you holding back from Jesus? Career? Finances? A relationship? A secret sin? Invite Him into ALL of it.</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">🌍</div>
+                    <h4 class="application-title">Live Under the Umbrella of Life</h4>
+                    <p class="application-text">Stop separating "secular" and "sacred." Christ IS your life—not just your Sunday life. How does knowing Jesus transform how you work, parent, spend money, or use your time?</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">🙌</div>
+                    <h4 class="application-title">Cultivate Gratitude for the Gospel</h4>
+                    <p class="application-text">You know the only way to heaven. Why weren't you born in a remote village without access to the gospel? Take time this week to worship God for His kindness in revealing Himself to you.</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">✉️</div>
+                    <h4 class="application-title">Invite Someone to Easter</h4>
+                    <p class="application-text">Many friends will never follow you to church—except Easter (the "CEOs": Christmas and Easter Only). Jesus loved them and died for them. Pray about who to invite to Good Friday or Easter Sunday services.</p>
+                </div>
+            </div>
+
+            <div class="quote-block" style="margin-top: 2rem;">
+                <p class="quote-text">Jesus is not offering himself as a part-time hobby. Jesus is not interested in squeezing out an hour and a half of your schedule only to be forgotten the other hundred and forty-two and a half hours of the week. Jesus says, I am life.</p>
+                <p class="quote-author">— Pastor Brett</p>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <h2 class="section-title">Prayer & Reflection</h2>
+
+            <div class="quote-block">
+                <p class="quote-text">Father in heaven, we are grateful for your word that it is true. We are grateful for Jesus, who endured such hostility against sinners, who did not lose hope, so that the mission could be fulfilled—that he would be crucified, and that he would be raised from the dead, proving to an on-looking world that he is unique.</p>
+                <p class="quote-author">— Pastor Brett's Closing Prayer</p>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin: 2rem 0;">
+                <h3 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 1rem;">🙏 Reflect & Respond</h3>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="font-size: 1.25rem; font-weight: 600; color: var(--accent); margin-bottom: 0.75rem;">Questions for Meditation</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
+                            <strong>1.</strong> What does it mean for you personally that Jesus is THE way, not just A way?
+                        </li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
+                            <strong>2.</strong> Which modern lie from today's sermon do you most struggle with?
+                        </li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
+                            <strong>3.</strong> Is there an area of your life where you've posted a "No Admittance" sign to God?
+                        </li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0;">
+                            <strong>4.</strong> How does Jesus being "your life" change how you approach Monday morning?
+                        </li>
+                        <li style="padding: 0.75rem 0;">
+                            <strong>5.</strong> Who is one person you can invite to experience the hope of Easter this week?
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #f7f5f2 0%, #fff 100%); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid var(--secondary);">
+                    <h4 style="font-size: 1.25rem; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem;">A Prayer to Pray</h4>
+                    <p style="font-style: italic; line-height: 1.8;">
+                        Jesus, You are the Way when I feel lost. You are the Truth when I'm surrounded by lies. You are the Life when everything feels dead and meaningless. I confess I've tried to keep parts of my life separate from You—my career, my relationships, my secret struggles. But You are Lord of ALL, not Lord of some. I surrender every area to You today. Help me stop being troubled by things that don't matter eternally, and instead trust You with everything that does. Thank You for dying and rising to prove You are who You say You are. I believe. Help my unbelief. In Your name, Amen.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4 class="timeline-title">📅 This Holy Week</h4>
+                    <p class="timeline-content">As we approach Good Friday and Easter Sunday, consider a spiritual discipline: Fast during Friday lunch. Don't just skip the meal—use that time to pray, read Scripture, or take a reflective walk. Then break your fast with communion at the Good Friday service (4pm or 6pm).</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="timeline-title">🌍 Mission Heart</h4>
+                    <p class="timeline-content">Island ECC is never inward-looking. While preparing for a new building, we're also sending mission teams to Thailand, Vietnam, and beyond. Consider: What if God is calling YOU to go on a short-term mission trip this year? Check the brochure. Pray about it. And enjoy the free Vietnamese coffee at the Global Outreach booth!</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="timeline-title">💬 Share Your Story</h4>
+                    <p class="timeline-content">If this sermon impacted you, share it. Tag a friend who needs to hear that Jesus is the way, the truth, and the life. The early church was known as "the Way"—let's keep living and sharing that exclusive, beautiful truth.</p>
+                </div>
+            </div>
+
+            <div style="background: var(--primary); color: white; padding: 2rem; border-radius: 0.75rem; margin-top: 2rem; text-align: center;">
+                <h3 style="font-size: 1.75rem; margin-bottom: 1rem; color: white;">✝️ The Heart of the Gospel</h3>
+                <p style="font-size: 1.125rem; line-height: 1.8; opacity: 0.95;">
+                    As emotionally unsatisfying as exclusivity may be, think what it means for YOU that God revealed Himself to you. There's only one way to heaven, and you KNOW it. Why weren't you born in a remote village without a church, Christian, or Bible? We may not have complete answers, but when we think about ourselves, we're filled with gratitude. We worship a God who loved us enough to send His Son as THE way, THE truth, and THE life.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short" onclick="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            ℹ️
+        </div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Background Image Carousel
+        const slides = document.querySelectorAll('.bg-slide');
+        let currentSlide = 0;
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 8000);
+
+        // Tab Navigation
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                // Remove active class from all tabs and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion Functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const content = item.querySelector('.accordion-content');
+                const isActive = item.classList.contains('active');
+                
+                // Close all accordions in the same section
+                item.parentElement.querySelectorAll('.accordion-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                    }
+                });
+                
+                // Toggle current accordion
+                if (isActive) {
+                    item.classList.remove('active');
+                    content.style.maxHeight = null;
+                } else {
+                    item.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // Set initial max-height for active accordions
+        document.querySelectorAll('.accordion-item.active').forEach(item => {
+            const content = item.querySelector('.accordion-content');
+            content.style.maxHeight = content.scrollHeight + 'px';
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Attribution badge hover effect (desktop only)
+        if (window.innerWidth > 768) {
+            const badge = document.querySelector('.attribution-badge');
+            badge.addEventListener('mouseenter', () => {
+                badge.querySelector('.attribution-short').style.display = 'none';
+                badge.querySelector('.attribution-full').style.display = 'block';
+            });
+            badge.addEventListener('mouseleave', () => {
+                badge.querySelector('.attribution-short').style.display = 'flex';
+                badge.querySelector('.attribution-full').style.display = 'none';
+            });
+        }
+    </script>
+</body>
+</html>

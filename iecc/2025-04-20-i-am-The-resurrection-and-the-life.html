@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I AM: The Resurrection and The Life | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+        }
+        
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            opacity: 0.15;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(234, 179, 8, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.25; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 1200px;
+            padding: 2rem;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #eab308 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes titleGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+        
+        .hero-meta {
+            font-size: 1.125rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #eab308 0%, #f59e0b 100%);
+            color: #0f172a;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(234, 179, 8, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #eab308;
+            background: rgba(234, 179, 8, 0.1);
+        }
+        
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #334155;
+        }
+        
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab {
+            flex-shrink: 0;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            color: #94a3b8;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .tab:hover {
+            color: #eab308;
+            background: rgba(234, 179, 8, 0.05);
+        }
+        
+        .tab.active {
+            color: #eab308;
+            border-bottom-color: #eab308;
+            background: rgba(234, 179, 8, 0.1);
+        }
+        
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: #eab308;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #334155;
+        }
+        
+        .verse-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-left: 4px solid #eab308;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .verse-reference {
+            font-weight: 600;
+            color: #eab308;
+            margin-bottom: 0.75rem;
+            font-size: 1.125rem;
+        }
+        
+        .verse-text {
+            font-style: italic;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+        
+        .accordion-item {
+            background: #1e293b;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: #334155;
+        }
+        
+        .accordion-title {
+            font-size: 1.25rem;
+            color: #eab308;
+            font-weight: 600;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: #eab308;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .accordion-item.active .accordion-content {
+            max-height: 5000px;
+        }
+        
+        .accordion-body {
+            padding: 1.5rem;
+            color: #cbd5e1;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #eab308;
+        }
+        
+        .key-point-title {
+            font-size: 1.5rem;
+            color: #eab308;
+            margin-bottom: 0.75rem;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #eab308 0%, #334155 100%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.375rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #eab308;
+            border: 3px solid #0f172a;
+        }
+        
+        .timeline-title {
+            font-size: 1.25rem;
+            color: #eab308;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tooltip-trigger {
+            display: inline-block;
+            color: #eab308;
+            border-bottom: 1px dashed #eab308;
+            cursor: help;
+            position: relative;
+        }
+        
+        .tooltip-content {
+            visibility: hidden;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 300px;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid #eab308;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tooltip-trigger:hover .tooltip-content,
+        .tooltip-trigger:focus .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+        }
+        
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            background: #1e293b;
+            border: 2px solid #eab308;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short:hover {
+            transform: scale(1.1);
+            background: #334155;
+        }
+        
+        .attribution-full {
+            display: none;
+            background: #1e293b;
+            border: 2px solid #eab308;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            max-width: 300px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .attribution-badge:hover .attribution-short {
+            display: none;
+        }
+        
+        .attribution-badge:hover .attribution-full {
+            display: block;
+        }
+        
+        .attribution-full a {
+            color: #eab308;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem 1rem;
+            }
+            
+            .attribution-short {
+                display: none;
+            }
+            
+            .attribution-full {
+                display: block;
+            }
+            
+            .tooltip-content {
+                width: calc(100% - 2rem);
+                left: 1rem;
+                right: 1rem;
+            }
+        }
+        
+        @media print {
+            .hero-section,
+            .tabs-container,
+            .attribution-badge,
+            .btn {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">I AM: The Resurrection and The Life ✨</h1>
+            <p class="hero-meta">
+                📅 20 April 2025 | 🎤 Pastor Kevin | 🏛️ Island ECC
+            </p>
+            <p style="max-width: 700px; margin: 0 auto 2rem; color: #94a3b8; font-size: 1.125rem;">
+                On this Easter Sunday, we celebrate the resurrection of Jesus Christ. His resurrection assures us that we, too, can conquer death. But how significant is the resurrection for our daily existence, and why should it matter to us?
+            </p>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=WcZoUMl2YHY" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">📖 Overview</div>
+            <div class="tab" data-tab="sermon">💬 Main Sermon</div>
+            <div class="tab" data-tab="verses">📜 Bible Verses</div>
+            <div class="tab" data-tab="application">🌱 Application</div>
+            <div class="tab" data-tab="reflection">🙏 Reflection</div>
+        </div>
+    </div>
+
+    <!-- Tab Contents -->
+    <div class="content-section">
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <h2 class="section-title">Overview 📋</h2>
+            
+            <div class="key-point">
+                <h3 class="key-point-title">Central Message 🎯</h3>
+                <p>The resurrection of Jesus is not just a future promise—it is a present reality that transforms how we think, live, and hope today. Jesus declares, "I am the resurrection and the life," offering renewal to the dead and broken places in our lives right now.</p>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">Key Scripture: John 11:25-26 📖</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p class="verse-text">"Jesus said to her, 'I am the resurrection and the life. The one who believes in me will live, even though they die; and whoever lives by believing in me will never die. Do you believe this?'"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">Main Themes 🌟</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p><strong>1. The Historical Reality of Resurrection 🏺</strong></p>
+                        <p>Jesus died on the cross and rose on the third day, appearing to over 500 witnesses who could verify His identity.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>2. Future Promise ⏳</strong></p>
+                        <p>We will conquer death, receive glorified bodies, and experience a renewed world—all through believing in Jesus Christ.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>3. Present Reality 💫</strong></p>
+                        <p>Resurrection power is available today to transform our thinking, our living, and our hoping.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">Three Areas Needing Resurrection Life 🔄</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p><strong>1. Resurrection Life to Think Differently 🧠</strong></p>
+                        <p>God can create new neural pathways, replacing destructive patterns with life-giving instincts and responses.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>2. Resurrection Life to Live Differently 🚶</strong></p>
+                        <p>We are freed from the rulership of sin—our lives can be characterized by selflessness, humility, and love instead of selfishness and pride.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>3. Resurrection Life to Hope Differently 🌅</strong></p>
+                        <p>Jesus offers an ultimate hope that never disappoints, replacing our worship of comfort, power, approval, and control with true satisfaction in Him.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <h2 class="section-title">Main Sermon 💬</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3 class="timeline-title">Introduction: The Foundation of Faith 🏛️</h3>
+                    <p>Pastor Kevin opens by reminding us that our entire Christian faith hinges on the resurrection. As Paul wrote, if Jesus had not risen, our faith would be futile and we would be the most pitied of all people. The resurrection is not optional—it is essential.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="timeline-title">Addressing Doubts: Did Jesus Really Die? ⚖️</h3>
+                    <p>Two common questions challenge the resurrection:</p>
+                    <p style="margin-top: 0.5rem;">• <strong>Did Jesus actually die?</strong> Roman crucifixion was highly effective. Victims suffocated to death, and if they lasted too long, soldiers broke their legs to hasten death. Jesus could not have survived.</p>
+                    <p style="margin-top: 0.5rem;">• <strong>Did the disciples lie?</strong> Jesus appeared to over 500 people who could have debunked any impersonator. None denied Him. The resurrection is historically credible.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="timeline-title">The Future Promise: What Resurrection Looks Like 🌈</h3>
+                    <p>The Old Testament prophesied that death would be "swallowed up forever" (Isaiah 25:8). The New Testament reveals specifics:</p>
+                    <p style="margin-top: 0.5rem;">• We will receive <strong>glorified, imperishable bodies</strong> raised in power and glory (1 Corinthians 15)</p>
+                    <p style="margin-top: 0.5rem;">• We will live in a <strong>renewed heaven and earth</strong> (Revelation 21)</p>
+                    <p style="margin-top: 0.5rem;">• This promise is accessed simply by <strong>believing in Jesus</strong></p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="timeline-title">The Story of Lazarus: Present Resurrection Power 🕊️</h3>
+                    <p>Jesus visits Mary and Martha after their brother Lazarus dies. Martha responds with religious statements: "I know he will rise again in the resurrection at the last day." But she's hiding her disappointment—Jesus was only two miles away and could have come earlier.</p>
+                    <p style="margin-top: 0.75rem;">Many of us do the same. We lean on abstract theological truths to avoid facing our pain and disappointment. We don't truly believe God cares about the small details of our lives.</p>
+                    <p style="margin-top: 0.75rem;">But Jesus reveals Himself: <span class="tooltip-trigger">"I am the resurrection and the life."<span class="tooltip-content">"I am the resurrection and the life" (John 11:25) - Jesus doesn't just bring resurrection in the future; He IS resurrection. His very presence brings life to dead things now.</span></span> Then He raises Lazarus from the tomb after four days—demonstrating that His resurrection power is not just for the future, but for today.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="timeline-title">Three Areas Needing Resurrection Today 🌱</h3>
+                    
+                    <div class="key-point" style="margin-top: 1rem;">
+                        <h4 class="key-point-title">1. Resurrection Life to Think Differently 🧠</h4>
+                        <p>We make over 20,000 decisions daily, 90% subconsciously. Our brain creates <span class="tooltip-trigger">neural pathways<span class="tooltip-content">Neural pathways are like roads through a forest. The more you walk a path, the clearer it becomes. Our brains naturally follow the most well-worn paths—which can be destructive patterns of rage, defensiveness, or judgment.</span></span>—patterns that can be destructive (rage, defensiveness, judgment).</p>
+                        <p style="margin-top: 0.75rem;">But Romans 12:2 promises transformation: "Do not conform to the pattern of this world, but be transformed by the renewing of your mind." God's Spirit creates new pathways—new ways of responding that give life.</p>
+                    </div>
+
+                    <div class="key-point" style="margin-top: 1rem;">
+                        <h4 class="key-point-title">2. Resurrection Life to Live Differently 🚶</h4>
+                        <p>Every human has a fundamental problem: we are born sinful. There are two levels:</p>
+                        <p style="margin-top: 0.5rem;">• <strong>Acts of sin</strong> (stealing, lying, cheating)</p>
+                        <p>• <strong>Capital-S Sin</strong> (the orientation of our lives toward ourselves—selfishness, pride, self-glorification)</p>
+                        <p style="margin-top: 0.75rem;">Even if you never commit an act of sin, you're still ruled by Sin. But Romans 6 declares: "Our old self was crucified with him... that we should no longer be slaves to sin." Jesus unbinds our shackles. Will we still sin? Yes. But our lives are no longer characterized by selfishness and pride—they're characterized by selflessness and humility.</p>
+                    </div>
+
+                    <div class="key-point" style="margin-top: 1rem;">
+                        <h4 class="key-point-title">3. Resurrection Life to Hope Differently 🌅</h4>
+                        <p>We all have hopes: career success, relationships, ideal life, successful kids. But none of these hopes can sustain us long-term. The day after becoming partner, you feel empty. You set your sights higher.</p>
+                        <p style="margin-top: 0.75rem;">Our deepest desires fall into <span class="tooltip-trigger">four core idols<span class="tooltip-content">The four core idols are: Comfort (pursuing pleasure and the ideal life), Power (seeking authority and influence), Approval (craving love and affection), and Control (managing every circumstance to ensure success).</span></span>: comfort, power, approval, and control. But Jesus says, "Whoever comes to me will never go hungry, and whoever believes in me will never be thirsty" (John 6:35).</p>
+                        <p style="margin-top: 0.75rem;">When you truly follow Jesus, you discover that the ideal life is found in Him. You possess power over death itself. You are lavished with the love of God. And the God who controls the universe directs your every step. This is the ultimate hope that never disappoints.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="timeline-title">The Challenge: Do You Believe? 🤔</h3>
+                    <p>Martha believed in future resurrection but didn't believe in present resurrection power. Do you believe God's resurrection power extends to your life right now? To your inner thought life? Your struggle with sin? Your disappointments? Your dashed hopes?</p>
+                    <p style="margin-top: 0.75rem;">The application is simple yet profound: <strong>Do you believe?</strong> And if so, how will you live differently?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses" class="tab-content">
+            <h2 class="section-title">Bible Verses 📜</h2>
+
+            <div class="verse-card">
+                <div class="verse-reference">John 11:25-26 (NIV)</div>
+                <div class="verse-text">
+                    "Jesus said to her, 'I am the resurrection and the life. The one who believes in me will live, even though they die; and whoever lives by believing in me will never die. Do you believe this?'"
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">1 Corinthians 15:21-22 (NIV)</div>
+                <div class="verse-text">
+                    "For since death came through a man, the resurrection of the dead comes also through a man. For as in Adam all die, so in Christ all will be made alive."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Isaiah 25:8 (NIV)</div>
+                <div class="verse-text">
+                    "He will swallow up death forever. The Sovereign Lord will wipe away the tears from all faces; he will remove his people's disgrace from all the earth."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">1 Corinthians 15:42-44 (NIV)</div>
+                <div class="verse-text">
+                    "So will it be with the resurrection of the dead. The body that is sown is perishable, it is raised imperishable; it is sown in dishonor, it is raised in glory; it is sown in weakness, it is raised in power; it is sown a natural body, it is raised a spiritual body."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Revelation 21:1 (NIV)</div>
+                <div class="verse-text">
+                    "Then I saw 'a new heaven and a new earth,' for the first heaven and the first earth had passed away."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">John 11:17-27 (NIV) - The Lazarus Story</div>
+                <div class="verse-text">
+                    "On his arrival, Jesus found that Lazarus had already been in the tomb for four days. Now Bethany was less than two miles from Jerusalem, and many Jews had come to Martha and Mary to comfort them in the loss of their brother. When Martha heard that Jesus was coming, she went out to meet him, but Mary stayed at home. 'Lord,' Martha said to Jesus, 'if you had been here, my brother would not have died. But I know that even now God will give you whatever you ask.' Jesus said to her, 'Your brother will rise again.' Martha answered, 'I know he will rise again in the resurrection at the last day.' Jesus said to her, 'I am the resurrection and the life. The one who believes in me will live, even though they die; and whoever lives by believing in me will never die. Do you believe this?' 'Yes, Lord,' she replied, 'I believe that you are the Messiah, the Son of God, who is to come into the world.'"
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Romans 12:2 (NIV)</div>
+                <div class="verse-text">
+                    "Do not conform to the pattern of this world, but be transformed by the renewing of your mind."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Romans 6:6-7 (NIV)</div>
+                <div class="verse-text">
+                    "For we know that our old self was crucified with him so that the body ruled by sin might be done away with, that we should no longer be slaves to sin—because anyone who has died has been set free from sin."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">John 6:35 (NIV)</div>
+                <div class="verse-text">
+                    "Whoever comes to me will never go hungry, and whoever believes in me will never be thirsty."
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">John 11:38-44 (NIV) - Lazarus Raised</div>
+                <div class="verse-text">
+                    "Jesus, once more deeply moved, came to the tomb. It was a cave with a stone laid across the entrance. 'Take away the stone,' he said. 'But, Lord,' said Martha, the sister of the dead man, 'by this time there is a bad odor, for he has been there four days.' Then Jesus said, 'Did I not tell you that if you believe, you will see the glory of God?' So they took away the stone. Then Jesus looked up and said, 'Father, I thank you that you have heard me. I knew that you always hear me, but I said this for the benefit of the people standing here, that they may believe that you sent me.' When he had said this, Jesus called in a loud voice, 'Lazarus, come out!' The dead man came out, his hands and feet wrapped with strips of linen, and a cloth around his face. Jesus said to them, 'Take off the grave clothes and let him go.'"
+                </div>
+            </div>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <h2 class="section-title">Application 🌱</h2>
+
+            <div class="key-point">
+                <h3 class="key-point-title">The Central Question ❓</h3>
+                <p><strong>Do you believe?</strong></p>
+                <p style="margin-top: 0.75rem;">This Easter Sunday challenges us not just to affirm the historical resurrection of Jesus, but to believe that His resurrection power is available for us today—in the specific, practical areas of our lives.</p>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">For Those Who Don't Yet Follow Jesus 🕊️</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Pastor Kevin extends an invitation to make the greatest decision of your life by answering two questions quietly in your heart:</p>
+                        <p style="margin-top: 1rem;"><strong>1. Do you believe that Jesus, who died for your sins, is alive and has risen from the grave?</strong></p>
+                        <p style="margin-top: 1rem;"><strong>2. Will you accept Him as your Savior and Lord over your life?</strong></p>
+                        <p style="margin-top: 1rem;">This resurrection life—the power to conquer death, receive a glorified body, and live in a renewed world—begins when you simply believe.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">For Committed Followers of Jesus 🔥</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>If you already follow Jesus, the challenge is this: <strong>Do you believe God's resurrection power extends to your life right now?</strong></p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Reflect on these questions:</strong></p>
+                        <p style="margin-top: 0.5rem;">• Do you believe there is resurrection power over your inner thought life?</p>
+                        <p>• Do you believe there is resurrection power over your struggle with sin?</p>
+                        <p>• Do you believe there is resurrection power over your disappointments?</p>
+                        <p>• Do you believe there is resurrection power over your dashed hopes?</p>
+                        
+                        <p style="margin-top: 1rem;">Like Martha, many of us believe in future resurrection but struggle to believe in present resurrection power. We hide behind abstract theological truths because we're afraid of being disappointed again.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>The invitation:</strong> Submit the broken and dead places in your life to Jesus, fully believing that He can renew them—whether it's a broken relationship, a habit you can't break, a quirk that prevents genuine connection, or an overwhelming sense of loneliness.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">Practical Steps This Week 👣</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p><strong>1. Identify one "dead place" in your life</strong> that needs resurrection power. Name it specifically.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>2. Ask yourself:</strong> "Do I truly believe Jesus can bring life to this area?" Be honest about your doubt.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>3. Pray daily:</strong> "Jesus, I believe you have resurrection power. Help my unbelief. I submit [specific area] to you, trusting that you can renew it."</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>4. Watch for signs of breakthrough</strong> and resist the temptation to dismiss them (like the pastor's friend exploring faith).</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>5. Live differently:</strong> If you believe in resurrection power, your daily choices should reflect that belief. What will change in how you think, live, and hope?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <h3 class="key-point-title">Remember 💭</h3>
+                <p>Jesus didn't just tell Martha, "Your brother will rise in the future." He said, "I AM the resurrection." He brought Lazarus back to life that very day. His power is not just for the distant future—it's for your life today. The question is: Do you believe?</p>
+            </div>
+        </div>
+
+        <!-- Reflection Tab -->
+        <div id="reflection" class="tab-content">
+            <h2 class="section-title">Reflection 🙏</h2>
+
+            <div class="key-point">
+                <h3 class="key-point-title">Closing Prayer from Pastor Kevin 🙏</h3>
+                <p style="font-style: italic;">"Jesus, that challenge you gave to Martha is something that I know we ought to be thinking about all the time. Because as much as it is easy to say we believe that you died for our sins and rose from the grave, I think a lot of us do not truly believe that you can fix the broken places in our lives.</p>
+                <p style="font-style: italic; margin-top: 0.75rem;">And so, Lord, we do submit these before you. We recognize that 2,000 years ago, you demonstrated that you had power over death. And you demonstrated that everything you taught was going to be true. And right now we are trying to hold on to those words. But we want to hold on to them dearly.</p>
+                <p style="font-style: italic; margin-top: 0.75rem;">And so we ask you, Lord, to perhaps if we haven't been fully believing in our daily lives, Lord, that we would submit those to you, fully believing that you will renew those things. Whether it's a broken relationship, it's a habit that we can't break, or it's a quirk that we have that keeps us from having genuine relationships. Where it's this overwhelming sense of loneliness we feel, and we don't know why it is that nobody seems to love us.</p>
+                <p style="font-style: italic; margin-top: 0.75rem;">Lord, there are strongholds that we all have that on this resurrection day we believe that you can renew. So God, I know that as much as we say these things in our mind, we need to be able to live them out. Help us, Lord. Help us in our unbelief. Help us gradually, every single day, to come to a more certain belief that your resurrection power is not just for the future. But it is for us individually, and it is for us even now.</p>
+                <p style="font-style: italic; margin-top: 0.75rem;">We love you, Jesus. We pray this in your powerful name. Amen."</p>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">Personal Reflection Questions 🤔</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p><strong>1. The Resurrection's Reality</strong></p>
+                        <p style="margin-top: 0.5rem;">How firmly do I believe in the historical resurrection of Jesus? What doubts linger, and how can I address them?</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>2. My Martha Moments</strong></p>
+                        <p style="margin-top: 0.5rem;">When have I hidden behind religious statements to avoid facing disappointment with God? What was I truly feeling beneath those words?</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>3. Dismissing Miracles</strong></p>
+                        <p style="margin-top: 0.5rem;">Like the pastor dismissing signs of his friend's genuine faith, when have I refused to see God's work because I didn't want to be disappointed? What breakthrough might I be dismissing right now?</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>4. Neural Pathways</strong></p>
+                        <p style="margin-top: 0.5rem;">What destructive patterns (rage, defensiveness, judgment) have become "well-worn paths" in my brain? Can I identify when and how these were formed?</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>5. Capital-S Sin</strong></p>
+                        <p style="margin-top: 0.5rem;">Beyond my acts of sin, in what ways is my life still oriented toward myself? Where do I see selfishness masquerading as good deeds?</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>6. My Core Idol</strong></p>
+                        <p style="margin-top: 0.5rem;">Which of the four idols (comfort, power, approval, control) do I most worship? How has this idol failed to satisfy me?</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>7. The Dead Places</strong></p>
+                        <p style="margin-top: 0.5rem;">What area of my life feels most "dead" right now—like Lazarus in the tomb for four days? Do I truly believe Jesus can bring resurrection power to that specific place?</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>8. Living Differently</strong></p>
+                        <p style="margin-top: 0.5rem;">If I genuinely believed in present resurrection power, what would change about how I live tomorrow? Next week? This year?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">For Further Study 📚</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p><strong>Related Bible Passages:</strong></p>
+                        <p style="margin-top: 0.5rem;">• John 20:1-31 (The resurrection appearances)</p>
+                        <p>• 1 Corinthians 15:1-58 (The resurrection chapter)</p>
+                        <p>• Romans 6:1-14 (Dead to sin, alive in Christ)</p>
+                        <p>• Ephesians 2:1-10 (Made alive in Christ)</p>
+                        <p>• Colossians 3:1-17 (Set your hearts on things above)</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Books Mentioned:</strong></p>
+                        <p style="margin-top: 0.5rem;">• Mistborn by Brandon Sanderson (illustration of freedom from enslavement)</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Additional Resources:</strong></p>
+                        <p style="margin-top: 0.5rem;">• Wes Huff (biblical historian) on the resurrection's credibility</p>
+                        <p>• Island ECC's "Quick Fix" sermon series (on the four core idols)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <h3 class="key-point-title">The Call to Belief ✨</h3>
+                <p>This Easter Sunday is not just a celebration of an event 2,000 years ago. It's an invitation to experience resurrection power today. Jesus is not just offering you life after death—He's offering you life in the midst of death. Life in the midst of broken thinking, enslaved living, and false hopes.</p>
+                <p style="margin-top: 0.75rem;">The tomb is empty. Death has been conquered. And the same power that raised Jesus from the grave is available to raise the dead places in your life right now.</p>
+                <p style="margin-top: 0.75rem;"><strong>Do you believe?</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const allItems = document.querySelectorAll('.accordion-item');
+            
+            allItems.forEach(i => {
+                if (i !== item && i.classList.contains('active')) {
+                    i.classList.remove('active');
+                }
+            });
+            
+            item.classList.toggle('active');
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-nav');
+            }
+        });
+        
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-nav');
+        });
+        
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

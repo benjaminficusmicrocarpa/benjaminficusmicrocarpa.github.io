@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Weary World Rejoices: Rejoice in Anticipation | Island ECC</title>
+    <meta name="description" content="How can we cultivate a renewed eagerness and hunger for Christ's return in our everyday lives? Explore the dual focus of Advent - celebrating Jesus' first coming while anticipating His glorious second coming.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2d4a7c;
+            --accent: #c7a36b;
+            --accent-light: #d4b98a;
+            --bg-dark: #0f1419;
+            --text-light: #f7fafc;
+            --text-muted: #a0aec0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a202c 100%);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* Header with Ken Burns effect */
+        .hero-header {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(15,20,25,0.3) 0%, rgba(15,20,25,0.8) 100%);
+            z-index: 1;
+        }
+
+        .bg-slide {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: kenBurns 24s infinite;
+        }
+
+        .bg-slide:nth-child(1) {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%231a365d;stop-opacity:1" /><stop offset="100%" style="stop-color:%230f1419;stop-opacity:1" /></linearGradient></defs><rect width="1920" height="1080" fill="url(%23g1)"/><circle cx="960" cy="300" r="400" fill="%23c7a36b" opacity="0.1"/><circle cx="1200" cy="700" r="300" fill="%232d4a7c" opacity="0.15"/></svg>');
+            animation-delay: 0s;
+        }
+
+        .bg-slide:nth-child(2) {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><defs><radialGradient id="g2"><stop offset="0%" style="stop-color:%232d4a7c;stop-opacity:1" /><stop offset="100%" style="stop-color:%231a365d;stop-opacity:1" /></radialGradient></defs><rect width="1920" height="1080" fill="url(%23g2)"/><path d="M 0 540 Q 480 300 960 540 T 1920 540 V 1080 H 0 Z" fill="%23c7a36b" opacity="0.1"/></svg>');
+            animation-delay: 8s;
+        }
+
+        .bg-slide:nth-child(3) {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><rect width="1920" height="1080" fill="%230f1419"/><circle cx="400" cy="800" r="500" fill="%231a365d" opacity="0.3"/><circle cx="1500" cy="400" r="350" fill="%23c7a36b" opacity="0.2"/><rect x="700" y="200" width="520" height="680" fill="%232d4a7c" opacity="0.1" transform="rotate(15 960 540)"/></svg>');
+            animation-delay: 16s;
+        }
+
+        @keyframes kenBurns {
+            0%, 33.33% {
+                opacity: 1;
+                transform: scale(1) translate(0, 0);
+            }
+            8.33%, 25% {
+                opacity: 1;
+            }
+            33.33%, 100% {
+                opacity: 0;
+                transform: scale(1.1) translate(-2%, -2%);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            color: var(--text-light);
+        }
+
+        .hero-meta {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(199, 163, 107, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border-color: var(--text-light);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(247, 250, 252, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Sticky Tabs */
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(199, 163, 107, 0.2);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1.25rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .tab:hover {
+            color: var(--accent-light);
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Timeline for Main Sermon */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px var(--bg-dark), 0 0 0 6px var(--accent);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .timeline-content p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        /* Bible Verses Grid */
+        .verse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .verse-card {
+            background: rgba(45, 74, 124, 0.1);
+            border: 1px solid rgba(199, 163, 107, 0.2);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .verse-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(199, 163, 107, 0.15);
+            border-color: var(--accent);
+        }
+
+        .verse-ref {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .verse-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        /* Accordion for Reflection */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(199, 163, 107, 0.2);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: rgba(26, 54, 93, 0.1);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(45, 74, 124, 0.2);
+        }
+
+        .accordion-header h4 {
+            font-size: 1.25rem;
+            color: var(--accent-light);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--accent);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+
+        .accordion-body {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-muted);
+        }
+
+        /* Application Cards */
+        .application-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: linear-gradient(135deg, rgba(26, 54, 93, 0.2), rgba(45, 74, 124, 0.1));
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(199, 163, 107, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 40px rgba(199, 163, 107, 0.2);
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .app-card p {
+            color: var(--text-muted);
+        }
+
+        /* Attribution Badge */
+        .attribution {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .attribution-full {
+            display: none;
+            background: rgba(26, 54, 93, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            max-width: 300px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+
+        .attribution-full a {
+            color: var(--accent-light);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .attribution-full a:hover {
+            color: var(--accent);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: 100svh;
+                min-height: 500px;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .timeline::before {
+                left: 0.5rem;
+            }
+
+            .timeline-item::before {
+                left: -1.75rem;
+            }
+
+            .attribution {
+                position: static;
+                margin: 2rem auto;
+                width: calc(100% - 2rem);
+                max-width: 400px;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .hero-header, .tabs-container, .attribution, .btn-group {
+                display: none;
+            }
+
+            .content-section {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="hero-bg">
+            <div class="bg-slide"></div>
+            <div class="bg-slide"></div>
+            <div class="bg-slide"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">The Weary World Rejoices: Rejoice in Anticipation</h1>
+            <p class="hero-meta">28 December 2025 | Pastor Kevin | Island ECC</p>
+            <div class="btn-group">
+                <a href="https://www.youtube.com/watch?v=fEVZCuux-hc" class="btn btn-primary" target="_blank" rel="noopener">
+                    <span>▶</span> Watch Original Sermon
+                </a>
+                <a href="../index.html" class="btn btn-secondary">
+                    <span>📚</span> View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">📖 Overview</div>
+            <div class="tab" data-tab="sermon">🎯 Main Sermon</div>
+            <div class="tab" data-tab="verses">✝️ Bible Verses</div>
+            <div class="tab" data-tab="application">💡 Application</div>
+            <div class="tab" data-tab="reflection">🤔 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Overview Section -->
+    <section id="overview" class="content-section active">
+        <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--accent);">📖 Sermon Overview</h2>
+        <div style="background: rgba(45, 74, 124, 0.1); border-left: 4px solid var(--accent); padding: 2rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+            <p style="font-size: 1.25rem; line-height: 1.8;">As the excitement of Christmas fades, many experience a sense of withdrawal. Yet, did you know that Advent was originally intended as a season to anticipate Christ's <strong>second coming</strong>? The Christian life is meant to be a continual Advent, an ongoing longing for His return. Unfortunately, many of us lose that fervor. How can we cultivate a renewed eagerness and hunger for His return in our everyday lives?</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📅</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Date</h3>
+                <p style="color: var(--text-muted);">28 Dec 2025</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎤</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Speaker</h3>
+                <p style="color: var(--text-muted);">Pastor Kevin</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">⛪</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Church</h3>
+                <p style="color: var(--text-muted);">Island ECC</p>
+            </div>
+        </div>
+
+        <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--accent-light);">🎵 Worship Songs</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li style="padding: 0.75rem; background: rgba(26, 54, 93, 0.1); margin-bottom: 0.5rem; border-radius: 0.5rem; border-left: 3px solid var(--accent);">Bless God</li>
+            <li style="padding: 0.75rem; background: rgba(26, 54, 93, 0.1); margin-bottom: 0.5rem; border-radius: 0.5rem; border-left: 3px solid var(--accent);">Revelation Song</li>
+            <li style="padding: 0.75rem; background: rgba(26, 54, 93, 0.1); margin-bottom: 0.5rem; border-radius: 0.5rem; border-left: 3px solid var(--accent);">King of Kings</li>
+            <li style="padding: 0.75rem; background: rgba(26, 54, 93, 0.1); margin-bottom: 0.5rem; border-radius: 0.5rem; border-left: 3px solid var(--accent);">The Blood</li>
+            <li style="padding: 0.75rem; background: rgba(26, 54, 93, 0.1); margin-bottom: 0.5rem; border-radius: 0.5rem; border-left: 3px solid var(--accent);">He Who Is To Come</li>
+        </ul>
+    </section>
+
+    <!-- Main Sermon Section -->
+    <section id="sermon" class="content-section">
+        <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--accent);">🎯 Main Sermon: Two Ingredients for Lifelong Anticipation</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Introduction: The Post-Christmas Letdown</h3>
+                    <p>Pastor Kevin shares his struggle with post-Christmas withdrawal—not missing Christmas Day itself, but the Advent <em>season</em> of anticipation. He reveals that Advent wasn't always just about preparing for Christmas Day, but originally had <strong>three purposes</strong>:</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-muted);">
+                        <li>✝️ Celebrate Jesus coming into the world in human form</li>
+                        <li>💝 Recognize Jesus coming into our lives to transform and save us</li>
+                        <li>👑 <strong>Prepare for His second coming as King</strong></li>
+                    </ul>
+                    <blockquote>
+                        "Advent is meant to be a season to remind us and compel us towards a lifelong anticipation of Jesus. That excitement that we have for Christmas Day, we should have that same excitement, if not more, for the return of Jesus."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The Honest Question: Are We Really Eager?</h3>
+                    <p>Pastor Kevin confesses: <em>"We're more excited about the next iPhone release than we are about Jesus coming back."</em> He contrasts this with biblical authors like Paul, who wrote of <strong>eagerly awaiting</strong> Christ's return, and John Calvin, who spoke of <strong>hungering</strong> for that great day.</p>
+                    <blockquote>
+                        "Do the words hunger and eager describe your anticipation of Jesus?"
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🔑 Ingredient #1: Keep Working</h3>
+                    <p>From <strong>Matthew 24:36-51</strong>, Jesus teaches about the unknown timing of His return through the parable of the faithful and wicked servants.</p>
+                    <blockquote style="background: rgba(199, 163, 107, 0.1); padding: 1rem; border-radius: 0.5rem;">
+                        <strong>Matthew 24:44-46 (NIV):</strong> "So you also must be ready, because the Son of Man will come at an hour when you do not expect him. Who then is the faithful and wise servant, whom the master has put in charge of the servants in his household to give them their food at the proper time? It will be good for that servant whose master finds him doing so when he returns."
+                    </blockquote>
+                    <p><strong>Key insight:</strong> The faithful servant keeps working because he <em>expects</em> his master to show up at any moment. The wicked servant stops working because he expects his master won't come at all.</p>
+                    <p style="color: var(--accent-light); font-weight: 600; margin-top: 1.5rem;">What is our work?</p>
+                    <p>Before Jesus ascended, He commanded: <em>"You will be my witnesses"</em> (Acts 1:8). Our task is to:</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-muted);">
+                        <li>📢 Share the gospel with others</li>
+                        <li>💖 Live out the gospel in love, forgiveness, and humility</li>
+                        <li>🍞 "Feed His sheep" as Jesus instructed Peter</li>
+                    </ul>
+                    <blockquote>
+                        "The more we do it, the more we will long for his return, the more excited we will be for his return. If you want to have a lifelong anticipation for the return of Jesus, do a good job with the task that God has given to you."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🔑 Ingredient #2: Preparation</h3>
+                    <p>From <strong>Matthew 25:1-13</strong>, Jesus teaches through the parable of the ten virgins (bridesmaids).</p>
+                    <blockquote style="background: rgba(199, 163, 107, 0.1); padding: 1rem; border-radius: 0.5rem;">
+                        <strong>Matthew 25:1-4 (NIV):</strong> "At that time the kingdom of heaven will be like ten virgins who took their lamps and went out to meet the bridegroom. Five of them were foolish and five were wise. The foolish ones took their lamps but did not take any oil with them. The wise ones, however, took oil in jars along with their lamps."
+                    </blockquote>
+                    <p><strong>The difference?</strong> Both groups fell asleep. But the wise had <em>extra oil</em>—they were prepared for a delay. The unprepared ones ran out and missed the wedding feast entirely.</p>
+                    
+                    <p style="color: var(--accent-light); font-weight: 600; margin-top: 1.5rem;">Two Hints About Spiritual Preparation:</p>
+                    
+                    <p><strong>Hint #1: It's About Your Heart</strong></p>
+                    <p>The bridegroom says to the unprepared: <em>"I don't know you"</em> (Matthew 25:12). This echoes Jesus' warning in Matthew 7:21-23 about those who prophesy and perform miracles in His name, yet Jesus says, <em>"I never knew you."</em></p>
+                    <blockquote>
+                        "You can do a lot of things for God, but not really know him. If you serve on the worship team, you show up and you play these songs, but these songs are just chords to you... You can do all these things and still not know him, and still be spiritually dry."
+                    </blockquote>
+                    
+                    <p><strong>Hint #2: It Cannot Be Done for You</strong></p>
+                    <p>The wise bridesmaids couldn't share their oil. Spiritual preparation is personal—it's between you and God alone.</p>
+                    <blockquote>
+                        "If you're being dragged here to church by your family or your spouse, that's great. But your internal heart change, your belief in God, that's on you and you alone. If your prayer life is relegated to when the pastor prays at the end of a sermon, you need to develop your own prayer life. You got to get your own oil."
+                    </blockquote>
+                    
+                    <p style="background: rgba(199, 163, 107, 0.15); padding: 1.5rem; border-radius: 0.5rem; margin-top: 1.5rem;"><strong>Summary:</strong> Spiritual preparation is about <em>your affection for God</em> that cannot be faked by action and cannot be outsourced to another person.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The Affection Analogy: Visiting Mother</h3>
+                    <p>Pastor Kevin illustrates with family relationships:</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-muted);">
+                        <li><strong>Close relationship:</strong> Mom visits → through the roof with excitement</li>
+                        <li><strong>Complicated relationship:</strong> Mom visits → nervous anticipation</li>
+                        <li><strong>Estranged relationship:</strong> Mom visits → indifference (don't believe she'll actually come)</li>
+                    </ul>
+                    <blockquote>
+                        "Your affection determines your readiness. Your affection for God determines your readiness and your anticipation."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Practical Advice: Quantity Time is Quality Time</h3>
+                    <p>Pastor Kevin shares relationship wisdom he received when dating his wife Emily: <em>"Quantity time is quality time."</em> Grand dates are wonderful, but nothing beats daily presence.</p>
+                    <p style="margin-top: 1rem;">Applied to our relationship with God:</p>
+                    <blockquote>
+                        "Nothing beats the day in, day out quantity time that you spend with him. What if reading the Bible wasn't just getting through a Bible reading plan? What if you read the Bible to understand God more? What if you paused after getting to the verse of the day on your phone and you asked God, 'Lord, what do you want to show me about yourself?'"
+                    </blockquote>
+                    <p><strong>On prayer:</strong></p>
+                    <blockquote>
+                        "What if prayer was also a time when you can enjoy his presence? If you've never had a time of prayer where you just stayed silent, not really think anything, and enjoyed your time with God, I'm telling you, you are missing out."
+                    </blockquote>
+                    <p style="color: var(--accent-light); font-weight: 600;">Approach spiritual disciplines with <em>relationship as the goal</em>, not just completion.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Closing Illustration: The Apple Watch</h3>
+                    <p>Pastor Kevin confesses his material desire for an Apple Watch Ultra 3 and his love for the <em>research phase</em>—the anticipation itself. When his wife suggested delaying the purchase for a future model with better features, she said:</p>
+                    <blockquote>
+                        "The greatest gift I can give you this Christmas, Kevin, is more time for anticipation."
+                    </blockquote>
+                    <p style="margin-top: 1rem;"><strong>The principle:</strong> Anticipating the future changes your present. It gives excitement, purpose, direction, and joy.</p>
+                    <blockquote style="background: rgba(199, 163, 107, 0.15); padding: 1.5rem; border-radius: 0.5rem;">
+                        "When the focus of our anticipation is the coming of Jesus, you will feel all these feelings more profoundly. They will be more long-lasting. If you struggle with loneliness, with emptiness, you're living a life devoid of joy and hope—can I invite you to embrace the anticipation of Christ? To let the hope of Jesus ignite in you a perpetual Advent."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bible Verses Section -->
+    <section id="verses" class="content-section">
+        <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--accent);">✝️ Key Bible Verses</h2>
+        
+        <div class="verse-grid">
+            <div class="verse-card">
+                <div class="verse-ref">Matthew 24:36-39 (NIV)</div>
+                <div class="verse-text">"But about that day or hour no one knows, not even the angels in heaven, nor the Son, but only the Father. As it was in the days of Noah, so it will be at the coming of the Son of Man. For in the days before the flood, people were eating and drinking, marrying and giving in marriage, up to the day Noah entered the ark; and they knew nothing about what would happen until the flood came and took them all away. That is how it will be at the coming of the Son of Man."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Matthew 24:42-44 (NIV)</div>
+                <div class="verse-text">"Therefore keep watch, because you do not know on what day your Lord will come. But understand this: If the owner of the house had known at what time of night the thief was coming, he would have kept watch and would not have let his house be broken into. So you also must be ready, because the Son of Man will come at an hour when you do not expect him."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Matthew 24:45-51 (NIV)</div>
+                <div class="verse-text">"Who then is the faithful and wise servant, whom the master has put in charge of the servants in his household to give them their food at the proper time? It will be good for that servant whose master finds him doing so when he returns. Truly I tell you, he will put him in charge of all his possessions. But suppose that servant is wicked and says to himself, 'My master is staying away a long time,' and he then begins to beat his fellow servants and to eat and drink with drunkards. The master of that servant will come on a day when he does not expect him and at an hour he is not aware of. He will cut him to pieces and assign him a place with the hypocrites, where there will be weeping and gnashing of teeth."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Matthew 25:1-13 (NIV)</div>
+                <div class="verse-text">"At that time the kingdom of heaven will be like ten virgins who took their lamps and went out to meet the bridegroom. Five of them were foolish and five were wise. The foolish ones took their lamps but did not take any oil with them. The wise ones, however, took oil in jars along with their lamps. The bridegroom was a long time in coming, and they all became drowsy and fell asleep. At midnight the cry rang out: 'Here's the bridegroom! Come out to meet him!' Then all the virgins woke up and trimmed their lamps. The foolish ones said to the wise, 'Give us some of your oil; our lamps are going out.' 'No,' they replied, 'there may not be enough for both us and you. Instead, go to those who sell oil and buy some for yourselves.' But while they were on their way to buy the oil, the bridegroom arrived. The virgins who were ready went in with him to the wedding banquet. And the door was shut. Later the others also came. 'Lord, Lord,' they said, 'open the door for us!' But he replied, 'Truly I tell you, I don't know you.' Therefore keep watch, because you do not know the day or the hour."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Acts 1:8 (NIV)</div>
+                <div class="verse-text">"But you will receive power when the Holy Spirit comes on you; and you will be my witnesses in Jerusalem, and in all Judea and Samaria, and to the ends of the earth."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Matthew 7:21-23 (NIV)</div>
+                <div class="verse-text">"Not everyone who says to me, 'Lord, Lord,' will enter the kingdom of heaven, but only the one who does the will of my Father who is in heaven. Many will say to me on that day, 'Lord, Lord, did we not prophesy in your name and in your name drive out demons and in your name perform many miracles?' Then I will tell them plainly, 'I never knew you. Away from me, you evildoers!'"</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section id="application" class="content-section">
+        <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--accent);">💡 Practical Application</h2>
+        
+        <div class="application-cards">
+            <div class="app-card">
+                <div class="app-icon">🎯</div>
+                <h3>Be a Faithful Witness</h3>
+                <p>Don't wait for the "perfect moment" to share the gospel. The more diligently you do the work God has given you, the more excited you'll be to give account when Jesus returns. Share with urgency and love.</p>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">🕯️</div>
+                <h3>Get Your Own Oil</h3>
+                <p>Spiritual preparation cannot be outsourced. Develop your own prayer life, your own Bible reading routine, your own relationship with God. Don't rely on corporate worship alone—cultivate daily intimacy with Jesus.</p>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">📖</div>
+                <h3>Read for Relationship</h3>
+                <p>Approach the Bible not as a checklist, but as God's way of revealing Himself to you. Ask: "Lord, what do you want to show me about yourself today?" Let Scripture deepen your affection for Him.</p>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">🙏</div>
+                <h3>Pray for Presence</h3>
+                <p>Prayer isn't just bringing requests to God. Try silent prayer—just enjoying His presence without words. This builds affection and transforms prayer from duty to delight.</p>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">⏰</div>
+                <h3>Quantity Time = Quality Time</h3>
+                <p>Grand spiritual experiences are wonderful, but daily consistency wins. Spend time with God every single day—even if brief. Relationship is built in the ordinary moments.</p>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">💝</div>
+                <h3>Grow Your Affection</h3>
+                <p>The greater your affection for God, the greater your anticipation for Jesus' return. Prioritize activities that deepen your love for Him—worship, community, service, reflection.</p>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, rgba(199, 163, 107, 0.1), rgba(45, 74, 124, 0.1)); border-radius: 1rem; padding: 2.5rem; margin-top: 3rem; border: 1px solid var(--accent);">
+            <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--accent-light); text-align: center;">🎁 The Greatest Gift</h3>
+            <p style="font-size: 1.25rem; text-align: center; color: var(--text-light); line-height: 1.8;">
+                "Anticipating the future changes your present. It gives you excitement, purpose, something to think about and to fixate your attention on, gives you a pep in your step. When the focus of our anticipation is the coming of Jesus, you will feel all these feelings more profoundly."
+            </p>
+            <p style="margin-top: 1.5rem; text-align: center; font-style: italic; color: var(--accent-light);">
+                — Pastor Kevin
+            </p>
+        </div>
+    </section>
+
+    <!-- Reflection Section -->
+    <section id="reflection" class="content-section">
+        <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--accent);">🤔 Reflection Questions</h2>
+        
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h4>1. What is the greatest obstacle that keeps you from living a life of anticipation for the return of Jesus?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p><strong>Consider these possibilities:</strong></p>
+                    <ul style="margin: 1rem 0 1rem 1.5rem; color: var(--text-muted);">
+                        <li>Comfort in earthly life—things are "good enough" that you don't long for something better</li>
+                        <li>Busyness and distraction—too focused on immediate concerns to think about eternal realities</li>
+                        <li>Doubt or uncertainty—not fully convinced Jesus will actually return</li>
+                        <li>Fear of judgment—worried about giving account rather than excited about reunion</li>
+                        <li>Weak affection for God—the relationship isn't close enough to produce genuine longing</li>
+                    </ul>
+                    <p><strong>Reflection prompts:</strong></p>
+                    <ul style="margin: 1rem 0 1rem 1.5rem; color: var(--text-muted);">
+                        <li>Am I more excited about upcoming earthly events (vacations, purchases, promotions) than about Jesus' return?</li>
+                        <li>When I think about Jesus coming back, what's my primary emotion: excitement, anxiety, or indifference?</li>
+                        <li>What would need to change in my life for me to genuinely long for His return?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h4>2. What is one thing you plan on doing in the new year to grow your affection towards God?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p><strong>Ideas from the sermon:</strong></p>
+                    <ul style="margin: 1rem 0 1rem 1.5rem; color: var(--text-muted);">
+                        <li><strong>Daily Bible reading</strong> with the goal of understanding God better, not just completing a plan</li>
+                        <li><strong>Silent prayer</strong> to simply enjoy God's presence without bringing requests</li>
+                        <li><strong>Faithful witnessing</strong> by sharing the gospel with a specific friend or family member</li>
+                        <li><strong>Serving others</strong> as a way to "feed His sheep" and live out the gospel</li>
+                        <li><strong>Morning/evening routine</strong> dedicated to spending quantity time with God</li>
+                    </ul>
+                    <p><strong>Make it specific:</strong></p>
+                    <ul style="margin: 1rem 0 1rem 1.5rem; color: var(--text-muted);">
+                        <li>What exactly will you do? (e.g., "Read one chapter before breakfast")</li>
+                        <li>When will you do it? (e.g., "Every morning at 6:30 AM")</li>
+                        <li>How will you track it? (e.g., "Journal one insight per day")</li>
+                        <li>Who will keep you accountable? (e.g., "Share progress with care group weekly")</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem; padding: 1rem; background: rgba(199, 163, 107, 0.1); border-radius: 0.5rem;"><strong>Remember:</strong> Approach this with <em>relationship as the goal</em>. The purpose isn't to check a box, but to grow closer to God so that your affection deepens and your anticipation for His return intensifies.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(26, 54, 93, 0.2); border-radius: 1rem; padding: 2rem; margin-top: 3rem; text-align: center;">
+            <h3 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--accent-light);">📝 Personal Commitment</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Write down your commitment for 2026. Share it with a trusted friend or care group member.</p>
+            <div style="background: rgba(0,0,0,0.2); padding: 2rem; border-radius: 0.5rem; border: 1px dashed var(--accent);">
+                <p style="font-style: italic; color: var(--text-light);">"In 2026, I will grow my affection for God by..."</p>
+                <p style="margin-top: 2rem; color: var(--accent);">✍️ (Take a moment to write this down)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+                Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+                <a href="../license.html">MIT License</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({
+                    top: document.querySelector('.tabs-container').offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all accordions
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Open clicked accordion if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

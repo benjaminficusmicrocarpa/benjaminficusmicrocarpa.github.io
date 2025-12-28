@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breaking Ground: Building People | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a4d2e;
+            --secondary: #4f772d;
+            --accent: #90a955;
+            --light: #ecf39e;
+            --dark: #132a13;
+            --text: #2d3748;
+            --bg: #fafdf6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .header-bg {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+        }
+
+        .header-overlay {
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: subtleShift 20s ease-in-out infinite;
+        }
+
+        @keyframes subtleShift {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-10px, -10px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .title-main {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: white;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 1.25rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: var(--text);
+            background: white;
+        }
+
+        .nav-tab:hover {
+            background: var(--light);
+            color: var(--primary);
+        }
+
+        .nav-tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+            background: rgba(26, 77, 46, 0.05);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .prose {
+            max-width: 75ch;
+            margin: 0 auto;
+        }
+
+        .prose h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin: 3rem 0 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .prose h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .prose h3 {
+            font-size: 1.75rem;
+            color: var(--secondary);
+            margin: 2rem 0 1rem;
+        }
+
+        .prose p {
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 30px rgba(26, 77, 46, 0.2);
+            border-left: 5px solid var(--accent);
+        }
+
+        .verse-text {
+            font-size: 1.25rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .verse-ref {
+            font-weight: 600;
+            opacity: 0.9;
+            font-style: normal;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+
+        .quote-block {
+            background: var(--light);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .emoji-icon {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--accent);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .attribution:hover {
+            transform: scale(1.1);
+        }
+
+        .attribution.expanded {
+            width: auto;
+            border-radius: 25px;
+            padding: 15px 25px;
+        }
+
+        .attribution-short {
+            font-size: 1.5rem;
+        }
+
+        .attribution-full {
+            display: none;
+            font-size: 0.875rem;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .attribution.expanded .attribution-short {
+            display: none;
+        }
+
+        .attribution.expanded .attribution-full {
+            display: block;
+        }
+
+        .attribution a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-bg {
+                height: 70vh;
+                min-height: 500px;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .timeline-item::before {
+                left: -2.5rem;
+            }
+
+            .attribution {
+                position: relative;
+                margin: 2rem auto;
+                width: 100%;
+                border-radius: 12px;
+                height: auto;
+                padding: 15px;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+                white-space: normal;
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, var(--light) 60%);
+            padding: 0 0.25rem;
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 3rem auto;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-bg">
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <h1 class="title-main">Breaking Ground:<br>Building People</h1>
+            <p class="subtitle">
+                <span class="emoji-icon">🏗️</span> 23 Feb 2025 • Pastor Brett • Island ECC<br>
+                "The gospel is good news—it changes everything about you, expands your capacity to love, and equips you to share this transformative message with the world."
+            </p>
+            <div class="btn-group">
+                <a href="https://www.youtube.com/watch?v=4sqP7Xj4NEU" class="btn btn-primary" target="_blank" rel="noopener">
+                    <span>▶️</span> Watch Original Sermon
+                </a>
+                <a href="../index.html" class="btn btn-secondary">
+                    <span>📚</span> View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="sticky-nav">
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="switchTab('overview')">Overview</div>
+            <div class="nav-tab" onclick="switchTab('sermon')">Main Sermon</div>
+            <div class="nav-tab" onclick="switchTab('verses')">Bible Verses</div>
+            <div class="nav-tab" onclick="switchTab('application')">Application</div>
+            <div class="nav-tab" onclick="switchTab('journey')">Church Journey</div>
+        </div>
+    </nav>
+
+    <!-- Tab Content -->
+    <main>
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="container">
+                <div class="prose">
+                    <h2>📖 Message Overview</h2>
+                    <p>In this powerful message, Pastor Brett launches the "Breaking Ground" series as Island ECC prepares for their new location at Sunbeam Theater. Using the profound encounter between Jesus and the Samaritan woman at the well (John 4), he illustrates how the gospel transforms lives from darkness to light—and how we, as ambassadors of Christ, are called to share this life-changing message strategically, respectfully, creatively, and radically.</p>
+
+                    <div class="grid-cards">
+                        <div class="card">
+                            <h3>🌟 Key Theme</h3>
+                            <p>The gospel is <span class="highlight">really good news</span> that fundamentally changes people, families, workplaces, and communities. We are called to be conduits of this good news, initiating strategically and loving radically.</p>
+                        </div>
+                        <div class="card">
+                            <h3>💡 Central Truth</h3>
+                            <p>"You were once darkness, but now you are light in the Lord" (Ephesians 5:8). This radical transfer from darkness to light is prescriptive for every believer and fuels our mission.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🏗️ Bold Faith Update</h3>
+                            <p>After 10 years of the Bold Faith campaign, Island ECC is breaking ground on the Sunbeam Theater renovation in March 2025, with an estimated move-in date of Q4 2027. Goal for 2025: raise $150 million.</p>
+                        </div>
+                    </div>
+
+                    <h2>🎯 Main Points</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h3>1. The Gospel Is Really Good News</h3>
+                            <p>Not just a ticket to heaven, but a transformative power that changes hearts, relationships, and daily life. It brings value, purpose, freedom, hope, and forgiveness—shifting everything from darkness to light.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3>2. The Woman at the Well: A Paradigm for Evangelism</h3>
+                            <p>Jesus' encounter with the Samaritan woman demonstrates how to bring good news to a lost world: initiating strategically, answering respectfully, teaching creatively, and loving radically.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3>3. We Are Christ's Ambassadors</h3>
+                            <p>As official representatives with God's authority and message, we leverage everything we have to declare and demonstrate the gospel, ensuring other stories can be told.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3>4. The Church: God's Chosen Instrument</h3>
+                            <p>While God uses many means, the church is His primary instrument for change—personal, cultural, and global. Island ECC's new location represents a strategic opportunity to be a beacon in North Point and beyond.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Sermon Tab -->
+        <div id="sermon" class="tab-content">
+            <div class="container">
+                <div class="prose">
+                    <h2>💬 The Message: Breaking Ground, Building People</h2>
+                    
+                    <h3>The Gospel Changes Everything</h3>
+                    <p>Pastor Brett begins by establishing a foundational truth: <span class="highlight">the gospel is good news—really good news</span>. It's not merely about securing a heavenly destination; it's about God fundamentally changing who you are right now.</p>
+
+                    <div class="quote-block">
+                        "The gospel says that your relationships are going to get better. As you understand how God loves you, your capacity to love others is also going to expand. Everything gets better with the gospel."
+                    </div>
+
+                    <p>Paul's words in Ephesians 5:8 frame this transformation simply yet powerfully: <strong>"You were once darkness, but now you are light in the Lord."</strong> This isn't just imagery—it's reality. Darkness can look like insecurity, confusion, enslavement to habits, purposelessness, or inner shame. Light brings value, freedom, energy, understanding, hope, and forgiveness.</p>
+
+                    <h3>🌊 The Woman at the Well: A Master Class in Evangelism</h3>
+                    <p>Pastor Brett unpacks John 4, where Jesus meets a Samaritan woman at Jacob's well at noon—a divine appointment orchestrated by God himself. Despite deep cultural antagonism between Jews and Samaritans, Jesus deliberately goes through Samaria.</p>
+
+                    <p><strong>What She Did:</strong></p>
+                    <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                        <li><strong>Stereotyped:</strong> "You're a Jew and I'm a Samaritan woman. How can you ask me for a drink?"</li>
+                        <li><strong>Questioned:</strong> "Sir, you have nothing to draw with, and the well is deep. Where can you get this living water?"</li>
+                        <li><strong>Compared:</strong> "Are you greater than our father Jacob?"</li>
+                        <li><strong>Deflected:</strong> When Jesus revealed everything about her, she shifted to theology: "Where should we worship—this mountain or Jerusalem?"</li>
+                    </ul>
+
+                    <p>Her defenses were up. She had been hurt by men, rejected by society, and was carrying deep shame from five failed marriages and a current illicit relationship. Yet Jesus met her with something radically different.</p>
+
+                    <p><strong>What He Did:</strong></p>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h3>Initiated Strategically</h3>
+                            <p>Jesus purposefully placed himself at that well at that time. He created the divine appointment, orchestrating circumstances to reach one woman who desperately needed hope.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3>Answered Respectfully</h3>
+                            <p>"If you knew the gift of God and who it is that asks you for a drink, you would have asked him and he would have given you living water." He heard her questions without condescension.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3>Taught Creatively</h3>
+                            <p>Using water—the one thing they had in common—Jesus bridged the gap between cosmic truth and everyday life. "Everyone who drinks this water will be thirsty again, but whoever drinks the water I give them will never thirst."</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3>Loved Radically</h3>
+                            <p>Despite knowing her entire sordid history, Jesus showed no judgment, no agenda, no exploitation. He offered honor, dignity, and transformative love.</p>
+                        </div>
+                    </div>
+
+                    <h3>🔄 Her Transformation</h3>
+                    <p>The text tells us something extraordinary: <strong>"Then, leaving her water jar, the woman went back to the town..."</strong></p>
+
+                    <p>She came to the well at noon to avoid people because of her shame. She came for water. But after encountering Jesus, everything changed:</p>
+
+                    <div class="quote-block">
+                        "She left the jar—it's no longer important. It's no longer her mission. She came at noon to avoid the women going as a group because she's an outcast. She doesn't have friends. She avoids people because her shame is great. She tries to be small. And then Jesus leaves her feeling big."
+                    </div>
+
+                    <p>She went straight to the very people she had been avoiding and proclaimed: <strong>"Come, see a man who told me everything I ever did. Could this be the Messiah?"</strong> The very things she was hiding became her testimony. Her priorities completely shifted.</p>
+
+                    <h3>🚀 Our Mission as Ambassadors</h3>
+                    <p>Paul writes in 2 Corinthians 5:20: <strong>"We are therefore Christ's ambassadors, as though God were making his appeal through us."</strong></p>
+
+                    <p>We are official representatives with God's authority and message. Someone prayed for you, invited you, told you about Christ, sent you to a Christian school. You are here because of a chain of faithful witnesses. Now it's your turn to continue that chain.</p>
+
+                    <div class="quote-block">
+                        "You and I are here because somebody came before us. Somebody prayed for you. Somebody invited you... All under the beautiful tapestry of what God has woven together to be your story. But it doesn't end there. Because there's so many other stories yet to be told, yet to be written. And you and I get to play a part in that."
+                    </div>
+
+                    <h3>🏗️ Breaking Ground: The Bold Faith Vision</h3>
+                    <p>After 10 years of the Bold Faith campaign (launched in 2015), Island ECC is now at a historic inflection point. In January 2024, the church purchased the Sunbeam Theater for $750 million, putting down $300 million and securing a $450 million loan.</p>
+
+                    <p><strong>The Timeline:</strong></p>
+                    <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                        <li><strong>March 2025:</strong> Breaking ground / construction begins</li>
+                        <li><strong>Q4 2027:</strong> Estimated move-in date</li>
+                        <li><strong>2025 Goal:</strong> Raise $150 million ($40M for mortgage, rest for revitalization)</li>
+                    </ul>
+
+                    <p>The facility includes over 100,000 square feet: the theater itself and the Kiu Fai Mansion (ground to 6th floor along King's Road), which will house Kids Club, Youth Ministry, Filipino Ministry, and more. Three floors (3-5) have been vacant for over 20 years—an unprecedented opportunity in Hong Kong.</p>
+
+                    <div class="quote-block">
+                        "We have a permanent location with signage outside and really be a true beacon in North Point and beyond... to say what do we want to do for God in the city."
+                    </div>
+
+                    <h3>📊 Where We Stand</h3>
+                    <p>As of February 21, 2025:</p>
+                    <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                        <li><strong>1,981 people</strong> have given to Bold Faith</li>
+                        <li><strong>~$1 million per month</strong> coming in from pledges and contributions</li>
+                        <li>Gifts ranging from a missionary's $100 bill to checks with "so many zeros—10 million plus"</li>
+                    </ul>
+
+                    <div class="quote-block">
+                        "It was more than $100. The monetary amount was not what God was seeing, but a transfer of affection and faith... I want to be a part of what God is doing."
+                    </div>
+
+                    <h3>🙏 The Call</h3>
+                    <p>Pastor Brett's plea is simple and sincere: <strong>Pray.</strong> Ask God what you can do to be part of this historic moment. Whether you're fulfilling an existing pledge, making a new one, or contributing for the first time—this is about privilege and investment, not guilt or manipulation.</p>
+
+                    <div class="quote-block">
+                        "The gospel is really good news. It's so good that God has allowed us to believe it. And God asks that many others would have the same chance. Everyone deserves a chance to hear it and to be changed by it."
+                    </div>
+
+                    <h3>✝️ Communion: Broken and Grateful</h3>
+                    <p>The service concluded with communion, Pastor Brett noting the two shortest, most succinct verbs describing us: <strong>We are broken, and yet we are grateful.</strong> Christ was broken on our behalf so that we, though broken, could be forgiven, covered, and transformed.</p>
+
+                    <div class="section-divider"></div>
+
+                    <h3>🎬 Tim and Carrie Chen's Story</h3>
+                    <p>Before the sermon, the church shared the story of Tim and Carrie Chen, who have been with Island ECC since before it moved from Kowloon to Hong Kong Island 25 years ago. Their three sons—Joshua, and two others—were all born and raised at Island ECC.</p>
+
+                    <p>Key reflections from their video testimony:</p>
+                    <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                        <li>From dropping off baby Joshua with a car seat, pacifier, and bottle to watching him grow in faith</li>
+                        <li>Benefiting from resources at every stage: Kids Club materials for parents, youth ministry as kids questioned faith, and the preteen ministry created specifically for grades 5-6</li>
+                        <li>Moving from nomadic Sunday services (different locations each week) to a permanent space at 633 King's Road, which allowed real programming and community</li>
+                        <li>Hoping the new Sunbeam location will provide even more space to serve the city, run events, and be "a true beacon" in North Point</li>
+                    </ul>
+
+                    <div class="quote-block">
+                        "The church even thought about: Okay, sixth graders a little bit young for youth. They don't quite fit in, but they're a little bit too old for Sunday school. They're getting a little bit bored. So the church created a preteen ministry for grades five to six... The fact that the church thinks about every segment of our community and thinks about ways to meet their needs is so incredible."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bible Verses Tab -->
+        <div id="verses" class="tab-content">
+            <div class="container">
+                <div class="prose">
+                    <h2>📜 Key Bible Verses</h2>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "You were once darkness, but now you are light in the Lord."
+                        </div>
+                        <div class="verse-ref">— Ephesians 5:8 (NIV)</div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "The law and the prophets were proclaimed until John. Since that time, the good news of the kingdom of God is being preached, and everyone is forcing their way into it."
+                        </div>
+                        <div class="verse-ref">— Luke 16:16 (NIV)</div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "We are therefore Christ's ambassadors, as though God were making his appeal through us. We implore you on Christ's behalf: Be reconciled to God."
+                        </div>
+                        <div class="verse-ref">— 2 Corinthians 5:20 (NIV)</div>
+                    </div>
+
+                    <h3>John 4: The Woman at the Well (Selected Portions)</h3>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "When a Samaritan woman came to draw water, Jesus said to her, 'Will you give me a drink?' (His disciples had gone into the town to buy food.)<br><br>
+                            The Samaritan woman said to him, 'You are a Jew and I am a Samaritan woman. How can you ask me for a drink?' (For Jews do not associate with Samaritans.)"
+                        </div>
+                        <div class="verse-ref">— John 4:7-9 (NIV)</div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "Jesus answered her, 'If you knew the gift of God and who it is that asks you for a drink, you would have asked him and he would have given you living water.'<br><br>
+                            'Sir,' the woman said, 'you have nothing to draw with and the well is deep. Where can you get this living water?'"
+                        </div>
+                        <div class="verse-ref">— John 4:10-11 (NIV)</div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "Jesus answered, 'Everyone who drinks this water will be thirsty again, but whoever drinks the water I give them will never thirst. Indeed, the water I give them will become in them a spring of water welling up to eternal life.'"
+                        </div>
+                        <div class="verse-ref">— John 4:13-14 (NIV)</div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "He told her, 'Go, call your husband and come back.'<br><br>
+                            'I have no husband,' she replied.<br><br>
+                            Jesus said to her, 'You are right when you say you have no husband. The fact is, you have had five husbands, and the man you now have is not your husband. What you have just said is quite true.'"
+                        </div>
+                        <div class="verse-ref">— John 4:16-18 (NIV)</div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "'Sir,' the woman said, 'I can see that you are a prophet. Our ancestors worshiped on this mountain, but you Jews claim that the place where we must worship is in Jerusalem.'"
+                        </div>
+                        <div class="verse-ref">— John 4:19-20 (NIV)</div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "Then, leaving her water jar, the woman went back to the town and said to the people, 'Come, see a man who told me everything I ever did. Could this be the Messiah?'"
+                        </div>
+                        <div class="verse-ref">— John 4:28-29 (NIV)</div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "For two years now he [Paul] welcomed all who came to see him. He proclaimed the kingdom of God and taught about the Lord Jesus Christ—with all boldness and without hindrance!"
+                        </div>
+                        <div class="verse-ref">— Acts 28:30-31 (NIV, paraphrased)</div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-text">
+                            "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing."
+                        </div>
+                        <div class="verse-ref">— John 15:5 (NIV)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Application Tab -->
+        <div id="application" class="tab-content">
+            <div class="container">
+                <div class="prose">
+                    <h2>🛠️ Practical Application</h2>
+
+                    <h3>Following Jesus' Example with the Woman at the Well</h3>
+                    
+                    <div class="grid-cards">
+                        <div class="card">
+                            <h3>🎯 Initiate Strategically</h3>
+                            <p><strong>What it means:</strong> Be intentional about reaching people who don't know Christ. Take risks. Go where they are, not just where it's comfortable.</p>
+                            <p><strong>Action steps:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Pray for specific people by name who don't know Jesus</li>
+                                <li>Create opportunities to connect (invite to coffee, events, Alpha)</li>
+                                <li>Don't wait for the "perfect moment"—step out in faith</li>
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <h3>🤝 Answer Respectfully</h3>
+                            <p><strong>What it means:</strong> Welcome questions, doubts, and criticism. Never push aside those who disagree.</p>
+                            <p><strong>Action steps:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Listen more than you speak</li>
+                                <li>Acknowledge legitimate questions without being defensive</li>
+                                <li>Say "I don't know" when you don't—then research together</li>
+                                <li>Invite skeptics to Alpha where there are "no wrong questions"</li>
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <h3>🎨 Teach Creatively</h3>
+                            <p><strong>What it means:</strong> Find bridges between cosmic truth and everyday life. Make God's word relevant and received.</p>
+                            <p><strong>Action steps:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Use stories, metaphors, and everyday experiences</li>
+                                <li>Connect faith to their actual struggles and questions</li>
+                                <li>Don't default to "Christianese"—translate for your audience</li>
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <h3>❤️ Love Radically</h3>
+                            <p><strong>What it means:</strong> Show honor and dignity to everyone—rich, poor, single, married, regardless of background or sin.</p>
+                            <p><strong>Action steps:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Serve without agenda or expectation</li>
+                                <li>Welcome the outcast, the messy, the broken</li>
+                                <li>Let your love be the first thing people notice, not your judgment</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>💭 Reflection Questions</h3>
+                    <div class="quote-block">
+                        <strong>1. From Darkness to Light:</strong> What specific areas of your life looked like "darkness" before Christ? What does "light" look like in those areas now?
+                    </div>
+
+                    <div class="quote-block">
+                        <strong>2. Your Water Jar:</strong> What "water jar" might God be asking you to leave behind? What old priority, habit, or comfort zone needs to be set aside so you can fully embrace His mission?
+                    </div>
+
+                    <div class="quote-block">
+                        <strong>3. Your Story:</strong> Who in your life doesn't yet know Jesus? How can you strategically, respectfully, creatively, and radically share the gospel with them?
+                    </div>
+
+                    <div class="quote-block">
+                        <strong>4. Bold Faith:</strong> How is God calling you to participate in Island ECC's Bold Faith vision? Is it through financial giving, prayer, volunteering, or inviting others?
+                    </div>
+
+                    <h3>🙏 This Week's Challenge</h3>
+                    <div class="card" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;">
+                        <h3 style="color: white;">Pray and Act</h3>
+                        <ol style="margin-left: 1.5rem; line-height: 1.8;">
+                            <li><strong>Pray daily</strong> for one specific person who doesn't know Jesus. Ask God to give you a strategic opportunity to share.</li>
+                            <li><strong>Identify your "well."</strong> Where do you naturally intersect with non-Christians? (Work, gym, hobby, neighborhood?) Be intentional there.</li>
+                            <li><strong>Practice radical love.</strong> This week, honor someone society deems "less than." Show them the dignity Jesus showed the Samaritan woman.</li>
+                            <li><strong>Seek God about Bold Faith.</strong> Ask Him specifically what your role is in Island ECC's next chapter. Write down what you sense and be ready to act.</li>
+                        </ol>
+                    </div>
+
+                    <h3>📚 Additional Resources</h3>
+                    <ul style="margin-left: 2rem; line-height: 2;">
+                        <li><strong>Alpha Course:</strong> Invite skeptical friends to explore faith in a no-pressure environment</li>
+                        <li><strong>Island Bible Seminar (Today):</strong> Caring for cancer patients—practical Christ-centered support</li>
+                        <li><strong>Marriage Weekend (Coming Soon):</strong> Strengthen your marriage as a platform for gospel witness</li>
+                        <li><strong>Gather25 (Global Broadcast):</strong> Join the global church in prayer and unity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Church Journey Tab -->
+        <div id="journey" class="tab-content">
+            <div class="container">
+                <div class="prose">
+                    <h2>🚶 Island ECC's Journey: From Kowloon to Sunbeam</h2>
+
+                    <h3>A 25-Year Story of Faithfulness</h3>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h3>Pre-2000: Kowloon Roots</h3>
+                            <p>Island ECC begins in Kowloon. Tim and Carrie Chen are among the original members worshiping on the mainland side of Hong Kong.</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <h3>~2000: The Move to Hong Kong Island</h3>
+                            <p>A group of believers crosses the harbor to plant what becomes Island ECC. The church enters a <strong>nomadic phase</strong>—meeting in different locations each week, requiring constant setup and teardown.</p>
+                            <div class="quote-block">
+                                "Every week it was a newspaper ad or an email that told us where we would go. That made it really difficult for the church to offer any real programming... It was near impossible." — Tim Chen
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <h3>Move to 633 King's Road</h3>
+                            <p>Island ECC secures a permanent facility, floor by floor. Each new floor opens up new ministry opportunities—Kids Club, Youth, Tweens, Filipino Ministry, and more.</p>
+                            <div class="quote-block">
+                                "Even moving to six-three-three, it was a permanent space in the sense that we didn't have to set up and take down... And that already gave the church the ability to provide a space for the community." — Tim Chen
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <h3>2015: Bold Faith Campaign Launches</h3>
+                            <p>Pastor Brett preaches the first "Trailblazer" sermon. The vision: save collectively so that one day, if kicked out or when the opportunity arises, Island ECC could secure a permanent location.</p>
+                            <div class="quote-block">
+                                "2015. That's a long time. And when we started it, it was a dream. Just an idea... I never would have imagined it would take this long. Ten years." — Pastor Brett
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <h3>January 2024: Sunbeam Theater Purchased</h3>
+                            <p>Island ECC purchases the iconic Sunbeam Theater on King's Road, North Point for <strong>$750 million</strong>. The down payment of $300 million comes from a decade of faithful giving. A $450 million loan covers the balance.</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <h3>2024-2025: Transition Year</h3>
+                            <p>Existing tenants continue leasing portions of the facility. The church services the mortgage (~$40M/year) while finalizing revitalization plans. Over <strong>1,981 people</strong> have contributed, with ~$1M/month coming in from pledges.</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <h3>March 2025: Breaking Ground</h3>
+                            <p>Construction begins on the <strong>100,000+ square foot</strong> facility, including the theater and Kiu Fai Mansion (ground-6th floor). Three floors (3-5) have been vacant for 20+ years.</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <h3>Q4 2027: Estimated Move-In</h3>
+                            <p>Island ECC anticipates moving into the fully renovated Sunbeam Theater—a permanent, visible beacon in North Point where the church can "proclaim with boldness and without hindrance."</p>
+                        </div>
+                    </div>
+
+                    <h3>💰 Bold Faith Financial Snapshot</h3>
+                    <div class="grid-cards">
+                        <div class="card">
+                            <h3>Initial Purchase (Jan 2024)</h3>
+                            <p><strong>$750 million total</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>$300M down payment (from 10 years of savings)</li>
+                                <li>$450M loan</li>
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <h3>2025 Goal</h3>
+                            <p><strong>$150 million to raise</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>$40M: Service existing mortgage</li>
+                                <li>$110M+: Revitalization costs (final figure TBD)</li>
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <h3>Current Giving</h3>
+                            <p><strong>1,981 contributors</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>~$1M/month from pledges</li>
+                                <li>Gifts range from $100 (missionary) to $10M+</li>
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <h3>The Vision</h3>
+                            <p><strong>A Permanent Beacon</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Open, welcoming corner atrium</li>
+                                <li>Signage visible to all of North Point</li>
+                                <li>Space for every ministry, every age</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>🏠 What the Sunbeam Means</h3>
+                    <div class="quote-block">
+                        "People know that there's a church there [at 633 King's Road], even though there's no signage on the outside... How much more amazing would it be that we have a permanent location with signage outside and really be a true beacon in North Point and beyond." — Tim Chen
+                    </div>
+
+                    <p>The Sunbeam Theater isn't just a building—it's a <strong>strategic platform</strong> for the gospel in one of Hong Kong's most densely populated areas. It represents:</p>
+
+                    <ul style="margin-left: 2rem; line-height: 2;">
+                        <li><strong>Visibility:</strong> A public declaration that the church is open, welcoming, accessible</li>
+                        <li><strong>Longevity:</strong> A permanent home for generations to come</li>
+                        <li><strong>Hospitality:</strong> Space to invite, serve, and love the community</li>
+                        <li><strong>Programming:</strong> Room for Alpha, marriage weekends, cancer care seminars, kids/youth ministries, and more</li>
+                        <li><strong>Legacy:</strong> Building on 25+ years of faithfulness to impact the next 25+ years</li>
+                    </ul>
+
+                    <h3>👨‍👩‍👧‍👦 Stories Like Tim and Carrie's</h3>
+                    <p>The Chen family embodies what Island ECC has always been about: <strong>building people</strong>. Their three sons grew up in the church, benefiting from:</p>
+                    <ul style="margin-left: 2rem; line-height: 2;">
+                        <li>Nursery care from one month old</li>
+                        <li>Kids Club with age-specific parenting resources</li>
+                        <li>Preteen ministry tailored for grades 5-6</li>
+                        <li>Youth ministry with adults walking alongside teenagers</li>
+                        <li>A community of families with shared values</li>
+                    </ul>
+
+                    <div class="quote-block">
+                        "The fact that the church thinks about every segment of our community or congregation and thinks about ways to meet their needs is so incredible, and we're so thankful for that." — Carrie Chen
+                    </div>
+
+                    <p>The Sunbeam Theater will allow Island ECC to tell thousands more stories like the Chens'—stories of people encountering Jesus, being transformed, and raising the next generation to know and love God.</p>
+
+                    <div class="section-divider"></div>
+
+                    <h3>🎯 The Call to This Generation</h3>
+                    <p>Just as previous generations faithfully gave to build 633 King's Road, and before that crossed the harbor to plant Island ECC, <strong>this generation</strong> is called to step up for the Sunbeam.</p>
+
+                    <div class="quote-block">
+                        "You and I are here because somebody came before us... But it doesn't end there. Because there's so many other stories yet to be told, yet to be written. And you and I get to play a part in that." — Pastor Brett
+                    </div>
+
+                    <p><strong>Next steps:</strong></p>
+                    <ol style="margin-left: 2rem; line-height: 2;">
+                        <li>Pray and ask God what He's calling you to give</li>
+                        <li>Attend next Sunday's service for detailed revitalization plans</li>
+                        <li>Make or renew your pledge to Bold Faith</li>
+                        <li>Invite others to be part of this historic moment</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution" onclick="this.classList.toggle('expanded')">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add scroll animation for timeline items
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-20px)';
+            item.style.transition = 'all 0.6s ease';
+            observer.observe(item);
+        });
+
+        // Keyboard navigation for tabs
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const tabs = Array.from(document.querySelectorAll('.nav-tab'));
+                const activeIndex = tabs.findIndex(tab => tab.classList.contains('active'));
+                
+                let newIndex;
+                if (e.key === 'ArrowRight') {
+                    newIndex = (activeIndex + 1) % tabs.length;
+                } else {
+                    newIndex = (activeIndex - 1 + tabs.length) % tabs.length;
+                }
+                
+                tabs[newIndex].click();
+            }
+        });
+    </script>
+</body>
+</html>

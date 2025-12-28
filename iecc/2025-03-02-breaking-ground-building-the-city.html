@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breaking Ground: Building the City | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #d4af37;
+            --accent-light: #f6e05e;
+            --bg: #f8f9fa;
+            --text: #1a202c;
+            --text-muted: #4a5568;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .header-bg {
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #1a365d 100%);
+            overflow: hidden;
+        }
+
+        .header-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.1), transparent 60%);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.875rem 2rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid rgba(255,255,255,0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+            background: rgba(26, 54, 93, 0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verse-card {
+            background: white;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .verse-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateX(4px);
+        }
+
+        .quote-block {
+            background: linear-gradient(135deg, rgba(26, 54, 93, 0.05), rgba(212, 175, 55, 0.05));
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid var(--border);
+        }
+
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--border);
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0.25rem;
+        }
+
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .attribution-short:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            font-size: 0.875rem;
+            max-width: 300px;
+            border: 1px solid var(--border);
+        }
+
+        .attribution-badge:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution-badge:hover .attribution-full {
+            display: block;
+        }
+
+        .reflection-question {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            border-top: 3px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .emoji-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                width: 100%;
+            }
+
+            .attribution-full {
+                display: block;
+                max-width: 100%;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .tab-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media print {
+            .sticky-tabs, .attribution-badge, .btn-primary, .btn-secondary {
+                display: none;
+            }
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header-bg text-white">
+        <div class="header-overlay"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 py-20 md:py-32">
+            <div class="text-center">
+                <div class="mb-6 flex flex-wrap justify-center gap-2">
+                    <span class="badge">
+                        <span class="emoji-icon">📅</span>
+                        02 Mar 2025
+                    </span>
+                    <span class="badge">
+                        <span class="emoji-icon">🎤</span>
+                        Pastor Brett
+                    </span>
+                    <span class="badge">
+                        <span class="emoji-icon">⛪</span>
+                        Island ECC
+                    </span>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    Breaking Ground:<br>Building the City
+                </h1>
+                
+                <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto opacity-90 font-light">
+                    Hong Kong needs Jesus. As we prepare for our new home at Sunbeam Theater, we're called not just to build a building, but to break through spiritual darkness with generous hearts.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="https://www.youtube.com/watch?v=lbqDzUb2ZL0" target="_blank" class="btn-primary">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+                        Watch Original Sermon
+                    </a>
+                    <a href="../index.html" class="btn-secondary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        View All Sermons
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex overflow-x-auto">
+                <button class="tab-btn active" onclick="switchTab('overview')">
+                    <span class="emoji-icon">🏠</span>Overview
+                </button>
+                <button class="tab-btn" onclick="switchTab('sermon')">
+                    <span class="emoji-icon">📖</span>Main Sermon
+                </button>
+                <button class="tab-btn" onclick="switchTab('verses')">
+                    <span class="emoji-icon">✝️</span>Bible Verses
+                </button>
+                <button class="tab-btn" onclick="switchTab('vision')">
+                    <span class="emoji-icon">🌆</span>Vision & Stats
+                </button>
+                <button class="tab-btn" onclick="switchTab('reflection')">
+                    <span class="emoji-icon">💭</span>Reflection
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-6 py-12">
+
+        <!-- Overview Tab -->
+        <section id="overview" class="tab-content active">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold mb-6 text-primary">
+                    <span class="emoji-icon">🎯</span>Sermon Overview
+                </h2>
+                
+                <div class="prose prose-lg max-w-none">
+                    <p class="text-xl text-text-muted mb-6">
+                        In this powerful message, Pastor Brett casts vision for Island ECC's future while grounding us in the timeless truth that our generosity flows from understanding that everything belongs to God.
+                    </p>
+
+                    <h3 class="text-2xl font-bold mt-8 mb-4">Key Themes</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">🏗️ Breaking Ground</h4>
+                            <p>The physical project of moving to Sunbeam Theater represents a spiritual opportunity to expand kingdom impact in Hong Kong.</p>
+                        </div>
+                        
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">💝 Generous Stewardship</h4>
+                            <p>Following David's example, we're called to be grateful managers of what God has entrusted to us, not owners.</p>
+                        </div>
+                        
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">🌃 City Impact</h4>
+                            <p>Hong Kong's shiny exterior hides deep struggles. The gospel is the answer to poverty, anxiety, isolation, and despair.</p>
+                        </div>
+                        
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">⚖️ Perspective Shift</h4>
+                            <p>"Everything in heaven and earth is yours." Recognizing God's ownership transforms how we give.</p>
+                        </div>
+                    </div>
+
+                    <div class="quote-block">
+                        <p class="text-lg">
+                            "Everything comes from you, and we have given you only what comes from your hands."
+                        </p>
+                        <footer class="text-sm mt-2 not-italic text-text-muted">— King David (1 Chronicles 29:14)</footer>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold mb-6">
+                    <span class="emoji-icon">🎵</span>Worship Songs
+                </h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3">
+                        <span class="text-2xl">🌱</span>
+                        <span class="text-lg">Graves Into Gardens</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-2xl">🙏</span>
+                        <span class="text-lg">I Speak Jesus</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-2xl">✨</span>
+                        <span class="text-lg">Jireh</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-2xl">🕊️</span>
+                        <span class="text-lg">Living Hope</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Main Sermon Tab -->
+        <section id="sermon" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-8 text-primary">
+                    <span class="emoji-icon">📖</span>Main Message
+                </h2>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-bold mb-4">Hong Kong: The Greatest City in the World</h3>
+                    <p class="mb-4">
+                        Pastor Brett opens with affection for Hong Kong—42 beaches, 564 skyscrapers, incredible food, Victoria Peak, and an iconic skyline (number 7 on the world list, though he thinks we should be #1!). It's vibrant, energetic, and exciting.
+                    </p>
+                    <p class="text-text-muted">
+                        But beneath the surface lie deep needs: 23% live below the poverty line, one in seven struggle with mental health, Hong Kong has the 7th highest divorce rate globally, and teen suicide rates reached an all-time high last year.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-bold mb-4">The Task is Huge, But the Gospel is the Answer</h3>
+                    <div class="quote-block">
+                        <p>
+                            "The answer to all of it is the gospel. I'm not being simplistic... The gospel brings hope, defines purpose and ambition, brings meaning into relationships, teaches us how to reconcile and forgive."
+                        </p>
+                    </div>
+                    <p class="mb-4">
+                        Island ECC is positioned to offer more than band-aid solutions. Through tutoring, poverty relief, and community programs, we want to bring holistic transformation that says: <em>You are made in the image of God.</em>
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-bold mb-4">David's Story: The Unlikely King</h3>
+                    <p class="mb-4">
+                        Samuel was sent by God to anoint the next king from Jesse's family. Seven sons passed by—strong, capable, good-looking—but God said "no" to each. Finally, the youngest, David, tending sheep and not even invited to the tryout, was chosen.
+                    </p>
+                    <p class="text-text-muted">
+                        This moment defined David's perspective for life: <strong>God is the one who chooses. God is the one who provides. God is the source of everything.</strong>
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-bold mb-4">David's Perspective on Generosity</h3>
+                    <p class="mb-4">
+                        Fast forward to David in his mid-50s. He's king, he's established peace, and now he wants to build a temple for God. God says, "No, your son Solomon will build it—but you can prepare."
+                    </p>
+                    <p class="mb-4">
+                        David responds with remarkable humility:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-text-muted ml-4">
+                        <li>He gives from the government's resources</li>
+                        <li>He gives from his personal treasures</li>
+                        <li>He challenges the leaders to give</li>
+                        <li>The people rejoice and give willingly</li>
+                    </ul>
+                    <div class="quote-block mt-6">
+                        <p>
+                            "Everything in heaven and earth is yours... Who am I, and who are my people, that we should be able to give as generously as this? Everything comes from you, and we have given you only what comes from your hands."
+                        </p>
+                        <footer class="text-sm mt-2 not-italic">— David's prayer (1 Chronicles 29:11-14)</footer>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-bold mb-4">Not Generous Givers, But Grateful Managers</h3>
+                    <p class="mb-4">
+                        The shift: We don't <em>own</em> and give. We are <em>entrusted</em> and manage. Everything we have—our lives, schedules, careers, bodies, bank accounts—belongs to God. We are stewards.
+                    </p>
+                    <p class="text-text-muted">
+                        "To whom much is given, much is required."
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-bold mb-4">The Vision: $150 Million in 12 Months</h3>
+                    <p class="mb-4">
+                        Island ECC is launching a generosity campaign with a goal of $150 million over 12 months:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 ml-4 mb-6">
+                        <li>$40 million to service the mortgage</li>
+                        <li>$110 million for the first phase of building revitalization</li>
+                    </ul>
+                    <p class="mb-4">
+                        This requires <strong>unequal gifts but equal sacrifice</strong>. Not everyone gives the same amount, but everyone prayerfully considers what God is calling them to contribute.
+                    </p>
+                    <p class="text-text-muted">
+                        "Pray about it. It's between you and God. If you write zero, we'll respect that. Anything in between—pray."
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-bold mb-4">The Call: Leveraging Collective Generosity</h3>
+                    <div class="quote-block">
+                        <p>
+                            "When we leverage our collective generosity, we maximize our kingdom impact. We can pool our resources and accomplish far more efficiently and effectively things that a smaller church simply couldn't do."
+                        </p>
+                    </div>
+                    <p class="mt-4">
+                        This is about more than a building. It's about breaking through generational darkness, spiritual apathy, confusion, and despair with the hope of the gospel.
+                    </p>
+                </div>
+
+                <div class="quote-block mt-8">
+                    <p class="text-lg">
+                        "Don't make this weird. Money can get weird, and throw church into the mix and it can get new levels of weird. But what we're doing is collective generosity for maximum kingdom impact. That's not weird."
+                    </p>
+                    <footer class="text-sm mt-2 not-italic">— Pastor Brett</footer>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bible Verses Tab -->
+        <section id="verses" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-8 text-primary">
+                    <span class="emoji-icon">✝️</span>Scripture References
+                </h2>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-bold mb-3">1 Samuel 16:1, 10-12 (NIV)</h3>
+                    <p class="italic mb-4">
+                        "The Lord said to Samuel, 'How long will you mourn for Saul, since I have rejected him as king over Israel? Fill your horn with oil and be on your way; I am sending you to Jesse of Bethlehem. I have chosen one of his sons to be king.'... Jesse had seven of his sons pass before Samuel, but Samuel said to him, 'The Lord has not chosen these.' So he asked Jesse, 'Are these all the sons you have?' 'There is still the youngest,' Jesse answered. 'He is tending the sheep.' Samuel said, 'Send for him; we will not sit down until he arrives.' So he sent for him and had him brought in. He was glowing with health and had a fine appearance and handsome features. Then the Lord said, 'Rise and anoint him; this is the one.'"
+                    </p>
+                    <p class="text-sm text-text-muted">
+                        <strong>Context:</strong> God chooses David, the youngest and most unlikely son, to be the next king of Israel. This moment shapes David's lifelong perspective that God is the source of all blessing.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-bold mb-3">1 Chronicles 29:11-14 (NIV)</h3>
+                    <p class="italic mb-4">
+                        "Yours, Lord, is the greatness and the power and the glory and the majesty and the splendor, for everything in heaven and earth is yours. Yours, Lord, is the kingdom; you are exalted as head over all. Wealth and honor come from you; you are the ruler of all things. In your hands are strength and power to exalt and give strength to all. Now, our God, we give you thanks, and praise your glorious name. But who am I, and who are my people, that we should be able to give as generously as this? Everything comes from you, and we have given you only what comes from your hands."
+                    </p>
+                    <p class="text-sm text-text-muted">
+                        <strong>Context:</strong> David's prayer after the people give generously toward building the temple. He recognizes that all wealth, honor, and opportunity to give come from God.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-bold mb-3">John 3:27 (NIV)</h3>
+                    <p class="italic mb-4">
+                        "To this John replied, 'A person can receive only what is given them from heaven.'"
+                    </p>
+                    <p class="text-sm text-text-muted">
+                        <strong>Context:</strong> John the Baptist reminds his disciples that everything—position, blessing, opportunity—is a gift from God.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-bold mb-3">Luke 12:48 (NIV)</h3>
+                    <p class="italic mb-4">
+                        "From everyone who has been given much, much will be demanded; and from the one who has been entrusted with much, much more will be asked."
+                    </p>
+                    <p class="text-sm text-text-muted">
+                        <strong>Context:</strong> Jesus teaches about faithful stewardship. We are managers, not owners, of what God entrusts to us.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-bold mb-3">Matthew 16:18 (NIV)</h3>
+                    <p class="italic mb-4">
+                        "And I tell you that you are Peter, and on this rock I will build my church, and the gates of Hades will not overcome it."
+                    </p>
+                    <p class="text-sm text-text-muted">
+                        <strong>Context:</strong> Jesus declares His intention to build His church. God is the one building; we are invited to participate.
+                    </p>
+                </div>
+
+                <div class="verse-card">
+                    <h3 class="text-xl font-bold mb-3">Matthew 6:33 (NIV)</h3>
+                    <p class="italic mb-4">
+                        "But seek first his kingdom and his righteousness, and all these things will be given to you as well."
+                    </p>
+                    <p class="text-sm text-text-muted">
+                        <strong>Context:</strong> Jesus teaches that when we prioritize God's kingdom, He provides what we need. The gospel addresses not just spiritual needs but holistic flourishing.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision & Stats Tab -->
+        <section id="vision" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold mb-8 text-primary">
+                    <span class="emoji-icon">🌆</span>Hong Kong by the Numbers
+                </h2>
+
+                <p class="text-lg mb-8 text-text-muted">
+                    Hong Kong is incredible—but beneath the skyline are deep needs that only the gospel can truly address.
+                </p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <div class="stat-card">
+                        <div class="stat-number">23%</div>
+                        <p class="text-text-muted font-semibold">Live Below Poverty Line</p>
+                        <p class="text-sm text-text-muted mt-2">Nearly 1 in 4 Hong Kongers</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">1 in 7</div>
+                        <p class="text-text-muted font-semibold">Struggle with Mental Health</p>
+                        <p class="text-sm text-text-muted mt-2">Anxiety, depression, isolation</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">7th</div>
+                        <p class="text-text-muted font-semibold">Highest Divorce Rate</p>
+                        <p class="text-sm text-text-muted mt-2">In the world</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">59K</div>
+                        <p class="text-text-muted font-semibold">Special Needs Kids</p>
+                        <p class="text-sm text-text-muted mt-2">Up 105% in 10 years</p>
+                    </div>
+                </div>
+
+                <div class="quote-block">
+                    <p class="text-lg">
+                        "The task is huge. But the opportunity is ours to represent a solution, hope. Beyond just fixing with a band-aid the immediate pressing issues... we want to go beyond that."
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-8 text-primary">
+                    <span class="emoji-icon">💰</span>The Generosity Campaign
+                </h2>
+
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold mb-4">Goal: $150 Million (12 Months)</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">$40 Million</h4>
+                            <p>Mortgage servicing for Sunbeam Theater</p>
+                        </div>
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">$110 Million</h4>
+                            <p>First phase of building revitalization</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-bold mb-4">What Could This Look Like?</h3>
+                <p class="mb-6 text-text-muted">
+                    These are illustrative examples—everyone prays and decides their own commitment:
+                </p>
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <span class="font-semibold">2 people @ $10M each</span>
+                        <span class="text-accent font-bold">$20M</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <span class="font-semibold">10 people @ $5M each</span>
+                        <span class="text-accent font-bold">$50M</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <span class="font-semibold">25 people @ $1M each</span>
+                        <span class="text-accent font-bold">$25M</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <span class="font-semibold">250 people @ $100K each</span>
+                        <span class="text-accent font-bold">$25M</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <span class="font-semibold">400 people @ $50K each</span>
+                        <span class="text-accent font-bold">$20M</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <span class="font-semibold">1,000 people @ $10K each</span>
+                        <span class="text-accent font-bold">$10M</span>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-gradient-to-r from-primary to-primary-light text-white rounded-lg">
+                    <p class="text-xl font-bold mb-2">Only 1,687 people in this scenario</p>
+                    <p>But over 5,000 call Island ECC home. <strong>It's doable.</strong></p>
+                </div>
+
+                <div class="quote-block mt-8">
+                    <p>
+                        "Not the same gifts, unequal gifts, but equal sacrifice where we all look at our place and figure out what it is that we can do."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reflection Tab -->
+        <section id="reflection" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold mb-8 text-primary">
+                    <span class="emoji-icon">💭</span>Reflection & Application
+                </h2>
+
+                <div class="reflection-question">
+                    <h3 class="text-xl font-bold mb-3">
+                        <span class="emoji-icon">💡</span>Question 1
+                    </h3>
+                    <p class="text-lg">
+                        What is one new insight you picked up from today's sermon?
+                    </p>
+                </div>
+
+                <div class="reflection-question">
+                    <h3 class="text-xl font-bold mb-3">
+                        <span class="emoji-icon">🚧</span>Question 2
+                    </h3>
+                    <p class="text-lg">
+                        What is your greatest personal barrier to a life of joyful generosity?
+                    </p>
+                </div>
+
+                <div class="mt-10">
+                    <h3 class="text-2xl font-bold mb-6">Key Takeaways</h3>
+
+                    <div class="space-y-6">
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">🙏 Everything Belongs to God</h4>
+                            <p>
+                                David's perspective: "Everything in heaven and earth is yours." We don't own our resources—we manage them. Generosity flows from recognizing God as the source of all blessing.
+                            </p>
+                        </div>
+
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">🏗️ We're Building More Than a Building</h4>
+                            <p>
+                                Sunbeam Theater is a tool for kingdom impact. The real goal is breaking through spiritual darkness with the hope of the gospel—addressing poverty, mental health, broken families, and loneliness in Hong Kong.
+                            </p>
+                        </div>
+
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">💝 From Generous Givers to Grateful Managers</h4>
+                            <p>
+                                The shift in perspective: We're not generous people giving our stuff. We're grateful stewards returning what already belongs to God. "We have given you only what comes from your hands."
+                            </p>
+                        </div>
+
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">⚖️ Unequal Gifts, Equal Sacrifice</h4>
+                            <p>
+                                God doesn't call everyone to give the same amount, but He invites all to pray and sacrifice. Some give $10 million, others give $10,000—what matters is prayerful obedience.
+                            </p>
+                        </div>
+
+                        <div class="verse-card">
+                            <h4 class="font-bold text-lg mb-2">🌍 Maximum Collective Impact</h4>
+                            <p>
+                                When we pool our resources as a big church, we can accomplish things a smaller church couldn't. Kids club serving 500 families, ministries to helpers, special needs families, community hubs—all made possible by collective generosity.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-block mt-10">
+                    <p class="text-lg">
+                        "Don't make this weird. Pray about it. It is between you and God. We will respect whatever you decide. This is collective generosity for maximum kingdom impact."
+                    </p>
+                    <footer class="text-sm mt-2 not-italic">— Pastor Brett's closing encouragement</footer>
+                </div>
+
+                <div class="mt-10 p-6 bg-gradient-to-r from-accent to-accent-light rounded-lg">
+                    <h3 class="text-2xl font-bold mb-4 text-primary">Prayer Prompt</h3>
+                    <p class="text-lg text-primary">
+                        <em>"Lord, help me see my resources—my time, talents, and treasures—as gifts from You. Show me how You're calling me to steward them for Your kingdom. Give me a clear perspective that everything belongs to You, and the joy of returning what is already Yours. In Jesus' name, Amen."</em>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html" class="text-primary font-semibold underline">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html" class="text-primary underline">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.currentTarget.classList.add('active');
+
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && e.shiftKey) {
+                // Allow normal tab navigation
+                return;
+            }
+        });
+
+        // Enhance focus visibility for accessibility
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('focus', function() {
+                this.style.outline = '3px solid var(--accent)';
+                this.style.outlineOffset = '2px';
+            });
+            el.addEventListener('blur', function() {
+                this.style.outline = 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>

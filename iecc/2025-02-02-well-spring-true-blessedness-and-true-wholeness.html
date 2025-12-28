@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"="width=device-width, initial-scale=1.0">
+    <title>Wellspring: True Blessedness & True Wholeness | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --spring-green: #4ade80;
+            --deep-teal: #0d9488;
+            --earth-brown: #78716c;
+            --soft-cream: #fefce8;
+            --dark-slate: #1e293b;
+            --water-blue: #67e8f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--soft-cream) 0%, #ffffff 100%);
+            color: var(--dark-slate);
+            line-height: 1.7;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+        }
+        
+        /* Header with flowing water animation */
+        .hero-header {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--deep-teal) 0%, var(--spring-green) 100%);
+        }
+        
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.15) 0%, transparent 50%);
+            animation: flowingWater 20s ease-in-out infinite;
+        }
+        
+        @keyframes flowingWater {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+            color: white;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 12px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero-meta {
+            font-size: 1.125rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.4s ease-out;
+        }
+        
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--deep-teal);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-3px);
+        }
+        
+        /* Sticky Tabs */
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .tab-button {
+            padding: 1rem 1.75rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--earth-brown);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .tab-button:hover {
+            background: var(--soft-cream);
+            color: var(--deep-teal);
+        }
+        
+        .tab-button.active {
+            color: var(--deep-teal);
+            border-bottom-color: var(--spring-green);
+            background: var(--soft-cream);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+            padding: 3rem 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--deep-teal);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        /* Timeline for sermon structure */
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--spring-green), var(--deep-teal));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: var(--spring-green);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--deep-teal);
+        }
+        
+        .timeline-heading {
+            font-size: 1.5rem;
+            color: var(--deep-teal);
+            margin-bottom: 0.75rem;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        /* Accordion for Bible verses */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 2px solid var(--soft-cream);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .accordion-header {
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--soft-cream);
+            transition: background 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: #fef3c7;
+        }
+        
+        .accordion-title {
+            font-weight: 600;
+            color: var(--deep-teal);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+        }
+        
+        .accordion-body {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .verse-text {
+            font-style: italic;
+            color: var(--earth-brown);
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+        
+        .verse-reference {
+            font-weight: 600;
+            color: var(--deep-teal);
+            font-size: 0.875rem;
+        }
+        
+        /* Flip cards for reflection questions */
+        .flip-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .flip-card {
+            perspective: 1000px;
+            height: 300px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .flip-card-front {
+            background: linear-gradient(135deg, var(--deep-teal), var(--spring-green));
+            color: white;
+        }
+        
+        .flip-card-back {
+            background: white;
+            color: var(--dark-slate);
+            transform: rotateY(180deg);
+            border: 2px solid var(--spring-green);
+        }
+        
+        /* Attribution Badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--deep-teal);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            max-width: 300px;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        
+        .attribution-badge:hover .attribution-short {
+            display: none;
+        }
+        
+        .attribution-badge:hover .attribution-full {
+            display: block;
+        }
+        
+        .attribution-full a {
+            color: var(--deep-teal);
+            text-decoration: underline;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-header {
+                min-height: 70vh;
+            }
+            
+            .timeline {
+                padding-left: 1.5rem;
+            }
+            
+            .flip-card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                text-align: center;
+            }
+            
+            .attribution-short {
+                display: none;
+            }
+            
+            .attribution-full {
+                display: block;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .speaker-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+        }
+        
+        .quote-box {
+            background: var(--soft-cream);
+            border-left: 4px solid var(--spring-green);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(13, 148, 136, 0.1));
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--spring-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="hero-content">
+            <h1 class="hero-title">💧 Wellspring: True Blessedness & True Wholeness</h1>
+            <div class="hero-meta">
+                <div style="margin-bottom: 0.5rem;">
+                    <span class="speaker-tag">Zelda</span>
+                    <span class="speaker-tag">Michael Wong</span>
+                </div>
+                <div>Island ECC • 02 Feb 2025</div>
+            </div>
+            <p style="font-size: 1.125rem; opacity: 0.9; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Discover the wellspring of life with God. Two powerful messages on finding true blessedness through Psalm 1 and experiencing holistic wholeness through resurrection hope.
+            </p>
+            <div class="cta-buttons">
+                <a href="https://www.youtube.com/watch?v=MmRfNj7YKao" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="../index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="tabs-container">
+            <button class="tab-button active" data-tab="overview">🌟 Overview</button>
+            <button class="tab-button" data-tab="sermon">📖 Main Sermon</button>
+            <button class="tab-button" data-tab="verses">✝️ Bible Verses</button>
+            <button class="tab-button" data-tab="application">💡 Application</button>
+            <button class="tab-button" data-tab="reflection">🙏 Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Overview Section -->
+    <section id="overview" class="content-section active">
+        <h2 class="section-title">🌟 Overview</h2>
+        
+        <div class="key-point">
+            <h3 style="color: var(--deep-teal); margin-bottom: 0.75rem;">Core Theme</h3>
+            <p>This sermon explores how God is the wellspring of all blessings and wholeness. Through Psalm 1, we learn that true blessedness comes from choosing God and delighting in His Word. The second message reveals how Jesus's resurrection offers complete healing—body, mind, spirit, and community—and promises eternal wholeness.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌳</div>
+                <h4 style="color: var(--deep-teal); margin-bottom: 0.5rem;">Message 1: True Blessedness</h4>
+                <p style="font-size: 0.9rem;">Zelda explores Psalm 1, showing how choosing God and meditating on His Word makes us like trees planted by streams—fruitful and prospering.</p>
+            </div>
+            
+            <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌿</div>
+                <h4 style="color: var(--deep-teal); margin-bottom: 0.5rem;">Message 2: True Wholeness</h4>
+                <p style="font-size: 0.9rem;">Michael reveals how holistic health encompasses body, mind, spirit, and community—with Jesus's resurrection as the ultimate wellspring.</p>
+            </div>
+        </div>
+
+        <div class="quote-box" style="margin-top: 2rem;">
+            <strong>Psalm 36:9</strong><br>
+            "The wellspring of life is with you. By means of your light, we see light."
+        </div>
+    </section>
+
+    <!-- Main Sermon Section -->
+    <section id="sermon" class="content-section">
+        <h2 class="section-title">📖 Main Sermon</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3 class="timeline-heading">🌳 Message 1: The Blessing of Psalm 1 (Zelda)</h3>
+                <div class="timeline-content">
+                    <h4 style="color: var(--deep-teal); margin-bottom: 0.75rem;">The Chinese New Year Context</h4>
+                    <p>During Chinese New Year, we exchange blessings like "Gong Hei Fat Choi" (wishing prosperity) or "San Tai Kin Hong" (wishing good health). But the Bible offers blessings with instructions on how to obtain them.</p>
+                    
+                    <div class="key-point" style="margin-top: 1.5rem;">
+                        <h4 style="color: var(--deep-teal); margin-bottom: 0.5rem;">The Structure of Psalm 1:1-3</h4>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.75rem;">
+                            <li><strong>Verse 1:</strong> What NOT to do (avoid the wicked, sinners, mockers)</li>
+                            <li><strong>Verse 2:</strong> What TO do (delight in God's law, meditate day and night)</li>
+                            <li><strong>Verse 3:</strong> The BLESSING (like a tree by streams of water)</li>
+                        </ul>
+                    </div>
+
+                    <h4 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.75rem;">The Promise: Like a Tree by Water 🌳</h4>
+                    <p>The blessed person is "like a tree planted by streams of water, which yields its fruit in season and whose leaf does not wither. Whatever they do prospers." This imagery shows peace, strength, unlimited nourishment, fruitfulness, and success.</p>
+
+                    <h4 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.75rem;">Who to Avoid</h4>
+                    <p>Three groups represent the anti-God camp:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li><strong>The Wicked:</strong> Hostile to God and His people</li>
+                        <li><strong>The Sinners:</strong> In open rebellion, habitual offenders</li>
+                        <li><strong>The Mockers:</strong> Refuse to learn God's way and ridicule those who do</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">Notice the progression: walking → standing → sitting. Sin tightens its grip gradually when we're not careful about our influences.</p>
+
+                    <h4 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.75rem;">What to Do Instead</h4>
+                    <p><strong>Delight in the law of the Lord and meditate on it day and night.</strong></p>
+                    <p style="margin-top: 0.75rem;">Key insights:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>"Meditate" means reciting under your breath—full attention, not just thinking</li>
+                        <li>"Delight" means longing and desire—do it joyfully, not as a checklist</li>
+                        <li>"Day and night" means continually, all the time</li>
+                    </ul>
+
+                    <div class="quote-box" style="margin-top: 1.5rem;">
+                        <strong>Zelda's Key Point:</strong> "We are influenced by what we surround ourselves with. Changes happen gradually, subtly, and often subconsciously. That's why surrounding ourselves with God's Word keeps us close to the source of every blessing."
+                    </div>
+
+                    <h4 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.75rem;">Two Foundational Truths</h4>
+                    <div class="key-point">
+                        <p><strong>1. We are influenced by what we surround ourselves with</strong><br>
+                        Just as new Hong Kong residents eventually walk as fast as locals, we become like those around us. Surround yourself with God's Word to become more like Him.</p>
+                    </div>
+                    <div class="key-point">
+                        <p><strong>2. God is the source of every blessing</strong><br>
+                        James 1:17 tells us: "Every good and perfect gift is from above, coming down from the Father of the Heavenly Lights." Behind every blessing is one wellspring—our Heavenly Father.</p>
+                    </div>
+
+                    <h4 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.75rem;">The "In Season" Reminder</h4>
+                    <p>Even the blessed tree only yields fruit "in season." We all have fruitful and less fruitful seasons. But God's promise is that when you stay close to Him, you remain nourished, at peace, and growing—so when it's your season, you'll bear beautiful fruit and prosper.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3 class="timeline-heading">🌿 Message 2: Holistic Health & Resurrection (Michael Wong)</h3>
+                <div class="timeline-content">
+                    <h4 style="color: var(--deep-teal); margin-bottom: 0.75rem;">The Health Obsession of Our Age</h4>
+                    <p>Michael begins with a humorous look at modern health trends:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Gyms on every corner</li>
+                        <li>Endless health apps and supplements</li>
+                        <li>Extreme diets: keto, carnivore, sirtfood, pegan, fast-mimicking, bulletproof</li>
+                        <li>Fun fact: Tennis adds the most years to your life!</li>
+                    </ul>
+
+                    <h4 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.75rem;">Point 1: Don't Underestimate Health ⚕️</h4>
+                    <p><strong>Health is holistic: body, mind, soul, spirit, and community.</strong></p>
+                    <p style="margin-top: 0.75rem;">The WHO defines health as "a state of complete physical, mental, and social well-being—not merely the absence of disease." The Bible has always taught this.</p>
+
+                    <div class="key-point" style="margin-top: 1.5rem;">
+                        <h5 style="margin-bottom: 0.5rem;">Physical + Mental Health</h5>
+                        <p>Proverbs 17:22: "A joyful heart is good medicine, but a crushed spirit dries up the bones."</p>
+                        <p style="margin-top: 0.5rem;">Chronic stress, sadness, anger, and anxiety impact our immune system, leading to heart disease and high blood pressure. We must guard our mental health diligently.</p>
+                    </div>
+
+                    <div class="key-point">
+                        <h5 style="margin-bottom: 0.5rem;">Social Health</h5>
+                        <p>The Harvard Study of Adult Development (85+ years) found: <strong>Positive relationships keep us happier, healthier, and help us live longer.</strong></p>
+                        <p style="margin-top: 0.5rem;">Genesis 2:18: "It is not good for the man to be alone." We are created for connection. Loneliness is as harmful as smoking or alcoholism.</p>
+                    </div>
+
+                    <div class="key-point">
+                        <h5 style="margin-bottom: 0.5rem;">Spiritual Health</h5>
+                        <p>We are fundamentally spiritual beings. We cannot be truly healthy if our spirit is sick due to separation from God.</p>
+                        <p style="margin-top: 0.5rem;"><strong>1 Timothy 4:8:</strong> "Bodily exercise profits a little, but godliness is profitable for all things, having promise of the life that now is and of that which is to come."</p>
+                        <p style="margin-top: 0.5rem;">Spiritual exercise (prayer, Scripture meditation, community) nourishes us at the deepest level.</p>
+                    </div>
+
+                    <h4 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.75rem;">Point 2: Don't Overestimate Health ⚖️</h4>
+                    <p><strong>Health matters, but it's not ultimate.</strong></p>
+
+                    <div class="quote-box" style="margin-top: 1rem;">
+                        "Which of you by being anxious can add a single hour to his span of life?" (Matthew 6:27)
+                    </div>
+
+                    <p style="margin-top: 1rem;">If we overestimate health:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>We become obsessed, constantly worried, chasing quick fixes</li>
+                        <li>We idolize it, making it our ultimate concern (e.g., "We Go Gym" trend)</li>
+                        <li>We overestimate controllability—but even the fittest can face illness</li>
+                    </ul>
+
+                    <p style="margin-top: 1rem;">Hong Kongers spent HK$18.5 billion on health products in six months—some beneficial, some driven by panic. We must put health in perspective.</p>
+
+                    <h4 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.75rem;">Point 3: The Sure Way to Permanent Health 🌅</h4>
+                    <p><strong>Resurrection: The promise stronger than death.</strong></p>
+
+                    <div class="key-point" style="margin-top: 1rem;">
+                        <p>Our hope isn't spirits floating in heaven—it's <strong>bodily resurrection</strong>. All who believe in Christ will receive imperishable, resurrected bodies.</p>
+                        <p style="margin-top: 0.75rem;"><strong>1 Corinthians 15:</strong> "This perishable body must put on the imperishable, and this mortal body must put on immortality."</p>
+                    </div>
+
+                    <h5 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.5rem;">Why We Can Believe This</h5>
+                    <p><strong>Because Jesus rose.</strong> He died, came back to life, spent 40 days with disciples, then ascended. This isn't myth—it's witnessed history. His resurrection guarantees ours.</p>
+
+                    <div class="quote-box" style="margin-top: 1.5rem;">
+                        <strong>Jesus said:</strong> "I am the resurrection and the life." (John 11:25)
+                    </div>
+
+                    <p style="margin-top: 1.5rem;">When Jesus returns, He will establish His kingdom fully on earth. We'll need immortal bodies to live in an imperishable kingdom forever. There will be no more sickness, death, pain, or tears.</p>
+
+                    <h5 style="color: var(--deep-teal); margin-top: 1.5rem; margin-bottom: 0.5rem;">How This Hope Changes Us Now</h5>
+                    <p>Resurrection hope gives us courage to face illness, aging, and suffering without losing joy. It frees us from health anxiety and fear of death.</p>
+
+                    <div class="quote-box" style="margin-top: 1.5rem;">
+                        <strong>2 Corinthians 4:16:</strong> "So we do not lose heart. Though our outer self is wasting away, our inner self is being renewed day by day."
+                    </div>
+
+                    <p style="margin-top: 1.5rem;"><strong>Michael's conclusion:</strong> In Chinese New Year, his parents forbade saying "death." But now he's not afraid—Jesus conquered the grave. The sermon ended with the congregation declaring:</p>
+                    <p style="font-style: italic; margin-top: 0.5rem;">"O death, where is your victory? O death, where is your sting?"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bible Verses Section -->
+    <section id="verses" class="content-section">
+        <h2 class="section-title">✝️ Key Bible Verses</h2>
+        
+        <div class="accordion-item active">
+            <div class="accordion-header">
+                <span class="accordion-title">Psalm 1:1-3 (NIV) — The Blessed Person</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="verse-text">
+                        "Blessed is the one who does not walk in step with the wicked or stand in the way that sinners take or sit in the company of mockers, but whose delight is in the law of the Lord, and who meditates on his law day and night. That person is like a tree planted by streams of water, which yields its fruit in season and whose leaf does not wither—whatever they do prospers."
+                    </p>
+                    <p class="verse-reference">Psalm 1:1-3</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <span class="accordion-title">Psalm 36:9 (NIV) — The Wellspring of Life</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="verse-text">
+                        "For with you is the fountain of life; in your light we see light."
+                    </p>
+                    <p class="verse-reference">Psalm 36:9</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <span class="accordion-title">James 1:17 (NIV) — Every Good Gift</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="verse-text">
+                        "Every good and perfect gift is from above, coming down from the Father of the heavenly lights, who does not change like shifting shadows."
+                    </p>
+                    <p class="verse-reference">James 1:17</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <span class="accordion-title">Proverbs 17:22 (NIV) — A Joyful Heart</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="verse-text">
+                        "A cheerful heart is good medicine, but a crushed spirit dries up the bones."
+                    </p>
+                    <p class="verse-reference">Proverbs 17:22</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <span class="accordion-title">Genesis 2:18 (NIV) — Not Good to Be Alone</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="verse-text">
+                        "The Lord God said, 'It is not good for the man to be alone. I will make a helper suitable for him.'"
+                    </p>
+                    <p class="verse-reference">Genesis 2:18</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <span class="accordion-title">1 Timothy 4:8 (NIV) — Godliness Over Exercise</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="verse-text">
+                        "For physical training is of some value, but godliness has value for all things, holding promise for both the present life and the life to come."
+                    </p>
+                    <p class="verse-reference">1 Timothy 4:8</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <span class="accordion-title">1 Corinthians 15:42-44, 53 (NIV) — Resurrection Bodies</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="verse-text">
+                        "So will it be with the resurrection of the dead. The body that is sown is perishable, it is raised imperishable; it is sown in dishonor, it is raised in glory; it is sown in weakness, it is raised in power; it is sown a natural body, it is raised a spiritual body... For the perishable must clothe itself with the imperishable, and the mortal with immortality."
+                    </p>
+                    <p class="verse-reference">1 Corinthians 15:42-44, 53</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <span class="accordion-title">2 Corinthians 4:16 (NIV) — Inner Renewal</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="verse-text">
+                        "Therefore we do not lose heart. Though outwardly we are wasting away, yet inwardly we are being renewed day by day."
+                    </p>
+                    <p class="verse-reference">2 Corinthians 4:16</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <span class="accordion-title">1 Corinthians 15:55 (NIV) — Death's Defeat</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="verse-text">
+                        "Where, O death, is your victory? Where, O death, is your sting?"
+                    </p>
+                    <p class="verse-reference">1 Corinthians 15:55</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section id="application" class="content-section">
+        <h2 class="section-title">💡 Practical Application</h2>
+        
+        <div class="key-point">
+            <h3 style="color: var(--deep-teal); margin-bottom: 1rem;">How to Live as a Tree by Streams of Water</h3>
+            
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">1. 📖 Choose to Surround Yourself with God's Word</h4>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li>After lunch today, open Psalm 1 and meditate on it</li>
+                <li>Set reminders to read Scripture throughout the day</li>
+                <li>Place Bible verses where you'll see them (mirror, desk, phone wallpaper)</li>
+                <li>Listen to worship songs that remind you of God</li>
+            </ul>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">2. 🚶 Be Mindful of Who You're Following</h4>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li>Audit your time: Who are you walking, standing, and sitting with?</li>
+                <li>Evaluate influences: social media, friends, entertainment</li>
+                <li>Are these voices drawing you closer to God or away?</li>
+                <li>Make wise choices about your community</li>
+            </ul>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">3. 🌿 Cultivate Holistic Health</h4>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li><strong>Physical:</strong> Exercise, eat well, rest adequately</li>
+                <li><strong>Mental:</strong> Monitor your emotional state, manage stress, seek help if needed</li>
+                <li><strong>Social:</strong> Invest in meaningful relationships, combat loneliness</li>
+                <li><strong>Spiritual:</strong> Pray, meditate on Scripture, participate in community, confess and turn from sin</li>
+            </ul>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">4. 🙌 Recognize God as the Source of Every Blessing</h4>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li>When you receive good things, thank God as the ultimate source</li>
+                <li>Remember: every good gift comes from the Father of Lights</li>
+                <li>Share your blessings generously—don't hoard them</li>
+                <li>During Chinese New Year, bless others with God's Word (like the Psalm 36:9 card)</li>
+            </ul>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">5. ⚖️ Keep Health in Perspective</h4>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li>Do your best, but don't obsess or idolize health</li>
+                <li>Avoid anxiety—you cannot add hours to your life by worrying</li>
+                <li>Trust God with outcomes beyond your control</li>
+                <li>Remember: godliness is more profitable than physical exercise</li>
+            </ul>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">6. 🌅 Anchor Your Hope in Resurrection</h4>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li>When facing illness, aging, or suffering, remember: this is temporary</li>
+                <li>Your final destiny (if you belong to Jesus) is an imperishable, resurrected body</li>
+                <li>Let this hope give you courage, joy, and peace</li>
+                <li>Declare: "O death, where is your sting?"</li>
+            </ul>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">7. 🌱 Trust God's Seasons</h4>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li>Even blessed trees bear fruit "in season"</li>
+                <li>If you're in a dry season, don't despair—stay rooted in God</li>
+                <li>He will nourish you and prepare you for fruitfulness</li>
+                <li>When your season comes, you'll prosper abundantly</li>
+            </ul>
+        </div>
+
+        <div class="quote-box" style="margin-top: 2rem;">
+            <strong>This Week's Challenge:</strong><br>
+            Choose one "spiritual exercise" to incorporate daily: extended prayer, Scripture meditation, journaling, or serving someone. Track how it nourishes your spirit and affects your overall well-being.
+        </div>
+    </section>
+
+    <!-- Reflection Section -->
+    <section id="reflection" class="content-section">
+        <h2 class="section-title">🙏 Reflection Questions</h2>
+        
+        <p style="margin-bottom: 2rem;">Hover or tap on each card to reveal the reflection question.</p>
+        
+        <div class="flip-card-grid">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">📖</h3>
+                        <h4>Time with God</h4>
+                    </div>
+                    <div class="flip-card-back">
+                        <p style="font-size: 0.95rem; line-height: 1.6;">How are you spending your time? What can you do differently to intentionally spend more time with God and His Word?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🎁</h3>
+                        <h4>Recognizing Blessings</h4>
+                    </div>
+                    <div class="flip-card-back">
+                        <p style="font-size: 0.95rem; line-height: 1.6;">Do you recognize the ways God has blessed you in your life? Do you see how every good and perfect gift is from our heavenly Father? How can you remind yourself of this truth?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🌅</h3>
+                        <h4>Resurrection Hope</h4>
+                    </div>
+                    <div class="flip-card-back">
+                        <p style="font-size: 0.95rem; line-height: 1.6;">How does the hope of resurrection change the way you view sickness, aging, or other physical limitations?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🏃</h3>
+                        <h4>Spiritual Exercise</h4>
+                    </div>
+                    <div class="flip-card-back">
+                        <p style="font-size: 0.95rem; line-height: 1.6;">What are some daily "spiritual exercises" (like prayer, meditation on Scripture, or acts of service) you could begin incorporating to cultivate holistic health?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🚶</h3>
+                        <h4>Your Influences</h4>
+                    </div>
+                    <div class="flip-card-back">
+                        <p style="font-size: 0.95rem; line-height: 1.6;">Who are you walking, standing, and sitting with? Are these influences drawing you closer to God or subtly pulling you away?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🌳</h3>
+                        <h4>Current Season</h4>
+                    </div>
+                    <div class="flip-card-back">
+                        <p style="font-size: 0.95rem; line-height: 1.6;">Are you in a fruitful season or a dry season right now? How can you stay rooted by God's streams of water, trusting He's preparing you for the next season?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 2rem; border-radius: 12px; margin-top: 3rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            <h3 style="color: var(--deep-teal); margin-bottom: 1rem;">💭 Personal Reflection Space</h3>
+            <p style="margin-bottom: 1rem;">Use this space to journal your thoughts, prayers, or commitments:</p>
+            <textarea 
+                style="width: 100%; min-height: 200px; padding: 1rem; border: 2px solid var(--soft-cream); border-radius: 8px; font-family: inherit; resize: vertical;"
+                placeholder="What is God speaking to you through this message? What step of faith will you take this week?"
+            ></textarea>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--earth-brown);">Note: Your reflections are private and stored only in your browser.</p>
+        </div>
+    </section>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                contentSections.forEach(section => section.classList.remove('active'));
+                
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const accordionItem = header.parentElement;
+                const wasActive = accordionItem.classList.contains('active');
+                
+                // Close all accordions
+                document.querySelectorAll('.accordion-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked accordion if it wasn't active
+                if (!wasActive) {
+                    accordionItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Save textarea content to localStorage
+        const reflectionTextarea = document.querySelector('textarea');
+        if (reflectionTextarea) {
+            const storageKey = 'reflection_wellspring_2025-02-02';
+            
+            // Load saved content
+            reflectionTextarea.value = localStorage.getItem(storageKey) || '';
+            
+            // Save on input
+            reflectionTextarea.addEventListener('input', () => {
+                localStorage.setItem(storageKey, reflectionTextarea.value);
+            });
+        }
+    </script>
+</body>
+</html>

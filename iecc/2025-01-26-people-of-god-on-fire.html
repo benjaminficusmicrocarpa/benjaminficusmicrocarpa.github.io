@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People of God: On Fire! | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --fire-orange: #FF6B35;
+            --ember-red: #C1121F;
+            --ash-gray: #4A4E69;
+            --warm-cream: #F8F4E8;
+            --deep-navy: #1B263B;
+            --gold-accent: #F4A261;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--warm-cream);
+            color: var(--deep-navy);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+        }
+        
+        /* Fire Animation Background */
+        .flame-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--ember-red) 0%, var(--fire-orange) 50%, var(--gold-accent) 100%);
+            opacity: 0.95;
+            z-index: 1;
+        }
+        
+        .flame-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            bottom: -50px;
+            width: 4px;
+            height: 40px;
+            background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.8));
+            border-radius: 50%;
+            animation: rise 4s infinite ease-in;
+            filter: blur(2px);
+        }
+        
+        @keyframes rise {
+            0% {
+                bottom: -50px;
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+            100% {
+                bottom: 100vh;
+                opacity: 0;
+                transform: translateX(50px) scale(0.5);
+            }
+        }
+        
+        /* Header Styles */
+        .header-container {
+            position: relative;
+            height: 70vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+        
+        .header-content h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: white;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .header-meta {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+        
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+        
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--ember-red);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Sticky Tabs Navigation */
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab {
+            padding: 1.25rem 2rem;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            color: var(--ash-gray);
+        }
+        
+        .tab:hover {
+            background: rgba(255,107,53,0.05);
+            color: var(--fire-orange);
+        }
+        
+        .tab.active {
+            color: var(--ember-red);
+            border-bottom-color: var(--ember-red);
+            background: rgba(193,18,31,0.05);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+            padding: 3rem 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--ember-red);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+        
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-content strong {
+            color: var(--ember-red);
+            font-weight: 600;
+        }
+        
+        /* Accordion for Sermon Points */
+        .accordion-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-item:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+        
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--deep-navy);
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: rgba(255,107,53,0.05);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+            color: var(--fire-orange);
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content-inner {
+            padding: 0 1.5rem 1.5rem;
+            font-size: 1.0625rem;
+            line-height: 1.8;
+        }
+        
+        /* Bible Verse Cards */
+        .verse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .verse-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--fire-orange);
+            transition: all 0.3s ease;
+        }
+        
+        .verse-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .verse-reference {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--ember-red);
+            margin-bottom: 0.75rem;
+        }
+        
+        .verse-text {
+            font-style: italic;
+            color: var(--ash-gray);
+            line-height: 1.7;
+        }
+        
+        /* Callout Boxes */
+        .callout {
+            background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(244,162,97,0.1));
+            border-left: 5px solid var(--fire-orange);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 1.125rem;
+        }
+        
+        .callout-title {
+            font-weight: 700;
+            color: var(--ember-red);
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+        
+        /* Quote Styles */
+        blockquote {
+            border-left: 4px solid var(--gold-accent);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--ash-gray);
+            font-size: 1.25rem;
+        }
+        
+        /* List Styling */
+        ul, ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Attribution Badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+        
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            background: var(--fire-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 1.5rem;
+        }
+        
+        .attribution-short:hover {
+            transform: scale(1.1);
+            background: var(--ember-red);
+        }
+        
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            max-width: 300px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .attribution-full a {
+            color: var(--ember-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .attribution-full a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .tab {
+                padding: 1rem 1.25rem;
+                font-size: 0.9rem;
+            }
+            
+            .content-section {
+                padding: 2rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .verse-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                width: fit-content;
+            }
+            
+            .attribution-full {
+                display: block !important;
+            }
+            
+            .attribution-short {
+                display: none;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .tabs-container,
+            .header-buttons,
+            .attribution-badge {
+                display: none;
+            }
+            
+            .content-section {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+            
+            .accordion-content {
+                max-height: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header-container">
+        <div class="flame-bg"></div>
+        <div class="flame-particles" id="particles"></div>
+        <div class="header-content">
+            <h1>🔥 People of God: On Fire!</h1>
+            <div class="header-meta">
+                26 January 2025 • Pastor Kevin • Island ECC
+            </div>
+            <div class="header-buttons">
+                <a href="https://www.youtube.com/watch?v=uItkYqNTvtw" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📋 View All Sermons
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Tabs Navigation -->
+    <div class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">📖 Overview</div>
+            <div class="tab" data-tab="sermon">🎤 Main Sermon</div>
+            <div class="tab" data-tab="verses">✝️ Bible Verses</div>
+            <div class="tab" data-tab="solution">🔑 The Solution</div>
+            <div class="tab" data-tab="reflection">💭 Application</div>
+        </div>
+    </div>
+
+    <!-- Content Sections -->
+    <div id="overview" class="content-section active">
+        <h2 class="section-title">📖 Overview</h2>
+        <div class="section-content">
+            <p><strong>Key Question:</strong> How do we fight against becoming spiritually lukewarm in our faith?</p>
+            
+            <div class="callout">
+                <div class="callout-title">Central Message</div>
+                The people of God can become spiritually stagnant, but we don't have to stay that way. By stepping out of our comfort zones, we can reignite the fire of our faith and become effective witnesses for Christ.
+            </div>
+            
+            <p>This sermon is the final message in the "People of God" series, exploring what it means to be authentic, loving, obedient followers of Christ. Pastor Kevin examines the church of Laodicea from Revelation 3:14-22 to understand spiritual stagnation and how to overcome it.</p>
+            
+            <p><strong>Series Recap:</strong></p>
+            <ul>
+                <li><strong>Week 1:</strong> People of God respond to and receive the gift of good news</li>
+                <li><strong>Week 2:</strong> People of God are made to worship</li>
+                <li><strong>Week 3:</strong> People of God are made for more - using our spiritual gifts</li>
+                <li><strong>Week 4:</strong> Examining our inner motivations, not just external actions</li>
+                <li><strong>Week 5 (Today):</strong> Staying on fire and avoiding spiritual stagnation</li>
+            </ul>
+            
+            <p><strong>The Three-Part Framework:</strong></p>
+            <ol>
+                <li><strong>Definition:</strong> What is spiritual stagnation?</li>
+                <li><strong>Cause:</strong> What leads to becoming lukewarm?</li>
+                <li><strong>Solution:</strong> How do we stay on fire?</li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="sermon" class="content-section">
+        <h2 class="section-title">🎤 Main Sermon</h2>
+        <div class="section-content">
+            <p>Pastor Kevin begins with vulnerability, sharing his own journey through seasons of spiritual fire and stagnation. From zealously sharing Christian rock music with friends to becoming self-conscious and stopping, from being a voracious reader in seminary to letting that passion fade - his experience mirrors what many believers face.</p>
+            
+            <blockquote>
+                "What if there was a way for us to stay on fire? What if there was a way for us to rekindle the dormant embers of our faith?"
+            </blockquote>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>🏛️ Context: The Seven Churches of Revelation</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>The Apostle John received a prophetic vision of Jesus's second coming and circulated it to seven churches in Asia Minor (modern-day Turkey): Ephesus, Smyrna, Pergamum, Thyatira, Sardis, Philadelphia, and Laodicea.</p>
+                        
+                        <p>These churches faced increasing persecution and needed hope. While Revelation's overarching message is hope, it begins with correction:</p>
+                        
+                        <ul>
+                            <li><strong>Ephesus:</strong> Loveless - "You have forsaken your first love"</li>
+                            <li><strong>Pergamum:</strong> Lax - Too compromising to worldly teachings</li>
+                            <li><strong>Thyatira:</strong> Liberal - Tolerating false teachers</li>
+                            <li><strong>Sardis:</strong> Lifeless - "You have a reputation for being alive, but you are dead"</li>
+                            <li><strong>Smyrna:</strong> ✅ Loyal in persecution</li>
+                            <li><strong>Philadelphia:</strong> ✅ Laboring church, working hard</li>
+                            <li><strong>Laodicea:</strong> Lukewarm - The harshest criticism with no affirmation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>❄️🔥 Definition: What is Spiritual Stagnation?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p><strong>The Geography Lesson:</strong> Laodicea sat between two sister cities in the Lycus River Valley:</p>
+                        <ul>
+                            <li><strong>Hierapolis:</strong> Known for hot springs and therapeutic waters</li>
+                            <li><strong>Colossae:</strong> Known for cold, refreshing spring water</li>
+                            <li><strong>Laodicea:</strong> Caught in the middle with lukewarm water</li>
+                        </ul>
+                        
+                        <p>Hot water was useful. Cold water was useful. But lukewarm water? It makes you vomit. It's ineffective.</p>
+                        
+                        <div class="callout">
+                            <div class="callout-title">Spiritual Stagnation Defined</div>
+                            To be <strong>ineffective</strong>. No fruit from your life. You don't look different from the world. People aren't compelled to ask about your hope and joy. You're not performing acts of mercy or sharing the gospel with people you claim are important to you.
+                        </div>
+                        
+                        <p><strong>For a whole church:</strong> No life change happening. People aren't coming to faith, being baptized, or growing in discipleship. Just focused on internal infighting, never leaving the four walls to minister to the community. If the church shut its doors, would anyone even notice?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>💰 Cause: The Three Idols of Laodicea</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Laodicea was an economic powerhouse on a major trade route. After a massive earthquake in AD 60 leveled the entire city, they refused Roman aid and rebuilt with their own resources. Historian Tacitus noted they "recovered by its own resources without assistance from ourselves."</p>
+                        
+                        <h4 style="color: var(--ember-red); margin-top: 1.5rem;">1. 💎 Gold - Spiritual Poverty</h4>
+                        <p>Jesus says: <em>"You say, 'I am rich; I have acquired wealth and do not need a thing.' But you do not realize that you are wretched, pitiful, poor, blind and naked. I counsel you to buy from me gold refined in the fire."</em></p>
+                        
+                        <p>Laodicea worshiped wealth. But Jesus taught in Matthew 6: "Do not store up for yourselves treasures on earth... For where your treasure is, there your heart will be also. You cannot serve both God and money."</p>
+                        
+                        <p><strong>The question for us:</strong> How many of us derive self-worth from what we own? How many place financial gain over relational, personal, and spiritual well-being?</p>
+                        
+                        <h4 style="color: var(--ember-red); margin-top: 1.5rem;">2. 👔 Clothing - Spiritual Nakedness</h4>
+                        <p>Jesus says: <em>"Buy from me... white clothes to wear, so you can cover your shameful nakedness."</em></p>
+                        
+                        <p>Laodicea was famous for breeding Phrygian sheep that produced coveted glossy black wool. They clothed themselves with garments the world chased after, but spiritually, they were still naked.</p>
+                        
+                        <p><strong>Spiritual nakedness is shame from sin.</strong> Like Adam and Eve covering themselves with leaves after eating the forbidden fruit - we feel disgusted, unable to look people in the eyes after lying to loved ones, or so frustrated after relapsing in addiction that we hide from church and care group.</p>
+                        
+                        <p>Jesus offers white robes of <strong>righteousness</strong> - the perfection God demands for relationship with Him. Through Christ's perfect life and death on the cross, this righteousness is given to us so we can have relationship with God the Father.</p>
+                        
+                        <h4 style="color: var(--ember-red); margin-top: 1.5rem;">3. 👁️ Eye Salve - Spiritual Blindness</h4>
+                        <p>Jesus says: <em>"Put salve on your eyes, so you can see."</em></p>
+                        
+                        <p>Laodicea had a medical school producing famous eye salve with anti-inflammatory and antibacterial properties. They were known for healing eyes, yet Jesus says they are blind.</p>
+                        
+                        <p><strong>Spiritual blindness is lack of understanding or discernment.</strong> Jesus continually criticized religious leaders and disciples for this - teaching lessons they failed to grasp.</p>
+                        
+                        <div class="callout">
+                            <div class="callout-title">The Greatest Indicator of Spiritual Blindness</div>
+                            When the truth of God doesn't translate into how we live:
+                            <ul style="margin-top: 0.75rem;">
+                                <li>We understand grace but remain condemning and judgmental</li>
+                                <li>We understand forgiveness but harbor resentment and bitterness</li>
+                                <li>We understand faith but run away when God asks us to do something hard</li>
+                            </ul>
+                            <strong>If you could truly see, you would live differently.</strong>
+                        </div>
+                        
+                        <h4 style="color: var(--ember-red); margin-top: 1.5rem;">The Deeper Lesson</h4>
+                        <p>Everything Laodicea placed their confidence in became the source of their stagnation:</p>
+                        <ul>
+                            <li>Banking → Spiritually poor</li>
+                            <li>Textile industry → Spiritually naked</li>
+                            <li>Ophthalmology → Spiritually blind</li>
+                        </ul>
+                        
+                        <p><strong>The true cause of spiritual stagnation is our comfort zone.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="verses" class="content-section">
+        <h2 class="section-title">✝️ Key Bible Verses</h2>
+        <div class="verse-grid">
+            <div class="verse-card">
+                <div class="verse-reference">Revelation 3:14-16</div>
+                <div class="verse-text">
+                    "To the angel of the church in Laodicea write: These are the words of the Amen, the faithful and true witness, the ruler of God's creation. I know your deeds, that you are neither cold nor hot. I wish you were either one or the other! So, because you are lukewarm—neither hot nor cold—I am about to spit you out of my mouth."
+                </div>
+            </div>
+            
+            <div class="verse-card">
+                <div class="verse-reference">Revelation 3:17-18</div>
+                <div class="verse-text">
+                    "You say, 'I am rich; I have acquired wealth and do not need a thing.' But you do not realize that you are wretched, pitiful, poor, blind and naked. I counsel you to buy from me gold refined in the fire, so you can become rich; and white clothes to wear, so you can cover your shameful nakedness; and salve to put on your eyes, so you can see."
+                </div>
+            </div>
+            
+            <div class="verse-card">
+                <div class="verse-reference">Matthew 6:19-21</div>
+                <div class="verse-text">
+                    "Do not store up for yourselves treasures on earth, where moths and vermin destroy, and where thieves break in and steal. But store up for yourselves treasures in heaven, where moths and vermin do not destroy, and where thieves do not break in and steal. For where your treasure is, there your heart will be also."
+                </div>
+            </div>
+            
+            <div class="verse-card">
+                <div class="verse-reference">Matthew 6:24</div>
+                <div class="verse-text">
+                    "No one can serve two masters. Either you will hate the one and love the other, or you will be devoted to the one and despise the other. You cannot serve both God and money."
+                </div>
+            </div>
+            
+            <div class="verse-card">
+                <div class="verse-reference">Revelation 3:19-20</div>
+                <div class="verse-text">
+                    "Those whom I love I rebuke and discipline. So be earnest and repent. Here I am! I stand at the door and knock. If anyone hears my voice and opens the door, I will come in and eat with that person, and they with me."
+                </div>
+            </div>
+            
+            <div class="verse-card">
+                <div class="verse-reference">Revelation 3:21-22</div>
+                <div class="verse-text">
+                    "To the one who is victorious, I will give the right to sit with me on my throne, just as I was victorious and sat down with my Father on his throne. Whoever has ears, let them hear what the Spirit says to the churches."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="solution" class="content-section">
+        <h2 class="section-title">🔑 The Solution: Step Out of Your Comfort Zone</h2>
+        <div class="section-content">
+            <blockquote>
+                "Comfort always precedes stagnation."
+            </blockquote>
+            
+            <p>When you first came to faith, you were excited, willing to take risks, jumping into things you shouldn't have, doing anything to serve God. But after several years, you settle into a comfort zone - only doing what's comfortable, only what you're good at.</p>
+            
+            <div class="callout">
+                <div class="callout-title">The Comfort Zone Trap</div>
+                <ul>
+                    <li>Inner city ministry? "Not me, I don't speak Cantonese"</li>
+                    <li>Prayer retreat on Saturday? "Not me, I'm more of a doer"</li>
+                    <li>You only do what you're interested in, nothing else</li>
+                    <li>And then in the blink of an eye: <strong>spiritual stagnation</strong></li>
+                </ul>
+            </div>
+            
+            <h3 style="color: var(--ember-red); margin-top: 2rem;">💡 Think About Your Pivotal Moments</h3>
+            <p>What do all your moments of spiritual growth have in common? <strong>You stepped out of your comfort zone:</strong></p>
+            
+            <ul>
+                <li><strong>Mission trips:</strong> Different culture, different country, doing something you never did before</li>
+                <li><strong>Baptism:</strong> Got up in front of the church, shared your testimony, declared your faith publicly</li>
+                <li><strong>Pastor Kevin's example:</strong> Leading his first Bible study despite never reading through a whole book of the Bible - God still used him</li>
+            </ul>
+            
+            <h3 style="color: var(--ember-red); margin-top: 2rem;">🎸 Personal Application: Worship Team</h3>
+            <p>Pastor Kevin tried out for the worship team as a bass player, even though:</p>
+            <ul>
+                <li>The church already has many amazing bass players</li>
+                <li>He had found his comfort zone giving announcements</li>
+                <li>He doesn't know how to read number charts or transpose</li>
+                <li>It complicated his schedule</li>
+            </ul>
+            
+            <p><strong>Why he did it:</strong> "In my heart of hearts, I wanted to experience God in a different way."</p>
+            
+            <p>Result? He was a nervous wreck every time he played, but it has been spiritually refreshing.</p>
+            
+            <h3 style="color: var(--ember-red); margin-top: 2rem;">🔥 Practical Ways to Step Out</h3>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>1. Volunteer for a Different Ministry</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <ul>
+                            <li><strong>Hope of the City:</strong> Try a training or info session</li>
+                            <li><strong>Kids Ministry:</strong> Orientation February 16th - serve on rotation or weekly</li>
+                            <li><strong>Men's Ministry:</strong> "Act Like Men" series starting after Chinese New Year - 10 weeks on rest, finances, health, anger, and more</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>2. Try a Different Spiritual Practice</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <ul>
+                            <li><strong>Silent Retreat:</strong> 2-3 days in complete silence (sounds terrifying if you need sound!)</li>
+                            <li><strong>Prayer walks</strong></li>
+                            <li><strong>Daily devotions</strong> with new structure</li>
+                            <li><strong>Art of Marriage:</strong> Strengthen and fortify your marriage (starting next Sunday)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>3. Meet New People</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>After 2-3 years in church, you settle into your crew - 5-6 friends you met, same spot every week. But this is a big church with new people constantly coming.</p>
+                        
+                        <p><strong>Why it matters:</strong> We need different perspectives, worldviews, and generations to change our own worldview and help us grow.</p>
+                        
+                        <p><strong>Chinese New Year opportunity:</strong> Invite a stranger or someone whose home isn't here into your home to help them feel they belong.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--ember-red); margin-top: 2rem;">🚪 The Invitation at the Door</h3>
+            <p>Imagine you're at home in your silk pajamas, Netflix on, tub of ice cream, blanket - so comfortable. Then a friend texts saying they're in the neighborhood wanting to hang out.</p>
+            
+            <p>Pastor Kevin's birthday story: He bought a Back to the Future Lego set, planned to watch all three movies and build it over 10-15 hours. Two friends surprised him and stayed the whole night, completely disrupting his plans. (He appreciated it anyway!)</p>
+            
+            <div class="callout">
+                <div class="callout-title">When Jesus Knocks on Your Door</div>
+                <p>He's going to change your life. It will be completely disruptive. He'll take you out of your comfort zone time and time again.</p>
+                
+                <p><strong>But it's going to be so good.</strong></p>
+                
+                <p>And at the end of this long life of discomfort? <em>"Sit with me on my throne."</em></p>
+            </div>
+            
+            <h3 style="color: var(--fire-orange); margin-top: 2rem; font-size: 1.75rem;">The Choice Before Us</h3>
+            <p style="font-size: 1.25rem; font-weight: 600;">Will you trade your comfort zone for the throne of God?</p>
+        </div>
+    </div>
+
+    <div id="reflection" class="content-section">
+        <h2 class="section-title">💭 Application & Reflection</h2>
+        <div class="section-content">
+            <h3 style="color: var(--ember-red);">🔍 Self-Assessment Questions</h3>
+            
+            <div class="callout">
+                <div class="callout-title">Am I Spiritually Stagnant?</div>
+                <ul>
+                    <li>When was the last time I did something in my faith that made me uncomfortable?</li>
+                    <li>Do I look any different from the non-Christians around me?</li>
+                    <li>Are people compelled to ask me about the source of my hope and joy?</li>
+                    <li>Am I performing acts of mercy to the marginalized?</li>
+                    <li>Am I sharing the gospel with people I say are important to me?</li>
+                    <li>What fruit is coming from my life?</li>
+                </ul>
+            </div>
+            
+            <h3 style="color: var(--ember-red); margin-top: 2rem;">💰 What Are My Comfort Zones?</h3>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Where Do I Place My Confidence?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Like Laodicea, everything we place our confidence in can become a source of stagnation:</p>
+                        <ul>
+                            <li><strong>Wealth/Financial security:</strong> Do I derive self-worth from what I own? Do I prioritize financial gain over relationships and spiritual health?</li>
+                            <li><strong>Reputation/Image:</strong> Am I covering spiritual nakedness with worldly garments people chase after?</li>
+                            <li><strong>Knowledge/Expertise:</strong> Do I think I can "see" clearly but fail to live differently based on biblical truth?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>What Excuses Do I Make?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <ul>
+                            <li>"That's not my gifting"</li>
+                            <li>"I don't have time"</li>
+                            <li>"I'm not qualified"</li>
+                            <li>"That makes me uncomfortable"</li>
+                            <li>"I've found what works for me"</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Remember:</strong> These might be the exact areas God is calling you to grow in.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--ember-red); margin-top: 2rem;">🎯 Action Steps This Week</h3>
+            
+            <ol style="font-size: 1.125rem;">
+                <li><strong>Identify one comfort zone</strong> you've been residing in</li>
+                <li><strong>Choose one small way</strong> to step out (ministry, spiritual practice, or meeting new people)</li>
+                <li><strong>Share your commitment</strong> with a trusted friend or care group member for accountability</li>
+                <li><strong>Pray daily</strong> for courage to follow where God leads, even when uncomfortable</li>
+            </ol>
+            
+            <div class="callout">
+                <div class="callout-title">Prayer for This Week</div>
+                <p style="font-style: italic;">"Lord, I recognize that I've been settling into comfort zones that have led to spiritual stagnation. I want to experience You in new ways. Help me hear Your voice when You knock on the door of my life. Give me courage to let You in, even when it completely disrupts my plans. I want to trade my comfortable life for the privilege of sitting on Your throne. Lead me to take one step out of my comfort zone this week. In Jesus' name, Amen."</p>
+            </div>
+            
+            <h3 style="color: var(--ember-red); margin-top: 2rem;">📅 Upcoming Opportunities at Island ECC</h3>
+            
+            <ul>
+                <li><strong>Chinese New Year Services:</strong> Two special "Well Spring" services with guest speakers</li>
+                <li><strong>Hope of the City:</strong> Visiting elderly, homeless outreach, tutoring, caring for single moms and kids</li>
+                <li><strong>Kids Club (633):</strong> Volunteer orientation February 16th</li>
+                <li><strong>Men's Ministry "Act Like Men":</strong> 10-week series after Lunar New Year</li>
+                <li><strong>The Art of Marriage:</strong> Starts next Sunday for all married couples</li>
+            </ul>
+            
+            <h3 style="color: var(--ember-red); margin-top: 2rem;">🔥 Remember the Promise</h3>
+            
+            <blockquote style="font-size: 1.25rem; border-left-color: var(--ember-red);">
+                "To the one who is victorious, I will give the right to sit with me on my throne, just as I was victorious and sat down with my Father on his throne."<br>
+                <em>— Revelation 3:21</em>
+            </blockquote>
+            
+            <p style="font-size: 1.125rem; margin-top: 2rem;">The journey of constantly stepping out of your comfort zone isn't easy. You'll be a nervous wreck sometimes. It will complicate your life. But at the end of it all, you get to sit on the throne with Jesus. That's the trade: your comfort zone for eternal glory with Christ.</p>
+            
+            <p style="font-size: 1.125rem;"><strong>What will you choose?</strong></p>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short" id="attrShort">ℹ️</div>
+        <div class="attribution-full" id="attrFull">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Particle Animation
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 4 + 's';
+            particle.style.animationDuration = (3 + Math.random() * 3) + 's';
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Tab Navigation
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Accordion Functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const content = item.querySelector('.accordion-content');
+                const contentInner = content.querySelector('.accordion-content-inner');
+                
+                const isActive = item.classList.contains('active');
+                
+                if (isActive) {
+                    content.style.maxHeight = '0';
+                    item.classList.remove('active');
+                } else {
+                    content.style.maxHeight = contentInner.scrollHeight + 'px';
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+        // Attribution Badge
+        const attrShort = document.getElementById('attrShort');
+        const attrFull = document.getElementById('attrFull');
+        
+        attrShort.addEventListener('mouseenter', () => {
+            attrShort.style.display = 'none';
+            attrFull.style.display = 'block';
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.attribution-badge')) {
+                attrShort.style.display = 'flex';
+                attrFull.style.display = 'none';
+            }
+        });
+        
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

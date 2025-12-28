@@ -1,379 +1,1095 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sticking Together Through the Sticky Stuff - Pastor Tim's Sermon</title>
+    <title>The Sticky Stuff: Resentment | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        :root {
+            --primary: #8B4513;
+            --primary-dark: #654321;
+            --secondary: #D2691E;
+            --accent: #CD853F;
+            --text: #2C1810;
+            --text-light: #5D4037;
+            --bg: #FFF8F0;
+            --bg-card: #FFFFFF;
+            --border: #E0D5C7;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero-section {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
             overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        .content {
-            padding: 40px;
-        }
-        .section {
-            margin-bottom: 40px;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-        .problem-section {
-            background: linear-gradient(135deg, #ffcccc, #ffe6e6);
-            border-left: 5px solid #ff6b6b;
-        }
-        .story-section {
-            background: linear-gradient(135deg, #e6f3ff, #f0f8ff);
-            border-left: 5px solid #4ecdc4;
-        }
-        .scripture-section {
-            background: linear-gradient(135deg, #fff9e6, #fffbf0);
-            border-left: 5px solid #f39c12;
-        }
-        .solution-section {
-            background: linear-gradient(135deg, #e8f5e8, #f0fff0);
-            border-left: 5px solid #27ae60;
-        }
-        .section h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
         }
-        .emoji {
-            font-size: 2.5rem;
-        }
-        .quote-box {
-            background: rgba(255,255,255,0.8);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #667eea;
-            font-style: italic;
-            position: relative;
-        }
-        .quote-box::before {
-            content: '"';
-            font-size: 4rem;
+
+        .hero-bg {
             position: absolute;
-            top: -10px;
-            left: 10px;
-            color: #667eea;
-            opacity: 0.3;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+
+        .hero-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
         }
-        .step {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide:nth-child(1) {
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+        }
+
+        .hero-slide:nth-child(2) {
+            background: linear-gradient(135deg, #654321 0%, #CD853F 100%);
+        }
+
+        .hero-slide:nth-child(3) {
+            background: linear-gradient(135deg, #5D4037 0%, #8B4513 100%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(44,24,16,0.7) 0%, rgba(44,24,16,0.85) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: white;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .hero-meta {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: white;
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            border-bottom: 2px solid var(--border);
+            z-index: 50;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .nav-tab:hover {
+            background: rgba(139,69,19,0.05);
+        }
+
+        .nav-tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+            background: rgba(139,69,19,0.08);
+        }
+
+        .content-section {
+            display: none;
+            padding: 3rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            background: var(--bg-card);
+        }
+
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary);
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(139,69,19,0.05);
+        }
+
+        .accordion-icon {
             transition: transform 0.3s ease;
         }
-        .step:hover {
-            transform: translateY(-5px);
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
         }
-        .step-number {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 5000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, rgba(139,69,19,0.05) 0%, rgba(210,105,30,0.05) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .verse-reference {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .verse-text {
+            font-style: italic;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -2rem;
+            top: 0.25rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--bg);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .quote-block {
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(205,133,63,0.08);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .quote-author {
+            text-align: right;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .badge-short {
             width: 50px;
             height: 50px;
+            background: var(--primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 15px;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        .scripture-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .scripture-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            border-top: 3px solid #f39c12;
-            position: relative;
             cursor: pointer;
-            transition: box-shadow 0.2s;
-        }
-        .scripture-card:hover {
-            box-shadow: 0 8px 18px rgba(67, 48, 182, 0.12);
-        }
-        .relationships {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .relationship-tag {
-            background: linear-gradient(45deg, #ff9a9e, #fecfef);
-            padding: 10px 15px;
-            border-radius: 25px;
-            font-weight: bold;
-            color: #333;
-        }
-        .highlight {
-            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
-            padding: 25px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-        /* Hover tooltip styles */
-        .verse-tooltip {
-            display: none;
-            position: absolute;
-            left: 50%;
-            top: 115%;
-            transform: translateX(-50%);
-            min-width: 320px;
-            max-width: 450px;
-            background: #f3f6fb;
-            color: #222;
-            border: 1px solid #d8dbe9;
-            border-radius: 8px;
-            padding: 15px 16px;
-            font-size: 0.9rem;
-            z-index: 99;
-            box-shadow: 0 4px 16px rgba(67, 48, 182, 0.13);
-            white-space: pre-line;
-            pointer-events: none;
-            font-family: 'Arial', sans-serif;
-        }
-        .scripture-card:hover .verse-tooltip,
-        .scripture-card:focus-within .verse-tooltip {
-            display: block;
-            animation: fadeIn 0.3s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-50%) translateY(10px);}
-            to { opacity: 1; transform: translateX(-50%) translateY(0);}
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 1.5rem;
         }
 
-        .verse-ref {
-            color: #7650b6;
-            font-weight: bold;
-            cursor: pointer;
-            border-bottom: 1px dotted #7650b6;
+        .badge-full {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            max-width: 300px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            display: none;
         }
+
+        .badge-full.active {
+            display: block;
+        }
+
+        .badge-full a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .tooltip {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            max-width: 280px;
+            background: var(--primary-dark);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            z-index: 60;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .tooltip.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .tooltip-term {
+            cursor: help;
+            border-bottom: 2px dotted var(--accent);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, rgba(210,105,30,0.2) 60%);
+            padding: 0 0.25rem;
+        }
+
         @media (max-width: 768px) {
-            .header h1 {
+            .hero-section {
+                height: 70vh;
+                min-height: 500px;
+            }
+
+            .hero-title {
                 font-size: 2rem;
             }
-            .content {
-                padding: 20px;
+
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
             }
-            .section {
-                padding: 20px;
+
+            .badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                width: 100%;
+                max-width: 100%;
             }
-            .steps {
-                grid-template-columns: 1fr;
+
+            .badge-short {
+                display: none;
             }
-            .scripture-grid {
-                grid-template-columns: 1fr;
+
+            .badge-full {
+                display: block;
+                max-width: 100%;
+            }
+
+            .timeline {
+                padding-left: 1.5rem;
+            }
+
+            .tooltip {
+                position: fixed;
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
             }
         }
-        @media (max-width: 450px) {
-            .header h1 {
-                font-size: 1.3rem;
-            }
-            .section h2 {
-                font-size: 1.2rem;
-            }
-            .highlight {
-                font-size: 1rem;
+
+        @media print {
+            .sticky-nav, .badge, .tooltip, .hero-section { display: none; }
+            .content-section { display: block !important; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🤝 Sticking Together Through the Sticky Stuff</h1>
-            <p>Pastor Tim's Sermon on Overcoming Resentment</p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg">
+            <div class="hero-slide active"></div>
+            <div class="hero-slide"></div>
+            <div class="hero-slide"></div>
         </div>
-        <div class="content">
-            <div class="section problem-section">
-                <h2><span class="emoji">😤</span> The Problem: Resentment</h2>
-                <p><strong>Definition:</strong> The feeling of indignant displeasure or persistent ill will as something regarded as wrong, insult or injury.</p>
-                <div class="quote-box">
-                    Resentment is like letting someone you despise live rent-free in your head 🏠💭
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">🔗 The Sticky Stuff: Resentment</h1>
+            <p class="hero-meta">29 Jun 2025 | Pastor Tim | Island ECC</p>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">Relationships are beautiful, yet complex. When bitterness creeps in, resentment creates a toxic prison. There's only one thing that can pull us out: forgiveness.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://www.youtube.com/watch?v=zQiEzRfnV3U" target="_blank" class="btn btn-primary">
+                    <span>▶️</span> Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-ghost">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav">
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-target="overview">📋 Overview</div>
+            <div class="nav-tab" data-target="sermon">💬 Main Sermon</div>
+            <div class="nav-tab" data-target="verses">📖 Bible Verses</div>
+            <div class="nav-tab" data-target="application">💡 Application</div>
+            <div class="nav-tab" data-target="reflection">🙏 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <!-- Content Sections -->
+    <div id="overview" class="content-section active">
+        <div class="card">
+            <h2 class="card-title">📋 Sermon Overview</h2>
+            <p><strong>Series:</strong> Sticking Together Through the Sticky Stuff</p>
+            <p><strong>Theme:</strong> Understanding and releasing resentment through forgiveness</p>
+            <p><strong>Key Insight:</strong> <span class="highlight">Resentment only hurts one person—you.</span> It's like drinking poison hoping someone else gets sick, or living rent-free in your head while guarding a prison door.</p>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem;">🎯 Main Points</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>1. Release the Resentment</h3>
+                        <p>Put away bitterness, wrath, and anger. It's not worth the cortisol—the stress hormone that deteriorates us emotionally, spiritually, and physically. Holding resentment paralyzes us and keeps us from moving forward.</p>
+                    </div>
                 </div>
-                <div class="quote-box">
-                    Resentment is like drinking poison and hoping the other person gets sick ☠️🍷
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>2. Give Grace</h3>
+                        <p>Be kind and tender-hearted to one another. Don't keep records of wrongs or rights. Show grace freely, knowing that one day we'll need it too.</p>
+                    </div>
                 </div>
-                <div class="quote-box">
-                    Resentment is a prison. When you put someone in your jail cell of hatred, you're stuck guarding the door 🔒👮‍♂️
-                </div>
-                <h3>📊 Physical Effects of Resentment:</h3>
-                <ul style="margin-top: 15px; padding-left: 20px;">
-                    <li>🔼 Raised cortisol levels (stress hormone)</li>
-                    <li>💔 Higher blood pressure</li>
-                    <li>🦠 Weakened immune system</li>
-                    <li>🤢 Digestive issues</li>
-                    <li>😴 Sleep disturbances</li>
-                    <li>😔 Depression</li>
-                </ul>
-                <h3>👥 Who We Resent:</h3>
-                <div class="relationships">
-                    <span class="relationship-tag">👨‍💼 Coworkers</span>
-                    <span class="relationship-tag">👫 Friends</span>
-                    <span class="relationship-tag">👪 Family</span>
-                    <span class="relationship-tag">💑 Spouses</span>
-                    <span class="relationship-tag">👧 Children</span>
-                    <span class="relationship-tag">👔 Bosses</span>
-                    <span class="relationship-tag">👩‍🏫 Teachers</span>
-                    <span class="relationship-tag">💔 Exes</span>
-                    <span class="relationship-tag">🏠 Neighbors</span>
-                    <span class="relationship-tag">😞 Ourselves</span>
-                    <span class="relationship-tag">🙏 God</span>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>3. Embrace Empathy</h3>
+                        <p>Forgive as God in Christ forgave you. Put yourself in others' shoes. Ask: Would I want mercy if I lost control, broke a promise, or failed again?</p>
+                    </div>
                 </div>
             </div>
-            <div class="section story-section">
-                <h2><span class="emoji">⚾</span> Pastor Tim's Story</h2>
-                <p><strong>The Incident:</strong> Young Tim makes a mistake in baseball, gets publicly humiliated by coach, then wrongly blamed for something he didn't do. Coach screams in his face in front of everyone. 😰</p>
-                <p><strong>The Resentment:</strong> Tim carries anger for years, celebrates when coach's new team loses. The resentment "lived rent-free" in his head. 🧠💢</p>
-                <div class="highlight">
-                    🎯 Key Moment: Years later at church, Tim sees the coach worshipping, vulnerable and transformed! 🙏✨
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">🔑 Key Definitions</h3>
+            <p><strong><span class="tooltip-term" data-definition="A feeling of indignant displeasure or persistent ill will at something regarded as a wrong, insult, or injury. The key is that it's persistent—it never goes away.">Resentment</span>:</strong> A feeling of indignant displeasure or persistent ill will at something regarded as a wrong, insult, or injury.</p>
+            <p style="margin-top: 1rem;"><strong>Living Rent-Free:</strong> An expression meaning something negative (usually a person or memory) occupies your mind constantly without "paying rent"—you can't stop thinking about it.</p>
+        </div>
+    </div>
+
+    <div id="sermon" class="content-section">
+        <div class="card">
+            <h2 class="card-title">💬 The Full Message</h2>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>⚾ Opening Story: The Angry Coach</span>
+                    <span class="accordion-icon">▼</span>
                 </div>
-                <p><strong>The Resolution:</strong> When Tim finally confronts the coach, the coach doesn't even remember the incident! 🤯 The coach admits: "I was a jerk back then, and I've really been working on that." 💪</p>
-                <div class="quote-box">
-                    I had been holding on to something for so long, and he didn't even remember it. He was free. I was the one tormented by the whole thing. 🔓😔
-                </div>
-            </div>
-            <div class="section scripture-section">
-                <h2><span class="emoji">📖</span> Biblical Foundation</h2>
-                <div class="scripture-grid">
-                    <div class="scripture-card" tabindex="0">
-                        <h4 class="verse-ref">💕 1 Corinthians 13:4-5</h4>
-                        <p>"Love is patient, love is kind... it keeps no record of wrongs."</p>
-                        <div class="verse-tooltip">
-                            <strong>1 Corinthians 13:45-5 (NIV):</strong><br>
-                            <span style="font-size:0.8em;">
-                            Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs.
-                            </span>
-                        </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Pastor Tim shared a personal story from his youth playing baseball. He had a coach who used negative reinforcement—ridiculing players to "build them up." During one game, Tim made a mistake that cost the team the win. His coach yelled at him publicly in front of parents, teammates, and classmates.</p>
+                        
+                        <p>But then the assistant coach kicked a chair in anger. The head coach, not seeing who did it, assumed it was Tim and came over screaming in his face, cursing and putting him down—all for something he didn't do. Tim froze, too scared to correct him, and just took the verbal assault.</p>
+                        
+                        <p>This incident planted seeds of resentment. When the coach left the next year to coach another team, Tim was happy every time they lost. "Yeah, he deserves it," he thought. The resentment felt justified, but it kept Tim paralyzed emotionally.</p>
+                        
+                        <p class="highlight" style="margin-top: 1.5rem;">This illustrates how resentment feels right but doesn't make anything right. It feels justified but keeps us paralyzed.</p>
                     </div>
-                    <div class="scripture-card" tabindex="0">
-                        <h4 class="verse-ref">👥 Luke 15:25-32</h4>
-                        <p>The older brother's resentment kept him out of the celebration! 🎉❌</p>
-                        <div class="verse-tooltip">
-                            <strong>Luke 15:25-32 (NIV, excerpt):</strong><br>
-                            <span style="font-size:0.85em;">
-                            Meanwhile, the older son was in the field. When he came near the house, he heard music and dancing. So he called one of the servants and asked him what was going on. “Your brother has come,” he replied, “and your father has killed the fattened calf because he has him back safe and sound.”
-                            <br>
-                            The older brother became angry and refused to go in. So his father went out and pleaded with him. But he answered his father, “Look! All these years I’ve been slaving for you and never disobeyed your orders. Yet you never gave me even a young goat so I could celebrate with my friends. But when this son of yours who has squandered your property with prostitutes comes home, you kill the fattened calf for him!”
-                            <br>
-                            “‘My son,’ the father said, ‘you are always with me, and everything I have is yours. But we had to celebrate and be glad, because this brother of yours was dead and is alive again; he was lost and is found.’”
-                            </span>
-                        </div>
-                    </div>
-                    <div class="scripture-card" tabindex="0">
-                        <h4 class="verse-ref">🕊️ Ephesians 4:31-32</h4>
-                        <p>"Let all bitterness... be put away from you... forgiving one another as God in Christ forgave you."</p>
-                        <div class="verse-tooltip">
-                            <strong>Ephesians 4:31-32 (ESV):</strong><br>
-                            <span style="font-size:0.85em;">
-                            Let all bitterness and wrath and anger and clamor and slander be put away from you, along with all malice. Be kind to one another, tenderhearted, forgiving one another, as God in Christ forgave you.
-                            </span>
-                        </div>
-                    </div>
-                    <div class="scripture-card" tabindex="0">
-                        <h4 class="verse-ref">✝️ Luke 23:34</h4>
-                        <p>"Father, forgive them for they know not what they do."</p>
-                        <div class="verse-tooltip">
-                            <strong>Luke 23:34 (ESV):</strong><br>
-                            <span style="font-size:0.85em;">
-                            And Jesus said, "Father, forgive them, for they know not what they do." And they cast lots to divide his garments.
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="highlight">
-                    🎭 Key Insight: We judge ourselves by our intentions and others by their behavior!
                 </div>
             </div>
-            <div class="section solution-section">
-                <h2><span class="emoji">💡</span> The Solution: Three Steps</h2>
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h3>🗑️ Release the Resentment</h3>
-                        <p>"Put it away from you" - it's not worth the cortisol! Forgive for YOUR freedom, not theirs.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h3>💝 Give Grace</h3>
-                        <p>Be kind and tenderhearted. Stop keeping records of wrongs AND rights!</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h3>🤗 Embrace Empathy</h3>
-                        <p>Put yourself in their shoes. Would you want mercy if you lost control?</p>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>🧠 What is Resentment?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p><strong>Definition:</strong> A feeling of indignant displeasure or persistent ill will at something regarded as a wrong, insult, or injury.</p>
+                        
+                        <div class="quote-block">
+                            <p>"Holding resentment is like letting someone you despise live rent-free in your head."</p>
+                            <p class="quote-author">— Anne Landers</p>
+                        </div>
+
+                        <div class="quote-block">
+                            <p>"Resentment is like drinking poison and hoping the other person gets sick."</p>
+                        </div>
+
+                        <div class="quote-block">
+                            <p>"Resentment is a prison. When you put someone in your jail cell of hatred, you're stuck guarding the door."</p>
+                        </div>
+
+                        <p style="margin-top: 1.5rem;"><strong>Physical Effects:</strong> Resentment raises cortisol (stress hormone) which can lead to:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Higher blood pressure</li>
+                            <li>Weakened immune system</li>
+                            <li>Digestive issues</li>
+                            <li>Sleep disturbances</li>
+                            <li>Depression</li>
+                        </ul>
+
+                        <p style="margin-top: 1.5rem;">Our brains replay hurtful memories, and they can't distinguish between real and imagined experiences. Each replay triggers the same stress response as the original event.</p>
                     </div>
                 </div>
-                <div class="highlight">
-                    ❓ Key Question: What's more important - your resentment or your relationship? 🤝
-                </div>
-                <h3>🔄 Remember: Forgiveness Facts</h3>
-                <ul style="margin-top: 15px; padding-left: 20px;">
-                    <li>🚫 No apology required from them</li>
-                    <li>✅ Not saying it's "okay"</li>
-                    <li>🚧 Not reconciliation (boundaries still allowed)</li>
-                    <li>🧠 Not forgetting</li>
-                    <li>🔁 May need to forgive 70 x 7 times (every time you replay it!)</li>
-                    <li>🎁 It's a gift to YOURSELF</li>
-                </ul>
             </div>
-            <div class="highlight">
-                <h2>🌟 Final Truth</h2>
-                <p>If Jesus can forgive us while being crucified, we can forgive those who hurt our pride! ✝️💪</p>
-                <p><strong>Forgiveness doesn't rewrite the past, but it opens a door to a better future! 🚪🌅</strong></p>
+
+            <div class="accordion-item active">
+                <div class="accordion-header">
+                    <span>📝 Keeping Records of Wrongs (and Rights)</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>We're all excellent archivists—we keep detailed records of how others have wronged us. But we're also good at keeping records of how right we are and how well we're doing compared to others.</p>
+
+                        <div class="quote-block">
+                            <p>"We judge ourselves by our intentions and others by their behavior."</p>
+                            <p class="quote-author">— Stephen Covey</p>
+                        </div>
+
+                        <p>When someone messes up, we think: "They're a bad person." When we mess up, we say: "But I had good intentions. I didn't mean to."</p>
+
+                        <p style="margin-top: 1.5rem;"><strong>Where We Build Resentment:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Co-workers:</strong> "I worked hard on this project. Why are they getting credit?"</li>
+                            <li><strong>Friends:</strong> "I'm always the one to text first. They never initiate."</li>
+                            <li><strong>Family:</strong> "I'm always coordinating everything. Why don't you help?"</li>
+                            <li><strong>Spouses:</strong> "I do all the chores. Why aren't you pulling your weight?"</li>
+                            <li><strong>Kids:</strong> "After everything I've given you, you disrespect me like this?"</li>
+                            <li><strong>Bosses:</strong> "I'm loyal. I work hard. Why no raise or promotion?"</li>
+                            <li><strong>Teachers/Students:</strong> "I do all my work and follow rules. Why so hard on me?"</li>
+                            <li><strong>Exes:</strong> "I was kind and loving. Why did they leave?"</li>
+                            <li><strong>Neighbors:</strong> "I say hi every morning. They don't even look at me."</li>
+                            <li><strong>Ourselves:</strong> Dwelling on past regrets and mistakes, unable to forgive ourselves.</li>
+                            <li><strong>God:</strong> "I come to church, pray, read my Bible, serve. Why aren't you answering my prayers?"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>😤 How We Normally Handle Resentment</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <ol style="margin-left: 1.5rem;">
+                            <li><strong>Keep it in:</strong> We hold on to it, nurse it, replay it over and over.</li>
+                            <li><strong>Explode (to the wrong person):</strong> We vent to friends instead of addressing the issue.</li>
+                            <li><strong>Keep score:</strong> We maintain mental checklists of wrongs and rights.</li>
+                            <li><strong>Passive aggression:</strong> "Well, somebody showed up for work today."</li>
+                            <li><strong>Fake nice:</strong> "Good to see you" while secretly wishing they'd leave.</li>
+                            <li><strong>Victimize:</strong> We rehearse the hurt and convince ourselves we deserve to feel angry.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>📖 The Parable of the Prodigal Son (Luke 15)</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>This famous parable is usually focused on the younger brother who squanders his inheritance and returns home humbled. But the story is really about <em>two brothers and a father</em>.</p>
+
+                        <p style="margin-top: 1.5rem;"><strong>The Older Brother's Resentment:</strong></p>
+                        <p>When the younger brother returns and the father throws a huge celebration, the older brother refuses to join. He's been working faithfully for years, never disobeying, and yet his father never threw him a party.</p>
+
+                        <p style="margin-top: 1rem;">He explodes at his father: <em>"Look! All these years I've been slaving for you and never disobeyed your orders. Yet you never gave me even a young goat so I could celebrate with my friends. But when this son of yours who has squandered your property with prostitutes comes home, you kill the fattened calf for him!"</em></p>
+
+                        <p style="margin-top: 1rem;">Notice the passive aggression: <strong>"this son of <em>yours</em>"</strong>—not "my brother."</p>
+
+                        <p style="margin-top: 1.5rem;"><strong>The Father's Response:</strong></p>
+                        <p><em>"My son, you are always with me, and everything I have is yours. But we had to celebrate and be glad, because this brother of yours was dead and is alive again; he was lost and is found."</em></p>
+
+                        <p style="margin-top: 1.5rem;" class="highlight"><strong>Key Insight:</strong> Grace welcomed both brothers in, but resentment kept the older brother out. He refused the joy because he couldn't let go of his bitterness.</p>
+
+                        <div class="quote-block" style="margin-top: 1.5rem;">
+                            <p>"You will always feel that you are owed more than you are getting. You will always see someone doing better than you in some aspect of life and will ask, 'Why this person and not me, after all I've done?' This resentment is your own fault. It's caused not by the prosperity of the other person, but by your own effort to control life through your performance."</p>
+                            <p class="quote-author">— Tim Keller, The Prodigal God</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>✝️ The Only Way Out: Forgiveness</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p><strong>The question we must ask:</strong> What's more important—your resentment or your relationship?</p>
+
+                        <p style="margin-top: 1.5rem;"><strong>Common Objections to Forgiveness:</strong></p>
+                        
+                        <p style="margin-top: 1rem;"><em>"But they haven't even apologized!"</em></p>
+                        <p>Just like resentment has nothing to do with them, forgiveness also has nothing to do with them. They don't need to know you've forgiven them. You just do it.</p>
+
+                        <p style="margin-top: 1rem;"><em>"If I forgive them, it's like saying it's okay."</em></p>
+                        <p>No. It's still wrong. Forgiveness is not saying "it's okay." It's releasing yourself from the poison of resentment. It's grace, not approval.</p>
+
+                        <p style="margin-top: 1rem;"><em>"Forgiveness means reconciliation, right?"</em></p>
+                        <p>No. Forgiveness is not reconciliation. You can forgive in your heart and still maintain healthy boundaries.</p>
+
+                        <p style="margin-top: 1rem;"><em>"What if they do it again?"</em></p>
+                        <p>You can forgive and still set boundaries. Forgiveness doesn't mean giving unlimited access to hurt you again.</p>
+
+                        <p style="margin-top: 1rem;"><em>"I've forgiven them, but I keep thinking about it."</em></p>
+                        <p>Jesus said forgive "70 times seven" (Matthew 18:22). Sometimes we only get hurt once, but we replay it hundreds of times. Each time we replay it, we need to remind ourselves: "I've already forgiven them."</p>
+
+                        <p style="margin-top: 1.5rem;" class="highlight"><strong>Forgiveness is a gift to yourself, not the other person.</strong> It's not letting them off the hook—it's freeing yourself from the prison.</p>
+
+                        <div class="quote-block" style="margin-top: 1.5rem;">
+                            <p>"Mercy and forgiveness must be free and unmerited to the wrongdoer. If the wrongdoer has to do something to merit it, then it isn't mercy. But forgiveness always comes at a cost to the one granting the forgiveness."</p>
+                            <p class="quote-author">— Tim Keller, The Prodigal God</p>
+                        </div>
+
+                        <p style="margin-top: 1.5rem;">Jesus' cost was the cross. Our cost is letting go of our pride and taking the first step toward healing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>🔚 The Rest of the Story</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Five or six years after the baseball incident, Tim had become a Christian. He was asked to play drums at his church's men's conference. As he sat behind the drum set, guess who walked through the door?</p>
+
+                        <p>His former coach—unmistakable, a mountain of a man. He sat in the front row.</p>
+
+                        <p>Tim thought, "God is about to send lightning down because that man is here."</p>
+
+                        <p style="margin-top: 1rem;">But then the music started. This burly, angry coach fell to his knees, raised his hands, and worshiped with tears streaming down his face. Tim couldn't believe what he was seeing. This mean, intimidating man was surrendering his heart to God.</p>
+
+                        <p style="margin-top: 1rem;">Instantly, Tim felt a wave of forgiveness. He began to imagine what his coach must be going through. What struggles brought him to his knees?</p>
+
+                        <p style="margin-top: 1rem;">Later, through God's providence (and humor), Tim ended up in a Bible study with this coach. Over weeks, he saw a completely different man—vulnerable in prayer, humble, growing in faith.</p>
+
+                        <p style="margin-top: 1rem;">One day, Tim had to ask: "Coach, do you remember that game where you yelled at me in front of everyone?"</p>
+
+                        <p><strong>The coach's response:</strong> "Nope."</p>
+
+                        <p style="margin-top: 1rem;">He had no memory of it. The event that tormented Tim for years meant nothing to the coach. Tim had been drinking the poison, guarding the prison door, for an event the other person didn't even remember.</p>
+
+                        <p style="margin-top: 1rem;">But then the coach said something that shocked Tim even more: <em>"Tim, I was a jerk back then, and I've really been working on that."</em></p>
+
+                        <p style="margin-top: 1rem;">He had truly changed. God had transformed him.</p>
+
+                        <p style="margin-top: 1rem;">The coach passed away last year. When Tim saw the Facebook tributes—stories of a great teacher, a caring coach, wonderful memories—he realized how much God had changed this man.</p>
+
+                        <p style="margin-top: 1.5rem;" class="highlight">The lesson: Holding on to resentment doesn't help anybody. It only hurts you.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <div id="verses" class="content-section">
+        <div class="card">
+            <h2 class="card-title">📖 Key Bible Passages</h2>
 
-</body></html>
+            <div class="verse-card">
+                <div class="verse-reference">1 Corinthians 13:4-5 (NIV)</div>
+                <div class="verse-text">
+                    "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs."
+                </div>
+                <p style="margin-top: 1rem; font-style: normal; color: var(--text);">This is the famous "love chapter" often read at weddings, but it's for every relationship. Love is not just a feeling—it's an action. And love keeps no record of wrongs.</p>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Luke 15:25-32 (NIV) - The Older Brother</div>
+                <div class="verse-text">
+                    "Meanwhile, the older son was in the field. When he came near the house, he heard music and dancing. So he called one of the servants and asked him what was going on. 'Your brother has come,' he replied, 'and your father has killed the fattened calf because he has him back safe and sound.'<br><br>
+                    
+                    The older brother became angry and refused to go in. So his father went out and pleaded with him. But he answered his father, 'Look! All these years I've been slaving for you and never disobeyed your orders. Yet you never gave me even a young goat so I could celebrate with my friends. But when this son of yours who has squandered your property with prostitutes comes home, you kill the fattened calf for him!'<br><br>
+                    
+                    'My son,' the father said, 'you are always with me, and everything I have is yours. But we had to celebrate and be glad, because this brother of yours was dead and is alive again; he was lost and is found.'"
+                </div>
+                <p style="margin-top: 1rem; font-style: normal; color: var(--text);">The older brother represents those who've been faithful but harbor resentment. Grace opened the door to celebration, but his bitterness kept him outside.</p>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Ephesians 4:31-32 (NIV)</div>
+                <div class="verse-text">
+                    "Let all bitterness and wrath and anger and clamor and slander be put away from you, along with all malice. Be kind to one another, tender-hearted, forgiving one another, as God in Christ forgave you."
+                </div>
+                <p style="margin-top: 1rem; font-style: normal; color: var(--text);">A clear command: release the bitterness, show kindness, and forgive as God forgave us through Christ.</p>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Luke 23:34 (NIV) - Jesus on the Cross</div>
+                <div class="verse-text">
+                    "Father, forgive them, for they do not know what they are doing."
+                </div>
+                <p style="margin-top: 1rem; font-style: normal; color: var(--text);">Jesus forgave freely while being crucified. He didn't wait for an apology. If Jesus can forgive us while dying on the cross, we can forgive those who hurt our pride.</p>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-reference">Matthew 18:21-22 (NIV) - Seventy Times Seven</div>
+                <div class="verse-text">
+                    "Then Peter came to Jesus and asked, 'Lord, how many times shall I forgive my brother or sister who sins against me? Up to seven times?' Jesus answered, 'I tell you, not seven times, but seventy-seven times.'"
+                </div>
+                <p style="margin-top: 1rem; font-style: normal; color: var(--text);">Forgiveness isn't a one-time event. We may need to forgive the same offense repeatedly as our minds replay the hurt.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="application" class="content-section">
+        <div class="card">
+            <h2 class="card-title">💡 Practical Application</h2>
+            
+            <h3 style="color: var(--primary); margin: 2rem 0 1rem;">Three Steps to Freedom</h3>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>1. Release the Resentment</h3>
+                        <p><em>"Let all bitterness and wrath and anger and clamor and slander be put away from you along with all malice."</em> (Ephesians 4:31)</p>
+                        <p style="margin-top: 1rem;"><strong>Why?</strong> It's not worth the cortisol. Resentment deteriorates us emotionally, spiritually, and physically. It paralyzes us and keeps us from moving forward.</p>
+                        <p style="margin-top: 1rem;"><strong>Action:</strong> Name the person or situation. Acknowledge the hurt. Then consciously choose to release it. You might need to do this many times as memories resurface.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>2. Give Grace</h3>
+                        <p><em>"Be kind to one another, tender-hearted."</em> (Ephesians 4:32)</p>
+                        <p style="margin-top: 1rem;"><strong>Why?</strong> One day we'll need it. We all make mistakes. We all hurt people. We judge ourselves by our intentions but others by their behavior. Grace levels the playing field.</p>
+                        <p style="margin-top: 1rem;"><strong>Action:</strong> Stop keeping score of wrongs and rights. Extend kindness even when it's not deserved—just as God does for us.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>3. Embrace Empathy</h3>
+                        <p><em>"Forgiving one another, as God in Christ forgave you."</em> (Ephesians 4:32)</p>
+                        <p style="margin-top: 1rem;"><strong>Why?</strong> We've all been there. We've all needed forgiveness. Empathy helps us see the person behind the offense.</p>
+                        <p style="margin-top: 1rem;"><strong>Action:</strong> Ask yourself: Would I want mercy if I lost control? If I broke a promise? If I failed again? Put yourself in their shoes. Imagine what they're going through.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">💭 Questions to Ask Yourself</h3>
+            <ul style="margin-left: 1.5rem; line-height: 2;">
+                <li>Is there someone I've locked in a jail cell of resentment? Am I guarding the door?</li>
+                <li>Am I drinking poison hoping someone else gets sick?</li>
+                <li>Who is living rent-free in my head?</li>
+                <li>What's more important—my resentment or my relationship?</li>
+                <li>Would I want mercy if I were in their shoes?</li>
+                <li>Am I keeping a record of their wrongs? Am I keeping a record of my rights?</li>
+                <li>What is holding on to this resentment costing me emotionally, spiritually, and physically?</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">🛠️ Practical Steps This Week</h3>
+            <ol style="margin-left: 1.5rem; line-height: 2;">
+                <li><strong>Identify:</strong> Write down the name of one person you resent and why.</li>
+                <li><strong>Acknowledge the cost:</strong> Consider what holding this resentment is doing to you.</li>
+                <li><strong>Choose forgiveness:</strong> Say out loud, "I forgive [name] for [what they did]."</li>
+                <li><strong>Set boundaries if needed:</strong> Forgiveness doesn't mean unlimited access. Protect yourself wisely.</li>
+                <li><strong>Repeat as necessary:</strong> Each time the memory resurfaces, remind yourself, "I've already forgiven them."</li>
+                <li><strong>Pray for them:</strong> Ask God to bless them and help you see them through His eyes.</li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="reflection" class="content-section">
+        <div class="card">
+            <h2 class="card-title">🙏 Closing Prayer & Reflection</h2>
+            
+            <div class="quote-block" style="background: linear-gradient(135deg, rgba(139,69,19,0.08) 0%, rgba(210,105,30,0.08) 100%); border-left: 4px solid var(--primary);">
+                <p style="font-style: normal; font-size: 1.1rem; line-height: 1.8;">
+                    God, we thank you so much for your love for us. We thank you for your forgiveness. We thank you for your mercy. We thank you that you don't keep any records of wrongs against us.
+                </p>
+                <p style="font-style: normal; font-size: 1.1rem; line-height: 1.8; margin-top: 1rem;">
+                    And God, I pray now as we think about our fellow brothers and sisters, our family members, our friends, our coworkers, our bosses—anyone that we are in touch with on a regular basis—God, I do pray that we would be able to show that same grace and mercy that you've given us to those around us.
+                </p>
+                <p style="font-style: normal; font-size: 1.1rem; line-height: 1.8; margin-top: 1rem;">
+                    I pray that we could release this resentment that we may be holding on to. That we could give the grace that's necessary to restore a relationship. And ultimately that we can be empathetic with one another, knowing that you empathize with us.
+                </p>
+                <p style="font-style: normal; font-size: 1.1rem; line-height: 1.8; margin-top: 1rem;">
+                    You've forgiven us, and we are to forgive others. So God, we thank you for this. I thank you for this time of sitting with us and processing it, and I pray that all of us could benefit from it in some way.
+                </p>
+                <p style="font-style: normal; font-size: 1.1rem; line-height: 1.8; margin-top: 1rem;">
+                    Of your powerful word, the story of the older brother, of Paul's words to us, his instruction to us, I pray that we would ruminate on that rather than the resentment.
+                </p>
+                <p style="font-style: normal; font-size: 1.1rem; line-height: 1.8; margin-top: 1rem;">
+                    We pray all this in Jesus' name. Amen.
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem;">✨ Final Thoughts</h3>
+            <p class="highlight" style="font-size: 1.15rem; line-height: 1.8;">
+                The cross that Jesus died on is proof to us that God keeps no record of wrongs. It's proof to us that we are not condemned. The cross shows us that Jesus freely forgave us.
+            </p>
+            <p style="margin-top: 1.5rem; font-size: 1.1rem;">
+                He wasn't on the cross saying, "When they apologize, then I'll forgive them." He didn't say, "After everything I've done for them, and they're going to act like this?"
+            </p>
+            <p style="margin-top: 1rem; font-size: 1.1rem;">
+                No. Jesus said: <strong>"Father, forgive them, for they know not what they do."</strong>
+            </p>
+            <p style="margin-top: 1.5rem; font-size: 1.1rem;">
+                If Jesus can forgive us while being crucified, we can forgive those who hurt our pride.
+            </p>
+            <p style="margin-top: 1.5rem; font-size: 1.1rem; font-style: italic; color: var(--text-light);">
+                Forgiveness doesn't rewrite the past, but it does open a door to a better future.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">📝 Journaling Prompts</h3>
+            <ul style="margin-left: 1.5rem; line-height: 2;">
+                <li>Who am I holding a grudge against right now? What happened?</li>
+                <li>How is this resentment affecting my emotional, spiritual, and physical health?</li>
+                <li>What would it look like to release this person from my "prison"?</li>
+                <li>Am I keeping records of my own rights and goodness? How does that fuel my resentment?</li>
+                <li>What does God's forgiveness toward me teach me about forgiving others?</li>
+                <li>What boundaries do I need to set to protect myself while still choosing forgiveness?</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="badge">
+        <div class="badge-short" id="badgeShort">ℹ️</div>
+        <div class="badge-full" id="badgeFull">
+            <p style="font-size: 0.9rem; line-height: 1.6;">
+                Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Hero carousel
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 5000);
+
+        // Tab navigation
+        const tabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.content-section');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.target;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all items
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Tooltip
+        const tooltipTerms = document.querySelectorAll('.tooltip-term');
+        const tooltip = document.getElementById('tooltip');
+        let tooltipTimeout;
+        
+        tooltipTerms.forEach(term => {
+            term.addEventListener('mouseenter', () => {
+                clearTimeout(tooltipTimeout);
+                tooltip.textContent = term.dataset.definition;
+                tooltip.classList.add('active');
+            });
+            
+            term.addEventListener('mouseleave', () => {
+                tooltipTimeout = setTimeout(() => {
+                    tooltip.classList.remove('active');
+                }, 300);
+            });
+        });
+
+        tooltip.addEventListener('mouseenter', () => {
+            clearTimeout(tooltipTimeout);
+        });
+        
+        tooltip.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('active');
+        });
+
+        // Badge
+        const badgeShort = document.getElementById('badgeShort');
+        const badgeFull = document.getElementById('badgeFull');
+        
+        if (window.innerWidth > 768) {
+            badgeShort.addEventListener('mouseenter', () => {
+                badgeShort.style.display = 'none';
+                badgeFull.classList.add('active');
+            });
+            
+            badgeFull.addEventListener('mouseleave', () => {
+                badgeFull.classList.remove('active');
+                badgeShort.style.display = 'flex';
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                const currentIndex = Array.from(tabs).findIndex(t => t.classList.contains('active'));
+                let newIndex;
+                
+                if (e.key === 'ArrowLeft') {
+                    newIndex = currentIndex > 0 ? currentIndex - 1 : tabs.length - 1;
+                } else {
+                    newIndex = currentIndex < tabs.length - 1 ? currentIndex + 1 : 0;
+                }
+                
+                tabs[newIndex].click();
+            }
+        });
+
+        // Focus management
+        tabs.forEach((tab, index) => {
+            tab.setAttribute('tabindex', '0');
+            tab.setAttribute('role', 'tab');
+            tab.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    tab.click();
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

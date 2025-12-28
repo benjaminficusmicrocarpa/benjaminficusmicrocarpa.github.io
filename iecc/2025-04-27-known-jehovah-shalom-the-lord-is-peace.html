@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jehovah Shalom: The Lord is Peace | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #2C5F7D;
+            --primary-light: #4A8DB5;
+            --secondary: #8B6F47;
+            --accent: #C9A969;
+            --bg-dark: #1A1F2E;
+            --bg-light: #F8F6F3;
+            --text-dark: #2A2A2A;
+            --text-light: #F8F6F3;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .hero {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--bg-dark) 100%);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(201, 169, 105, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(74, 141, 181, 0.15) 0%, transparent 50%);
+            animation: breathe 8s ease-in-out infinite;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero-meta {
+            color: var(--accent);
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(201, 169, 105, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-light);
+            border-bottom: 1px solid rgba(44, 95, 125, 0.15);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .tabs-container {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tabs-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab {
+            flex: 0 0 auto;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            color: var(--text-dark);
+            opacity: 0.7;
+        }
+        
+        .tab:hover {
+            opacity: 1;
+            background: rgba(44, 95, 125, 0.05);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+            opacity: 1;
+        }
+        
+        .content-section {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .verse-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .verse-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .verse-reference {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .verse-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            font-style: italic;
+        }
+        
+        .sermon-content {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        .sermon-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin: 2.5rem 0 1.5rem;
+        }
+        
+        .sermon-content h3 {
+            font-size: 1.7rem;
+            color: var(--secondary);
+            margin: 2rem 0 1rem;
+        }
+        
+        .sermon-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+        
+        .quote-block {
+            background: linear-gradient(135deg, rgba(44, 95, 125, 0.05), rgba(201, 169, 105, 0.05));
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            font-style: italic;
+        }
+        
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            font-size: 0.85rem;
+        }
+        
+        .badge-short {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(44, 95, 125, 0.3);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+        
+        .badge-short:hover {
+            transform: scale(1.1);
+            background: var(--primary-light);
+        }
+        
+        .badge-full {
+            display: none;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            max-width: 300px;
+            line-height: 1.6;
+        }
+        
+        .badge-full.show {
+            display: block;
+            animation: slideInRight 0.3s ease;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .badge-full a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .badge-full a:hover {
+            text-decoration: underline;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            padding-bottom: 2.5rem;
+            border-left: 2px solid var(--accent);
+        }
+        
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg-light);
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .accordion-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: rgba(44, 95, 125, 0.05);
+        }
+        
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--accent);
+        }
+        
+        .accordion-icon.rotate {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content.show {
+            max-height: 2000px;
+        }
+        
+        .accordion-body {
+            padding: 0 1.5rem 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                height: 70vh;
+                min-height: 500px;
+            }
+            
+            .sermon-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .attribution-badge {
+                position: static;
+                margin: 2rem auto;
+                text-align: center;
+            }
+            
+            .badge-short {
+                display: none;
+            }
+            
+            .badge-full {
+                display: block;
+                max-width: 100%;
+                box-shadow: none;
+                border: 1px solid rgba(44, 95, 125, 0.2);
+            }
+            
+            .timeline-item {
+                padding-left: 2rem;
+            }
+        }
+        
+        @media print {
+            .sticky-tabs, .attribution-badge, .button-group {
+                display: none;
+            }
+            
+            .content-section {
+                display: block !important;
+                page-break-after: always;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Jehovah Shalom:<br>The Lord is Peace</h1>
+            <div class="hero-meta">
+                27 April 2025 • Island ECC • Pastor Brett
+            </div>
+            <div class="button-group">
+                <a href="https://www.youtube.com/watch?v=m-h3Cw3h2-Y" class="btn btn-primary" target="_blank" rel="noopener">
+                    <span>▶</span> Watch Sermon
+                </a>
+                <a href="../index.html" class="btn btn-secondary">
+                    <span>📖</span> View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="tabs-container">
+            <div class="tab active" data-tab="overview">📋 Overview</div>
+            <div class="tab" data-tab="sermon">💬 Main Sermon</div>
+            <div class="tab" data-tab="verses">📖 Bible Verses</div>
+            <div class="tab" data-tab="names">✨ Names of God</div>
+            <div class="tab" data-tab="application">🎯 Application</div>
+            <div class="tab" data-tab="reflection">🙏 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Content Sections -->
+    
+    <!-- Overview -->
+    <section class="content-section active" id="overview">
+        <div class="sermon-content">
+            <h2>Sermon Overview</h2>
+            <p>In this powerful message, we explore one of God's names: <strong>Jehovah Shalom</strong> — The Lord is Peace. This peace isn't merely the absence of conflict; it's a deep, abiding contentment available to every Christ follower, even in the midst of chaos.</p>
+            
+            <div class="quote-block">
+                "What comes into our minds when we think about God is the most important thing about us." — A.W. Tozer
+            </div>
+            
+            <h3>Key Themes</h3>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">Identity in God's Declaration</h4>
+                    <p>You are what God declares you to be — not what circumstances suggest or what you achieve for yourself.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">The Cycle of Israel</h4>
+                    <p>The Book of Judges reveals a 400-year pattern: prosperity → idolatry → oppression → deliverance. Sound familiar?</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">Gideon's Transformation</h4>
+                    <p>From hiding in fear to becoming a mighty warrior — all because God spoke truth over his life.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">The Mind Governed by the Spirit</h4>
+                    <p>Peace comes from setting our minds on what the Spirit desires, not on worldly chaos.</p>
+                </div>
+            </div>
+            
+            <h3>Main Scripture References</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.1);">📜 Exodus 3 — God reveals "I AM"</li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.1);">📜 Judges 6-8 — Gideon's story</li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.1);">📜 Romans 8:5-6 — Mind set on the Spirit</li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.1);">📜 Isaiah 26:3 — Perfect peace</li>
+                <li style="padding: 0.5rem 0;">📜 John 16:33 — Peace in tribulation</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Main Sermon -->
+    <section class="content-section" id="sermon">
+        <div class="sermon-content">
+            <h2>The Lord is Peace</h2>
+            
+            <h3>Understanding God's Names</h3>
+            <p>We're beginning a six-week series called <em>Known</em>, exploring different names God uses to reveal aspects of His character. This premise is foundational: what you think about God is the most important thing about you.</p>
+            
+            <p>Most of us lead with other labels — our career, marital status, achievements. But fundamentally, what you think about God drives your motivation, contentment, and understanding of how the world works.</p>
+            
+            <div class="quote-block">
+                Here's the catch: What you think about God is probably wrong.
+            </div>
+            
+            <p>Why? Because God is infinite and you are finite. Your capacity to comprehend Him accurately is limited. Plus, we live in a fallen world tainted by sin and imperfection, which clouds our conclusions about how life works.</p>
+            
+            <p>The challenge — and opportunity — is to examine what we think about God and let Scripture shape our understanding more accurately.</p>
+            
+            <h3>The Names of God</h3>
+            <p><strong>El or Elohim</strong> appears over 2,000 times in the Old Testament, a common word for God. Then in Exodus 3, Moses asks God, "Who should I tell them you are?" God responds: "Tell them I AM THAT I AM" — meaning "I am present, I always have been, I always will be."</p>
+            
+            <p>From that encounter came <strong>Yahweh</strong>, often abbreviated and replaced with <strong>Adonai</strong> (Lord) by Jewish people who believed saying the name would minimize His character.</p>
+            
+            <p>In the 4th century BC, Jewish scribes created <strong>Jehovah</strong> by inserting vowels from Adonai into Yahweh. While not an original biblical word, it's accurate and meaningful.</p>
+            
+            <p>God uses many names because no single name can fully describe Him:</p>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                <li><strong>El Roi</strong> — The God Who Sees</li>
+                <li><strong>El Shaddai</strong> — God Almighty</li>
+                <li><strong>Jehovah Jireh</strong> — The Lord Will Provide</li>
+                <li><strong>Jehovah Nissi</strong> — The Lord Our Banner</li>
+                <li><strong>Jehovah Shalom</strong> — The Lord is Peace</li>
+            </ul>
+            
+            <h3>Gideon's Story: From Fear to Faith</h3>
+            <p>Today's focus is <strong>Jehovah Shalom</strong>. The Hebrew word <em>shalom</em> means more than just "peace" as absence of conflict. It's a deep, abiding contentment and wholeness in the midst of chaos.</p>
+            
+            <p>This name is revealed in the Book of Judges, characterized by the phrase: "Everyone did what was right in his own eyes." Israel cycled through this pattern for 400+ years:</p>
+            
+            <p style="text-align: center; font-weight: 600; color: var(--primary); margin: 2rem 0;">Prosperity → Idolatry → Oppression → Deliverance → Prosperity...</p>
+            
+            <p>Enter <strong>Gideon</strong>, one of twelve major judges. We find him hiding in a winepress, threshing wheat to save it from Midianite plunderers. He's fearful, lacking courage, totally afraid.</p>
+            
+            <p>Then an angel appears and says:</p>
+            
+            <div class="quote-block">
+                "The Lord is with you, mighty warrior."
+            </div>
+            
+            <p>Let's be clear: nothing in Gideon's life says "mighty warrior." He's hiding in fear. But God speaks prophetically into his life. Gideon must now choose: Will I step into this label? Will I believe what God says about me? Or will I let circumstances rule my life?</p>
+            
+            <h3>You Are What God Declares</h3>
+            <p><strong>You are what God declares you to be.</strong> God says so much about who you are. Rather than embracing His label, we often reject it or try to achieve something different ourselves.</p>
+            
+            <p>Some settle for less, playing a negative tape: "I'm insecure, I don't belong." But God says: "You are My daughter, My son. You have dignity, value, and worth because you're made in My image."</p>
+            
+            <p>Others create more than what God says: "I got this, God. I'll carve my own way, create my own dignity." This leads to anxiety: What's my next trick? How long can I impress? What happens when my achievements are past?</p>
+            
+            <p>This is why many face depression at retirement — their worth was tethered to career achievement rather than God's declaration.</p>
+            
+            <h3>Gideon's Honest Questions</h3>
+            <p>Gideon responds with brilliantly honest pushback:</p>
+            
+            <div class="quote-block">
+                "Pardon me, my lord, but if the Lord is with us, why has all this happened to us? Where are all His wonders our ancestors told us about? The Lord has abandoned us!"
+            </div>
+            
+            <p>He looks at circumstances and bases God's presence on whether things look favorable. Sound familiar? We look at world chaos, financial markets, relationships, careers and think, "God, are You on the throne? Have You noticed?"</p>
+            
+            <p>Gideon makes three mistakes we often make:</p>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>1. Looking at Circumstances</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>He judges God's presence by visible outcomes. But God's presence isn't contingent on favorable circumstances. The irony? He's speaking to an angel of God while saying "Where is God?"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>2. Making Comparisons</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>"Where are the wonders like our ancestors experienced?" Comparison is a black hole — it breeds envy or pride. We're told repeatedly to fix our eyes on Jesus, not on others' blessings or lack thereof.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>3. Becoming Critical</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>His feelings turn into criticism of God's ways, timing, and character. He brings his baggage to the conversation: "You've abandoned us!" This is a raw journal entry we get to witness.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>God's Response</h3>
+            <p>God doesn't rebuke Gideon's honesty. Instead:</p>
+            
+            <div class="quote-block">
+                "Go in the strength you have and save Israel out of Midian's hand. Am I not sending you?"
+            </div>
+            
+            <p>Gideon protests: "My clan is the weakest in Manasseh, and I am the least in my family!" He's resisting the call, pointing out to God (as if God doesn't know) why he's the wrong choice.</p>
+            
+            <p>Then God speaks words that change everything:</p>
+            
+            <div class="quote-block">
+                "I will be with you, and you will strike down all the Midianites, leaving none alive."
+            </div>
+            
+            <h3>The Sign and the Peace</h3>
+            <p>Gideon asks for verification — a sincere request God always answers. (Though we don't get to determine how He answers!)</p>
+            
+            <p>God provides an extravagant sign: fire consumes Gideon's offering. Then God says:</p>
+            
+            <div class="quote-block">
+                "Peace! Do not be afraid. You are not going to die."
+            </div>
+            
+            <p>So Gideon built an altar and called it <strong>Jehovah Shalom</strong> — The Lord is Peace.</p>
+            
+            <p>Gideon found peace when he realized God was with him. Not in a general "God is everywhere" way, but in a particular, specific, and personal way. It's not enough to know God exists — we must know God is with us and for us.</p>
+            
+            <h3>How Do We Know God Is With Us?</h3>
+            <p>If God's presence leads to God's peace, how can we be assured? Romans 8 gives us clarity:</p>
+            
+            <div class="quote-block">
+                "Those who live according to the flesh have their minds set on what the flesh desires. But those who live according to the Spirit have their minds set on what the Spirit desires. The mind governed by the flesh is death, but the mind governed by the Spirit is life and peace."
+            </div>
+            
+            <p>Peace requires a mindset shift. It's taking our faith from a Sunday hobby to a 24/7 perspective. Not secluding ourselves into monasteries, but bringing God into every area — work, relationships, schedules, hobbies.</p>
+            
+            <p>We do our work "heartily as unto the Lord rather than people." It's seeing life through the lens of the One who made life. This isn't burdensome — it's clarity, a beautiful light way to see everything.</p>
+            
+            <p>Isaiah promises:</p>
+            
+            <div class="quote-block">
+                "You keep him in perfect peace whose mind is stayed on You, because he trusts in You."
+            </div>
+            
+            <h3>Peace in Tribulation</h3>
+            <p>Jesus gives us gritty reality:</p>
+            
+            <div class="quote-block">
+                "I have told you these things, so that in Me you may have peace. In this world you will have trouble. But take heart! I have overcome the world."
+            </div>
+            
+            <p>Following Christ isn't an escape from trouble — it's the presence of God and the shalom of peace in the midst of chaos.</p>
+            
+            <h3>The Orchestra Illustration</h3>
+            <p>Think of an orchestra warm-up: utter chaos, screeching, discordant noise. You paid money and think, "Couldn't you have done this before I came?"</p>
+            
+            <p>But then the conductor walks out. Instruments are stilled. He commands attention. Harmony occurs. Suddenly, chaos becomes a symphony.</p>
+            
+            <p>That's what God does in our lives. The chaos, noise, anxiety, stress — they don't disappear. But when He takes the stage, when we set our minds on what He says, He makes music from it. He infuses peace in the midst of it. Even the most troublesome things gain purpose and meaning.</p>
+            
+            <p style="margin-top: 3rem; text-align: center; font-size: 1.2rem; color: var(--primary); font-style: italic;">Life isn't easy. But there can be shalom in the midst of it.</p>
+        </div>
+    </section>
+
+    <!-- Bible Verses -->
+    <section class="content-section" id="verses">
+        <div class="verse-card">
+            <div class="verse-reference">Judges 6:12-16 (NIV)</div>
+            <div class="verse-text">
+                "When the angel of the LORD appeared to Gideon, he said, 'The LORD is with you, mighty warrior.' 'Pardon me, my lord,' Gideon replied, 'but if the LORD is with us, why has all this happened to us? Where are all his wonders that our ancestors told us about when they said, "Did not the LORD bring us up out of Egypt?" But now the LORD has abandoned us and given us into the hand of Midian.' The LORD turned to him and said, 'Go in the strength you have and save Israel out of Midian's hand. Am I not sending you?' 'Pardon me, my lord,' Gideon replied, 'but how can I save Israel? My clan is the weakest in Manasseh, and I am the least in my family.' The LORD answered, 'I will be with you, and you will strike down all the Midianites, leaving none alive.'"
+            </div>
+        </div>
+        
+        <div class="verse-card">
+            <div class="verse-reference">Judges 6:23-24 (NIV)</div>
+            <div class="verse-text">
+                "But the LORD said to him, 'Peace! Do not be afraid. You are not going to die.' So Gideon built an altar to the LORD there and called it The LORD Is Peace. To this day it stands in Ophrah of the Abiezrites."
+            </div>
+        </div>
+        
+        <div class="verse-card">
+            <div class="verse-reference">Romans 8:5-6 (NIV)</div>
+            <div class="verse-text">
+                "Those who live according to the flesh have their minds set on what the flesh desires; but those who live in accordance with the Spirit have their minds set on what the Spirit desires. The mind governed by the flesh is death, but the mind governed by the Spirit is life and peace."
+            </div>
+        </div>
+        
+        <div class="verse-card">
+            <div class="verse-reference">Isaiah 26:3 (NIV)</div>
+            <div class="verse-text">
+                "You will keep in perfect peace those whose minds are steadfast, because they trust in you."
+            </div>
+        </div>
+        
+        <div class="verse-card">
+            <div class="verse-reference">John 16:33 (NIV)</div>
+            <div class="verse-text">
+                "I have told you these things, so that in me you may have peace. In this world you will have trouble. But take heart! I have overcome the world."
+            </div>
+        </div>
+        
+        <div class="verse-card">
+            <div class="verse-reference">Exodus 3:14 (NIV)</div>
+            <div class="verse-text">
+                "God said to Moses, 'I AM WHO I AM. This is what you are to say to the Israelites: "I AM has sent me to you."'"
+            </div>
+        </div>
+    </section>
+
+    <!-- Names of God -->
+    <section class="content-section" id="names">
+        <div class="sermon-content">
+            <h2>Understanding God's Names</h2>
+            <p>God reveals Himself through many names, each unveiling a different aspect of His character. No single name can fully describe Him because He is infinite and we are finite.</p>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">El / Elohim</h4>
+                    <p><strong>Meaning:</strong> God (general term)<br>
+                    <strong>Used:</strong> Over 2,000 times in the Old Testament<br>
+                    <strong>Significance:</strong> The foundational name for deity, used for both the true God and pagan gods</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">Yahweh (YHWH)</h4>
+                    <p><strong>Meaning:</strong> "I AM THAT I AM" — the self-existent one<br>
+                    <strong>Origin:</strong> Exodus 3, God's revelation to Moses<br>
+                    <strong>Significance:</strong> God's personal, covenant name declaring His eternal presence and faithfulness</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">Jehovah</h4>
+                    <p><strong>Origin:</strong> Created in 4th century BC by combining YHWH consonants with Adonai vowels<br>
+                    <strong>Significance:</strong> While not original, it's accurate and meaningful, preserving reverence for God's name</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">Adonai</h4>
+                    <p><strong>Meaning:</strong> Lord, Master<br>
+                    <strong>Usage:</strong> Substituted for YHWH out of reverence<br>
+                    <strong>Significance:</strong> Emphasizes God's sovereignty and our submission</p>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 3rem;">Compound Names Explored in This Series</h3>
+            
+            <div class="verse-card">
+                <div class="verse-reference">Jehovah Shalom — The Lord is Peace</div>
+                <div class="verse-text">
+                    Revealed in Judges 6:24 when Gideon built an altar after God assured him, "Peace! Do not be afraid." This peace (shalom) is deep, abiding contentment and wholeness even in chaos — not merely absence of conflict.
+                </div>
+            </div>
+            
+            <div class="verse-card">
+                <div class="verse-reference">Jehovah Jireh — The Lord Will Provide</div>
+                <div class="verse-text">
+                    Abraham named the place where God provided a ram in place of Isaac (Genesis 22:14). Reveals God as our ultimate provider in impossible situations.
+                </div>
+            </div>
+            
+            <div class="verse-card">
+                <div class="verse-reference">Jehovah Nissi — The Lord Our Banner</div>
+                <div class="verse-text">
+                    Moses built an altar after victory over the Amalekites (Exodus 17:15). God is our rallying point, our victory, our identity in spiritual warfare.
+                </div>
+            </div>
+            
+            <div class="verse-card">
+                <div class="verse-reference">El Roi — The God Who Sees</div>
+                <div class="verse-text">
+                    Hagar named God this in Genesis 16:13 when fleeing Sarah. God sees us in our distress, isolation, and desperation — we are never invisible to Him.
+                </div>
+            </div>
+            
+            <div class="verse-card">
+                <div class="verse-reference">El Shaddai — God Almighty</div>
+                <div class="verse-text">
+                    Used in Genesis 17:1 when God made covenant with Abraham. Emphasizes God's all-sufficiency, power, and ability to accomplish His promises.
+                </div>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, rgba(44, 95, 125, 0.1), rgba(201, 169, 105, 0.1)); padding: 2rem; border-radius: 12px; margin-top: 3rem;">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Why Multiple Names Matter</h3>
+                <p>Each name reveals a layer of God's character that our finite minds can grasp. Together, they paint a fuller picture of who God is:</p>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>Provider when we lack</li>
+                    <li>Peace when we're anxious</li>
+                    <li>Victory when we're defeated</li>
+                    <li>Observer when we're alone</li>
+                    <li>Almighty when we're weak</li>
+                </ul>
+                <p style="margin-top: 1rem; font-style: italic;">As you encounter different seasons of life, different names of God will resonate more deeply. This is by design — He meets us exactly where we are.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application -->
+    <section class="content-section" id="application">
+        <div class="sermon-content">
+            <h2>Living in Jehovah Shalom</h2>
+            <p>How do we move from knowing about God's peace to actually experiencing it in our daily chaos?</p>
+            
+            <h3>1. Embrace Your God-Given Identity</h3>
+            <div class="quote-block">
+                You are what God declares you to be — not what circumstances suggest or what you achieve for yourself.
+            </div>
+            
+            <p><strong>Practical Steps:</strong></p>
+            <ul style="margin-left: 2rem; margin-bottom: 2rem;">
+                <li>Identify the negative tapes playing in your mind (insecurity, unworthiness, comparison)</li>
+                <li>Counter each with what Scripture says: "I am loved" (1 John 3:1), "I am chosen" (1 Peter 2:9), "I am God's workmanship" (Ephesians 2:10)</li>
+                <li>Write these truths down and speak them aloud when anxiety rises</li>
+                <li>Stop striving to create your own dignity through achievement or approval</li>
+            </ul>
+            
+            <h3>2. Shift Your Mindset</h3>
+            <div class="quote-block">
+                "The mind governed by the Spirit is life and peace." — Romans 8:6
+            </div>
+            
+            <p><strong>From Sunday Faith to 24/7 Perspective:</strong></p>
+            <ul style="margin-left: 2rem; margin-bottom: 2rem;">
+                <li><strong>At work:</strong> Do your tasks "heartily as unto the Lord" (Colossians 3:23) — excellence becomes worship, not reputation management</li>
+                <li><strong>In relationships:</strong> See people as image-bearers of God, not as means to your ends</li>
+                <li><strong>Facing decisions:</strong> Ask "What does God think about this?" not just "What do I want?"</li>
+                <li><strong>In crisis:</strong> Remember God is the conductor — He makes music from chaos</li>
+            </ul>
+            
+            <h3>3. Stop the Comparison Trap</h3>
+            <p>Gideon compared his present to Israel's past. We compare ourselves to others' blessings or achievements. Both destroy peace.</p>
+            
+            <p><strong>Instead:</strong></p>
+            <ul style="margin-left: 2rem; margin-bottom: 2rem;">
+                <li>Fix your eyes on Jesus (Hebrews 12:2), not on others' journeys</li>
+                <li>Celebrate others' wins without diminishing your own value</li>
+                <li>Practice gratitude for what God has specifically given you</li>
+                <li>Recognize that your season is unique — God's timing is perfect</li>
+            </ul>
+            
+            <h3>4. Ask for Signs (Sincerely)</h3>
+            <div class="quote-block">
+                If you sincerely want to know God is with you, He will always show you. Every single time.
+            </div>
+            
+            <p><strong>But remember:</strong></p>
+            <ul style="margin-left: 2rem; margin-bottom: 2rem;">
+                <li>God answers on His terms, not ours — don't bargain ("If you give me X, I'll follow")</li>
+                <li>Be open to unexpected answers — He may reveal Himself in ways you didn't anticipate</li>
+                <li>Journal your requests and watch for answers — you'll build faith muscles</li>
+                <li>God's goal is revealing Himself for who He is, not giving goodies</li>
+            </ul>
+            
+            <h3>5. Bring Honest Doubts to God</h3>
+            <p>Gideon's raw honesty didn't offend God. Neither will yours.</p>
+            
+            <p><strong>Practice Authentic Prayer:</strong></p>
+            <ul style="margin-left: 2rem; margin-bottom: 2rem;">
+                <li>"God, where are You in this situation?"</li>
+                <li>"I'm afraid and I don't feel like a mighty warrior"</li>
+                <li>"The world is chaotic — are You still on the throne?"</li>
+                <li>"I want to believe, but I need help with my unbelief"</li>
+            </ul>
+            
+            <h3>6. Expect Trouble, Experience Peace</h3>
+            <div class="quote-block">
+                "In this world you will have trouble. But take heart! I have overcome the world." — John 16:33
+            </div>
+            
+            <p><strong>Reframe your expectations:</strong></p>
+            <ul style="margin-left: 2rem; margin-bottom: 2rem;">
+                <li>Faith doesn't exempt you from hardship — it anchors you through it</li>
+                <li>Shalom isn't circumstances improving; it's your soul being at rest regardless</li>
+                <li>When chaos comes (and it will), remind yourself: "God is still with me, God is still for me"</li>
+                <li>The conductor is on the stage — trust Him to make harmony from discord</li>
+            </ul>
+            
+            <h3 style="margin-top: 3rem;">This Week's Challenge</h3>
+            <div style="background: var(--primary); color: white; padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+                <h4 style="color: var(--accent); margin-bottom: 1rem;">Build Your Altar</h4>
+                <p style="margin-bottom: 1rem;">Gideon built an altar and named it "Jehovah Shalom" to remember God's presence and peace.</p>
+                <p style="margin-bottom: 1rem;"><strong>Your turn:</strong> Create a tangible reminder of God's peace in your life.</p>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>Write "Jehovah Shalom" on a card and place it where you'll see it daily</li>
+                    <li>Set a phone reminder to pause at noon and say, "God is with me"</li>
+                    <li>Journal one instance this week where you chose God's truth over anxious feelings</li>
+                    <li>Share with one person how God has shown you peace in chaos</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reflection -->
+    <section class="content-section" id="reflection">
+        <div class="sermon-content">
+            <h2>Personal Reflection & Prayer</h2>
+            
+            <h3>Questions for Contemplation</h3>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>What label am I living under?</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Like Gideon hiding in a winepress, where are you hiding? What negative identity have you accepted that contradicts what God says about you?</p>
+                        <p style="margin-top: 1rem;"><strong>God's Declaration:</strong> "You are My beloved child, chosen, redeemed, forgiven, empowered."</p>
+                        <p style="margin-top: 1rem;"><strong>Reflection:</strong> What would change in your life if you truly believed God's label for you instead of the world's?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Where am I looking for peace?</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Am I seeking peace through control, achievement, relationships, or possessions? Or am I setting my mind on the Spirit?</p>
+                        <p style="margin-top: 1rem;"><strong>Honest Assessment:</strong></p>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>What circumstance, if changed, would give me peace right now?</li>
+                            <li>What am I believing will satisfy my restlessness?</li>
+                            <li>How often do I turn to God first versus as a last resort?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>What chaos needs a conductor?</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>What area of your life feels like discordant noise right now? Career uncertainty? Relationship tension? Financial stress? Health concerns?</p>
+                        <p style="margin-top: 1rem;"><strong>Invitation:</strong> Visualize God stepping onto the stage of that chaos. What would it look like for Him to bring harmony?</p>
+                        <p style="margin-top: 1rem;"><strong>Prayer:</strong> "God, I invite You to take the conductor's stand in [specific situation]. I trust You to make music from this mess."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Am I comparing or criticizing?</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Gideon compared his present to Israel's past and criticized God's absence. Where am I doing the same?</p>
+                        <p style="margin-top: 1rem;"><strong>Examine:</strong></p>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>Whose life am I comparing mine to?</li>
+                            <li>What past season am I romanticizing?</li>
+                            <li>What am I criticizing God for: His timing? His methods? His silence?</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Shift:</strong> "God, help me fix my eyes on You, not on others. Help me trust Your timing even when I don't understand."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 3rem;">Guided Prayer</h3>
+            <div style="background: linear-gradient(135deg, rgba(44, 95, 125, 0.05), rgba(201, 169, 105, 0.05)); padding: 2.5rem; border-radius: 12px; border-left: 4px solid var(--accent);">
+                <p style="font-style: italic; margin-bottom: 1.5rem;">Pray this aloud, slowly, allowing each phrase to sink into your soul:</p>
+                
+                <p style="margin-bottom: 1rem;"><strong>Jehovah Shalom, Lord of Peace,</strong></p>
+                <p style="margin-bottom: 1rem;">I confess I've sought peace in fleeting things — in control, in achievement, in people's approval. Forgive me for looking to the world for what only You can provide.</p>
+                
+                <p style="margin-bottom: 1rem; margin-top: 2rem;"><strong>I acknowledge:</strong></p>
+                <p style="margin-bottom: 1rem;">You are with me. Not in a distant, general way, but intimately, personally, specifically. You see me. You know me. You are for me.</p>
+                
+                <p style="margin-bottom: 1rem; margin-top: 2rem;"><strong>I receive:</strong></p>
+                <p style="margin-bottom: 1rem;">The identity You've declared over me. I am not defined by my failures, my fears, or my circumstances. I am Your beloved child, mighty in Your strength, equipped by Your Spirit.</p>
+                
+                <p style="margin-bottom: 1rem; margin-top: 2rem;"><strong>I surrender:</strong></p>
+                <p style="margin-bottom: 1rem;">My need to understand everything. My compulsion to compare. My criticism when life doesn't make sense. I trust You are the Conductor, making music from my chaos.</p>
+                
+                <p style="margin-bottom: 1rem; margin-top: 2rem;"><strong>I set my mind:</strong></p>
+                <p style="margin-bottom: 1rem;">On what the Spirit desires, not on the noise of this world. I choose to see my work, relationships, and challenges through Your lens. Transform my perspective.</p>
+                
+                <p style="margin-bottom: 1rem; margin-top: 2rem;"><strong>I ask:</strong></p>
+                <p style="margin-bottom: 1rem;">Show me You are with me this week. I want to know You, not just Your gifts. Reveal Yourself in ways I cannot miss. I'm listening.</p>
+                
+                <p style="margin-top: 2rem;"><strong>Jehovah Shalom, anchor my soul in Your unshakable peace. In Jesus' name, Amen.</strong></p>
+            </div>
+            
+            <h3 style="margin-top: 3rem;">Scripture Memory</h3>
+            <div class="verse-card">
+                <div class="verse-reference">Isaiah 26:3</div>
+                <div class="verse-text">
+                    "You will keep in perfect peace those whose minds are steadfast, because they trust in you."
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px; border: 2px dashed var(--accent);">
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">📝 Journal Prompt</h4>
+                <p style="margin-bottom: 1rem;">Complete this sentence:</p>
+                <p style="font-size: 1.1rem; font-style: italic; color: var(--secondary);">"If I truly believed God is with me and for me, I would stop _____________ and start _____________."</p>
+                <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.8;">Write your answer, then pray it back to God. Ask Him for the courage to make that shift this week.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="badge-short" onclick="toggleBadge()">ℹ️</div>
+        <div class="badge-full" id="badgeFull">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switching
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            
+            content.classList.toggle('show');
+            icon.classList.toggle('rotate');
+        }
+        
+        // Attribution Badge Toggle
+        function toggleBadge() {
+            const badgeFull = document.getElementById('badgeFull');
+            badgeFull.classList.toggle('show');
+        }
+        
+        // Close badge when clicking outside
+        document.addEventListener('click', (e) => {
+            const badge = document.querySelector('.attribution-badge');
+            const badgeFull = document.getElementById('badgeFull');
+            
+            if (!badge.contains(e.target) && badgeFull.classList.contains('show')) {
+                badgeFull.classList.remove('show');
+            }
+        });
+        
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const badgeFull = document.getElementById('badgeFull');
+                if (badgeFull.classList.contains('show')) {
+                    badgeFull.classList.remove('show');
+                }
+            }
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

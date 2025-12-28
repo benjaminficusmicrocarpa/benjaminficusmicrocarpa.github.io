@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jehovah Mekoddishkem: The Lord Who Sanctifies | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1a2332;
+            --deep-blue: #2d3e50;
+            --gold: #d4a574;
+            --sage: #8b9d83;
+            --cream: #f5f1e8;
+            --light-cream: #faf8f3;
+            --text-dark: #2c2c2c;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-dark);
+            background: var(--light-cream);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .hero-section {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--deep-blue) 50%, var(--sage) 100%);
+            animation: gradientShift 20s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(26, 35, 50, 0.5) 100%);
+        }
+
+        .decorative-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.05;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, var(--gold) 35px, var(--gold) 36px);
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .tab-button {
+            position: relative;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button:hover {
+            color: var(--navy);
+            background: rgba(212, 165, 116, 0.05);
+        }
+
+        .tab-button.active {
+            color: var(--navy);
+            border-bottom-color: var(--gold);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--gold), var(--sage));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            opacity: 0;
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.2);
+            z-index: 2;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .accordion-button {
+            width: 100%;
+            text-align: left;
+            padding: 1.25rem 1.5rem;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--navy);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-button:hover {
+            background: var(--cream);
+            border-color: var(--gold);
+        }
+
+        .accordion-button.active {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .accordion-inner {
+            padding: 1.5rem;
+        }
+
+        .tooltip-trigger {
+            cursor: help;
+            border-bottom: 2px dotted var(--gold);
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-content {
+            visibility: hidden;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--navy);
+            color: white;
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            max-width: 300px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .tooltip-trigger:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, rgba(212,165,116,0.05) 0%, rgba(139,157,131,0.05) 100%);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-style: italic;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--gold);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212,165,116,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 0.75rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 999;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .attribution-badge:hover {
+            transform: translateX(-10px);
+        }
+
+        .attribution-badge:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution-badge:hover .attribution-full {
+            display: block;
+        }
+
+        .attribution-full {
+            display: none;
+            position: absolute;
+            right: 100%;
+            margin-right: 1rem;
+            white-space: nowrap;
+            background: var(--navy);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .attribution-full a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .attribution-full a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 60vh;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-marker {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .sticky-tabs {
+                overflow-x: auto;
+            }
+
+            .tabs-container {
+                display: flex;
+                min-width: max-content;
+            }
+
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                width: auto;
+                height: auto;
+                border-radius: 8px;
+                padding: 1rem;
+            }
+
+            .attribution-badge:hover {
+                transform: none;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+                position: relative;
+                right: auto;
+                margin: 0;
+                background: transparent;
+                color: var(--text-dark);
+                padding: 0;
+                box-shadow: none;
+                white-space: normal;
+                text-align: center;
+            }
+
+            .attribution-full a {
+                color: var(--navy);
+            }
+        }
+
+        @media print {
+            .sticky-tabs, .attribution-badge, .btn-primary, .btn-secondary {
+                display: none;
+            }
+            .tab-content {
+                display: block !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .quote-box {
+            background: white;
+            border-left: 4px solid var(--sage);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .emphasis {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        blockquote {
+            font-style: italic;
+            color: var(--text-light);
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--gold);
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="decorative-pattern"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div style="display: inline-block; background: rgba(212,165,116,0.2); padding: 0.5rem 1.5rem; border-radius: 50px; margin-bottom: 1.5rem;">
+                <p style="color: var(--gold); font-weight: 600; font-size: 0.875rem; letter-spacing: 1px;">KNOWN SERIES</p>
+            </div>
+            <h1 style="color: white; font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; font-weight: 700;">
+                Jehovah Mekoddishkem
+            </h1>
+            <p style="color: rgba(255,255,255,0.9); font-size: 1.5rem; margin-bottom: 0.5rem; font-family: 'Crimson Pro', serif;">
+                The Lord Who Sanctifies
+            </p>
+            <p style="color: rgba(255,255,255,0.7); font-size: 1rem; margin-bottom: 2rem;">
+                25 May 2025 | Pastor Brett | Island ECC
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://www.youtube.com/watch?v=F44NvGXBL-4" target="_blank" class="btn-primary">
+                    ▶ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn-secondary">
+                    📋 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs Navigation -->
+    <nav class="sticky-tabs">
+        <div class="tabs-container" style="display: flex; justify-content: center; overflow-x: auto;">
+            <button class="tab-button active" onclick="switchTab('overview')">🏠 Overview</button>
+            <button class="tab-button" onclick="switchTab('sermon')">📖 Main Sermon</button>
+            <button class="tab-button" onclick="switchTab('phases')">🌱 Three Phases</button>
+            <button class="tab-button" onclick="switchTab('verses')">✝️ Bible Verses</button>
+            <button class="tab-button" onclick="switchTab('application')">💡 Application</button>
+        </div>
+    </nav>
+
+    <!-- Tab Content: Overview -->
+    <div id="overview" class="tab-content active">
+        <div class="content-section">
+            <h2 style="font-size: 2.5rem; color: var(--navy); margin-bottom: 1.5rem;">Overview</h2>
+            
+            <div class="quote-box">
+                <p style="font-size: 1.125rem; line-height: 1.8;">
+                    <em>"What comes into our minds when we think about God is the most important thing about us."</em>
+                </p>
+                <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.875rem;">— A.W. Tozer</p>
+            </div>
+
+            <p style="font-size: 1.125rem; margin-bottom: 1.5rem; color: var(--text-dark);">
+                Have you ever observed someone who is a Christian and thought, "They don't really act like one?" Or have you ever been personally disappointed in your own ability to maintain a vibrant faith?
+            </p>
+
+            <p style="margin-bottom: 1.5rem;">
+                In this message, we explore <span class="tooltip-trigger">Jehovah Mekoddishkem<span class="tooltip-content">Hebrew: "The Lord Who Sanctifies" - from the root word meaning "to set apart" or "to make holy"</span></span>, learning how spiritual growth happens and what we can expect from God in that journey.
+            </p>
+
+            <h3 style="font-size: 1.5rem; color: var(--navy); margin: 2rem 0 1rem;">Key Insights 🎯</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 1rem; background: white; border-radius: 8px; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    ✨ <strong>Sanctification is a process</strong> — God changes us gradually, not instantly, providing daily grace for daily challenges
+                </li>
+                <li style="padding: 1rem; background: white; border-radius: 8px; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    🎁 <strong>Justification by faith alone</strong> — We are saved by faith, not works, but sanctification requires our cooperation
+                </li>
+                <li style="padding: 1rem; background: white; border-radius: 8px; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    🌅 <strong>New mercies every morning</strong> — Each day brings both new challenges and new grace from God
+                </li>
+                <li style="padding: 1rem; background: white; border-radius: 8px; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    👑 <strong>God's glory is the goal</strong> — Spiritual growth ultimately brings glory to God, not just personal improvement
+                </li>
+            </ul>
+
+            <h3 style="font-size: 1.5rem; color: var(--navy); margin: 2rem 0 1rem;">Main Scripture Foundation 📜</h3>
+            <div class="verse-card">
+                <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--navy); font-style: normal;">Exodus 31:13</p>
+                <p>"Above all you shall keep my Sabbaths. For this is a sign between me and you throughout your generations, that you may know that I, the Lord, sanctify you."</p>
+            </div>
+
+            <div class="verse-card">
+                <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--navy); font-style: normal;">Lamentations 3:22-23</p>
+                <p>"Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Main Sermon -->
+    <div id="sermon" class="tab-content">
+        <div class="content-section">
+            <h2 style="font-size: 2.5rem; color: var(--navy); margin-bottom: 1.5rem;">Main Sermon</h2>
+
+            <h3 style="font-size: 1.75rem; color: var(--navy); margin: 2rem 0 1rem;">The God Who Sanctifies 🔥</h3>
+            
+            <p style="margin-bottom: 1.5rem;">
+                We're in this series called <strong>Known</strong>, based on the assumption that we all have an inadequate and incomplete understanding of who God is. No matter how long you may have followed after God, read his word, or been in Christian community, the reality is that you are limited, you are finite, and we follow an infinite God.
+            </p>
+
+            <p style="margin-bottom: 1.5rem;">
+                Throughout Scripture, God chose to reveal different aspects of His nature and character. There is not one name that could even come close to describing the totality of who He is. So God will choose a variety of different circumstances to reveal himself by changing his name.
+            </p>
+
+            <blockquote>
+                "Make-a-dish-Kim" — A helpful way to remember "Mekoddishkem"
+            </blockquote>
+
+            <h3 style="font-size: 1.75rem; color: var(--navy); margin: 2rem 0 1rem;">What Does Sanctify Mean? 🤔</h3>
+            
+            <p style="margin-bottom: 1.5rem;">
+                <span class="tooltip-trigger">Sanctify<span class="tooltip-content">To set apart for a special purpose; to make holy. Related words: saint, holy, holiness</span></span> literally means <strong>to set apart</strong>. To be different, to be noticeably different, to be observably unique. Biblically speaking, you and I as followers of Christ are set apart.
+            </p>
+
+            <p style="margin-bottom: 1.5rem;">
+                It's a two-fold understanding:
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li style="margin-bottom: 0.75rem;"><strong>Negatively:</strong> Set apart FROM evil — avoiding what is dark and anti-God</li>
+                <li style="margin-bottom: 0.75rem;"><strong>Positively:</strong> Set apart FOR God and His glory — pursuing Him with new affections and priorities</li>
+            </ul>
+
+            <div class="quote-box">
+                <h4 style="font-size: 1.25rem; color: var(--navy); margin-bottom: 1rem;">The Context: Old Testament Sabbath</h4>
+                <p style="margin-bottom: 1rem;">
+                    God's heart behind the Sabbath rules for Israel wasn't to impose legalistic expectations. By providing them a list of do's and don'ts, it would set them apart — they would be counter-cultural. Their behavior would reflect their belief.
+                </p>
+                <p style="color: var(--text-light); font-size: 0.875rem;">
+                    Note: Breaking Sabbath rules meant death in the Old Testament. Today, Jesus has fulfilled the law, so while we honor the Sabbath, the consequences are different.
+                </p>
+            </div>
+
+            <h3 style="font-size: 1.75rem; color: var(--navy); margin: 2rem 0 1rem;">Justification vs. Sanctification ⚖️</h3>
+            
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin: 2rem 0;">
+                <div style="display: grid; gap: 1.5rem;">
+                    <div>
+                        <h4 style="color: var(--gold); margin-bottom: 0.5rem;">Justification = Faith Alone ✝️</h4>
+                        <p>When you stand before God and He asks, "Why should I let you into heaven?" Your answer is: <strong>Jesus</strong>. Not church attendance, baptism, good deeds — Jesus alone. You are saved by faith in Jesus alone.</p>
+                    </div>
+                    <div style="border-top: 1px solid #e5e7eb; padding-top: 1.5rem;">
+                        <h4 style="color: var(--sage); margin-bottom: 0.5rem;">Sanctification = Faith + Works 🛠️</h4>
+                        <p>Growing in Christ-likeness is a <strong>cooperative effort</strong>. Only God produces growth, but you are called to participate. When you move, believe, pray, trust, shift, change, walk by faith — God takes that and produces growth within you.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.75rem; color: var(--navy); margin: 2rem 0 1rem;">Why Gradual Growth? 🌱</h3>
+            
+            <p style="margin-bottom: 1.5rem;">
+                Pastor Brett shared his personal struggle with worry, despite knowing theologically that Christians shouldn't worry. He keeps a journal to record God's answers to prayer, memorizes Scripture, but still finds himself worrying.
+            </p>
+
+            <blockquote>
+                "I want to not worry. I've pled with God. And yet God chose to keep Paul in that place of humble dependence. An ongoing disappointment, but it was the will of God that he carry that."
+            </blockquote>
+
+            <p style="margin-bottom: 1.5rem;">
+                The answer lies in understanding these two bookend verses:
+            </p>
+
+            <div class="verse-card">
+                <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--navy); font-style: normal;">Matthew 6:34</p>
+                <p>"Do not worry about tomorrow, for tomorrow will worry about itself. Each day has enough trouble of its own."</p>
+                <p style="margin-top: 1rem; color: var(--text-light); font-size: 0.95rem; font-style: normal;">
+                    ☀️ Every day has trouble — this is life. Monday will have Monday trouble. Sunday has Sunday trouble.
+                </p>
+            </div>
+
+            <div class="verse-card">
+                <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--navy); font-style: normal;">Lamentations 3:22-23</p>
+                <p>"Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning."</p>
+                <p style="margin-top: 1rem; color: var(--text-light); font-size: 0.95rem; font-style: normal;">
+                    🌅 But Monday will also have Monday grace. Tuesday stress comes with Tuesday grace. God compensates — giving you what you need when you need it.
+                </p>
+            </div>
+
+            <div class="quote-box" style="background: linear-gradient(135deg, rgba(212,165,116,0.1) 0%, rgba(139,157,131,0.1) 100%);">
+                <p style="font-size: 1.125rem; font-weight: 600; color: var(--navy); margin-bottom: 1rem;">
+                    The Daily Dependence Principle 🍞
+                </p>
+                <p>
+                    Just as you can't pull yesterday's meal up to satisfy today's hunger, your soul needs daily renewal. God gives you what you need when you need it. This is how growth works — daily surrender, daily grace, incremental change that compounds into transformation.
+                </p>
+            </div>
+
+            <h3 style="font-size: 1.75rem; color: var(--navy); margin: 2rem 0 1rem;">Our Inner Self is Being Renewed 💫</h3>
+            
+            <div class="verse-card">
+                <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--navy); font-style: normal;">2 Corinthians 4:16</p>
+                <p>"We do not lose heart. Though our outer self is wasting away, our inner self is being renewed day by day."</p>
+            </div>
+
+            <p style="margin-bottom: 1.5rem;">
+                This is beautiful news: Your outer body is wasting away (no facial cream can prevent this), but your inner self — your soul — is being renewed. It's being made more beautiful, more like Christ. Why not invest in your soul? God tells you what wins in the end.
+            </p>
+        </div>
+    </div>
+
+    <!-- Tab Content: Three Phases -->
+    <div id="phases" class="tab-content">
+        <div class="content-section">
+            <h2 style="font-size: 2.5rem; color: var(--navy); margin-bottom: 1.5rem; text-align: center;">The Three Phases of Sanctification</h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 3rem; font-size: 1.125rem;">
+                Understanding how God transforms us: past, present, and future
+            </p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div style="display: inline-block; background: rgba(212,165,116,0.2); padding: 0.5rem 1rem; border-radius: 50px; margin-bottom: 1rem;">
+                            <span style="color: var(--gold); font-weight: 600; font-size: 0.875rem;">PHASE 1</span>
+                        </div>
+                        <h3 style="font-size: 1.75rem; color: var(--navy); margin-bottom: 1rem;">
+                            Past Sanctification ✨
+                        </h3>
+                        <p style="color: var(--gold); font-weight: 600; margin-bottom: 1rem;">
+                            Positional | Instant
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            This happens in the <strong>moment you become a Christian</strong>. When you trust in Christ, you are transferred from the kingdom of darkness to the kingdom of light. Your eternity changes in the blinking of an eye.
+                        </p>
+                        <div class="verse-card" style="margin-top: 1.5rem;">
+                            <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--navy); font-style: normal;">1 Corinthians 6:11</p>
+                            <p>"That is what some of you were. But you were washed, you were sanctified, you were justified in the name of the Lord Jesus Christ and by the Spirit of our God."</p>
+                        </div>
+                        <div style="background: rgba(212,165,116,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <p style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">💡 Key Point:</p>
+                            <p style="font-size: 0.95rem;">You must understand WHO YOU ARE so that you know WHAT YOU ARE TO DO. Many people get this backwards, thinking they must do things to make God approve of them. But positional sanctification means God already sees you as a saint through Christ's righteousness.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div style="display: inline-block; background: rgba(139,157,131,0.2); padding: 0.5rem 1rem; border-radius: 50px; margin-bottom: 1rem;">
+                            <span style="color: var(--sage); font-weight: 600; font-size: 0.875rem;">PHASE 2</span>
+                        </div>
+                        <h3 style="font-size: 1.75rem; color: var(--navy); margin-bottom: 1rem;">
+                            Present Sanctification 🌱
+                        </h3>
+                        <p style="color: var(--sage); font-weight: 600; margin-bottom: 1rem;">
+                            Progressive | Gradual
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            This is the <strong>ongoing sense of growing in faith</strong>, maturing as a believer. It happens gradually as you walk with God, are around the things of God, and are changed by the Spirit of God.
+                        </p>
+                        <div class="verse-card" style="margin-top: 1.5rem;">
+                            <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--navy); font-style: normal;">2 Corinthians 3:18</p>
+                            <p>"We all, who with unveiled faces contemplate the Lord's glory, are being transformed into his image with ever-increasing glory, which comes from the Lord, who is the Spirit."</p>
+                        </div>
+                        <div style="background: rgba(139,157,131,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <p style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">💡 Key Point:</p>
+                            <p style="font-size: 0.95rem;">God loves you as you are, but He doesn't want you to stay that way. Wherever you are, He's got more. This is an active, proactive faith — you cooperate with God's Spirit to see Christ-likeness formed in you.</p>
+                        </div>
+                        <blockquote style="margin-top: 1.5rem;">
+                            "Let us purify ourselves from everything that contaminates body and spirit, perfecting holiness out of reverence for God." — 2 Corinthians 7:1
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div style="display: inline-block; background: rgba(26,35,50,0.15); padding: 0.5rem 1rem; border-radius: 50px; margin-bottom: 1rem;">
+                            <span style="color: var(--navy); font-weight: 600; font-size: 0.875rem;">PHASE 3</span>
+                        </div>
+                        <h3 style="font-size: 1.75rem; color: var(--navy); margin-bottom: 1rem;">
+                            Future Sanctification 👑
+                        </h3>
+                        <p style="color: var(--navy); font-weight: 600; margin-bottom: 1rem;">
+                            Perfect | Eternal
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            This is what awaits all of us when Christ returns or we go to be with Him. <strong>Perfect sanctification</strong> — the "already, but not yet" fulfilled. A day when all is healed, particularly within you.
+                        </p>
+                        <div class="verse-card" style="margin-top: 1.5rem;">
+                            <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--navy); font-style: normal;">Jude 1:24-25</p>
+                            <p>"To him who is able to keep you from stumbling and to present you before his glorious presence without fault and with great joy... to the only God our Savior be glory, majesty, power and authority, through Jesus Christ our Lord, before all ages, now and forevermore!"</p>
+                        </div>
+                        <div class="verse-card" style="margin-top: 1rem;">
+                            <p style="margin-bottom: 0.5rem; font-weight: 600; color: var(--navy); font-style: normal;">1 John 3:2</p>
+                            <p>"Dear friends, now we are children of God, and what we will be has not yet been made known. But we know that when Christ appears, we shall be like him, for we shall see him as he is."</p>
+                        </div>
+                        <div style="background: rgba(26,35,50,0.05); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <p style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">💡 Key Point:</p>
+                            <p style="font-size: 0.95rem;">Currently we see Him dimly with limited understanding. But we will have new capacities and purified hearts to comprehend the fullness of who God is — without blemish, impurity, sickness, or tears. This is glorification.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-top: 3rem;">
+                <h3 style="font-size: 1.5rem; color: var(--navy); margin-bottom: 1.5rem; text-align: center;">Summary Chart 📊</h3>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: var(--navy); color: white;">
+                                <th style="padding: 1rem; text-align: left; border: 1px solid #e5e7eb;">Phase</th>
+                                <th style="padding: 1rem; text-align: left; border: 1px solid #e5e7eb;">Theological Term</th>
+                                <th style="padding: 1rem; text-align: left; border: 1px solid #e5e7eb;">Timing</th>
+                                <th style="padding: 1rem; text-align: left; border: 1px solid #e5e7eb;">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: rgba(212,165,116,0.1);">
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb; font-weight: 600;">Past</td>
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb;">Justification</td>
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb;">Instant</td>
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb;">Positional standing before God when you trust Christ</td>
+                            </tr>
+                            <tr style="background: rgba(139,157,131,0.1);">
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb; font-weight: 600;">Present</td>
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb;">Sanctification</td>
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb;">Gradual</td>
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb;">Ongoing cooperation with God's Spirit for Christ-likeness</td>
+                            </tr>
+                            <tr style="background: rgba(26,35,50,0.05);">
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb; font-weight: 600;">Future</td>
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb;">Glorification</td>
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb;">Perfect</td>
+                                <td style="padding: 1rem; border: 1px solid #e5e7eb;">Complete perfection when reunited with God in eternity</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Bible Verses -->
+    <div id="verses" class="tab-content">
+        <div class="content-section">
+            <h2 style="font-size: 2.5rem; color: var(--navy); margin-bottom: 1.5rem;">Scripture References</h2>
+            <p style="color: var(--text-light); margin-bottom: 2rem;">All verses are from the NIV translation</p>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button active" onclick="toggleAccordion(this)">
+                    <span>📜 Exodus 31:13 — The Foundation of Sanctification</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content active">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "Above all you shall keep my Sabbaths. For this is a sign between me and you throughout your generations, that you may know that I, the Lord, sanctify you."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            Context: God speaking about the importance of the Sabbath for Israel. This was a sign to set them apart as God's people.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>✝️ 1 Corinthians 1:2 — Called to Be Saints</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "To the church of God in Corinth, to those sanctified in Christ Jesus and called to be his holy people, together with all those everywhere who call on the name of our Lord Jesus Christ—their Lord and ours."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            Paul addresses believers as those who are already sanctified (past tense) in Christ Jesus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>🔥 1 Corinthians 6:11 — Washed, Sanctified, Justified</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "And that is what some of you were. But you were washed, you were sanctified, you were justified in the name of the Lord Jesus Christ and by the Spirit of our God."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            The three-fold transformation: washed (cleansed), sanctified (set apart), justified (declared righteous).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>🌟 2 Corinthians 3:18 — Being Transformed</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "And we all, who with unveiled faces contemplate the Lord's glory, are being transformed into his image with ever-increasing glory, which comes from the Lord, who is the Spirit."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            Progressive sanctification — an ongoing transformation into Christ's image.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>💪 2 Corinthians 7:1 — Perfecting Holiness</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "Therefore, since we have these promises, dear friends, let us purify ourselves from everything that contaminates body and spirit, perfecting holiness out of reverence for God."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            Our responsibility in sanctification — actively pursuing holiness in cooperation with God.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>💫 2 Corinthians 4:16 — Inner Renewal</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "Therefore we do not lose heart. Though outwardly we are wasting away, yet inwardly we are being renewed day by day."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            While our physical bodies decline, our souls are being renewed daily by God.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>👑 Jude 1:24-25 — Presented Without Fault</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "To him who is able to keep you from stumbling and to present you before his glorious presence without fault and with great joy—to the only God our Savior be glory, majesty, power and authority, through Jesus Christ our Lord, before all ages, now and forevermore! Amen."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            Future sanctification — God will present us faultless before His presence.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>✨ 1 John 3:2 — We Shall Be Like Him</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "Dear friends, now we are children of God, and what we will be has not yet been made known. But we know that when Christ appears, we shall be like him, for we shall see him as he is."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            The promise of complete transformation when we see Christ face to face.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>☀️ Matthew 6:34 — Daily Trouble</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "Therefore do not worry about tomorrow, for tomorrow will worry about itself. Each day has enough trouble of its own."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            Jesus acknowledges that every day brings challenges — this is the reality of life.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>🌅 Lamentations 3:22-23 — New Every Morning</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            God's mercies and grace are renewed daily — providing what we need when we need it.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <button class="accordion-button" onclick="toggleAccordion(this)">
+                    <span>🎯 Romans 8:29 — Conformed to His Image</span>
+                    <span style="font-size: 1.25rem;">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p style="font-style: italic; margin-bottom: 1rem;">
+                            "For those God foreknew he also predestined to be conformed to the image of his Son, that he might be the firstborn among many brothers and sisters."
+                        </p>
+                        <p style="color: var(--text-light);">
+                            God's ultimate purpose: making us more like Jesus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Application -->
+    <div id="application" class="tab-content">
+        <div class="content-section">
+            <h2 style="font-size: 2.5rem; color: var(--navy); margin-bottom: 1.5rem;">Application & Reflection</h2>
+
+            <div class="quote-box" style="background: linear-gradient(135deg, rgba(212,165,116,0.15) 0%, rgba(139,157,131,0.15) 100%);">
+                <h3 style="font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem;">🙏 Closing Prayer</h3>
+                <p style="font-style: italic; line-height: 1.8;">
+                    "Father, we're so grateful. We thank you that you didn't just create us and then abandon. You didn't just spin this world into existence and then sit back and watch, but that you are organic, that you are engaged, that you are present. Your spirit dwells within us. And God, you are committed to our change, not because you love us less in our current state, but because ultimately it brings you glory. When we walk with you, trust you, depend upon you. So we relinquish our expectations. We concede that you are all-wise, all-knowing, and that your ways are greater than ours, and we thank you that you are the God who sanctifies. Sanctify us, we pray. Amen."
+                </p>
+            </div>
+
+            <h3 style="font-size: 1.75rem; color: var(--navy); margin: 2rem 0 1rem;">Personal Reflection Questions 💭</h3>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 1.5rem;">
+                <h4 style="color: var(--gold); margin-bottom: 1rem;">1. Where do you see change?</h4>
+                <p style="margin-bottom: 0.75rem;">
+                    Can you look back and identify ways God has changed you? What affections, priorities, or behaviors are different now than before you knew Christ?
+                </p>
+                <p style="color: var(--text-light); font-size: 0.95rem;">
+                    If you cannot see changes in your life, you have every reason to question whether you are truly a Christian, because change is normative in the Christian life.
+                </p>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 1.5rem;">
+                <h4 style="color: var(--gold); margin-bottom: 1rem;">2. Are you cooperating with God?</h4>
+                <p style="margin-bottom: 0.75rem;">
+                    Sanctification is not passive. Are you actively engaging with God through prayer, Scripture, worship, and community? Are you choosing to walk by faith rather than sight?
+                </p>
+                <p style="color: var(--text-light); font-size: 0.95rem;">
+                    Only God produces growth, but He does it when a Christian is activated — when you move, believe, pray, trust, shift, change.
+                </p>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 1.5rem;">
+                <h4 style="color: var(--gold); margin-bottom: 1rem;">3. What are you investing in?</h4>
+                <p style="margin-bottom: 0.75rem;">
+                    Your outer body is wasting away — no amount of effort can prevent this. But your inner self is being renewed. Are you investing more in your soul than in temporary, external things?
+                </p>
+                <blockquote style="margin-top: 1rem;">
+                    "Why not invest in your soul? God tells you what wins in the end."
+                </blockquote>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 1.5rem;">
+                <h4 style="color: var(--gold); margin-bottom: 1rem;">4. How do you respond to slow growth?</h4>
+                <p style="margin-bottom: 0.75rem;">
+                    Are you frustrated that sanctification is gradual rather than instant? Do you understand that God gives daily grace for daily challenges?
+                </p>
+                <p style="color: var(--text-light); font-size: 0.95rem;">
+                    Just as you need to eat daily, your soul needs daily renewal. God's method of gradual transformation keeps us in humble dependence on Him.
+                </p>
+            </div>
+
+            <h3 style="font-size: 1.75rem; color: var(--navy); margin: 2rem 0 1rem;">Practical Next Steps 🚶</h3>
+
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 1.25rem; background: white; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid var(--gold);">
+                    <strong style="color: var(--navy);">📖 Start a Growth Journal</strong>
+                    <p style="margin-top: 0.5rem; color: var(--text-light);">Record God's answers to prayer and areas where you see Him changing you. This helps you "talk yourself off the ledge" when doubts come.</p>
+                </li>
+                <li style="padding: 1.25rem; background: white; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid var(--sage);">
+                    <strong style="color: var(--navy);">💬 Memorize Scripture</strong>
+                    <p style="margin-top: 0.5rem; color: var(--text-light);">Choose verses like 1 Peter 5:7 ("Cast all your anxiety on him because he cares for you") to combat specific struggles.</p>
+                </li>
+                <li style="padding: 1.25rem; background: white; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid var(--gold);">
+                    <strong style="color: var(--navy);">🤝 Find Accountability</strong>
+                    <p style="margin-top: 0.5rem; color: var(--text-light);">Sanctification happens in community. Share your growth journey with trusted believers who can encourage and challenge you.</p>
+                </li>
+                <li style="padding: 1.25rem; background: white; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid var(--sage);">
+                    <strong style="color: var(--navy);">🙏 Practice Daily Surrender</strong>
+                    <p style="margin-top: 0.5rem; color: var(--text-light);">Each morning, consciously yield your day to God. Acknowledge both the challenges you'll face and the grace He provides.</p>
+                </li>
+            </ul>
+
+            <div class="quote-box" style="margin-top: 3rem; background: var(--navy); color: white;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: white;">Remember This 💎</h3>
+                <p style="font-size: 1.125rem; line-height: 1.8;">
+                    You are being sanctified. It's not complete yet, but God is committed to the process. He gives you what you need when you need it. Trust His timing, cooperate with His Spirit, and know that what awaits is perfect, complete transformation in His presence.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <span class="attribution-short">ℹ️</span>
+        <span class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </span>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Show selected content and activate button
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion functionality
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('span:last-child');
+            
+            button.classList.toggle('active');
+            content.classList.toggle('active');
+            
+            // Rotate arrow
+            if (content.classList.contains('active')) {
+                icon.textContent = '▲';
+            } else {
+                icon.textContent = '▼';
+            }
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add animation to timeline items on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Keyboard navigation for accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-nav');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-nav');
+        });
+
+        // Add focus styles for keyboard navigation
+        const style = document.createElement('style');
+        style.textContent = `
+            .keyboard-nav *:focus {
+                outline: 3px solid var(--gold);
+                outline-offset: 2px;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

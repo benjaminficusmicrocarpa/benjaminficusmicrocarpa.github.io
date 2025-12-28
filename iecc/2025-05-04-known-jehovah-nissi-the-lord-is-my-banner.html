@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jehovah Nissi: The Lord is My Banner | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --color-primary: #8B0000;
+            --color-secondary: #DAA520;
+            --color-accent: #2F4F4F;
+            --color-bg: #F5F5DC;
+            --color-text: #1a1a1a;
+            --color-text-muted: #4a4a4a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        /* Header Styles */
+        .hero-header {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+        }
+        
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero-bg.active {
+            opacity: 0.3;
+        }
+        
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(139,0,0,0.6), rgba(47,79,79,0.8));
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 900px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-title {
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            margin-bottom: 1rem;
+            text-shadow: 2px 4px 12px rgba(0,0,0,0.5);
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-meta {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--color-secondary);
+            color: var(--color-accent);
+            box-shadow: 0 4px 14px rgba(218,165,32,0.4);
+        }
+        
+        .btn-primary:hover {
+            background: #FFD700;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(218,165,32,0.6);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tab-container {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            border-bottom: 2px solid #e5e5e5;
+        }
+        
+        .tab-button {
+            flex: 1;
+            min-width: 140px;
+            padding: 1.2rem 1rem;
+            border: none;
+            background: white;
+            color: var(--color-text-muted);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--color-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+        
+        .tab-button:hover {
+            background: #fafafa;
+        }
+        
+        /* Content Sections */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .prose h2 {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin: 2.5rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--color-secondary);
+        }
+        
+        .prose h3 {
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            margin: 2rem 0 1rem;
+        }
+        
+        .prose p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        
+        .prose strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        /* Bible Verse Cards */
+        .verse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .verse-card {
+            background: white;
+            border-left: 4px solid var(--color-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .verse-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+        }
+        
+        .verse-reference {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+        }
+        
+        .verse-text {
+            font-style: italic;
+            color: var(--color-text);
+            line-height: 1.8;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: -2.4rem;
+            top: 0.3rem;
+            width: 20px;
+            height: 20px;
+            background: var(--color-secondary);
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px var(--color-primary);
+        }
+        
+        .timeline-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Quote Box */
+        .quote-box {
+            background: linear-gradient(135deg, rgba(139,0,0,0.05), rgba(218,165,32,0.05));
+            border-left: 5px solid var(--color-secondary);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .quote-box::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--color-secondary);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+        
+        .quote-author {
+            display: block;
+            margin-top: 1rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--color-primary);
+            text-align: right;
+        }
+        
+        /* Accordion */
+        .accordion-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        
+        .accordion-header {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            background: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            transition: background 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: #fafafa;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--color-secondary);
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .accordion-inner {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e5e5;
+        }
+        
+        /* Tooltip */
+        .tooltip-trigger {
+            color: var(--color-primary);
+            text-decoration: underline dotted;
+            cursor: help;
+            position: relative;
+        }
+        
+        .tooltip {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 320px;
+            background: var(--color-accent);
+            color: white;
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .tooltip.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .tooltip-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Attribution Badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+        
+        .badge-short {
+            width: 48px;
+            height: 48px;
+            background: var(--color-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .badge-short:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        
+        .badge-full {
+            display: none;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            font-size: 0.85rem;
+            max-width: 280px;
+            line-height: 1.5;
+        }
+        
+        .badge-full a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .badge-full a:hover {
+            text-decoration: underline;
+        }
+        
+        .attribution-badge:hover .badge-short {
+            display: none;
+        }
+        
+        .attribution-badge:hover .badge-full {
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: 70vh;
+                min-height: 500px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .tab-button {
+                min-width: 120px;
+                padding: 1rem 0.75rem;
+                font-size: 0.85rem;
+            }
+            
+            .content-wrapper {
+                padding: 2rem 1rem;
+            }
+            
+            .timeline {
+                padding-left: 1.5rem;
+            }
+            
+            .tooltip {
+                position: absolute;
+                top: auto;
+                bottom: 100%;
+                right: auto;
+                left: 50%;
+                transform: translateX(-50%);
+                margin-bottom: 10px;
+            }
+            
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                text-align: center;
+            }
+            
+            .badge-short {
+                display: none;
+            }
+            
+            .badge-full {
+                display: block;
+            }
+        }
+        
+        @media print {
+            .tab-nav, .hero-buttons, .attribution-badge, .tooltip { display: none; }
+            .tab-content { display: block !important; }
+            .hero-header { height: auto; min-height: auto; page-break-after: always; }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="hero-bg active" style="background-image: url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1920&q=80')"></div>
+        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1465101162946-4377e57745c3?w=1920&q=80')"></div>
+        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1518098268026-4e89f1a2cd8e?w=1920&q=80')"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">⛰️ Jehovah Nissi: The Lord is My Banner</h1>
+            <p class="hero-meta">
+                04 May 2025 | Pastor Rick | Island ECC
+            </p>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=q1HOSYbBy98" target="_blank" class="btn btn-primary">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    Watch Original Sermon
+                </a>
+                <a href="../index.html" class="btn btn-secondary">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+        <div class="tab-container">
+            <button class="tab-button active" data-tab="overview">📖 Overview</button>
+            <button class="tab-button" data-tab="sermon">✨ Main Sermon</button>
+            <button class="tab-button" data-tab="verses">📜 Bible Verses</button>
+            <button class="tab-button" data-tab="names">🏷️ Names of God</button>
+            <button class="tab-button" data-tab="application">💡 Application</button>
+            <button class="tab-button" data-tab="reflection">🙏 Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Content Sections -->
+    <main class="content-wrapper">
+        <!-- Overview -->
+        <section id="overview" class="tab-content active prose">
+            <h2>Sermon Overview</h2>
+            <p>In this powerful message, Pastor Rick explores the name <strong>Jehovah Nissi</strong> (The Lord is My Banner) revealed during Israel's first military battle in the wilderness. Through the story in Exodus 17, we discover how God provides victory not through human strength or strategy, but through His divine presence and power.</p>
+            
+            <p>The sermon connects an ancient battle memorial to modern faith, showing how raising God's name high—like Moses raising his staff—brings victory in our spiritual battles. Just as the Marines at Iwo Jima raised a flag symbolizing uncommon valor, Moses raised the staff of God, and from that ugliness of war came a glorious moment of divine triumph.</p>
+            
+            <div class="quote-box">
+                Out of the ugliness of war comes some glorious moments.
+                <span class="quote-author">— Pastor Rick</span>
+            </div>
+            
+            <h3>Key Themes</h3>
+            <p><strong>Divine Sovereignty meets Human Responsibility:</strong> God provides victory, but we must participate through obedience and faithful action. The staff had no magic power—it required both divine appointment and obedient use with right internal motives.</p>
+            
+            <p><strong>God's Visibility is Unignorable:</strong> Like a banner raised high on a pole, God makes Himself known. His presence cannot be overlooked, and He actively pursues relationship with each of us.</p>
+            
+            <p><strong>Victory Worth Commemorating:</strong> Moses built an altar immediately after the battle to celebrate, give thanks, and pledge commitment—three essential responses when God grants us victory.</p>
+            
+            <p><strong>From Grumbling to Glory:</strong> The Israelites went from complaining about water to witnessing God's provision in battle. Our grumbling reveals lost confidence in God's goodness, but God remains faithful even when we forget who He is.</p>
+        </section>
+
+        <!-- Main Sermon -->
+        <section id="sermon" class="tab-content prose">
+            <h2>The Story of Two Banners</h2>
+            
+            <h3>A Memorial of Uncommon Valor</h3>
+            <p>The Battle of Iwo Jima in 1945 produced one of the most iconic images in American history: six Marines raising the flag on Mount Suribachi. That photograph, and the bronze statue it inspired, carries an inscription in gold letters: <em>"Uncommon valor was a common virtue"</em> along with the Marine Corps motto <em>"Semper Fidelis"</em> (Always Faithful).</p>
+            
+            <p>Pastor Rick notes three important elements of this memorial: it took more than one person to raise the pole, the pole was raised high so people could see what was on top, and on top was a flag celebrating victory for a country. These same elements appear in our story from Exodus.</p>
+            
+            <h3>Israel's First Battle</h3>
+            <p>The story begins with an unprovoked attack. The Amalekites ambushed the Israelites—a ragtag group of former slaves who had never fought a battle. They had no military experience, no battle plans, no strategy. They traveled with women and children who had been attacked earlier when they fell behind.</p>
+            
+            <div class="quote-box">
+                Moses said to Joshua, "Choose some of our men, and let's go out and fight the Amalek army. Tomorrow I will stand on top of the hill with the staff that got in my hands."
+                <span class="quote-author">— Exodus 17:9</span>
+            </div>
+            
+            <h3>The Staff of God's Presence</h3>
+            <p>Before this battle, there was another critical story. The people were grumbling—actually questioning whether God was with them at all, asking "Is the Lord among us or not?" They were thirsty, impatient, and complaining that Moses had led them out of Egypt to die in the wilderness.</p>
+            
+            <p>God instructed Moses: <em>"Go out in front of the people. Take some of the elders of Israel and take in your hand the staff with which you struck the Nile and go, and I will stand there before you on the rock of Horeb."</em> Moses struck the rock, water flowed miraculously, and God provided what the people needed.</p>
+            
+            <p>This same staff—used to part the Red Sea, to bring plagues on Egypt, to bring water from rock—would now be raised in battle. Pastor Rick demonstrated with a physical staff, explaining that this was no magic wand. The staff was an external and visible symbol that meant nothing unless it was divinely appointed and used obediently with right internal motives.</p>
+            
+            <h3>The Battle on Two Fronts</h3>
+            <p>The narrative focuses not on the fighting itself, but on what happened on the hill. As long as Moses held up his hands with the staff, Israel prevailed. When his hands grew tired and lowered, the Amalekites gained advantage.</p>
+            
+            <div class="quote-box">
+                When Moses' hands grew tired, they took a stone and put it under him, and Aaron and Hur held his hands up, one on one side and one on the other, so that his hands remained steady until sunset.
+                <span class="quote-author">— Exodus 17:12</span>
+            </div>
+            
+            <p>The battle was won because God provided the victory. The presence of God, symbolized by the raised staff, secured triumph. It took teamwork—Aaron and Hur supporting Moses when he grew tired. This represents both divine sovereignty and human responsibility working together.</p>
+            
+            <h3>The Church as Banner-Bearers</h3>
+            <p>Pastor Rick applied this directly to the church: "We need faithful leaders who are God-appointed. But we need those who follow and support, and we call those here volunteers. This is a church built on volunteers who, under God's sovereignty, are responsible for the church and how Christ's name is proclaimed."</p>
+            
+            <p>Whether passing out bulletins, working production, playing music, leading care groups, helping with kids' club—every volunteer is the church, holding up the banner of Christ's name together.</p>
+            
+            <h3>Building an Altar</h3>
+            <p>After the victory, Moses built an altar and called it "Jehovah Nissi"—The Lord is My Banner. This altar symbolized three things:</p>
+            
+            <p><strong>1. Celebration of Victory:</strong> Moses didn't celebrate until there was actual victory. Taking time to celebrate victories in our lives—individually and collectively—is essential. The church does this annually at Easter, celebrating the ultimate victory of the cross and resurrection.</p>
+            
+            <p><strong>2. Thanksgiving for God's Provision:</strong> The altar wasn't about their leadership or participation. It was genuine thanks for what only God could provide. We must pause to thank God when something good happens that He has provided.</p>
+            
+            <p><strong>3. Pledge of Commitment:</strong> An altar represents our pledge to do our part. In baptism, people celebrate victory over what bound them, thank God for what He provided that they couldn't provide themselves, and pledge their commitment to follow Jesus.</p>
+            
+            <div class="quote-box">
+                We should create towers of granite in our memory.
+                <span class="quote-author">— Commentary on Exodus</span>
+            </div>
+            
+            <h3>Towers of Granite in Our Memory</h3>
+            <p>Pastor Rick shared a personal "tower of granite"—a moment when circumstances were so far beyond him that he knew God had provided. As a college junior committed to following Jesus but vowed never to be a pastor like his father, he signed up for summer missions working with children at camps.</p>
+            
+            <p>Upon arrival, the vicar announced that each team member would preach once during the summer—and Rick would start the next night. When Rick refused, the vicar gave him two choices: preach Sunday night, or be put on a plane home that Sunday afternoon.</p>
+            
+            <p>"This is a tower of granite in my life because it pushed me with a godly man not knowing any of my story to push me ahead, and I would not have been a pastor and a preacher if it hadn't been for that moment when everything changed for me."</p>
+            
+            <h3>Understanding Jehovah</h3>
+            <p>Before exploring the full name "Jehovah Nissi," Pastor Rick clarified the confusing history of God's name:</p>
+            
+            <p><strong>Lord (capitalized)</strong> is the mainstream English translation representing Yahweh. The capitals distinguish it from "lord" with lowercase letters.</p>
+            
+            <p><strong>Yahweh</strong> is the proper name of God, made up of four Hebrew consonants (Y-H-W-H), called the tetragrammaton. Many godly Hebrews wouldn't speak this name, possibly because of the commandment not to take the Lord's name in vain.</p>
+            
+            <p><strong>Jehovah</strong> developed over centuries by taking vowels from "Adonai" (meaning Lord) and adding them to the four consonants of Yahweh. When Latinized, Y became J and W became V, giving us "Jehovah."</p>
+            
+            <div class="quote-box">
+                Jehovah is the great miracle maker, the unrivaled wonder worker. No one can be likened to him. He is alone in Wonderland, the creator and worker of true marvels compared with which all other remarkable things are like child's play.
+                <span class="quote-author">— Charles Spurgeon</span>
+            </div>
+            
+            <div class="quote-box">
+                A thousand lives are not equal to the eternal life which abides in Jehovah's smile.
+                <span class="quote-author">— Charles Spurgeon</span>
+            </div>
+            
+            <p>God communicates through new names so we know how He cares about us. He's not distant—He creates life and wants to be with us. He reveals Himself through different names that capture aspects of the one God because He wants intimacy and invites us to know Him.</p>
+            
+            <h3>The Lord is My Banner</h3>
+            <p>The word "banner" (nissi) comes from a Hebrew stem meaning "a sign that can be seen from afar off." Banners were used by tribal groups, cities, and armies to identify themselves, rally troops, and encourage people to do battle.</p>
+            
+            <p>Pastor Rick connected this to sports, showing a Chicago Bulls championship banner. "These are banners that are very visible when you walk in the auditorium. They commemorate greatness, honor special contributions like Michael Jordan's, and attract people to the team. That's what banners do."</p>
+            
+            <p>Four aspects of God are captured in "Jehovah Nissi":</p>
+            
+            <p><strong>1. God's Visibility is Unignorable:</strong> Banners are meant to be seen. God wants us to know He's here. He's available to you, and you can't ignore Him—He'll come after you because He loves you and wants you to have life.</p>
+            
+            <p><strong>2. God's Provision of Victory is Worth Commemorating:</strong> The name came after a battle. There's no doubt it was God's provision, and that victory deserves celebration. When you have victories, remember it's God who provides them.</p>
+            
+            <p><strong>3. God's Presence is to be Celebrated and Honored:</strong> <em>"You have given a banner to those who honor you, that it might be lifted up because of the truth"</em> (Psalm 60). We honor the fact of God's presence in our daily life and serve as representatives of who God is.</p>
+            
+            <p><strong>4. God's Character is Attractional:</strong> Banners function to attract attention, gather people together, and summon them to be seen by others. God has a gravitational pull—a tug for all who would believe. The church loves being attractional because God's character is attractional.</p>
+            
+            <h3>From Old Testament to New Testament</h3>
+            <p>Pastor Rick then showed a video of Island ECC's Kids Club singing "His Banner Over Me Is Love." The children sang about being brought to the banqueting table where God's banner over them is love, being lifted into heavenly places.</p>
+            
+            <p>"That's our kids. They helped me deliver the sermon because I really believe that captures what the altar is about, what the name is about—that the Lord is our banner. We take it from the Old Testament of the Israelites into the New Testament, where we believe in Christ and what Christ gives for us."</p>
+            
+            <div class="quote-box">
+                A new commandment I give you, that you love one another, just as I loved you. You also are to love one another. By this all people will know that you are my disciples if you have love for one another.
+                <span class="quote-author">— Jesus, John 13:34-35</span>
+            </div>
+            
+            <p>This changes or deepens what happened with Moses and the Israelites. The Lord is our banner because we know Jesus Christ, and we are to love the way He loved us. There's tremendous power in that.</p>
+            
+            <h3>Your Battles and God's Banner</h3>
+            <p>Pastor Rick closed with direct application: "I don't know what kind of things you have in your life, but we all have times when we have battles going on. We all have times we grumble about those. We all have struggles, situations that are beyond us."</p>
+            
+            <p>"In the midst of that, please remember the name of God, Jehovah Nissi. If it's a spiritual battle and God wants you to fight it, He will be there for you. He will lead you in that way. Don't take on battles if God's not leading you—not spiritual ones."</p>
+            
+            <p>"For us, the staff that is lifted up is the cross. So much changed about life because of the cross. It is lifted high because we know what happened after that death on the cross—the resurrection. The cross and the empty tomb suffice as the most concrete expression of what God did in Christ, and the resurrection assures us of final victory in our life. Jehovah Nissi."</p>
+            
+            <p>The worship team then led the congregation in worship, singing: <em>"There's no other God like Jehovah. His arm never tires. There's no other God like Jehovah. Call the name, call the name Jehovah. All glory and praise is yours. Call on him, Jehovah Nissi, fight our battles."</em></p>
+        </section>
+
+        <!-- Bible Verses -->
+        <section id="verses" class="tab-content">
+            <h2>Key Scripture Passages</h2>
+            
+            <div class="verse-grid">
+                <div class="verse-card">
+                    <div class="verse-reference">Exodus 17:9</div>
+                    <div class="verse-text">"Moses said to Joshua, 'Choose some of our men and go out to fight the Amalekites. Tomorrow I will stand on top of the hill with the staff of God in my hands.'"</div>
+                </div>
+                
+                <div class="verse-card">
+                    <div class="verse-reference">Exodus 17:5-6</div>
+                    <div class="verse-text">"The LORD answered Moses, 'Go out in front of the people. Take with you some of the elders of Israel and take in your hand the staff with which you struck the Nile, and go. I will stand there before you by the rock at Horeb. Strike the rock, and water will come out of it for the people to drink.'"</div>
+                </div>
+                
+                <div class="verse-card">
+                    <div class="verse-reference">Exodus 17:11-12</div>
+                    <div class="verse-text">"As long as Moses held up his hands, the Israelites were winning, but whenever he lowered his hands, the Amalekites were winning. When Moses' hands grew tired, they took a stone and put it under him and he sat on it. Aaron and Hur held his hands up—one on one side, one on the other—so that his hands remained steady till sunset."</div>
+                </div>
+                
+                <div class="verse-card">
+                    <div class="verse-reference">Exodus 17:13</div>
+                    <div class="verse-text">"So Joshua overcame the Amalekite army with the sword."</div>
+                </div>
+                
+                <div class="verse-card">
+                    <div class="verse-reference">Exodus 17:15</div>
+                    <div class="verse-text">"Moses built an altar and called it The LORD is my Banner."</div>
+                </div>
+                
+                <div class="verse-card">
+                    <div class="verse-reference">Exodus 17:16</div>
+                    <div class="verse-text">"He said, 'Because hands were lifted up against the throne of the LORD, the LORD will be at war against the Amalekites from generation to generation.'"</div>
+                </div>
+                
+                <div class="verse-card">
+                    <div class="verse-reference">James 5:9</div>
+                    <div class="verse-text">"Don't grumble against one another, brothers and sisters, or you will be judged. The Judge is standing at the door!"</div>
+                </div>
+                
+                <div class="verse-card">
+                    <div class="verse-reference">John 13:34-35</div>
+                    <div class="verse-text">"A new command I give you: Love one another. As I have loved you, so you must love one another. By this everyone will know that you are my disciples, if you love one another."</div>
+                </div>
+                
+                <div class="verse-card">
+                    <div class="verse-reference">Psalm 60:4</div>
+                    <div class="verse-text">"But for those who fear you, you have raised a banner to be unfurled against the bow."</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Names of God -->
+        <section id="names" class="tab-content prose">
+            <h2>Understanding God's Name: Jehovah Nissi</h2>
+            
+            <h3>The Journey of God's Name</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-title">YHWH (Yahweh) - The Tetragrammaton</div>
+                    <p>The proper name of God in Hebrew consists of four consonants: Y-H-W-H (יהוה). This is the personal, covenant name of God revealed to Moses at the burning bush (Exodus 3:14-15). Out of reverence, many Jewish people would not pronounce this name aloud.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-title">Adonai - Lord</div>
+                    <p>As a substitute for the unspoken name YHWH, Jewish readers would say "Adonai" (meaning "Lord" or "Master") when they encountered the four consonants in Scripture. This practice preserved the sanctity of God's personal name.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-title">Jehovah - A Medieval Rendering</div>
+                    <p>Over centuries, scribes combined the consonants of YHWH with the vowels of Adonai, creating a hybrid form. When this was Latinized in medieval times, Y became J and W became V, resulting in "Jehovah." While not the original pronunciation, it became a reverent way to refer to God's covenant name.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-title">LORD (Capitalized) - English Translation</div>
+                    <p>In most English Bibles, when you see "LORD" in all capital letters, it represents the Hebrew name YHWH/Yahweh. This distinguishes it from "Lord" (with lowercase letters), which usually translates Adonai or refers to Jesus as Lord in the New Testament.</p>
+                </div>
+            </div>
+            
+            <h3>Jehovah Nissi: The Lord is My Banner</h3>
+            
+            <p><strong>Nissi (נִסִּי)</strong> comes from the Hebrew root meaning "to lift up" or "a sign/standard that can be seen from afar." In ancient times, banners served multiple purposes in military and civic life.</p>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>What is a Banner in Ancient Context?</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>In the ancient Near East, banners were raised high on poles and served several critical functions:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li><strong>Identification:</strong> They marked tribal groups, cities, or armies with distinct symbols or colors</li>
+                            <li><strong>Rally Point:</strong> Soldiers could locate their unit and regroup around the banner during battle</li>
+                            <li><strong>Encouragement:</strong> A raised banner signaled that the battle was still being fought and victory was possible</li>
+                            <li><strong>Victory Declaration:</strong> After battle, the banner celebrated triumph and commemorated the win</li>
+                        </ul>
+                        <p style="margin-top: 1rem;">The banner had to be raised high enough to be seen from a distance, requiring teamwork and strength to keep it elevated throughout the battle—just as Moses needed Aaron and Hur's help.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Four Characteristics of Jehovah Nissi</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p><strong>1. God's Visibility is Unignorable</strong></p>
+                        <p>Like a banner raised high that demands attention, God makes Himself known. He doesn't hide from us but actively reveals His presence. Pastor Rick created the word "unignorable" to capture this—God's availability is so persistent that even when we try to ignore Him, He pursues us because He loves us and wants us to have life.</p>
+                        
+                        <p style="margin-top: 1.5rem;"><strong>2. God's Provision of Victory is Worth Commemorating</strong></p>
+                        <p>This name emerged after God provided victory in battle. Moses didn't build the altar during the fight—he waited until God had delivered triumph. When God gives us victories (spiritual, relational, circumstantial), we should pause to commemorate them, creating "towers of granite in our memory" that we can return to when faith wavers.</p>
+                        
+                        <p style="margin-top: 1.5rem;"><strong>3. God's Presence is to be Celebrated and Honored</strong></p>
+                        <p>The banner represents God's abiding presence with His people. We don't just acknowledge it intellectually—we celebrate it, honor it, and let it shape how we live. As Psalm 60:4 says, God has given a banner to those who honor Him, that it might be lifted up because of truth.</p>
+                        
+                        <p style="margin-top: 1.5rem;"><strong>4. God's Character is Attractional</strong></p>
+                        <p>Banners draw people together, creating a gathering point. God's character has this same gravitational pull. He doesn't coerce or manipulate, but His love, faithfulness, and goodness naturally attract people to Him. The church embraces this by being attractional—helping others see and be drawn to God's character.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Other Names of God in Scripture</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>God reveals different aspects of His character through various names:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li><strong>Jehovah Jireh</strong> - The Lord Will Provide (Genesis 22:14)</li>
+                            <li><strong>Jehovah Rapha</strong> - The Lord Who Heals (Exodus 15:26)</li>
+                            <li><strong>Jehovah Shalom</strong> - The Lord is Peace (Judges 6:24)</li>
+                            <li><strong>Jehovah Raah</strong> - The Lord is My Shepherd (Psalm 23:1)</li>
+                            <li><strong>Jehovah Tsidkenu</strong> - The Lord Our Righteousness (Jeremiah 23:6)</li>
+                            <li><strong>Jehovah Shammah</strong> - The Lord is There (Ezekiel 48:35)</li>
+                        </ul>
+                        <p style="margin-top: 1rem;">Each name invites us into deeper intimacy with God, revealing how He relates to us in specific circumstances and meets particular needs.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quote-box">
+                Jehovah is the great miracle maker, the unrivaled wonder worker. No one can be likened to him. He is alone in Wonderland, the creator and worker of true marvels compared with which all other remarkable things are like child's play.
+                <span class="quote-author">— Charles Spurgeon</span>
+            </div>
+            
+            <div class="quote-box">
+                A thousand lives are not equal to the eternal life which abides in Jehovah's smile. Think of that—Jehovah smiles, and just in the smile of this great Jehovah God, it's like a thousand lives, an eternal life. That's the power of Jehovah's name.
+                <span class="quote-author">— Charles Spurgeon</span>
+            </div>
+        </section>
+
+        <!-- Application -->
+        <section id="application" class="tab-content prose">
+            <h2>Living Under God's Banner</h2>
+            
+            <h3>From Grumbling to Gratitude</h3>
+            <p>Before the battle, the Israelites were <span class="tooltip-trigger" data-tooltip="grumble">grumbling</span> against God and Moses. They questioned whether God was even with them: "Is the LORD among us or not?" (Exodus 17:7). This wasn't simple complaining—it was losing trust in God's character, goodness, and faithfulness.</p>
+            
+            <p>We do this constantly. When life gets difficult, when prayers seem unanswered, when circumstances don't make sense, we <em>gogguzō</em> (the Greek word for grumble that sounds like grumbling). We forget who God is and what He's already done.</p>
+            
+            <p><strong>Application:</strong> Take inventory of your current "grumbling points." Where have you been questioning God's presence, provision, or goodness? Now contrast that with your personal "towers of granite"—times when God's intervention was undeniable. Let those memories rebuild your trust.</p>
+            
+            <h3>Divine Sovereignty and Human Responsibility</h3>
+            <p>The staff Moses raised was divinely appointed—God commanded its use. But it required human obedience to lift it, hold it high, and keep it raised even when tired. Victory came through the partnership of God's power and human participation.</p>
+            
+            <div class="quote-box">
+                The staff is no magic wand. The external and visible symbol means nothing unless it is divinely appointed and the obedient use of the external form is accompanied by internal motives of the heart and spirit.
+                <span class="quote-author">— Biblical Commentary</span>
+            </div>
+            
+            <p>This applies directly to church life. God sovereignly works, but He invites our participation. At Island ECC, volunteers aren't just "helpers"—they're essential partners in God's work. Whether greeting, serving in production, teaching children, leading groups, or playing music, volunteers lift high the banner of Christ's name together.</p>
+            
+            <p><strong>Application:</strong> Where is God inviting you to participate in His work? What "staff" has He placed in your hand that needs to be lifted high? Remember, it often requires teamwork (like Aaron and Hur supporting Moses). Who could support you, and whom could you support?</p>
+            
+            <h3>Building Altars of Remembrance</h3>
+            <p>Moses didn't celebrate during the battle or before victory was secured. He waited until God had delivered triumph, then immediately built an altar. This altar served three purposes:</p>
+            
+            <p><strong>1. Celebration of Victory</strong> - We need to pause and celebrate when God gives victories. The church does this corporately (like Easter), but individuals should do it personally. When has God recently given you a win—spiritual, relational, professional, or personal? Have you stopped to celebrate it?</p>
+            
+            <p><strong>2. Thanksgiving for God's Provision</strong> - The altar directed praise to God, not to human effort. When something good happens, our first response should be gratitude to God. This isn't about denying our role, but recognizing the ultimate source.</p>
+            
+            <p><strong>3. Pledge of Commitment</strong> - Altars represented renewed dedication. Baptism functions this way for Christians—celebrating victory over sin, thanking God for salvation we couldn't earn, and pledging to follow Jesus.</p>
+            
+            <p><strong>Application:</strong> Create your own "altar" this week. This could be journaling about a recent victory and thanking God, sharing a testimony with your small group, or taking a specific step of obedience as a pledge of commitment. Make it concrete and memorable.</p>
+            
+            <h3>Towers of Granite in Your Memory</h3>
+            <p>Pastor Rick shared his personal "tower of granite"—the summer missions experience where a vicar forced him to preach, changing the entire trajectory of his life. These are moments when circumstances are so far beyond us that we know God provided.</p>
+            
+            <p><strong>Application:</strong> Identify and write down your top three "towers of granite"—times when God's intervention was unmistakable. Keep this list somewhere accessible. When you're tempted to grumble or doubt God's presence, return to these memories. They're your personal Ebenezer stones (1 Samuel 7:12), markers of God's faithfulness.</p>
+            
+            <h3>Fighting Spiritual Battles</h3>
+            <p>Not all battles are ours to fight. The Israelites didn't go looking for war—they were attacked. God led them into this battle and provided the strategy. Pastor Rick warns: "If it's a spiritual battle and God wants you to fight it, He will be there for you. He will lead you in that way. Don't take on battles if God's not leading you—not spiritual ones."</p>
+            
+            <p>Many Christians exhaust themselves fighting battles God never asked them to fight. Others avoid battles God has clearly called them to engage. Discernment is crucial.</p>
+            
+            <p><strong>Application:</strong> What battles are you currently fighting? Ask yourself these questions:</p>
+            <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                <li>Did God lead me into this, or did I choose it myself?</li>
+                <li>Am I fighting in my own strength, or am I looking to God's "staff" (His presence and power)?</li>
+                <li>Do I have "Aaron and Hur" support, or am I isolated?</li>
+                <li>Is this battle about God's kingdom, or my ego/preferences?</li>
+            </ul>
+            <p>If you're in a God-ordained battle, keep the banner raised. If you're fighting your own war, consider laying down your weapons.</p>
+            
+            <h3>The Cross as Our Banner</h3>
+            <p>Pastor Rick concluded: "For us, the staff that is lifted up is the cross. The cross and the empty tomb suffice as the most concrete expression of what God did in Christ, and the resurrection assures us of final victory in our life. Jehovah Nissi."</p>
+            
+            <p>In the Old Testament, Moses raised a wooden staff. In the New Testament, God raised His Son on a wooden cross. That cross—followed by the empty tomb—is the ultimate banner of God's victory over sin, death, and Satan.</p>
+            
+            <p><strong>Application:</strong> How does the cross function as your banner this week? When you face temptation, the cross reminds you that sin's power is broken. When you face fear, the resurrection assures you that death has lost its sting. When you feel unworthy, the cross proves God's love for you. Keep the cross raised high in your thoughts, your prayers, and your worship.</p>
+            
+            <h3>His Banner Over Me Is Love</h3>
+            <p>The children's song captures the New Testament reality: Christ's banner over us is love. Jesus gave a new commandment: "Love one another as I have loved you" (John 13:34-35). This is how people will recognize His disciples.</p>
+            
+            <p><strong>Application:</strong> Who in your life needs to experience Christ's love through you this week? Consider these categories:</p>
+            <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                <li><strong>The Grumbler</strong> - Someone who's complaining and questioning God's goodness. Can you point them to a "tower of granite"?</li>
+                <li><strong>The Weary</strong> - Someone whose arms are tired from holding up their "staff." Can you be their Aaron and Hur?</li>
+                <li><strong>The Victory-Needer</strong> - Someone in a battle. Can you pray for them, encourage them, or help them see God's presence?</li>
+                <li><strong>The Celebrator</strong> - Someone who's experienced a win. Can you help them build an "altar" and give God glory?</li>
+            </ul>
+        </section>
+
+        <!-- Reflection -->
+        <section id="reflection" class="tab-content prose">
+            <h2>Personal Reflection & Prayer</h2>
+            
+            <h3>Reflection Questions</h3>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>🤔 When have I grumbled against God?</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>The Israelites asked, "Is the LORD among us or not?" Reflect on times when you've questioned God's presence, goodness, or faithfulness. What circumstances triggered that grumbling? Looking back now, can you see evidence of God's presence that you missed in the moment?</p>
+                        <p style="margin-top: 1rem;"><em>Journal Prompt:</em> Write a letter to God expressing your honest frustrations and questions, then write His response to you based on His character revealed in Scripture.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>⛰️ What are my "towers of granite"?</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Identify 2-3 specific times when circumstances were so far beyond you that you knew God had intervened. These become anchors for your faith when you're tempted to doubt.</p>
+                        <p style="margin-top: 1rem;"><strong>Describe each tower:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>What was the situation?</li>
+                            <li>What did you need that you couldn't provide for yourself?</li>
+                            <li>How did God show up?</li>
+                            <li>What did this reveal about God's character?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>🙌 Where do I need Aaron and Hur support?</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Moses couldn't keep his arms raised alone. He needed support from Aaron and Hur. What battles are you fighting where your arms are getting tired? Who could help hold them up?</p>
+                        <p style="margin-top: 1rem;">Conversely, whose arms could you help hold up right now? Who in your community is weary and needs someone to stand beside them?</p>
+                        <p style="margin-top: 1rem;"><em>Action Step:</em> Reach out to someone this week—either to ask for support or to offer it.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>🏛️ What altar do I need to build?</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>An altar serves three purposes: celebrating victory, giving thanks for God's provision, and pledging commitment. Where do you need to build an altar in your life right now?</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li><strong>Celebrate:</strong> What recent victory has God given you that you haven't properly celebrated?</li>
+                            <li><strong>Thank:</strong> What provision from God have you taken for granted without expressing gratitude?</li>
+                            <li><strong>Pledge:</strong> What commitment is God calling you to make in response to His faithfulness?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>⚔️ What battles should I stop fighting?</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>The Israelites didn't choose this battle—they were attacked, and God gave them strategy for victory. But sometimes we fight battles God never asked us to fight.</p>
+                        <p style="margin-top: 1rem;"><strong>Evaluate your current battles:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Is this battle driven by God's leading or my ego?</li>
+                            <li>Am I fighting in my strength or looking to God's presence for victory?</li>
+                            <li>Is this advancing God's kingdom or my preferences?</li>
+                            <li>Has God given me specific strategy, or am I just swinging wildly?</li>
+                        </ul>
+                        <p style="margin-top: 1rem;">Consider whether you need to lay down weapons in some areas and pick them up in others.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>❤️ How is Christ's banner of love over me?</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>The children sang, "His banner over me is love." The New Testament reveals that Christ's love is the ultimate banner. How are you experiencing that love right now?</p>
+                        <p style="margin-top: 1rem;">Jesus said, "Love one another as I have loved you" (John 13:34-35). Who needs to experience Christ's love through you this week? Be specific.</p>
+                        <p style="margin-top: 1rem;"><em>Challenge:</em> Identify one person and one specific way you'll demonstrate Christ's banner of love to them before this week ends.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Prayer Guide</h3>
+            
+            <div class="quote-box" style="font-style: normal;">
+                <strong>Prayer of Acknowledgment</strong><br><br>
+                Jehovah Nissi, You are my banner. You are visible, powerful, and present. Forgive me for the times I've grumbled and questioned whether You were with me. Thank You for the towers of granite in my memory that prove Your faithfulness. Help me return to those memories when doubt creeps in.
+            </div>
+            
+            <div class="quote-box" style="font-style: normal; margin-top: 1.5rem;">
+                <strong>Prayer for Current Battles</strong><br><br>
+                Lord, I bring before You the battles I'm facing: [name them specifically]. Show me which of these You've called me to fight and which I need to lay down. For the battles You've ordained, give me Your strategy. Raise the banner of Your presence high so I can see it clearly. Send me Aaron and Hur support—people who will stand with me when my arms grow tired.
+            </div>
+            
+            <div class="quote-box" style="font-style: normal; margin-top: 1.5rem;">
+                <strong>Prayer of Gratitude</strong><br><br>
+                Thank You, Father, for victories You've already given. I celebrate [name specific victories] and acknowledge that they came from Your hand, not my strength. I build an altar of remembrance and give You all glory. May these memories sustain me in future battles.
+            </div>
+            
+            <div class="quote-box" style="font-style: normal; margin-top: 1.5rem;">
+                <strong>Prayer of Commitment</strong><br><br>
+                Jesus, Your cross is the ultimate banner raised high. You defeated sin, death, and Satan through Your sacrifice and resurrection. I pledge to live under that banner—to love as You loved, to serve as You served, to sacrifice as You sacrificed. Make me a banner-bearer who points others to Your love. Use me to hold up the arms of the weary and to celebrate with those who've experienced victory.
+            </div>
+            
+            <div class="quote-box" style="font-style: normal; margin-top: 1.5rem;">
+                <strong>Closing Benediction</strong><br><br>
+                Jehovah Nissi, fight my battles. Raise Your banner high over my life. Let Your banner over me be love—love that transforms me, love that flows through me, love that draws others to You. There is no other God like You. Your arm never tires. All glory and praise is Yours. In Jesus' name, Amen.
+            </div>
+            
+            <h3>Scripture Memory</h3>
+            <p style="margin-top: 2rem;">Choose one of these verses to memorize this week:</p>
+            
+            <div class="verse-card" style="margin-top: 1rem;">
+                <div class="verse-reference">Exodus 17:15</div>
+                <div class="verse-text">"Moses built an altar and called it The LORD is my Banner."</div>
+            </div>
+            
+            <div class="verse-card" style="margin-top: 1rem;">
+                <div class="verse-reference">John 13:34-35</div>
+                <div class="verse-text">"A new command I give you: Love one another. As I have loved you, so you must love one another. By this everyone will know that you are my disciples, if you love one another."</div>
+            </div>
+            
+            <div class="verse-card" style="margin-top: 1rem;">
+                <div class="verse-reference">Psalm 60:4</div>
+                <div class="verse-text">"But for those who fear you, you have raised a banner to be unfurled against the bow."</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip">
+        <button class="tooltip-close" onclick="closeTooltip()">×</button>
+        <div id="tooltip-content"></div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="badge-short">ℹ️</div>
+        <div class="badge-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Hero Background Carousel
+        let currentBg = 0;
+        const backgrounds = document.querySelectorAll('.hero-bg');
+        
+        setInterval(() => {
+            backgrounds[currentBg].classList.remove('active');
+            currentBg = (currentBg + 1) % backgrounds.length;
+            backgrounds[currentBg].classList.add('active');
+        }, 5000);
+        
+        // Accordion
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const content = item.querySelector('.accordion-content');
+                const isActive = item.classList.contains('active');
+                
+                // Close all accordions
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                    i.querySelector('.accordion-content').style.maxHeight = null;
+                });
+                
+                // Open clicked accordion if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+        
+        // Tooltip System
+        const tooltipData = {
+            'grumble': 'The Greek word "gogguzō" (γογγύζω) means to murmur, mutter, or grumble in discontent. It goes beyond simple complaining to express deep dissatisfaction and questioning of God\'s goodness or presence. James 5:9 warns believers against this attitude.'
+        };
+        
+        const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
+        const tooltip = document.getElementById('tooltip');
+        const tooltipContent = document.getElementById('tooltip-content');
+        
+        tooltipTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                const key = trigger.dataset.tooltip;
+                tooltipContent.textContent = tooltipData[key] || 'Definition not found';
+                tooltip.classList.add('active');
+            });
+        });
+        
+        function closeTooltip() {
+            tooltip.classList.remove('active');
+        }
+        
+        // Close tooltip when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.tooltip-trigger') && !e.target.closest('.tooltip')) {
+                closeTooltip();
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeTooltip();
+            }
+        });
+    </script>
+</body>
+</html>

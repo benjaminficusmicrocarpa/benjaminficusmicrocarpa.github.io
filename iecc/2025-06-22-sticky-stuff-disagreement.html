@@ -1,371 +1,939 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sticky Stuff: Biblical Conflict Resolution</title>
+    <title>The Sticky Stuff: Disagreement | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e4e4e7;
+            line-height: 1.7;
         }
-        
-        .container {
-            max-width: 900px;
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%);
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.05); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 1000px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ef4444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-meta {
+            font-size: 1.125rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e4e4e7;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(22, 33, 62, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-container {
+            display: flex;
+            overflow-x: auto;
+            max-width: 1400px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            scrollbar-width: none;
+        }
+
+        .tab-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .tab.active {
+            color: #f59e0b;
+            border-bottom-color: #f59e0b;
+        }
+
+        .content-section {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sermon-point {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .sermon-point:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .sermon-point h3 {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            position: relative;
             overflow: hidden;
         }
-        
-        .header {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            text-align: center;
-            padding: 30px;
+
+        .verse-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 6rem;
+            color: rgba(251, 191, 36, 0.1);
+            font-family: 'Crimson Pro', serif;
         }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+
+        .verse-reference {
+            color: #fbbf24;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 1.125rem;
         }
-        
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+
+        .verse-text {
+            color: #cbd5e1;
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
         }
-        
-        .content {
-            padding: 40px;
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
         }
-        
-        .intro {
-            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-            text-align: center;
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #f59e0b 0%, #ef4444 100%);
         }
-        
-        .intro h2 {
-            color: #2d3436;
-            margin-bottom: 15px;
-            font-size: 1.8em;
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
         }
-        
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #f59e0b;
+            border: 3px solid #16213e;
         }
-        
-        .step-card {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+
+        .accordion-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .accordion-header h3 {
+            color: #fbbf24;
+            font-size: 1.25rem;
+        }
+
+        .accordion-icon {
             transition: transform 0.3s ease;
         }
-        
-        .step-card:hover {
-            transform: translateY(-5px);
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
         }
-        
-        .step-number {
-            background: rgba(255,255,255,0.2);
-            width: 40px;
-            height: 40px;
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.open .accordion-content {
+            max-height: 2000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            color: #cbd5e1;
+        }
+
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .badge-short {
+            width: 48px;
+            height: 48px;
+            background: rgba(245, 158, 11, 0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            margin-bottom: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-        
-        .step-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .step-description {
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-        
-        .key-verses {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
-            color: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-        }
-        
-        .key-verses h3 {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.8em;
-        }
-        
-        .verse-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .verse-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            padding: 20px;
+
+        .badge-full {
+            display: none;
+            background: rgba(22, 33, 62, 0.95);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            max-width: 300px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
-        
-        .verse-reference {
-            font-weight: bold;
-            color: #ffe8e8;
-            margin-bottom: 8px;
+
+        .attribution-badge:hover .badge-short {
+            display: none;
         }
-        
-        .verse-text {
-            font-style: italic;
-            line-height: 1.5;
+
+        .attribution-badge:hover .badge-full {
+            display: block;
         }
-        
-        .goal-section {
-            background: linear-gradient(135deg, #00b894, #00a085);
-            color: white;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            margin: 30px 0;
+
+        .badge-full a {
+            color: #fbbf24;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
-        
-        .goal-section h3 {
-            font-size: 2em;
-            margin-bottom: 15px;
+
+        .badge-full a:hover {
+            color: #f59e0b;
         }
-        
-        .goal-text {
-            font-size: 1.2em;
-            line-height: 1.6;
-        }
-        
-        .warning-box {
-            background: linear-gradient(135deg, #e17055, #d63031);
-            color: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 25px 0;
-        }
-        
-        .warning-box h4 {
-            margin-bottom: 15px;
-            font-size: 1.4em;
-        }
-        
-        .warning-list {
-            list-style: none;
-        }
-        
-        .warning-list li {
-            margin: 10px 0;
-            padding-left: 30px;
-            position: relative;
-        }
-        
-        .warning-list li:before {
-            content: "⚠️";
-            position: absolute;
-            left: 0;
-        }
-        
-        .footer {
-            background: linear-gradient(45deg, #2d3436, #636e72);
-            color: white;
-            text-align: center;
-            padding: 25px;
-        }
-        
-        .emoji-large {
-            font-size: 2em;
-            margin: 0 10px;
-        }
-        
+
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
+            .attribution-badge {
+                position: static;
+                margin: 2rem auto;
+                text-align: center;
             }
-            
-            .content {
-                padding: 20px;
+
+            .badge-short {
+                display: none;
             }
-            
-            .steps-grid {
-                grid-template-columns: 1fr;
+
+            .badge-full {
+                display: block;
+                margin: 0 auto;
             }
+
+            .timeline {
+                padding-left: 1.5rem;
+            }
+
+            .timeline-item::before {
+                left: -2rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        blockquote {
+            border-left: 4px solid #ef4444;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #94a3b8;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f59e0b;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            margin-top: 0.5rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(239, 68, 68, 0.2) 100%);
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🤝 Sticky Stuff: Disagreement 🤝</h1>
-            <p>Biblical Wisdom for Resolving Conflict</p>
-        </div>
-        
-        <div class="content">
-            <div class="intro">
-                <h2>🌍 Conflict is Everywhere 🌍</h2>
-                <p><strong>56 current global conflicts involving 92 countries</strong></p>
-                <p>But what keeps you awake isn't global conflict... it's the conflict in your relationships 💔</p>
-                <p><em>Relationships are easy to start 😊 but harder to maintain 😰</em></p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">The Sticky Stuff: Disagreement</h1>
+            <div class="hero-meta">
+                📅 22 June 2025 | 🎙️ Island ECC
             </div>
-            
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1️⃣</div>
-                    <div class="step-title">🚀 Make the First Move</div>
-                    <div class="step-description">
-                        Stop waiting! God made the first move toward you. 💝 Don't let pride keep you in a stalemate. Be the bigger person and take initiative.
-                    </div>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">2️⃣</div>
-                    <div class="step-title">🚫 Reject Your Excuses</div>
-                    <div class="step-description">
-                        Fear leads to hiding 😰 Don't let excuses win! You're secure in God's love, so their rejection might sting but doesn't define you.
-                    </div>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">3️⃣</div>
-                    <div class="step-title">🙏 Recognize Your Lack</div>
-                    <div class="step-description">
-                        We ALL lack wisdom! 🧠 Conflict makes us even fuzzier. Ask God for wisdom - He gives generously without finding fault.
-                    </div>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">4️⃣</div>
-                    <div class="step-title">✅ Consider Acceptance</div>
-                    <div class="step-description">
-                        69% of conflicts are perpetual problems that won't be resolved! 📊 Sometimes you just need to accept and move on - throw away the scorecard.
-                    </div>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">5️⃣</div>
-                    <div class="step-title">🪞 Own Your Part</div>
-                    <div class="step-description">
-                        Even if it's only 1%! 🤏 Start with sincere apology for your part. Quarrels come from desires battling within us, not just other people.
-                    </div>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">6️⃣</div>
-                    <div class="step-title">👂 Listen Beyond Words</div>
-                    <div class="step-description">
-                        We have 2 ears and 1 mouth - use them proportionally! 👂👂👄 Listen to the heart behind the words. Understanding brings grace.
-                    </div>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">7️⃣</div>
-                    <div class="step-title">🤐 Guard Your Mouth</div>
-                    <div class="step-description">
-                        Speak truth in love! 💕 Words can pierce like swords or bring healing. Avoid "WMDs" - Words of Mass Destruction like "always," "never," comparisons.
-                    </div>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">8️⃣</div>
-                    <div class="step-title">🤝 Focus on Reconciliation</div>
-                    <div class="step-description">
-                        Not just resolution! 🎯 You can agree to disagree but still be reconciled. Forgiveness is the means - reconciliation is the goal!
-                    </div>
-                </div>
-            </div>
-            
-            <div class="key-verses">
-                <h3>📖 Key Biblical Foundations 📖</h3>
-                <div class="verse-grid">
-                    <div class="verse-card">
-                        <div class="verse-reference">Matthew 5:9</div>
-                        <div class="verse-text">"Blessed are the peacemakers" 🕊️</div>
-                    </div>
-                    
-                    <div class="verse-card">
-                        <div class="verse-reference">James 1:19</div>
-                        <div class="verse-text">"Quick to listen, slow to speak, slow to anger" 👂💬😤</div>
-                    </div>
-                    
-                    <div class="verse-card">
-                        <div class="verse-reference">Ephesians 4:15</div>
-                        <div class="verse-text">"Speak the truth in love" 💕💬</div>
-                    </div>
-                    
-                    <div class="verse-card">
-                        <div class="verse-reference">Romans 12:18</div>
-                        <div class="verse-text">"As far as it depends on you, live at peace" ☮️</div>
-                    </div>
-                    
-                    <div class="verse-card">
-                        <div class="verse-reference">1 John 4:19</div>
-                        <div class="verse-text">"We love because he first loved us" ❤️</div>
-                    </div>
-                    
-                    <div class="verse-card">
-                        <div class="verse-reference">2 Corinthians 5:18-20</div>
-                        <div class="verse-text">"God gave us the ministry of reconciliation" 🤝</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="warning-box">
-                <h4>🚨 Words of Mass Destruction (WMDs) - Never Use These! 🚨</h4>
-                <ul class="warning-list">
-                    <li>The "D" word in marriage (divorce) 💔</li>
-                    <li>"You're just like your father/mother" 👨‍👩‍👧</li>
-                    <li>"You should be more like your sister/brother" 👫</li>
-                    <li>"You always..." or "You never..." ♾️</li>
-                    <li>Toxic comparisons that wound forever 💀</li>
-                </ul>
-            </div>
-            
-            <div class="goal-section">
-                <h3>🎯 The Ultimate Goal 🎯</h3>
-                <div class="goal-text">
-                    <span class="emoji-large">❌</span> Forgiveness was NOT God's goal <span class="emoji-large">❌</span><br><br>
-                    <span class="emoji-large">✅</span> <strong>RECONCILIATION</strong> was the goal! <span class="emoji-large">✅</span><br><br>
-                    Forgiveness is the means - Reconciliation is the end 🤝<br>
-                    God didn't just forgive us... He brought us NEAR! 💕
-                </div>
-            </div>
-            
-            <div class="intro">
-                <h2>💡 Remember: 69% of conflicts are perpetual! 💡</h2>
-                <p>They're not changing. You're not changing them.</p>
-                <p><strong>So what are you going to do? Get mad every time... or choose acceptance? 🤷‍♂️</strong></p>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=aHddo6XCwN8" class="btn btn-primary" target="_blank">
+                    <span>▶️</span> Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <span>📋</span> View All Sermons
+                </a>
             </div>
         </div>
+    </section>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="tab-container">
+            <div class="tab active" data-tab="overview">📖 Overview</div>
+            <div class="tab" data-tab="sermon">🎤 Main Sermon</div>
+            <div class="tab" data-tab="verses">✝️ Bible Verses</div>
+            <div class="tab" data-tab="application">💡 Application</div>
+            <div class="tab" data-tab="reflection">🙏 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Content Sections -->
+    <div id="overview" class="content-section active">
+        <h2 style="color: #fbbf24; font-size: 2.5rem; margin-bottom: 2rem;">Sermon Overview</h2>
         
-        <div class="footer">
-            <p><strong>🙏 "As much as it depends on you, live at peace with everyone" 🙏</strong></p>
-            <p>We love because He first loved us ❤️</p>
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+            <p style="font-size: 1.125rem; line-height: 1.9; color: #cbd5e1;">
+                Repairing relationships is one of the toughest things we'll do in life. And yet, it's required from us all. Though we love building new relationships, maintaining damaged relationships can be daunting. This sermon explores practical, biblical skills to navigate conflict and pursue reconciliation in our relationships.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+            <div class="stat-card">
+                <div class="stat-number">56</div>
+                <div class="stat-label">Current global conflicts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">92</div>
+                <div class="stat-label">Countries involved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">69%</div>
+                <div class="stat-label">Of conflicts are perpetual</div>
+            </div>
+        </div>
+
+        <h3 style="color: #fbbf24; font-size: 1.75rem; margin-bottom: 1.5rem;">Key Themes</h3>
+        <div style="display: grid; gap: 1rem;">
+            <div class="sermon-point">
+                <h4 style="color: #f59e0b; margin-bottom: 0.5rem;">🕊️ Peacemaking vs. Peacekeeping</h4>
+                <p>Jesus calls us to be peacemakers, not just peacekeepers. Making peace requires initiative, courage, and biblical wisdom.</p>
+            </div>
+            <div class="sermon-point">
+                <h4 style="color: #f59e0b; margin-bottom: 0.5rem;">🎯 Reconciliation Over Resolution</h4>
+                <p>The goal isn't always to solve every disagreement, but to restore relationship and pursue intimacy despite differences.</p>
+            </div>
+            <div class="sermon-point">
+                <h4 style="color: #f59e0b; margin-bottom: 0.5rem;">💪 Practical Skills</h4>
+                <p>Eight biblical strategies for navigating conflict that lead to growth, health, and deeper connection.</p>
+            </div>
         </div>
     </div>
 
+    <div id="sermon" class="content-section">
+        <h2 style="color: #fbbf24; font-size: 2.5rem; margin-bottom: 2rem;">Eight Ways to Resolve Disagreements</h2>
 
-</body></html>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="sermon-point">
+                    <h3>1. Make the First Move 🚀</h3>
+                    <p style="margin-bottom: 1rem;">Stop waiting. Stop keeping score. God made the first move toward you—let that empower you to pursue reconciliation, regardless of who's "more wrong."</p>
+                    <blockquote>
+                        "If you, while going, remember that someone, you have an angst against someone, there's unresolved conflict against someone, leave your offering there. And then first go and be reconciled to them." — Matthew 5
+                    </blockquote>
+                    <p style="color: #94a3b8; margin-top: 1rem;">Reconciliation is more important than worship. Better to work it out in the lobby than sing with bitterness in your heart.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="sermon-point">
+                    <h3>2. Reject Your Excuses 🚫</h3>
+                    <p>We all have excuses: "I tried before," "They're more mature," "It won't work." Don't let fear win. Fear leads to hiding, but you are secure in God's love.</p>
+                    <p style="margin-top: 1rem; color: #cbd5e1;">Their rejection may sting, but it doesn't define you. Pursue peace anyway.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="sermon-point">
+                    <h3>3. Recognize Your Lack 🙏</h3>
+                    <p style="margin-bottom: 1rem;">Conflict makes everything fuzzy. You need God's wisdom to see clearly, to respond well, to know what to say.</p>
+                    <div class="verse-card">
+                        <div class="verse-reference">James 1:5</div>
+                        <div class="verse-text">"If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."</div>
+                    </div>
+                    <p style="color: #94a3b8;">Conflict is a blessing when it increases your dependence on God.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="sermon-point">
+                    <h3>4. Consider Acceptance ✅</h3>
+                    <p style="margin-bottom: 1rem;">Not everything is worth fighting about. Paul addressed the early church's debate about meat sacrificed to idols by calling some matters "disputable."</p>
+                    <div class="verse-card">
+                        <div class="verse-reference">Romans 14:1</div>
+                        <div class="verse-text">"Accept the one whose faith is weak, without quarreling over disputable matters."</div>
+                    </div>
+                    <p style="margin-top: 1rem;"><span class="highlight">John Gottman's research:</span> 69% of marital conflict is perpetual—it won't be resolved. You can fight about it forever, or you can accept.</p>
+                    <p style="margin-top: 1rem; color: #94a3b8; font-style: italic;">This isn't denial or avoidance. It's a decision: I release this. I accept you as you are. Forgiveness granted, reconciliation established.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="sermon-point">
+                    <h3>5. Own Your Part 🪞</h3>
+                    <p style="margin-bottom: 1rem;">Even if you think it's only 1% your fault, own it. Most of us think the problem is 80% them, 20% us. Guess what? They think the same thing.</p>
+                    <div class="verse-card">
+                        <div class="verse-reference">James 4:1</div>
+                        <div class="verse-text">"What causes fights and quarrels among you? Don't they come from your desires that battle within you?"</div>
+                    </div>
+                    <p style="margin-top: 1rem; color: #cbd5e1;">If you are at peace with God, very little can disrupt that. The source of quarrels is often what's happening <em>within</em> us.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="sermon-point">
+                    <h3>6. Listen Beyond the Words 👂</h3>
+                    <p style="margin-bottom: 1rem;">Listen to the heart. Understand the woundedness, the baggage, the context. If we saw what they're carrying, we'd be more gracious.</p>
+                    <div class="verse-card">
+                        <div class="verse-reference">James 1:19</div>
+                        <div class="verse-text">"My dear brothers and sisters, take note of this: Everyone should be quick to listen, slow to speak and slow to become angry."</div>
+                    </div>
+                    <p style="margin-top: 1rem; color: #94a3b8;">Two ears, one mouth—use them proportionately. Listening well automatically makes you slow to speak and slow to anger.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="sermon-point">
+                    <h3>7. Guard Your Mouth 🗣️</h3>
+                    <p style="margin-bottom: 1rem;">Words create. God spoke the world into existence; you're made in His image. Your words have power to wound or heal.</p>
+                    <div class="verse-card">
+                        <div class="verse-reference">Ephesians 4:15</div>
+                        <div class="verse-text">"Speak the truth in love."</div>
+                    </div>
+                    <p style="margin-top: 1rem;"><strong style="color: #f59e0b;">Weapons of Mass Destruction (WMD):</strong></p>
+                    <ul style="list-style-position: inside; color: #cbd5e1; margin-top: 0.5rem;">
+                        <li>The "D" word (divorce) — never use it</li>
+                        <li>Comparisons — "You're just like your dad" or "Be more like your sister"</li>
+                        <li>"Always" and "Never" — rarely true, always destructive</li>
+                    </ul>
+                    <p style="margin-top: 1rem; color: #94a3b8; font-style: italic;">Don't hide behind your personality. "I'm just direct" isn't an excuse. Neither is "I'm just quiet." We all need to speak truth in love.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="sermon-point">
+                    <h3>8. Focus on Reconciliation, Not Resolution 🤝</h3>
+                    <p style="margin-bottom: 1rem;">You may never agree. But you can agree to disagree and still be reconciled.</p>
+                    <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(251, 191, 36, 0.2) 100%); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;">
+                        <p style="font-size: 1.125rem; font-weight: 600; color: #fbbf24;">Forgiveness was not God's goal.</p>
+                        <p style="margin-top: 1rem; color: #cbd5e1;">God sent Jesus to die so we could be forgiven—but that was a means to an end. <strong>Reconciliation</strong> was the goal: intimacy, connection, relationship restored.</p>
+                    </div>
+                    <p style="color: #94a3b8;">Forgiveness can happen from a distance. Reconciliation requires proximity. As much as it depends on you, pursue reconciliation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="verses" class="content-section">
+        <h2 style="color: #fbbf24; font-size: 2.5rem; margin-bottom: 2rem;">Key Bible Verses</h2>
+
+        <div class="verse-card">
+            <div class="verse-reference">Matthew 5:9</div>
+            <div class="verse-text">"Blessed are the peacemakers, for they will be called children of God."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Matthew 5:23-24</div>
+            <div class="verse-text">"Therefore, if you are offering your gift at the altar and there remember that your brother or sister has something against you, leave your gift there in front of the altar. First go and be reconciled to them; then come and offer your gift."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">1 John 4:20</div>
+            <div class="verse-text">"Whoever claims to love God yet hates a brother or sister is a liar. For whoever does not love their brother and sister, whom they have seen, cannot love God, whom they have not seen."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">1 Peter 3:7</div>
+            <div class="verse-text">"Husbands, in the same way be considerate as you live with your wives, and treat them with respect as the weaker partner and as heirs with you of the gracious gift of life, so that nothing will hinder your prayers."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">James 3:18</div>
+            <div class="verse-text">"Peacemakers who sow in peace reap a harvest of righteousness."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">James 1:5</div>
+            <div class="verse-text">"If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Romans 14:1</div>
+            <div class="verse-text">"Accept the one whose faith is weak, without quarreling over disputable matters."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">James 4:1</div>
+            <div class="verse-text">"What causes fights and quarrels among you? Don't they come from your desires that battle within you?"</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Proverbs 13:10</div>
+            <div class="verse-text">"Where there is strife, there is pride, but wisdom is found in those who take advice."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">James 1:19</div>
+            <div class="verse-text">"My dear brothers and sisters, take note of this: Everyone should be quick to listen, slow to speak and slow to become angry."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Ephesians 4:15</div>
+            <div class="verse-text">"Instead, speaking the truth in love, we will grow to become in every respect the mature body of him who is the head, that is, Christ."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Proverbs 12:18</div>
+            <div class="verse-text">"The words of the reckless pierce like swords, but the tongue of the wise brings healing."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Ephesians 4:29</div>
+            <div class="verse-text">"Do not let any unwholesome talk come out of your mouths, but only what is helpful for building others up according to their needs, that it may benefit those who listen."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Romans 12:18</div>
+            <div class="verse-text">"If it is possible, as far as it depends on you, live at peace with everyone."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">2 Corinthians 5:18-20</div>
+            <div class="verse-text">"All this is from God, who reconciled us to himself through Christ and gave us the ministry of reconciliation: that God was reconciling the world to himself in Christ, not counting people's sins against them. And he has committed to us the message of reconciliation. We are therefore Christ's ambassadors, as though God were making his appeal through us. We implore you on Christ's behalf: Be reconciled to God."</div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">1 John 4:19</div>
+            <div class="verse-text">"We love because he first loved us."</div>
+        </div>
+    </div>
+
+    <div id="application" class="content-section">
+        <h2 style="color: #fbbf24; font-size: 2.5rem; margin-bottom: 2rem;">Personal Application</h2>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>🎯 Who Comes to Mind?</h3>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>As you listened to this message, did someone come to mind? A strained relationship? An unresolved conflict?</p>
+                    <p style="margin-top: 1rem;">Don't wait. Make the first move. Stop keeping score. God made the first move toward you—now you go first.</p>
+                    <ul style="list-style-position: inside; margin-top: 1rem; color: #cbd5e1;">
+                        <li>Write the text</li>
+                        <li>Make the call</li>
+                        <li>Send the email</li>
+                        <li>Have the conversation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>🪞 What's Your Conflict Style?</h3>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>How do you typically handle conflict? Are you:</p>
+                    <ul style="list-style-position: inside; margin-top: 1rem; color: #cbd5e1;">
+                        <li><strong>Porcupine:</strong> Defensive, prickly, quick to protect yourself?</li>
+                        <li><strong>Tortoise:</strong> Withdrawn, waiting it out, hoping it passes?</li>
+                        <li><strong>Lizard:</strong> So conflict-averse you'd lose a limb to escape?</li>
+                        <li><strong>Mimic Octopus:</strong> Camouflaging, blending in, avoiding confrontation?</li>
+                        <li><strong>Bonobo Chimp:</strong> Using charm and affection to distract?</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem;">Whatever your default, know that biblical skills can be learned. You can grow in peacemaking.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>💬 Establish WMD Boundaries</h3>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>What are your relational "weapons of mass destruction"—words you should never say?</p>
+                    <p style="margin-top: 1rem;">Have a conversation with your spouse, family members, or close friends. Agree together:</p>
+                    <ul style="list-style-position: inside; margin-top: 1rem; color: #cbd5e1;">
+                        <li>No divorce threats</li>
+                        <li>No toxic comparisons</li>
+                        <li>No "always" or "never" accusations</li>
+                        <li>No name-calling or character attacks</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem; color: #94a3b8;">When you know the boundaries, you protect the relationship even in heated moments.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>✅ Practice Acceptance</h3>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Is there something you've been fighting about for years? Something that's 69% likely to be perpetual?</p>
+                    <p style="margin-top: 1rem;">Maybe it's time to stop fighting and start accepting. Not denial. Not passivity. But a conscious decision:</p>
+                    <blockquote style="margin: 1.5rem 0;">
+                        "I release this. I accept you as you are. This is no longer a source of conflict between us."
+                    </blockquote>
+                    <p style="color: #cbd5e1;">Acceptance paves the way for reconciliation. You stop keeping score. You throw away the scorecard.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>🙏 Ask for Wisdom</h3>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Before your next difficult conversation, pray James 1:5:</p>
+                    <div class="verse-card" style="margin: 1rem 0;">
+                        <div class="verse-text">"If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."</div>
+                    </div>
+                    <p>Ask God:</p>
+                    <ul style="list-style-position: inside; margin-top: 1rem; color: #cbd5e1;">
+                        <li>How should I approach this person?</li>
+                        <li>What should I say?</li>
+                        <li>What should I own?</li>
+                        <li>What should I accept?</li>
+                        <li>Help me listen beyond the words</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reflection" class="content-section">
+        <h2 style="color: #fbbf24; font-size: 2.5rem; margin-bottom: 2rem;">Reflection & Prayer</h2>
+
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+            <h3 style="color: #f59e0b; margin-bottom: 1rem;">Three Consequences of Unresolved Conflict</h3>
+            <div style="margin-top: 1.5rem;">
+                <div class="sermon-point">
+                    <h4>1. Disrupts Your Peace with God 🕊️</h4>
+                    <p>You cannot have peace with God and unresolved conflict with someone else. They're incompatible.</p>
+                </div>
+                <div class="sermon-point">
+                    <h4>2. Disrupts Your Prayer Life 🙏</h4>
+                    <p>Peter says treating people poorly—especially your spouse—will hinder your prayers. God says: Don't pray. Do. Fix it first.</p>
+                </div>
+                <div class="sermon-point">
+                    <h4>3. Disrupts Your Personal Joy 😔</h4>
+                    <p>You reap what you sow. If you sow peace, you reap peace. If you sow bitterness, you reap a harvest of misery.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <h3 style="color: #fbbf24; margin-bottom: 1rem;">The Heart of the Gospel</h3>
+            <p style="font-size: 1.125rem; line-height: 1.9; color: #cbd5e1; margin-bottom: 1rem;">
+                Forgiveness was not God's goal. <strong>Reconciliation</strong> was. God didn't just want to forgive you from a distance—He wanted intimacy, connection, relationship restored.
+            </p>
+            <p style="color: #94a3b8; font-style: italic;">
+                Forgiveness is a means. Reconciliation is the end. Don't stop at "I forgive you." Pursue proximity. Pursue peace. Pursue relationship.
+            </p>
+        </div>
+
+        <div style="margin-top: 3rem; background: rgba(239, 68, 68, 0.1); padding: 2rem; border-radius: 12px; border-left: 4px solid #ef4444;">
+            <h3 style="color: #fbbf24; margin-bottom: 1rem;">Closing Prayer (from the sermon)</h3>
+            <p style="font-style: italic; line-height: 1.9; color: #cbd5e1;">
+                "Father, we are grateful for your love for us in spite of who we are. While we were yet sinners, Christ died for us. It was in our worst state that you deemed us worthy of your sacrificial love. And yes, we are forgiven through Christ, but more importantly, we are reconciled. And so as we live in the afterglow of that beautiful substitutionary death that we have received, God, we pray that that would somehow free us up in our relationships to be a beacon of peace and hope to others, that we could sow a life of making peace with all of those around us. We have access to you. We have resources through your spirit. We have been forgiven much. And so certainly we can do the same. We thank you in the name of Jesus who died for us. Amen."
+            </p>
+        </div>
+
+        <div style="margin-top: 2rem; text-align: center;">
+            <h3 style="color: #fbbf24; margin-bottom: 1rem;">Reflection Questions</h3>
+            <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+                <div class="sermon-point">
+                    <p><strong>1.</strong> What conflict have you been avoiding? What excuse have you been using?</p>
+                </div>
+                <div class="sermon-point">
+                    <p><strong>2.</strong> Which of the 8 strategies do you most need to apply right now?</p>
+                </div>
+                <div class="sermon-point">
+                    <p><strong>3.</strong> What "WMD words" do you need to commit to never saying again?</p>
+                </div>
+                <div class="sermon-point">
+                    <p><strong>4.</strong> Is there a perpetual problem you need to accept rather than keep fighting about?</p>
+                </div>
+                <div class="sermon-point">
+                    <p><strong>5.</strong> Who will you reach out to this week to pursue reconciliation?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="badge-short">ℹ️</div>
+        <div class="badge-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isOpen = item.classList.contains('open');
+                
+                // Close all accordion items
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('open');
+                });
+                
+                // Open clicked item if it wasn't open
+                if (!isOpen) {
+                    item.classList.add('open');
+                }
+            });
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const activeTab = document.querySelector('.tab.active');
+                const allTabs = Array.from(tabs);
+                const currentIndex = allTabs.indexOf(activeTab);
+                
+                let nextIndex;
+                if (e.key === 'ArrowRight') {
+                    nextIndex = (currentIndex + 1) % allTabs.length;
+                } else {
+                    nextIndex = (currentIndex - 1 + allTabs.length) % allTabs.length;
+                }
+                
+                allTabs[nextIndex].click();
+            }
+        });
+    </script>
+</body>
+</html>

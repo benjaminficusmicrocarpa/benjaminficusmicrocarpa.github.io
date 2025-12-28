@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I AM: The Light of the World | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #FFB84D;
+            --amber: #F59E0B;
+            --dark-bg: #0A0A0F;
+            --card-bg: #1A1A24;
+            --text-primary: #F5F5F7;
+            --text-secondary: #A8A8B0;
+            --accent-glow: rgba(255, 184, 77, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            line-height: 1.2;
+        }
+
+        /* Starfield Background */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Glow Effects */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 184, 77, 0.5),
+                         0 0 40px rgba(255, 184, 77, 0.3);
+        }
+
+        .glow-box {
+            box-shadow: 0 0 30px var(--accent-glow),
+                        inset 0 0 20px rgba(255, 184, 77, 0.05);
+        }
+
+        /* Header */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0A0A0F 0%, #1A1A24 50%, #0A0A0F 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 0.6; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--amber) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Sticky Tabs */
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 184, 77, 0.2);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 0;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: var(--gold);
+            background: rgba(255, 184, 77, 0.05);
+        }
+
+        .tab.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+            background: rgba(255, 184, 77, 0.1);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--gold), var(--amber));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 184, 77, 0.2);
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            margin-right: auto;
+            width: calc(50% - 2rem);
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: auto;
+            margin-right: 0;
+            width: calc(50% - 2rem);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            top: 2rem;
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border: 3px solid var(--dark-bg);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-marker {
+            right: -60px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-marker {
+            left: -60px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100% !important;
+                margin-left: 3rem !important;
+                margin-right: 0 !important;
+            }
+
+            .timeline-marker {
+                left: -60px !important;
+            }
+        }
+
+        /* Accordion */
+        .accordion {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 184, 77, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--card-bg);
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 184, 77, 0.05);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 3000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 184, 77, 0.1);
+        }
+
+        /* Bible Verse Cards */
+        .verse-card {
+            background: var(--card-bg);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .verse-reference {
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .verse-text {
+            font-style: italic;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--amber));
+            color: var(--dark-bg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 184, 77, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 184, 77, 0.1);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted var(--gold);
+            color: var(--gold);
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 300px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Attribution Badge */
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .attribution-full {
+            display: none;
+            background: var(--card-bg);
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            padding: 1rem;
+            max-width: 300px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+
+        .attribution a {
+            color: var(--gold);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .attribution {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                text-align: center;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+            }
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .text-gold {
+            color: var(--gold);
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media print {
+            .tabs-container, .attribution, .btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Starfield Background -->
+    <div class="starfield" id="starfield"></div>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
+            <h1 class="glow-text">I AM: The Light of the World</h1>
+            <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                Pastor Kevin | Island ECC
+            </p>
+            <p style="color: var(--gold); margin-bottom: 2rem;">16 March 2025</p>
+            <p style="max-width: 700px; margin: 0 auto 2rem; color: var(--text-secondary);">
+                Jesus says that He is the Light of the world. What does that mean? Why were the Israelites so offended by that statement? The first sermon in our "I AM" series exploring the significance of this statement and what it means for our lives.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://www.youtube.com/watch?v=7gtI_vDt2Ec" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📋 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="tabs-container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab(0)">Overview</button>
+            <button class="tab" onclick="switchTab(1)">Main Sermon</button>
+            <button class="tab" onclick="switchTab(2)">Bible Verses</button>
+            <button class="tab" onclick="switchTab(3)">Application</button>
+            <button class="tab" onclick="switchTab(4)">Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Content Sections -->
+    <main>
+        <!-- Overview -->
+        <section class="content-section active container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; text-align: center;">✨ Overview</h2>
+            
+            <div class="glow-box" style="background: var(--card-bg); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="color: var(--gold); margin-bottom: 1rem;">Context: The Festival of Tabernacles</h3>
+                <p style="margin-bottom: 1rem;">
+                    The <span class="tooltip">Festival of Tabernacles<span class="tooltip-text">A Jewish festival commemorating the 40 years the Israelites wandered in the desert after escaping Egypt, living in temporary shelters (tabernacles) while God's presence dwelt among them in a tent.</span></span> forms the backdrop for Jesus' bold declaration. During this festival, the Israelites erected massive columns in the temple court and lit enormous fires on top, creating a spectacular display of light visible throughout Jerusalem.
+                </p>
+                <p>
+                    These fires commemorated the <span class="tooltip">pillar of fire<span class="tooltip-text">A manifestation of God's presence described in Exodus—a massive cloud by day and fire by night that guided the Israelites through the wilderness and protected them from their enemies.</span></span> that guided their ancestors through the wilderness. On the final day of the festival, when these fires were extinguished, Jesus stood up and declared: "I am the light of the world."
+                </p>
+            </div>
+
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="color: var(--gold); margin-bottom: 1rem;">🎯 Key Theme</h3>
+                <p style="font-size: 1.125rem; line-height: 1.8;">
+                    Jesus claims to be the light that guides us, protects us, and dwells with us. This wasn't just a metaphor—it was a direct claim to divinity that paralleled God's presence in the Old Testament, which is why the religious leaders responded with such hostility.
+                </p>
+            </div>
+
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px;">
+                <h3 style="color: var(--gold); margin-bottom: 1rem;">📖 Main Scripture</h3>
+                <div class="verse-card" style="border-left-color: var(--amber);">
+                    <span class="verse-reference">John 8:12</span>
+                    <p class="verse-text">
+                        "When Jesus spoke again to the people, he said, 'I am the light of the world. Whoever follows me will never walk in darkness, but will have the light of life.'"
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Sermon -->
+        <section class="content-section container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; text-align: center;">🔥 The Three Dimensions of Light</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item glow-box">
+                    <div class="timeline-marker"></div>
+                    <h3 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.75rem;">🧭 The Light Guides Us</h3>
+                    <p style="margin-bottom: 1rem;">
+                        Just as the pillar of fire guided the Israelites through the wilderness, Jesus guides us through life. But this isn't about divine illumination for every minor decision—it's about living according to the principles and teachings Jesus gave us.
+                    </p>
+                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
+                        <li style="margin-bottom: 0.75rem;">• Forgive as you have been forgiven</li>
+                        <li style="margin-bottom: 0.75rem;">• Love your neighbor as yourself</li>
+                        <li style="margin-bottom: 0.75rem;">• To be the greatest, be the servant of all</li>
+                        <li style="margin-bottom: 0.75rem;">• Don't worry about what you'll wear or eat</li>
+                        <li style="margin-bottom: 0.75rem;">• Let your yes be yes and your no be no</li>
+                        <li style="margin-bottom: 0.75rem;">• Be faithful with little, be entrusted with more</li>
+                        <li style="margin-bottom: 0.75rem;">• Don't judge lest you be judged</li>
+                        <li style="margin-bottom: 0.75rem;">• Worship in spirit and truth</li>
+                    </ul>
+                    <p style="margin-top: 1rem; font-style: italic; color: var(--gold);">
+                        "Jesus guides us by giving us a framework for how to live our lives so we can face any and every circumstance."
+                    </p>
+                </div>
+
+                <div class="timeline-item glow-box">
+                    <div class="timeline-marker"></div>
+                    <h3 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.75rem;">🛡️ The Light Protects Us</h3>
+                    <p style="margin-bottom: 1rem;">
+                        When the Egyptian army pursued the Israelites to the Red Sea, the pillar of fire threw the army into confusion and protected God's people. Similarly, Jesus protects us from spiritual forces of evil.
+                    </p>
+                    <div class="verse-card" style="margin: 1.5rem 0;">
+                        <span class="verse-reference">Ephesians 6:12</span>
+                        <p class="verse-text">
+                            "For our struggle is not against flesh and blood, but against the rulers, against the authorities, against the powers of this dark world, and against the spiritual forces of evil in the heavenly realms."
+                        </p>
+                    </div>
+                    <p style="margin-bottom: 1rem;">
+                        There is a very real spiritual battle happening around us. Satan is described as "the prince of this world," free to run amok temporarily. But the light of Jesus protects us by freeing us from our enslavement to sin and evil.
+                    </p>
+                    <div class="verse-card" style="margin: 1.5rem 0;">
+                        <span class="verse-reference">1 Thessalonians 5:5</span>
+                        <p class="verse-text">
+                            "You are all children of the light and children of the day. We do not belong to the night or to the darkness."
+                        </p>
+                    </div>
+                    <p style="font-style: italic; color: var(--gold);">
+                        We don't belong to the darkness. If you don't have the light of Jesus, you belong to evil—shackled to sin, thinking you're free.
+                    </p>
+                </div>
+
+                <div class="timeline-item glow-box">
+                    <div class="timeline-marker"></div>
+                    <h3 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.75rem;">🏠 The Light Dwells With Us</h3>
+                    <p style="margin-bottom: 1rem;">
+                        For 40 years in the wilderness, God's glorious presence filled the tabernacle. Later, when Solomon built the temple, God's presence came and filled it. But when Israel fell into idolatry and disobedience, God's presence departed.
+                    </p>
+                    <div class="verse-card" style="margin: 1.5rem 0;">
+                        <span class="verse-reference">Ezekiel 10:18-19 (excerpt)</span>
+                        <p class="verse-text">
+                            "Then the glory of the Lord departed from over the threshold of the temple... They stopped at the entrance of the east gate of the Lord's house, and the glory of the God of Israel was above them."
+                        </p>
+                    </div>
+                    <p style="margin-bottom: 1rem;">
+                        By Jesus' time, the temple had been rebuilt, but God's presence was absent. For generations, the Jews prayed for God's presence to return. And then Jesus stood up and said, "I am the light. I've come back to dwell with you."
+                    </p>
+                    <p style="font-style: italic; color: var(--gold);">
+                        He wasn't claiming to be a positive influence or a great teacher. He was claiming to be God himself—returned to guide, protect, and dwell among his people.
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; margin-top: 3rem; border: 2px solid var(--amber);">
+                <h3 style="color: var(--amber); margin-bottom: 1rem;">⚠️ The Tragic Response</h3>
+                <p style="margin-bottom: 1rem;">The people of Israel responded to Jesus' claim with:</p>
+                <ol style="color: var(--text-secondary); line-height: 2;">
+                    <li><strong style="color: var(--text-primary);">Judgment:</strong> "Your testimony is not valid" (John 8:13)</li>
+                    <li><strong style="color: var(--text-primary);">Dishonor:</strong> "Aren't we right in saying you are a Samaritan and demon-possessed?" (John 8:48)</li>
+                    <li><strong style="color: var(--text-primary);">Violence:</strong> They picked up stones to kill him (John 8:59)</li>
+                </ol>
+                <p style="margin-top: 1rem; font-size: 1.125rem; color: var(--amber);">
+                    The very light they had been praying would return for centuries had to hide himself and slip away from the temple in darkness. How tragic. How ironic.
+                </p>
+            </div>
+        </section>
+
+        <!-- Bible Verses -->
+        <section class="content-section container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; text-align: center;">📖 Scripture References</h2>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">John 7:2 - The Festival Setting</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p class="verse-text">
+                                "But when the Jewish festival of tabernacles was near, Jesus' brothers said to him, 'Leave Galilee and go to Judea, so that your disciples there may see the works you do. No one who wants to become a public figure acts in secret. Since you are doing these things, show yourself to the world.'"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">John 7:37 & John 8:12 - Jesus' Declaration</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p class="verse-text" style="margin-bottom: 1rem;">
+                                <strong>John 7:37 -</strong> "On the last and greatest day of the festival, Jesus stood and said in a loud voice, 'Let anyone who is thirsty come to me and drink.'"
+                            </p>
+                            <p class="verse-text">
+                                <strong>John 8:12 -</strong> "When Jesus spoke again to the people, he said, 'I am the light of the world. Whoever follows me will never walk in darkness, but will have the light of life.'"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">Exodus - The Pillar of Fire</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p class="verse-text">
+                                "By day the Lord went ahead of them in a pillar of cloud to guide them on their way, and by night in a pillar of fire to give them light, so that they could travel by day or by night."
+                            </p>
+                            <p style="margin-top: 1rem; color: var(--text-secondary);">
+                                This pillar guided the Israelites for 40 years in the wilderness and protected them from their enemies at the Red Sea.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">Genesis 1 - Let There Be Light</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p class="verse-text">
+                                "In the beginning, God said, 'Let there be light.'"
+                            </p>
+                            <p style="margin-top: 1rem; color: var(--text-secondary);">
+                                This light sparked all of creation. Everything we know and love has been created through this light. Light is the very first thing God spoke into existence.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">Ephesians 6:12 - The Spiritual Battle</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p class="verse-text">
+                                "For our struggle is not against flesh and blood, but against the rulers, against the authorities, against the powers of this dark world, and against the spiritual forces of evil in the heavenly realms."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">1 Thessalonians 5:5 - Children of Light</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p class="verse-text">
+                                "You are all children of the light and children of the day. We do not belong to the night or to the darkness."
+                            </p>
+                            <p style="margin-top: 1rem; color: var(--text-secondary);">
+                                Note the word "belong"—if you don't have the light of Jesus, you belong to the darkness. The light of Jesus frees us from enslavement to evil.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">Ezekiel 10:18-19 - God's Presence Departs</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p class="verse-text">
+                                "Then the glory of the Lord departed from over the threshold of the temple and stopped above the cherubim. While I watched, the cherubim spread their wings and rose from the ground, and as they went, the wheels went with them. They stopped at the entrance of the east gate of the Lord's house, and the glory of the God of Israel was above them."
+                            </p>
+                            <p style="margin-top: 1rem; color: var(--text-secondary);">
+                                This prophetic vision showed God's presence leaving the temple before Jerusalem fell to Babylon. When the temple was later rebuilt, God's presence did not return—until Jesus came.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application -->
+        <section class="content-section container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; text-align: center;">🎯 Practical Application</h2>
+            
+            <div style="background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 184, 77, 0.05) 100%); padding: 3rem 2rem; border-radius: 12px; border: 1px solid var(--gold); margin-bottom: 2rem;">
+                <h3 style="color: var(--gold); font-size: 2rem; margin-bottom: 1.5rem; text-align: center;">📸 The Camera Exposure Analogy</h3>
+                <p style="margin-bottom: 1rem; font-size: 1.125rem;">
+                    Pastor Kevin shared a story from his recent vacation to New Zealand's Lake Pukaki, a certified dark sky reserve. When he tried to photograph the Milky Way with his iPhone, he got a disappointing dark image—but the professional photos showed stunning detail.
+                </p>
+                <p style="margin-bottom: 1rem; font-size: 1.125rem;">
+                    The difference? <strong style="color: var(--gold);">Exposure time.</strong> The longer a camera lens is exposed to light, the more light it captures and the clearer the image becomes.
+                </p>
+                <p style="font-size: 1.25rem; color: var(--amber); font-style: italic; text-align: center; margin-top: 2rem;">
+                    "When we have the light of Jesus, we can all stand to increase our exposure to his light."
+                </p>
+            </div>
+
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.5rem;">💡 Why Increase Your Exposure?</h3>
+                <p style="margin-bottom: 1rem;">Greater exposure to God's light brings:</p>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--gold);">🧭</span>
+                        <strong>Greater clarity over his guidance</strong> - Understanding how to apply his principles in your specific circumstances
+                    </li>
+                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--gold);">🛡️</span>
+                        <strong>Greater protection</strong> - From spiritual forces and deceptions you aren't even aware of
+                    </li>
+                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--gold);">🏠</span>
+                        <strong>Greater intimacy in his presence</strong> - Deeper relationship and transformation
+                    </li>
+                    <li style="padding-left: 2rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--gold);">✨</span>
+                        <strong>Greater transformation</strong> - Becoming more like Jesus and more effective for his purposes
+                    </li>
+                </ul>
+            </div>
+
+            <div style="background: var(--amber); color: var(--dark-bg); padding: 3rem 2rem; border-radius: 12px; text-align: center;">
+                <h3 style="font-size: 2rem; margin-bottom: 1.5rem;">⏰ The Challenge: Add One Day</h3>
+                <p style="font-size: 1.25rem; margin-bottom: 2rem; line-height: 1.8;">
+                    Can you increase your exposure to God by <strong>just one day</strong>?
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    <div style="background: rgba(255,255,255,0.9); padding: 1.5rem; border-radius: 8px;">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">If you're exposed to God 1 day/week:</p>
+                        <p>Add a second day—read your Bible, pray, join a care group, serve</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.9); padding: 1.5rem; border-radius: 8px;">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">If you're exposed to God 2 days/week:</p>
+                        <p>Make it three days—add a midweek Bible study or coffee with Christian friends</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.9); padding: 1.5rem; border-radius: 8px;">
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">If you have daily quiet time:</p>
+                        <p>Increase from 30 minutes to 35-40 minutes</p>
+                    </div>
+                </div>
+                <p style="font-size: 1.125rem; margin-top: 2rem; font-style: italic;">
+                    "Are you spending time with God? That's it. Can you increase the amount of time you spend with him? You can. You will grow."
+                </p>
+            </div>
+
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; margin-top: 2rem; border-left: 4px solid var(--gold);">
+                <h3 style="color: var(--gold); margin-bottom: 1rem;">🤔 Honest Self-Reflection</h3>
+                <p style="margin-bottom: 1rem;">Before we judge the Israelites too harshly, Pastor Kevin challenges us to consider: Are we really that different?</p>
+                <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
+                    <li style="margin-bottom: 0.75rem;">• Do we truly want his guidance? (Living by his principles is inconvenient and requires sacrifice)</li>
+                    <li style="margin-bottom: 0.75rem;">• Do we truly want his protection? (We live in a post-truth world that rejects absolute truth)</li>
+                    <li style="margin-bottom: 0.75rem;">• Do we truly want his presence? (His light exposes the ugly parts of ourselves we'd rather ignore)</li>
+                </ul>
+                <p style="margin-top: 1.5rem; font-style: italic; color: var(--gold);">
+                    "Sometimes we overcomplicate spirituality. Are you spending time with God? Can you increase the amount of time you spend with him?"
+                </p>
+            </div>
+        </section>
+
+        <!-- Reflection -->
+        <section class="content-section container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; text-align: center;">💭 Personal Reflection</h2>
+            
+            <div class="accordion">
+                <div class="accordion-item active">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">🔍 The Post-Truth World We Live In</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                Pastor Kevin identified three characteristics of our current post-truth era:
+                            </p>
+                            <ol style="color: var(--text-secondary); line-height: 2; margin-bottom: 1rem;">
+                                <li><strong style="color: var(--text-primary);">Erosion of trust</strong> in traditional sources of truth (news, government, science, Scripture)</li>
+                                <li><strong style="color: var(--text-primary);">Prioritization of emotions</strong> over empirical evidence—if it doesn't feel right, we dismiss it</li>
+                                <li><strong style="color: var(--text-primary);">Widespread false information</strong> that we believe if it resonates with our feelings</li>
+                            </ol>
+                            <p style="color: var(--amber); font-style: italic;">
+                                Result: We don't know right from wrong. We've abandoned Scripture as our source of truth and lean into our emotions, believing falsehoods that resonate with us.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">⚔️ The Unseen Spiritual Battle</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                John Mark Comer's book "Live No Lies" argues that Satan's main weapon is <strong style="color: var(--gold);">lies and deception</strong>. There is a sophisticated infrastructure—an intricate network of demons—working to compel us toward rebellion and unbelief.
+                            </p>
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+                                Can you, by yourself, stand up against this coalition of evil and deception? Pastor Kevin urges us to reconsider.
+                            </p>
+                            <p style="font-style: italic; color: var(--amber);">
+                                "We need his protection to protect us from a spiritual reality and a spiritual battle that we cannot fully comprehend or even perceive."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">🪞 The Mirror We Avoid</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                Pastor Kevin shared a vulnerable story: "When I was in high school, I hated looking at myself in the mirror. I had pointy eyebrows and frequent pimples. Every time I flicked on the light switch and walked into the bathroom, I was confronted with this really gross and disgusting face."
+                            </p>
+                            <p style="margin-bottom: 1rem;">
+                                In the same way, the light of Jesus exposes the real ugliness in us—the muck, dirt, and sin we'd rather not see:
+                            </p>
+                            <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
+                                <li style="margin-bottom: 0.5rem;">• Your anger and pride</li>
+                                <li style="margin-bottom: 0.5rem;">• Your tendency to run from problems</li>
+                                <li style="margin-bottom: 0.5rem;">• Your restless anxiety to control everything</li>
+                                <li style="margin-bottom: 0.5rem;">• Your unhealthy codependency patterns</li>
+                            </ul>
+                            <p style="margin-top: 1.5rem; color: var(--amber); font-style: italic;">
+                                "It's easier to turn a blind eye and move on with your life. But you can only be as efficient and effective as your resemblance to Jesus."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">🌟 Part of God's Grand Plan</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem; font-size: 1.125rem;">
+                                All of us—Christian or not—have a desire for significance and purpose. Here's the beautiful message of the gospel:
+                            </p>
+                            <div style="background: linear-gradient(135deg, rgba(255, 184, 77, 0.1), rgba(245, 158, 11, 0.1)); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--gold); margin: 1.5rem 0;">
+                                <p style="font-size: 1.25rem; color: var(--gold); text-align: center; font-weight: 600;">
+                                    When you follow Jesus, you are brought into God's grand cosmic plan of redemption for the entire world.
+                                </p>
+                            </div>
+                            <p style="margin-bottom: 1rem;">
+                                There's no greater purpose or cause you could ever be part of. But here's the key: <strong style="color: var(--gold);">You can only be as efficient as your resemblance to Jesus.</strong>
+                            </p>
+                            <p style="margin-bottom: 1rem;">
+                                The Christian life after salvation and baptism is dedicated to becoming more and more like Jesus. The best—and necessary—way to do this is to be in his presence, allowing his light to expose the dirt and sin in your heart so you can deal with it and progress.
+                            </p>
+                            <p style="font-style: italic; color: var(--amber);">
+                                "This is what I believe is the most significant ministry of the Holy Spirit. The Holy Spirit dwells within us to surface all these things under the surface that we wouldn't have otherwise touched so that we can be effective for his purposes."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 style="color: var(--gold); font-size: 1.25rem;">🎁 The Simplicity of the Gospel</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div style="background: var(--dark-bg); padding: 2rem; border-radius: 8px; border: 2px solid var(--gold); text-align: center;">
+                                <p style="font-size: 1.125rem; margin-bottom: 1rem;">How do we get the light?</p>
+                                <p style="font-size: 1.5rem; color: var(--gold); font-weight: 600; margin-bottom: 1rem;">
+                                    You follow him. You believe in him. You trust in him.
+                                </p>
+                                <div class="verse-card" style="margin: 1.5rem 0; background: var(--card-bg);">
+                                    <span class="verse-reference">John 8:12</span>
+                                    <p class="verse-text">
+                                        "Whoever follows me will never walk in darkness, but will have the light of life."
+                                    </p>
+                                </div>
+                                <p style="color: var(--text-secondary);">
+                                    Salvation is by grace through faith in Jesus Christ alone. When you do this, you receive the light. That's the beautiful gospel message.
+                                </p>
+                            </div>
+                            <p style="margin-top: 2rem; font-style: italic; color: var(--amber);">
+                                But just because we have his light doesn't mean we allow that light to shine brightly. We can all stand to increase our exposure.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, var(--card-bg), rgba(255, 184, 77, 0.1)); padding: 3rem 2rem; border-radius: 12px; margin-top: 3rem; text-align: center;">
+                <h3 style="color: var(--gold); font-size: 2rem; margin-bottom: 1.5rem;">🙏 Closing Prayer Points</h3>
+                <p style="margin-bottom: 2rem; font-size: 1.125rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    From Pastor Kevin's closing prayer:
+                </p>
+                <div style="display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto;">
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; text-align: left;">
+                        <p style="color: var(--text-secondary);">
+                            "Lord, we confess that there are many times and seasons where we have suppressed your light, walked away from your guidance, sought to defend ourselves without your protection, and tried to transform ourselves to be more like the world instead of more like Jesus."
+                        </p>
+                    </div>
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; text-align: left;">
+                        <p style="color: var(--text-secondary);">
+                            "Your light is so beautiful—so much greater than the Milky Way. And it's so much more personal. You invite us to experience the fullness of your light in this present life. It's available to us."
+                        </p>
+                    </div>
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; text-align: left;">
+                        <p style="color: var(--text-secondary);">
+                            "We want to be a city on a hill, a church shining your light in this city, this nation, and around the world. Help us do that. We want to be part of expanding your kingdom and glory."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Generate Starfield
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                starfield.appendChild(star);
+            }
+        }
+        createStarfield();
+
+        // Tab Switching
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const sections = document.querySelectorAll('.content-section');
+            
+            tabs.forEach((tab, i) => {
+                if (i === index) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            sections.forEach((section, i) => {
+                if (i === index) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all items in the same accordion
+                const accordion = item.parentElement;
+                accordion.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Toggle current item
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                const activeTab = document.querySelector('.tab.active');
+                const prevTab = activeTab.previousElementSibling;
+                if (prevTab) {
+                    const index = Array.from(document.querySelectorAll('.tab')).indexOf(prevTab);
+                    switchTab(index);
+                }
+            } else if (e.key === 'ArrowRight') {
+                const activeTab = document.querySelector('.tab.active');
+                const nextTab = activeTab.nextElementSibling;
+                if (nextTab) {
+                    const index = Array.from(document.querySelectorAll('.tab')).indexOf(nextTab);
+                    switchTab(index);
+                }
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

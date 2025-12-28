@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellspring: No Excuse & As Your Heart Desires | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B4513;
+            --secondary: #D4AF37;
+            --accent: #2F4F4F;
+            --bg-light: #FFF8E7;
+            --text-dark: #1a1a1a;
+            --text-muted: #666;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #ffffff 100%);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .header-bg {
+            position: relative;
+            height: 70vh;
+            min-height: 500px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        }
+
+        .header-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, var(--secondary) 35px, var(--secondary) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--secondary) 35px, var(--secondary) 70px);
+        }
+
+        .header-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.2) 0%, transparent 50%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+
+        .title-main {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            text-shadow: 2px 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .title-accent {
+            color: var(--secondary);
+            display: block;
+        }
+
+        .meta-info {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--primary);
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #FFD700;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-container {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tab-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1.25rem 2rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--secondary);
+        }
+
+        .content-section {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bible-verse {
+            background: linear-gradient(135deg, #f8f5f0 0%, #ffffff 100%);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .verse-text {
+            font-style: italic;
+            color: var(--accent);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        .verse-reference {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .accordion-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary);
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-light);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 3000px;
+            transition: max-height 0.6s ease-in;
+        }
+
+        .accordion-body {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .reflection-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--secondary), var(--primary));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--bg-light);
+        }
+
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .attribution-short:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            font-size: 0.85rem;
+            max-width: 300px;
+            color: var(--text-dark);
+        }
+
+        .attribution-full a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .attribution-badge:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution-badge:hover .attribution-full {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .header-bg {
+                height: 60vh;
+                min-height: 400px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                text-align: center;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .quote-block {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.05) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .quote-author {
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 0.75rem;
+            font-style: normal;
+        }
+
+        .application-box {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 2px dashed var(--secondary);
+        }
+
+        .emoji-bullet {
+            font-size: 1.3rem;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-bg">
+        <div class="header-pattern"></div>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <h1 class="title-main">
+                Wellspring:<br>
+                <span class="title-accent">No Excuse & As Your Heart Desires</span>
+            </h1>
+            <p class="meta-info">
+                09 Feb 2025 | Carrie & Pastor Daniel | Island ECC 🙏
+            </p>
+            <div class="btn-group">
+                <a href="https://www.youtube.com/watch?v=2OXbL8yC9nE" target="_blank" class="btn btn-primary">
+                    <span>▶️</span> Watch Original Sermon
+                </a>
+                <a href="../index.html" class="btn btn-secondary">
+                    <span>📋</span> View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="tab-container">
+            <button class="tab active" onclick="switchTab(event, 'overview')">Overview 🌟</button>
+            <button class="tab" onclick="switchTab(event, 'sermon1')">Message 1: No Excuse 🍽️</button>
+            <button class="tab" onclick="switchTab(event, 'sermon2')">Message 2: Heart's Desires ❤️</button>
+            <button class="tab" onclick="switchTab(event, 'verses')">Bible Verses 📖</button>
+            <button class="tab" onclick="switchTab(event, 'application')">Application 🎯</button>
+            <button class="tab" onclick="switchTab(event, 'reflection')">Reflection 💭</button>
+        </div>
+    </nav>
+
+    <!-- Content Sections -->
+    <main>
+        <!-- Overview -->
+        <section id="overview" class="content-section active">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">Two Messages, One Heart 💝</h2>
+            
+            <div class="reflection-card">
+                <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                    This Chinese New Year sermon explores two profound truths: how we respond to God's invitation and what happens when we truly delight in Him.
+                </p>
+                
+                <div style="display: grid; gap: 1.5rem; margin-top: 2rem;">
+                    <div>
+                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">🍽️ Message 1: The Great Banquet</h3>
+                        <p><strong>Speaker:</strong> Carrie</p>
+                        <p><strong>Key Scripture:</strong> Luke 14:15-24</p>
+                        <p style="margin-top: 0.5rem;">The parable challenges us to examine our excuses and commit to walking toward God's kingdom without hesitation.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">❤️ Message 2: Heart's Desires</h3>
+                        <p><strong>Speaker:</strong> Pastor Daniel</p>
+                        <p><strong>Key Scripture:</strong> Psalm 37:4</p>
+                        <p style="margin-top: 0.5rem;">Discover how delighting in the Lord transforms our desires and leads to true fulfillment and abundance.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bible-verse">
+                <p class="verse-text">
+                    "Delight yourself in the LORD, and he will give you the desires of your heart."
+                </p>
+                <p class="verse-reference">— Psalm 37:4 (NIV)</p>
+            </div>
+        </section>
+
+        <!-- Message 1: No Excuse -->
+        <section id="sermon1" class="content-section">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">The Parable of the Great Banquet 🍽️</h2>
+            
+            <div class="bible-verse">
+                <p class="verse-text">
+                    "A certain man was preparing a great banquet and invited many guests. At the time of the banquet he sent his servant to tell those who had been invited, 'Come, for everything is now ready.' But they all alike began to make excuses..."
+                </p>
+                <p class="verse-reference">— Luke 14:16-18 (NIV)</p>
+            </div>
+
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">Understanding the Context 🏛️</h3>
+            <p style="margin-bottom: 1.5rem;">
+                Jesus told this parable while eating at a Pharisee's house. A guest declared, "Blessed is the one who will eat at the feast in the kingdom of God," assuming his heritage guaranteed entry. Many Jews felt entitled to God's kingdom based on their lineage and law-keeping. Jesus used this parable to reveal who truly enters God's kingdom.
+            </p>
+
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">The Three Excuses 🚫</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Excuse #1: The Field</h4>
+                    <p style="margin-bottom: 0.5rem;"><em>"I have just bought a field and I must go and see it."</em></p>
+                    <p><strong>The Issue:</strong> Possession over Provider. This person valued his property more than the one who gave him the means to acquire it. Sometimes we focus so much on what we have that we forget who provided it.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Excuse #2: The Oxen</h4>
+                    <p style="margin-bottom: 0.5rem;"><em>"I have just bought five yoke of oxen and I'm on my way to try them out."</em></p>
+                    <p><strong>The Issue:</strong> Calculation over Trust. Five yoke (ten oxen) represents significant farming investment. This person couldn't wait even one day to maximize productivity. The problem? Too much calculating, too little trusting. We try to control everything and forget to surrender to God.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Excuse #3: The Marriage</h4>
+                    <p style="margin-bottom: 0.5rem;"><em>"I just got married, so I can't come."</em></p>
+                    <p><strong>The Issue:</strong> Misusing God's Word. While Deuteronomy 24:5 exempts newly married men from war duties for a year, attending a banquet is entirely different. This person twisted Scripture to justify rejection. Sometimes we use biblical values (like loving family) as excuses to avoid what God is calling us to.</p>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p>"It's not like 'I can't come.' It's more like 'I don't want to come.' But I'm giving you a reason so that it convinces myself that it's okay to not go."</p>
+                <p class="quote-author">— Carrie on the nature of excuses</p>
+            </div>
+
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">The Host's Response 🏠</h3>
+            
+            <div class="bible-verse">
+                <p class="verse-text">
+                    "Then the owner of the house became angry and ordered his servant, 'Go out quickly into the streets and alleys of the town and bring in the poor, the crippled, the blind and the lame... Go out to the roads and country lanes and compel them to come in, so that my house will be full. I tell you, not one of those who were invited will get a taste of my banquet.'"
+                </p>
+                <p class="verse-reference">— Luke 14:21-24 (NIV)</p>
+            </div>
+
+            <p style="margin: 1.5rem 0;">
+                The word "compel" stresses God's desire for His house to be filled. He longs for us to join the banquet. The invitation is extended not based on our merit or works—none of us deserve it. Yet God still invites us through Jesus Christ.
+            </p>
+
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">Choosing the Inconvenient Way 🛤️</h3>
+            
+            <div class="application-box">
+                <p style="font-weight: 600; margin-bottom: 1rem;">💡 A Practical Starting Point:</p>
+                <p style="margin-bottom: 1rem;">Usually, the inconvenient option will bring you closer to Christ. Here are everyday examples:</p>
+                
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 1rem;">
+                        <span class="emoji-bullet">🤳</span><strong>In the elevator queue:</strong> Instead of scrolling Instagram, talk to the person next to you. Care for them. Pray for them.
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <span class="emoji-bullet">✝️</span><strong>When complimented:</strong> If someone admires your cross earrings, don't just say "thank you." Explain what the cross means and invite them to explore Christianity.
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <span class="emoji-bullet">🙏</span><strong>At family gatherings:</strong> Choose to share your faith even when it feels uncomfortable.
+                    </li>
+                </ul>
+                
+                <p style="margin-top: 1.5rem; font-style: italic; color: var(--primary);">
+                    "It is the cumulative impact of all the small decisions in our daily life that can remove our excuses and shape us to be more like Christ and move us closer to God."
+                </p>
+            </div>
+
+            <div class="bible-verse">
+                <p class="verse-text">
+                    "Whoever does not carry their cross and follow me cannot be my disciple... Those of you who do not give up everything you have cannot be my disciples."
+                </p>
+                <p class="verse-reference">— Luke 14:27, 33 (NIV)</p>
+            </div>
+        </section>
+
+        <!-- Message 2: Heart's Desires -->
+        <section id="sermon2" class="content-section">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">Delight in the Lord ❤️</h2>
+            
+            <div class="bible-verse">
+                <p class="verse-text">
+                    "Delight yourself in the LORD, and he will give you the desires of your heart."
+                </p>
+                <p class="verse-reference">— Psalm 37:4 (NIV)</p>
+            </div>
+
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">Not a Transaction 💰</h3>
+            
+            <p style="margin-bottom: 1.5rem;">
+                This verse is often misinterpreted as a transaction: "If I'm good enough, God will give me what I want." But delighting in the Lord is not about paying dues to get blessings. It's not checking off religious activities to earn God's favor.
+            </p>
+
+            <div class="quote-block">
+                <p>"Sometimes we treat our faith like a to-do list. We go through rituals every week, but we don't have an intimate relationship with God. This is called religiosity—it becomes superficial based on traditions, part of our weekly routine, to a point that you start believing you need to do all these religious activities and stay good to be on God's side."</p>
+                <p class="quote-author">— Pastor Daniel</p>
+            </div>
+
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">What "Delight" Really Means 🎵</h3>
+            
+            <p style="margin-bottom: 1.5rem;">
+                The Hebrew word is <em>anag</em>—a command to <strong>enjoy</strong>, to <strong>take pleasure</strong> in God. Imagine spending time with the person you love most, a friend you deeply respect, someone you're in awe of—except this is God who loves you no matter what.
+            </p>
+
+            <div class="quote-block">
+                <p>"When we enjoy God, not just his gifts, but God himself, then the desires of our heart are shaped, defined, and created in accord with our delight in him."</p>
+                <p class="quote-author">— John Piper</p>
+            </div>
+
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">How to Delight in God 🌈</h3>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🌅 Marvel at His Creation</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Do you enjoy God? Do you marvel at His creation?</p>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                            <li>When you gaze upon the sky's ever-changing masterpiece</li>
+                            <li>The beauty of a butterfly alighting on a flower</li>
+                            <li>The trees as you walk through Victoria Park</li>
+                            <li>Swimming in warm ocean waters, feeling sand beneath your feet</li>
+                            <li>A simple cool glass of water on a hot Hong Kong summer day</li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-style: italic;">Does it bring a twinkle to your eye or a smile to your face?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🤝 Experience His Grace in Relationships</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Enjoying God includes:</p>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                            <li>Being thankful when people are kind and loving to you</li>
+                            <li>Choosing to forgive the unforgivable because you understand the depth of God's forgiveness to you</li>
+                            <li>Finding joy in praise, worship, and fellowship</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📖 Immerse Yourself in His Word</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>Enjoying God is about:</p>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                            <li>Immersing yourself in His Word</li>
+                            <li>Getting to know Him a little more each day</li>
+                            <li>Trusting in His plans for your life</li>
+                            <li>Finding deep delight in His presence, no matter what life brings</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">Three Practical Ways to Delight 🎯</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">1️⃣ Say Hello and Good Night</h4>
+                    <div class="bible-verse" style="margin-top: 1rem;">
+                        <p class="verse-text">
+                            "You should not begin to pray for all that you want until you realize that in God you have all that you need."
+                        </p>
+                        <p class="verse-reference">— Tim Keller, Prayer: Experiencing Awe and Intimacy with God</p>
+                    </div>
+                    <div class="bible-verse" style="margin-top: 1rem;">
+                        <p class="verse-text">
+                            "But seek first his kingdom and his righteousness, and all these things will be given to you as well."
+                        </p>
+                        <p class="verse-reference">— Matthew 6:33 (NIV)</p>
+                    </div>
+                    <p style="margin-top: 1rem;"><strong>Practice:</strong> Use a morning devotional app (Pastor Daniel uses one that plays Scripture with background music). Begin the day with God's Word before checking anything else. End the day the same way—bookend your day with God.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">2️⃣ Say No to Something</h4>
+                    <p><strong>Fasting:</strong> Giving up something important (like food) to focus on God. It's turning down life's volume to hear Him better.</p>
+                    <p style="margin-top: 1rem;"><strong>Tomorrow's challenge:</strong> Fast from lunch. Find a quiet place, reflect on your morning and weekend, journal, listen to worship music, meditate on Scripture.</p>
+                    <p style="margin-top: 1rem;"><strong>Or fast from:</strong> Instagram, social media, impulsive buying, or your ego (apologize when you're wrong).</p>
+                    <p style="margin-top: 1rem; font-style: italic;">Every time you say no to a distraction, you're saying yes to delighting in God.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">3️⃣ Say Yes to Rest</h4>
+                    <p><strong>Sabbath:</strong> A day of rest, celebration, and worship. God rested after six days of creation, looked back, and said, "This is good, this is very good." He celebrated.</p>
+                    <p style="margin-top: 1rem;"><strong>Start small:</strong> Choose one hour this Sunday—totally undistracted time with God. Pray, worship, reflect, journal, spend time with loved ones without distractions.</p>
+                </div>
+            </div>
+
+            <div class="quote-block">
+                <p>"Nothing teaches us about the preciousness of the Creator as much as when we learn the emptiness of everything else."
+                </p>
+                <p class="quote-author">— Charles Spurgeon</p>
+            </div>
+
+            <div class="bible-verse">
+                <p class="verse-text">
+                    "By wisdom a house is built, and through understanding it is established; through knowledge its rooms are filled with rare and beautiful treasures."
+                </p>
+                <p class="verse-reference">— Proverbs 24:3-4 (NIV)</p>
+            </div>
+
+            <p style="margin-top: 2rem;">
+                When we seek God's wisdom, understanding, and knowledge and take delight in Him, our lives become richer—both spiritually and materially. Our Heavenly Father knows exactly what we need (maybe not always what we want, but what's best for us). When we align our will with His, we experience true fulfillment.
+            </p>
+        </section>
+
+        <!-- Bible Verses -->
+        <section id="verses" class="content-section">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">Key Scripture References 📖</h2>
+            
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Luke 14:15-24 - The Parable of the Great Banquet</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content" style="max-height: 3000px;">
+                    <div class="accordion-body">
+                        <div class="bible-verse">
+                            <p class="verse-text">
+                                When one of those at the table with him heard this, he said to Jesus, "Blessed is the one who will eat at the feast in the kingdom of God."
+                                <br><br>
+                                Jesus replied: "A certain man was preparing a great banquet and invited many guests. At the time of the banquet he sent his servant to tell those who had been invited, 'Come, for everything is now ready.'
+                                <br><br>
+                                "But they all alike began to make excuses. The first said, 'I have just bought a field, and I must go and see it. Please excuse me.'
+                                <br><br>
+                                "Another said, 'I have just bought five yoke of oxen, and I'm on my way to try them out. Please excuse me.'
+                                <br><br>
+                                "Still another said, 'I just got married, so I can't come.'
+                                <br><br>
+                                "The servant came back and reported this to his master. Then the owner of the house became angry and ordered his servant, 'Go out quickly into the streets and alleys of the town and bring in the poor, the crippled, the blind and the lame.'
+                                <br><br>
+                                "'Sir,' the servant said, 'what you ordered has been done, but there is still room.'
+                                <br><br>
+                                "Then the master told his servant, 'Go out to the roads and country lanes and compel them to come in, so that my house will be full. I tell you, not one of those who were invited will get a taste of my banquet.'"
+                            </p>
+                            <p class="verse-reference">— Luke 14:15-24 (NIV)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Psalm 37:4 - Delight in the Lord</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="bible-verse">
+                            <p class="verse-text">
+                                "Take delight in the LORD, and he will give you the desires of your heart."
+                            </p>
+                            <p class="verse-reference">— Psalm 37:4 (NIV)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Supporting Verses</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="bible-verse" style="margin-bottom: 1.5rem;">
+                            <p class="verse-text">
+                                "Jesus answered, 'I am the way and the truth and the life. No one comes to the Father except through me.'"
+                            </p>
+                            <p class="verse-reference">— John 14:6 (NIV)</p>
+                        </div>
+
+                        <div class="bible-verse" style="margin-bottom: 1.5rem;">
+                            <p class="verse-text">
+                                "If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised him from the dead, you will be saved."
+                            </p>
+                            <p class="verse-reference">— Romans 10:9 (NIV)</p>
+                        </div>
+
+                        <div class="bible-verse" style="margin-bottom: 1.5rem;">
+                            <p class="verse-text">
+                                "But seek first his kingdom and his righteousness, and all these things will be given to you as well."
+                            </p>
+                            <p class="verse-reference">— Matthew 6:33 (NIV)</p>
+                        </div>
+
+                        <div class="bible-verse" style="margin-bottom: 1.5rem;">
+                            <p class="verse-text">
+                                "Whoever does not carry their cross and follow me cannot be my disciple... In the same way, those of you who do not give up everything you have cannot be my disciples."
+                            </p>
+                            <p class="verse-reference">— Luke 14:27, 33 (NIV)</p>
+                        </div>
+
+                        <div class="bible-verse" style="margin-bottom: 1.5rem;">
+                            <p class="verse-text">
+                                "By wisdom a house is built, and through understanding it is established; through knowledge its rooms are filled with rare and beautiful treasures."
+                            </p>
+                            <p class="verse-reference">— Proverbs 24:3-4 (NIV)</p>
+                        </div>
+
+                        <div class="bible-verse">
+                            <p class="verse-text">
+                                "If a man has recently married, he must not be sent to war or have any other duty laid on him. For one year he is to be free to stay at home and bring happiness to the wife he has married."
+                            </p>
+                            <p class="verse-reference">— Deuteronomy 24:5 (NIV)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Jeremiah 29:11-13 - God's Plans</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="bible-verse">
+                            <p class="verse-text">
+                                "For I know the plans I have for you," declares the LORD, "plans to prosper you and not to harm you, plans to give you hope and a future. Then you will call on me and come and pray to me, and I will listen to you. You will seek me and find me when you seek me with all your heart."
+                            </p>
+                            <p class="verse-reference">— Jeremiah 29:11-13 (NIV)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application -->
+        <section id="application" class="content-section">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">Living It Out 🎯</h2>
+            
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">From Message 1: Stop Making Excuses</h3>
+            
+            <div class="application-box">
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">🔍 Examine Your Excuses</h4>
+                <p style="margin-bottom: 1rem;">Reflect on these questions:</p>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">💼</span>Am I prioritizing possessions over my relationship with God?
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">📊</span>Am I calculating and controlling instead of trusting God?
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">📖</span>Am I using biblical principles as excuses to avoid God's call?
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">👨‍👩‍👧‍👦</span>Is there a fine line between loving my family and using them as an excuse?
+                    </li>
+                </ul>
+            </div>
+
+            <div class="application-box">
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">🛤️ Choose the Inconvenient Way</h4>
+                <p style="margin-bottom: 1rem;"><strong>This Week's Challenges:</strong></p>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 1rem;">
+                        <span class="emoji-bullet">🗣️</span><strong>Elevator Conversations:</strong> Put away your phone. Talk to or pray for the person next to you.
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <span class="emoji-bullet">✝️</span><strong>Faith Sharing:</strong> Next time someone compliments you, use it as an opportunity to share your faith.
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <span class="emoji-bullet">🤔</span><strong>Decision Making:</strong> When faced with a choice, ask: "Which option brings me closer to Christ?" Then choose that one, even if it's inconvenient.
+                    </li>
+                </ul>
+            </div>
+
+            <h3 style="font-size: 1.8rem; margin: 2rem 0 1rem; color: var(--primary);">From Message 2: Delight in the Lord</h3>
+            
+            <div class="application-box">
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">📅 Daily Practices</h4>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">🌅 Morning Routine:</p>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>Before checking your phone, spend time in God's Word</li>
+                        <li>Use a devotional app or Bible reading plan</li>
+                        <li>Center your scattered thoughts on God before the day begins</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">🌙 Evening Routine:</p>
+                    <ul style="padding-left: 1.5rem;">
+                        <li>End your day with Scripture</li>
+                        <li>Reflect on how God showed up during your day</li>
+                        <li>Journal about moments of delight in Him</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="application-box">
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">🍽️ This Week's Fast</h4>
+                <p style="margin-bottom: 1rem;">Choose one thing to say NO to so you can say YES to God:</p>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">🥗</span><strong>Food:</strong> Fast from lunch tomorrow. Use that hour for prayer and reflection.
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">📱</span><strong>Social Media:</strong> Take a break from Instagram/Facebook for 24 hours.
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">🛍️</span><strong>Shopping:</strong> Skip impulsive buying this week.
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">🤝</span><strong>Pride:</strong> Apologize to someone even though admitting fault is hard.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="application-box">
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">🛋️ Sabbath Rest</h4>
+                <p style="margin-bottom: 1rem;"><strong>Start This Sunday:</strong></p>
+                <p>Choose ONE HOUR of completely undistracted time with God:</p>
+                <ul style="padding-left: 1.5rem; margin-top: 0.75rem;">
+                    <li>No phone, no work, no errands</li>
+                    <li>Pray, worship, journal</li>
+                    <li>Spend quality time with loved ones</li>
+                    <li>Reflect on the week and celebrate God's goodness</li>
+                </ul>
+            </div>
+
+            <div class="reflection-card">
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">💭 Reflection Questions</h4>
+                <ol style="padding-left: 1.5rem;">
+                    <li style="margin-bottom: 1rem;">What excuses have I been making to avoid God's invitation? Name them specifically.</li>
+                    <li style="margin-bottom: 1rem;">When was the last time I truly delighted in God—not just His gifts, but in who He is?</li>
+                    <li style="margin-bottom: 1rem;">What "empty treasures" have I been hunting that left me feeling unfulfilled?</li>
+                    <li style="margin-bottom: 1rem;">How can I choose the inconvenient way this week in a specific situation I'm facing?</li>
+                    <li style="margin-bottom: 1rem;">What is one distraction I need to say NO to so I can say YES to God?</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Reflection -->
+        <section id="reflection" class="content-section">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">Final Thoughts 💭</h2>
+            
+            <div class="reflection-card">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">The Invitation Still Stands 💌</h3>
+                <p style="margin-bottom: 1rem;">
+                    God has prepared a great banquet—the kingdom where true abundance flows. The invitation has been extended to each of us through Jesus Christ. Not because we deserve it, but because of His overwhelming grace and love.
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    The question is: <strong>How will you respond?</strong>
+                </p>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">✅</span>Will you accept the invitation and commit to walking toward the banquet?
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <span class="emoji-bullet">🚫</span>Or will you make excuses—prioritizing possessions, productivity, or even good things—over the Provider?
+                    </li>
+                </ul>
+            </div>
+
+            <div class="quote-block">
+                <p>"Grace, grace, it's all about grace. Take delight in God, are you feeling the chase? Delight in His grace, let your soul embrace, and let His joy set your pace."</p>
+                <p class="quote-author">— Pastor Daniel's Rap</p>
+            </div>
+
+            <div class="reflection-card">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">True 盆滿缽滿 (Abundance) 🏆</h3>
+                <p style="margin-bottom: 1rem;">
+                    In Chinese culture, we wish each other "盆滿缽滿"—may all your bowls and plates be filled. But the sermon challenges us to ask: <em>Filled with what?</em>
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    True abundance isn't found in:
+                </p>
+                <ul style="padding-left: 1.5rem; margin-bottom: 1rem;">
+                    <li>More possessions</li>
+                    <li>Greater productivity</li>
+                    <li>Perfect circumstances</li>
+                    <li>Worldly success</li>
+                </ul>
+                <p style="margin-bottom: 1rem;">
+                    True abundance is found when our hearts are filled with:
+                </p>
+                <ul style="padding-left: 1.5rem;">
+                    <li>Delight in God Himself</li>
+                    <li>Joy in His presence</li>
+                    <li>Peace in His plans</li>
+                    <li>Hope in His promises</li>
+                </ul>
+            </div>
+
+            <div class="bible-verse">
+                <p class="verse-text">
+                    "By wisdom a house is built, and through understanding it is established; through knowledge its rooms are filled with rare and beautiful treasures."
+                </p>
+                <p class="verse-reference">— Proverbs 24:3-4 (NIV)</p>
+            </div>
+
+            <div class="reflection-card">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">A Personal Challenge 🎯</h3>
+                <p style="margin-bottom: 1rem;">
+                    In this Year of the Snake, will you:
+                </p>
+                <ol style="padding-left: 1.5rem; margin-bottom: 1.5rem;">
+                    <li style="margin-bottom: 0.75rem;"><strong>Stop making excuses</strong> and walk toward God's banquet?</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Choose the inconvenient way</strong> in small daily decisions?</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Say hello to God</strong> each morning before anything else?</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Say no to distractions</strong> through intentional fasting?</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Say yes to rest</strong> with a weekly Sabbath practice?</li>
+                </ol>
+                
+                <p style="font-style: italic; color: var(--primary); margin-top: 1.5rem;">
+                    "Our Heavenly Father knows exactly what we need—maybe not always what we want, but what's best for us in this stage of your life. When we align our will with His, we can truly experience fulfillment."
+                </p>
+            </div>
+
+            <div class="quote-block">
+                <p>"Nothing teaches us about the preciousness of the Creator as much as when we learn the emptiness of everything else. What are some of the empty treasures that you've been hunting continuously?"</p>
+                <p class="quote-author">— Charles Spurgeon (paraphrased)</p>
+            </div>
+
+            <div class="reflection-card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: white;">
+                <h3 style="color: var(--secondary); margin-bottom: 1rem; text-align: center;">心想事成 ❤️</h3>
+                <p style="text-align: center; font-size: 1.2rem; line-height: 1.8;">
+                    May the desires of your heart come true—<br>
+                    not through worldly striving,<br>
+                    but through <strong>delighting in the Lord</strong>.<br>
+                    <br>
+                    For when we find our joy in Him,<br>
+                    our desires are transformed,<br>
+                    and we receive something far greater<br>
+                    than anything we could ask for:<br>
+                    <br>
+                    <strong style="color: var(--secondary); font-size: 1.3rem;">We receive Him.</strong>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(evt, tabName) {
+            // Hide all content sections
+            const sections = document.getElementsByClassName('content-section');
+            for (let i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            
+            // Remove active class from all tabs
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // Show selected section and mark tab as active
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all accordion items
+            const allItems = document.querySelectorAll('.accordion-item');
+            allItems.forEach(i => i.classList.remove('active'));
+            
+            // If it wasn't active, open it
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add keyboard navigation for tabs
+        document.addEventListener('keydown', function(e) {
+            const tabs = Array.from(document.querySelectorAll('.tab'));
+            const activeTab = document.querySelector('.tab.active');
+            const currentIndex = tabs.indexOf(activeTab);
+            
+            if (e.key === 'ArrowRight' && currentIndex < tabs.length - 1) {
+                tabs[currentIndex + 1].click();
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                tabs[currentIndex - 1].click();
+            }
+        });
+    </script>
+</body>
+</html>

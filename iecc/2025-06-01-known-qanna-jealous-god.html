@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Known: Qanna: Jealous God | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B4513;
+            --primary-dark: #5D2F0E;
+            --secondary: #D4AF37;
+            --accent: #C9A961;
+            --bg-light: #FAF7F2;
+            --bg-dark: #1A1612;
+            --text-light: #F5F5DC;
+            --text-dark: #2C2416;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .header-bg {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--secondary) 100%);
+            overflow: hidden;
+        }
+
+        .header-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.08;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, var(--text-light) 35px, var(--text-light) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--text-light) 35px, var(--text-light) 70px);
+            animation: patternShift 60s linear infinite;
+        }
+
+        @keyframes patternShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(70px, 70px); }
+        }
+
+        .header-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(26, 22, 18, 0.4) 100%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .header-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            animation: titleFade 1.2s ease-out;
+        }
+
+        @keyframes titleFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-family: 'Lora', serif;
+            font-style: italic;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: titleFade 1.2s ease-out 0.3s backwards;
+        }
+
+        .header-meta {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin-bottom: 2.5rem;
+            opacity: 0.85;
+            animation: titleFade 1.2s ease-out 0.6s backwards;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: titleFade 1.2s ease-out 0.9s backwards;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 2px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--text-dark);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border-color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(245, 245, 220, 0.1);
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-dark);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-container {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tab-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: rgba(245, 245, 220, 0.6);
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            color: var(--secondary);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .tab.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .content-section {
+            display: none;
+            padding: 4rem 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 2.75rem);
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .prose {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .prose p {
+            margin-bottom: 1.5rem;
+        }
+
+        .prose strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .prose em {
+            color: var(--primary-dark);
+        }
+
+        .verse-card {
+            background: white;
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .verse-reference {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .verse-text {
+            font-style: italic;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--secondary), var(--primary));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--secondary);
+            border-radius: 50%;
+            border: 3px solid var(--bg-light);
+        }
+
+        .timeline-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .quote-block {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(212, 175, 55, 0.05));
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .quote-author {
+            margin-top: 1rem;
+            text-align: right;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-style: normal;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(139, 69, 19, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            background: white;
+            border: none;
+            text-align: left;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(139, 69, 19, 0.05);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--secondary);
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(250, 247, 242, 0.5);
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--text-dark);
+            padding: 2rem;
+            border-radius: 2px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.15);
+        }
+
+        .highlight-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 2px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            font-size: 0.85rem;
+            max-width: 300px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .attribution-full.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .attribution-full a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .attribution-full a:hover {
+            color: var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            .header-bg {
+                height: 70vh;
+                min-height: 500px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .timeline {
+                padding-left: 1.5rem;
+            }
+
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem auto;
+                text-align: center;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+                max-width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media print {
+            .header-bg {
+                height: auto;
+                min-height: auto;
+                background: var(--primary);
+                page-break-after: always;
+            }
+
+            .sticky-tabs,
+            .attribution-badge,
+            .btn-group {
+                display: none;
+            }
+
+            .content-section {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-bg">
+        <div class="header-pattern"></div>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <h1 class="header-title">Qanna: Jealous God</h1>
+            <p class="header-subtitle">Understanding the Confusing Descriptor of Divine Love</p>
+            <p class="header-meta">
+                📅 01 June 2025 | 🎤 Island ECC | 📖 Known Series
+            </p>
+            <div class="btn-group">
+                <a href="https://www.youtube.com/watch?v=UbCn9ppwg8Q" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="sticky-tabs">
+        <div class="tab-container">
+            <button class="tab active" data-tab="overview">Overview</button>
+            <button class="tab" data-tab="sermon">Main Sermon</button>
+            <button class="tab" data-tab="verses">Bible Verses</button>
+            <button class="tab" data-tab="theology">Theological Insights</button>
+            <button class="tab" data-tab="application">Application</button>
+            <button class="tab" data-tab="reflection">Reflection</button>
+        </div>
+    </nav>
+
+    <!-- Overview Section -->
+    <section id="overview" class="content-section active">
+        <h2 class="section-title">Overview</h2>
+        <div class="prose">
+            <p>This sermon explores one of the most confusing yet essential descriptors of God in Scripture: His jealousy. The Hebrew term <strong>Jehovah Qanna</strong> (Jealous God) appears prominently in the Ten Commandments and throughout the biblical narrative, challenging our modern understanding of divine attributes.</p>
+            
+            <div class="highlight-box">
+                <h3 class="highlight-title">⚡ Key Insight</h3>
+                <p>"Unless we understand His jealousy, we can't really understand God Himself. Godly jealousy is love fighting extinction."</p>
+            </div>
+
+            <p>The sermon distinguishes between two types of jealousy:</p>
+            
+            <div style="background: white; padding: 1.5rem; margin: 1.5rem 0; border-radius: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <p><strong>🔴 Worldly Jealousy:</strong> Insidious, divisive, possessive, and destructive. It divides teams, families, and relationships. It's love gone extinct—the kind that consumed King Saul and led to his downfall.</p>
+                
+                <p style="margin-top: 1rem;"><strong>💛 Godly Jealousy:</strong> Protective, relational, loving, and restorative. It's the passion of a Father who refuses to let His children wander into harm. It's love fighting for survival, not ego demanding attention.</p>
+            </div>
+
+            <p>The sermon unpacks three dimensions of God's jealousy:</p>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="margin-bottom: 1rem;">✨ <strong>Priority</strong> — God desires to be first in our lives, not out of insecurity but out of love for our well-being</li>
+                <li style="margin-bottom: 1rem;">✨ <strong>Holiness</strong> — God's jealousy calls us to transformation and alignment with His heart</li>
+                <li style="margin-bottom: 1rem;">✨ <strong>Connection</strong> — God's jealousy is relational; He is not a distant deity but "I, the Lord YOUR God"</li>
+            </ul>
+
+            <p>Through metaphors of marriage, parenthood, and even tennis players demanding applause, the sermon invites us to see God's jealousy not as egotism but as the rightful response of the Creator who deserves—and invites us into—worship that leads to our ultimate flourishing.</p>
+        </div>
+    </section>
+
+    <!-- Main Sermon Section -->
+    <section id="sermon" class="content-section">
+        <h2 class="section-title">Main Sermon</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3 class="timeline-title">🎯 The Paradox of Divine Jealousy</h3>
+                <div class="prose">
+                    <p>God declares in Exodus 20:5, tucked within the Ten Commandments: <em>"I, the Lord your God, am a jealous God."</em> This self-declaration—<strong>Jehovah Qanna</strong>—is both confusing and essential. We're told throughout Scripture to avoid jealousy, yet God claims it as part of His nature.</p>
+                    
+                    <div class="verse-card">
+                        <span class="verse-reference">Romans 13:13 (NIV)</span>
+                        <p class="verse-text">"Let us behave decently, not in dissension and jealousy."</p>
+                    </div>
+
+                    <div class="verse-card">
+                        <span class="verse-reference">1 Corinthians 3:3 (NIV)</span>
+                        <p class="verse-text">"You are still worldly. For since there is jealousy and quarreling among you, are you not worldly?"</p>
+                    </div>
+
+                    <p>The Apostle Paul condemns jealousy as a marker of spiritual immaturity. Proverbs warns that jealousy is more dangerous than wrath or anger. We see its destructive power everywhere—in sports teams, families, and relationships. Murder documentaries on Netflix reveal jealous rage as a primary motive.</p>
+
+                    <p>Yet God claims this attribute. The key lies in understanding the difference between <strong>worldly jealousy</strong> and <strong>godly jealousy</strong>.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3 class="timeline-title">👑 The Cautionary Tale of King Saul</h3>
+                <div class="prose">
+                    <p>King Saul's downfall illustrates worldly jealousy perfectly. He had respect, authority, and the throne. Then came David—younger, better-looking, a poet, beloved by all. After David's victory, the nation sang:</p>
+
+                    <div class="quote-block">
+                        Saul has slain his thousands, and David his tens of thousands.
+                    </div>
+
+                    <p>This moment became the turning point. Jealousy consumed Saul. His heart filled with envy, bitterness, rage, and revenge. Getting rid of David became his obsession. Jealousy replaced love with murderous intent. Worldly jealousy is insidious—it transforms character, divides relationships, and ultimately destroys the jealous person themselves.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3 class="timeline-title">💚 The Beauty of Godly Jealousy</h3>
+                <div class="prose">
+                    <p>Paul introduces us to another kind of jealousy when writing to the Corinthian church, which was plagued by aberrant behaviors and false teachings:</p>
+
+                    <div class="verse-card">
+                        <span class="verse-reference">2 Corinthians 11:2-3 (NIV)</span>
+                        <p class="verse-text">"I am jealous for you with a godly jealousy. I promised you to one husband, to Christ, so that I might present you as a pure virgin to him. But I am afraid that just as Eve was deceived by the serpent's cunning, your minds may somehow be led astray from your sincere and pure devotion to Christ."</p>
+                    </div>
+
+                    <p>Paul was <em>unashamed</em> of this jealousy. Why? Because it wasn't about personal offense—it was about the <strong>glory of God</strong> and the <strong>well-being of the Corinthians</strong>. He wanted them to return to pure devotion to Christ. This is jealousy born from love, not insecurity.</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Godly jealousy is love fighting extinction.</strong> It's the passionate pursuit of a Father who refuses to let His children wander into destruction. Worldly jealousy is love <em>gone</em> extinct—it has turned into rage.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3 class="timeline-title">🔍 Three Dimensions of God's Jealousy</h3>
+                <div class="prose">
+                    <p>Understanding God's jealousy requires examining three critical aspects:</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span>1️⃣ Priority: "You Shall Have No Other Gods"</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body prose">
+                    <p>When God says, "I am a jealous God," He prefaces it with: <em>"You shall have no other gods before me. You shall not make for yourself an idol."</em></p>
+
+                    <p>God gives us the <strong>dignity of choice</strong>. He doesn't force worship. But our hearts are "idol factories" (John Calvin). We naturally elevate things—careers, relationships, comfort, possessions—to positions of ultimate importance.</p>
+
+                    <div class="quote-block">
+                        Anything that detracts from the focus and priority of God alone is potentially an idol.
+                    </div>
+
+                    <p><strong>God wants priority.</strong> Not because He's insecure, but because He knows what's best for us. Just as a husband and wife commit "till death do us part," pledging priority to each other, God desires the same relational commitment.</p>
+
+                    <p>Problems arise when priorities shift. A couple has a child, and the child becomes central—applauded in many circles, but dangerous if it comes at the expense of the marriage. The husband feels neglected but won't admit he's "jealous of their child." So he shifts his priority to work. Subtle priority shifts over time lead couples to wonder, <em>"What happened? We said 'I do.'"</em></p>
+
+                    <p><strong>Priorities must be maintained</strong>—they're not a one-time decision. God continually calls us back to first place in our hearts.</p>
+
+                    <div class="verse-card">
+                        <span class="verse-reference">Luke 9:57-60 (NIV)</span>
+                        <p class="verse-text">As they were walking along the road, a man said to him, "I will follow you wherever you go." Jesus replied, "Foxes have dens and birds have nests, but the Son of Man has no place to lay his head." He said to another man, "Follow me." But he replied, "Lord, first let me go and bury my father." Jesus said to him, "Let the dead bury their own dead, but you go and proclaim the kingdom of God."</p>
+                    </div>
+
+                    <p>The disciples said, "We'll follow you anywhere!" Jesus essentially responded, "Will you though? It's easy to say, harder to do." When they added, <em>"But first..."</em>—there's the problem. Any "but first" creates a condition that competes with God's priority.</p>
+
+                    <p>The father wasn't even dead yet. The excuse was, "Let me go home, wait for my father to die, then I'll follow you." Jesus called it out. Not because He's anti-family, but because the man's heart revealed a priority problem.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span>2️⃣ Holiness: A Call to Transformation</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body prose">
+                    <p>God's jealousy is also a call to <strong>holiness</strong>—to being set apart, different, transformed. This isn't about perfection but about ongoing sanctification, becoming more like Jesus.</p>
+
+                    <div class="verse-card">
+                        <span class="verse-reference">2 Corinthians 5:9 (NIV)</span>
+                        <p class="verse-text">"So we make it our goal to please him, whether we are at home or away."</p>
+                    </div>
+
+                    <p>This verse used to bother the speaker. "Please him? I thought it was grace! This feels like effort, like dysfunction—what pleases him?"</p>
+
+                    <p>The resolution: We are <strong>positionally sanctified</strong>—already pleasing to God because of Christ's work. God delights in us as His creation. But there's also <strong>progressive sanctification</strong>—a relational component where we learn to care about what God cares about.</p>
+
+                    <p><strong>That's the nature of love.</strong> In any loving relationship, you begin to care about what the other person cares about. If you don't, you're just roommates doing your own thing.</p>
+
+                    <div class="highlight-box">
+                        <h3 class="highlight-title">🐕 The Dog Story</h3>
+                        <p>The speaker's wife <em>loves</em> dogs. All dogs. Every dog ever born. She gets updates about puppies in Europe. She knows the names of puppies in Hungary. The speaker likes dogs, but not on that level. They have three dogs (one too many, in his opinion).</p>
+                        
+                        <p>When his wife says, "Look at this cute dog," he used to respond, "No more dogs!" But he realized—she doesn't want more dogs either. She just loves dogs and wants to share that joy.</p>
+                        
+                        <p>So now he looks. He cares. He knows the names of Hungarian puppies. Why? <strong>Because she cares.</strong> That's love. And he actually likes dogs more now because of her influence.</p>
+                    </div>
+
+                    <p>A jealous God is saying, <em>"I want you to care about what I care about."</em> His heart beats for the lost, the widow, the orphan, the glory of His name across the earth. As we grow in relationship with Him, we align with His affections. We make it our aim to please Him—not out of fear, but out of love.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span>3️⃣ Connection: "I, the Lord YOUR God"</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body prose">
+                    <p>God's jealousy is rooted in <strong>relationship</strong>. He doesn't just say, "I am a jealous God." He says, <em>"I, the Lord <strong>your</strong> God, am a jealous God."</em></p>
+
+                    <p>The Hebrew word <em>qanna</em> (jealousy) is sometimes translated as "zeal," but that misses the relational core. <strong>Zeal</strong> is passion. <strong>Jealousy</strong> is passion <em>in the context of relationship</em>.</p>
+
+                    <div class="verse-card">
+                        <span class="verse-reference">Psalm 69:9 (NIV)</span>
+                        <p class="verse-text">"For zeal for your house consumes me..."</p>
+                    </div>
+
+                    <p>This is often translated "zeal," but it's actually <em>qanna</em>—<strong>jealousy</strong> for God's house. David's passion was relational, not abstract.</p>
+
+                    <p>God is not a distant deity. Not a cosmic force. He is <strong>relational, caring, feeling, empathetic</strong>. He is <em>yours</em>. He grieves over your sin (Genesis 6:6). He delights over you with dancing (Zephaniah 3:17). His emotions run the full spectrum—not erratic or out of control, but <em>real</em>.</p>
+
+                    <p>To understand His jealousy is to understand that when something that belongs to Him starts to leave, His heart is grieved. Not because He's possessive or insecure, but because <strong>He loves you</strong> and wants to keep you in the place you were created to thrive.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline" style="margin-top: 3rem;">
+            <div class="timeline-item">
+                <h3 class="timeline-title">🎾 The Tennis Player Analogy</h3>
+                <div class="prose">
+                    <p>Recently in professional tennis, when a player hits an exceptional shot—a tweener, an around-the-net winner, a 30-hit rally—they've started doing this:</p>
+
+                    <div style="text-align: center; font-size: 3rem; margin: 2rem 0;">👏👏👏</div>
+
+                    <p>Players like Carlos Alcaraz, Novak Djokovic, and Holger Rune gesture to the crowd: <em>"Are you applauding loud enough? Come on, what do you got? Clap louder!"</em></p>
+
+                    <p>In sports, we tolerate this. We even enjoy it. But imagine a preacher doing that after a sermon: <em>"All right, what'd you think? Please! Yeah! Come on!"</em> The church would empty. We'd say, "That guy is so full of himself."</p>
+
+                    <p>So when God demands worship, is He like this? Egotistical? Insecure? Does He need constant reminding? Is He petty?</p>
+
+                    <div class="highlight-box">
+                        <h3 class="highlight-title">The Critical Question</h3>
+                        <p>What kind of God demands worship?</p>
+                    </div>
+
+                    <p>Christians often deflect compliments: "Good sermon!" "Glory to God." It's a way to acknowledge the true source of goodness and grace. But we have somewhere to deflect <em>to</em>. We point beyond ourselves.</p>
+
+                    <p><strong>Where should God deflect His glory?</strong></p>
+
+                    <p>When we say, "God, you're amazing," what should He say? "Aw, shucks, it's not me—it's that other guy"? "Lucky me"? Should He be embarrassed? No.</p>
+
+                    <div class="quote-block">
+                        <p><strong>He's saying: "You got it right."</strong></p>
+                    </div>
+
+                    <p>It would be egotistical if He didn't deserve it. But He <em>is</em> God. He is the Alpha and Omega, the source of all good things. His worth and value are not affected one iota by our worship. He doesn't go from discouraged to encouraged based on our praise.</p>
+
+                    <p><strong>When we worship, it's simply truth.</strong> And He wants us to continue getting it right. That's why He's jealous for us—out of a heart of love. He cares infinitely and perfectly that we understand the whole essence of life: <strong>it's about His glory. Knowing God and making Him known. Full stop.</strong></p>
+
+                    <p>His love is so great, so complete, so generous, that He wants us to get life right. When we veer, when we minimize Him, He is jealous. It pains Him—because we belong to Him. When He senses He's losing us, He pursues out of His jealous heart to bring us back to relational harmony, the place we were created to live.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3 class="timeline-title">👨‍👧 Father or Grandfather?</h3>
+                <div class="prose">
+                    <div class="quote-block">
+                        <p>We want, in fact, not so much a father in heaven, but a grandfather in heaven.</p>
+                        <div class="quote-author">— C.S. Lewis</div>
+                    </div>
+
+                    <p>Grandparents are wonderful. They spoil kids, give them sugar, say yes to more screen time, and send them home. It's lavish, occasional love without the burden of raising the child.</p>
+
+                    <p>Spiritually, that's what we often want from God. Someone who drops in occasionally, dotes on us, tells us we're amazing, gives us stuff—but doesn't interfere with our daily decisions.</p>
+
+                    <p>But we have a <strong>Heavenly Father</strong>, not a grandfather. A Father who is doting, yes, but also hyper-vigilant. Helicopter-parent aware. Concerned about your every move, every ailment, every thought. Relationally committed 24/7 for your entire life.</p>
+
+                    <p>That level of engagement is sometimes beyond what we want. But it's <em>good</em>. Because that's what fathers do. They're entrusted with rearing, which means constant wisdom, discipline, yes and no, boundaries and freedom.</p>
+
+                    <p>God's jealousy flows from His Fatherhood. He knows what's good for us. He desires to keep us in that place—not only for our good, but also for His glory.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bible Verses Section -->
+    <section id="verses" class="content-section">
+        <h2 class="section-title">Bible Verses</h2>
+        <div class="prose">
+            <p>The following Scripture passages form the theological foundation of this sermon:</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 Exodus 20:4-5 (NIV)</span>
+            <p class="verse-text">"You shall not make for yourself an image in the form of anything in heaven above or on the earth beneath or in the waters below. You shall not bow down to them or worship them; for I, the Lord your God, am a jealous God..."</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 Romans 13:13 (NIV)</span>
+            <p class="verse-text">"Let us behave decently, as in the daytime, not in carousing and drunkenness, not in sexual immorality and debauchery, not in dissension and jealousy."</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 1 Corinthians 3:3 (NIV)</span>
+            <p class="verse-text">"You are still worldly. For since there is jealousy and quarreling among you, are you not worldly? Are you not acting like mere humans?"</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 Proverbs 27:4 (NIV)</span>
+            <p class="verse-text">"Anger is cruel and fury overwhelming, but who can stand before jealousy?"</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 1 Corinthians 10:22 (NIV)</span>
+            <p class="verse-text">"Are we trying to arouse the Lord's jealousy? Are we stronger than he?"</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 2 Corinthians 11:2-3 (NIV)</span>
+            <p class="verse-text">"I am jealous for you with a godly jealousy. I promised you to one husband, to Christ, so that I might present you as a pure virgin to him. But I am afraid that just as Eve was deceived by the serpent's cunning, your minds may somehow be led astray from your sincere and pure devotion to Christ."</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 Luke 9:57-60 (NIV)</span>
+            <p class="verse-text">"As they were walking along the road, a man said to him, 'I will follow you wherever you go.' Jesus replied, 'Foxes have dens and birds have nests, but the Son of Man has no place to lay his head.' He said to another man, 'Follow me.' But he replied, 'Lord, first let me go and bury my father.' Jesus said to him, 'Let the dead bury their own dead, but you go and proclaim the kingdom of God.'"</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 2 Corinthians 5:9 (NIV)</span>
+            <p class="verse-text">"So we make it our goal to please him, whether we are at home or away."</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 Psalm 69:9 (NIV)</span>
+            <p class="verse-text">"For zeal for your house consumes me, and the insults of those who insult you fall on me."</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 Genesis 2:24 (NIV)</span>
+            <p class="verse-text">"That is why a man leaves his father and mother and is united to his wife, and they become one flesh."</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 Zephaniah 3:17 (NIV)</span>
+            <p class="verse-text">"The Lord your God is with you, the Mighty Warrior who saves. He will take great delight in you; in his love he will no longer rebuke you, but will rejoice over you with singing."</p>
+        </div>
+
+        <div class="verse-card">
+            <span class="verse-reference">📜 Genesis 6:6 (NIV)</span>
+            <p class="verse-text">"The Lord regretted that he had made human beings on the earth, and his heart was deeply troubled."</p>
+        </div>
+    </section>
+
+    <!-- Theological Insights Section -->
+    <section id="theology" class="content-section">
+        <h2 class="section-title">Theological Insights</h2>
+        
+        <div class="prose">
+            <p>This sermon offers profound theological reflection on an often-overlooked divine attribute. Here are key insights:</p>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header active">
+                <span>📖 The Hebrew Word: Qanna (קַנָּא)</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content active">
+                <div class="accordion-body prose">
+                    <p>The Hebrew word <strong>qanna</strong> (קַנָּא) is sometimes translated as "zeal," but most biblical scholars agree this is inadequate. Zeal refers to passion or fervor for something, but <em>qanna</em> specifically denotes <strong>passion within a relational context</strong>.</p>
+
+                    <p>God's jealousy is not abstract enthusiasm—it's the emotional response of a relational being whose covenant partner is straying. This distinguishes divine jealousy from mere possessiveness or insecurity.</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Key Distinction:</strong> Zeal = passion. Jealousy = passion in relationship. God's qanna is inherently relational because He is "I, the Lord YOUR God."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span>⚖️ Worldly vs. Godly Jealousy</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body prose">
+                    <p>The sermon makes a critical distinction between two types of jealousy:</p>
+
+                    <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+                        <thead>
+                            <tr style="background: var(--primary); color: var(--text-light);">
+                                <th style="padding: 1rem; text-align: left; border: 1px solid rgba(255,255,255,0.2);">Worldly Jealousy</th>
+                                <th style="padding: 1rem; text-align: left; border: 1px solid rgba(255,255,255,0.2);">Godly Jealousy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: white;">
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Self-centered</td>
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Other-centered</td>
+                            </tr>
+                            <tr style="background: rgba(250,247,242,0.5);">
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Love gone extinct</td>
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Love fighting extinction</td>
+                            </tr>
+                            <tr style="background: white;">
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Destructive</td>
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Protective</td>
+                            </tr>
+                            <tr style="background: rgba(250,247,242,0.5);">
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Insecure</td>
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Confident in love</td>
+                            </tr>
+                            <tr style="background: white;">
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Leads to harm</td>
+                                <td style="padding: 1rem; border: 1px solid rgba(0,0,0,0.1);">Leads to restoration</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Worldly jealousy is condemned throughout Scripture (Romans 13:13, 1 Corinthians 3:3, Proverbs 27:4). It divides, destroys, and ultimately harms both the jealous person and their target.</p>
+
+                    <p>Godly jealousy, by contrast, flows from perfect love and seeks the highest good of the beloved. It's the jealousy of a parent protecting a child, a spouse guarding marital faithfulness, or God pursuing His wandering people.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span>🎭 God's Emotional Nature</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body prose">
+                    <p>The sermon emphasizes that God is an <strong>emotional being</strong>—not erratic or out of control, but genuinely feeling. This challenges deistic or overly philosophical views of God as an unmoved mover.</p>
+
+                    <p>Scripture presents God as:</p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 0.75rem;">💔 <strong>Grieving</strong> over sin (Genesis 6:6)</li>
+                        <li style="margin-bottom: 0.75rem;">💃 <strong>Delighting</strong> with dancing over His people (Zephaniah 3:17)</li>
+                        <li style="margin-bottom: 0.75rem;">😡 <strong>Wrathful</strong> against injustice</li>
+                        <li style="margin-bottom: 0.75rem;">😊 <strong>Pleased</strong> by obedience and worship</li>
+                        <li style="margin-bottom: 0.75rem;">💚 <strong>Jealous</strong> when His people stray</li>
+                    </ul>
+
+                    <p>This emotional richness is not weakness but the fullness of personhood. A God who cannot feel cannot truly love. A God who cannot be jealous cannot truly desire relationship.</p>
+
+                    <div class="quote-block">
+                        <p>If you don't understand the jealousy of God, you don't really understand God. Realizing this about God is actually a wonderful thing, as it is fuel for worship.</p>
+                        <div class="quote-author">— Eric Taines, <em>Godly Jealousy</em></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span>🏔️ God's Self-Sufficiency vs. Relational Desire</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body prose">
+                    <p>A crucial theological tension: God is <strong>completely self-sufficient</strong> (He needs nothing from us), yet He is also <strong>deeply relational</strong> (He desires us).</p>
+
+                    <p>How do we reconcile these truths?</p>
+
+                    <p>God's jealousy is not rooted in neediness or insecurity. His sense of worth is not affected by our worship. He doesn't fluctuate between discouragement and encouragement based on our behavior.</p>
+
+                    <p>Rather, His jealousy flows from <strong>perfect love and perfect knowledge</strong>. He knows:</p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>What is truly good for us</li>
+                        <li>Where we were created to flourish</li>
+                        <li>What brings ultimate fulfillment</li>
+                        <li>That life apart from Him leads to destruction</li>
+                    </ul>
+
+                    <p>When God pursues us jealously, He's not trying to fill a void in Himself. He's trying to prevent a void in us. His jealousy is generous, not grasping. It seeks our good and His glory simultaneously—because these are ultimately the same thing.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span>💍 The Marriage Covenant Metaphor</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body prose">
+                    <p>Throughout Scripture, God's relationship with His people is depicted as a marriage covenant. This metaphor illuminates His jealousy:</p>
+
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Hosea</strong> — God commands the prophet to marry a prostitute as a living parable of Israel's unfaithfulness and God's jealous love</li>
+                        <li><strong>Ezekiel 16</strong> — God describes finding Israel, adorning her as a bride, then being betrayed by her spiritual adultery</li>
+                        <li><strong>Ephesians 5</strong> — Human marriage is designed to reflect Christ's relationship with the Church</li>
+                        <li><strong>Revelation 19</strong> — The consummation of history is depicted as a wedding feast</li>
+                    </ul>
+
+                    <p>In marriage, jealousy is appropriate—even necessary. A spouse who is indifferent to infidelity doesn't truly love. Rightful jealousy guards the exclusive covenant commitment that marriage requires.</p>
+
+                    <p>Similarly, God's jealousy guards the exclusive worship due Him alone. It's not petty possessiveness but the natural response of covenant love.</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Paul's Language:</strong> "I promised you to one husband, to Christ, so that I might present you as a pure virgin to him" (2 Corinthians 11:2). This bridal imagery emphasizes <em>exclusivity, purity, and faithfulness</em>—all protected by godly jealousy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">
+                <span>👨‍👧 Father vs. Grandfather: The C.S. Lewis Insight</span>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body prose">
+                    <p>C.S. Lewis observed that humans naturally prefer a "grandfather in heaven" to a "father in heaven." This preference shapes our resistance to God's jealousy.</p>
+
+                    <p><strong>What We Want (Grandfather God):</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Occasional visits with lavish affection</li>
+                        <li>Gifts and blessings without responsibility</li>
+                        <li>Approval without accountability</li>
+                        <li>Doting without discipline</li>
+                        <li>Sugar without vegetables</li>
+                    </ul>
+
+                    <p><strong>What We Need (Father God):</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Constant, attentive presence</li>
+                        <li>Wisdom that says "yes" and "no" appropriately</li>
+                        <li>Discipline that shapes character</li>
+                        <li>Boundaries that protect from harm</li>
+                        <li>High standards because He believes in our potential</li>
+                    </ul>
+
+                    <p>A father's jealousy is hyper-vigilant awareness. He knows where his children are, what they're doing, who they're with. Not to control, but to <em>care</em>. This is the jealousy of Jehovah Qanna—constant, committed, protective love.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section id="application" class="content-section">
+        <h2 class="section-title">Application</h2>
+        
+        <div class="prose">
+            <p>How does understanding God's jealousy change how we live? Here are practical applications:</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3 class="timeline-title">🔍 Examine Your Priorities</h3>
+                <div class="prose">
+                    <p>God desires to be first in your life. Not out of insecurity, but because He knows that's where you'll thrive.</p>
+
+                    <p><strong>Reflection Questions:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>What gets your first attention in the morning?</li>
+                        <li>What do you think about most throughout the day?</li>
+                        <li>Where do you turn first when you're anxious or afraid?</li>
+                        <li>What would your calendar and bank statement reveal about your priorities?</li>
+                        <li>If Jesus asked, "Will you follow me?" would there be a "but first..." in your response?</li>
+                    </ul>
+
+                    <p>Remember: <strong>Priorities must be maintained</strong>. They're not a one-time decision. Life constantly tempts us to shift what matters most. God's jealousy calls us back to first place—repeatedly, lovingly, persistently.</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Action Step:</strong> Identify one area where something good has become more important than God. It might be career success, a relationship, comfort, or security. Confess it, and ask God to help you realign your heart.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3 class="timeline-title">❤️ Care About What God Cares About</h3>
+                <div class="prose">
+                    <p>Love means caring about what the beloved cares about. As you grow in relationship with God, you'll naturally align with His affections.</p>
+
+                    <p><strong>God's Heart Beats For:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Those who don't yet know Him (the lost)</li>
+                        <li>The marginalized: widows, orphans, refugees, the poor</li>
+                        <li>Justice and righteousness</li>
+                        <li>His glory being known across all nations</li>
+                        <li>Holiness and transformation in His people</li>
+                        <li>Unity and love within the Church</li>
+                    </ul>
+
+                    <p>Just as the speaker learned to care about Hungarian puppies because his wife cares, we can learn to care about these things because God cares. And in the process, our hearts expand, our joy increases, and we become more like Jesus.</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Action Step:</strong> Pick one thing God cares deeply about that you've been indifferent to. Learn about it. Pray about it. Take one small action this week to align with God's heart in that area.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3 class="timeline-title">🔥 Recognize When God Is Pursuing You</h3>
+                <div class="prose">
+                    <p>God's jealousy means He won't passively watch you wander into destruction. He pursues, convicts, redirects, and sometimes disciplines.</p>
+
+                    <p><strong>Signs God May Be Jealously Pursuing You:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Persistent conviction about a sin or pattern</li>
+                        <li>Repeated "coincidences" that point you back to God (sermons, conversations, verses)</li>
+                        <li>Circumstances that limit your ability to continue in a harmful direction</li>
+                        <li>A growing sense of dissatisfaction with things that used to satisfy</li>
+                        <li>Relationships or opportunities closing while God-honoring ones open</li>
+                    </ul>
+
+                    <p>When you sense God's jealous pursuit, don't run. Don't harden your heart. <strong>Respond with gratitude</strong>. He's chasing you because He loves you. He's fighting for you because you're worth fighting for.</p>
+
+                    <div class="quote-block">
+                        <p>Godly jealousy is love fighting extinction. When God pursues you jealously, He's refusing to let you go—not because He needs you, but because He loves you.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3 class="timeline-title">🙏 Worship Without Deflection</h3>
+                <div class="prose">
+                    <p>God doesn't need to deflect His glory elsewhere because <strong>He is the source</strong>. When you worship, you're simply acknowledging truth.</p>
+
+                    <p>Stop seeing worship as inflating God's ego. See it as:</p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Alignment with reality</strong> — God is worthy; worship acknowledges this</li>
+                        <li><strong>Participation in joy</strong> — God delights when you get life right</li>
+                        <li><strong>Relational intimacy</strong> — Worship deepens connection with your Creator</li>
+                        <li><strong>Transformation</strong> — You become like what you worship</li>
+                    </ul>
+
+                    <p>When God says, "Worship me," He's inviting you into the purpose for which you were created. Your greatest fulfillment comes from giving Him greatest glory.</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Action Step:</strong> This week, practice worship that's not transactional (asking for things) but declarative (declaring who God is). Spend 10 minutes simply telling God why He's worthy, with no requests attached.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3 class="timeline-title">🛡️ Guard Your Heart Against Idols</h3>
+                <div class="prose">
+                    <p>John Calvin said the human heart is an "idol factory." We're constantly creating rivals to God, often without realizing it.</p>
+
+                    <p><strong>Common Modern Idols:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Success/Achievement</strong> — Worth tied to performance</li>
+                        <li><strong>Relationships</strong> — Looking to people for what only God can provide</li>
+                        <li><strong>Comfort/Security</strong> — Prioritizing safety over obedience</li>
+                        <li><strong>Approval/Reputation</strong> — Living for others' opinions</li>
+                        <li><strong>Control</strong> — Refusing to trust God with outcomes</li>
+                        <li><strong>Entertainment/Distraction</strong> — Numbing rather than feeling</li>
+                    </ul>
+
+                    <p>Idols aren't always obviously sinful. They're often good things elevated to ultimate things. When something good becomes your source of identity, security, or ultimate joy, it's become an idol.</p>
+
+                    <p>God's jealousy says, "I won't share you with rivals—not because I'm petty, but because they'll destroy you. I alone can bear the weight of your worship."</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Action Step:</strong> Identify your functional god—the thing you most fear losing, the thing that most affects your mood and sense of well-being. Confess it as an idol and ask God to dethrone it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reflection Section -->
+    <section id="reflection" class="content-section">
+        <h2 class="section-title">Reflection & Prayer</h2>
+        
+        <div class="prose">
+            <p>This sermon invites us to reconsider one of God's most misunderstood attributes. Far from being a character flaw, God's jealousy reveals the depth of His love and the seriousness with which He takes relationship with us.</p>
+
+            <div class="quote-block">
+                <p><strong>Closing Meditation:</strong> A jealous God is a loving one. He pursues, protects, and refuses to let us settle for less than we were created for. His jealousy is not the possessiveness of insecurity but the vigilance of perfect love.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box" style="margin: 2.5rem 0;">
+            <h3 class="highlight-title">🙏 Closing Prayer (from the sermon)</h3>
+            <div class="prose" style="font-style: italic; color: var(--text-dark);">
+                <p>Father in heaven, Jehovah Qanna.</p>
+                
+                <p>We worship you as best we can. We learn about you as best we can, but we are so tempted to diminish, forget, minimize. To focus on things that feel good, but not those that don't.</p>
+                
+                <p>But God, we just pray that we could have a view of you that is filled, that is full, that is complete. And so God, write us. Correct us, chase us as needed, so that we can stay in the loving arms of God who is defined by love.</p>
+                
+                <p>A jealous God, we thank you in Jesus' name.</p>
+                
+                <p><strong>Amen.</strong></p>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 2rem; border-radius: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-top: 2rem;">
+            <h3 style="font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 1.5rem;">💭 Personal Reflection Questions</h3>
+            
+            <div class="prose">
+                <p><strong>1. How has your view of God's jealousy changed after this sermon?</strong></p>
+                <p style="margin-left: 1.5rem; color: #666; font-size: 0.95rem;">Consider whether you previously saw it as a negative trait and how understanding it as protective love reshapes your relationship with God.</p>
+
+                <p><strong>2. Where in your life is God jealous for you right now?</strong></p>
+                <p style="margin-left: 1.5rem; color: #666; font-size: 0.95rem;">What rival to God's affection has crept into first place? What is He pursuing you about?</p>
+
+                <p><strong>3. What does it mean practically for you to "make it your aim to please Him"?</strong></p>
+                <p style="margin-left: 1.5rem; color: #666; font-size: 0.95rem;">How can you care more deeply about what God cares about in your daily life this week?</p>
+
+                <p><strong>4. How does understanding God as "Father" rather than "Grandfather" challenge you?</strong></p>
+                <p style="margin-left: 1.5rem; color: #666; font-size: 0.95rem;">Where are you wanting occasional affirmation without accountability? Where is God calling you to deeper commitment?</p>
+
+                <p><strong>5. What would change in your life if you truly believed God's jealousy is motivated by perfect love for you?</strong></p>
+                <p style="margin-left: 1.5rem; color: #666; font-size: 0.95rem;">How would you respond differently to conviction, discipline, or closed doors?</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(212, 175, 55, 0.05)); border-radius: 2px;">
+            <p style="font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--primary); margin-bottom: 1rem;">
+                ✨ May you know the jealous love of God ✨
+            </p>
+            <p style="font-style: italic; color: var(--text-dark);">
+                A love that pursues, protects, and refuses to let you settle for anything less than the fullness of life found in Him alone.
+            </p>
+        </div>
+    </section>
+
+    <!-- Attribution Badge -->
+    <div class="attribution-badge">
+        <div class="attribution-short" id="attrShort">ℹ️</div>
+        <div class="attribution-full" id="attrFull">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const isActive = header.classList.contains('active');
+                
+                header.classList.toggle('active');
+                content.classList.toggle('active');
+            });
+        });
+
+        // Attribution Badge (Desktop only)
+        const attrShort = document.getElementById('attrShort');
+        const attrFull = document.getElementById('attrFull');
+
+        if (window.innerWidth > 768) {
+            attrShort.addEventListener('mouseenter', () => {
+                attrShort.style.display = 'none';
+                attrFull.classList.add('active');
+            });
+
+            attrFull.addEventListener('mouseleave', () => {
+                attrFull.classList.remove('active');
+                setTimeout(() => {
+                    if (!attrFull.classList.contains('active')) {
+                        attrShort.style.display = 'flex';
+                    }
+                }, 300);
+            });
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                const activeTab = document.querySelector('.tab.active');
+                const nextTab = activeTab.nextElementSibling;
+                if (nextTab && nextTab.classList.contains('tab')) {
+                    nextTab.click();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                const activeTab = document.querySelector('.tab.active');
+                const prevTab = activeTab.previousElementSibling;
+                if (prevTab && prevTab.classList.contains('tab')) {
+                    prevTab.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

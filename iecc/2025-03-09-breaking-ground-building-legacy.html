@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breaking Ground: Building Legacy | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c5f4f;
+            --secondary: #8b7355;
+            --accent: #d4a574;
+            --bg-light: #f8f6f3;
+            --bg-paper: #fffef9;
+            --text-dark: #1a1a1a;
+            --text-muted: #6b6b6b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a3d32 100%);
+            overflow: hidden;
+        }
+
+        .hero-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.08;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,165,116,0.15) 0%, transparent 60%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero-meta {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--text-dark);
+        }
+
+        .btn-primary:hover {
+            background: #c49563;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212,165,116,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-paper);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .tabs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tabs-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1.2rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+        }
+
+        .content-section {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--bg-paper);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid rgba(44,95,79,0.1);
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, var(--bg-paper) 0%, #f5f3ee 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .verse-reference {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.03em;
+        }
+
+        .verse-text {
+            font-style: italic;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .accordion-item {
+            border: 1px solid rgba(44,95,79,0.15);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            background: var(--bg-paper);
+        }
+
+        .accordion-header {
+            padding: 1.3rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary);
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(44,95,79,0.05);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 5000px;
+            padding: 1.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--primary));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -2.4rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--bg-paper);
+            box-shadow: 0 0 0 3px rgba(212,165,116,0.2);
+        }
+
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(44,95,79,0.3);
+            z-index: 1000;
+        }
+
+        .attribution:hover {
+            transform: translateX(-10px);
+            padding-right: 2rem;
+        }
+
+        .attribution-short {
+            display: inline;
+        }
+
+        .attribution-full {
+            display: none;
+            margin-left: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: inline;
+        }
+
+        .attribution a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(212,165,116,0.3) 0%, rgba(212,165,116,0.1) 100%);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                height: 70vh;
+                min-height: 500px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .attribution {
+                position: static;
+                margin: 2rem auto;
+                width: fit-content;
+                display: block;
+            }
+
+            .attribution:hover {
+                transform: none;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: inline;
+                margin-left: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media print {
+            .tabs, .btn-group, .attribution {
+                display: none;
+            }
+            .content-section {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-pattern"></div>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Breaking Ground: Building Legacy 🌱</h1>
+            <p class="hero-meta">09 March 2025 | Pastor Brett | Island ECC</p>
+            <div class="btn-group">
+                <a href="https://www.youtube.com/watch?v=-Ak-7Ahqq9k" target="_blank" class="btn btn-primary">
+                    <span>▶</span> Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <span>📚</span> View All Sermons
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Tabs -->
+    <nav class="tabs" role="navigation" aria-label="Sermon sections">
+        <div class="tabs-container">
+            <div class="tab active" data-tab="overview">📋 Overview</div>
+            <div class="tab" data-tab="sermon">💬 Main Sermon</div>
+            <div class="tab" data-tab="verses">📖 Bible Verses</div>
+            <div class="tab" data-tab="application">🎯 Application</div>
+            <div class="tab" data-tab="reflection">🙏 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Overview Section -->
+    <section id="overview" class="content-section active">
+        <div class="card">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--primary);">A Call to Bold Faith 🔥</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 2rem;">
+                In the final installment of the "Breaking Ground" series, Island ECC explores what it means to build a legacy that transcends generations. As the church prepares for its move to the historic Sunbeam Theater location, Pastor Brett challenges us to embody the same boldness that characterized the early church—a boldness not rooted in personal courage, but in witnessing the power of the resurrected Christ.
+            </p>
+
+            <div style="background: linear-gradient(135deg, rgba(44,95,79,0.1) 0%, rgba(212,165,116,0.1) 100%); padding: 2rem; border-radius: 12px; margin: 2rem 0;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary);">Key Themes 🗝️</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(44,95,79,0.1);">
+                        <strong style="color: var(--primary);">Resurrection Power:</strong> Peter and John's transformation from fearful deserters to fearless proclaimers
+                    </li>
+                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(44,95,79,0.1);">
+                        <strong style="color: var(--primary);">Provocative Faith:</strong> Speaking truth even when it challenges established religious systems
+                    </li>
+                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(44,95,79,0.1);">
+                        <strong style="color: var(--primary);">Generational Stewardship:</strong> Planting trees whose shade we may never fully enjoy
+                    </li>
+                    <li style="padding: 0.8rem 0;">
+                        <strong style="color: var(--primary);">Bold Faith Campaign:</strong> <em>B</em>ring people to faith, <em>O</em>ptimize training, <em>L</em>ove the city, <em>D</em>eepen community
+                    </li>
+                </ul>
+            </div>
+
+            <blockquote style="font-size: 1.15rem; margin: 2rem 0;">
+                "Previous generations plant trees and future generations enjoy the shade. What we are being asked to do is to plant a tree that future generations will benefit from."
+                <footer style="margin-top: 1rem; font-style: normal; color: var(--primary);">— Pastor Brett</footer>
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- Main Sermon Section -->
+    <section id="sermon" class="content-section">
+        <div class="card">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">The Message: From Fear to Fearless 🦁</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary);">The Context: A City Abuzz ⚡</h3>
+                    <p>Just weeks after the resurrection, Jerusalem is flooded with pilgrims for a feast celebration. The news of Jesus' death and resurrection has spread like wildfire. Peter and John—once terrified disciples who fled when Jesus was arrested—now stand emboldened, ready to proclaim a message that will threaten the very foundations of the religious establishment.</p>
+                    <p style="margin-top: 1rem;"><em>What changed?</em> They had seen Jesus alive. The resurrection wasn't just a miracle—it was undeniable proof that everything Jesus said was true. This wasn't about their courage; it was about witnessing God's power.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary);">The Proclamation: Repent & Be Baptized 💧</h3>
+                    <p>Peter's message to the crowd was <span class="highlight">provocative</span>: "Repent and be baptized, every one of you, in the name of Jesus Christ for the forgiveness of your sins."</p>
+                    <p style="margin-top: 1rem;">This wasn't just a call to spiritual renewal—it was a direct challenge to the temple system. Baptism in Jesus' name declared that <strong>forgiveness comes through Christ alone</strong>, not through animal sacrifices, not through the high priest, but through the blood of Jesus poured out once and for all.</p>
+                    <p style="margin-top: 1rem; font-style: italic; color: var(--text-muted);">The result? 3,000 people were baptized that day. The church began with an explosion of faith.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary);">The Miracle: Dancing Lame Guy 🎉</h3>
+                    <p>Outside the temple gate sat a man who had been lame from birth—a familiar figure to all who passed by. In that culture, many believed his condition was divine punishment. Rabbis would even say, "Blessed be the righteous judge," effectively blaming the beggar for his own suffering.</p>
+                    <p style="margin-top: 1rem;">But Peter and John stopped. "Silver or gold I do not have, but what I do have I give you. In the name of Jesus Christ of Nazareth, walk."</p>
+                    <p style="margin-top: 1rem;"><strong>The man didn't just walk—he danced.</strong> He leaped. He praised God publicly in the temple courts. This wasn't a quiet healing; it was a visible, undeniable testimony to the power of the risen Christ.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary);">The Opposition: You Killed the Author of Life ⚔️</h3>
+                    <p>With a crowd gathered, Peter preaches again: "You killed the author of life, but God raised him from the dead. We are witnesses of this."</p>
+                    <p style="margin-top: 1rem;">This was <em>deeply offensive</em>. The religious leaders had orchestrated Jesus' execution, and now Peter was publicly declaring their guilt—while simultaneously proclaiming that their entire sacrificial system had been rendered obsolete.</p>
+                    <p style="margin-top: 1rem; background: rgba(212,165,116,0.15); padding: 1rem; border-radius: 6px;">
+                        <strong>5,000 men believed.</strong> But the authorities arrested Peter and John. The message was spreading too fast, threatening too much power.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary);">The Trial: "We Cannot Stop Speaking" 🗣️</h3>
+                    <p>Brought before the religious leaders, Peter and John are warned to stop teaching in Jesus' name. But they respond with unwavering conviction:</p>
+                    <blockquote>"As for us, we cannot help speaking about what we have seen and heard."</blockquote>
+                    <p style="margin-top: 1rem;">The leaders were astonished. These were "unschooled, ordinary men." What gave them such courage? The text tells us: <em>They had been with Jesus.</em></p>
+                    <p style="margin-top: 1rem;">And they had the healed man standing right there as living proof. The authorities had no rebuttal. They threatened Peter and John again, then threw them in jail.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary);">The Prayer: "Give Us Boldness" 🙏</h3>
+                    <p>When Peter and John returned to the church and reported what had happened, the believers prayed together. But their prayer wasn't what you might expect.</p>
+                    <p style="margin-top: 1rem;">They didn't pray for safety. They didn't ask God to soften the hearts of their enemies or to give them wisdom to avoid conflict. Instead, they prayed:</p>
+                    
+                    <div class="verse-card" style="margin: 1.5rem 0;">
+                        <p class="verse-text">"Now, Lord, consider their threats and enable your servants to speak your word with great boldness."</p>
+                        <p class="verse-reference" style="margin-top: 1rem;">— Acts 4:29</p>
+                    </div>
+
+                    <p style="margin-top: 1.5rem;"><strong>They prayed for more boldness.</strong> They understood that the mission was bigger than their comfort, bigger than their safety. They were stewarding the gospel for future generations.</p>
+                    <p style="margin-top: 1rem;">And God answered. The place where they met was shaken. They were filled with the Holy Spirit. And they spoke the word of God boldly.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 2rem;">
+            <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--primary);">The Bold Faith Campaign: BOLD Defined 📍</h3>
+            <p style="margin-bottom: 2rem;">As Island ECC prepares for its permanent home at the Sunbeam Theater, the church is launching the <strong>Bold Faith Campaign</strong>—a call to invest not just financially, but spiritually and missionally in the future. The acronym BOLD captures the vision:</p>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>B</strong>ring People to Faith 💒</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>A heart for the lost. Island ECC is committed to being outward-facing, welcoming all people from all backgrounds—broken, addicted, Buddhist, Muslim, or unchurched. The new location will feature an open cafe, community service hub, and redemptive retail spaces designed to engage the neighborhood seven days a week.</p>
+                    <p style="margin-top: 1rem;"><em>The goal:</em> Not to be a big church, but a healthy church that creatively and shrewdly shares the gospel in North Point and beyond.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>O</strong>ptimize Training 📚</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Equipping believers to integrate the gospel into every area of life. Through workshops, seminars, conferences, and classes (like the upcoming studies on Jude and fasting), Island ECC wants to help people apply biblical truth to their marriages, workplaces, and communities.</p>
+                    <p style="margin-top: 1rem;">The new space will provide unlimited access to host training events throughout the week—no longer constrained by rental agreements.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>L</strong>ove the City ❤️</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>The Sunbeam Theater is an iconic Hong Kong landmark with deep cultural significance. Island ECC is committed to honoring that heritage by preserving its tangible and intangible history—partnering with artists, universities, and cultural institutions to create virtual museums, documentaries, and exhibitions.</p>
+                    <p style="margin-top: 1rem;">The new location will open its doors to the community, offering space, resources, and ministry presence on one of the city's busiest streets.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><strong>D</strong>eepen Community 🤝</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Rows are good, but circles are better. While Sunday gatherings are vital, true transformation happens in care groups—where people know your name, pray for you regularly, and walk through life's ups and downs with you.</p>
+                    <p style="margin-top: 1rem;">The new facility will provide dedicated space for small groups, youth ministry, kids club, and other community-building activities that foster authentic relationships.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bible Verses Section -->
+    <section id="verses" class="content-section">
+        <div class="card">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">Scripture Foundation 📖</h2>
+            
+            <div class="verse-card">
+                <p class="verse-reference">Acts 2:38</p>
+                <p class="verse-text">"Peter replied, 'Repent and be baptized, every one of you, in the name of Jesus Christ for the forgiveness of your sins. And you will receive the gift of the Holy Spirit.'"</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 2:41</p>
+                <p class="verse-text">"Those who accepted his message were baptized, and about three thousand were added to their number that day."</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 3:6</p>
+                <p class="verse-text">"Then Peter said, 'Silver or gold I do not have, but what I do have I give you. In the name of Jesus Christ of Nazareth, walk.'"</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 3:8</p>
+                <p class="verse-text">"He jumped to his feet and began to walk. Then he went with them into the temple courts, walking and jumping, and praising God."</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 3:15</p>
+                <p class="verse-text">"You killed the author of life, but God raised him from the dead. We are witnesses of this."</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 4:12</p>
+                <p class="verse-text">"Salvation is found in no one else, for there is no other name under heaven given to mankind by which we must be saved."</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 4:13</p>
+                <p class="verse-text">"When they saw the courage of Peter and John and realized that they were unschooled, ordinary men, they were astonished and they took note that these men had been with Jesus."</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 4:20</p>
+                <p class="verse-text">"As for us, we cannot help speaking about what we have seen and heard."</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 4:24, 27-28</p>
+                <p class="verse-text">"When they heard this, they raised their voices together in prayer to God. 'Sovereign Lord,' they said, 'you made the heavens and the earth and the sea, and everything in them... Indeed Herod and Pontius Pilate met together with the Gentiles and the people of Israel in this city to conspire against your holy servant Jesus, whom you anointed. They did what your power and will had decided beforehand should happen.'"</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 4:29</p>
+                <p class="verse-text">"Now, Lord, consider their threats and enable your servants to speak your word with great boldness."</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Acts 4:31</p>
+                <p class="verse-text">"After they prayed, the place where they were meeting was shaken. And they were all filled with the Holy Spirit and spoke the word of God boldly."</p>
+            </div>
+
+            <div class="verse-card">
+                <p class="verse-reference">Deuteronomy 31:8</p>
+                <p class="verse-text">"The Lord himself goes before you and will be with you; he will never leave you nor forsake you. Do not be afraid; do not be discouraged."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section id="application" class="content-section">
+        <div class="card">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">Living It Out 🎯</h2>
+
+            <div style="background: linear-gradient(135deg, rgba(44,95,79,0.05) 0%, rgba(212,165,116,0.05) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary);">What Do You Pray About? 🤔</h3>
+                <p>Pastor Brett asked a convicting question: <em>If all of your prayers were answered, who would benefit the most?</em></p>
+                <p style="margin-top: 1rem;">For most of us, the honest answer is: <strong>me.</strong> Our prayers revolve around our comfort, our promotion, our well-being, our problems.</p>
+                <p style="margin-top: 1rem;">But the early church prayed differently. They prayed from a macro view—acknowledging God's sovereignty over all things—and then brought their specific circumstances to him. And instead of asking for safety or convenience, they asked for <span class="highlight">boldness to proclaim the gospel</span>.</p>
+                <p style="margin-top: 1rem;"><strong>Challenge:</strong> This week, evaluate your prayer life. Are you praying for your own comfort, or for God's kingdom to advance—even if it costs you something?</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(44,95,79,0.05) 0%, rgba(212,165,116,0.05) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary);">Invest in Eternal Things 💎</h3>
+                <p>There are only two things that are eternal: <strong>the Word of God and the souls of people.</strong></p>
+                <p style="margin-top: 1rem;">Everything else—possessions, careers, achievements—will fade. We get excited about new purchases, but that excitement is short-lived. Something else always becomes shinier.</p>
+                <p style="margin-top: 1rem;">But investing in the gospel, in people's lives, in the church—that never loses its luster. It compounds across eternity.</p>
+                <p style="margin-top: 1rem;"><strong>Application:</strong> Where are you investing your time, energy, and resources? Are you building a legacy that will outlast you, or are you chasing things that will rust and decay?</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(44,95,79,0.05) 0%, rgba(212,165,116,0.05) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary);">Plant Trees You May Never Sit Under 🌳</h3>
+                <p>The Chinese proverb says: <em>"Previous generations plant trees and future generations enjoy the shade."</em></p>
+                <p style="margin-top: 1rem;">You and I are enjoying shade today because someone before us—people we've never met—invested in the gospel, in the church, in missions. They prayed. They gave. They suffered. And we benefit.</p>
+                <p style="margin-top: 1rem;">Now it's our turn. The Bold Faith campaign isn't just about a building—it's about ensuring that <strong>future generations</strong> have a place to encounter Christ, to be discipled, to be sent out into the world.</p>
+                <p style="margin-top: 1rem;"><strong>Reflection:</strong> What legacy are you leaving? Will your children, grandchildren, and spiritual descendants benefit from the seeds you're planting today?</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(44,95,79,0.05) 0%, rgba(212,165,116,0.05) 100%); padding: 2rem; border-radius: 12px;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary);">Speak Boldly (Even When It's Costly) 🔥</h3>
+                <p>Peter and John faced imprisonment, threats, and potential execution. But they couldn't stop talking about what they had seen and heard.</p>
+                <p style="margin-top: 1rem;">Boldness isn't recklessness—it's confidence in the resurrection. It's believing that the message of Jesus is <em>worth the risk</em>.</p>
+                <p style="margin-top: 1rem;">In our context, boldness might look like:</p>
+                <ul style="margin-top: 1rem; padding-left: 1.5rem; line-height: 2;">
+                    <li>Sharing your faith with a colleague, even if it feels awkward</li>
+                    <li>Inviting a friend to church, knowing they might say no</li>
+                    <li>Standing for biblical truth in a culture that finds it offensive</li>
+                    <li>Giving sacrificially to support the mission of the church</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Question:</strong> Where is God calling you to be bold? What step of faith is he asking you to take this week?</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reflection Section -->
+    <section id="reflection" class="content-section">
+        <div class="card">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--primary);">Personal Reflection & Prayer 🙏</h2>
+
+            <div style="background: var(--bg-light); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary);">Examine Your Heart ❤️</h3>
+                <ul style="line-height: 2.2; color: var(--text-dark);">
+                    <li>🔍 <strong>Am I living in light of the resurrection?</strong> Does my life reflect confidence that Jesus is alive, or am I living as if the gospel might be a nice idea but not transformative truth?</li>
+                    <li>💭 <strong>What am I praying for?</strong> Are my prayers centered on my comfort, or am I asking God to make me bold for his kingdom?</li>
+                    <li>🌱 <strong>What legacy am I leaving?</strong> Am I investing in things that will last—the Word and souls—or am I pouring my life into things that will fade?</li>
+                    <li>🗣️ <strong>Where am I holding back?</strong> Is there a conversation, a relationship, a step of faith where God is calling me to be bold, but I'm playing it safe?</li>
+                </ul>
+            </div>
+
+            <div style="background: linear-gradient(135deg, var(--primary) 0%, #1a3d32 100%); color: white; padding: 2.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">A Prayer for Boldness 🕊️</h3>
+                <p style="font-style: italic; line-height: 2; font-size: 1.1rem;">
+                    <em>Sovereign Lord, you made the heavens and the earth and the sea, and everything in them. You are above all things, and yet you care deeply about our lives.</em>
+                </p>
+                <p style="font-style: italic; line-height: 2; font-size: 1.1rem; margin-top: 1rem;">
+                    <em>We confess that we often pray for our own comfort, our own success, our own safety. But today, we ask for something different: <strong>Give us boldness.</strong></em>
+                </p>
+                <p style="font-style: italic; line-height: 2; font-size: 1.1rem; margin-top: 1rem;">
+                    <em>Give us courage to speak your word, even when it's costly. Give us faith to invest in your kingdom, even when we can't see the full return. Give us eyes to see beyond our own lives to the generations that will come after us.</em>
+                </p>
+                <p style="font-style: italic; line-height: 2; font-size: 1.1rem; margin-top: 1rem;">
+                    <em>Help us to live as people who have been with Jesus—transformed by the resurrection, empowered by the Spirit, and sent into the world with a message that changes everything.</em>
+                </p>
+                <p style="font-style: italic; line-height: 2; font-size: 1.1rem; margin-top: 1rem;">
+                    <em>In Jesus' name, Amen.</em>
+                </p>
+            </div>
+
+            <div style="background: var(--bg-light); padding: 2rem; border-radius: 12px;">
+                <h3 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary);">Next Steps 👣</h3>
+                <ol style="line-height: 2.5; color: var(--text-dark); padding-left: 1.5rem;">
+                    <li><strong>Pray</strong> about your role in the Bold Faith campaign. Ask God how he's calling you to participate—whether through financial giving, volunteering, or prayer.</li>
+                    <li><strong>Visit</strong> the Bold Faith website (<a href="http://iecc.hk/boldfaith" style="color: var(--accent); text-decoration: none;">iecc.hk/boldfaith</a>) to learn more about the vision for the Sunbeam Theater location.</li>
+                    <li><strong>Invite</strong> someone to church this week. Be bold in sharing what God is doing in your life.</li>
+                    <li><strong>Join</strong> a care group if you're not already in one. Circles are better than rows—we need deep community to sustain bold faith.</li>
+                    <li><strong>Attend</strong> the Marriage Weekend (March 21-22) or sign up for the Jude class or Fasting workshop to continue growing in your faith.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 2rem; text-align: center;">
+            <h3 style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary);">Remember 🌟</h3>
+            <p style="font-size: 1.3rem; line-height: 2; color: var(--text-dark); font-style: italic;">
+                "As for us, we cannot help speaking about what we have seen and heard."
+            </p>
+            <p style="margin-top: 1rem; font-weight: 600; color: var(--accent);">— Acts 4:20</p>
+            <p style="margin-top: 2rem; font-size: 1.1rem; color: var(--text-muted);">
+                May we be a generation that speaks boldly, gives generously, and plants trees whose shade we may never fully enjoy—all for the glory of God and the advancement of his kingdom. 🌱✨
+            </p>
+        </div>
+    </section>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <span class="attribution-short">ℹ️</span>
+        <span class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
+        </span>
+    </div>
+
+    <script>
+        // Tab Navigation
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion Functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all accordions
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Open clicked accordion if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && e.shiftKey === false) {
+                const focusableElements = document.querySelectorAll('a, button, .tab, .accordion-header');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+                
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        });
+
+        // Print Optimization
+        window.addEventListener('beforeprint', () => {
+            sections.forEach(s => s.classList.add('active'));
+        });
+
+        window.addEventListener('afterprint', () => {
+            sections.forEach(s => s.classList.remove('active'));
+            document.getElementById('overview').classList.add('active');
+        });
+    </script>
+</body>
+</html>

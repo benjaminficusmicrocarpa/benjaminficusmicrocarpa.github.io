@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Increase Our Faith | Island ECC Sermon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2c5282;
+            --accent: #d69e2e;
+            --text: #2d3748;
+            --bg: #f7fafc;
+            --card: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #2d3748 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(214, 158, 46, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(44, 82, 130, 0.15) 0%, transparent 50%);
+            animation: breathe 8s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 12px rgba(0,0,0,0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .hero-meta {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #b7791f;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(214, 158, 46, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: white;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .tabs {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 140px;
+            padding: 1.25rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: #f7fafc;
+        }
+
+        .tab.active {
+            border-bottom-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .content-section {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verse-card {
+            background: var(--card);
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .verse-card:hover {
+            transform: translateX(8px);
+        }
+
+        .verse-reference {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .verse-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a5568;
+            font-style: italic;
+        }
+
+        .accordion-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .accordion-header:hover {
+            background: #f7fafc;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-item.open .accordion-content {
+            max-height: 5000px;
+        }
+
+        .accordion-body {
+            padding: 0 1.5rem 1.5rem;
+            color: #4a5568;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+            border-left: 5px solid var(--primary);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 1rem 1rem 0;
+            font-style: italic;
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        .section-heading {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .application-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .application-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .application-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .application-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            max-width: 300px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+
+        .attribution a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                height: 70vh;
+                min-height: 500px;
+            }
+
+            .attribution {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem 1rem;
+            }
+
+            .attribution-full {
+                display: block;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .btn {
+                padding: 0.875rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .tab {
+                font-size: 0.9rem;
+                padding: 1rem;
+                min-width: 120px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent), var(--primary));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 0.5rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--accent);
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .timeline-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>🙏 Increase Our Faith!</h1>
+            <div class="hero-meta">
+                16 Feb 2025 | Pastor Brett | Island ECC
+            </div>
+            <p style="font-size: 1.25rem; margin-bottom: 2.5rem; opacity: 0.95; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Without faith it is impossible to please God. So how can we realistically increase our faith?
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://www.youtube.com/watch?v=MDCNoc7lVNY" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('overview')">📋 Overview</div>
+            <div class="tab" onclick="showTab('sermon')">🎤 Main Sermon</div>
+            <div class="tab" onclick="showTab('verses')">📖 Bible Verses</div>
+            <div class="tab" onclick="showTab('application')">💡 Application</div>
+            <div class="tab" onclick="showTab('reflection')">🤔 Reflection</div>
+        </div>
+    </div>
+
+    <!-- Overview Section -->
+    <section id="overview" class="content-section active">
+        <h2 class="section-heading">Sermon Overview</h2>
+        
+        <div class="quote-box">
+            "Without faith it is impossible to please God. Faith is not optimism. Faith is not positivity. It is belief in Jesus."
+        </div>
+
+        <div style="background: white; padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 1.5rem;">
+                📌 Key Message
+            </h3>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem;">
+                This powerful message explores what it truly means to increase our faith as individuals and as a church community. Pastor Brett challenges us to move beyond shadow faith—a routine, predictable, limited faith—to embrace the reality found in Christ.
+            </p>
+            <p style="font-size: 1.1rem; line-height: 1.8;">
+                As Island ECC prepares to transition to Sunbeam Theater, the question isn't just about accomplishing a goal, but about being spiritually transformed in the process. True faith isn't about decreasing our fears or making life convenient—it's about increasing our capacity to believe in Jesus, no matter what comes.
+            </p>
+        </div>
+
+        <div class="application-grid">
+            <div class="application-card">
+                <div class="application-icon">🎯</div>
+                <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.25rem; margin-bottom: 1rem; color: var(--primary);">
+                    Main Point
+                </h4>
+                <p>Faith has an object—Jesus Christ. To increase your faith is to increase your understanding and belief in who Jesus really is.</p>
+            </div>
+
+            <div class="application-card">
+                <div class="application-icon">📚</div>
+                <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.25rem; margin-bottom: 1rem; color: var(--primary);">
+                    Primary Scriptures
+                </h4>
+                <p>Luke 17:1-6, Matthew 8:5-13, Mark 6:1-6, Hebrews 11:6, John 14:1</p>
+            </div>
+
+            <div class="application-card">
+                <div class="application-icon">⏱️</div>
+                <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.25rem; margin-bottom: 1rem; color: var(--primary);">
+                    Duration
+                </h4>
+                <p>Full service with worship and teaching from Island ECC's Sunday gathering.</p>
+            </div>
+
+            <div class="application-card">
+                <div class="application-icon">🎓</div>
+                <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.25rem; margin-bottom: 1rem; color: var(--primary);">
+                    For Everyone
+                </h4>
+                <p>Whether discovering Jesus for the first time or seeking to grow deeper, this message speaks to all levels of spiritual maturity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Sermon Section -->
+    <section id="sermon" class="content-section">
+        <h2 class="section-heading">Main Sermon Content</h2>
+
+        <div class="accordion-item open">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>🌱 Introduction: What Makes You Say "Increase My Faith"?</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p style="margin-bottom: 1rem;">
+                        Pastor Brett begins by asking what circumstances drive us to desperately cry out, "God, increase my faith!" He identifies several common triggers:
+                    </p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0;">📍</span>
+                            <strong>Big Decisions:</strong> Career changes, relocations, marriage, education—moments requiring divine wisdom
+                        </li>
+                        <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0;">🎭</span>
+                            <strong>Loss of Control:</strong> When our sophisticated masks slip and we realize we're not as autonomous as we thought
+                        </li>
+                        <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0;">😰</span>
+                            <strong>Fearful Circumstances:</strong> Medical diagnoses, aging parents, changing marital status
+                        </li>
+                        <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0;">⚖️</span>
+                            <strong>Personal Sacrifice:</strong> Anytime we must discipline ourselves against our comfort
+                        </li>
+                    </ul>
+                    <div class="quote-box" style="margin-top: 1.5rem;">
+                        "We love control. Most of us live for it. We've learned to mask it, but we want autonomy, independence, financial freedom. But there are moments when we're not in control—and it's those moments of insecurity that cause us to cry out: God, I need you."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>🪨 The Radical Teaching: Millstones and Forgiveness (Luke 17)</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p style="margin-bottom: 1rem;">
+                        Jesus delivers two shocking statements that lead His disciples to pray "Increase our faith":
+                    </p>
+                    <div style="background: #f7fafc; padding: 1.5rem; border-radius: 0.5rem; margin: 1.5rem 0; border-left: 4px solid var(--primary);">
+                        <p style="margin-bottom: 1rem;">
+                            <strong>First:</strong> Jesus says that causing someone to stumble spiritually is so serious, it would be better to have a massive millstone tied around your neck and be thrown into the sea to drown.
+                        </p>
+                        <p>
+                            <strong>Second:</strong> He commands that if someone sins against you seven times in one day and seven times says "I repent," you must forgive them.
+                        </p>
+                    </div>
+                    <p style="margin-bottom: 1rem;">
+                        The disciples are stunned. Seven times in one day? What if they're not sincere? Jesus's point isn't about the offender's sincerity—it's about the health of your soul.
+                    </p>
+                    <div class="quote-box">
+                        "Your soul cannot absorb the hatred, the revenge. The lack of forgiveness will erode the vitality of your soul. Don't let unforgiveness rob you of your spiritual connection to God."
+                    </div>
+                    <p style="margin-top: 1.5rem;">
+                        It's against this radical backdrop that the apostles cry out: <strong>"Lord, increase our faith!"</strong> They recognize this isn't natural—it requires supernatural faith in Jesus.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>😲 Faith That Amazes Jesus: The Centurion (Matthew 8)</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p style="margin-bottom: 1rem;">
+                        Only twice in Scripture are we told Jesus was amazed. The first time was at someone's great faith—a Roman centurion who understood authority:
+                    </p>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">The Request</div>
+                                <p>A Roman centurion approaches Jesus, asking Him to heal his paralyzed servant who is suffering terribly. This is remarkable—a non-Jew, a Roman military officer, coming to a Jewish teacher for help.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Jesus Offers to Come</div>
+                                <p>Jesus immediately offers to go to the centurion's home. The disciples expect Jesus to cite ceremonial laws about entering a Gentile home, but He doesn't hesitate.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">The Centurion's Response</div>
+                                <p>"Lord, I do not deserve to have you come under my roof. But just say the word, and my servant will be healed."</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Understanding Authority</div>
+                                <p>"I myself am a man under authority, with soldiers under me. I tell this one 'Go' and he goes, and that one 'Come' and he comes." The centurion understands that because he represents the Roman government, his words carry authority. He recognizes Jesus represents God the Father—His words carry divine authority.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-box">
+                        "When Jesus heard this, he was amazed and said to those following him, 'Truly I tell you, I have not found anyone in Israel with such great faith.'"
+                    </div>
+                    <p style="margin-top: 1.5rem;">
+                        Jesus marvels that this outsider, without religious upbringing, grasps what the religious insiders miss: <strong>Faith has an object—Jesus, who speaks with God's authority.</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>😔 Lack of Faith That Amazes Jesus: His Hometown (Mark 6)</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p style="margin-bottom: 1rem;">
+                        The second time Jesus was amazed was at the <em>lack</em> of faith in His own hometown. The people who knew Him best couldn't see past their familiarity:
+                    </p>
+                    <div style="background: #f7fafc; padding: 1.5rem; border-radius: 0.5rem; margin: 1.5rem 0;">
+                        <p style="margin-bottom: 1rem;">
+                            <strong>Initial Response:</strong> "Where did this man get these things? What's this wisdom that has been given him? What are these remarkable miracles he is performing?"
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            <strong>Then Reality Sets In:</strong> "Wait... isn't this just Mary's son? The brother of James, Joseph, Judas, and Simon? Aren't his sisters here with us?"
+                        </p>
+                        <p>
+                            <strong>The Result:</strong> "And they took offense at him."
+                        </p>
+                    </div>
+                    <p style="margin-bottom: 1rem;">
+                        They couldn't push aside their flesh—their prejudices, childhood resentments, competitive spirits. They were unwilling to overcome their familiarity to behold what was happening in their midst.
+                    </p>
+                    <div class="quote-box">
+                        "Jesus was amazed at their lack of faith—their inability to see beyond what they thought they knew, to embrace the reality of who He truly was."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>🎯 Faith Has an Object: Not Optimism, But Jesus</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p style="margin-bottom: 1rem;">
+                        In John 14:1, Jesus says to His troubled disciples: "Do not let your hearts be troubled. You believe in God; believe also in me."
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        John creates a new grammatical construction in Greek—not just "believe" but "believe <em>in</em>" something. Faith isn't generic positivity. It has a specific object.
+                    </p>
+                    <div style="background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%); padding: 2rem; border-radius: 1rem; margin: 1.5rem 0;">
+                        <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.25rem; margin-bottom: 1rem; color: var(--primary);">
+                            Faith Is NOT:
+                        </h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.75rem;">❌ Optimism or positive thinking</li>
+                            <li style="margin-bottom: 0.75rem;">❌ Manifesting a preferred future</li>
+                            <li style="margin-bottom: 0.75rem;">❌ Squashing doubts or ignoring reality</li>
+                            <li style="margin-bottom: 0.75rem;">❌ Crossing your fingers for good circumstances</li>
+                        </ul>
+                        <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.25rem; margin: 1.5rem 0 1rem; color: var(--primary);">
+                            Faith IS:
+                        </h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.75rem;">✅ Belief <em>in</em> Jesus Christ</li>
+                            <li style="margin-bottom: 0.75rem;">✅ Trust in His character and promises</li>
+                            <li style="margin-bottom: 0.75rem;">✅ Confidence that He works all things for good</li>
+                            <li>✅ Anchored conviction regardless of circumstances</li>
+                        </ul>
+                    </div>
+                    <div class="quote-box">
+                        "To increase your faith is to increase your capacity to comprehend who Jesus is. People with great faith aren't unflappable because bad things don't happen to them. They're steady because their faith isn't in circumstances—it's in Jesus, the giver of the days."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>🌑 Shadow Faith vs. Reality in Christ (Colossians 2)</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p style="margin-bottom: 1rem;">
+                        Pastor Brett shares about his dog Monet, who used to bark at his own shadow. A shadow represents something real, but it's not the real thing itself. Paul uses this exact imagery:
+                    </p>
+                    <div class="verse-card">
+                        <div class="verse-reference">Colossians 2:17</div>
+                        <div class="verse-text">
+                            "These are a shadow of the things that were to come; the reality, however, is found in Christ."
+                        </div>
+                    </div>
+                    <p style="margin-bottom: 1rem;">
+                        Paul, a former Pharisee who persecuted Christians, discovered that his religious system—though based on Scripture—was only a shadow pointing to the reality: Jesus Christ.
+                    </p>
+                    <div style="background: #f7fafc; padding: 2rem; border-radius: 1rem; margin: 1.5rem 0; border-left: 4px solid var(--accent);">
+                        <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.25rem; margin-bottom: 1rem; color: var(--primary);">
+                            Characteristics of Shadow Faith:
+                        </h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; top: 0;">📏</span>
+                                <strong>Limited:</strong> "This is what I'll give God. I'll go to church on Sundays and forget Him on Fridays."
+                            </li>
+                            <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; top: 0;">📦</span>
+                                <strong>Predictable:</strong> Keeping God in a box, determining how you'll live under His "sovereign care"
+                            </li>
+                            <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; top: 0;">🔄</span>
+                                <strong>Routine:</strong> Going through religious motions without intimate, organic discovery
+                            </li>
+                            <li style="padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; top: 0;">🎭</span>
+                                <strong>Performance-Based:</strong> Feeling spiritually smug after checking boxes
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="quote-box">
+                        "Don't settle for shadow faith. The reality is found in Christ. If you want to know what God is like, look at Jesus. There is no better way. He is the perfect representation—not a shadow."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>🏛️ Application: The Sunbeam Theater Transition</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p style="margin-bottom: 1rem;">
+                        Island ECC purchased the historic Sunbeam Theater a year ago and is planning a revitalization over the next two years. As the church prepares for this major transition, Pastor Brett poses a critical question:
+                    </p>
+                    <div class="quote-box">
+                        "As we prepare to make this geographical change and transition to Sunbeam Theater, wouldn't it be tragic if we made the goal but weren't changed? If we were the same spiritually, if our belief didn't grow, our faith didn't enhance? That would be tragic."
+                    </div>
+                    <p style="margin: 1.5rem 0;">
+                        The transition isn't just about logistics, models, and timelines. It's an opportunity for God to work within His people—to increase faith as a church family.
+                    </p>
+                    <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); color: white; padding: 2rem; border-radius: 1rem;">
+                        <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; margin-bottom: 1.5rem;">
+                            Three Layers of Prayer:
+                        </h4>
+                        <div style="margin-bottom: 1.5rem;">
+                            <strong style="font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">1️⃣ Personal:</strong>
+                            <p style="opacity: 0.95;">"God, I know I've got gaps. I believe You easily in these ways, but not here. I keep You restricted to certain rooms of my life. Increase my faith. Make surrender easy."</p>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <strong style="font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">2️⃣ Corporate (Church):</strong>
+                            <p style="opacity: 0.95;">"Increase our faith as a church. As we transition, help us grow spiritually, not just logistically."</p>
+                        </div>
+                        <div>
+                            <strong style="font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">3️⃣ City-Wide:</strong>
+                            <p style="opacity: 0.95;">"That Christianity would increase in Hong Kong. That the 10% statistic would go up. That those who are lost would realize it and come to faith in Christ."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bible Verses Section -->
+    <section id="verses" class="content-section">
+        <h2 class="section-heading">Key Scripture Passages</h2>
+
+        <div class="verse-card">
+            <div class="verse-reference">Luke 17:1-6 (NIV)</div>
+            <div class="verse-text">
+                Jesus said to his disciples: "Things that cause people to stumble are bound to come, but woe to anyone through whom they come. It would be better for them to be thrown into the sea with a millstone tied around their neck than to cause one of these little ones to stumble. So watch yourselves. If your brother or sister sins against you, rebuke them; and if they repent, forgive them. Even if they sin against you seven times in a day and seven times come back to you saying 'I repent,' you must forgive them." The apostles said to the Lord, "Increase our faith!"
+            </div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Hebrews 11:6 (NIV)</div>
+            <div class="verse-text">
+                And without faith it is impossible to please God, because anyone who comes to him must believe that he exists and that he rewards those who earnestly seek him.
+            </div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Matthew 8:5-10, 13 (NIV)</div>
+            <div class="verse-text">
+                When Jesus had entered Capernaum, a centurion came to him, asking for help. "Lord," he said, "my servant lies at home paralyzed, suffering terribly." Jesus said to him, "Shall I come and heal him?" The centurion replied, "Lord, I do not deserve to have you come under my roof. But just say the word, and my servant will be healed. For I myself am a man under authority, with soldiers under me. I tell this one, 'Go,' and he goes; and that one, 'Come,' and he comes. I say to my servant, 'Do this,' and he does it." When Jesus heard this, he was amazed and said to those following him, "Truly I tell you, I have not found anyone in Israel with such great faith." ... Then Jesus said to the centurion, "Go! Let it be done just as you believed it would." And his servant was healed at that moment.
+            </div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Mark 6:1-6 (NIV)</div>
+            <div class="verse-text">
+                Jesus left there and went to his hometown, accompanied by his disciples. When the Sabbath came, he began to teach in the synagogue, and many who heard him were amazed. "Where did this man get these things?" they asked. "What's this wisdom that has been given him? What are these remarkable miracles he is performing? Isn't this the carpenter? Isn't this Mary's son and the brother of James, Joseph, Judas and Simon? Aren't his sisters here with us?" And they took offense at him. Jesus said to them, "A prophet is not without honor except in his own town, among his relatives and in his own home." He could not do any miracles there, except lay his hands on a few sick people and heal them. He was amazed at their lack of faith.
+            </div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">John 14:1 (NIV)</div>
+            <div class="verse-text">
+                "Do not let your hearts be troubled. You believe in God; believe also in me."
+            </div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Colossians 2:17 (NIV)</div>
+            <div class="verse-text">
+                These are a shadow of the things that were to come; the reality, however, is found in Christ.
+            </div>
+        </div>
+
+        <div class="verse-card">
+            <div class="verse-reference">Philippians 2:10-11 (NIV)</div>
+            <div class="verse-text">
+                At the name of Jesus every knee should bow, in heaven and on earth and under the earth, and every tongue acknowledge that Jesus Christ is Lord, to the glory of God the Father.
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section id="application" class="content-section">
+        <h2 class="section-heading">Practical Application</h2>
+
+        <div class="quote-box">
+            "Increase my faith. Maybe this should be our prayer every day. God, give me spiritual eyes. Help me to see people as you see them."
+        </div>
+
+        <div class="application-grid">
+            <div class="application-card">
+                <div class="application-icon">🙏</div>
+                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.35rem; margin-bottom: 1rem; color: var(--primary);">
+                    Daily Prayer Practice
+                </h3>
+                <p style="line-height: 1.7;">
+                    Make "Increase my faith" your daily prayer. It acknowledges that spiritual growth is God's work in you, not your own achievement. It's a prayer of humility that says, "God, the distance between us is my fault. Expand my capacity to believe in You."
+                </p>
+            </div>
+
+            <div class="application-card">
+                <div class="application-icon">👁️</div>
+                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.35rem; margin-bottom: 1rem; color: var(--primary);">
+                    See with Spiritual Eyes
+                </h3>
+                <p style="line-height: 1.7;">
+                    Ask God to help you see people as He sees them—as sheep without a shepherd rather than annoying obstacles on the MTR. Let compassion replace frustration. This shift in perspective is evidence of increasing faith.
+                </p>
+            </div>
+
+            <div class="application-card">
+                <div class="application-icon">💝</div>
+                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.35rem; margin-bottom: 1rem; color: var(--primary);">
+                    Forgive Quickly
+                </h3>
+                <p style="line-height: 1.7;">
+                    Be quick to forgive, quick to listen, eager to empathize, and slow to keep score or seek revenge. Not because offenders deserve it, but because your soul needs it. Unforgiveness erodes spiritual vitality.
+                </p>
+            </div>
+
+            <div class="application-card">
+                <div class="application-icon">⚓</div>
+                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.35rem; margin-bottom: 1rem; color: var(--primary);">
+                    Anchor in Christ, Not Circumstances
+                </h3>
+                <p style="line-height: 1.7;">
+                    When fear enters—financial instability, relational tension, uncertainty—remember your trust is in Jesus, not in stable circumstances. Faith isn't about decreasing fears; it's about increasing belief in the One who remains constant.
+                </p>
+            </div>
+
+            <div class="application-card">
+                <div class="application-icon">🚫</div>
+                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.35rem; margin-bottom: 1rem; color: var(--primary);">
+                    Reject Shadow Faith
+                </h3>
+                <p style="line-height: 1.7;">
+                    Examine your spiritual life honestly. Have you settled for routine religion? Limited God to certain areas? Made faith predictable and safe? The reality is found in Christ—intimate, organic, changing, adventurous, never merely routine.
+                </p>
+            </div>
+
+            <div class="application-card">
+                <div class="application-icon">🏛️</div>
+                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.35rem; margin-bottom: 1rem; color: var(--primary);">
+                    Embrace Transitions as Faith Opportunities
+                </h3>
+                <p style="line-height: 1.7;">
+                    Whether it's a church building transition, job change, or life circumstance, don't just focus on accomplishing goals. Ask how God wants to transform you spiritually through the process. Increased faith is the real goal.
+                </p>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%); padding: 2.5rem; border-radius: 1rem; margin-top: 3rem; border-left: 5px solid var(--accent);">
+            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--primary);">
+                🌟 This Week's Challenge
+            </h3>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                Pray "Increase my faith" every morning this week. Journal one specific area where you recognize you've limited God or settled for shadow faith. Then ask Him to expand your capacity to believe in that area.
+            </p>
+            <div style="background: white; padding: 1.5rem; border-radius: 0.5rem; margin-top: 1rem;">
+                <p style="font-size: 1rem; line-height: 1.7; color: #4a5568; margin-bottom: 1rem;">
+                    <strong>Reflection Questions:</strong>
+                </p>
+                <ul style="list-style: none; padding-left: 0; color: #4a5568;">
+                    <li style="margin-bottom: 0.75rem;">• Where do I most need increased faith right now?</li>
+                    <li style="margin-bottom: 0.75rem;">• What "rooms" of my life have I kept God out of?</li>
+                    <li style="margin-bottom: 0.75rem;">• Is my faith in circumstances or in Christ?</li>
+                    <li>• Am I harboring unforgiveness that's eroding my spiritual vitality?</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reflection Section -->
+    <section id="reflection" class="content-section">
+        <h2 class="section-heading">Personal Reflection</h2>
+
+        <div class="quote-box">
+            "Faith is the beginning point of our journey with God. But it doesn't stop there. You are to live by faith so that you do not gratify the desires of the flesh."
+        </div>
+
+        <div style="background: white; padding: 2.5rem; border-radius: 1rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--primary);">
+                🤔 Deep Dive Questions
+            </h3>
+            
+            <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e2e8f0;">
+                <h4 style="font-family: 'Crimson Pro', serif; color: var(--accent); margin-bottom: 1rem; font-size: 1.25rem;">
+                    1. Identifying Your Faith Triggers
+                </h4>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    Pastor Brett listed several situations that make us cry out "Increase my faith": big decisions, loss of control, fearful circumstances, and personal sacrifice.
+                </p>
+                <p style="line-height: 1.8; font-weight: 500; color: var(--primary);">
+                    Which of these most resonates with where you are right now? What specific situation is exposing the limits of your faith?
+                </p>
+            </div>
+
+            <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e2e8f0;">
+                <h4 style="font-family: 'Crimson Pro', serif; color: var(--accent); margin-bottom: 1rem; font-size: 1.25rem;">
+                    2. The Forgiveness Test
+                </h4>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    Jesus's command to forgive "seven times in a day" reveals how unforgiveness erodes our souls. He's less concerned about whether the offender is sincere than about the health of your heart.
+                </p>
+                <p style="line-height: 1.8; font-weight: 500; color: var(--primary);">
+                    Is there someone you're withholding forgiveness from? How might harboring that unforgiveness be affecting your spiritual vitality and relationship with God?
+                </p>
+            </div>
+
+            <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e2e8f0;">
+                <h4 style="font-family: 'Crimson Pro', serif; color: var(--accent); margin-bottom: 1rem; font-size: 1.25rem;">
+                    3. Faith vs. Optimism
+                </h4>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    The sermon emphasized that faith is not the same as optimism or positive thinking. Faith has an object—Jesus Christ. It's not about manifesting preferred outcomes but about trusting in the character of God.
+                </p>
+                <p style="line-height: 1.8; font-weight: 500; color: var(--primary);">
+                    Have you been treating faith like optimism—hoping for good circumstances rather than trusting in Jesus regardless of circumstances? What would shift if you anchored your faith in Christ's character instead of your desired outcomes?
+                </p>
+            </div>
+
+            <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e2e8f0;">
+                <h4 style="font-family: 'Crimson Pro', serif; color: var(--accent); margin-bottom: 1rem; font-size: 1.25rem;">
+                    4. Shadow Faith Audit
+                </h4>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    Using the image of Paul's dog barking at shadows, Pastor Brett warned against settling for "shadow faith"—a limited, predictable, routine version that looks real but lacks substance. The reality is found in Christ.
+                </p>
+                <p style="line-height: 1.8; font-weight: 500; color: var(--primary);">
+                    In what areas of your spiritual life have you settled for going through religious motions rather than experiencing intimate relationship with Jesus? Where is your faith limited, predictable, or merely routine?
+                </p>
+            </div>
+
+            <div>
+                <h4 style="font-family: 'Crimson Pro', serif; color: var(--accent); margin-bottom: 1rem; font-size: 1.25rem;">
+                    5. The Centurion's Understanding
+                </h4>
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    The Roman centurion amazed Jesus because he understood authority. He recognized that Jesus spoke with divine authority, representing God the Father, and that His words carried power to heal from a distance.
+                </p>
+                <p style="line-height: 1.8; font-weight: 500; color: var(--primary);">
+                    How well do you understand Jesus's authority in your life? In what areas do you intellectually acknowledge His authority but practically live as if you're in control?
+                </p>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); color: white; padding: 2.5rem; border-radius: 1rem; margin-bottom: 2rem;">
+            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.75rem; margin-bottom: 1.5rem;">
+                ✍️ Journaling Prompts
+            </h3>
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 1rem;">
+                <p style="margin-bottom: 1rem; opacity: 0.95;">
+                    <strong>Complete this prayer:</strong> "God, increase my faith in the area of _____________ because I recognize that I've been _____________."
+                </p>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 1rem;">
+                <p style="margin-bottom: 1rem; opacity: 0.95;">
+                    <strong>Identify gaps:</strong> "I find it easy to trust God with _____________, but I struggle to trust Him with _____________."
+                </p>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 0.75rem;">
+                <p style="opacity: 0.95;">
+                    <strong>The surrender question:</strong> "If God asked me to _____________, I would find it difficult because _____________. What does this reveal about where I need increased faith?"
+                </p>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 2.5rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--primary);">
+                🎯 Moving Forward
+            </h3>
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+                Pastor Brett closed with a powerful prayer that can become our own:
+            </p>
+            <div style="background: #f7fafc; padding: 2rem; border-radius: 0.75rem; border-left: 4px solid var(--accent);">
+                <p style="font-style: italic; line-height: 1.9; font-size: 1.05rem; color: #4a5568;">
+                    "Father, we do pray that you would increase our faith. However mature or knowledgeable, educated we may be, God, we know that there are gaps. We know that there are deficiencies and they're ours, not yours. And so God, increase our faith, our ability to comprehend who you are, our ability to live our lives commensurate with that deep conviction of your character. God, to see spiritually as you see, to look upon the masses and to see them as sheep without a shepherd and to have compassion, not frustration. So God, increase our faith. Wherever you deem it needed, we welcome you in those places."
+                </p>
+            </div>
+            <p style="margin-top: 2rem; line-height: 1.8; font-size: 1.05rem;">
+                This week, carry this prayer with you. Let it become as natural as breathing. And watch how God responds when His people humbly ask for what He's already eager to give: faith that sees Him clearly, trusts Him deeply, and follows Him completely.
+            </p>
+        </div>
+    </section>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all content sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasOpen = item.classList.contains('open');
+
+            // Close all accordion items
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('open');
+            });
+
+            // Open clicked item if it wasn't open
+            if (!wasOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add keyboard navigation for tabs
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const tabs = Array.from(document.querySelectorAll('.tab'));
+                const activeTab = document.querySelector('.tab.active');
+                const currentIndex = tabs.indexOf(activeTab);
+                
+                let newIndex;
+                if (e.key === 'ArrowRight') {
+                    newIndex = (currentIndex + 1) % tabs.length;
+                } else {
+                    newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                }
+                
+                tabs[newIndex].click();
+            }
+        });
+
+        // Lazy load images (if any were added)
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img.lazy').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+</body>
+</html>

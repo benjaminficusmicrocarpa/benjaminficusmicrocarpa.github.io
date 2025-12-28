@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Interactive collection of sermon infographics from Island ECC, curated by benjaminficusmicrocarpa">
-    <title>Island ECC Sermon Infographics | benjaminficusmicrocarpa</title>
+    <meta name="description" content="Interactive collection of sermon webpages from Island ECC, curated by benjaminficusmicrocarpa">
+    <title>Island ECC Sermon Webpages | benjaminficusmicrocarpa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -215,6 +215,7 @@
         
         /* Tag Badges in Cards */
         .tag { padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500; }
+        .tag.series { background-color: #faf5ff; color: #7e22ce; }
         .tag.theme { background-color: #eff6ff; color: #1d4ed8; }
         .tag.topic { background-color: #f0fdf4; color: #15803d; }
         .tag.scripture { background-color: #fffbeb; color: #b45309; }
@@ -265,6 +266,9 @@
             transition: all 0.2s;
         }
         .filter-tag:focus { outline: none; }
+        .filter-tag.series { background-color: #f3e8ff; color: #7e22ce; }
+        .filter-tag.series:hover { background-color: #e9d5ff; }
+        .filter-tag.series:focus { box-shadow: 0 0 0 2px #a855f7; }
         .filter-tag.theme { background-color: #dbeafe; color: #1d4ed8; }
         .filter-tag.theme:hover { background-color: #bfdbfe; }
         .filter-tag.theme:focus { box-shadow: 0 0 0 2px #60a5fa; }
@@ -280,6 +284,21 @@
             background: linear-gradient(to right, #16a34a, #059669) !important;
             color: white !important;
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .skeleton-card {
+            height: 200px;
+            border-radius: 1rem;
         }
     </style>
 </head>
@@ -313,7 +332,7 @@
         <div class="relative z-20 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-4xl mx-auto">
                 <h1 class="font-['Playfair_Display'] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-slide-in" style="animation-delay: 0.2s; opacity: 0;">
-                    🏝️ Island ECC<br>Sermon Infographics
+                    🏝️ Island ECC<br>Sermon Webpages
                 </h1>
                 <p class="text-lg sm:text-xl md:text-2xl text-white/90 mb-8 font-light leading-relaxed animate-slide-in" style="animation-delay: 0.4s; opacity: 0;">
                     Visual summaries and key insights from inspiring messages,<br class="hidden sm:block">
@@ -347,11 +366,11 @@
             <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl p-6 mb-8 text-white shadow-xl">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                     <div class="stats-counter">
-                        <div class="text-3xl font-bold" id="total-sermons">32</div>
+                        <div class="text-3xl font-bold" id="total-sermons">--</div>
                         <div class="text-sm opacity-90">Total Sermons</div>
                     </div>
                     <div class="stats-counter">
-                        <div class="text-3xl font-bold" id="visible-sermons">32</div>
+                        <div class="text-3xl font-bold" id="visible-sermons">--</div>
                         <div class="text-sm opacity-90">Showing</div>
                     </div>
                     <div class="stats-counter">
@@ -359,7 +378,7 @@
                         <div class="text-sm opacity-90">Active Filters</div>
                     </div>
                     <div class="stats-counter">
-                        <div class="text-3xl font-bold" id="total-tags">27</div>
+                        <div class="text-3xl font-bold" id="total-tags">--</div>
                         <div class="text-sm opacity-90">Total Tags</div>
                     </div>
                 </div>
@@ -368,11 +387,8 @@
             <!-- Year Filter - Sticky -->
             <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-md rounded-2xl mb-6 p-4 no-print" 
                  aria-label="Year filter">
-                <div class="flex flex-wrap justify-center gap-3">
-                    <button onclick="filterYear('2025')" class="filter-btn year-btn year-btn-active text-white" data-year="2025" aria-pressed="true">📅 2025</button>
-                    <button onclick="filterYear('2024')" class="filter-btn year-btn inactive" data-year="2024" aria-pressed="false">📅 2024</button>
-                    <button onclick="filterYear('2023')" class="filter-btn year-btn inactive" data-year="2023" aria-pressed="false">📅 2023</button>
-                    <button onclick="filterYear('all')" class="filter-btn year-btn inactive" data-year="all" aria-pressed="false">🌐 All Years</button>
+                <div id="year-filters" class="flex flex-wrap justify-center gap-3">
+                    <!-- Year buttons will be dynamically generated -->
                 </div>
             </nav>
 
@@ -393,18 +409,19 @@
 
                 <div id="tag-cloud" class="tag-cloud">
                     <div class="space-y-4">
+                        <!-- Series Tags -->
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-600 mb-2 uppercase tracking-wide">📚 Sermon Series</h4>
+                            <div class="flex flex-wrap gap-2" id="series-tags">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+
                         <!-- Theme Tags -->
                         <div>
                             <h4 class="text-sm font-semibold text-gray-600 mb-2 uppercase tracking-wide">Themes</h4>
                             <div class="flex flex-wrap gap-2" id="theme-tags">
-                                <button onclick="toggleTag('worship')" class="tag-badge filter-tag theme" data-tag="worship" aria-pressed="false">✨ Worship</button>
-                                <button onclick="toggleTag('identity')" class="tag-badge filter-tag theme" data-tag="identity" aria-pressed="false">🪞 Identity</button>
-                                <button onclick="toggleTag('healing')" class="tag-badge filter-tag theme" data-tag="healing" aria-pressed="false">🩺 Healing</button>
-                                <button onclick="toggleTag('spiritual-warfare')" class="tag-badge filter-tag theme" data-tag="spiritual-warfare" aria-pressed="false">⚔️ Spiritual Warfare</button>
-                                <button onclick="toggleTag('fresh-start')" class="tag-badge filter-tag theme" data-tag="fresh-start" aria-pressed="false">🌅 Fresh Start</button>
-                                <button onclick="toggleTag('obedience')" class="tag-badge filter-tag theme" data-tag="obedience" aria-pressed="false">🌊 Obedience</button>
-                                <button onclick="toggleTag('advent')" class="tag-badge filter-tag theme" data-tag="advent" aria-pressed="false">🕯️ Advent</button>
-                                <button onclick="toggleTag('relationships')" class="tag-badge filter-tag theme" data-tag="relationships" aria-pressed="false">🎯 Relationships</button>
+                                <!-- Dynamically populated -->
                             </div>
                         </div>
 
@@ -412,13 +429,7 @@
                         <div>
                             <h4 class="text-sm font-semibold text-gray-600 mb-2 uppercase tracking-wide">Topics</h4>
                             <div class="flex flex-wrap gap-2" id="topic-tags">
-                                <button onclick="toggleTag('emotions')" class="tag-badge filter-tag topic" data-tag="emotions" aria-pressed="false">😔 Emotions</button>
-                                <button onclick="toggleTag('prayer')" class="tag-badge filter-tag topic" data-tag="prayer" aria-pressed="false">🙏 Prayer</button>
-                                <button onclick="toggleTag('temptation')" class="tag-badge filter-tag topic" data-tag="temptation" aria-pressed="false">🎣 Temptation</button>
-                                <button onclick="toggleTag('grace')" class="tag-badge filter-tag topic" data-tag="grace" aria-pressed="false">💝 Grace</button>
-                                <button onclick="toggleTag('trust')" class="tag-badge filter-tag topic" data-tag="trust" aria-pressed="false">🕊️ Trust</button>
-                                <button onclick="toggleTag('giving')" class="tag-badge filter-tag topic" data-tag="giving" aria-pressed="false">💰 Giving</button>
-                                <button onclick="toggleTag('courage')" class="tag-badge filter-tag topic" data-tag="courage" aria-pressed="false">🦁 Courage</button>
+                                <!-- Dynamically populated -->
                             </div>
                         </div>
 
@@ -426,18 +437,7 @@
                         <div>
                             <h4 class="text-sm font-semibold text-gray-600 mb-2 uppercase tracking-wide">Scriptures</h4>
                             <div class="flex flex-wrap gap-2" id="scripture-tags">
-                                <button onclick="toggleTag('psalms')" class="tag-badge filter-tag scripture" data-tag="psalms" aria-pressed="false">📖 Psalms</button>
-                                <button onclick="toggleTag('proverbs')" class="tag-badge filter-tag scripture" data-tag="proverbs" aria-pressed="false">📖 Proverbs</button>
-                                <button onclick="toggleTag('matthew')" class="tag-badge filter-tag scripture" data-tag="matthew" aria-pressed="false">📖 Matthew</button>
-                                <button onclick="toggleTag('romans')" class="tag-badge filter-tag scripture" data-tag="romans" aria-pressed="false">📖 Romans</button>
-                                <button onclick="toggleTag('corinthians')" class="tag-badge filter-tag scripture" data-tag="corinthians" aria-pressed="false">📖 Corinthians</button>
-                                <button onclick="toggleTag('ephesians')" class="tag-badge filter-tag scripture" data-tag="ephesians" aria-pressed="false">📖 Ephesians</button>
-                                <button onclick="toggleTag('james')" class="tag-badge filter-tag scripture" data-tag="james" aria-pressed="false">📖 James</button>
-                                <button onclick="toggleTag('jonah')" class="tag-badge filter-tag scripture" data-tag="jonah" aria-pressed="false">📖 Jonah</button>
-                                <button onclick="toggleTag('genesis')" class="tag-badge filter-tag scripture" data-tag="genesis" aria-pressed="false">📖 Genesis</button>
-                                <button onclick="toggleTag('isaiah')" class="tag-badge filter-tag scripture" data-tag="isaiah" aria-pressed="false">📖 Isaiah</button>
-                                <button onclick="toggleTag('john')" class="tag-badge filter-tag scripture" data-tag="john" aria-pressed="false">📖 John</button>
-                                <button onclick="toggleTag('luke')" class="tag-badge filter-tag scripture" data-tag="luke" aria-pressed="false">📖 Luke</button>
+                                <!-- Dynamically populated -->
                             </div>
                         </div>
 
@@ -466,478 +466,13 @@
 
             <!-- Sermons Grid -->
             <div id="sermons-container" class="grid grid-template-columns-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                <!-- 2025 Sermons -->
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="worship,identity,psalms,ephesians">
-                    <div class="sermon-content">
-                        <time datetime="2025-01-05" class="sermon-date">📅 05 Jan 2025</time>
-                        <h3 class="sermon-title">✨ People of God: Made To Worship</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">worship</span>
-                            <span class="tag theme">identity</span>
-                            <span class="tag scripture">Psalm 95</span>
-                            <span class="tag scripture">Ephesians 2</span>
-                        </div>
-                        <a href="2025-01-05-people-of-god-made-to-worship.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="identity,worship,matthew,ephesians,james">
-                    <div class="sermon-content">
-                        <time datetime="2025-01-12" class="sermon-date">📅 12 Jan 2025</time>
-                        <h3 class="sermon-title">✨ People of God: What Are You Made For?</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">identity</span>
-                            <span class="tag theme">worship</span>
-                            <span class="tag scripture">Matthew 5</span>
-                            <span class="tag scripture">Ephesians 2</span>
-                        </div>
-                        <a href="2025-01-12-what-are-you-made-for.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="identity,grace,matthew,corinthians,proverbs">
-                    <div class="sermon-content">
-                        <time datetime="2025-01-19" class="sermon-date">📅 19 Jan 2025</time>
-                        <h3 class="sermon-title">🪞 People of God: But First, Look Inside</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">identity</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">Matthew 23</span>
-                            <span class="tag scripture">1 Peter 2</span>
-                        </div>
-                        <a href="2025-01-19-people-of-gods-but-first-look-inside.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="healing,grace,romans,corinthians,isaiah">
-                    <div class="sermon-content">
-                        <time datetime="2025-05-11" class="sermon-date">📅 11 May 2025</time>
-                        <h3 class="sermon-title">🩺 Known: Jehovah Rapha: The Lord Who Heals</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">healing</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">Exodus 15</span>
-                            <span class="tag scripture">Isaiah 65</span>
-                        </div>
-                        <a href="2025-05-11-known-jehovah-rapha-lord-who-heals.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="emotions,relationships,matthew,romans">
-                    <div class="sermon-content">
-                        <time datetime="2025-06-08" class="sermon-date">📅 08 Jun 2025</time>
-                        <h3 class="sermon-title">🍯 The Sticky Stuff: Contempt</h3>
-                        <div class="sermon-tags">
-                            <span class="tag topic">emotions</span>
-                            <span class="tag theme">relationships</span>
-                            <span class="tag scripture">Matthew 5</span>
-                            <span class="tag scripture">Romans 12</span>
-                        </div>
-                        <a href="2025-06-08-sticky-stuff-contempt.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="emotions,trust,grace,relationships,corinthians,psalms,ephesians">
-                    <div class="sermon-content">
-                        <time datetime="2025-06-15" class="sermon-date">📅 15 Jun 2025</time>
-                        <h3 class="sermon-title">😔 The Sticky Stuff: Discouragement</h3>
-                        <div class="sermon-tags">
-                            <span class="tag topic">emotions</span>
-                            <span class="tag topic">trust</span>
-                            <span class="tag scripture">2 Corinthians 4</span>
-                            <span class="tag scripture">Psalm 42</span>
-                        </div>
-                        <a href="2025-06-15-sticky-stuff-discouragement.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="relationships,grace,matthew,james,ephesians,romans,corinthians">
-                    <div class="sermon-content">
-                        <time datetime="2025-06-22" class="sermon-date">📅 22 Jun 2025</time>
-                        <h3 class="sermon-title">🤝 The Sticky Stuff: Disagreement</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">relationships</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">Matthew 5</span>
-                            <span class="tag scripture">James 1</span>
-                        </div>
-                        <a href="2025-06-22-sticky-stuff-disagreement.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="emotions,grace,corinthians,luke,ephesians">
-                    <div class="sermon-content">
-                        <time datetime="2025-06-29" class="sermon-date">📅 29 Jun 2025</time>
-                        <h3 class="sermon-title">😤 The Sticky Stuff: Resentment</h3>
-                        <div class="sermon-tags">
-                            <span class="tag topic">emotions</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">1 Corinthians 13</span>
-                            <span class="tag scripture">Luke 15</span>
-                        </div>
-                        <a href="2025-06-29-sticky-stuff-resentment.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="worship,grace,corinthians,psalms,matthew">
-                    <div class="sermon-content">
-                        <time datetime="2025-07-06" class="sermon-date">📅 06 Jul 2025</time>
-                        <h3 class="sermon-title">⚖️ The Sticky Stuff: Spiritual Imbalance</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">worship</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">1 Corinthians 8-12</span>
-                            <span class="tag scripture">Psalm 46</span>
-                        </div>
-                        <a href="2025-07-06-sticky-stuff-spiritual-imbalance.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="emotions,relationships,genesis,proverbs,matthew,romans">
-                    <div class="sermon-content">
-                        <time datetime="2025-07-13" class="sermon-date">📅 13 Jul 2025</time>
-                        <h3 class="sermon-title">😠 The Sticky Stuff: Annoyance</h3>
-                        <div class="sermon-tags">
-                            <span class="tag topic">emotions</span>
-                            <span class="tag theme">relationships</span>
-                            <span class="tag scripture">Proverbs</span>
-                            <span class="tag scripture">Romans 12</span>
-                        </div>
-                        <a href="2025-07-13-sticky-stuff-annoyance.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="spiritual-warfare,courage,ephesians,james,john">
-                    <div class="sermon-content">
-                        <time datetime="2025-07-27" class="sermon-date">📅 27 Jul 2025</time>
-                        <h3 class="sermon-title">🎯 Clickbait: The Battle Is Real</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">spiritual-warfare</span>
-                            <span class="tag topic">courage</span>
-                            <span class="tag scripture">Ephesians 6</span>
-                            <span class="tag scripture">1 Peter 5</span>
-                        </div>
-                        <a href="2025-07-27-clickbait-battle-is-real.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="spiritual-warfare,temptation,genesis,john,corinthians,ephesians">
-                    <div class="sermon-content">
-                        <time datetime="2025-08-03" class="sermon-date">📅 03 Aug 2025</time>
-                        <h3 class="sermon-title">🎣 Clickbait: Satan: The Father of Lies</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">spiritual-warfare</span>
-                            <span class="tag topic">temptation</span>
-                            <span class="tag scripture">Genesis 2-3</span>
-                            <span class="tag scripture">1 John 4</span>
-                        </div>
-                        <a href="2025-08-03-clickbait-satan-father-of-lies.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="spiritual-warfare,temptation,matthew,james,corinthians">
-                    <div class="sermon-content">
-                        <time datetime="2025-08-10" class="sermon-date">📅 10 Aug 2025</time>
-                        <h3 class="sermon-title">⚔️ Clickbait: Temptation's Triple Threat: Your Battle Plan</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">spiritual-warfare</span>
-                            <span class="tag topic">temptation</span>
-                            <span class="tag scripture">Matthew 4</span>
-                            <span class="tag scripture">James 1</span>
-                        </div>
-                        <a href="2025-08-10-clickbait-temptations-triple-threat-battle-plan.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="spiritual-warfare,courage,corinthians,matthew,john">
-                    <div class="sermon-content">
-                        <time datetime="2025-08-17" class="sermon-date">📅 17 Aug 2025</time>
-                        <h3 class="sermon-title">⚔️ Clickbait: Outwitting Satan</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">spiritual-warfare</span>
-                            <span class="tag topic">courage</span>
-                            <span class="tag scripture">2 Corinthians 2</span>
-                            <span class="tag scripture">1 Peter 5</span>
-                        </div>
-                        <a href="2025-08-17-clickbait-outwitting-satan.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="spiritual-warfare,grace,corinthians,john,james,psalms">
-                    <div class="sermon-content">
-                        <time datetime="2025-08-24" class="sermon-date">📅 24 Aug 2025</time>
-                        <h3 class="sermon-title">⚔️ Clickbait: Defeating Strongholds</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">spiritual-warfare</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">2 Corinthians 10</span>
-                            <span class="tag scripture">John 10</span>
-                        </div>
-                        <a href="2025-08-24-clickbait-defeating-strongholds.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="identity,worship,proverbs,ephesians,genesis">
-                    <div class="sermon-content">
-                        <time datetime="2025-08-31" class="sermon-date">📅 31 Aug 2025</time>
-                        <h3 class="sermon-title">💝 The Heart of Hearing: The Inner Life</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">identity</span>
-                            <span class="tag theme">worship</span>
-                            <span class="tag scripture">Proverbs</span>
-                            <span class="tag scripture">1 Kings 4</span>
-                        </div>
-                        <a href="2025-08-31-the-heart-of-hearing-1.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="emotions,grace,proverbs,isaiah,romans,genesis">
-                    <div class="sermon-content">
-                        <time datetime="2025-09-07" class="sermon-date">📅 07 Sep 2025</time>
-                        <h3 class="sermon-title">🎭 The Heart of Hearing: Navigating Pride</h3>
-                        <div class="sermon-tags">
-                            <span class="tag topic">emotions</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">Proverbs</span>
-                            <span class="tag scripture">Isaiah 14</span>
-                        </div>
-                        <a href="2025-09-07-the-heart-of-hearing-navigating-pride.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="emotions,grace,proverbs,ephesians">
-                    <div class="sermon-content">
-                        <time datetime="2025-09-14" class="sermon-date">📅 14 Sep 2025</time>
-                        <h3 class="sermon-title">😤 The Heart of Hearing: Anger Management</h3>
-                        <div class="sermon-tags">
-                            <span class="tag topic">emotions</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">Proverbs</span>
-                            <span class="tag scripture">Ephesians 4</span>
-                        </div>
-                        <a href="2025-09-14-the-heart-of-hearing-anger-management.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="fresh-start,courage,isaiah,romans,corinthians,ephesians">
-                    <div class="sermon-content">
-                        <time datetime="2025-09-21" class="sermon-date">📅 21 Sep 2025</time>
-                        <h3 class="sermon-title">🌅 Fresh Start: Awake!</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">fresh-start</span>
-                            <span class="tag topic">courage</span>
-                            <span class="tag scripture">Isaiah 43</span>
-                            <span class="tag scripture">Romans 13</span>
-                        </div>
-                        <a href="2025-09-21-fresh-start-awake.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="fresh-start,identity,isaiah,luke,corinthians,ephesians,proverbs">
-                    <div class="sermon-content">
-                        <time datetime="2025-09-28" class="sermon-date">📅 28 Sep 2025</time>
-                        <h3 class="sermon-title">👁️ Fresh Start: See Clearer</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">fresh-start</span>
-                            <span class="tag theme">identity</span>
-                            <span class="tag scripture">Isaiah 43</span>
-                            <span class="tag scripture">Luke 24</span>
-                        </div>
-                        <a href="2025-09-28-fresh-start-see-clearer.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="fresh-start,trust,psalms,proverbs">
-                    <div class="sermon-content">
-                        <time datetime="2025-10-05" class="sermon-date">📅 05 Oct 2025</time>
-                        <h3 class="sermon-title">🕊️ Fresh Start: Trust Deeper</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">fresh-start</span>
-                            <span class="tag topic">trust</span>
-                            <span class="tag scripture">Psalm 46, 62</span>
-                            <span class="tag scripture">Proverbs 3</span>
-                        </div>
-                        <a href="2025-10-05-fresh-start-trust-deeper.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="fresh-start,prayer,matthew">
-                    <div class="sermon-content">
-                        <time datetime="2025-10-12" class="sermon-date">📅 12 Oct 2025</time>
-                        <h3 class="sermon-title">🙏 Fresh Start: Pray Bigger</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">fresh-start</span>
-                            <span class="tag topic">prayer</span>
-                            <span class="tag scripture">Matthew 26</span>
-                            <span class="tag scripture">Hebrews 4</span>
-                        </div>
-                        <a href="2025-10-12-fresh-start-pray-bigger.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="fresh-start,giving,isaiah,matthew,genesis,john">
-                    <div class="sermon-content">
-                        <time datetime="2025-10-19" class="sermon-date">📅 19 Oct 2025</time>
-                        <h3 class="sermon-title">💝 Fresh Start: Give Easier</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">fresh-start</span>
-                            <span class="tag topic">giving</span>
-                            <span class="tag scripture">Matthew 6</span>
-                            <span class="tag scripture">Malachi 3</span>
-                        </div>
-                        <a href="2025-10-19-fresh-start-give-easier.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="fresh-start,courage,john,romans,ephesians,isaiah">
-                    <div class="sermon-content">
-                        <time datetime="2025-10-26" class="sermon-date">📅 26 Oct 2025</time>
-                        <h3 class="sermon-title">🦋 Fresh Start: Live Bolder</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">fresh-start</span>
-                            <span class="tag topic">courage</span>
-                            <span class="tag scripture">John 12</span>
-                            <span class="tag scripture">Romans 12</span>
-                        </div>
-                        <a href="2025-10-26-fresh-start-live-bolder.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="obedience,courage,jonah,luke,james,john">
-                    <div class="sermon-content">
-                        <time datetime="2025-11-02" class="sermon-date">📅 02 Nov 2025</time>
-                        <h3 class="sermon-title">🌊 Turning Tides: You Can Run, But You Can't Hide</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">obedience</span>
-                            <span class="tag topic">courage</span>
-                            <span class="tag scripture">Jonah 1</span>
-                            <span class="tag scripture">1 John 1</span>
-                        </div>
-                        <a href="2025-11-02-turning-tides-you-can-run-but-you-cant-hide.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="obedience,grace,jonah,psalms,matthew,romans">
-                    <div class="sermon-content">
-                        <time datetime="2025-11-09" class="sermon-date">📅 09 Nov 2025</time>
-                        <h3 class="sermon-title">🌊 Turning Tides: Swallowed by Grace</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">obedience</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">Jonah 2</span>
-                            <span class="tag scripture">Psalm 31, 40</span>
-                        </div>
-                        <a href="2025-11-09-turning-tides-swallowed-by-grace.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="obedience,grace,jonah,matthew,psalms,james,isaiah">
-                    <div class="sermon-content">
-                        <time datetime="2025-11-16" class="sermon-date">📅 16 Nov 2025</time>
-                        <h3 class="sermon-title">🌊 Turning Tides: The God of Second Chances</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">obedience</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">Jonah 3</span>
-                            <span class="tag scripture">Matthew 12</span>
-                        </div>
-                        <a href="2025-11-16-turning-tides-the-god-of-second-chances.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="obedience,emotions,jonah,romans,matthew">
-                    <div class="sermon-content">
-                        <time datetime="2025-11-23" class="sermon-date">📅 23 Nov 2025</time>
-                        <h3 class="sermon-title">🌊 Turning Tides: Not-So-Righteous, Righteous Anger</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">obedience</span>
-                            <span class="tag topic">emotions</span>
-                            <span class="tag scripture">Jonah 4</span>
-                            <span class="tag scripture">Romans 5</span>
-                        </div>
-                        <a href="2025-11-23-turning-tides-not-so-righteous-righteous-anger.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="advent,trust,isaiah,luke,corinthians,psalms">
-                    <div class="sermon-content">
-                        <time datetime="2025-11-30" class="sermon-date">📅 30 Nov 2025</time>
-                        <h3 class="sermon-title">🕯️ The Weary World Rejoices: Rejoice in the Waiting</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">advent</span>
-                            <span class="tag topic">trust</span>
-                            <span class="tag scripture">Isaiah 40</span>
-                            <span class="tag scripture">Habakkuk</span>
-                        </div>
-                        <a href="2025-11-30-the-weary-world-rejoices-rejoice-in-the-waiting.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="advent,grace,proverbs,psalms,matthew,luke">
-                    <div class="sermon-content">
-                        <time datetime="2025-12-07" class="sermon-date">📅 07 Dec 2025</time>
-                        <h3 class="sermon-title">🎁 The Weary World Rejoices: Rejoice in the Unexpected</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">advent</span>
-                            <span class="tag topic">grace</span>
-                            <span class="tag scripture">Luke 1</span>
-                            <span class="tag scripture">Galatians 4</span>
-                        </div>
-                        <a href="2025-12-07-the-weary-world-rejoices-rejoice-in-the-unexpected.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="advent,trust,matthew,luke,james,romans,psalms">
-                    <div class="sermon-content">
-                        <time datetime="2025-12-14" class="sermon-date">📅 14 Dec 2025</time>
-                        <h3 class="sermon-title">🎹 The Weary World Rejoices: Choosing Joy in the Struggle</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">advent</span>
-                            <span class="tag topic">trust</span>
-                            <span class="tag scripture">James 1</span>
-                            <span class="tag scripture">Psalm 42, 88</span>
-                        </div>
-                        <a href="2025-12-14-the-weary-world-rejoices-choosing-joy-in-the-struggle.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <article class="sermon-card sermon-article year-2025" data-year="2025" data-tags="advent,courage,matthew,isaiah">
-                    <div class="sermon-content">
-                        <time datetime="2025-12-21" class="sermon-date">📅 21 Dec 2025</time>
-                        <h3 class="sermon-title">⭐ The Weary World Rejoices: Rejoice in Opposition</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">advent</span>
-                            <span class="tag topic">courage</span>
-                            <span class="tag scripture">Matthew 2</span>
-                            <span class="tag scripture">Isaiah 9</span>
-                        </div>
-                        <a href="2025-12-21-the-weary-world-rejoices-rejoice-in-opposition.html" class="btn-view purple">View Infographic →</a>
-                    </div>
-                </article>
-
-                <!-- 2024 Sermons -->
-                <article class="sermon-card sermon-article year-2024" data-year="2024" data-tags="relationships,identity,john,corinthians,ephesians,proverbs">
-                    <div class="sermon-content">
-                        <time datetime="2024-11-17" class="sermon-date">📅 17 Nov 2024</time>
-                        <h3 class="sermon-title">🎯 Finding Purpose in Singleness, Marriage and Parenting</h3>
-                        <div class="sermon-tags">
-                            <span class="tag theme">relationships</span>
-                            <span class="tag theme">identity</span>
-                            <span class="tag scripture">John 17</span>
-                            <span class="tag scripture">Ephesians 5</span>
-                        </div>
-                        <a href="2024-11-17-rewriting-my-worldview-finding-purpose-in-singleness-marriage-and-parenting.html" class="btn-view indigo">View Infographic →</a>
-                    </div>
-                </article>
-
-                <!-- 2023 Placeholder -->
-                <article class="sermon-card sermon-article year-2023 opacity-60" data-year="2023" data-tags="" style="background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);">
-                    <div class="sermon-content text-center">
-                        <div class="text-6xl mb-4">🚧</div>
-                        <h3 class="text-xl font-bold text-gray-700 mb-2">Coming Soon</h3>
-                        <p class="text-gray-600">2023 sermon infographics will be added here</p>
-                    </div>
-                </article>
+                <!-- Loading skeleton -->
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
             </div>
 
             <!-- No Results Message -->
@@ -960,10 +495,10 @@
                 </h2>
                 <div class="bg-white rounded-2xl shadow-xl p-8 space-y-6">
                     <p class="text-lg text-gray-700 leading-relaxed">
-                        This collection features visual summaries and infographics from sermons at Island ECC, carefully crafted to help believers reflect on key teachings and apply biblical truths to daily life.
+                        This collection features visual summaries and webpages from sermons at Island ECC, carefully crafted to help believers reflect on key teachings and apply biblical truths to daily life.
                     </p>
                     <p class="text-lg text-gray-700 leading-relaxed">
-                        Each infographic distills complex spiritual concepts into accessible, memorable visuals that serve as practical tools for spiritual growth and community discussion.
+                        Each webpage distills complex spiritual concepts into accessible, memorable visuals that serve as practical tools for spiritual growth and community discussion.
                     </p>
                     <div class="border-t border-gray-200 pt-6">
                         <p class="text-gray-600 italic">
@@ -1004,9 +539,151 @@
         // Global state
         let activeTags = new Set();
         let activeYear = '2025';
+        let sermonsData = null;
+        let tagCategories = null;
 
-        // Lazy load images
-        document.addEventListener('DOMContentLoaded', function() {
+        // Format date for display
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = date.toLocaleString('en-US', { month: 'short' });
+            const year = date.getFullYear();
+            return `📅 ${day} ${month} ${year}`;
+        }
+
+        // Get button color class based on year
+        function getButtonClass(year) {
+            return year === 2025 ? 'purple' : 'indigo';
+        }
+
+        // Render a single sermon card
+        function renderSermonCard(sermon) {
+            const displayTags = sermon.displayTags.map(tag => 
+                `<span class="tag ${tag.type}">${tag.label}</span>`
+            ).join('');
+
+            return `
+                <article class="sermon-card sermon-article year-${sermon.year}" 
+                         data-year="${sermon.year}" 
+                         data-tags="${sermon.tags.join(',')}">
+                    <div class="sermon-content">
+                        <time datetime="${sermon.date}" class="sermon-date">${formatDate(sermon.date)}</time>
+                        <h3 class="sermon-title">${sermon.emoji} ${sermon.title}</h3>
+                        <div class="sermon-tags">
+                            ${displayTags}
+                        </div>
+                        <a href="${sermon.link}" class="btn-view ${getButtonClass(sermon.year)}">View Webpage →</a>
+                    </div>
+                </article>
+            `;
+        }
+
+        // Render all sermon cards
+        function renderSermons() {
+            const container = document.getElementById('sermons-container');
+            const html = sermonsData.map(renderSermonCard).join('');
+            
+            // Add "Coming Soon" placeholder for 2023
+            const comingSoonHtml = `
+                <article class="sermon-card sermon-article year-2023 opacity-60" data-year="2023" data-tags="" style="background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);">
+                    <div class="sermon-content text-center">
+                        <div class="text-6xl mb-4">🚧</div>
+                        <h3 class="text-xl font-bold text-gray-700 mb-2">Coming Soon</h3>
+                        <p class="text-gray-600">2023 sermon webpages will be added here</p>
+                    </div>
+                </article>
+            `;
+            
+            container.innerHTML = html + comingSoonHtml;
+        }
+
+        // Render tag filter buttons
+        function renderTagFilters() {
+            // Render series tags
+            const seriesContainer = document.getElementById('series-tags');
+            if (tagCategories.series) {
+                seriesContainer.innerHTML = tagCategories.series.map(tag => 
+                    `<button onclick="toggleTag('${tag.id}')" class="tag-badge filter-tag series" data-tag="${tag.id}" aria-pressed="false">${tag.emoji} ${tag.label}</button>`
+                ).join('');
+            }
+
+            // Render theme tags
+            const themeContainer = document.getElementById('theme-tags');
+            themeContainer.innerHTML = tagCategories.themes.map(tag => 
+                `<button onclick="toggleTag('${tag.id}')" class="tag-badge filter-tag theme" data-tag="${tag.id}" aria-pressed="false">${tag.emoji} ${tag.label}</button>`
+            ).join('');
+
+            // Render topic tags
+            const topicContainer = document.getElementById('topic-tags');
+            topicContainer.innerHTML = tagCategories.topics.map(tag => 
+                `<button onclick="toggleTag('${tag.id}')" class="tag-badge filter-tag topic" data-tag="${tag.id}" aria-pressed="false">${tag.emoji} ${tag.label}</button>`
+            ).join('');
+
+            // Render scripture tags
+            const scriptureContainer = document.getElementById('scripture-tags');
+            scriptureContainer.innerHTML = tagCategories.scriptures.map(tag => 
+                `<button onclick="toggleTag('${tag.id}')" class="tag-badge filter-tag scripture" data-tag="${tag.id}" aria-pressed="false">${tag.emoji} ${tag.label}</button>`
+            ).join('');
+        }
+
+        // Render year filter buttons
+        function renderYearFilters() {
+            const years = [...new Set(sermonsData.map(s => s.year))].sort((a, b) => b - a);
+            const container = document.getElementById('year-filters');
+            
+            const buttons = years.map(year => {
+                const isActive = year.toString() === activeYear;
+                return `<button onclick="filterYear('${year}')" 
+                               class="filter-btn year-btn ${isActive ? 'year-btn-active text-white' : 'inactive'}" 
+                               data-year="${year}" 
+                               aria-pressed="${isActive}">📅 ${year}</button>`;
+            }).join('');
+            
+            const allButton = `<button onclick="filterYear('all')" 
+                                      class="filter-btn year-btn inactive" 
+                                      data-year="all" 
+                                      aria-pressed="false">🌐 All Years</button>`;
+            
+            container.innerHTML = buttons + allButton;
+        }
+
+        // Load data from JSON
+        async function loadData() {
+            try {
+                const response = await fetch('sermons_data.json');
+                const data = await response.json();
+                
+                sermonsData = data.sermons;
+                tagCategories = data.tagCategories;
+                
+                // Render everything
+                renderYearFilters();
+                renderTagFilters();
+                renderSermons();
+                
+                // Update stats
+                updateStats();
+                
+                // Apply initial filter (show 2025 by default)
+                applyTagFilters();
+                
+                // Setup lazy loading for hero images
+                setupLazyLoading();
+                
+            } catch (error) {
+                console.error('Failed to load sermon data:', error);
+                document.getElementById('sermons-container').innerHTML = `
+                    <div class="col-span-full text-center py-16">
+                        <div class="text-6xl mb-4">⚠️</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Failed to Load Sermons</h3>
+                        <p class="text-gray-600">Please refresh the page to try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Setup lazy loading for images
+        function setupLazyLoading() {
             const images = document.querySelectorAll('.lazy-image');
             const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -1019,10 +696,10 @@
             });
 
             images.forEach(img => imageObserver.observe(img));
-            
-            // Initial update
-            updateStats();
-        });
+        }
+
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', loadData);
 
         // Toggle tag cloud visibility
         function toggleTagCloud() {
@@ -1133,7 +810,8 @@
                 noResults.classList.add('hidden');
             }
             
-            updateStats();
+            // Update stats after animation completes
+            setTimeout(updateStats, 450);
         }
 
         // Year filter function
@@ -1147,7 +825,7 @@
                 btn.setAttribute('aria-pressed', 'false');
             });
             
-            const activeBtn = event.target;
+            const activeBtn = document.querySelector(`[data-year="${year}"]`);
             activeBtn.classList.remove('inactive');
             activeBtn.classList.add('year-btn-active', 'text-white');
             activeBtn.setAttribute('aria-pressed', 'true');
@@ -1158,12 +836,32 @@
 
         // Update stats
         function updateStats() {
-            const allCards = document.querySelectorAll('.sermon-card').length - 1; // Exclude "Coming Soon"
-            const visibleCards = document.querySelectorAll('.sermon-card[style*="display: block"]').length || 
-                                document.querySelectorAll('.sermon-card:not([style*="display: none"])').length - 1;
+            if (!sermonsData) return;
             
-            document.getElementById('total-sermons').textContent = allCards;
-            document.getElementById('visible-sermons').textContent = visibleCards;
+            const totalSermons = sermonsData.length;
+            
+            // Count visible cards by checking computed style
+            const allCards = document.querySelectorAll('.sermon-card');
+            let visibleCount = 0;
+            allCards.forEach(card => {
+                const style = window.getComputedStyle(card);
+                // Skip the "Coming Soon" placeholder (has empty data-tags)
+                if (card.dataset.tags !== '' && style.display !== 'none') {
+                    visibleCount++;
+                }
+            });
+            
+            // Count total unique tags
+            const allTags = [
+                ...(tagCategories.series || []),
+                ...tagCategories.themes,
+                ...tagCategories.topics,
+                ...tagCategories.scriptures
+            ];
+            
+            document.getElementById('total-sermons').textContent = totalSermons;
+            document.getElementById('visible-sermons').textContent = visibleCount;
+            document.getElementById('total-tags').textContent = allTags.length;
             
             // Animate counter
             const counters = document.querySelectorAll('.stats-counter');
@@ -1185,16 +883,6 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                }
-            });
-        });
-
-        // Keyboard navigation for filter buttons
-        document.querySelectorAll('.filter-btn, .tag-badge').forEach(btn => {
-            btn.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    btn.click();
                 }
             });
         });

@@ -1,463 +1,1198 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Sticky Stuff: Annoyance - Sermon Infographic</title>
+    <title>The Sticky Stuff: Annoyance | Island ECC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --primary: #8B4513;
+            --primary-dark: #654321;
+            --accent: #D2691E;
+            --bg-light: #FFF8F0;
+            --bg-card: #FFFFFF;
+            --text-primary: #2C1810;
+            --text-secondary: #6B5847;
+            --border: #E5D4C1;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-light);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            line-height: 1.3;
         }
-        
-        .header {
-            background: linear-gradient(45deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .header h2 {
-            font-size: 1.8em;
-            margin-bottom: 5px;
-        }
-        
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .content {
-            padding: 40px;
-        }
-        
-        .section {
-            margin-bottom: 40px;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-        
-        .foundation {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-        }
-        
-        .principles {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        }
-        
-        .examples {
-            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
-        }
-        
-        .quote {
-            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
-            color: white;
-            text-align: center;
-            font-style: italic;
-            font-size: 1.3em;
-            padding: 30px;
-            border-radius: 15px;
-            margin: 30px 0;
-        }
-        
-        .scripture {
+
+        .header-hero {
             position: relative;
-            display: inline;
-            background: #f0f8ff;
-            padding: 2px 6px;
-            border-radius: 4px;
-            border-left: 4px solid #4158D0;
-            cursor: help;
-            transition: all 0.3s ease
-			z-index: 0;
-        }
-        
-        .scripture:hover {
-            background: #e6f3ff;
-            transform: scale(1.02);
-        }
-        
-		.tooltip {
-			position: absolute;
-			bottom: 110%; /* slightly more space above the .scripture badge */
-			left: 50%;
-			transform: translateX(-50%);
-			background: #333;
-			color: white;
-			padding: 18px 22px;    /* bigger padding */
-			border-radius: 10px;   /* bigger radius */
-			font-size: 1em;        /* bigger text size */
-			min-width: 260px;      /* set a minimum width */
-			max-width: 600px;      /* allow for wider verses */
-			white-space: normal;   /* wrap text */
-			opacity: 0;
-			visibility: hidden;
-			transition: all 0.3s ease;
-			z-index: 9999;         /* sits above all other content */
-			line-height: 1.6;
-			box-shadow: 0 6px 24px rgba(0,0,0,0.18); /* subtle shadow for lift */
-		}
-        
-        .scripture:hover .tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .principle-item {
-            background: white;
-            margin: 15px 0;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 5px solid #4158D0;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        
-        .principle-item h4 {
-            color: #4158D0;
-            margin-bottom: 10px;
-            font-size: 1.3em;
-        }
-        
-        .example-box {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 5px solid #C850C0;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        
-        .example-box h4 {
-            color: #C850C0;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        
-        th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-weight: bold;
-        }
-        
-        tr:hover {
-            background: #f5f5f5;
-        }
-        
-        .emoji {
-            font-size: 1.5em;
-            margin-right: 10px;
-        }
-        
-        .flow-step {
+            min-height: 85vh;
             display: flex;
             align-items: center;
-            margin: 20px 0;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
         }
-        
-        .flow-number {
-            background: #4158D0;
+
+        .bg-slider {
+            position: absolute;
+            inset: 0;
+            opacity: 0.15;
+        }
+
+        .bg-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .bg-slide.active {
+            opacity: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        .header-content h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
             color: white;
-            width: 40px;
-            height: 40px;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .header-meta {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-card);
+            border-bottom: 2px solid var(--border);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1.25rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+            background: rgba(139, 69, 19, 0.05);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: rgba(139, 69, 19, 0.08);
+        }
+
+        .content-section {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.9rem;
+            top: 0.5rem;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--bg-light);
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+
+        .timeline-item h3 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .verse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFF 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .verse-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.15);
+        }
+
+        .verse-reference {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .verse-text {
+            font-style: italic;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            background: var(--bg-card);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(139, 69, 19, 0.05);
+        }
+
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--accent);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 3000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            background: rgba(139, 69, 19, 0.02);
+        }
+
+        .quote-box {
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: linear-gradient(to right, rgba(210, 105, 30, 0.05), transparent);
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            margin-right: 20px;
-            flex-shrink: 0;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+            transition: all 0.3s ease;
         }
-        
-        @media (max-width: 768px) {
-            .content {
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .header h2 {
-                font-size: 1.5em;
-            }
-            
-            .tooltip {
-                font-size: 0.8em;
-                max-width: 250px;
-            }
-        }
-		
-		.table-responsive {
-			width: 100%;
-			overflow-x: auto;
-			-webkit-overflow-scrolling: touch;
-		}
 
-		@media (max-width: 768px) {
-			table {
-				font-size: 0.92em;
-				min-width: 600px; /* force table to be wider than the viewport */
-			}
-			th, td {
-				padding: 10px;
-			}
-		}
+        .attribution-short:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+        }
+
+        .attribution-full {
+            display: none;
+            background: white;
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            max-width: 300px;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            border: 1px solid var(--border);
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+
+        .attribution-full a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .attribution-full a:hover {
+            text-decoration: underline;
+        }
+
+        .key-points {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.08), rgba(210, 105, 30, 0.08));
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .key-points h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+
+        .key-points ul {
+            list-style: none;
+        }
+
+        .key-points li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .key-points li::before {
+            content: '🎯';
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .header-hero {
+                min-height: 70vh;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .verse-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .attribution {
+                position: static;
+                margin: 2rem 1.5rem;
+            }
+
+            .attribution-full {
+                display: block;
+                max-width: 100%;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+        }
+
+        @media print {
+            .tabs-container, .btn-group, .attribution {
+                display: none;
+            }
+
+            .content-section {
+                display: block !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎯 The Sticky Stuff: Annoyance</h1>
-            <h2>📖 Pastor Brett - Island ECC</h2>
-            <p>💡 How to Honor God with Annoying People</p>
+    <header class="header-hero">
+        <div class="bg-slider">
+            <div class="bg-slide active" style="background-image: url('https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=1920&q=80');"></div>
+            <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=1920&q=80');"></div>
+            <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1920&q=80');"></div>
         </div>
         
-        <div class="content">
-            <div class="section foundation">
-                <h3><span class="emoji">🏗️</span>Biblical Foundation</h3>
-                <div class="flow-step">
-                    <div class="flow-number">1</div>
-                    <div>
-                        <strong>God Creates Order from Chaos</strong><br>
-                        <span class="scripture">Genesis 1:1-4<span class="tooltip">In the beginning God created the heavens and the earth. Now the earth was formless and empty, darkness was over the surface of the deep, and the Spirit of God was hovering over the waters. And God said, "Let there be light," and there was light. God saw that the light was good, and he separated the light from the darkness.</span></span> - God establishes boundaries (light/dark) to bring peace from chaos
+        <div class="header-content">
+            <h1>The Sticky Stuff: Annoyance</h1>
+            <div class="header-meta">
+                <span>13 July 2025</span> • 
+                <span>Pastor Brett</span> • 
+                <span>Island ECC</span>
+            </div>
+            <p style="color: rgba(255,255,255,0.85); font-size: 1.15rem; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                How do you honor God with annoying people in your life? Discover biblical wisdom for setting healthy boundaries while maintaining love and grace.
+            </p>
+            <div class="btn-group">
+                <a href="https://www.youtube.com/watch?v=UqU5KSFL-34" target="_blank" class="btn btn-primary">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📋 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">📖 Overview</div>
+            <div class="tab" data-tab="sermon">💬 Main Sermon</div>
+            <div class="tab" data-tab="verses">📜 Bible Verses</div>
+            <div class="tab" data-tab="application">🎯 Application</div>
+            <div class="tab" data-tab="reflection">🤔 Reflection</div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="overview" class="content-section active">
+            <div class="card">
+                <h2>🎯 Sermon Overview</h2>
+                <p style="font-size: 1.15rem; margin-bottom: 1.5rem;">
+                    We all have people in our lives who drive us crazy—those who sap our energy, rob our joy, and leave us feeling angry, guilty, frustrated, and confused. This message explores what God says about dealing with the annoying people in our lives while maintaining our faith and integrity.
+                </p>
+                
+                <div class="key-points">
+                    <h3>Key Themes</h3>
+                    <ul>
+                        <li><strong>Boundaries are Biblical:</strong> From Genesis 1 onward, God establishes boundaries to bring order from chaos and peace from disorder.</li>
+                        <li><strong>Boundaries Require Balance:</strong> We need to avoid being either too rigid or too passive in our relational boundaries.</li>
+                        <li><strong>Boundaries Protect Peace:</strong> Healthy boundaries honor God while protecting our emotional and spiritual well-being.</li>
+                        <li><strong>Self-Examination is Critical:</strong> Annoying relationships often reveal our own inadequacies and need for spiritual growth.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🗺️ The Path to Proper Boundaries</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>1. Choose to Rise Above the Offense</h3>
+                        <p>Develop thick skin with a tender heart. Practice being "unoffendable"—don't let every slight or annoyance take up residence in your mind and rob you of joy.</p>
+                        <p class="quote-box">"It is to one's glory to overlook an offense." (Proverbs 19:11)</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>2. Don't Stop Forgiving</h3>
+                        <p>Forgiveness isn't optional. Jesus commanded us to forgive "seventy times seven"—meaning continuously. You need to forgive more than anyone needs to be forgiven.</p>
+                        <p class="quote-box">"Father, forgive them, for they do not know what they are doing." (Luke 23:34)</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>3. Refuse to Play Games</h3>
+                        <p>Don't engage in manipulation, guilt trips, or endless arguments. Like Jesus before Pilate, sometimes the wisest response is no response at all.</p>
+                        <p class="quote-box">"We have renounced secret and shameful ways. We do not use deception, nor do we distort the Word of God." (2 Corinthians 4:2)</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>4. Disengage When Necessary</h3>
+                        <p>Some people thrive on conflict. Don't fuel their fire. Remember: it takes two people to have an argument.</p>
+                        <p class="quote-box">"Just as charcoal and wood keep a fire going, a quarrelsome person keeps an argument going." (Proverbs 26:21)</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>5. Establish Clear Boundaries</h3>
+                        <p>Boundaries are for you, not others. You can't control their behavior, but you can control how you respond and what you allow in your life.</p>
+                        <p class="quote-box">"Have nothing to do with such people." (2 Timothy 3:5)</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>6. Stay on the High Ground</h3>
+                        <p>Don't retaliate. Don't gossip. Don't return insult for insult. You can have boundaries and still be a blessing.</p>
+                        <p class="quote-box">"Do not be overcome by evil, but overcome evil with good." (Romans 12:21)</p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="sermon" class="content-section">
+            <div class="card">
+                <h2>💬 Main Sermon Points</h2>
                 
-                <div class="flow-step">
-                    <div class="flow-number">2</div>
-                    <div>
-                        <strong>First Human Boundary</strong><br>
-                        <span class="scripture">Genesis 2:16-17<span class="tooltip">And the Lord God commanded the man, "You are free to eat from any tree in the garden; but you must not eat from the tree of the knowledge of good and evil, for when you eat from it you will certainly die."</span></span> - One rule in the Garden, demonstrating love requires choice and boundaries
+                <div class="accordion-item active">
+                    <div class="accordion-header">
+                        <h3>🌅 God Establishes Boundaries from the Beginning</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>In Genesis 1, before creation, the earth was "formless and empty, darkness was over the surface of the deep." God's first act was to create a boundary—separating light from darkness, bringing order from chaos.</p>
+                            
+                            <p>In Genesis 2, God gave Adam and Eve complete freedom except for one boundary: "You are free to eat from any tree in the garden, but you must not eat from the tree of the knowledge of good and evil." This boundary was an expression of God's love, giving humanity the choice to love Him back.</p>
+                            
+                            <p>When that boundary was broken, chaos ensued. Throughout Genesis, one boundary became over 600 laws and guidelines—not because God wanted to restrict freedom, but because more rebellion required more clarity to maintain peace.</p>
+                            
+                            <p style="font-weight: 500; color: var(--primary); margin-top: 1rem;">The principle: As chaos grows, so does the need for boundaries.</p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="flow-step">
-                    <div class="flow-number">3</div>
-                    <div>
-                        <strong>God of Peace, Not Disorder</strong><br>
-                        <span class="scripture">1 Corinthians 14:33<span class="tooltip">For God is not a God of disorder but of peace—as in all the congregations of the Lord's people.</span></span> - God desires relational peace within communities
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>🕊️ God is Not a God of Disorder</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>The Apostle Paul wrote to the chaotic church in Corinth: "For God is not a God of disorder, but of peace." Despite all their problems—incest, drunkenness at the Lord's Supper, spiritual abuse—Paul reminded them that behind all the rules is a God who desires peace.</p>
+                            
+                            <p>This peace wasn't just individual; it was relational: "As in all the congregations of the Lord's people." God's design is for peace to exist within our relationships and communities.</p>
+                            
+                            <p>We're called to "live at peace with all people" as much as it depends on us (Romans 12:18). But here's the tension: what if "all people" includes annoying people who never change? The answer: YOU need to change. Change the dynamics, the frequency, the interaction. Establish boundaries so peace can be maintained.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>🎭 The Kennedy Town Lunch Story</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Brett shared a personal story about developing a friendship with someone who worked in Kennedy Town. Every time they planned lunch, the friend would make reservations in Kennedy Town, requiring Pastor Brett to travel there.</p>
+                            
+                            <p>After several lunches, bitterness began to grow. Every MTR ride to Kennedy Town became an opportunity to nurse a wound: "Why am I always going to Kennedy Town? Doesn't he know we have restaurants in Quarry Bay? He's so selfish. He thinks his time is more important than mine."</p>
+                            
+                            <p>The turning point came when Pastor Brett finally suggested meeting in Causeway Bay instead. The friend immediately agreed: "Oh yeah, that's great!" In that moment, the entire narrative collapsed. The friend wasn't selfish or entitled—Pastor Brett had never communicated his preference.</p>
+                            
+                            <p style="font-weight: 500; color: var(--primary); margin-top: 1rem;">The lesson: Drawing a boundary saved the relationship. It prevented resentment from growing and revealed that the "problem" was actually in the lack of communication, not in the friend's character.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>📧 The June Email Story</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Early in his ministry at Island ECC, Pastor Brett received weekly critical emails from a well-intentioned woman (pseudonym: June). Each email followed the "sandwich" pattern: compliment, criticism, compliment.</p>
+                            
+                            <p>Initially, he responded immediately with long, gracious replies. But this actually fed the pattern—June felt heard and continued sending critical feedback every week. The constant criticism began affecting his preaching; he'd be on stage thinking about what June would criticize next. She "lived rent-free" in his head.</p>
+                            
+                            <p>The solution wasn't to attack June or cut her off completely. Instead, Pastor Brett adjusted his boundaries:</p>
+                            <ul style="margin-top: 1rem;">
+                                <li>He shortened his responses significantly</li>
+                                <li>He delayed his replies (Thursday instead of Monday)</li>
+                                <li>He reduced the emotional energy he invested</li>
+                            </ul>
+                            
+                            <p style="font-weight: 500; color: var(--primary); margin-top: 1rem;">The lesson: Boundaries are for YOU, not others. You can't control June's behavior, but you can control how much space she occupies in your life and mind.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>⚠️ When to Draw Hard Boundaries</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Paul's letters give clear guidance on when hard boundaries are necessary. In 2 Timothy 3, he describes people who will be "lovers of themselves, lovers of money, boastful, proud, abusive, disobedient to their parents, ungrateful, unholy, without love, unforgiving, slanderous, without self-control, brutal, not lovers of the good."</p>
+                            
+                            <p>Paul's instruction is direct: "Have nothing to do with such people."</p>
+                            
+                            <p>In Titus 3:10, regarding divisive people in the church: "Warn a divisive person once, and then warn them a second time. After that, have nothing to do with them." Two warnings, then a clear boundary for the protection of the community.</p>
+                            
+                            <p>Paul also confronted the Corinthian church: "You even put up with anyone who enslaves you or exploits you or takes advantage of you or puts on airs or slaps you in the face." He was astounded that they allowed themselves to be mistreated.</p>
+                            
+                            <p style="font-weight: 500; color: var(--primary); margin-top: 1rem;">The principle: Being Christian doesn't mean being a doormat. It means establishing boundaries with grace and love, protecting yourself and others from harm while still extending forgiveness.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>💔 Hurt vs. Harm</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Henry Cloud, author of "Boundaries," makes an important distinction: "There's a big difference between hurt and harm. We all hurt sometimes in facing hard truths, but it makes us grow. It can be the source of huge growth. That is not harmful. Harm is when you damage someone."</p>
+                            
+                            <p>Drawing a boundary might hurt someone's feelings. They might feel rejected or confused. But if done with grace and clarity, it's not harmful—it might actually be helpful. It establishes truth and creates space for both people to grow.</p>
+                            
+                            <p>Guidelines for healthy boundaries:</p>
+                            <ul style="margin-top: 1rem;">
+                                <li><strong>Never attack the person:</strong> Address the behavior, not their character</li>
+                                <li><strong>Never close the door to healing:</strong> Always leave room for reconciliation</li>
+                                <li><strong>Don't be afraid of temporary hurt:</strong> If it promotes long-term health and truth</li>
+                                <li><strong>Communicate clearly:</strong> Vague boundaries create more confusion and conflict</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="section principles">
-                <h3><span class="emoji">🛡️</span>Seven Principles for Healthy Boundaries</h3>
+        </section>
+
+        <section id="verses" class="content-section">
+            <div class="card">
+                <h2>📜 Key Bible Verses</h2>
                 
-                <div class="principle-item">
-                    <h4>1. 🧘‍♂️ Choose to Rise Above Offense</h4>
-                    <p><span class="scripture">Proverbs 19:11<span class="tooltip">A person's wisdom yields patience; it is to one's glory to overlook an offense.</span></span> and <span class="scripture">Proverbs 12:16<span class="tooltip">Fools show their annoyance at once, but the prudent overlook an insult.</span></span> - Develop thick skin but keep a tender heart. Don't let critics live "rent-free" in your head.</p>
-                </div>
-                
-                <div class="principle-item">
-                    <h4>2. 🔄 Don't Stop Forgiving</h4>
-                    <p><span class="scripture">Matthew 18:21-22<span class="tooltip">Then Peter came to Jesus and asked, "Lord, how many times shall I forgive my brother or sister who sins against me? Up to seven times?" Jesus answered, "I tell you, not seven times, but seventy-seven times."</span></span> and <span class="scripture">Luke 23:34<span class="tooltip">Jesus said, "Father, forgive them, for they do not know what they are doing." And they divided up his clothes by casting lots.</span></span> - Forgive for your own benefit, not just theirs.</p>
-                </div>
-                
-                <div class="principle-item">
-                    <h4>3. 🚫 Refuse to Play Games</h4>
-                    <p><span class="scripture">Matthew 27:12-14<span class="tooltip">When he was accused by the chief priests and the elders, he gave no answer. Then Pilate asked him, "Don't you hear the testimony they are bringing against you?" But Jesus made no reply, not even to a single charge—to the great amazement of the governor.</span></span> - Jesus refused to be baited. <span class="scripture">Proverbs 26:21<span class="tooltip">As charcoal to embers and as wood to fire, so is a quarrelsome person for kindling strife.</span></span> - Don't feed the fire of arguments.</p>
-                </div>
-                
-                <div class="principle-item">
-                    <h4>4. 🎯 Remember Boundaries Are For You</h4>
-                    <p><span class="scripture">2 Corinthians 11:20<span class="tooltip">In fact, you even put up with anyone who enslaves you or exploits you or takes advantage of you or pushes himself forward or slaps you in the face.</span></span> - Don't let others exploit you. Set boundaries for your own behavior, not to control others.</p>
-                </div>
-                
-                <div class="principle-item">
-                    <h4>5. ✋ Know When to Have Nothing to Do With Some People</h4>
-                    <p><span class="scripture">2 Timothy 3:1-5<span class="tooltip">But mark this: There will be terrible times in the last days. People will be lovers of themselves, lovers of money, boastful, proud, abusive, disobedient to their parents, ungrateful, unholy, without love, unforgiving, slanderous, without self-control, brutal, not lovers of the good, treacherous, rash, conceited, lovers of pleasure rather than lovers of God—having a form of godliness but denying its power. Have nothing to do with such people.</span></span> and <span class="scripture">Titus 3:10<span class="tooltip">Warn a divisive person once, and then warn them a second time. After that, have nothing to do with them.</span></span> - Sometimes withdrawal is biblical.</p>
-                </div>
-                
-                <div class="principle-item">
-                    <h4>6. 💔 Boundaries Can Hurt, But Shouldn't Harm</h4>
-                    <p>Henry Cloud: "There's a big difference between hurt and harm. We all hurt sometimes in facing hard truths, but it makes us grow... Harm is when you damage someone."</p>
-                </div>
-                
-                <div class="principle-item">
-                    <h4>7. ⛰️ Stay on the High Ground</h4>
-                    <p><span class="scripture">Romans 12:14,17,21<span class="tooltip">Bless those who persecute you; bless and do not curse... Do not repay anyone evil for evil... Do not be overcome by evil, but overcome evil with good.</span></span> - Respond to evil with good, don't retaliate.</p>
+                <div class="verse-grid">
+                    <div class="verse-card">
+                        <div class="verse-reference">Genesis 1:1-4</div>
+                        <div class="verse-text">
+                            "In the beginning God created the heavens and the earth. Now the earth was formless and empty, darkness was over the surface of the deep, and the Spirit of God was hovering over the waters. And God said, 'Let there be light,' and there was light. God saw that the light was good, and he separated the light from the darkness."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Genesis 2:16-17</div>
+                        <div class="verse-text">
+                            "And the LORD God commanded the man, 'You are free to eat from any tree in the garden; but you must not eat from the tree of the knowledge of good and evil, for when you eat from it you will certainly die.'"
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">1 Corinthians 14:33</div>
+                        <div class="verse-text">
+                            "For God is not a God of disorder but of peace—as in all the congregations of the Lord's people."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Romans 12:18</div>
+                        <div class="verse-text">
+                            "If it is possible, as far as it depends on you, live at peace with everyone."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Proverbs 19:11</div>
+                        <div class="verse-text">
+                            "A person's wisdom yields patience; it is to one's glory to overlook an offense."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Proverbs 12:16</div>
+                        <div class="verse-text">
+                            "Fools show their annoyance at once, but the prudent overlook an insult."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Luke 23:34</div>
+                        <div class="verse-text">
+                            "Jesus said, 'Father, forgive them, for they do not know what they are doing.'"
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Matthew 27:12-14</div>
+                        <div class="verse-text">
+                            "When he was accused by the chief priests and the elders, he gave no answer. Then Pilate asked him, 'Don't you hear the testimony they are bringing against you?' But Jesus made no reply, not even to a single charge—to the great amazement of the governor."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">2 Corinthians 4:2</div>
+                        <div class="verse-text">
+                            "Rather, we have renounced secret and shameful ways; we do not use deception, nor do we distort the word of God. On the contrary, by setting forth the truth plainly we commend ourselves to everyone's conscience in the sight of God."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Proverbs 26:21</div>
+                        <div class="verse-text">
+                            "As charcoal to embers and as wood to fire, so is a quarrelsome person for kindling strife."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Proverbs 22:10</div>
+                        <div class="verse-text">
+                            "Drive out the mocker, and out goes strife; quarrels and insults are ended."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">2 Corinthians 11:20</div>
+                        <div class="verse-text">
+                            "In fact, you even put up with anyone who enslaves you or exploits you or takes advantage of you or puts on airs or slaps you in the face."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">2 Timothy 3:2-5</div>
+                        <div class="verse-text">
+                            "People will be lovers of themselves, lovers of money, boastful, proud, abusive, disobedient to their parents, ungrateful, unholy, without love, unforgiving, slanderous, without self-control, brutal, not lovers of the good... have nothing to do with such people."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Titus 3:10</div>
+                        <div class="verse-text">
+                            "Warn a divisive person once, and then warn them a second time. After that, have nothing to do with them."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Romans 12:14, 21</div>
+                        <div class="verse-text">
+                            "Bless those who persecute you; bless and do not curse... Do not be overcome by evil, but overcome evil with good."
+                        </div>
+                    </div>
+
+                    <div class="verse-card">
+                        <div class="verse-reference">Psalm 139:23-24</div>
+                        <div class="verse-text">
+                            "Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me, and lead me in the way everlasting."
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="section examples">
-                <h3><span class="emoji">📚</span>Pastor Brett's Real-Life Examples</h3>
+        </section>
+
+        <section id="application" class="content-section">
+            <div class="card">
+                <h2>🎯 Practical Application</h2>
                 
-                <div class="example-box">
-                    <h4>🎯 Example 1: "June" - The Critical Emailer</h4>
-                    <p><strong>Situation:</strong> A church member who sent critical emails every Monday, always packaged as "suggestions" but consistently negative.</p>
-                    <p><strong>Pastor's Initial Response:</strong> Long, detailed, encouraging replies trying to please her.</p>
-                    <p><strong>The Problem:</strong> It fed the pattern and made him anxious about preaching, always thinking about potential criticism.</p>
-                    <p><strong>The Boundary:</strong> Shorter responses, delayed timing, refusing to let her "live rent-free" in his head.</p>
-                    <p><strong>Lesson:</strong> Sometimes you need to change the dynamic to protect your own peace and effectiveness.</p>
+                <h3 style="color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">For the Too-Rigid Person</h3>
+                <p>If you naturally lean toward strict boundaries and find yourself thinking "finally, a sermon validating my approach," consider:</p>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>Are your boundaries protecting peace or avoiding relationship?</li>
+                    <li>Do you leave room for grace, forgiveness, and second chances?</li>
+                    <li>Are you quick to label someone as "divisive" or "annoying" without examining your own heart?</li>
+                    <li>Have you communicated your boundaries clearly, or do you expect people to read your mind?</li>
+                </ul>
+                <p class="quote-box">Challenge: This week, extend grace to someone who annoys you. Choose to overlook one offense without mentioning it.</p>
+
+                <h3 style="color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">For the Too-Passive Person</h3>
+                <p>If boundaries feel "unloving" to you and you're thinking "but we need to be forgiving 70 times 7," consider:</p>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>Are you confusing boundaries with unforgiveness? (They're not the same)</li>
+                    <li>Are you allowing yourself to be exploited, enslaved, or taken advantage of?</li>
+                    <li>Is your passivity actually enabling destructive behavior in others?</li>
+                    <li>Are you protecting the peace of your community, or allowing division to spread?</li>
+                </ul>
+                <p class="quote-box">Challenge: This week, establish one clear boundary with someone who consistently drains you. Communicate it kindly but firmly.</p>
+
+                <h3 style="color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">Remember: Boundaries Are For YOU</h3>
+                <div style="background: rgba(139, 69, 19, 0.05); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                    <p><strong>You cannot control:</strong></p>
+                    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                        <li>Whether someone calls you after 10 PM</li>
+                        <li>Whether someone sends critical emails</li>
+                        <li>Whether someone argues or picks fights</li>
+                        <li>Whether someone changes their behavior</li>
+                    </ul>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>You CAN control:</strong></p>
+                    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                        <li>Whether you answer calls after 10 PM</li>
+                        <li>How quickly and lengthily you respond to emails</li>
+                        <li>Whether you engage in arguments</li>
+                        <li>How much mental and emotional space someone occupies in your life</li>
+                    </ul>
                 </div>
+
+                <h3 style="color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">Steps to Establish Healthy Boundaries</h3>
+                <div class="timeline" style="margin-top: 1.5rem;">
+                    <div class="timeline-item">
+                        <h3>Step 1: Self-Examination</h3>
+                        <p>Pray Psalm 139:23-24: "Search me, God, and know my heart; test me and know my anxious thoughts." Ask God to reveal:</p>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>Am I too rigid or too passive?</li>
+                            <li>What wounds am I nursing that don't belong?</li>
+                            <li>What false narratives have I created about others?</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>Step 2: Identify the Pattern</h3>
+                        <p>Recognize recurring dynamics that rob your peace:</p>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>Who consistently drains your energy?</li>
+                            <li>What situations trigger disproportionate emotional responses?</li>
+                            <li>Where are you being exploited or taken advantage of?</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>Step 3: Communicate Clearly</h3>
+                        <p>Don't expect people to read your mind. State your needs directly but kindly:</p>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>"I'd love to meet for lunch. How about Causeway Bay this time?"</li>
+                            <li>"I appreciate your feedback. I'll consider it prayerfully."</li>
+                            <li>"I need to step away from this conversation. Let's talk when we're both calmer."</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>Step 4: Adjust Your Response</h3>
+                        <p>Change what YOU do, not what you demand from others:</p>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>Delay responses to reduce reactivity</li>
+                            <li>Shorten interactions that become draining</li>
+                            <li>Exit conversations that turn quarrelsome</li>
+                            <li>Limit frequency of contact with toxic individuals</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>Step 5: Monitor Your Heart</h3>
+                        <p>Boundaries should protect peace, not harbor bitterness:</p>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>Continue forgiving, even as you establish distance</li>
+                            <li>Don't gossip about the person</li>
+                            <li>Pray for them genuinely</li>
+                            <li>Leave room for reconciliation if they change</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reflection" class="content-section">
+            <div class="card">
+                <h2>🤔 Reflection Questions</h2>
                 
-                <div class="example-box">
-                    <h4>🚇 Example 2: The Kennedy Town Lunch Pattern</h4>
-                    <p><strong>Situation:</strong> A friendship where the other person always chose restaurants near his office in Kennedy Town, requiring Pastor Brett to travel.</p>
-                    <p><strong>Pastor's Initial Response:</strong> Went along with it but grew increasingly bitter, creating a false narrative about the friend being selfish.</p>
-                    <p><strong>The Boundary:</strong> Simply suggested meeting in Causeway Bay instead of always Kennedy Town.</p>
-                    <p><strong>The Surprise:</strong> The friend happily agreed, revealing Pastor Brett's assumptions were wrong.</p>
-                    <p><strong>Lesson:</strong> Sometimes boundaries protect us from our own false narratives and prevent relationship damage.</p>
+                <div class="accordion-item active">
+                    <div class="accordion-header">
+                        <h3>1. Do you tend to be too rigid or too passive in your relational boundaries?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Signs you might be too rigid:</strong></p>
+                            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                                <li>You quickly cut people off without giving grace or second chances</li>
+                                <li>You have strict rules about how people should behave toward you</li>
+                                <li>You struggle to forgive or let go of past offenses</li>
+                                <li>You avoid vulnerable or messy relationships altogether</li>
+                                <li>People describe you as "hard to approach" or "judgmental"</li>
+                            </ul>
+                            
+                            <p style="margin-top: 1.5rem;"><strong>Signs you might be too passive:</strong></p>
+                            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                                <li>You feel resentful but never communicate your needs</li>
+                                <li>You allow people to repeatedly take advantage of you</li>
+                                <li>You avoid conflict at all costs, even when necessary</li>
+                                <li>You feel drained by relationships but don't know how to change them</li>
+                                <li>People describe you as "too nice" or a "pushover"</li>
+                            </ul>
+                            
+                            <p style="margin-top: 1.5rem; font-weight: 500; color: var(--primary);">
+                                Journal: Write honestly about which tendency you lean toward. Ask God to show you specific examples from the past month where you've been too rigid or too passive.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>2. How does the scripture in today's message inspire you in your relationships?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Consider these scriptures and how they apply to your current relationships:</p>
+                            
+                            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(139, 69, 19, 0.05); border-radius: 6px;">
+                                <p><strong>"It is to one's glory to overlook an offense" (Proverbs 19:11)</strong></p>
+                                <p style="margin-top: 0.5rem;">What small offenses have you been nursing that you need to overlook? Who in your life deserves the benefit of the doubt?</p>
+                            </div>
+                            
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(139, 69, 19, 0.05); border-radius: 6px;">
+                                <p><strong>"Jesus made no reply" (Matthew 27:14)</strong></p>
+                                <p style="margin-top: 0.5rem;">What arguments or baiting do you need to simply not engage with? Where is silence the wisest response?</p>
+                            </div>
+                            
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(139, 69, 19, 0.05); border-radius: 6px;">
+                                <p><strong>"Have nothing to do with such people" (2 Timothy 3:5)</strong></p>
+                                <p style="margin-top: 0.5rem;">Are there relationships where God is calling you to establish firmer boundaries for the sake of your spiritual health?</p>
+                            </div>
+                            
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(139, 69, 19, 0.05); border-radius: 6px;">
+                                <p><strong>"Do not be overcome by evil, but overcome evil with good" (Romans 12:21)</strong></p>
+                                <p style="margin-top: 0.5rem;">How can you maintain boundaries while still blessing those who annoy or hurt you?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>3. Which one of your relationships needs more firm boundaries or more clear expectations?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p><strong>Exercise: Relationship Audit</strong></p>
+                            <p style="margin-top: 1rem;">List the key relationships in your life (spouse, children, parents, close friends, colleagues, church members). For each, honestly assess:</p>
+                            
+                            <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(139, 69, 19, 0.05); border-radius: 6px;">
+                                <p><strong>Energizing vs. Draining</strong></p>
+                                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                                    <li>Does this relationship give me life or drain me?</li>
+                                    <li>Do I feel peace or anxiety when I see their name on my phone?</li>
+                                    <li>Am I looking forward to seeing them or dreading it?</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="margin-top: 1rem; padding: 1.5rem; background: rgba(139, 69, 19, 0.05); border-radius: 6px;">
+                                <p><strong>Clarity vs. Confusion</strong></p>
+                                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                                    <li>Have I clearly communicated my expectations?</li>
+                                    <li>Do they know what bothers me, or am I expecting them to just know?</li>
+                                    <li>Are we on the same page about the frequency and nature of our interaction?</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="margin-top: 1rem; padding: 1.5rem; background: rgba(139, 69, 19, 0.05); border-radius: 6px;">
+                                <p><strong>Balance vs. Exploitation</strong></p>
+                                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                                    <li>Is this relationship mutual, or am I constantly giving without receiving?</li>
+                                    <li>Do I feel respected and valued, or taken advantage of?</li>
+                                    <li>Can I say "no" without guilt, or do I feel obligated?</li>
+                                </ul>
+                            </div>
+                            
+                            <p style="margin-top: 1.5rem; font-weight: 500; color: var(--primary);">
+                                Action Step: Choose ONE relationship that needs attention. This week, have an honest conversation about expectations, or establish one new boundary to protect your peace.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>4. What false narratives have you created about annoying people in your life?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Brett's Kennedy Town story revealed how we often create entire narratives about people's motives without any evidence. He assumed his friend was selfish and entitled, when the friend was actually just making convenient suggestions.</p>
+                            
+                            <p style="margin-top: 1rem;"><strong>Common false narratives we create:</strong></p>
+                            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                                <li>"They're doing this on purpose to annoy me"</li>
+                                <li>"They think their time is more important than mine"</li>
+                                <li>"They don't care about my feelings"</li>
+                                <li>"They're trying to control/manipulate me"</li>
+                                <li>"They should just know better"</li>
+                            </ul>
+                            
+                            <p style="margin-top: 1.5rem;"><strong>Reality check questions:</strong></p>
+                            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                                <li>Have I actually communicated my concern, or am I expecting mind-reading?</li>
+                                <li>Is there a more charitable explanation for their behavior?</li>
+                                <li>Am I projecting my own insecurities onto their actions?</li>
+                                <li>What evidence do I have for my interpretation?</li>
+                            </ul>
+                            
+                            <p class="quote-box" style="margin-top: 1.5rem;">
+                                "I developed this whole narrative... thinking he was selfish, thinking that he was entitled, thinking that he thought his time was more important than my time. I lived in a lie... See, it took me drawing a boundary so that I didn't nurse a wound to realize the life and the freedom that was actually there." - Pastor Brett
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="quote">
-                <span class="emoji">💭</span>
-                "There's a big difference between hurt and harm. We all hurt sometimes in facing hard truths, but it makes us grow. It can be the source of huge growth. That is not harmful. Harm is when you damage someone."
-                <br><strong>- Henry Cloud</strong>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h2>🙏 Closing Prayer</h2>
+                <div class="quote-box">
+                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                        Father, we pray along with David: <em>Search me, God, and know my heart. Test me and know my anxious thoughts. See if there be any wicked way in me and lead me in a way everlasting.</em>
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        God, we are prone to reach faulty conclusions. We are, at heart, selfish. We think of ourselves often, and we're prone to miscalculate, to misunderstand, to jump to conclusions that are wrong.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        So God, guide us, convict us, comfort us, speak to us. We pray that we could make boundaries that would create peace amidst our chaos. That we could manage our time, our schedules, the people, our emails—all those things, God—that we could infuse our faith into every aspect of our relationships.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        And that we too would find freedom in our decisiveness. That we would choose to love, that we would choose to respond, that we would, as stewards of our own lives, honor You with annoying people.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        We pray in Jesus' name. Amen.
+                    </p>
+                </div>
             </div>
-            
-            <div class="section">
-                <h3><span class="emoji">🙏</span>Conclusion: Seek God's Wisdom</h3>
-                <p>The sermon closes with <span class="scripture">Psalm 139:23-24<span class="tooltip">Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me, and lead me in the way everlasting.</span></span> - A prayer for God to search our hearts and guide our boundary-setting with wisdom, humility, and love.</p>
-            </div>
-            
-            <div class="section">
-                <h3><span class="emoji">📊</span>Scripture Summary Table</h3>
-				<div class="table-responsive">
-					<table>
-						<thead>
-							<tr>
-								<th>📖 Passage</th>
-								<th>🎯 Context in Sermon</th>
-								<th>📚 Original Biblical Context</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Genesis 1:1-4</td>
-								<td>God establishes boundaries in creation</td>
-								<td>Creation account - order from chaos</td>
-							</tr>
-							<tr>
-								<td>Genesis 2:16-17</td>
-								<td>God's first boundary for humanity</td>
-								<td>Free will and moral boundary in Eden</td>
-							</tr>
-							<tr>
-								<td>1 Corinthians 14:33</td>
-								<td>God desires order and peace</td>
-								<td>Paul addressing chaotic Corinthian worship</td>
-							</tr>
-							<tr>
-								<td>Romans 12:18</td>
-								<td>Seek peace with all people</td>
-								<td>Christian living instructions</td>
-							</tr>
-							<tr>
-								<td>Proverbs 19:11</td>
-								<td>Overlooking offenses brings glory</td>
-								<td>Wisdom literature on patience</td>
-							</tr>
-							<tr>
-								<td>Proverbs 12:16</td>
-								<td>Wise people overlook insults</td>
-								<td>Wisdom on self-control</td>
-							</tr>
-							<tr>
-								<td>Matthew 18:21-22</td>
-								<td>Limitless forgiveness (70x7)</td>
-								<td>Jesus teaching Peter about forgiveness</td>
-							</tr>
-							<tr>
-								<td>Luke 23:34</td>
-								<td>Jesus' model of forgiveness</td>
-								<td>Jesus forgiving from the cross</td>
-							</tr>
-							<tr>
-								<td>Matthew 27:12-14</td>
-								<td>Jesus refuses to engage accusers</td>
-								<td>Jesus' trial before Pilate</td>
-							</tr>
-							<tr>
-								<td>2 Corinthians 4:2</td>
-								<td>Paul's straightforward approach</td>
-								<td>Paul defending ministry integrity</td>
-							</tr>
-							<tr>
-								<td>Proverbs 26:21</td>
-								<td>Don't fuel arguments</td>
-								<td>Wisdom against stirring up strife</td>
-							</tr>
-							<tr>
-								<td>Proverbs 22:10</td>
-								<td>Removing mockers ends strife</td>
-								<td>Wisdom on dealing with contentious people</td>
-							</tr>
-							<tr>
-								<td>2 Corinthians 11:20</td>
-								<td>Don't tolerate exploitation</td>
-								<td>Paul critiquing tolerance of false apostles</td>
-							</tr>
-							<tr>
-								<td>2 Timothy 3:1-5</td>
-								<td>Toxic traits - "have nothing to do with such people"</td>
-								<td>Warning about godlessness in last days</td>
-							</tr>
-							<tr>
-								<td>Titus 3:10</td>
-								<td>Warning divisive people, then withdrawing</td>
-								<td>Church discipline instructions</td>
-							</tr>
-							<tr>
-								<td>Romans 12:14,17,21</td>
-								<td>Respond with good, not evil</td>
-								<td>Christian ethical living</td>
-							</tr>
-							<tr>
-								<td>Psalm 139:23-24</td>
-								<td>Prayer for God's searching and guidance</td>
-								<td>David's prayer for self-examination</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-            </div>
+        </section>
+    </main>
+
+    <div class="attribution">
+        <div class="attribution-short">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
         </div>
     </div>
 
+    <script>
+        // Background image slider
+        const slides = document.querySelectorAll('.bg-slide');
+        let currentSlide = 0;
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 5000);
 
-</body></html>
+        // Tab navigation
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all accordion items in the same section
+                const section = item.closest('.content-section');
+                section.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Toggle current item
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Keyboard navigation for tabs
+        tabs.forEach((tab, index) => {
+            tab.setAttribute('tabindex', '0');
+            tab.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    tab.click();
+                }
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    tabs[(index + 1) % tabs.length].focus();
+                }
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    tabs[(index - 1 + tabs.length) % tabs.length].focus();
+                }
+            });
+        });
+
+        // Lazy load images (if any are added dynamically)
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            observer.unobserve(img);
+                        }
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
+        }
+    </script>
+</body>
+</html>

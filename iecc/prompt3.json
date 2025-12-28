@@ -1,0 +1,97 @@
+{
+    "task": "Create a fully responsive, accessible, standalone HTML infographic with interactive UI elements, using sermon transcript content and rules defined in this JSON.",
+    "user_input_details": {
+      "source_video_title": "27 July 2025 | Clickbait: The Battle Is Real",
+      "source_video_channel": "Island ECC",
+      "source_video_url": "https://www.youtube.com/watch?v=KLAEniQuiLo",
+      "sermon_content": {
+        "description": "We all “believe” in invisible things, like oxygen and love, for example. But when it comes to a mysterious spirit world, many of us think it sounds a bit too fanciful. Angels and demons? Really? But the unseen world is real, and by pretending it’s not (or hyper focusing on it), we run the risk of being influenced unknowingly.",
+        "reflection_questions": [
+          "N/A",
+          "N/A"
+        ]
+      }
+    },
+    "workflow": {
+      "output_format": "Single HTML file with embedded CSS and JavaScript (Vanilla JS)",
+      "workflow_type": "two_stage",
+      "stage_1": "Generate three colour palettes, three typographys, three word tones, etc. presented in HTML for selection. After user's selection, generate a JSON for user copy and paste.",
+      "stage_2": "Generate a complete HTML infographic with integrated sermon content and interactive features, based on the user’s choice and answers.",
+      "content_requirements": {
+        "structure_rule": {
+          "flow": "Follow chronological order unless sermon flow is messy; restructure for clarity.",
+          "paraphrasing": "Quote Bible verses verbatim from NIV; paraphrase authors faithfully with citations; if exact author quotation is not verbatim in transcript, mark as paraphrase.",
+          "implied_points": "Include implied sermon points if they add key context."
+        }
+      },
+      "ui_elements": [
+        "accordion",
+        "collapsible",
+        "tooltip",
+        "modal",
+        "tabs",
+        "bento_grid",
+        "chart",
+        "table"
+      ],
+      "ui_elements_explanation": {
+        "accordion": "Opens sections for scripture readings and sermon breakdowns 📖",
+        "collapsible": "Reveals or hides deeper personal application notes ✨",
+        "tooltip": "Shows quick definitions for theological terms and acronyms💡 make sure tooltip is above everything else. The tooltip system should be optimized: it adapts to screen size, dynamically repositions to avoid overflow, and ensures smooth performance. Tooltips wrap text properly, adjust width for desktop, tablet, and mobile, and smartly choose the best placement. This guarantees readable, responsive, and user-friendly tooltips across all devices.",
+        "modal": "Displays full scripture or author or speaker quote context in a popup 🪟",
+        "tabs": "Switches between 'Main Sermon', 'Bible Verses', 'Practical Steps', and 'Reflection Questions' 🗂️",
+        "bento_grid": "Visual summary of the sermon’s battle plan 🎯",
+        "chart": "Visualizes temptation frequency or spiritual progress 📊",
+        "table": "Compares scripture references, author quotes, and key sermon takeaways 📋"
+      },
+      "animation_effect": "Required but use wisely to match the overall theme",
+      "default_states": {
+        "main_content": "expanded",
+        "other_sections": "closed_by_default_unless_beneficial"
+      }
+    },
+    "content_inclusion_rules": {
+      "bible_integration": {
+        "version": "NIV",
+        "include_all": true,
+        "method": "Embed relevant text excerpts in output",
+        "long_passage_handling": "Only the most relevant excerpts are quoted, even if part of a larger passage."
+      },
+      "author_quotes": {
+        "include_all": true,
+        "scope": "Any author quoted or paraphrased in the sermon."
+      },
+      "ui_conflict_resolution": "Dual placement with cross-links between relevant sections.",
+      "quotes_from_the_speakers": "Include if deemed suitable."
+    },
+    "style_preferences": {
+      "emoji_usage": "Mix of thematic (spiritual) and universal emojis",
+      "responsiveness": "Optimized for desktop (up to 32-inch), Mac, iPad, Android tablet, and phone",
+      "accessibility": {
+        "enabled": true,
+        "aria_labels": true,
+        "keyboard_navigation": true,
+        "focus_management": true
+      },
+      "theme_alignment": "Website theme (colors, fonts, and atmosphere) shall match the tone of the content. For sermons, this means reverent, clear, and spiritually uplifting design with calm and focused color palettes."
+    },
+    "performance_preferences": {
+      "optimization_strategy": "Hybrid approach -- fast load time with minimal dependencies",
+      "react_best_practices": true
+    },
+    "date_requirement": "dd mmm yyyy",
+    "must_include_UIs": {
+      "original_sermon_button": {
+        "placement": "End of the header.",
+        "HTML_template": "                        <a href=\"{{source_video_url}}\"                            class=\"{formulate_css_according_to_the_theme}\">                            <svg class=\"w-5 h-5\" fill=\"currentColor\" viewBox=\"0 0 24 24\">                                <path d=\"{formulate_according_to_the_theme}\"/>                            </svg>                            <span>Watch Original Sermon</span>                        </a>"
+      },
+      "view_more_sermon_button": {
+        "placement": "End of the header.",
+        "HTML_template": "                        <a href=\"index.html\"                            class=\"{formulate_css_according_to_the_theme}\">                            <svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">                                <path stroke-linecap=\"{formulate_according_to_the_theme}\" stroke-linejoin=\"{formulate_according_to_the_theme}\" stroke-width=\"2\" d=\"{formulate_according_to_the_theme}\"></path>                            </svg>                            <span>View All Sermons</span>                        </a>"
+      },
+      "attribution_badge": {
+        "placemeent": "Follow the style.",
+        "HTML_template": "    <div style=\"position: fixed; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.95); color: {theme_matching_hex}; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba({theme_matching_rgba}); max-width: 300px; word-wrap: break-word; box-shadow: 0 10px 25px rgba({theme_matching_rgba});\">        <div style=\"margin-bottom: 4px; font-weight: bold; color: {theme_matching_hex}; line-height: 1.3;\">            Generated using LLM with supervision and polishing by             <a href=\"../index.html\" style=\"color: {theme_matching_hex}; text-decoration: none; border-bottom: 1px dotted {theme_matching_hex};\" target=\"_blank\">                benjaminficusmicrocarpa            </a>        </div>        <div>            <a href=\"../license.html\" style=\"color: {theme_matching_hex}; text-decoration: none; font-size: 0.75rem;\" target=\"_blank\">                Released under the MIT License            </a>        </div>    </div>"
+      }
+    }
+  }
