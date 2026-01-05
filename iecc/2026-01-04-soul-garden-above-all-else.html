@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Garden: Above All Else | Island ECC</title>
+    <meta name="description" content="The wisest man who ever lived and the Creator of our souls agree: who we are in our heart and how we care for our heart will determine the course of our life. Discover how to guard your heart above all else.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2d5a4a;
+            --primary-light: #3d7a64;
+            --accent: #d4a574;
+            --accent-light: #e8c49a;
+            --bg-dark: #1a1f1c;
+            --bg-card: #242b27;
+            --text-light: #f0f4f2;
+            --text-muted: #9ca8a2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Garden-themed Hero with Image Slideshow */
+        .hero-header {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Slideshow Container */
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .slideshow-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slideshow-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slideshow-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(26,31,28,0.5) 0%, rgba(26,31,28,0.85) 100%);
+            z-index: 1;
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .series-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(45,90,74,0.4);
+            border: 1px solid var(--primary-light);
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            color: var(--text-light);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .hero-meta {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212,165,116,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border-color: var(--text-light);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(240,244,242,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Sticky Tabs */
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26,31,28,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(61,122,100,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1.25rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .tab:hover {
+            color: var(--accent-light);
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Garden Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary-light), var(--accent), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '🌱';
+            position: absolute;
+            left: -2.75rem;
+            top: 0;
+            font-size: 1.25rem;
+        }
+
+        .timeline-item:nth-child(2)::before { content: '🌿'; }
+        .timeline-item:nth-child(3)::before { content: '🪴'; }
+        .timeline-item:nth-child(4)::before { content: '🌳'; }
+        .timeline-item:nth-child(5)::before { content: '🌻'; }
+        .timeline-item:nth-child(6)::before { content: '🍃'; }
+        .timeline-item:nth-child(7)::before { content: '🌺'; }
+
+        .timeline-content h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .timeline-content p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-light);
+            background: rgba(45,90,74,0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .timeline-content ul {
+            margin-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Insight Boxes */
+        .insight-box {
+            background: linear-gradient(135deg, rgba(45,90,74,0.2), rgba(61,122,100,0.1));
+            border: 1px solid var(--primary-light);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .insight-box h4 {
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        /* Bible Verses Grid */
+        .verse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .verse-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(61,122,100,0.3);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--primary-light));
+        }
+
+        .verse-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(212,165,116,0.15);
+            border-color: var(--accent);
+        }
+
+        .verse-ref {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .verse-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        /* Heart Model Cards */
+        .heart-model {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .heart-card {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(61,122,100,0.3);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .heart-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 40px rgba(45,90,74,0.3);
+        }
+
+        .heart-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .heart-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent-light);
+        }
+
+        .heart-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Reflection Accordion */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(61,122,100,0.3);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: var(--bg-card);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(45,90,74,0.2);
+        }
+
+        .accordion-header h4 {
+            font-size: 1.15rem;
+            color: var(--accent-light);
+            font-family: 'Source Sans 3', sans-serif;
+            font-weight: 600;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--accent);
+            font-size: 1.25rem;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 800px;
+        }
+
+        .accordion-body {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .accordion-body ul {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+
+        .accordion-body li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Application Cards */
+        .application-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: linear-gradient(135deg, rgba(45,90,74,0.15), rgba(36,43,39,0.9));
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(61,122,100,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 40px rgba(212,165,116,0.15);
+            border-color: var(--accent);
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .app-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Key Quote Box */
+        .key-quote {
+            background: linear-gradient(135deg, rgba(212,165,116,0.15), rgba(45,90,74,0.1));
+            border-radius: 1rem;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            border: 1px solid var(--accent);
+            text-align: center;
+        }
+
+        .key-quote p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .key-quote cite {
+            color: var(--accent);
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        /* Attribution Badge */
+        .attribution {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 2px solid var(--accent);
+        }
+
+        .attribution-full {
+            display: none;
+            background: rgba(36,43,39,0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            max-width: 300px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+
+        .attribution-full a {
+            color: var(--accent-light);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .attribution-full a:hover {
+            color: var(--accent);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: 100svh;
+                min-height: 500px;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .timeline {
+                padding-left: 2.5rem;
+            }
+
+            .timeline::before {
+                left: 0.5rem;
+            }
+
+            .timeline-item::before {
+                left: -2rem;
+            }
+
+            .attribution {
+                position: static;
+                margin: 2rem auto;
+                width: calc(100% - 2rem);
+                max-width: 400px;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .hero-header, .tabs-container, .attribution, .btn-group {
+                display: none;
+            }
+
+            .content-section {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Header with Image Slideshow -->
+    <header class="hero-header">
+        <!-- Slideshow Container -->
+        <div class="slideshow-container">
+            <!-- Slide 1: Hands Planting Seeds -->
+            <div class="slideshow-slide active" style="background-image: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2070&auto=format&fit=crop');" data-caption="Planting seeds of faith"></div>
+            
+            <!-- Slide 2: Lush Garden Path -->
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1558904541-efa843a96f01?q=80&w=2070&auto=format&fit=crop');" data-caption="Walking the path of growth"></div>
+            
+            <!-- Slide 3: Sunlight Through Trees -->
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop');" data-caption="Light guiding your soul"></div>
+            
+            <!-- Slide 4: Watering Plants -->
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=2070&auto=format&fit=crop');" data-caption="Nurturing your heart"></div>
+            
+            <!-- Slide 5: Peaceful Garden -->
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=2070&auto=format&fit=crop');" data-caption="Guard your heart above all else"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="series-badge">
+                <span>🌱</span> Soul Garden Series
+            </div>
+            <h1 class="hero-title">Above All Else</h1>
+            <p class="hero-subtitle">Guard your heart, for everything you do flows from it</p>
+            <p class="hero-meta">📅 4 January 2026 • 🎤 Pastor Eric • ⛪ Island ECC</p>
+            <div class="btn-group">
+                <a href="https://www.youtube.com/watch?v=Bqx2tZ77gDw" class="btn btn-primary" target="_blank" rel="noopener">
+                    <span>▶</span> Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <span>📚</span> View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">📖 Overview</div>
+            <div class="tab" data-tab="sermon">🌱 Main Sermon</div>
+            <div class="tab" data-tab="verses">✝️ Bible Verses</div>
+            <div class="tab" data-tab="application">💡 Application</div>
+            <div class="tab" data-tab="reflection">🤔 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Overview Section -->
+    <section id="overview" class="content-section active">
+        <h2 class="section-header">📖 Sermon Overview</h2>
+        
+        <div class="key-quote">
+            <p>"The wisest man who ever lived and the Creator of our souls agree on this: who we are in our heart and how we care for our heart will determine the course of our life."</p>
+            <cite>— Pastor Eric</cite>
+        </div>
+
+        <div style="background: var(--bg-card); border-left: 4px solid var(--accent); padding: 2rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+            <p style="font-size: 1.2rem; line-height: 1.8;">We would be wise to lean in and pay close attention to our heart—the thing from which our whole life flows. In this first message of the <strong>Soul Garden</strong> series, Pastor Eric explores why Scripture commands us to guard our hearts <em>above all else</em>, what the heart really encompasses in biblical understanding, and how we can begin the daily practice of paying attention to our inner life.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📅</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Date</h3>
+                <p style="color: var(--text-muted);">4 Jan 2026</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎤</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Speaker</h3>
+                <p style="color: var(--text-muted);">Pastor Eric</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📚</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Series</h3>
+                <p style="color: var(--text-muted);">Soul Garden</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">⛪</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Church</h3>
+                <p style="color: var(--text-muted);">Island ECC</p>
+            </div>
+        </div>
+
+        <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--accent-light);">🎵 Worship Songs</h3>
+        <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+            <li style="padding: 0.75rem 1rem; background: var(--bg-card); border-radius: 0.5rem; border-left: 3px solid var(--accent);">Won't Stop Now</li>
+            <li style="padding: 0.75rem 1rem; background: var(--bg-card); border-radius: 0.5rem; border-left: 3px solid var(--accent);">Made For More</li>
+            <li style="padding: 0.75rem 1rem; background: var(--bg-card); border-radius: 0.5rem; border-left: 3px solid var(--accent);">Worthy Of It All</li>
+            <li style="padding: 0.75rem 1rem; background: var(--bg-card); border-radius: 0.5rem; border-left: 3px solid var(--accent);">A Thousand Hallelujahs</li>
+        </ul>
+
+        <div class="insight-box" style="margin-top: 2rem;">
+            <h4>🌿 Series Introduction</h4>
+            <p style="color: var(--text-muted);">The <strong>Soul Garden</strong> series invites us to spend several weeks journeying through Scripture to understand our hearts. Just like a garden needs watching over, nourishing, watering, protecting, and pruning for growth and health—so do our hearts. This series uses the garden metaphor to explore how we can guard, care for, preserve, and protect our inner life.</p>
+        </div>
+    </section>
+
+    <!-- Main Sermon Section -->
+    <section id="sermon" class="content-section">
+        <h2 class="section-header">🌱 Main Sermon: Above All Else, Guard Your Heart</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Introduction: The Complexity of the Heart</h3>
+                    <p>Pastor Eric opens by illustrating how the English word "heart" carries so many meanings:</p>
+                    <ul>
+                        <li><strong>"I gave you my heart"</strong> — I love you</li>
+                        <li><strong>"You broke my heart"</strong> — you no longer love me</li>
+                        <li><strong>"Change of heart"</strong> — thinking differently</li>
+                        <li><strong>"Cross my heart"</strong> — I promise I'm telling the truth</li>
+                        <li><strong>"Heart of gold"</strong> — they are kind</li>
+                        <li><strong>"Lost heart"</strong> — gave up</li>
+                        <li><strong>"Played with heart"</strong> — never stopped fighting</li>
+                        <li><strong>"Wholeheartedly"</strong> — full effort</li>
+                    </ul>
+                    <blockquote>
+                        "The heart is complex, but it is central. As we dive into looking at the heart with the lens of spiritual vitality—wholeness, holiness, happiness, flourishing, and joy—it will be worth it."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The Garden Metaphor</h3>
+                    <p>The series uses the framework of a garden to talk about guarding and caring for our hearts:</p>
+                    <div class="insight-box">
+                        <h4>🌻 Just Like a Garden...</h4>
+                        <p style="color: var(--text-muted);">A garden needs <strong>watching over</strong>, <strong>nourishing</strong>, <strong>watering</strong>, <strong>protecting</strong>, and <strong>pruning</strong> for growth, life, and health. So do our hearts. This could be one of the wisest and most important things we do this year—one that changes our trajectory for many years.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The Key Passage: Proverbs 4:20-27</h3>
+                    <blockquote style="background: rgba(212,165,116,0.15); padding: 1.5rem; border-radius: 0.5rem;">
+                        "My son, pay attention to what I say. Turn your ear to my words. Do not let them out of your sight, and keep them within your heart, for they are life to those who find them, and health to one's whole body. <strong>Above all else, guard your heart, for everything you do flows from it.</strong>"
+                        <br><br>— Proverbs 4:20-23 (NIV)
+                    </blockquote>
+                    <p><strong>The Question:</strong> If the wisest man who ever lived (Solomon) and the One who created you (Jesus) teamed up to give you advice, what would it be?</p>
+                    <p>Solomon says: <em>"Above all else"</em> — above everything — pay attention, watch, guard, keep your heart.</p>
+                    <p>Jesus says: <em>"Love the Lord your God with all your heart, mind, soul, and strength"</em> — the greatest commandment.</p>
+                    <blockquote>
+                        "Both the wisest one who ever lived and the one who's wiser than him are in agreement. This isn't advice—it's a command."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>What Is in Your Heart Matters Most</h3>
+                    <p>Pastor Eric references Dallas Willard's book <em>Renovation of the Heart</em>:</p>
+                    <blockquote>
+                        "What is in our heart matters more than anything else for who we become and what becomes of us."
+                    </blockquote>
+                    <p>Key insight: Who you are on the <strong>inside</strong>—your inner self, your inner sense of self—is who you really are. This is what God is concerned with. This is what He is transforming.</p>
+                    <div class="insight-box">
+                        <h4>💡 The Revolution of the Heart</h4>
+                        <p style="color: var(--text-muted);">Dallas Willard argues that Jesus' revolution wasn't about organizations, institutions, laws, or rules. <strong>His revolution was a revolution of the heart.</strong> The only way for real change is to have change on the inside—not just modifying behavior to appear good, holy, or clean.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The Biblical Understanding of "Heart"</h3>
+                    <p>In Hebrew culture and Old Testament writings, the heart (לֵב, <em>lev</em>) is much more holistic than our modern Western thinking. It encompasses:</p>
+                    <ul>
+                        <li>Desires and affections</li>
+                        <li>Thoughts and intentions</li>
+                        <li>Will and choices</li>
+                        <li>Emotions—all working together as your unified inner self</li>
+                    </ul>
+                    <p>The word "heart" appears over <strong>1,000 times</strong> in Scripture. Anything that appears that often is something God wants us to know about!</p>
+                    
+                    <div class="heart-model">
+                        <div class="heart-card">
+                            <div class="heart-icon">❤️</div>
+                            <h3>What We Love</h3>
+                            <p>Our affections, what we seek, yearn for, want, desire</p>
+                        </div>
+                        <div class="heart-card">
+                            <div class="heart-icon">🧠</div>
+                            <h3>What We Know</h3>
+                            <p>Our thoughts, intentions, imaginations</p>
+                        </div>
+                        <div class="heart-card">
+                            <div class="heart-icon">⚡</div>
+                            <h3>What We Choose</h3>
+                            <p>Our will—ability to say yes or no, face temptation, pursue discipline</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Managing the Outside vs. The Inside</h3>
+                    <p>Pastor Eric shares a personal story about getting frustrated with his kids. Outwardly, he managed his response—but inwardly, he noticed something different:</p>
+                    <blockquote>
+                        "The quickness with which I got frustrated inside and the intensity with which I got frustrated at a normal thing was different than I had ever encountered. It caught me off guard. I was like, 'Whoa, that's in there.'"
+                    </blockquote>
+                    <p><strong>Key insight:</strong> We've all learned to manage what we do on the outside. We put on a face, carry a persona, learn not to react. But who we are on the <em>inside</em> is a better reflection of who we really are.</p>
+                    <div class="insight-box">
+                        <h4>🎭 There's No Such Thing as "Blowing It"</h4>
+                        <p style="color: var(--text-muted);">Scripture would say there's no such thing as "blowing it." What comes out was already in you. When something erupts that seems "out of character," it may just be out of character for how you've managed situations before. The Bible calls us to transformation on the inside—not just behavior modification on the outside.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>How to Guard Your Heart: Preserve & Protect</h3>
+                    <p>Craig Troxel, in his book <em>With All Your Heart</em>, uses helpful language about what it means to guard or "keep" your heart:</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                        <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 0.75rem; border-left: 4px solid var(--primary-light);">
+                            <h4 style="color: var(--accent-light); margin-bottom: 0.75rem;">👁️ Keep an Eye ON Your Heart</h4>
+                            <p style="color: var(--text-muted); font-size: 0.95rem;">Pay attention to what's going on inside. Watch over the growth. What's happening within your heart?</p>
+                        </div>
+                        <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 0.75rem; border-left: 4px solid var(--accent);">
+                            <h4 style="color: var(--accent-light); margin-bottom: 0.75rem;">🛡️ Keep an Eye OUT FOR Your Heart</h4>
+                            <p style="color: var(--text-muted); font-size: 0.95rem;">Be aware of external influences. What environment are you in? What are you giving access to your heart?</p>
+                        </div>
+                    </div>
+
+                    <p>Like a parent keeps an eye <em>on</em> their kids (health, studies) and keeps an eye <em>out for</em> their kids (oncoming cars, harm)—we do both for our hearts.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="key-quote">
+            <p>"The greatest difficulty in conversion is to win the heart to God. But the greatest difficulty after conversion is to keep the heart with God."</p>
+            <cite>— John Flavel (Puritan author)</cite>
+        </div>
+    </section>
+
+    <!-- Bible Verses Section -->
+    <section id="verses" class="content-section">
+        <h2 class="section-header">✝️ Key Bible Verses</h2>
+        
+        <div class="verse-grid">
+            <div class="verse-card">
+                <div class="verse-ref">Proverbs 4:20-23 (NIV)</div>
+                <div class="verse-text">"My son, pay attention to what I say; turn your ear to my words. Do not let them out of your sight, keep them within your heart; for they are life to those who find them and health to one's whole body. <strong>Above all else, guard your heart, for everything you do flows from it.</strong>"</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Proverbs 4:24-27 (NIV)</div>
+                <div class="verse-text">"Keep your mouth free of perversity; keep corrupt talk far from your lips. Let your eyes look straight ahead; fix your gaze directly before you. Give careful thought to the paths for your feet and be steadfast in all your ways. Do not turn to the right or the left; keep your foot from evil."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Psalm 139:23-24 (NIV)</div>
+                <div class="verse-text">"Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me, and lead me in the way everlasting."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Psalm 121:1-8 (ESV)</div>
+                <div class="verse-text">"I lift up my eyes to the hills. From where does my help come? My help comes from the LORD, who made heaven and earth. He will not let your foot be moved; he who keeps you will not slumber... <strong>The LORD is your keeper</strong>... The LORD will keep you from all evil; he will keep your life."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Proverbs 19:21 (NIV)</div>
+                <div class="verse-text">"Many are the plans in a person's heart, but it is the LORD's purpose that prevails."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Jude 1:24-25 (ESV)</div>
+                <div class="verse-text">"Now to him who is able to keep you from stumbling and to present you blameless before the presence of his glory with great joy, to the only God, our Savior, through Jesus Christ our Lord, be glory, majesty, dominion, and authority, before all time and now and forever. Amen."</div>
+            </div>
+        </div>
+
+        <div class="key-quote" style="margin-top: 3rem;">
+            <p>"The Lord is your keeper. The Lord is your shade on your right hand... The Lord will keep your going out and your coming in from this time forth and forevermore."</p>
+            <cite>— Psalm 121:5, 8</cite>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section id="application" class="content-section">
+        <h2 class="section-header">💡 Practical Application</h2>
+        
+        <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 2rem;">Pastor Eric provides daily reflection questions to help us become aware of what's going on in our hearts. These are available on the church app and sermon page.</p>
+
+        <div class="application-cards">
+            <div class="app-card">
+                <div class="app-icon">❤️</div>
+                <h3>What We Love</h3>
+                <ul style="color: var(--text-muted); margin-left: 1rem;">
+                    <li>What desires did I give attention to today that aren't healthy for me?</li>
+                    <li>Was there any conflict between what I desired and what I feel God wants from me?</li>
+                    <li>What was my overriding emotion today? How did that serve me?</li>
+                </ul>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">🧠</div>
+                <h3>What We Know</h3>
+                <ul style="color: var(--text-muted); margin-left: 1rem;">
+                    <li>What thoughts dominated my mind today?</li>
+                    <li>How did dwelling on those thoughts influence my feelings or actions?</li>
+                    <li>Did any truth of God or Scripture guide my thought life today?</li>
+                    <li>Was there any media or conversations that influenced my thought life?</li>
+                </ul>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">⚡</div>
+                <h3>What We Choose</h3>
+                <ul style="color: var(--text-muted); margin-left: 1rem;">
+                    <li>What choices did I make today that reflect God's desires for me?</li>
+                    <li>Were there moments where I chose convenience over integrity?</li>
+                    <li>Did I seek God's guidance in the choices I made today?</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="insight-box" style="margin-top: 2rem;">
+            <h4>📝 Daily Practice</h4>
+            <p style="color: var(--text-muted);">Set aside a few minutes at the end of each day to reflect on these questions. You don't have to answer all nine—even engaging with a few will help you become more aware of what's going on in your heart. The goal is <strong>awareness</strong>. As our days progress so fast, we may miss important signals if we don't stop and reflect.</p>
+        </div>
+
+        <div style="background: linear-gradient(135deg, rgba(45,90,74,0.2), rgba(212,165,116,0.1)); border-radius: 1rem; padding: 2.5rem; margin-top: 3rem; border: 1px solid var(--primary-light);">
+            <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--accent-light); text-align: center;">🙏 The Prayer to Pray</h3>
+            <blockquote style="font-size: 1.25rem; text-align: center; color: var(--text-light); line-height: 1.8; border: none; margin: 0;">
+                "Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me, and lead me in the way everlasting."
+            </blockquote>
+            <p style="margin-top: 1.5rem; text-align: center; font-style: italic; color: var(--accent);">
+                — Psalm 139:23-24
+            </p>
+            <p style="margin-top: 1.5rem; text-align: center; color: var(--text-muted);">
+                This is a terrifying but transformative prayer. It takes deep trust and humility to invite God to search your heart. But He wants good for you, and it's a safe place to be honest.
+            </p>
+        </div>
+    </section>
+
+    <!-- Reflection Section -->
+    <section id="reflection" class="content-section">
+        <h2 class="section-header">🤔 Reflection Questions</h2>
+        
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h4>1. How would you compare the way you guard your heart to how you guard other valuable things?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Consider how much effort you put into guarding:</p>
+                    <ul>
+                        <li>Your <strong>finances</strong> — bank accounts, investments, budgets</li>
+                        <li>Your <strong>career</strong> — reputation, networking, skill development</li>
+                        <li>Your <strong>physical health</strong> — exercise, diet, medical check-ups</li>
+                        <li>Your <strong>reputation</strong> — what others think of you</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Honest assessment:</strong> Does your effort to guard your heart reflect the priority Scripture says it should be given? Is your heart getting "above all else" treatment?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h4>2. What is one way you can preserve and protect your heart better this week?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p><strong>To preserve (keep an eye ON):</strong></p>
+                    <ul>
+                        <li>Daily reflection using the "What we love / know / choose" questions</li>
+                        <li>Journaling your emotions, thoughts, and decisions</li>
+                        <li>Prayer time specifically for heart examination</li>
+                        <li>Talking with a trusted friend about what you're noticing inside</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>To protect (keep an eye OUT FOR):</strong></p>
+                    <ul>
+                        <li>Evaluating what media you're consuming</li>
+                        <li>Assessing which relationships are influencing you</li>
+                        <li>Setting boundaries on environments that harm your heart</li>
+                        <li>Creating space for silence and Scripture</li>
+                    </ul>
+                    <p style="margin-top: 1rem; padding: 1rem; background: rgba(45,90,74,0.15); border-radius: 0.5rem;"><strong>Remember:</strong> The Keeper of your heart is with you. You're not doing this alone. God is sovereign, in control, and empowering you through His Holy Spirit.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h4>3. Is there something in your heart that has surfaced recently that caught you off guard?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Pastor Eric shared how an unusual intensity of frustration caught him by surprise. Sometimes things surface that we didn't know were there:</p>
+                    <ul>
+                        <li>An unexpected burst of anger or resentment</li>
+                        <li>A desire you didn't realize was so strong</li>
+                        <li>Fear or anxiety that seemed disproportionate</li>
+                        <li>Jealousy, comparison, or contempt toward someone</li>
+                        <li>Apathy toward things that should matter</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Next step:</strong> Rather than being alarmed, see this as valuable data. Bring it to God in prayer. Ask the Holy Spirit to help you understand what's going on and where it came from. This is the beginning of heart transformation.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: var(--bg-card); border-radius: 1rem; padding: 2rem; margin-top: 3rem; text-align: center; border: 1px solid rgba(61,122,100,0.3);">
+            <h3 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--accent-light);">🌱 Coming Up in Soul Garden</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">This is just the beginning of a multi-week journey exploring our hearts through Scripture. Future weeks will explore:</p>
+            <ul style="text-align: left; max-width: 500px; margin: 0 auto; color: var(--text-muted);">
+                <li>What is God's vision for the garden of your heart?</li>
+                <li>What pruning needs to happen?</li>
+                <li>What kind of soil are we planted in (community)?</li>
+                <li>What do we do with the fruit and blessings?</li>
+                <li>What might be out to harm our heart?</li>
+            </ul>
+        </div>
+
+        <div class="key-quote" style="margin-top: 2rem;">
+            <p>"We live from our hearts. That's where life is found, from what comes within."</p>
+            <cite>— Dallas Willard, Renovation of the Heart</cite>
+        </div>
+    </section>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">🌱</div>
+        <div class="attribution-full">
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+                Generated by LLM with supervision by <a href="index.html">benjaminficusmicrocarpa</a>. 
+                <a href="../license.html">MIT License</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({
+                    top: document.querySelector('.tabs-container').offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all accordions
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Open clicked accordion if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // === SLIDESHOW FUNCTIONALITY ===
+        function initSlideshow() {
+            const slides = document.querySelectorAll('.slideshow-slide');
+            const totalSlides = slides.length;
+            
+            if (totalSlides === 0) return; // Exit if no slides found
+            
+            let currentSlide = 0;
+            let slideshowInterval;
+
+            // Show specific slide
+            function showSlide(index) {
+                // Wrap around
+                if (index >= totalSlides) {
+                    currentSlide = 0;
+                } else if (index < 0) {
+                    currentSlide = totalSlides - 1;
+                } else {
+                    currentSlide = index;
+                }
+
+                // Update slides
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === currentSlide);
+                });
+            }
+
+            // Auto-advance slideshow
+            function startSlideshow() {
+                // Clear any existing interval
+                if (slideshowInterval) {
+                    clearInterval(slideshowInterval);
+                }
+                slideshowInterval = setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 3000); // Change slide every 3 seconds
+            }
+
+            // Pause slideshow on hover (desktop)
+            const heroHeader = document.querySelector('.hero-header');
+            if (heroHeader) {
+                heroHeader.addEventListener('mouseenter', () => {
+                    clearInterval(slideshowInterval);
+                });
+
+                heroHeader.addEventListener('mouseleave', () => {
+                    startSlideshow();
+                });
+            }
+
+            // Initialize slideshow
+            startSlideshow();
+        }
+
+        // Initialize slideshow when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSlideshow);
+        } else {
+            initSlideshow();
+        }
+    </script>
+</body>
+</html>
+
