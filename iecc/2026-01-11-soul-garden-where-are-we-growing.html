@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Garden: Where Are We Growing? | Island ECC</title>
+    <meta name="description" content="Desire is the engine of our hearts. We are always growing toward something. Discover how our hearts are shaped by what we love and how God invites us to refocus our desires.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2d5a4a;
+            --primary-light: #3d7a64;
+            --accent: #e6a832;
+            --accent-light: #f4c45a;
+            --accent-warm: #d4854e;
+            --bg-dark: #141a17;
+            --bg-card: #1c2420;
+            --text-light: #f5f7f6;
+            --text-muted: #9ca8a2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Sunflower-inspired Hero */
+        .hero-header {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Slideshow Container */
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .slideshow-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slideshow-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slideshow-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(20,26,23,0.4) 0%, rgba(20,26,23,0.85) 100%);
+            z-index: 1;
+        }
+
+        /* Sun Rays Animation */
+        .sun-rays {
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center top, rgba(230,168,50,0.08) 0%, transparent 60%);
+            z-index: 0;
+            animation: sunPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .series-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(45,90,74,0.4);
+            border: 1px solid var(--primary-light);
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            color: var(--text-light);
+        }
+
+        .hero-title span {
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .hero-meta {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(230,168,50,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border-color: var(--text-light);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(240,244,242,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Sticky Tabs */
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(20,26,23,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(61,122,100,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1.25rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .tab:hover {
+            color: var(--accent-light);
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Growth Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--primary-light), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '🌱';
+            position: absolute;
+            left: -2.75rem;
+            top: 0;
+            font-size: 1.25rem;
+        }
+
+        .timeline-item:nth-child(2)::before { content: '📱'; }
+        .timeline-item:nth-child(3)::before { content: '💔'; }
+        .timeline-item:nth-child(4)::before { content: '🌿'; }
+        .timeline-item:nth-child(5)::before { content: '🌲'; }
+        .timeline-item:nth-child(6)::before { content: '👀'; }
+        .timeline-item:nth-child(7)::before { content: '🍕'; }
+        .timeline-item:nth-child(8)::before { content: '🌻'; }
+
+        .timeline-content h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .timeline-content p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-light);
+            background: rgba(45,90,74,0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .timeline-content ul {
+            margin-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Insight Boxes */
+        .insight-box {
+            background: linear-gradient(135deg, rgba(45,90,74,0.2), rgba(61,122,100,0.1));
+            border: 1px solid var(--primary-light);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .insight-box h4 {
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        /* Sunflower Highlight Box */
+        .sunflower-box {
+            background: linear-gradient(135deg, rgba(230,168,50,0.15), rgba(244,196,90,0.05));
+            border: 1px solid var(--accent);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .sunflower-box .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: sunflowerSway 3s ease-in-out infinite;
+        }
+
+        @keyframes sunflowerSway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* Bible Verses Grid */
+        .verse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .verse-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(61,122,100,0.3);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--primary-light));
+        }
+
+        .verse-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(230,168,50,0.15);
+            border-color: var(--accent);
+        }
+
+        .verse-ref {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .verse-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        /* Drift Cards */
+        .drift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .drift-card {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(61,122,100,0.3);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .drift-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 40px rgba(45,90,74,0.3);
+        }
+
+        .drift-card .emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .drift-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-light);
+        }
+
+        .drift-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Reflection Accordion */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(61,122,100,0.3);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: var(--bg-card);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(45,90,74,0.2);
+        }
+
+        .accordion-header h4 {
+            font-size: 1.15rem;
+            color: var(--accent-light);
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 600;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--accent);
+            font-size: 1.25rem;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 800px;
+        }
+
+        .accordion-body {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .accordion-body ul {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+
+        .accordion-body li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Application Cards */
+        .application-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: linear-gradient(135deg, rgba(45,90,74,0.15), rgba(28,36,32,0.9));
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(61,122,100,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 40px rgba(230,168,50,0.15);
+            border-color: var(--accent);
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .app-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Key Quote Box */
+        .key-quote {
+            background: linear-gradient(135deg, rgba(230,168,50,0.15), rgba(45,90,74,0.1));
+            border-radius: 1rem;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            border: 1px solid var(--accent);
+            text-align: center;
+        }
+
+        .key-quote p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .key-quote cite {
+            color: var(--accent);
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        /* LLL Framework */
+        .lll-framework {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .lll-card {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 2px solid var(--primary-light);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .lll-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(230,168,50,0.2);
+        }
+
+        .lll-card .number {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .lll-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent-light);
+        }
+
+        .lll-card p {
+            color: var(--text-muted);
+        }
+
+        /* Attribution Badge */
+        .attribution {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+
+        .attribution-short {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 2px solid var(--accent);
+        }
+
+        .attribution-full {
+            display: none;
+            background: rgba(28,36,32,0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            max-width: 300px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .attribution:hover .attribution-short {
+            display: none;
+        }
+
+        .attribution:hover .attribution-full {
+            display: block;
+        }
+
+        .attribution-full a {
+            color: var(--accent-light);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .attribution-full a:hover {
+            color: var(--accent);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: 100svh;
+                min-height: 500px;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .timeline {
+                padding-left: 2.5rem;
+            }
+
+            .timeline::before {
+                left: 0.5rem;
+            }
+
+            .timeline-item::before {
+                left: -2rem;
+            }
+
+            .attribution {
+                position: static;
+                margin: 2rem auto;
+                width: calc(100% - 2rem);
+                max-width: 400px;
+            }
+
+            .attribution-short {
+                display: none;
+            }
+
+            .attribution-full {
+                display: block;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .hero-header, .tabs-container, .attribution, .btn-group {
+                display: none;
+            }
+
+            .content-section {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Header with Image Slideshow -->
+    <header class="hero-header">
+        <div class="sun-rays"></div>
+        
+        <!-- Slideshow Container -->
+        <div class="slideshow-container">
+            <!-- Slide 1: Sunflower Field -->
+            <div class="slideshow-slide active" style="background-image: url('https://images.unsplash.com/photo-1597848212624-a19eb35e2651?q=80&w=2070&auto=format&fit=crop');"></div>
+            
+            <!-- Slide 2: Single Sunflower Towards Sun -->
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1470509037663-253afd7f0f51?q=80&w=2074&auto=format&fit=crop');"></div>
+            
+            <!-- Slide 3: Crooked Trees (metaphor) -->
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1476842634003-7dcca8f832de?q=80&w=2070&auto=format&fit=crop');"></div>
+            
+            <!-- Slide 4: Light Through Trees -->
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop');"></div>
+            
+            <!-- Slide 5: Garden Growth -->
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=2070&auto=format&fit=crop');"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="series-badge">
+                <span>🌻</span> Soul Garden Series • Part 2
+            </div>
+            <h1 class="hero-title">Where Are We <span>Growing?</span></h1>
+            <p class="hero-subtitle">Desire is the engine of our hearts—follow the right light source</p>
+            <p class="hero-meta">📅 11 Jan 2026 • 🎤 Pastor Tim • ⛪ Island ECC</p>
+            <div class="btn-group">
+                <a href="https://www.youtube.com/watch?v=ifWzcAWijjc" class="btn btn-primary" target="_blank" rel="noopener">
+                    <span>▶</span> Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <span>📚</span> View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Tabs -->
+    <nav class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">📖 Overview</div>
+            <div class="tab" data-tab="sermon">🌻 Main Sermon</div>
+            <div class="tab" data-tab="verses">✝️ Bible Verses</div>
+            <div class="tab" data-tab="application">💡 Application</div>
+            <div class="tab" data-tab="reflection">🤔 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Overview Section -->
+    <section id="overview" class="content-section active">
+        <h2 class="section-header">📖 Sermon Overview</h2>
+        
+        <div class="key-quote">
+            <p>"Our hearts grow in the direction of our desires. Whatever is brightest in your life is shaping how you grow."</p>
+            <cite>— Pastor Tim</cite>
+        </div>
+
+        <div style="background: var(--bg-card); border-left: 4px solid var(--accent); padding: 2rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+            <p style="font-size: 1.2rem; line-height: 1.8;">Desire is the engine of our hearts. We are always growing toward something. And while desire itself is not a bad thing, it can slowly become aimed at the wrong things. In this second message of the <strong>Soul Garden</strong> series, Pastor Tim explores how our hearts are shaped by what we love and how God invites us to refocus our desires so we keep growing in the right direction—like a sunflower following the sun.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📅</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Date</h3>
+                <p style="color: var(--text-muted);">11 Jan 2026</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎤</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Speaker</h3>
+                <p style="color: var(--text-muted);">Pastor Tim</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📚</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Series</h3>
+                <p style="color: var(--text-muted);">Soul Garden (Part 2)</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">⛪</div>
+                <h3 style="color: var(--accent-light); margin-bottom: 0.5rem;">Church</h3>
+                <p style="color: var(--text-muted);">Island ECC</p>
+            </div>
+        </div>
+
+        <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--accent-light);">🎵 Worship Songs</h3>
+        <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+            <li style="padding: 0.75rem 1rem; background: var(--bg-card); border-radius: 0.5rem; border-left: 3px solid var(--accent);">Christ Is The Center</li>
+            <li style="padding: 0.75rem 1rem; background: var(--bg-card); border-radius: 0.5rem; border-left: 3px solid var(--accent);">Another Like You</li>
+            <li style="padding: 0.75rem 1rem; background: var(--bg-card); border-radius: 0.5rem; border-left: 3px solid var(--accent);">Still</li>
+            <li style="padding: 0.75rem 1rem; background: var(--bg-card); border-radius: 0.5rem; border-left: 3px solid var(--accent);">Lord I Need You</li>
+        </ul>
+
+        <div class="sunflower-box" style="margin-top: 2rem;">
+            <div class="icon">🌻</div>
+            <h4 style="color: var(--accent-light); font-size: 1.5rem; margin-bottom: 1rem;">The Sunflower Principle</h4>
+            <p style="color: var(--text-muted);">A sunflower tracks the sun's movement across the sky every single day. At night, when the sun sets in the west, it turns back east, waiting for the sun to return. <strong>What an amazing metaphor for our lives—following the main light source, turning our attention back to God each morning.</strong></p>
+        </div>
+    </section>
+
+    <!-- Main Sermon Section -->
+    <section id="sermon" class="content-section">
+        <h2 class="section-header">🌻 Main Sermon: Where Are We Growing?</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Introduction: Our Hearts Grow Toward Our Desires</h3>
+                    <p>Pastor Tim begins with the theme verse for the Soul Garden series:</p>
+                    <blockquote>
+                        "Above all else, guard your heart for everything you do flows from it."
+                        <br><br>— Proverbs 4:23 (NIV)
+                    </blockquote>
+                    <p>Everything we do in life flows from our heart. We need to protect and guard our heart to make sure we know where it's growing towards. <strong>Our hearts grow in the direction of our desires.</strong></p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The iPhone Revolution: A Cautionary Tale</h3>
+                    <p>Nineteen years ago, Apple announced the iPhone—a revolutionary device. Pastor Tim remembers being excited, telling his wife Cindy all the possibilities. But fast forward almost 20 years:</p>
+                    <blockquote>
+                        "This revolutionary device has kind of become a ball and chain... A lot of companies are fighting for our attention. The most valuable commodity in this world now is our time and attention."
+                    </blockquote>
+                    <div class="insight-box">
+                        <h4>💡 The Algorithm of Our Lives</h4>
+                        <p style="color: var(--text-muted);">A person who worked at a large social media company was quoted in the New York Times: <em>"I am convinced the devil lives in our phones."</em> This isn't a message about the evils of technology—it's about thinking about what our attention is giving power to.</p>
+                    </div>
+                    <p>At the end of the year, these companies give us a "gift"—Spotify Wrapped, YouTube Rewind—showing us exactly where we devoted all our time. Often we look and think: <em>"That's what I devoted all of my time and attention to?"</em></p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Treasure and Heart: Jesus' Teaching</h3>
+                    <p>In the Sermon on the Mount, Jesus speaks about material things:</p>
+                    <blockquote style="background: rgba(230,168,50,0.15);">
+                        "Do not lay up for yourselves treasures on earth, where moth and rust destroy, and where thieves break in and steal... For where your treasure is, there your heart will be also."
+                        <br><br>— Matthew 6:19-21 (NIV)
+                    </blockquote>
+                    <p>What we pay attention to constitutes our inner lives. Our desires—the things we're attracted to, the things we chase—are shaping our hearts and moving them in that direction.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Broken Cisterns: The Prophet Jeremiah's Warning</h3>
+                    <p>The prophet Jeremiah spoke to people who were outwardly religious but inwardly wavering:</p>
+                    <blockquote>
+                        "My people have committed two sins: They have forsaken me, the spring of living water, and have dug their own cisterns, broken cisterns that cannot hold water."
+                        <br><br>— Jeremiah 2:13 (NIV)
+                    </blockquote>
+                    <p>They forsook God who provides <strong>unlimited fresh water</strong> and created man-made water receptacles that crack, break, and run dry.</p>
+                    
+                    <div class="insight-box">
+                        <h4>🚰 Tim Keller on Idols</h4>
+                        <p style="color: var(--text-muted);">"An idol is anything more important to you than God. Anything that absorbs your heart and imagination more than God. Anything you seek to give you what only God can give."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The Crooked Forest: A Lesson in Growth</h3>
+                    <p>Pastor Tim shows a fascinating picture of a forest in Poland where trees grow crooked. The consensus is that man intervened and made these trees grow this way—perhaps for chairs or curved boat lumber.</p>
+                    
+                    <div style="margin: 2rem 0; border-radius: 1rem; overflow: hidden; border: 1px solid rgba(61,122,100,0.3); background: var(--bg-card);">
+                        <img src="https://img.atlasobscura.com/hmI9QEHajnqt6h5ETSC7NjNxGnO82Oedreq-VuGiSkQ/rt:fit/w:1200/q:80/sm:1/scp:1/ar:1/aHR0cHM6Ly9hdGxh/cy1kZXYuczMuYW1h/em9uYXdzLmNvbS91/cGxvYWRzL3BsYWNl/X2ltYWdlcy9mYmUy/NTc2M2Y1NDFiMmE0/NWRfY3Jvb2tlZC1m/b3Jlc3QtODY2Mjk0/XzEyODAuanBn.webp" alt="Crooked Forest in Poland (Krzywy Las)" style="width: 100%; height: auto; display: block; max-height: 500px; object-fit: cover;">
+                        <div style="padding: 1.5rem;">
+                            <h4 style="color: var(--accent-light); margin-bottom: 0.75rem; font-size: 1.1rem;">🌲 The Crooked Forest (Krzywy Las), Poland</h4>
+                            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">Located near Gryfino in West Pomerania, this unique grove contains approximately 400 Scots pine trees planted around 1930. Each tree exhibits a distinctive 90-degree bend at its base, all curving northward before straightening upwards. While the exact cause remains a mystery, theories suggest human intervention to cultivate curved timber for boat building or furniture. The surrounding forest consists of straight pines, making this formation even more striking—a powerful visual reminder of how outside influences can shape our growth.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>🌲 What Happens When We Get Out of the Way</h4>
+                        <p style="color: var(--text-muted);">Notice in the photo: as man got out of the way, <strong>the trees started growing back towards the correct direction</strong>—toward their main light source above. If we would just get out of our own way, put ourselves in the backseat, and focus on things above, we would begin growing in the right direction.</p>
+                    </div>
+                    
+                    <h4 style="color: var(--accent-light); margin: 1.5rem 0 1rem;">When Our Desires Drift...</h4>
+                    <div class="drift-grid">
+                        <div class="drift-card">
+                            <div class="emoji">🎮</div>
+                            <h4>Control replaces Christ</h4>
+                            <p>We think we can do things better than God</p>
+                        </div>
+                        <div class="drift-card">
+                            <div class="emoji">📱</div>
+                            <h4>Distraction replaces Devotion</h4>
+                            <p>So many things pull us away</p>
+                        </div>
+                        <div class="drift-card">
+                            <div class="emoji">🛡️</div>
+                            <h4>Safety replaces Surrender</h4>
+                            <p>We want comfort over God's will</p>
+                        </div>
+                        <div class="drift-card">
+                            <div class="emoji">📋</div>
+                            <h4>Productivity replaces Presence</h4>
+                            <p>Doing FOR God, not WITH God</p>
+                        </div>
+                        <div class="drift-card">
+                            <div class="emoji">😐</div>
+                            <h4>Apathy replaces Awe</h4>
+                            <p>We lose our wonder of who God is</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Refocusing on Jesus</h3>
+                    <blockquote>
+                        "Let us run with perseverance the race marked out for us, fixing our eyes on Jesus, the pioneer and perfecter of faith."
+                        <br><br>— Hebrews 12:1-2 (NIV)
+                    </blockquote>
+                    <p>Jesus says: <em>"The eye is the lamp of the body. So if your eye is healthy, your whole body will be full of light."</em> (Matthew 6:22)</p>
+                    <p><strong>Our focus is very important.</strong> Everything we're bringing into our lives tells us where our light is. Our focus will feed our soul and help us grow the right way.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The Pizza to Broccoli Transformation</h3>
+                    <p>Pastor Tim shares a personal story about his love for pizza—especially the all-you-can-eat pizza buffet near his university. But as he got older and started eating healthier:</p>
+                    <blockquote>
+                        "I remember one specific night... I looked at the broccoli and my mouth started watering. For broccoli! And it hit me—what has happened to me? The same feeling I had for pizza is now for broccoli!"
+                    </blockquote>
+                    <div class="insight-box">
+                        <h4>🍕➡️🥦 God Changes Our Taste</h4>
+                        <p style="color: var(--text-muted);">God doesn't take away our hunger—<strong>He changes our taste.</strong> If we keep chasing the wrong thing, He can help us change our taste for the right thing. If we enter into devotion with Him and focus our eyes on Christ, God can transform what we crave.</p>
+                    </div>
+                    <blockquote style="background: rgba(230,168,50,0.15);">
+                        "Taste and see that the Lord is good; blessed is the one who takes refuge in him."
+                        <br><br>— Psalm 34:8 (NIV)
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>The Sunflower: Following the True Light</h3>
+                    <div class="sunflower-box">
+                        <div class="icon">🌻</div>
+                        <p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 1rem;">A sunflower tracks the sun's movement across the sky. At night, when the sun sets in the west, the flower turns back east, waiting for the sun to return.</p>
+                        <p style="color: var(--text-muted);">"The sunflower doesn't follow a lamp. It doesn't follow a candle. It follows the main source of light, the sun. God is saying: <strong>I'm the source of light that you need to follow. Stop looking at these other things that will never fill you.</strong>"</p>
+                    </div>
+                    <blockquote>
+                        "Whatever is brightest in your life is shaping how you grow."
+                    </blockquote>
+                    <p>Many of us have become desensitized—staring at our phones (a flashlight!) every night. But God is bright for us like the sun is bright for the sunflower. If we trust in God as our true light source, we will grow towards Him.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="key-quote">
+            <p>"The greatest enemy of hunger for God is not poison, but apple pie. It is not the banquet of the wicked that dulls our appetite for heaven, but the endless nibbling at the table of the world."</p>
+            <cite>— John Piper, A Hunger for God</cite>
+        </div>
+    </section>
+
+    <!-- Bible Verses Section -->
+    <section id="verses" class="content-section">
+        <h2 class="section-header">✝️ Key Bible Verses</h2>
+        
+        <div class="verse-grid">
+            <div class="verse-card">
+                <div class="verse-ref">Proverbs 4:23 (NIV)</div>
+                <div class="verse-text">"<strong>Above all else, guard your heart, for everything you do flows from it.</strong>"</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Matthew 6:19-21 (NIV)</div>
+                <div class="verse-text">"Do not lay up for yourselves treasures on earth, where moth and rust destroy, and where thieves break in and steal, but lay up for yourselves treasures in heaven... <strong>For where your treasure is, there your heart will be also.</strong>"</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Jeremiah 2:13 (NIV)</div>
+                <div class="verse-text">"My people have committed two sins: They have forsaken me, the spring of living water, and have dug their own cisterns, <strong>broken cisterns that cannot hold water.</strong>"</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Genesis 3:6 (NIV)</div>
+                <div class="verse-text">"When the woman saw that the fruit of the tree was good for food and <strong>pleasing to the eye</strong>, and also desirable for gaining wisdom, she took some and ate it."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Romans 1:25 (NIV)</div>
+                <div class="verse-text">"They exchanged the truth about God for a lie, and worshiped and served created things rather than the Creator—who is forever praised."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Psalm 37:4 (NIV)</div>
+                <div class="verse-text">"<strong>Delight yourself in the Lord, and he will give you the desires of your heart.</strong>"</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Colossians 3:2 (NIV)</div>
+                <div class="verse-text">"Set your minds on things that are above, not on things that are on earth."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Hebrews 12:1-2 (NIV)</div>
+                <div class="verse-text">"Let us run with perseverance the race marked out for us, <strong>fixing our eyes on Jesus</strong>, the pioneer and perfecter of faith."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Matthew 6:22 (NIV)</div>
+                <div class="verse-text">"The eye is the lamp of the body. <strong>If your eyes are healthy, your whole body will be full of light.</strong>"</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Psalm 34:8 (NIV)</div>
+                <div class="verse-text">"<strong>Taste and see that the Lord is good;</strong> blessed is the one who takes refuge in him."</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Matthew 5:6 (NIV)</div>
+                <div class="verse-text">"<strong>Blessed are those who hunger and thirst for righteousness, for they will be filled.</strong>"</div>
+            </div>
+
+            <div class="verse-card">
+                <div class="verse-ref">Psalm 27:4 (NIV)</div>
+                <div class="verse-text">"One thing I ask from the Lord, this only do I seek: that I may dwell in the house of the Lord all the days of my life, <strong>to gaze on the beauty of the Lord</strong> and to seek him in his temple."</div>
+            </div>
+        </div>
+
+        <div class="key-quote" style="margin-top: 3rem;">
+            <p>"God is most glorified when we are most satisfied in him."</p>
+            <cite>— John Piper</cite>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section id="application" class="content-section">
+        <h2 class="section-header">💡 Practical Application</h2>
+        
+        <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 2rem;">Pastor Tim summarizes the sermon with a beautiful framework drawn from Psalm 27:4—David's single request to dwell with God, gaze at His beauty, and seek Him.</p>
+
+        <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--accent-light); text-align: center;">The Live • Look • Lean Framework</h3>
+        
+        <div class="lll-framework">
+            <div class="lll-card">
+                <div class="number">1</div>
+                <h3>Live</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 0.5rem;"><strong>Dwell with God</strong></p>
+                <p>Let your heart live at home with Him. Dwell in His presence daily—not just on Sundays.</p>
+            </div>
+            <div class="lll-card">
+                <div class="number">2</div>
+                <h3>Look</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 0.5rem;"><strong>Gaze at His Wonder</strong></p>
+                <p>Fix your eyes on the beauty of the Lord. Be inspired and in awe of who God is.</p>
+            </div>
+            <div class="lll-card">
+                <div class="number">3</div>
+                <h3>Lean</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 0.5rem;"><strong>Seek Desires That Honor God</strong></p>
+                <p>Lean toward Him with everything you do. Let your desires be directed toward Him.</p>
+            </div>
+        </div>
+
+        <div class="application-cards" style="margin-top: 3rem;">
+            <div class="app-card">
+                <div class="app-icon">🌅</div>
+                <h3>Start Your Day with God</h3>
+                <p>Like the sunflower turning east overnight to await the sunrise, prepare your heart each evening and morning to focus on God first—before the phone, before the emails, before the distractions.</p>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">📵</div>
+                <h3>Audit Your Attention</h3>
+                <p>What has captured your attention this week? Review your screen time, your browsing history, your "year in review." Are these things moving your heart toward God or away from Him?</p>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">🍽️</div>
+                <h3>Change Your Taste</h3>
+                <p>Start hungering for the right things. Spend time in God's word, in prayer, in community. Over time, God will change your taste so that righteousness becomes what you crave.</p>
+            </div>
+        </div>
+
+        <div class="sunflower-box" style="margin-top: 3rem;">
+            <h3 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--accent-light);">🌿 Touch Grass</h3>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">One of Pastor Tim's favorite new Gen Z slang terms is <strong>"touch grass"</strong>—go offline, turn off your computer, go outside and literally touch grass. Go into nature, explore God's beautiful creation—not on a screen, but IRL (in real life). Maybe you'll see a sunflower.</p>
+        </div>
+
+        <div style="background: linear-gradient(135deg, rgba(45,90,74,0.2), rgba(230,168,50,0.1)); border-radius: 1rem; padding: 2.5rem; margin-top: 3rem; border: 1px solid var(--primary-light);">
+            <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--accent-light); text-align: center;">🙏 A Prayer for Direction</h3>
+            <blockquote style="font-size: 1.25rem; text-align: center; color: var(--text-light); line-height: 1.8; border: none; margin: 0;">
+                "God, if we are distracted, if our desires are off course, if we are hungering for the wrong things—change our tastes. Help us to taste and see that you are good, and may you truly be the center of our lives. Help us to look to you as our source and grow in the right direction."
+            </blockquote>
+            <p style="margin-top: 1.5rem; text-align: center; font-style: italic; color: var(--accent);">
+                — Pastor Tim's closing prayer
+            </p>
+        </div>
+    </section>
+
+    <!-- Reflection Section -->
+    <section id="reflection" class="content-section">
+        <h2 class="section-header">🤔 Reflection Questions</h2>
+
+        <div style="background: var(--bg-card); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+            <h4 style="color: var(--accent-light); margin-bottom: 0.75rem;">📋 Questions from the Sermon</h4>
+            <ol style="color: var(--text-muted); margin-left: 1.5rem;">
+                <li style="margin-bottom: 0.75rem;">What has quietly become bigger than God in my heart, even if I would never say it out loud? What am I treasuring right now?</li>
+                <li>What can I do this week to help me refocus on God to make sure I'm growing in the right direction?</li>
+            </ol>
+        </div>
+        
+        <div class="accordion-item active">
+            <div class="accordion-header">
+                <h4>1. What is my heart growing towards right now?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>This is the key question Pastor Tim asks us to leave with. Take an honest assessment:</p>
+                    <ul>
+                        <li>Where does most of my attention go each day?</li>
+                        <li>What fills my mind when I have free time?</li>
+                        <li>What would my "year in review" reveal about my priorities?</li>
+                        <li>If my heart is like a plant, what "light source" am I growing toward?</li>
+                    </ul>
+                    <p style="margin-top: 1rem; padding: 1rem; background: rgba(230,168,50,0.1); border-radius: 0.5rem;"><strong>Remember:</strong> "Whatever is brightest in your life is shaping how you grow."</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h4>2. What "broken cisterns" have I been digging?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Jeremiah says we forsake the spring of living water for broken cisterns that can't hold water. Consider:</p>
+                    <ul>
+                        <li>What am I looking to for fulfillment that isn't God?</li>
+                        <li>What absorbs my heart and imagination more than God does?</li>
+                        <li>What do I seek to give me what only God can give? (Security? Identity? Worth? Love?)</li>
+                        <li>Are there idols in my life that I wouldn't call "idols" but have become more important than God?</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Note:</strong> These idols may not be evil things—they could be work, entertainment, relationships, or even ministry. The question is whether they've become bigger than God.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h4>3. Am I like the crooked trees or the sunflower?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Pastor Tim presented two powerful images:</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 1rem 0;">
+                        <div style="background: rgba(45,90,74,0.15); padding: 1rem; border-radius: 0.5rem;">
+                            <h5 style="color: var(--accent-light);">🌲 The Crooked Forest</h5>
+                            <p>Trees that grew crooked because man intervened—but when left alone, they grew back toward the light.</p>
+                        </div>
+                        <div style="background: rgba(230,168,50,0.15); padding: 1rem; border-radius: 0.5rem;">
+                            <h5 style="color: var(--accent-light);">🌻 The Sunflower</h5>
+                            <p>Follows the sun all day, then turns back east at night to await the sunrise—never following a lamp or candle.</p>
+                        </div>
+                    </div>
+                    <p><strong>Ask yourself:</strong></p>
+                    <ul>
+                        <li>Have I been growing crooked because of outside influences?</li>
+                        <li>What would it look like to "get out of my own way" and grow toward God?</li>
+                        <li>Am I following the main light source, or distracted by smaller lights?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h4>4. What tastes need to change in my life?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Pastor Tim's story about pizza and broccoli illustrates how God can change our desires:</p>
+                    <blockquote style="border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1rem 0; font-style: italic; color: var(--text-light);">
+                        "God doesn't take away our hunger—He changes our taste."
+                    </blockquote>
+                    <p><strong>Reflect:</strong></p>
+                    <ul>
+                        <li>What spiritual "pizza" am I still craving that isn't good for my soul?</li>
+                        <li>What spiritual "broccoli" do I need to develop a taste for?</li>
+                        <li>Am I willing to let God transform what I hunger for?</li>
+                        <li>What steps can I take to "taste and see that the Lord is good"?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h4>5. How can I Live, Look, and Lean toward God this week?</h4>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Based on Psalm 27:4, create a practical plan:</p>
+                    <div style="margin: 1.5rem 0;">
+                        <h5 style="color: var(--accent); margin-bottom: 0.5rem;">LIVE — Dwell with God</h5>
+                        <ul>
+                            <li>Start each day in God's presence before checking your phone</li>
+                            <li>Create rhythms of prayer throughout the day</li>
+                            <li>Be present in community worship on Sundays</li>
+                        </ul>
+                    </div>
+                    <div style="margin: 1.5rem 0;">
+                        <h5 style="color: var(--accent); margin-bottom: 0.5rem;">LOOK — Gaze at God's Wonder</h5>
+                        <ul>
+                            <li>Spend time in Scripture, looking at who God is</li>
+                            <li>Go outside and appreciate His creation ("touch grass")</li>
+                            <li>Reflect on His faithfulness in your life</li>
+                        </ul>
+                    </div>
+                    <div style="margin: 1.5rem 0;">
+                        <h5 style="color: var(--accent); margin-bottom: 0.5rem;">LEAN — Seek Desires That Honor God</h5>
+                        <ul>
+                            <li>Audit where your attention goes this week</li>
+                            <li>Reduce time on things that pull you away from God</li>
+                            <li>Invest time in what cultivates hunger for righteousness</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="key-quote" style="margin-top: 2rem;">
+            <p>"Our hearts are restless until they rest in you."</p>
+            <cite>— Augustine</cite>
+        </div>
+
+        <div style="background: var(--bg-card); border-radius: 1rem; padding: 2rem; margin-top: 3rem; text-align: center; border: 1px solid rgba(61,122,100,0.3);">
+            <h3 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--accent-light);">🌱 Coming Up in Soul Garden</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">The Soul Garden series continues as we explore how to guard our hearts by gardening our souls. Join us next week!</p>
+            <a href="2026-01-04-soul-garden-above-all-else.html" style="color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent);">← Previous: Above All Else (Part 1)</a>
+        </div>
+    </section>
+
+    <!-- Attribution Badge -->
+    <div class="attribution">
+        <div class="attribution-short">🌻</div>
+        <div class="attribution-full">
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+                Generated by LLM with supervision by <a href="index.html">benjaminficusmicrocarpa</a>. 
+                <a href="../license.html">MIT License</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.content-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({
+                    top: document.querySelector('.tabs-container').offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all accordions
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Open clicked accordion if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // === SLIDESHOW FUNCTIONALITY ===
+        function initSlideshow() {
+            const slides = document.querySelectorAll('.slideshow-slide');
+            const totalSlides = slides.length;
+            
+            if (totalSlides === 0) return;
+            
+            let currentSlide = 0;
+            let slideshowInterval;
+
+            function showSlide(index) {
+                if (index >= totalSlides) {
+                    currentSlide = 0;
+                } else if (index < 0) {
+                    currentSlide = totalSlides - 1;
+                } else {
+                    currentSlide = index;
+                }
+
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === currentSlide);
+                });
+            }
+
+            function startSlideshow() {
+                if (slideshowInterval) {
+                    clearInterval(slideshowInterval);
+                }
+                slideshowInterval = setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 4000);
+            }
+
+            const heroHeader = document.querySelector('.hero-header');
+            if (heroHeader) {
+                heroHeader.addEventListener('mouseenter', () => {
+                    clearInterval(slideshowInterval);
+                });
+
+                heroHeader.addEventListener('mouseleave', () => {
+                    startSlideshow();
+                });
+            }
+
+            startSlideshow();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSlideshow);
+        } else {
+            initSlideshow();
+        }
+    </script>
+</body>
+</html>
