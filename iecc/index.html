@@ -541,6 +541,167 @@
         let activeYear = '2025';
         let sermonsData = null;
         let tagCategories = null;
+        
+        // ===== URL Routing Functions =====
+        
+        /**
+         * Get URL parameters from current URL
+         */
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                year: params.get('year'),
+                tags: params.get('tags') ? params.get('tags').split(',') : []
+            };
+        }
+        
+        /**
+         * Update URL with current filter state
+         */
+        function updateUrl() {
+            const params = new URLSearchParams();
+            
+            // Add year parameter if not default
+            if (activeYear !== '2025') {
+                params.set('year', activeYear);
+            }
+            
+            // Add tags parameter if any tags are active
+            if (activeTags.size > 0) {
+                params.set('tags', Array.from(activeTags).sort().join(','));
+            }
+            
+            // Update URL without reloading page
+            const newUrl = params.toString() 
+                ? `${window.location.pathname}?${params.toString()}`
+                : window.location.pathname;
+            
+            window.history.pushState({ year: activeYear, tags: Array.from(activeTags) }, '', newUrl);
+        }
+        
+        /**
+         * Validate if a year is valid
+         */
+        function isValidYear(year) {
+            if (!year) return false;
+            if (year === 'all') return true;
+            
+            const yearNum = parseInt(year);
+            if (isNaN(yearNum)) return false;
+            
+            // Check if year exists in our sermon data
+            const availableYears = [...new Set(sermonsData.map(s => s.year))];
+            return availableYears.includes(yearNum);
+        }
+        
+        /**
+         * Validate if tags are valid
+         */
+        function validateTags(tags) {
+            if (!tags || tags.length === 0) return [];
+            
+            // Get all valid tag IDs
+            const validTags = [
+                ...(tagCategories.series || []),
+                ...tagCategories.themes,
+                ...tagCategories.topics,
+                ...tagCategories.scriptures
+            ].map(tag => tag.id);
+            
+            // Filter out invalid tags
+            return tags.filter(tag => validTags.includes(tag));
+        }
+        
+        /**
+         * Apply filters from URL parameters
+         */
+        function applyFiltersFromUrl() {
+            const urlParams = getUrlParams();
+            let hasInvalidParams = false;
+            
+            // Validate and apply year filter
+            if (urlParams.year) {
+                if (isValidYear(urlParams.year)) {
+                    activeYear = urlParams.year;
+                } else {
+                    console.warn(`Invalid year parameter: ${urlParams.year}. Using default.`);
+                    hasInvalidParams = true;
+                }
+            }
+            
+            // Validate and apply tag filters
+            if (urlParams.tags.length > 0) {
+                const validTags = validateTags(urlParams.tags);
+                if (validTags.length !== urlParams.tags.length) {
+                    const invalidTags = urlParams.tags.filter(t => !validTags.includes(t));
+                    console.warn(`Invalid tag parameters: ${invalidTags.join(', ')}. Ignoring.`);
+                    hasInvalidParams = true;
+                }
+                activeTags = new Set(validTags);
+            }
+            
+            // If there were invalid parameters, update URL to remove them
+            if (hasInvalidParams) {
+                updateUrl();
+            }
+            
+            // Update UI to reflect URL state
+            updateYearButtonStates();
+            updateTagButtonStates();
+            updateActiveTags();
+        }
+        
+        /**
+         * Update year button states based on activeYear
+         */
+        function updateYearButtonStates() {
+            const buttons = document.querySelectorAll('.filter-btn[data-year]');
+            buttons.forEach(btn => {
+                const btnYear = btn.dataset.year;
+                const isActive = btnYear === activeYear;
+                
+                if (isActive) {
+                    btn.classList.remove('inactive');
+                    btn.classList.add('year-btn-active', 'text-white');
+                    btn.setAttribute('aria-pressed', 'true');
+                } else {
+                    btn.classList.remove('year-btn-active', 'text-white');
+                    btn.classList.add('inactive');
+                    btn.setAttribute('aria-pressed', 'false');
+                }
+            });
+        }
+        
+        /**
+         * Update tag button states based on activeTags
+         */
+        function updateTagButtonStates() {
+            document.querySelectorAll('.tag-badge').forEach(btn => {
+                const tag = btn.dataset.tag;
+                if (activeTags.has(tag)) {
+                    btn.classList.add('tag-active');
+                    btn.setAttribute('aria-pressed', 'true');
+                } else {
+                    btn.classList.remove('tag-active');
+                    btn.setAttribute('aria-pressed', 'false');
+                }
+            });
+        }
+        
+        /**
+         * Handle browser back/forward navigation
+         */
+        window.addEventListener('popstate', function(event) {
+            if (event.state) {
+                activeYear = event.state.year || '2025';
+                activeTags = new Set(event.state.tags || []);
+                
+                updateYearButtonStates();
+                updateTagButtonStates();
+                updateActiveTags();
+                applyTagFilters();
+            }
+        });
 
         // Format date for display
         function formatDate(dateStr) {
@@ -664,7 +825,8 @@
                 // Update stats
                 updateStats();
                 
-                // Apply initial filter (show 2025 by default)
+                // Apply filters from URL or use defaults
+                applyFiltersFromUrl();
                 applyTagFilters();
                 
                 // Setup lazy loading for hero images
@@ -731,6 +893,7 @@
             }
             
             updateActiveTags();
+            updateUrl();
         }
 
         // Update active tags display
@@ -761,6 +924,7 @@
                 btn.setAttribute('aria-pressed', 'false');
             });
             updateActiveTags();
+            updateUrl();
         }
 
         // Apply tag filters
@@ -816,21 +980,9 @@
 
         // Year filter function
         function filterYear(year) {
-            const buttons = document.querySelectorAll('.filter-btn[data-year]');
-            
-            // Update button states
-            buttons.forEach(btn => {
-                btn.classList.remove('year-btn-active', 'text-white');
-                btn.classList.add('inactive');
-                btn.setAttribute('aria-pressed', 'false');
-            });
-            
-            const activeBtn = document.querySelector(`[data-year="${year}"]`);
-            activeBtn.classList.remove('inactive');
-            activeBtn.classList.add('year-btn-active', 'text-white');
-            activeBtn.setAttribute('aria-pressed', 'true');
-            
             activeYear = year;
+            updateYearButtonStates();
+            updateUrl();
             applyTagFilters();
         }
 

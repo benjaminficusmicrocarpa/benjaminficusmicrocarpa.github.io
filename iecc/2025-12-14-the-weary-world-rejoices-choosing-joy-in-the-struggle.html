@@ -1001,25 +1001,55 @@
     </div>
 
     <script>
-        // Tab Navigation
+        // Tab switching with URL hash navigation
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const targetTab = tab.getAttribute('data-tab');
-                
-                // Remove active class from all tabs and contents
-                tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(tc => tc.classList.remove('active'));
-                
-                // Add active class to clicked tab and corresponding content
-                tab.classList.add('active');
-                document.getElementById(targetTab).classList.add('active');
+        function switchToTab(targetId) {
+            // Remove active class from all tabs and contents
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(tc => tc.classList.remove('active'));
+            
+            // Add active class to target tab and content
+            const targetTab = document.querySelector(`.tab[data-tab="${targetId}"]`);
+            const targetContent = document.getElementById(targetId);
+            
+            if (targetTab && targetContent) {
+                targetTab.classList.add('active');
+                targetContent.classList.add('active');
                 
                 // Scroll to top of content
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Handle tab clicks
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tab');
+                
+                // Update URL hash
+                window.location.hash = targetId;
+                
+                // Switch to the tab
+                switchToTab(targetId);
             });
+        });
+
+        // Handle hash changes (back/forward navigation)
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1); // Remove the # symbol
+            if (hash) {
+                switchToTab(hash);
+            }
+        });
+
+        // On page load, check if there's a hash and switch to that tab
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                switchToTab(hash);
+            }
         });
 
         // Attribution Toggle

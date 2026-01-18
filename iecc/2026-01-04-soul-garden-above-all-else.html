@@ -1094,26 +1094,58 @@
     </div>
 
     <script>
-        // Tab switching
+        // Tab switching with URL hash navigation
         const tabs = document.querySelectorAll('.tab');
         const sections = document.querySelectorAll('.content-section');
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const targetId = tab.getAttribute('data-tab');
-                
-                tabs.forEach(t => t.classList.remove('active'));
-                sections.forEach(s => s.classList.remove('active'));
-                
-                tab.classList.add('active');
-                document.getElementById(targetId).classList.add('active');
+        function switchToTab(targetId) {
+            // Remove active class from all tabs and sections
+            tabs.forEach(t => t.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+            
+            // Add active class to target tab and section
+            const targetTab = document.querySelector(`.tab[data-tab="${targetId}"]`);
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetTab && targetSection) {
+                targetTab.classList.add('active');
+                targetSection.classList.add('active');
                 
                 // Scroll to top of content
                 window.scrollTo({
                     top: document.querySelector('.tabs-container').offsetTop,
                     behavior: 'smooth'
                 });
+            }
+        }
+
+        // Handle tab clicks
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tab');
+                
+                // Update URL hash
+                window.location.hash = targetId;
+                
+                // Switch to the tab
+                switchToTab(targetId);
             });
+        });
+
+        // Handle hash changes (back/forward navigation)
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1); // Remove the # symbol
+            if (hash) {
+                switchToTab(hash);
+            }
+        });
+
+        // On page load, check if there's a hash and switch to that tab
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                switchToTab(hash);
+            }
         });
 
         // Accordion functionality

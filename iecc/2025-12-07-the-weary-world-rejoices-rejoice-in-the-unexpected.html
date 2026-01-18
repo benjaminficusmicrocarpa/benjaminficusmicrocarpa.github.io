@@ -432,11 +432,11 @@
     <!-- Sticky Tabs Navigation -->
     <nav class="tabs-container">
         <div class="tabs">
-            <button type="button" class="tab active" onclick="switchTab(0)">📖 Overview</button>
-            <button type="button" class="tab" onclick="switchTab(1)">🎤 Main Sermon</button>
-            <button type="button" class="tab" onclick="switchTab(2)">✝️ Bible Verses</button>
-            <button type="button" class="tab" onclick="switchTab(3)">💡 Application</button>
-            <button type="button" class="tab" onclick="switchTab(4)">🙏 Reflection</button>
+            <button type="button" class="tab active" data-tab="overview">📖 Overview</button>
+            <button type="button" class="tab" data-tab="sermon">🎤 Main Sermon</button>
+            <button type="button" class="tab" data-tab="verses">✝️ Bible Verses</button>
+            <button type="button" class="tab" data-tab="application">💡 Application</button>
+            <button type="button" class="tab" data-tab="reflection">🙏 Reflection</button>
         </div>
     </nav>
 
@@ -444,7 +444,7 @@
     <main class="max-w-5xl mx-auto px-4 py-12">
         
         <!-- Overview Tab -->
-        <section class="tab-content active" id="tab-0">
+        <section class="tab-content active" id="overview">
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <h2 class="text-4xl font-bold text-gray-800 mb-6">Sermon Overview 🎯</h2>
                 
@@ -488,7 +488,7 @@
         </section>
 
         <!-- Main Sermon Tab -->
-        <section class="tab-content" id="tab-1">
+        <section class="tab-content" id="sermon">
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <h2 class="text-4xl font-bold text-gray-800 mb-6">Main Sermon Content 📜</h2>
 
@@ -709,7 +709,7 @@
         </section>
 
         <!-- Bible Verses Tab -->
-        <section class="tab-content" id="tab-2">
+        <section class="tab-content" id="verses">
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <h2 class="text-4xl font-bold text-gray-800 mb-6">Key Scripture References ✝️</h2>
 
@@ -786,7 +786,7 @@
         </section>
 
         <!-- Application Tab -->
-        <section class="tab-content" id="tab-3">
+        <section class="tab-content" id="application">
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <h2 class="text-4xl font-bold text-gray-800 mb-6">Practical Application 💡</h2>
 
@@ -868,7 +868,7 @@
         </section>
 
         <!-- Reflection Tab -->
-        <section class="tab-content" id="tab-4">
+        <section class="tab-content" id="reflection">
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <h2 class="text-4xl font-bold text-gray-800 mb-6">Reflections & Quotes 🙏</h2>
 
@@ -983,29 +983,54 @@
             setInterval(rotateBackground, 5000);
         }
 
-        // Tab switching
-        function switchTab(index) {
-            const tabs = document.querySelectorAll('.tab');
-            const contents = document.querySelectorAll('.tab-content');
-            
-            if (tabs.length === 0 || contents.length === 0) return;
-            if (index < 0 || index >= tabs.length) return;
-            
-            tabs.forEach(tab => tab.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
-            
-            tabs[index].classList.add('active');
-            contents[index].classList.add('active');
+        // Tab switching with URL hash navigation
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function switchToTab(targetId) {
+            // Remove active class from all tabs and contents
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to target tab and content
+            const targetTab = document.querySelector(`.tab[data-tab="${targetId}"]`);
+            const targetContent = document.getElementById(targetId);
+            
+            if (targetTab && targetContent) {
+                targetTab.classList.add('active');
+                targetContent.classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
-        // Ensure initial tab is active on page load
+        // Handle tab clicks
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tab');
+                
+                // Update URL hash
+                window.location.hash = targetId;
+                
+                // Switch to the tab
+                switchToTab(targetId);
+            });
+        });
+
+        // Handle hash changes (back/forward navigation)
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1); // Remove the # symbol
+            if (hash) {
+                switchToTab(hash);
+            }
+        });
+
+        // On page load, check if there's a hash and switch to that tab
         document.addEventListener('DOMContentLoaded', function() {
-            const firstTab = document.querySelector('.tab.active');
-            const firstContent = document.querySelector('.tab-content.active');
-            if (!firstTab || !firstContent) {
-                switchTab(0);
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                switchToTab(hash);
             }
         });
 

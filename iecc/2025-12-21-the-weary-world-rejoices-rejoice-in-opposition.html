@@ -482,12 +482,12 @@
     <!-- Sticky Tabs -->
     <nav class="tabs">
         <div class="flex overflow-x-auto">
-            <button class="tab-button active" onclick="switchTab('overview')">✨ Overview</button>
-            <button class="tab-button" onclick="switchTab('sermon')">📖 Main Sermon</button>
-            <button class="tab-button" onclick="switchTab('astronomy')">🔭 Star of Bethlehem</button>
-            <button class="tab-button" onclick="switchTab('verses')">📜 Bible Verses</button>
-            <button class="tab-button" onclick="switchTab('application')">💡 Application</button>
-            <button class="tab-button" onclick="switchTab('reflection')">🙏 Reflection</button>
+            <button class="tab-button active" data-tab="overview">✨ Overview</button>
+            <button class="tab-button" data-tab="sermon">📖 Main Sermon</button>
+            <button class="tab-button" data-tab="astronomy">🔭 Star of Bethlehem</button>
+            <button class="tab-button" data-tab="verses">📜 Bible Verses</button>
+            <button class="tab-button" data-tab="application">💡 Application</button>
+            <button class="tab-button" data-tab="reflection">🙏 Reflection</button>
         </div>
     </nav>
 
@@ -978,25 +978,56 @@
         
         createStarfield();
         
-        // Tab Switching
-        function switchTab(tabName) {
-            // Hide all tabs
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
+        // Tab switching with URL hash navigation
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        function switchToTab(targetId) {
+            // Remove active class from all buttons and tabs
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(tab => tab.classList.remove('active'));
             
-            // Remove active from all buttons
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to target button and tab
+            const targetButton = document.querySelector(`.tab-button[data-tab="${targetId}"]`);
+            const targetTab = document.getElementById(targetId);
             
-            // Show selected tab
-            document.getElementById(tabName).classList.add('active');
-            
-            // Activate button
-            event.target.classList.add('active');
-            
-            // Scroll to top of content
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (targetButton && targetTab) {
+                targetButton.classList.add('active');
+                targetTab.classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
+
+        // Handle tab clicks
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-tab');
+                
+                // Update URL hash
+                window.location.hash = targetId;
+                
+                // Switch to the tab
+                switchToTab(targetId);
+            });
+        });
+
+        // Handle hash changes (back/forward navigation)
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1); // Remove the # symbol
+            if (hash) {
+                switchToTab(hash);
+            }
+        });
+
+        // On page load, check if there's a hash and switch to that tab
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                switchToTab(hash);
+            }
+        });
         
         // Accordion Toggle
         function toggleAccordion(header) {
