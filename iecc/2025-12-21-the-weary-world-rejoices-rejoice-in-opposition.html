@@ -280,6 +280,77 @@
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
         
+        /* Tags Section */
+        .sermon-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .sermon-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .sermon-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .sermon-tag.series {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--star-gold);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .sermon-tag.series:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: var(--star-gold);
+        }
+
+        .sermon-tag.theme {
+            background: rgba(107, 44, 62, 0.2);
+            color: #e8a5b8;
+            border-color: rgba(107, 44, 62, 0.4);
+        }
+
+        .sermon-tag.theme:hover {
+            background: rgba(107, 44, 62, 0.3);
+            border-color: var(--wine);
+        }
+
+        .sermon-tag.topic {
+            background: rgba(74, 91, 60, 0.2);
+            color: #a8c48a;
+            border-color: rgba(74, 91, 60, 0.4);
+        }
+
+        .sermon-tag.topic:hover {
+            background: rgba(74, 91, 60, 0.3);
+            border-color: var(--primary);
+        }
+
+        .sermon-tag.scripture {
+            background: rgba(138, 115, 85, 0.2);
+            color: #d4c4a8;
+            border-color: rgba(138, 115, 85, 0.4);
+        }
+
+        .sermon-tag.scripture:hover {
+            background: rgba(138, 115, 85, 0.3);
+            border-color: var(--earth);
+        }
+        
         .btn-secondary {
             background: transparent;
             color: var(--star-gold);
@@ -462,6 +533,9 @@
             <div class="mono text-sm mb-8">
                 21 December 2025 | Pastor Kevin | Island ECC
             </div>
+            <div class="sermon-tags-container" id="sermon-tags">
+                <!-- Tags will be dynamically loaded -->
+            </div>
             <p class="text-lg mb-8 max-w-2xl mx-auto text-gray-300">
                 We often embrace the concept of following a guiding star, but what happens when it leads us into opposition and uncertainty? How do we stay steadfast when following God brings hardship?
             </p>
@@ -471,7 +545,7 @@
                     <span>▶️</span>
                     Watch Original Sermon
                 </a>
-                <a href="../index.html" class="btn btn-secondary">
+                <a href="index.html" class="btn btn-secondary">
                     <span>📋</span>
                     View All Sermons
                 </a>
@@ -1056,6 +1130,55 @@
                 el.style.transition = 'none';
             });
         }
+
+        // Load and display tags
+        async function loadSermonTags() {
+            try {
+                const response = await fetch('sermons_data.json');
+                const data = await response.json();
+                
+                // Find this sermon by date
+                const sermon = data.sermons.find(s => s.date === '2025-12-21');
+                if (!sermon) return;
+                
+                const tagsContainer = document.getElementById('sermon-tags');
+                const tagCategories = data.tagCategories;
+                
+                // Create a map of all tags for quick lookup
+                const allTags = {};
+                Object.values(tagCategories).flat().forEach(tag => {
+                    allTags[tag.id] = tag;
+                });
+                
+                // Generate tag links
+                const tagLinks = sermon.tags.map(tagId => {
+                    const tagInfo = allTags[tagId];
+                    if (!tagInfo) return '';
+                    
+                    // Determine tag type
+                    let tagType = 'topic';
+                    if (tagCategories.series?.find(t => t.id === tagId)) tagType = 'series';
+                    else if (tagCategories.themes?.find(t => t.id === tagId)) tagType = 'theme';
+                    else if (tagCategories.topics?.find(t => t.id === tagId)) tagType = 'topic';
+                    else if (tagCategories.scriptures?.find(t => t.id === tagId)) tagType = 'scripture';
+                    
+                    // Create link to index.html with tag filter
+                    const tagUrl = `index.html?tags=${encodeURIComponent(tagId)}`;
+                    
+                    return `<a href="${tagUrl}" class="sermon-tag ${tagType}" title="Filter sermons by ${tagInfo.label}">
+                        ${tagInfo.emoji} ${tagInfo.label}
+                    </a>`;
+                }).filter(html => html).join('');
+                
+                tagsContainer.innerHTML = tagLinks;
+                
+            } catch (error) {
+                console.error('Failed to load sermon tags:', error);
+            }
+        }
+        
+        // Load tags when DOM is ready
+        document.addEventListener('DOMContentLoaded', loadSermonTags);
     </script>
 </body>
 </html>

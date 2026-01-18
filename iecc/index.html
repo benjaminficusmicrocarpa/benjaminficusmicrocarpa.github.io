@@ -538,7 +538,7 @@
     <script>
         // Global state
         let activeTags = new Set();
-        let activeYear = '2025';
+        let activeYear = 'all';
         let sermonsData = null;
         let tagCategories = null;
         
@@ -562,7 +562,7 @@
             const params = new URLSearchParams();
             
             // Add year parameter if not default
-            if (activeYear !== '2025') {
+            if (activeYear !== 'all') {
                 params.set('year', activeYear);
             }
             
@@ -693,7 +693,7 @@
          */
         window.addEventListener('popstate', function(event) {
             if (event.state) {
-                activeYear = event.state.year || '2025';
+                activeYear = event.state.year || 'all';
                 activeTags = new Set(event.state.tags || []);
                 
                 updateYearButtonStates();
@@ -800,10 +800,11 @@
                                aria-pressed="${isActive}">📅 ${year}</button>`;
             }).join('');
             
+            const isAllActive = activeYear === 'all';
             const allButton = `<button onclick="filterYear('all')" 
-                                      class="filter-btn year-btn inactive" 
+                                      class="filter-btn year-btn ${isAllActive ? 'year-btn-active text-white' : 'inactive'}" 
                                       data-year="all" 
-                                      aria-pressed="false">🌐 All Years</button>`;
+                                      aria-pressed="${isAllActive}">🌐 All Years</button>`;
             
             container.innerHTML = buttons + allButton;
         }

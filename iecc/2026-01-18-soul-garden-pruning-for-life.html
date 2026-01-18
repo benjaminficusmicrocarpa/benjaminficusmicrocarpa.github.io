@@ -553,6 +553,79 @@
             text-decoration: underline;
         }
 
+        /* Tags Section */
+        .sermon-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .sermon-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .sermon-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .sermon-tag.series {
+            background: rgba(139, 111, 71, 0.2);
+            color: var(--accent-light);
+            border-color: rgba(139, 111, 71, 0.4);
+        }
+
+        .sermon-tag.series:hover {
+            background: rgba(139, 111, 71, 0.3);
+            border-color: var(--accent);
+        }
+
+        .sermon-tag.theme {
+            background: rgba(107, 44, 62, 0.2);
+            color: #e8a5b8;
+            border-color: rgba(107, 44, 62, 0.4);
+        }
+
+        .sermon-tag.theme:hover {
+            background: rgba(107, 44, 62, 0.3);
+            border-color: var(--wine);
+        }
+
+        .sermon-tag.topic {
+            background: rgba(74, 91, 60, 0.2);
+            color: #a8c48a;
+            border-color: rgba(74, 91, 60, 0.4);
+        }
+
+        .sermon-tag.topic:hover {
+            background: rgba(74, 91, 60, 0.3);
+            border-color: var(--primary);
+        }
+
+        .sermon-tag.scripture {
+            background: rgba(138, 115, 85, 0.2);
+            color: #d4c4a8;
+            border-color: rgba(138, 115, 85, 0.4);
+        }
+
+        .sermon-tag.scripture:hover {
+            background: rgba(138, 115, 85, 0.3);
+            border-color: var(--earth);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero-title {
@@ -653,6 +726,9 @@
             <p class="hero-subtitle">"Every branch that does bear fruit He prunes so that it will be even more fruitful."</p>
             <div class="hero-meta">
                 📅 18 Jan 2026 | 🎤 Pastor Kevin | 🏝️ Island ECC
+            </div>
+            <div class="sermon-tags-container" id="sermon-tags">
+                <!-- Tags will be dynamically loaded -->
             </div>
             <div class="hero-buttons">
                 <a href="https://www.youtube.com/watch?v=vYeFUFFfsyU" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
@@ -1252,6 +1328,55 @@
                 }
             });
         });
+
+        // Load and display tags
+        async function loadSermonTags() {
+            try {
+                const response = await fetch('sermons_data.json');
+                const data = await response.json();
+                
+                // Find this sermon by date
+                const sermon = data.sermons.find(s => s.date === '2026-01-18');
+                if (!sermon) return;
+                
+                const tagsContainer = document.getElementById('sermon-tags');
+                const tagCategories = data.tagCategories;
+                
+                // Create a map of all tags for quick lookup
+                const allTags = {};
+                Object.values(tagCategories).flat().forEach(tag => {
+                    allTags[tag.id] = tag;
+                });
+                
+                // Generate tag links
+                const tagLinks = sermon.tags.map(tagId => {
+                    const tagInfo = allTags[tagId];
+                    if (!tagInfo) return '';
+                    
+                    // Determine tag type
+                    let tagType = 'topic';
+                    if (tagCategories.series?.find(t => t.id === tagId)) tagType = 'series';
+                    else if (tagCategories.themes?.find(t => t.id === tagId)) tagType = 'theme';
+                    else if (tagCategories.topics?.find(t => t.id === tagId)) tagType = 'topic';
+                    else if (tagCategories.scriptures?.find(t => t.id === tagId)) tagType = 'scripture';
+                    
+                    // Create link to index.html with tag filter
+                    const tagUrl = `index.html?tags=${encodeURIComponent(tagId)}`;
+                    
+                    return `<a href="${tagUrl}" class="sermon-tag ${tagType}" title="Filter sermons by ${tagInfo.label}">
+                        ${tagInfo.emoji} ${tagInfo.label}
+                    </a>`;
+                }).filter(html => html).join('');
+                
+                tagsContainer.innerHTML = tagLinks;
+                
+            } catch (error) {
+                console.error('Failed to load sermon tags:', error);
+            }
+        }
+        
+        // Load tags when DOM is ready
+        document.addEventListener('DOMContentLoaded', loadSermonTags);
     </script>
 </body>
 </html>
