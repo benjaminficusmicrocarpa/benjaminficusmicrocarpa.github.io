@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polyclave Key to Ficus Species of Hong Kong</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header section -->
+    <header class="header">
+        <h1>Polyclave Key to Ficus Species of Hong Kong</h1>
+        <h2>Interactive identification key for 25 Ficus species found in Hong Kong</h2>
+    </header>
+
+    <!-- Main content container -->
+    <div class="container">
+        <div class="layout">
+            <!-- Filters sidebar -->
+            <div class="filters">
+                <h2>Select Characteristics</h2>
+                
+                <div class="species-count">
+                    Showing <span id="countSpecies">25</span> of 25 species
+                </div>
+                
+                <button id="resetFilters" class="reset-btn">Reset All Filters</button>
+                
+                <!-- Growth Habit -->
+                <div class="filter-group">
+                    <h3>Growth Habit (生長習性)</h3>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="habit-tree" class="filter" data-category="habit" value="tree">
+                            <label for="habit-tree">Tree (樹木)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="habit-shrub" class="filter" data-category="habit" value="shrub">
+                            <label for="habit-shrub">Shrub (灌木)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="habit-climber" class="filter" data-category="habit" value="climber">
+                            <label for="habit-climber">Climber/Vine (攀緣植物/藤蔓)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="habit-epiphyte" class="filter" data-category="habit" value="epiphyte">
+                            <label for="habit-epiphyte">Epiphyte when young (幼時為附生植物)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leaf Shape -->
+                <div class="filter-group">
+                    <h3>Leaf Shape (葉形)</h3>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-ovate" class="filter" data-category="leaf-shape" value="ovate">
+                            <label for="leaf-ovate">Ovate (卵形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-elliptic" class="filter" data-category="leaf-shape" value="elliptic">
+                            <label for="leaf-elliptic">Elliptic (橢圓形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-lanceolate" class="filter" data-category="leaf-shape" value="lanceolate">
+                            <label for="leaf-lanceolate">Lanceolate (披針形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-oblong" class="filter" data-category="leaf-shape" value="oblong">
+                            <label for="leaf-oblong">Oblong (長橢圓形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-obovate" class="filter" data-category="leaf-shape" value="obovate">
+                            <label for="leaf-obovate">Obovate (倒卵形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-cordate" class="filter" data-category="leaf-shape" value="cordate">
+                            <label for="leaf-cordate">Cordate (心形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-triangular" class="filter" data-category="leaf-shape" value="triangular">
+                            <label for="leaf-triangular">Triangular (三角形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-oblanceolate" class="filter" data-category="leaf-shape" value="oblanceolate">
+                            <label for="leaf-oblanceolate">Oblanceolate (倒披針形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-linear" class="filter" data-category="leaf-shape" value="linear">
+                            <label for="leaf-linear">Linear (線形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-rhomboid" class="filter" data-category="leaf-shape" value="rhomboid">
+                            <label for="leaf-rhomboid">Rhomboid (菱形)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="leaf-pandurate" class="filter" data-category="leaf-shape" value="pandurate">
+                            <label for="leaf-pandurate">Pandurate/Fiddle-shaped (提琴形)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leaf Arrangement -->
+                <div class="filter-group">
+                    <h3>Leaf Arrangement (排列)</h3>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="arrangement-alternate" class="filter" data-category="leaf-arrangement" value="alternate">
+                            <label for="arrangement-alternate">Alternate (互生)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="arrangement-opposite" class="filter" data-category="leaf-arrangement" value="opposite">
+                            <label for="arrangement-opposite">Opposite (對生)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="arrangement-distichous" class="filter" data-category="leaf-arrangement" value="distichous">
+                            <label for="arrangement-distichous">Distichous (二列)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leaf Margin -->
+                <div class="filter-group">
+                    <h3>Leaf Margin (葉緣)</h3>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="margin-entire" class="filter" data-category="leaf-margin" value="entire">
+                            <label for="margin-entire">Entire (全緣)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="margin-serrate" class="filter" data-category="leaf-margin" value="serrate">
+                            <label for="margin-serrate">Serrate/Dentate (鋸齒狀)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="margin-undulate" class="filter" data-category="leaf-margin" value="undulate">
+                            <label for="margin-undulate">Undulate/Sinuate (波狀)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="margin-lobed" class="filter" data-category="leaf-margin" value="lobed">
+                            <label for="margin-lobed">Lobed (深波狀)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="margin-repand" class="filter" data-category="leaf-margin" value="repand">
+                            <label for="margin-repand">Repand (殘波狀)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="margin-angulate" class="filter" data-category="leaf-margin" value="angulate">
+                            <label for="margin-angulate">Angulate (有稜角)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fig Position -->
+                <div class="filter-group">
+                    <h3>Fig Position (隱頭果生長位置)</h3>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-axillary" class="filter" data-category="fig-position" value="axillary">
+                            <label for="fig-axillary">Axillary (腋生)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-leafless" class="filter" data-category="fig-position" value="leafless">
+                            <label for="fig-leafless">On leafless branches (無葉的枝條)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-cauliflorous" class="filter" data-category="fig-position" value="cauliflorous">
+                            <label for="fig-cauliflorous">On trunk/old branches (幹生)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fig Color -->
+                <div class="filter-group">
+                    <h3>Fig Color when mature (成熟果實果色)</h3>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-red" class="filter" data-category="fig-color" value="red">
+                            <label for="fig-red">Red/Purple (紅色/紫色)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-yellow" class="filter" data-category="fig-color" value="yellow">
+                            <label for="fig-yellow">Yellow/Orange (黃色/橙色)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-green" class="filter" data-category="fig-color" value="green">
+                            <label for="fig-green">Green (綠色)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-black" class="filter" data-category="fig-color" value="black">
+                            <label for="fig-black">Black/Dark Purple (黑色/深紫色)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-white" class="filter" data-category="fig-color" value="white">
+                            <label for="fig-white">White (白色)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-brown" class="filter" data-category="fig-color" value="brown">
+                            <label for="fig-brown">Brown (棕色)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fig-blue" class="filter" data-category="fig-color" value="blue">
+                            <label for="fig-blue">Blue (藍色)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Habitat -->
+                <div class="filter-group">
+                    <h3>Habitat/Occurrence (生境)</h3>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="habitat-forest" class="filter" data-category="habitat" value="forest">
+                            <label for="habitat-forest">Forests (森林)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="habitat-stream" class="filter" data-category="habitat" value="stream">
+                            <label for="habitat-stream">By streams (溪澗旁)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="habitat-cultivated" class="filter" data-category="habitat" value="cultivated">
+                            <label for="habitat-cultivated">Cultivated (栽培)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Results section -->
+            <div class="results">
+                <h2>Species List</h2>
+                <div class="table-container">
+                    <div class="table-wrapper">
+                        <table id="speciesTable">
+                            <thead>
+                                <tr>
+                                    <th>Scientific Name</th>
+                                    <th>Chinese Name</th>
+                                    <th>Habit</th>
+                                    <th>Leaf</th>
+                                    <th>Fig</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Species data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer attribution -->
+        <div class="attribution">
+            Generated using LLM with supervision and polishing by 
+            <a href="https://benjaminficusmicrocarpa.github.io/" target="_blank" rel="noopener noreferrer">
+                benjaminficusmicrocarpa
+            </a>
+        </div>
+        
+        <!-- MIT License link -->
+        <div class="license-link">
+            <a href="../../license.html" target="_blank" rel="noopener noreferrer">
+                📄 MIT License
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Species data with their characteristics
+        const speciesData = [
+            {
+                scientificName: "Ficus microcarpa",
+                chineseName: "榕樹 (細葉榕)",
+                habit: ["tree"],
+                leafShape: ["elliptic", "ovate", "obovate"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["yellow", "red"],
+                habitat: ["forest", "cultivated"],
+                notes: "Large tree with aerial roots, figs 6-8 mm in diameter"
+            },
+            {
+                scientificName: "Ficus religiosa",
+                chineseName: "菩提樹",
+                habit: ["tree", "epiphyte"],
+                leafShape: ["triangular", "ovate"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire", "undulate"],
+                figPosition: ["axillary"],
+                figColor: ["red"],
+                habitat: ["cultivated"],
+                notes: "Distinctive caudate leaf apex 2-5 cm long"
+            },
+            {
+                scientificName: "Ficus sagittata",
+                chineseName: "羊乳榕 (箭葉榕)",
+                habit: ["tree", "epiphyte", "climber"],
+                leafShape: ["ovate", "elliptic"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire", "sinuate"],
+                figPosition: ["axillary", "leafless"],
+                figColor: ["orange"],
+                habitat: ["forest"],
+                notes: "Tree when mature, epiphytic vine when young"
+            },
+            {
+                scientificName: "Ficus hispida",
+                chineseName: "對葉榕",
+                habit: ["shrub", "tree"],
+                leafShape: ["ovate", "obovate", "oblong"],
+                leafArrangement: ["opposite"],
+                leafMargin: ["entire", "serrate"],
+                figPosition: ["axillary", "cauliflorous"],
+                figColor: ["yellow"],
+                habitat: ["stream", "forest"],
+                notes: "Very rough leaves with stiff hairs on both surfaces"
+            },
+            {
+                scientificName: "Ficus vasculosa",
+                chineseName: "白肉榕",
+                habit: ["tree"],
+                leafShape: ["elliptic", "oblong", "lanceolate"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire", "lobed"],
+                figPosition: ["axillary"],
+                figColor: ["yellow", "red"],
+                habitat: ["forest"],
+                notes: "Whitish leaf undersides, leaves 4-11 × 2-4 cm"
+            },
+            {
+                scientificName: "Ficus variegata",
+                chineseName: "青果榕",
+                habit: ["tree"],
+                leafShape: ["ovate", "elliptic"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire", "sinuate", "serrate"],
+                figPosition: ["cauliflorous"],
+                figColor: ["green"],
+                habitat: ["forest"],
+                notes: "Figs clustered on trunk or branches, pear-shaped or globose"
+            },
+            {
+                scientificName: "Ficus concinna",
+                chineseName: "雅榕",
+                habit: ["tree"],
+                leafShape: ["elliptic"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["blue", "purple"],
+                habitat: ["forest"],
+                notes: "Figs light blue-purple, sometimes with yellow spots"
+            },
+            {
+                scientificName: "Ficus rumphii",
+                chineseName: "心葉榕",
+                habit: ["tree", "epiphyte"],
+                leafShape: ["cordate", "ovate"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary", "leafless"],
+                figColor: ["purple"],
+                habitat: ["cultivated"],
+                notes: "Cultivated in parks and along roadsides"
+            },
+            {
+                scientificName: "Ficus subulata",
+                chineseName: "假斜葉榕",
+                habit: ["shrub", "climber"],
+                leafShape: ["elliptic", "obovate"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary", "leafless"],
+                figColor: ["orange"],
+                habitat: ["forest"],
+                notes: "Leaf blade asymmetrical, 8-15 × 2.5-7 cm"
+            },
+            {
+                scientificName: "Ficus altissima",
+                chineseName: "高山榕 (雞榕)",
+                habit: ["tree"],
+                leafShape: ["ovate", "elliptic"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["red", "yellow"],
+                habitat: ["forest", "cultivated"],
+                notes: "Large tree 25-30 m tall, figs 17-28 mm in diameter"
+            },
+            {
+                scientificName: "Ficus langkokensis",
+                chineseName: "青藤公",
+                habit: ["tree"],
+                leafShape: ["elliptic", "lanceolate"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["yellow", "orange"],
+                habitat: ["forest"],
+                notes: "Figs ferrugineo-scurfy, apex umbonulate"
+            },
+            {
+                scientificName: "Ficus esquiroliana",
+                chineseName: "黃毛榕 (馬鞍天仙果)",
+                habit: ["tree", "shrub"],
+                leafShape: ["ovate", "lobed"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["serrate"],
+                figPosition: ["axillary"],
+                figColor: ["brown"],
+                habitat: ["forest", "stream"],
+                notes: "Young branches yellow hirsute, hollowed at center"
+            },
+            {
+                scientificName: "Ficus virens",
+                chineseName: "黃葛樹 (大葉榕)",
+                habit: ["tree", "epiphyte"],
+                leafShape: ["lanceolate"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary", "leafless"],
+                figColor: ["red", "purple"],
+                habitat: ["cultivated"],
+                notes: "Deciduous or semideciduous tree with buttressed or prop roots"
+            },
+            {
+                scientificName: "Ficus subpisocarpa",
+                chineseName: "筆管榕",
+                habit: ["tree"],
+                leafShape: ["elliptic", "oblong"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire", "undulate"],
+                figPosition: ["axillary", "leafless"],
+                figColor: ["purple", "black"],
+                habitat: ["forest"],
+                notes: "Deciduous tree, sometimes with aerial roots"
+            },
+            {
+                scientificName: "Ficus nervosa",
+                chineseName: "九丁樹 (凸葉榕)",
+                habit: ["tree"],
+                leafShape: ["oblanceolate", "oblong", "elliptic"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["yellow", "red", "brown"],
+                habitat: ["forest", "stream"],
+                notes: "Midvein and lateral veins prominent on underside"
+            },
+            {
+                scientificName: "Ficus elastica",
+                chineseName: "印度榕 (印度橡樹)",
+                habit: ["tree"],
+                leafShape: ["oblong", "elliptic"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["yellow", "red"],
+                habitat: ["cultivated"],
+                notes: "Large tree with thick leaves and prominent stipule scars"
+            },
+            {
+                scientificName: "Ficus pumila",
+                chineseName: "薜荔 (文頭郎)",
+                habit: ["shrub", "climber"],
+                leafShape: ["ovate", "cordate", "elliptic"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["green", "red"],
+                habitat: ["forest"],
+                notes: "Creeping shrub with adventitious roots, dimorphic leaves"
+            },
+            {
+                scientificName: "Ficus pandurata",
+                chineseName: "琴葉榕",
+                habit: ["shrub"],
+                leafShape: ["pandurate", "obovate", "lanceolate", "linear"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["red"],
+                habitat: ["forest"],
+                notes: "Small shrub 1-2 m tall, leaves sometimes constricted at middle"
+            },
+            {
+                scientificName: "Ficus variolosa",
+                chineseName: "變葉榕",
+                habit: ["shrub", "tree"],
+                leafShape: ["elliptic", "lanceolate"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["yellow", "green"],
+                habitat: ["forest"],
+                notes: "Figs 10-12 mm in diameter, verrucose"
+            },
+            {
+                scientificName: "Ficus hederacea",
+                chineseName: "藤榕 (爬牆榕)",
+                habit: ["climber"],
+                leafShape: ["elliptic", "ovate"],
+                leafArrangement: ["distichous"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["yellow", "green"],
+                habitat: ["forest"],
+                notes: "Climber with papillary leaf surfaces"
+            },
+            {
+                scientificName: "Ficus sarmentosa var. impressa",
+                chineseName: "爬藤榕 (凹葉榕)",
+                habit: ["shrub", "climber"],
+                leafShape: ["oblong", "elliptic", "lanceolate"],
+                leafArrangement: ["distichous"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["yellow", "orange"],
+                habitat: ["forest"],
+                notes: "Shrub prostrate or creeping with small leaves 4-7 × 1-2 cm"
+            },
+            {
+                scientificName: "Ficus pyriformis",
+                chineseName: "舶梨榕",
+                habit: ["shrub"],
+                leafShape: ["oblanceolate", "oblong", "lanceolate"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire"],
+                figPosition: ["axillary"],
+                figColor: ["white"],
+                habitat: ["stream", "forest"],
+                notes: "Distinctive pear-shaped figs 2-3 cm in diameter"
+            },
+            {
+                scientificName: "Ficus tinctoria subsp. gibbosa",
+                chineseName: "斜葉榕 (水榕)",
+                habit: ["tree", "epiphyte"],
+                leafShape: ["ovate", "elliptic", "rhomboid"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire", "angulate"],
+                figPosition: ["axillary"],
+                figColor: ["yellow"],
+                habitat: ["forest"],
+                notes: "Unequal-sided leaves less than 13 × 5 cm"
+            },
+            {
+                scientificName: "Ficus fistulosa",
+                chineseName: "水同木",
+                habit: ["tree"],
+                leafShape: ["obovate", "oblong"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire", "repand"],
+                figPosition: ["cauliflorous"],
+                figColor: ["orange"],
+                habitat: ["forest", "stream"],
+                notes: "Figs clustered on verrucose brachyblast from old wood"
+            },
+            {
+                scientificName: "Ficus formosana",
+                chineseName: "台灣榕",
+                habit: ["shrub"],
+                leafShape: ["oblanceolate", "linear"],
+                leafArrangement: ["alternate"],
+                leafMargin: ["entire", "dentate"],
+                figPosition: ["axillary"],
+                figColor: ["green", "red"],
+                habitat: ["forest"],
+                notes: "Shrub 1.5-3 m tall with oblanceolate to linear leaves"
+            }
+        ];
+        
+        // Function to populate table
+        function populateTable() {
+            const tableBody = document.querySelector("#speciesTable tbody");
+            tableBody.innerHTML = "";
+            
+            speciesData.forEach(species => {
+                const row = document.createElement("tr");
+                row.className = "species-row";
+                row.dataset.habit = species.habit.join(' ');
+                row.dataset.leafShape = species.leafShape.join(' ');
+                row.dataset.leafArrangement = species.leafArrangement.join(' ');
+                row.dataset.leafMargin = species.leafMargin.join(' ');
+                row.dataset.figPosition = species.figPosition.join(' ');
+                row.dataset.figColor = species.figColor.join(' ');
+                row.dataset.habitat = species.habitat.join(' ');
+                
+                row.innerHTML = `
+                    <td><span class="scientific-name">${species.scientificName}</span></td>
+                    <td><span class="chinese-name">${species.chineseName}</span></td>
+                    <td>${formatList(species.habit)}</td>
+                    <td class="info-cell">
+                        <strong>Shape:</strong> ${formatList(species.leafShape)}<br>
+                        <strong>Arrangement:</strong> ${formatList(species.leafArrangement)}<br>
+                        <strong>Margin:</strong> ${formatList(species.leafMargin)}
+                    </td>
+                    <td class="info-cell">
+                        <strong>Position:</strong> ${formatList(species.figPosition)}<br>
+                        <strong>Color:</strong> ${formatList(species.figColor)}
+                    </td>
+                    <td class="notes">${species.notes}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        function formatList(list) {
+            return list.map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(", ");
+        }
+        
+        // Filter functionality
+        function applyFilters() {
+            const filterSelections = {};
+            const allFilters = document.querySelectorAll('.filter:checked');
+            
+            // Collect all selected filters by category
+            allFilters.forEach(filter => {
+                const category = filter.dataset.category;
+                if (!filterSelections[category]) {
+                    filterSelections[category] = [];
+                }
+                filterSelections[category].push(filter.value);
+            });
+            
+            const rows = document.querySelectorAll('.species-row');
+            let visibleCount = 0;
+            
+            rows.forEach(row => {
+                let shouldShow = true;
+                
+                // Check each filter category
+                for (const category in filterSelections) {
+                    const selectedValues = filterSelections[category];
+                    const rowValues = row.dataset[camelCase(category)].split(' ');
+                    
+                    // If any value matches, keep the row for this category
+                    const categoryMatch = selectedValues.some(val => rowValues.includes(val));
+                    if (!categoryMatch) {
+                        shouldShow = false;
+                        break;
+                    }
+                }
+                
+                if (shouldShow) {
+                    row.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+            
+            // Update species count
+            document.getElementById('countSpecies').textContent = visibleCount;
+        }
+        
+        // Helper to convert dash-case to camelCase
+        function camelCase(str) {
+            return str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+        }
+        
+        // Reset all filters
+        document.getElementById('resetFilters').addEventListener('click', function() {
+            document.querySelectorAll('.filter:checked').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            document.querySelectorAll('.species-row').forEach(row => {
+                row.classList.remove('hidden');
+            });
+            
+            document.getElementById('countSpecies').textContent = speciesData.length;
+        });
+        
+        // Add event listeners to all filter checkboxes
+        document.querySelectorAll('.filter').forEach(checkbox => {
+            checkbox.addEventListener('change', applyFilters);
+        });
+        
+        // Initialize table on page load
+        document.addEventListener('DOMContentLoaded', populateTable);
+    </script>
+</body>
+</html>
