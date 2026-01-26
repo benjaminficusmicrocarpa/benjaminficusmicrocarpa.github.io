@@ -1,0 +1,779 @@
+/* 
+ * ════════════════════════════════════════════════════════════════════════════════
+ * 🌳 TREE DATABASE SPECIALIZED FEATURES - PHASE 3 ISOLATION
+ * ════════════════════════════════════════════════════════════════════════════════
+ * 
+ * 🎯 SPECIALIZED DATABASE COMPONENTS - ISOLATED FOR MAINTENANCE
+ * ──────────────────────────────────────────────────────────────
+ * • Ultra-compact data table optimized for species information
+ * • Advanced image carousel for species photography
+ * • Professional modal system for database information
+ * • External database integration (GBIF, POWO, WFO)
+ * • Specialized tooltip system for data tables
+ * • Fuzzy search relevance indicators
+ * 
+ * 🚀 PERFORMANCE OPTIMIZATIONS:
+ * ──────────────────────────────
+ * • Hardware-accelerated animations
+ * • Minimal reflows and repaints
+ * • Optimized for large datasets
+ * • Mobile-first responsive design
+ * 
+ * ════════════════════════════════════════════════════════════════════════════════
+ */
+
+/* =================================
+   ULTRA-COMPACT DATA TABLE SYSTEM
+   ================================= */
+
+/* Table container with enhanced styling */
+.database-table-container {
+  background: rgb(var(--db-bg-primary));
+  border-radius: var(--db-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--db-shadow-lg);
+  border: 1px solid rgb(var(--db-border-medium));
+  margin-bottom: 2rem;
+}
+
+/* Table wrapper for horizontal scrolling */
+.database-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--db-border-medium)) transparent;
+}
+
+/* Custom scrollbar for webkit browsers */
+.database-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.database-table-wrapper::-webkit-scrollbar-track {
+  background: rgb(var(--db-bg-secondary));
+}
+
+.database-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgb(var(--db-border-medium));
+  border-radius: 4px;
+}
+
+.database-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--db-border-dark));
+}
+
+/* Main species table - optimized for data density */
+.species-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; /* Ensures horizontal scroll on smaller screens */
+  font-size: 14px;
+  font-variant-numeric: tabular-nums; /* Align numbers properly */
+}
+
+/* Table header styling */
+.species-table th {
+  background: rgb(var(--db-bg-secondary));
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: rgb(var(--db-text-primary));
+  border-bottom: 2px solid rgb(var(--db-border-medium));
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  white-space: nowrap;
+  height: var(--db-header-height);
+  user-select: none;
+}
+
+/* Table body rows - ultra-compact spacing */
+.species-table tbody tr {
+  height: var(--db-row-height);
+  transition: background-color var(--db-transition-fast) ease;
+  border-bottom: 1px solid rgb(var(--db-border-light));
+}
+
+/* Alternating row colors (zebra striping) */
+.species-table tbody tr:nth-child(even) {
+  background-color: rgb(var(--db-bg-stripe));
+}
+
+.species-table tbody tr:hover {
+  background-color: rgb(var(--db-bg-hover));
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Table cell styling - minimal padding for maximum data density */
+.species-table td {
+  padding: var(--db-cell-padding);
+  vertical-align: middle;
+  font-size: 14px;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; /* Prevent extremely wide cells */
+}
+
+/* Specialized cell types */
+.species-table .scientific-name {
+  font-weight: 500;
+  color: rgb(var(--db-text-primary));
+  transition: all var(--db-transition-fast) ease;
+  position: relative;
+  user-select: text;
+  max-width: 250px;
+}
+
+/* Clickable species with photos */
+.species-table .scientific-name.clickable {
+  cursor: pointer;
+  padding-right: 24px; /* Space for camera icon */
+}
+
+.species-table .scientific-name.clickable:hover {
+  color: rgb(var(--db-primary));
+  background-color: rgb(var(--db-primary) / 0.1);
+  border-radius: var(--db-radius-sm);
+  padding-left: 8px;
+  margin-left: -2px;
+}
+
+/* Camera icon for species with photos */
+.species-table .scientific-name.clickable:hover::after {
+  content: "📷";
+  font-size: 0.9em;
+  opacity: 0.8;
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  animation: fadeIn var(--db-transition-fast) ease;
+}
+
+.species-table .chinese-name {
+  font-weight: 600;
+  color: rgb(var(--db-text-primary));
+  max-width: 150px;
+}
+
+.species-table .alternative-name {
+  color: rgb(var(--db-text-secondary));
+  font-size: 0.9rem;
+  max-width: 150px;
+}
+
+/* Latin29 ID column styling */
+.species-table .latin29-id {
+  text-align: center;
+  font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+  font-weight: bold;
+  color: rgb(var(--db-primary));
+  font-size: 0.9rem;
+  width: 80px;
+  min-width: 80px;
+}
+
+/* External database link columns - specific column classes */
+.species-table .gbif-column, 
+.species-table .powo-column, 
+.species-table .wfo-column {
+  text-align: center;
+  width: 50px;
+  min-width: 50px;
+  padding: 0.25rem;
+}
+
+/* External database links - specific link classes */
+.gbif-link, .powo-link, .wfo-link {
+  display: inline-block;
+  padding: 0.25rem;
+  color: rgb(var(--db-primary));
+  text-decoration: none;
+  border-radius: var(--db-radius-sm);
+  transition: all var(--db-transition-fast) ease;
+  font-size: 1rem;
+}
+
+.gbif-link:hover, .powo-link:hover, .wfo-link:hover {
+  background-color: rgb(var(--db-bg-hover));
+  transform: scale(1.1);
+  box-shadow: var(--db-shadow-sm);
+}
+
+.gbif-link:focus, .powo-link:focus, .wfo-link:focus {
+  outline: 2px solid rgb(var(--db-primary));
+  outline-offset: 2px;
+}
+
+/* External database icons - specific icon classes */
+.gbif-icon, .wfo-icon {
+  width: 16px;
+  height: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Generic external database styling for backward compatibility */
+.external-link {
+  display: inline-block;
+  padding: 0.25rem;
+  color: rgb(var(--db-primary));
+  text-decoration: none;
+  border-radius: var(--db-radius-sm);
+  transition: all var(--db-transition-fast) ease;
+  font-size: 1rem;
+}
+
+.external-link:hover {
+  background-color: rgb(var(--db-bg-hover));
+  transform: scale(1.1);
+  box-shadow: var(--db-shadow-sm);
+}
+
+.external-icon {
+  width: 16px;
+  height: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* =================================
+   FUZZY SEARCH RELEVANCE INDICATORS
+   ================================= */
+
+/* Fuzzy search relevance indicators */
+.database-suggestion-item.relevance-exact {
+  border-left: 3px solid rgb(var(--db-success));
+}
+
+.database-suggestion-item.relevance-high {
+  border-left: 3px solid rgb(var(--db-info));
+}
+
+.database-suggestion-item.relevance-medium {
+  border-left: 3px solid rgb(var(--db-warning));
+}
+
+.database-suggestion-item.relevance-low {
+  border-left: 3px solid rgb(var(--db-text-muted));
+}
+
+/* Backward compatibility for suggestion items */
+.suggestion-item.relevance-exact {
+  border-left: 3px solid #22c55e;
+}
+
+.suggestion-item.relevance-high {
+  border-left: 3px solid #3b82f6;
+}
+
+.suggestion-item.relevance-medium {
+  border-left: 3px solid #f59e0b;
+}
+
+.suggestion-item.relevance-low {
+  border-left: 3px solid #6b7280;
+}
+
+/* =================================
+   SPECIES IMAGE CAROUSEL SYSTEM
+   ================================= */
+
+/* Carousel modal overlay - using original working styles */
+.species-carousel-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Carousel content container - adapted from original modal-content */
+.species-carousel-content {
+  background-color: white;
+  margin: 2% auto;
+  padding: 0;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Original carousel modal dimensions for proper sizing */
+.species-carousel-modal .species-carousel-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 800px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Carousel header - adapted from original modal-header */
+.species-carousel-header {
+  background: linear-gradient(135deg, rgb(var(--db-primary)), #3b82f6);
+  color: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.species-carousel-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.species-carousel-chinese {
+  font-size: 1rem;
+  opacity: 0.9;
+  font-weight: 400;
+  margin-top: 0.5rem;
+}
+
+/* Title container for carousel */
+.carousel-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.carousel-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Close button - using original styles */
+.species-carousel-close {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  transition: opacity 0.3s ease;
+  background: none;
+  border: none;
+}
+
+.species-carousel-close:hover {
+  opacity: 0.7;
+}
+
+/* Carousel main container - adapted from original carousel-container */
+.species-carousel-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 1rem 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Carousel image container - missing from original */
+.carousel-image-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-width: 600px;
+  max-height: 400px;
+}
+
+/* Main carousel image - using original styles */
+.species-carousel-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Carousel navigation buttons - adapted from original carousel-button */
+.species-carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.species-carousel-nav:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.species-carousel-nav.prev {
+  left: 20px;
+}
+
+.species-carousel-nav.next {
+  right: 20px;
+}
+
+.species-carousel-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Image counter - using original styles */
+.species-carousel-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* CC License styling */
+.cc-license {
+  position: relative;
+  text-align: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid rgb(var(--db-border-medium));
+  z-index: 20;
+}
+
+.cc-icon {
+  width: 88px;
+  height: 31px;
+  display: block;
+  cursor: help;
+  object-fit: contain;
+}
+
+/* Carousel thumbnails - using original styles */
+.species-carousel-thumbnails {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  max-height: 100px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.thumbnail:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.thumbnail.active {
+  border-color: rgb(var(--db-primary));
+  opacity: 1;
+}
+
+/* =================================
+   TOOLTIP SYSTEM FOR DATA TABLES
+   ================================= */
+
+/* Tooltip container for table headers */
+.database-tooltip-header {
+  position: relative;
+  cursor: help;
+  display: inline-block;
+}
+
+/* Tooltip content */
+.database-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(17 24 39); /* gray-900 */
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: var(--db-radius-md);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 9999;
+  transition: all var(--db-transition-fast) ease;
+  pointer-events: none;
+  box-shadow: var(--db-shadow-lg);
+}
+
+/* Tooltip arrow */
+.database-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgb(17 24 39);
+}
+
+/* Show tooltip on hover */
+.database-tooltip-header:hover .database-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Smart tooltip positioning for edge cases */
+.database-tooltip-header:first-child .database-tooltip,
+.database-tooltip-header:nth-child(1) .database-tooltip {
+  left: 0;
+  transform: translateX(0);
+}
+
+.database-tooltip-header:last-child .database-tooltip,
+.database-tooltip-header:nth-last-child(1) .database-tooltip {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+}
+
+/* Backward compatibility for tooltips */
+.tooltip-header {
+  position: relative;
+  cursor: help;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  background-color: #333;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 9999;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #333;
+}
+
+.tooltip-header:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* =================================
+   NO RESULTS MESSAGE
+   ================================= */
+
+.database-no-results {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgb(var(--db-text-secondary));
+  background: rgb(var(--db-bg-secondary));
+  border-radius: var(--db-radius-lg);
+  border: 2px dashed rgb(var(--db-border-medium));
+}
+
+.database-no-results h3 {
+  font-size: 1.5rem;
+  color: rgb(var(--db-text-primary));
+  margin-bottom: 1rem;
+}
+
+.database-no-results p {
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+
+/* Backward compatibility for no results */
+.no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgb(var(--db-text-secondary));
+}
+
+/* =================================
+   MOBILE RESPONSIVE ADJUSTMENTS
+   ================================= */
+
+@media (max-width: 768px) {
+  /* Mobile table adjustments */
+  .species-table {
+    font-size: 12px;
+    min-width: 600px; /* Reduced minimum width for mobile */
+  }
+
+  .species-table tbody tr {
+    height: var(--db-row-height-mobile);
+  }
+
+  .species-table th {
+    padding: 0.5rem;
+    font-size: 12px;
+    height: var(--db-header-height-mobile);
+  }
+
+  .species-table td {
+    padding: var(--db-cell-padding-mobile);
+    font-size: 12px;
+  }
+
+  .species-table .latin29-id {
+    font-size: 0.8rem;
+    width: 60px;
+    min-width: 60px;
+  }
+
+  .species-table .external-link-column {
+    width: 35px;
+    min-width: 35px;
+  }
+
+  .external-link {
+    padding: 0.125rem;
+    font-size: 0.9rem;
+  }
+
+  .external-icon {
+    width: 12px;
+    height: 11px;
+  }
+
+  /* Mobile carousel adjustments */
+  .species-carousel-content {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  .species-carousel-header {
+    padding: 1rem;
+  }
+
+  .species-carousel-title {
+    font-size: 1.2rem;
+  }
+
+  .species-carousel-nav {
+    font-size: 1.5rem;
+    padding: 0.75rem;
+  }
+
+  .species-carousel-nav.prev {
+    left: 0.5rem;
+  }
+
+  .species-carousel-nav.next {
+    right: 0.5rem;
+  }
+
+  .species-carousel-thumbnails {
+    padding: 0.5rem;
+  }
+
+  .species-carousel-thumbnail {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Mobile tooltip adjustments */
+  .database-tooltip {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.75rem;
+    position: fixed;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    bottom: auto !important;
+    white-space: normal;
+    max-width: 250px;
+  }
+
+  .database-tooltip::after {
+    display: none;
+  }
+}
+
+/* =================================
+   ANIMATIONS AND TRANSITIONS
+   ================================= */
+
+/* Original working animations from modal.css */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Apply animations to relevant elements */
+.species-table tbody tr {
+  animation: slideIn var(--db-transition-fast) ease;
+}
+
+.database-suggestion-item {
+  animation: fadeIn var(--db-transition-fast) ease;
+}

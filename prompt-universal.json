@@ -1,0 +1,204 @@
+{
+  "task": "Create responsive, accessible HTML content webpage with interactive UI",
+  "workflow": {
+    "step_1": "Analyze content tone and subject matter",
+    "step_2": "Select theme (colors, fonts, tone) matching content",
+    "step_3": "Generate HTML that prefers shared external CSS/JS when working inside this repo (especially under iecc/), otherwise use lightweight inline styles/scripts",
+    "output": "Single HTML file with interactive features; use shared external assets when available"
+  },
+  "project_conventions": {
+    "repo_context": "This repo hosts GitHub Pages content. Prefer maintainable, reusable assets over large inline blocks when building multiple pages with similar UI patterns.",
+    "iecc_sermon_pages": {
+      "applies_to": "Pages under iecc/ that follow the sermon UI (hero + sticky tabs + section content + tags).",
+      "required_external_assets": {
+        "base_css": "iecc/css/iecc-base.css",
+        "theme_css": "iecc/css/<theme>.css (e.g., soul-garden.css, weary-world.css)",
+        "common_js": "iecc/js/iecc-common.js"
+      },
+      "inline_policy": {
+        "css": "Only allow small page-specific overrides inline (aim < 50 lines). If larger, create/update a theme CSS file under iecc/css/.",
+        "js": "Avoid large inline <script> blocks. Put shared behaviors in iecc/js/iecc-common.js; only allow minimal per-page bootstrapping inline (e.g., one init call)."
+      },
+      "initialization": {
+        "preferred": "Use a data attribute on the page root to auto-initialize (e.g., data-sermon-date=\"YYYY-MM-DD\").",
+        "acceptable": "If the page uses a manual init pattern, include a tiny inline script that calls the shared initializer."
+      }
+    }
+  },
+  "design_system": {
+    "archetypes": [
+      {
+        "name": "Swiss Minimalist",
+        "traits": "Large typography, grid-based, high contrast, minimal shadows, sans-serif"
+      },
+      {
+        "name": "Modern Organic",
+        "traits": "Soft border-radius, pastel palette, serif headings, paper textures, floating cards"
+      },
+      {
+        "name": "Digital Brutalist",
+        "traits": "Monospace fonts, neon accents, thick borders, sharp edges, high saturation"
+      },
+      {
+        "name": "Classic Editorial",
+        "traits": "Traditional serif, refined palette, centered layouts, divider ornaments"
+      },
+      {
+        "name": "Contextual Wildcard",
+        "traits": "Invent a unique style specifically matching the content's metaphor, tone, or theme."
+      }
+    ]
+  },
+  "content_rules": {
+    "quotes": {
+      "authors": "Include all, cite sources accurately, mark paraphrases clearly",
+      "speakers": "Include if contextually valuable"
+    },
+    "structure": "Chronological flow unless clarity requires restructuring"
+  },
+  "ui_components": {
+    "selection_logic": "Select 3-5 components that best fit the specific content density and structure. Do not use all.",
+    "library": {
+      "navigation": ["Sticky Tabs", "Sidebar Dot Nav", "Floating FAB", "Mega Footer"],
+      "content_display": ["Accordion", "Masonry Grid", "Timeline", "Carousel", "Split-Screen Scroll", "Table", "Chart"],
+      "interactive": ["Flip Cards", "Hover Tooltips", "Modal Popups", "Slide-over Panels"]
+    },
+    "constraints": {
+      "if_many_items": "Use 'Masonry Grid' or 'Carousel'",
+      "if_long_content": "Use 'Accordion' or 'Read More Expandable'",
+      "if_structured_points": "Use 'Timeline' or 'Step-by-Step Vertical Progress'",
+      "need_organization_navigation_and_or_comparison": "Use 'Table'"
+    },
+    "tooltip_spec": "Float independently at top-right (all devices) for term definitions",
+    "tabs_requirement": "Sticky on top with hash-based routing (URL updates on tab change, supports back/forward navigation)",
+    "default_state": "Main content expanded, others collapsed unless beneficial"
+  },
+  "header": {
+    "instruction": "Please select options for each attribute below that best fit the content.",
+    "layout_options": [
+      "full_bleed",
+      "split_screen",
+      "minimalist",
+      "**Experimental**: Create a layout that visually mimics the content theme or title."
+    ],
+    "content_alignment_options": [
+      "center",
+      "left",
+      "right"
+    ],
+    "background": {
+      "type": [
+        "image_carousel",
+        "video_loop",
+        "**Generative CSS**: Use CSS patterns or SVG filters to create a dynamic background representing the content theme."
+      ],
+      "images": 3,
+      "specs": "Royalty-free, theme-matched, 1920x1080+, <300KB each",
+      "animation": [
+        "ken_burns_fade",
+        "parallax",
+        "slide",
+        "static",
+        "**Custom Keyframes**: Create a subtle animation specific to the mood."
+      ],
+      "overlay": [
+        "gradient_dark",
+        "solid_scrim",
+        "theme_color_tint"
+      ]
+    },
+    "content": [
+      "Title (H1)",
+      "Date & Source Info",
+      "Description (optional, for minimalist layouts)",
+      "Navigation buttons"
+    ],
+    "buttons": {
+      "grouping_style": ["inline", "stacked"],
+      "required_buttons": {
+        "primary_action": {
+          "label": "View/Watch/Read Original",
+          "icon": ["play", "external-link", "link"],
+          "style_options": ["primary", "ghost"]
+        },
+        "view_all": {
+          "label": "View All Items",
+          "icon": ["info", "list"],
+          "style_options": ["secondary", "text_link"]
+        }
+      },
+      "optional_buttons": {
+        "share": {
+          "action": "open_share_modal",
+          "label": "Share",
+          "icon": ["share"],
+          "style_options": ["secondary", "ghost"]
+        }
+      }
+    }
+  },
+  "attribution_badge": {
+    "position": {
+      "desktop": "fixed bottom-right (20px)",
+      "mobile": "relative static"
+    },
+    "initial_state": {
+      "short": "visible (ℹ️ icon)",
+      "full": "hidden"
+    },
+    "behavior": {
+      "desktop": {
+        "transform": "translateX(-10px)",
+        "short": "hidden",
+        "full": "visible"
+      },
+      "mobile": {
+        "transform": "none",
+        "short": "hidden",
+        "full": "visible"
+      }
+    },
+    "content": {
+      "short": "Single emoji (ℹ️)",
+      "full": "Generated by LLM with supervision by <a href='../index.html'>benjaminficusmicrocarpa</a>. <a href='../license.html'>MIT License</a>"
+    },
+    "styling": {
+      "color_strategy_options": [
+        "Monochromatic (Single hue, varying lightness)",
+        "Complementary (High contrast, dynamic)",
+        "Split-Complementary (Rich, nuanced)",
+        "Pastel/Muted (Calm, reflective)",
+        "Dark Mode Default (Cinematic, immersive)",
+        "**Thematic Extraction**: Extract the two dominant colors mentioned or visualized in the content and build a custom palette."
+      ],
+      "texture_options": [
+        "Flat color",
+        "Subtle gradient (mesh)",
+        "Noise/Grain overlay",
+        "Dot pattern background"
+      ],
+      "typography": {
+        "pairing_options": [
+          "Serif Header + Sans-Serif Body (Classic)",
+          "Sans-Serif Header + Serif Body (Editorial)",
+          "Display/Script Header + Monospace Body (Artistic)",
+          "Geometric Sans + Geometric Sans (Modern/Tech)",
+          "**Mood Match**: Select a font pairing that contradicts the others if it fits the content tone."
+        ]
+      }
+    }
+  },
+  "styling": {
+    "responsive": "Mobile-first: 320px to 32-inch displays",
+    "accessibility": "WCAG AA compliant (keyboard nav, ARIA, focus management)",
+    "emojis": "Use appropriately for content type",
+    "animations": "Theme-appropriate, performance-optimized (60fps), respect prefers-reduced-motion",
+    "date_format": "dd mmm yyyy"
+  },
+  "technical": {
+    "format": "HTML + (Tailwind CSS optional) + vanilla JS; in-repo pages should reuse shared external CSS/JS when present",
+    "optimization": "Fast load, minimal dependencies, lazy-load images, print-friendly; avoid duplicating large CSS/JS across many pages",
+    "standards": "Semantic HTML5, cross-browser compatible",
+    "routing": "Use data-tab attributes and window.location.hash for tab navigation with hashchange listener"
+  }
+}

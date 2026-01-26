@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize all interactive elements
     initializeCards();
-    initializeDatabaseCard();
     initializeParticles();
     initializeScrollEffects();
     initializeTypingEffect();
@@ -53,27 +52,6 @@ function initializeCards() {
     });
 }
 
-// Initialize database card
-function initializeDatabaseCard() {
-    const databaseCard = document.querySelector('.database-card');
-    
-    if (databaseCard) {
-        databaseCard.addEventListener('click', function() {
-            const link = this.getAttribute('data-link');
-            if (link) {
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                    window.location.href = link;
-                }, 150);
-            }
-        });
-        
-        databaseCard.addEventListener('click', function(e) {
-            createRippleEffect(e, this);
-        });
-    }
-}
 
 // Create ripple effect on click
 function createRippleEffect(event, element) {
@@ -161,7 +139,7 @@ function initializeScrollEffects() {
     }, observerOptions);
     
     // Observe cards for scroll animations
-    document.querySelectorAll('.card, .database-section').forEach(el => {
+    document.querySelectorAll('.card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -219,7 +197,7 @@ function playHoverSound() {
 
 // Add keyboard navigation
 document.addEventListener('keydown', function(e) {
-    const cards = document.querySelectorAll('.card, .database-card');
+    const cards = document.querySelectorAll('.card');
     const currentIndex = Array.from(cards).findIndex(card => 
         card === document.activeElement || card.contains(document.activeElement)
     );
@@ -248,7 +226,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Add focus styles for accessibility
-document.querySelectorAll('.card, .database-card').forEach(card => {
+document.querySelectorAll('.card').forEach(card => {
     card.setAttribute('tabindex', '0');
     card.addEventListener('focus', function() {
         this.style.outline = '3px solid #667eea';
@@ -293,8 +271,7 @@ style.textContent = `
         }
     }
     
-    body.loaded .card,
-    body.loaded .database-section {
+    body.loaded .card {
         opacity: 1;
         transform: translateY(0);
     }

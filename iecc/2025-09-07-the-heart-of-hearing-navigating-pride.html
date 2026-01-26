@@ -4,8 +4,1173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Heart of Hearing: Navigating Pride - Interactive Sermon Study</title>
-    <link rel="stylesheet" href="css/iecc-generic.css">
-    <link rel="stylesheet" href="css/pride-theme.css">
+    <!-- Generic Styles and Pride Theme (Inlined) -->
+    <style>
+/* Generic Styles - Reusable across different sermon pages */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Structure */
+.header {
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+}
+
+.header h1 {
+    font-family: 'Times New Roman', serif;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+}
+
+.header .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.sermon-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Tab Navigation */
+.tab-navigation {
+    border-radius: 15px;
+    padding: 8px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    flex: 1;
+    min-width: max-content;
+    padding: 15px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.tab-btn:not(.active):hover {
+    transform: translateY(-2px);
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Bento Grid Layout */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.bento-item {
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.bento-item:hover {
+    transform: translateY(-5px);
+}
+
+.bento-item h3 {
+    font-family: 'Times New Roman', serif;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.bento-item p {
+    line-height: 1.6;
+}
+
+/* Content Cards */
+.content-card {
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 25px;
+}
+
+.content-card h2 {
+    font-family: 'Times New Roman', serif;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Accordion Structure */
+.accordion {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.accordion-header {
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-content {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.accordion-content.active {
+    padding: 25px;
+    max-height: 1000px;
+}
+
+.accordion-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.accordion-icon {
+    transition: transform 0.3s ease;
+}
+
+.accordion-header.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+/* Personal Story Structure */
+.personal-story {
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.personal-story h4 {
+    margin-bottom: 15px;
+    font-family: 'Times New Roman', serif;
+}
+
+.thought-process {
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.thought-process h5 {
+    margin-bottom: 10px;
+}
+
+.thought-process ul {
+    list-style: none;
+    padding: 0;
+}
+
+.thought-process li {
+    margin-bottom: 8px;
+    padding-left: 15px;
+    position: relative;
+}
+
+.thought-process li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.story-timeline {
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+    padding: 10px 0;
+}
+
+.timeline-item:last-child {
+    border-bottom: none;
+}
+
+.timeline-marker {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    min-width: 70px;
+    text-align: center;
+}
+
+/* Mindmap Structure */
+.mindmap-container {
+    position: relative;
+    width: 100%;
+    height: 800px;
+    border-radius: 20px;
+    margin: 30px 0;
+    overflow: hidden;
+}
+
+.mindmap-central-node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.central-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    animation: pulse 3s infinite;
+}
+
+.central-circle h3 {
+    font-family: 'Times New Roman', serif;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.central-circle p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.mindmap-branch {
+    position: absolute;
+}
+
+.branch-1 { top: 15%; left: 15%; }
+.branch-2 { top: 15%; right: 15%; }
+.branch-3 { bottom: 15%; left: 15%; }
+.branch-4 { bottom: 15%; right: 15%; }
+
+.branch-line {
+    position: absolute;
+    z-index: 1;
+}
+
+.line-1 { width: 150px; height: 3px; transform: rotate(45deg); top: 80px; left: 100px; }
+.line-2 { width: 150px; height: 3px; transform: rotate(-45deg); top: 80px; right: 100px; }
+.line-3 { width: 150px; height: 3px; transform: rotate(-45deg); bottom: 80px; left: 100px; }
+.line-4 { width: 150px; height: 3px; transform: rotate(45deg); bottom: 80px; right: 100px; }
+
+.branch-node {
+    border-radius: 15px;
+    padding: 20px;
+    min-width: 200px;
+    position: relative;
+    z-index: 5;
+    transition: all 0.3s ease;
+}
+
+.branch-node:hover {
+    transform: scale(1.05);
+}
+
+.branch-node h4 {
+    font-family: 'Times New Roman', serif;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.sub-branches {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sub-node {
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.sub-node:hover {
+    transform: translateX(5px);
+}
+
+.sub-node span {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.detail-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 2000;
+    max-width: 350px;
+    width: max-content;
+}
+
+.sub-node:hover .detail-popup {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mindmap-legend {
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.mindmap-legend h4 {
+    margin-bottom: 15px;
+    font-family: 'Times New Roman', serif;
+}
+
+.mindmap-legend ul {
+    list-style: none;
+    padding: 0;
+}
+
+.mindmap-legend li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.mindmap-legend li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* Collapsible Structure */
+.collapsible {
+    margin: 20px 0;
+}
+
+.collapsible-trigger {
+    padding: 15px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+}
+
+.collapsible-trigger:hover {
+    transform: translateY(-2px);
+}
+
+.collapsible-content {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-radius: 0 0 10px 10px;
+}
+
+.collapsible-content.active {
+    padding: 20px;
+    max-height: 500px;
+}
+
+/* Tooltip Structure */
+.tooltip {
+    position: relative;
+    display: inline;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    cursor: help;
+}
+
+.tooltip-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    max-width: 300px;
+    width: max-content;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    line-height: 1.4;
+}
+
+.tooltip:hover .tooltip-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal Structure */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    margin: 20px;
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Bible Verse Structure */
+.bible-verse {
+    padding: 20px;
+    border-radius: 0 12px 12px 0;
+    margin: 20px 0;
+    font-style: italic;
+    position: relative;
+}
+
+.bible-verse::before {
+    content: '"';
+    font-size: 3rem;
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    font-family: 'Times New Roman', serif;
+}
+
+.bible-verse-text {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    padding-left: 30px;
+}
+
+.bible-reference {
+    text-align: right;
+    font-weight: 600;
+    font-style: normal;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bible-reference:hover {
+    text-decoration: underline;
+}
+
+/* Quote Structure */
+.author-quote {
+    border-radius: 15px;
+    padding: 25px;
+    margin: 25px 0;
+    position: relative;
+}
+
+.author-quote::before {
+    content: '"';
+    font-size: 4rem;
+    position: absolute;
+    top: -5px;
+    left: 20px;
+    opacity: 0.3;
+    font-family: 'Times New Roman', serif;
+}
+
+.quote-text {
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    padding-left: 40px;
+}
+
+.quote-author {
+    text-align: right;
+    font-weight: 600;
+}
+
+/* Chart Structure */
+.pride-chart {
+    border-radius: 15px;
+    padding: 25px;
+    margin: 25px 0;
+}
+
+.chart-bars {
+    display: flex;
+    align-items: end;
+    gap: 15px;
+    height: 200px;
+    margin: 20px 0;
+}
+
+.chart-bar {
+    flex: 1;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.chart-bar:hover {
+    transform: scale(1.05);
+}
+
+.chart-bar-label {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+}
+
+.chart-value {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Table Structure */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.comparison-table th {
+    padding: 20px;
+    text-align: left;
+    font-family: 'Times New Roman', serif;
+    font-size: 1.1rem;
+}
+
+.comparison-table td {
+    padding: 20px;
+    vertical-align: top;
+}
+
+/* Reflection Questions Structure */
+.reflection-questions {
+    border-radius: 20px;
+    padding: 35px;
+    margin: 30px 0;
+}
+
+.reflection-questions h3 {
+    font-family: 'Times New Roman', serif;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.question-item {
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.question-number {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.question-text {
+    font-style: italic;
+    line-height: 1.6;
+}
+
+/* Accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+button:focus,
+.btn:focus,
+.tab-btn:focus {
+    outline: 2px solid;
+    outline-offset: 2px;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-up {
+    animation: slideUp 0.6s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container { padding: 15px; }
+    .header { padding: 25px; }
+    .header h1 { font-size: 2rem; }
+    .sermon-meta { flex-direction: column; gap: 15px; }
+    .tab-navigation { flex-direction: column; gap: 8px; }
+    .tab-btn { flex: none; }
+    .bento-grid { grid-template-columns: 1fr; }
+    .content-card { padding: 20px; }
+    .modal-content { margin: 10px; padding: 25px; }
+    .chart-bars { height: 150px; }
+    .tooltip-content { position: fixed; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; max-width: 280px; }
+    .mindmap-container { height: 600px; }
+    .central-circle { width: 120px; height: 120px; }
+    .central-circle h3 { font-size: 1.3rem; }
+    .branch-node { min-width: 150px; padding: 15px; }
+    .branch-1, .branch-2, .branch-3, .branch-4 { position: static; margin: 20px 0; }
+    .branch-line { display: none; }
+    .detail-popup { position: fixed !important; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) !important; max-width: 280px; }
+}
+
+/* ========================================= */
+/* Pride Theme - Specific styling for Pride sermon */
+/* ========================================= */
+
+/* Color Variables */
+:root {
+    --primary-blue: #2c5282;
+    --secondary-blue: #3182ce;
+    --light-blue: #90cdf4;
+    --accent-pink: #fed7d7;
+    --bg-light: #f7fafc;
+    --text-dark: #2d3748;
+    --text-medium: #4a5568;
+    --text-light: #718096;
+    --white: #ffffff;
+    --border-light: #e2e8f0;
+}
+
+/* Body and Background */
+body {
+    color: var(--text-dark);
+    background: linear-gradient(135deg, var(--bg-light) 0%, #e6fffa 100%);
+}
+
+/* Header Theme */
+.header {
+    background: var(--white);
+    box-shadow: 0 10px 30px rgba(44, 82, 130, 0.1);
+}
+
+.header::before {
+    background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue), var(--light-blue));
+}
+
+.header h1 {
+    color: var(--primary-blue);
+}
+
+.header .subtitle {
+    color: var(--text-medium);
+}
+
+.meta-item {
+    color: var(--text-medium);
+}
+
+/* Button Theme */
+.btn-primary {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: var(--secondary-blue);
+    box-shadow: 0 8px 20px rgba(44, 82, 130, 0.3);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.btn-outline:hover {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+/* Tab Navigation Theme */
+.tab-navigation {
+    background: var(--white);
+    box-shadow: 0 5px 15px rgba(44, 82, 130, 0.1);
+}
+
+.tab-btn.active {
+    background: var(--primary-blue);
+    color: var(--white);
+    box-shadow: 0 5px 15px rgba(44, 82, 130, 0.3);
+}
+
+.tab-btn:not(.active) {
+    color: var(--text-medium);
+}
+
+.tab-btn:not(.active):hover {
+    background: var(--bg-light);
+    color: var(--primary-blue);
+}
+
+/* Bento Grid Theme */
+.bento-item {
+    background: var(--white);
+    box-shadow: 0 8px 25px rgba(44, 82, 130, 0.1);
+    border-left: 4px solid var(--light-blue);
+}
+
+.bento-item:hover {
+    box-shadow: 0 15px 35px rgba(44, 82, 130, 0.15);
+}
+
+.bento-item h3 {
+    color: var(--primary-blue);
+}
+
+.bento-item p {
+    color: var(--text-medium);
+}
+
+/* Content Cards Theme */
+.content-card {
+    background: var(--white);
+    box-shadow: 0 8px 25px rgba(44, 82, 130, 0.1);
+}
+
+.content-card h2 {
+    color: var(--primary-blue);
+}
+
+/* Accordion Theme */
+.accordion {
+    border: 1px solid var(--border-light);
+}
+
+.accordion-header {
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.accordion-header:hover {
+    background: var(--light-blue);
+    color: var(--primary-blue);
+}
+
+.accordion-header.active {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+/* Personal Story Theme */
+.personal-story {
+    background: var(--bg-light);
+    border-left: 4px solid var(--light-blue);
+}
+
+.personal-story h4 {
+    color: var(--primary-blue);
+}
+
+.thought-process {
+    background: var(--white);
+}
+
+.thought-process h5 {
+    color: var(--secondary-blue);
+}
+
+.thought-process li::before {
+    color: var(--light-blue);
+}
+
+.story-timeline {
+    background: var(--white);
+}
+
+.timeline-item {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.timeline-marker {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+/* Mindmap Theme */
+.mindmap-container {
+    background: radial-gradient(circle at center, var(--bg-light) 0%, #e6fffa 100%);
+}
+
+.central-circle {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: var(--white);
+    box-shadow: 0 15px 35px rgba(44, 82, 130, 0.3);
+}
+
+.branch-line {
+    background: var(--light-blue);
+}
+
+.branch-node {
+    background: var(--white);
+    box-shadow: 0 10px 25px rgba(44, 82, 130, 0.15);
+    border-left: 5px solid var(--secondary-blue);
+}
+
+.branch-node:hover {
+    box-shadow: 0 15px 35px rgba(44, 82, 130, 0.25);
+}
+
+.branch-node h4 {
+    color: var(--primary-blue);
+}
+
+.sub-node {
+    background: var(--bg-light);
+    border-left: 3px solid var(--light-blue);
+}
+
+.sub-node:hover {
+    background: var(--light-blue);
+    color: var(--primary-blue);
+}
+
+.detail-popup {
+    background: var(--text-dark);
+    color: var(--white);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.mindmap-legend {
+    background: var(--accent-pink);
+}
+
+.mindmap-legend h4 {
+    color: var(--primary-blue);
+}
+
+.mindmap-legend li::before {
+    color: var(--secondary-blue);
+}
+
+/* Collapsible Theme */
+.collapsible-trigger {
+    background: var(--accent-pink);
+    color: var(--primary-blue);
+}
+
+.collapsible-trigger:hover {
+    background: #fbb6ce;
+}
+
+.collapsible-content {
+    background: #fef7f7;
+}
+
+/* Tooltip Theme */
+.tooltip {
+    color: var(--secondary-blue);
+}
+
+.tooltip-content {
+    background: var(--text-dark);
+    color: var(--white);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Modal Theme */
+.modal {
+    background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background: var(--white);
+}
+
+.modal-close {
+    color: var(--text-medium);
+}
+
+.modal-close:hover {
+    background: var(--bg-light);
+    color: var(--primary-blue);
+}
+
+/* Bible Verse Theme */
+.bible-verse {
+    background: linear-gradient(135deg, var(--bg-light) 0%, #e6fffa 100%);
+    border-left: 4px solid var(--primary-blue);
+}
+
+.bible-verse::before {
+    color: var(--light-blue);
+}
+
+.bible-reference {
+    color: var(--primary-blue);
+}
+
+.bible-reference:hover {
+    color: var(--secondary-blue);
+}
+
+/* Quote Theme */
+.author-quote {
+    background: var(--accent-pink);
+    border-left: 5px solid var(--primary-blue);
+}
+
+.author-quote::before {
+    color: var(--primary-blue);
+}
+
+.quote-author {
+    color: var(--primary-blue);
+}
+
+/* Chart Theme */
+.pride-chart {
+    background: var(--white);
+    box-shadow: 0 8px 25px rgba(44, 82, 130, 0.1);
+}
+
+.chart-bar {
+    background: linear-gradient(to top, var(--primary-blue), var(--light-blue));
+}
+
+.chart-bar:hover {
+    box-shadow: 0 8px 20px rgba(44, 82, 130, 0.3);
+}
+
+.chart-value {
+    color: var(--primary-blue);
+}
+
+/* Table Theme */
+.comparison-table {
+    background: var(--white);
+    box-shadow: 0 8px 25px rgba(44, 82, 130, 0.1);
+}
+
+.comparison-table th {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+.comparison-table td {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.comparison-table tr:nth-child(even) td {
+    background: var(--bg-light);
+}
+
+.comparison-table tr:hover td {
+    background: var(--light-blue);
+    color: var(--primary-blue);
+}
+
+/* Reflection Questions Theme */
+.reflection-questions {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, #fef5e7 100%);
+    border: 2px solid var(--primary-blue);
+}
+
+.reflection-questions h3 {
+    color: var(--primary-blue);
+}
+
+.question-item {
+    background: var(--white);
+    box-shadow: 0 4px 15px rgba(44, 82, 130, 0.1);
+    border-left: 4px solid var(--secondary-blue);
+}
+
+.question-number {
+    color: var(--primary-blue);
+}
+
+.question-text {
+    color: var(--text-dark);
+}
+
+/* Focus styles with theme colors */
+button:focus,
+.btn:focus,
+.tab-btn:focus {
+    outline-color: var(--secondary-blue);
+}
+    </style>
 </head>
 <body>
     <div class="container">
@@ -663,7 +1828,351 @@
         </div>
     </div>
 
-    <script src="js/iecc-generic.js"></script>
-    <script src="js/pride-theme.js"></script>
+    <!-- Scripts (Inlined) -->
+    <script>
+/* Generic JavaScript - Reusable functionality across different sermon pages */
+
+// Tab functionality
+function initializeTabs() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetTab = this.dataset.tab;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            this.classList.add('active');
+            this.setAttribute('aria-selected', 'true');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const targetContent = document.getElementById(targetTab);
+            if (targetContent) {
+                targetContent.classList.add('active');
+                targetContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+}
+
+// Accordion functionality
+function initializeAccordions() {
+    document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const isActive = this.classList.contains('active');
+            
+            // Close all accordions in the same container
+            const container = this.closest('.content-card');
+            if (container) {
+                container.querySelectorAll('.accordion-header').forEach(h => {
+                    h.classList.remove('active');
+                    h.nextElementSibling.classList.remove('active');
+                });
+            }
+            
+            // Toggle current accordion
+            if (!isActive) {
+                this.classList.add('active');
+                content.classList.add('active');
+            }
+        });
+        
+        // Keyboard support
+        header.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+}
+
+// Collapsible functionality
+function initializeCollapsibles() {
+    document.querySelectorAll('.collapsible-trigger').forEach(trigger => {
+        trigger.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('span');
+            
+            content.classList.toggle('active');
+            if (icon) {
+                icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
+        });
+    });
+}
+
+// Modal functionality
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        const closeBtn = modal.querySelector('.modal-close');
+        if (closeBtn) {
+            closeBtn.focus();
+        }
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function initializeModals() {
+    // Close modal when clicking outside
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal(this.id);
+            }
+        });
+    });
+    
+    // Keyboard support for modals
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal.active').forEach(modal => {
+                closeModal(modal.id);
+            });
+        }
+    });
+}
+
+// Smooth scrolling for internal links
+function initializeSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// Mobile tooltip handling
+function initializeMobileTooltips() {
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.tooltip').forEach(tooltip => {
+            tooltip.addEventListener('click', function(e) {
+                e.preventDefault();
+                const content = this.querySelector('.tooltip-content');
+                if (content) {
+                    const isVisible = content.style.opacity === '1';
+                    
+                    // Hide all other tooltips
+                    document.querySelectorAll('.tooltip-content').forEach(tc => {
+                        tc.style.opacity = '0';
+                        tc.style.visibility = 'hidden';
+                    });
+                    
+                    // Show current tooltip if it wasn't visible
+                    if (!isVisible) {
+                        content.style.opacity = '1';
+                        content.style.visibility = 'visible';
+                        
+                        // Hide after 3 seconds
+                        setTimeout(() => {
+                            content.style.opacity = '0';
+                            content.style.visibility = 'hidden';
+                        }, 3000);
+                    }
+                }
+            });
+        });
+    }
+}
+
+// Intersection Observer for animations
+function initializeScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('slide-up');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    document.querySelectorAll('.bento-item, .content-card, .bible-verse, .author-quote').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Mindmap animations
+function initializeMindmapAnimations() {
+    const mindmapNodes = document.querySelectorAll('.branch-node');
+    
+    mindmapNodes.forEach((node, index) => {
+        node.style.opacity = '0';
+        node.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            node.style.transition = 'all 0.6s ease';
+            node.style.opacity = '1';
+            node.style.transform = 'translateY(0)';
+        }, index * 200);
+    });
+}
+
+// Mobile mindmap popup handling
+function initializeMobileMindmapPopups() {
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.sub-node').forEach(node => {
+            node.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const popup = this.querySelector('.detail-popup');
+                
+                // Hide other popups
+                document.querySelectorAll('.detail-popup').forEach(p => {
+                    if (p !== popup) {
+                        p.style.opacity = '0';
+                        p.style.visibility = 'hidden';
+                    }
+                });
+                
+                // Toggle current popup
+                if (popup) {
+                    const isVisible = popup.style.opacity === '1';
+                    popup.style.opacity = isVisible ? '0' : '1';
+                    popup.style.visibility = isVisible ? 'hidden' : 'visible';
+                    
+                    // Auto-hide after 4 seconds
+                    if (!isVisible) {
+                        setTimeout(() => {
+                            popup.style.opacity = '0';
+                            popup.style.visibility = 'hidden';
+                        }, 4000);
+                    }
+                }
+            });
+        });
+        
+        // Close popups when clicking outside
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.detail-popup').forEach(popup => {
+                popup.style.opacity = '0';
+                popup.style.visibility = 'hidden';
+            });
+        });
+    }
+}
+
+// Initialize all generic functionality
+function initializeGenericFeatures() {
+    initializeTabs();
+    initializeAccordions();
+    initializeCollapsibles();
+    initializeModals();
+    initializeSmoothScrolling();
+    initializeMobileTooltips();
+    initializeScrollAnimations();
+    
+    // Initialize mindmap features when DOM is loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMindmapAnimations();
+            initializeMobileMindmapPopups();
+        });
+    } else {
+        initializeMindmapAnimations();
+        initializeMobileMindmapPopups();
+    }
+}
+
+// Auto-initialize when script loads
+initializeGenericFeatures();
+
+// Export functions for external use
+window.SermonUtils = {
+    openModal,
+    closeModal,
+    initializeTabs,
+    initializeAccordions,
+    initializeCollapsibles,
+    initializeModals,
+    initializeSmoothScrolling,
+    initializeMobileTooltips,
+    initializeScrollAnimations,
+    initializeMindmapAnimations,
+    initializeMobileMindmapPopups
+};
+
+/* Pride Theme JavaScript - Specific functionality for Pride sermon */
+
+// Chart bar interactions specific to pride sermon
+function initializePrideChart() {
+    document.querySelectorAll('.chart-bar').forEach(bar => {
+        bar.addEventListener('click', function() {
+            const label = this.querySelector('.chart-bar-label');
+            const value = this.querySelector('.chart-value');
+            
+            if (label && value) {
+                const labelText = label.textContent.trim();
+                const valueText = value.textContent;
+                
+                let message = '';
+                switch(labelText.split('\n')[0]) {
+                    case 'Relationship':
+                        message = 'Pride damages relationships by making us unable to see our own faults and preventing vulnerability with others.';
+                        break;
+                    case 'Isolation':
+                        message = 'Pride isolates us because we use relationships only to get what we want, and people see through this.';
+                        break;
+                    case 'Help':
+                        message = 'Pride prevents us from seeking help because we refuse to acknowledge our need for assistance.';
+                        break;
+                    case 'False':
+                        message = 'Pride promises recognition, significance, and fulfillment but consistently fails to deliver on these promises.';
+                        break;
+                }
+                
+                if (message) {
+                    alert(labelText + ': ' + valueText + '\n\n' + message);
+                }
+            }
+        });
+    });
+}
+
+// Pride sermon specific initialization
+function initializePrideTheme() {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePrideChart();
+        });
+    } else {
+        initializePrideChart();
+    }
+}
+
+// Initialize pride-specific features
+initializePrideTheme();
+
+// Export pride-specific functions
+window.PrideTheme = {
+    initializePrideChart
+};
+    </script>
 </body>
 </html>

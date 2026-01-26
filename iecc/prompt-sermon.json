@@ -1,6 +1,25 @@
 {
   "extends": "../prompt-universal.json",
   "content_type": "Sermon / Christian Teaching",
+  "iecc_sermon_output_conventions": {
+    "goal": "Generate sermon pages that reuse IECC shared CSS/JS (no huge inline <style>/<script>).",
+    "required_head_includes": [
+      "<link rel=\"stylesheet\" href=\"css/iecc-base.css\">",
+      "<link rel=\"stylesheet\" href=\"css/<series-theme>.css\">"
+    ],
+    "required_body_includes": [
+      "<script src=\"js/iecc-common.js\"></script>"
+    ],
+    "preferred_initialization": {
+      "data_attribute": "Add data-sermon-date=\"YYYY-MM-DD\" on a top-level element (e.g., <body> or a wrapper) so shared JS can auto-init.",
+      "tags_loader": "Ensure there is a <div class=\"sermon-tags-container\" id=\"sermon-tags\"></div> in the hero, and tags are loaded from sermons_data.json by sermon date.",
+      "tabs_routing": "Tabs must use data-tab attributes matching section IDs; URL hash routing must work (back/forward supported)."
+    },
+    "inline_policy": {
+      "css": "Only tiny per-page overrides inline (aim < 50 lines). If more, extend the appropriate theme file under iecc/css/.",
+      "js": "Only tiny per-page bootstrapping inline (e.g., one init call). Put shared logic in iecc/js/iecc-common.js."
+    }
+  },
   "specialized_rules": {
     "bible": {
       "version": "NIV (verbatim quotes only)",
