@@ -1,0 +1,298 @@
+/* Rewriting My Worldview Series Theme
+ * Classic Theological - Traditional serif, gold/deep blue palette
+ * Focused on clarity, wisdom, and thoughtful examination
+ */
+
+/* ==========================================
+   Theme Variables Override
+   ========================================== */
+:root {
+    --primary: #1e3a5f;
+    --primary-light: #2d5a8c;
+    --primary-dark: #0d1f33;
+    --accent: #c9a857;
+    --accent-light: #e0c97d;
+    --accent-warm: #b8963d;
+    --wine: #5c3d4f;
+    --earth: #6b5b4f;
+    --bg-dark: #0f1419;
+    --bg-card: #1a2332;
+    --text-light: #f0f4f8;
+    --text-muted: #9aa8b8;
+}
+
+/* ==========================================
+   Hero Background - Thoughtful/Contemplative
+   ========================================== */
+.hero-header {
+    background: linear-gradient(135deg, #0d1f33 0%, #1e3a5f 50%, #0f1419 100%);
+}
+
+.hero-bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(201, 168, 87, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(45, 90, 140, 0.15) 0%, transparent 50%),
+        linear-gradient(45deg, transparent 40%, rgba(201, 168, 87, 0.05) 45%, transparent 50%);
+    z-index: 1;
+}
+
+/* Animated subtle glow for "wisdom" feel */
+.hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201, 168, 87, 0.15) 0%, transparent 70%);
+    animation: wisdomGlow 8s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes wisdomGlow {
+    0%, 100% { transform: scale(1) translate(-50%, -50%); opacity: 0.3; }
+    50% { transform: scale(1.2) translate(-50%, -50%); opacity: 0.5; }
+}
+
+/* ==========================================
+   Series Badge Override
+   ========================================== */
+.series-badge {
+    background: rgba(30, 58, 95, 0.6);
+    border-color: var(--accent);
+}
+
+/* ==========================================
+   Timeline Icon Override
+   ========================================== */
+.timeline-item::before {
+    content: '📖';
+}
+
+/* Different icons for different sections */
+.timeline-item[data-section="origin"]::before { content: '🌍'; }
+.timeline-item[data-section="meaning"]::before { content: '🎯'; }
+.timeline-item[data-section="morality"]::before { content: '⚖️'; }
+.timeline-item[data-section="fall"]::before { content: '💔'; }
+.timeline-item[data-section="destiny"]::before { content: '✨'; }
+.timeline-item[data-section="worldview"]::before { content: '👓'; }
+
+/* ==========================================
+   Worldview Cards - Special Components
+   ========================================== */
+.worldview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.worldview-card {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-light);
+    transition: all 0.3s ease;
+}
+
+.worldview-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(201, 168, 87, 0.15);
+    border-left-color: var(--accent);
+}
+
+.worldview-card h4 {
+    color: var(--accent-light);
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.worldview-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Modern worldview categories */
+.worldview-card.naturalism { border-left-color: #5c8a8a; }
+.worldview-card.transcendentalism { border-left-color: #8a5c7a; }
+.worldview-card.theism { border-left-color: var(--accent); }
+.worldview-card.postmodernism { border-left-color: #7a5c8a; }
+
+/* ==========================================
+   Framework Cards - 5 Pillars
+   ========================================== */
+.framework-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.framework-card {
+    background: linear-gradient(135deg, var(--bg-card), rgba(30, 58, 95, 0.3));
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(201, 168, 87, 0.2);
+    transition: all 0.3s ease;
+}
+
+.framework-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(201, 168, 87, 0.2);
+}
+
+.framework-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.framework-title {
+    font-size: 1.25rem;
+    color: var(--accent-light);
+    margin-bottom: 0.5rem;
+}
+
+.framework-question {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* ==========================================
+   Example Cards (Lion King, etc.)
+   ========================================== */
+.example-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(201, 168, 87, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.example-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-light), var(--accent));
+}
+
+.example-label {
+    display: inline-block;
+    background: rgba(201, 168, 87, 0.2);
+    color: var(--accent-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+/* ==========================================
+   Scripture Highlight
+   ========================================== */
+.scripture-highlight {
+    background: linear-gradient(135deg, rgba(201, 168, 87, 0.1), rgba(30, 58, 95, 0.2));
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 12px 12px 0;
+}
+
+.scripture-highlight .verse-ref {
+    font-size: 1rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.scripture-highlight .verse-text {
+    font-family: 'Crimson Pro', 'Lora', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-light);
+}
+
+/* ==========================================
+   Comparison Table
+   ========================================== */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.comparison-table th {
+    background: rgba(30, 58, 95, 0.5);
+    color: var(--accent-light);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(201, 168, 87, 0.1);
+    color: var(--text-muted);
+}
+
+.comparison-table tr:hover td {
+    background: rgba(201, 168, 87, 0.05);
+}
+
+/* ==========================================
+   Reflection List Override
+   ========================================== */
+.reflection-list li::before {
+    content: '🤔';
+}
+
+/* ==========================================
+   Key Insight Box
+   ========================================== */
+.key-insight {
+    background: linear-gradient(135deg, rgba(201, 168, 87, 0.15), rgba(30, 58, 95, 0.2));
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.key-insight h3 {
+    color: var(--accent);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.key-insight p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* ==========================================
+   Print overrides
+   ========================================== */
+@media print {
+    .worldview-card,
+    .framework-card,
+    .example-card {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+        background: white;
+    }
+}

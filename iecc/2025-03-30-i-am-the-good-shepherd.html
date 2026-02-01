@@ -8,528 +8,59 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --shepherd-sage: #6B8E6F;
-            --shepherd-cream: #F5F1E8;
-            --shepherd-earth: #8B7355;
-            --shepherd-sky: #A8C5D1;
-            --shepherd-deep: #2C3E3A;
-            --shepherd-gold: #C9A961;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--shepherd-cream);
-            color: var(--shepherd-deep);
-            line-height: 1.7;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Crimson Pro', serif;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .header-wrapper {
-            position: relative;
-            height: 85vh;
-            min-height: 500px;
-            overflow: hidden;
-        }
-
-        .carousel-container {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-
-        .carousel-slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-        }
-
-        .carousel-slide::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(43,62,58,0.85) 0%, rgba(107,142,111,0.75) 50%, rgba(168,197,209,0.65) 100%);
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 10;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            color: white;
-        }
-
-        .header-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .header-title {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            margin-bottom: 1rem;
-            text-shadow: 2px 4px 12px rgba(0,0,0,0.3);
-        }
-
-        .header-meta {
-            font-size: clamp(1rem, 3vw, 1.25rem);
-            opacity: 0.95;
-            margin-bottom: 2rem;
-        }
-
-        .header-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 0.875rem 2rem;
-            border-radius: 9999px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            border: 2px solid transparent;
-        }
-
-        .btn-primary {
-            background: white;
-            color: var(--shepherd-deep);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(0,0,0,0.25);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: white;
-            border-color: white;
-        }
-
-        .btn-ghost:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
-        }
-
-        .sticky-tabs {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: white;
-            border-bottom: 2px solid var(--shepherd-sage);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .tabs-container {
-            display: flex;
-            overflow-x: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--shepherd-sage) transparent;
-        }
-
-        .tab-button {
-            flex-shrink: 0;
-            padding: 1rem 1.5rem;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            color: var(--shepherd-deep);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .tab-button:hover {
-            background: var(--shepherd-cream);
-            color: var(--shepherd-sage);
-        }
-
-        .tab-button.active {
-            border-bottom-color: var(--shepherd-sage);
-            color: var(--shepherd-sage);
-            font-weight: 600;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .content-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 1.5rem;
-        }
-
-        .section-title {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
-            color: var(--shepherd-sage);
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.75rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--shepherd-gold);
-        }
-
-        .verse-card {
-            background: white;
-            border-left: 4px solid var(--shepherd-sage);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0 8px 8px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .verse-card:hover {
-            transform: translateX(4px);
-            box-shadow: 0 4px 16px rgba(107,142,111,0.15);
-        }
-
-        .verse-reference {
-            font-weight: 600;
-            color: var(--shepherd-sage);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .verse-text {
-            color: var(--shepherd-deep);
-            font-style: italic;
-            line-height: 1.8;
-        }
-
-        .accordion-item {
-            background: white;
-            margin-bottom: 1rem;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .accordion-header {
-            width: 100%;
-            padding: 1.25rem 1.5rem;
-            background: white;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--shepherd-deep);
-            transition: background 0.3s ease;
-        }
-
-        .accordion-header:hover {
-            background: var(--shepherd-cream);
-        }
-
-        .accordion-icon {
-            transition: transform 0.3s ease;
-            color: var(--shepherd-sage);
-        }
-
-        .accordion-header.active .accordion-icon {
-            transform: rotate(180deg);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-            padding: 0 1.5rem;
-        }
-
-        .accordion-content.active {
-            max-height: 3000px;
-            padding: 1rem 1.5rem 1.5rem;
-        }
-
-        .quote-box {
-            background: linear-gradient(135deg, var(--shepherd-sage) 0%, var(--shepherd-sky) 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            position: relative;
-            box-shadow: 0 4px 20px rgba(107,142,111,0.2);
-        }
-
-        .quote-box::before {
-            content: '"';
-            font-size: 4rem;
-            font-family: 'Crimson Pro', serif;
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            opacity: 0.3;
-        }
-
-        .quote-text {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .quote-author {
-            text-align: right;
-            font-weight: 600;
-            opacity: 0.9;
-        }
-
-        .timeline-container {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .timeline-container::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--shepherd-sage);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding-left: 2rem;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2.375rem;
-            top: 0.5rem;
-            width: 12px;
-            height: 12px;
-            background: var(--shepherd-gold);
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px var(--shepherd-sage);
-        }
-
-        .timeline-title {
-            font-size: 1.25rem;
-            color: var(--shepherd-sage);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .application-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-            border-top: 3px solid var(--shepherd-gold);
-        }
-
-        .attribution-badge {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-
-        .attribution-short {
-            width: 48px;
-            height: 48px;
-            background: var(--shepherd-sage);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-        }
-
-        .attribution-short:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-        }
-
-        .attribution-full {
-            display: none;
-            background: white;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            max-width: 300px;
-            font-size: 0.875rem;
-            line-height: 1.6;
-            color: var(--shepherd-deep);
-        }
-
-        .attribution-badge:hover .attribution-short {
-            display: none;
-        }
-
-        .attribution-badge:hover .attribution-full {
-            display: block;
-        }
-
-        .emoji {
-            font-style: normal;
-        }
-
-        @media (max-width: 768px) {
-            .header-wrapper {
-                height: 70vh;
-            }
-
-            .attribution-badge {
-                position: static;
-                margin: 2rem auto;
-                width: fit-content;
-            }
-
-            .attribution-short {
-                display: none;
-            }
-
-            .attribution-full {
-                display: block;
-            }
-
-            .timeline-container {
-                padding-left: 1.5rem;
-            }
-        }
-
-        @media print {
-            .sticky-tabs,
-            .header-buttons,
-            .attribution-badge {
-                display: none;
-            }
-
-            .tab-content {
-                display: block !important;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/iecc-base.css">
+    <link rel="stylesheet" href="css/i-am.css">
 </head>
-<body>
+<body class="theme-shepherd" data-sermon-date="2025-03-30">
     <!-- Header with Carousel -->
-    <header class="header-wrapper">
-        <div class="carousel-container" id="carousel">
-            <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=1920&h=1080&fit=crop');"></div>
-            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1548690596-b175f36d9da4?w=1920&h=1080&fit=crop');"></div>
-            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&h=1080&fit=crop');"></div>
+    <header class="hero header-vine">
+        <div class="slideshow-container" id="carousel">
+            <div class="slideshow-slide active" style="background-image: url('https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=1920&h=1080&fit=crop');"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1548690596-b175f36d9da4?w=1920&h=1080&fit=crop');"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&h=1080&fit=crop');"></div>
         </div>
         
-        <div class="header-content">
-            <div class="header-icon"><span class="emoji">🐑</span></div>
-            <h1 class="header-title">I AM: The Good Shepherd</h1>
-            <div class="header-meta">
-                30 March 2025 | Pastor Eric | Island ECC
+        <div class="hero-content">
+            <div class="vine-icon header-icon">🐑</div>
+            <h1 class="hero-title">I AM: The Good Shepherd</h1>
+            <p class="hero-subtitle">30 March 2025 | Pastor Eric | Island ECC</p>
+            <div class="sermon-tags-container" id="sermon-tags">
+                <!-- Tags dynamically loaded -->
             </div>
-            <p style="max-width: 600px; margin-bottom: 2rem; opacity: 0.95; font-size: 1.125rem;">
+            <p style="max-width: 600px; margin: 0 auto 2rem; opacity: 0.95; font-size: 1.125rem;">
                 Jesus declares Himself as the loving Messiah who knows His sheep by name, who lays down His life for them, and who leads them into abundant life.
             </p>
-            <div class="header-buttons">
+            <div class="btn-group header-buttons">
                 <a href="https://www.youtube.com/watch?v=iukCkvCpKyM" class="btn btn-primary" target="_blank" rel="noopener">
-                    <span class="emoji">▶️</span> Watch Original Sermon
+                    ▶️ Watch Original Sermon
                 </a>
-                <a href="../index.html" class="btn btn-ghost">
-                    <span class="emoji">📚</span> View All Sermons
+                <a href="index.html" class="btn btn-secondary btn-ghost">
+                    📚 View All Sermons
                 </a>
             </div>
         </div>
     </header>
 
     <!-- Sticky Tabs Navigation -->
-    <nav class="sticky-tabs">
-        <div class="tabs-container">
-            <button class="tab-button active" data-tab="overview"><span class="emoji">📖</span> Overview</button>
-            <button class="tab-button" data-tab="sermon"><span class="emoji">🎤</span> Main Sermon</button>
-            <button class="tab-button" data-tab="verses"><span class="emoji">✝️</span> Bible Verses</button>
-            <button class="tab-button" data-tab="shepherd"><span class="emoji">🐑</span> The Shepherd</button>
-            <button class="tab-button" data-tab="application"><span class="emoji">💡</span> Application</button>
-            <button class="tab-button" data-tab="reflection"><span class="emoji">🙏</span> Reflection</button>
+    <nav class="tabs-container sticky-tabs">
+        <div class="tabs">
+            <button class="tab tab-button active" data-tab="overview">📖 Overview</button>
+            <button class="tab tab-button" data-tab="sermon">🎤 Main Sermon</button>
+            <button class="tab tab-button" data-tab="verses">✝️ Bible Verses</button>
+            <button class="tab tab-button" data-tab="shepherd">🐑 The Shepherd</button>
+            <button class="tab tab-button" data-tab="application">💡 Application</button>
+            <button class="tab tab-button" data-tab="reflection">🙏 Reflection</button>
         </div>
     </nav>
 
     <!-- Tab Content -->
     <main>
         <!-- Overview Tab -->
-        <section class="tab-content active" id="overview">
-            <div class="content-wrapper">
-                <h2 class="section-title">Overview</h2>
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">🌟</span> Key Message
-                    </h3>
+        <section id="overview" class="content-section active">
+            <div class="container content-wrapper">
+                <h2 class="section-header section-title">Overview</h2>
+                <div class="content-card application-card">
+                    <h3>🌟 Key Message</h3>
                     <p style="margin-bottom: 1rem;">
                         In John 10, Jesus continues His discourse from being the door to revealing Himself as the Good Shepherd. Using imagery deeply rooted in Old Testament prophecy and the familiar occupation of shepherding, Jesus declares to the religious leaders that He is the loving Messiah God's people had been waiting for.
                     </p>
@@ -538,33 +69,29 @@
                     </p>
                 </div>
 
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">🎯</span> Central Truths
-                    </h3>
+                <div class="content-card application-card">
+                    <h3>🎯 Central Truths</h3>
                     <ul style="list-style: none; padding-left: 0;">
                         <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--shepherd-cream);">
-                            <strong style="color: var(--shepherd-sage);">•</strong> Jesus is the Good Shepherd who knows His sheep by name and lays down His life for them
+                            <strong>•</strong> Jesus is the Good Shepherd who knows His sheep by name and lays down His life for them
                         </li>
                         <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--shepherd-cream);">
-                            <strong style="color: var(--shepherd-sage);">•</strong> We are like sheep: easily lost, defenseless, and in need of a shepherd
+                            <strong>•</strong> We are like sheep: easily lost, defenseless, and in need of a shepherd
                         </li>
                         <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--shepherd-cream);">
-                            <strong style="color: var(--shepherd-sage);">•</strong> Bad shepherds feed themselves; good shepherds lay down their lives for the sheep
+                            <strong>•</strong> Bad shepherds feed themselves; good shepherds lay down their lives for the sheep
                         </li>
                         <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--shepherd-cream);">
-                            <strong style="color: var(--shepherd-sage);">•</strong> The quality of our life depends on whose voice we listen to
+                            <strong>•</strong> The quality of our life depends on whose voice we listen to
                         </li>
                         <li style="padding: 0.75rem 0;">
-                            <strong style="color: var(--shepherd-sage);">•</strong> Jesus is the shepherd in sheep's clothing who died in our place
+                            <strong>•</strong> Jesus is the shepherd in sheep's clothing who died in our place
                         </li>
                     </ul>
                 </div>
 
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">📍</span> Context & Setting
-                    </h3>
+                <div class="content-card application-card">
+                    <h3>📍 Context & Setting</h3>
                     <p style="margin-bottom: 0.75rem;">
                         <strong>When:</strong> Winter, during the Festival of Dedication (Hanukkah)
                     </p>
@@ -582,140 +109,150 @@
         </section>
 
         <!-- Main Sermon Tab -->
-        <section class="tab-content" id="sermon">
-            <div class="content-wrapper">
-                <h2 class="section-title">Main Sermon</h2>
+        <section id="sermon" class="content-section">
+            <div class="container content-wrapper">
+                <h2 class="section-header section-title">Main Sermon</h2>
                 
                 <div class="accordion-item">
-                    <button class="accordion-header">
-                        <span><span class="emoji">🎬</span> Introduction: Understanding Context</span>
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🎬 Introduction: Understanding Context</span>
                         <span class="accordion-icon">▼</span>
-                    </button>
-                    <div class="accordion-content">
-                        <p style="margin-bottom: 1rem;">
-                            Pastor Eric begins by explaining how powerful statements gain their meaning from context. Just like Darth Vader's "I am your father" only has shock value when you know the story leading up to it, Jesus' "I am" statements are rich with meaning when we understand the context.
-                        </p>
-                        <p style="margin-bottom: 1rem;">
-                            This passage in John 10 continues from chapter 9, where Jesus addresses religious leaders who have failed as shepherds of God's people. The setting is winter during the Festival of Dedication (Hanukkah), a time commemorating when the Jewish people overthrew bad leadership 200 years prior and reconsecrated the temple after Antiochus Epiphanes desecrated it.
-                        </p>
-                        <p>
-                            There's an air of expectation—remembering past deliverance from bad leadership while currently under Roman rule, and internally experiencing spiritual leaders who aren't serving the people well.
-                        </p>
                     </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header active">
-                        <span><span class="emoji">⚠️</span> Bad Shepherds: The Indictment</span>
-                        <span class="accordion-icon">▼</span>
-                    </button>
-                    <div class="accordion-content active">
-                        <p style="margin-bottom: 1rem;">
-                            When Jesus says "I am the good shepherd," He's implicitly saying the current leaders are not. He compares them to hired hands who don't truly care for the sheep—they're in it for personal benefit and flee when danger comes.
-                        </p>
-                        <p style="margin-bottom: 1rem;">
-                            Jesus references Ezekiel 34, where God condemns Israel's shepherds: "You eat the fat, you clothe yourselves with the wool, you slaughter the fat ones, but you do not feed the sheep. The weak you have not strengthened, the sick you have not healed, the injured you have not bound up, the strayed you have not brought back, the lost you have not sought."
-                        </p>
-                        <div class="quote-box">
-                            <p class="quote-text">
-                                This is a little bit of an awkward moment. Jesus walks in and says, "I am the good pastor." It's offensive, right? It's a lot offensive. But this is Jesus in love confronting the leaders who weren't doing what they should be doing.
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                Pastor Eric begins by explaining how powerful statements gain their meaning from context. Just like Darth Vader's "I am your father" only has shock value when you know the story leading up to it, Jesus' "I am" statements are rich with meaning when we understand the context.
                             </p>
-                            <p class="quote-author">— Pastor Eric</p>
+                            <p style="margin-bottom: 1rem;">
+                                This passage in John 10 continues from chapter 9, where Jesus addresses religious leaders who have failed as shepherds of God's people. The setting is winter during the Festival of Dedication (Hanukkah), a time commemorating when the Jewish people overthrew bad leadership 200 years prior and reconsecrated the temple after Antiochus Epiphanes desecrated it.
+                            </p>
+                            <p>
+                                There's an air of expectation—remembering past deliverance from bad leadership while currently under Roman rule, and internally experiencing spiritual leaders who aren't serving the people well.
+                            </p>
                         </div>
-                        <p>
-                            This is a call to anyone entrusted with "sheep"—whether a team at work, children, a care group, or aging parents. Good leadership means laying down your life, caring for those who go astray, healing the hurt, and nourishing others, sometimes giving of yourself so they can live.
-                        </p>
                     </div>
                 </div>
 
-                <div class="accordion-item">
-                    <button class="accordion-header">
-                        <span><span class="emoji">🐑</span> We Are the Sheep</span>
+                <div class="accordion-item active">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>⚠️ Bad Shepherds: The Indictment</span>
                         <span class="accordion-icon">▼</span>
-                    </button>
+                    </div>
                     <div class="accordion-content">
-                        <p style="margin-bottom: 1rem;">
-                            Being called sheep is offensive at first, but then humbling. Drawing from shepherds-turned-pastors Phillip Keller and W. Phillip Keller, Pastor Eric describes sheep as:
-                        </p>
-                        <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
-                            <li style="margin-bottom: 0.5rem;"><strong>Easily lost:</strong> No sense of direction, can't find their way even when the fold is in sight</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Distracted:</strong> See luscious grass and wander off the path without meaning to</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Panicky:</strong> When they realize they're lost, every sound becomes threatening, every shadow looks like the enemy</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Defenseless:</strong> Can't run well, have no defensive weapons like horns or fangs</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Helpless:</strong> Can't even get up when on their backs; will die without intervention</li>
-                        </ul>
-                        <p style="margin-bottom: 1rem;">
-                            We can replace these descriptions with ourselves: "I get easily lost and lose my sense of direction in life. I see something shiny, something new, something exciting, and soon I'm off the path. When I panic, everything becomes a threat. I feel defenseless, powerless to affect change in a world I cannot control."
-                        </p>
-                        <div class="quote-box">
-                            <p class="quote-text">
-                                Left to my own devices, I often need rescuing. I'm hopeless in this greater world without someone interceding. And we find out that the lot of any one of us in life is dependent on who we allow to be the shepherd.
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                When Jesus says "I am the good shepherd," He's implicitly saying the current leaders are not. He compares them to hired hands who don't truly care for the sheep—they're in it for personal benefit and flee when danger comes.
                             </p>
-                            <p class="quote-author">— Pastor Eric</p>
+                            <p style="margin-bottom: 1rem;">
+                                Jesus references Ezekiel 34, where God condemns Israel's shepherds: "You eat the fat, you clothe yourselves with the wool, you slaughter the fat ones, but you do not feed the sheep. The weak you have not strengthened, the sick you have not healed, the injured you have not bound up, the strayed you have not brought back, the lost you have not sought."
+                            </p>
+                            <div class="quote-box key-quote">
+                                <p class="quote-text">
+                                    This is a little bit of an awkward moment. Jesus walks in and says, "I am the good pastor." It's offensive, right? It's a lot offensive. But this is Jesus in love confronting the leaders who weren't doing what they should be doing.
+                                </p>
+                                <p class="quote-author">— Pastor Eric</p>
+                            </div>
+                            <p>
+                                This is a call to anyone entrusted with "sheep"—whether a team at work, children, a care group, or aging parents. Good leadership means laying down your life, caring for those who go astray, healing the hurt, and nourishing others, sometimes giving of yourself so they can live.
+                            </p>
                         </div>
                     </div>
                 </div>
 
                 <div class="accordion-item">
-                    <button class="accordion-header">
-                        <span><span class="emoji">🔊</span> Listening to the Right Voice</span>
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🐑 We Are the Sheep</span>
                         <span class="accordion-icon">▼</span>
-                    </button>
+                    </div>
                     <div class="accordion-content">
-                        <p style="margin-bottom: 1rem;">
-                            The imagery of the Good Shepherd finding His lost sheep is beautiful—the shepherd joyfully carries the lamb on his shoulders back home. But what the image doesn't show is what happened minutes before: the sheep running away, panicking, not recognizing that the shepherd is the best thing for it.
-                        </p>
-                        <p style="margin-bottom: 1rem;">
-                            Sometimes shepherds have to tackle sheep and bind their legs to rescue them. Even when a good God comes after us, we panic, fearing we might lose what we're chasing, not knowing enough to recognize the shepherd's swift movements are intended for our good.
-                        </p>
-                        <p style="margin-bottom: 1rem;">
-                            We can listen to a million different voices: accomplishment, achievement, production, mattering, security, being right. But Jesus calls us by name—and when He does, everything changes:
-                        </p>
-                        <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
-                            <li style="margin-bottom: 0.5rem;"><strong>Saul, Saul</strong> — why are you persecuting me?</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Martha, Martha</strong> — there's one thing that matters</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Mary</strong> — at the empty tomb, one word and she sees Him</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Lazarus</strong> — called out of death itself</li>
-                        </ul>
-                        <p>
-                            The Good Shepherd calls His sheep by name because He knows them, loves them, and is trying to rescue them. When we listen to His voice above all others, it changes everything.
-                        </p>
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                Being called sheep is offensive at first, but then humbling. Drawing from shepherds-turned-pastors Phillip Keller and W. Phillip Keller, Pastor Eric describes sheep as:
+                            </p>
+                            <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
+                                <li style="margin-bottom: 0.5rem;"><strong>Easily lost:</strong> No sense of direction, can't find their way even when the fold is in sight</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Distracted:</strong> See luscious grass and wander off the path without meaning to</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Panicky:</strong> When they realize they're lost, every sound becomes threatening, every shadow looks like the enemy</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Defenseless:</strong> Can't run well, have no defensive weapons like horns or fangs</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Helpless:</strong> Can't even get up when on their backs; will die without intervention</li>
+                            </ul>
+                            <p style="margin-bottom: 1rem;">
+                                We can replace these descriptions with ourselves: "I get easily lost and lose my sense of direction in life. I see something shiny, something new, something exciting, and soon I'm off the path. When I panic, everything becomes a threat. I feel defenseless, powerless to affect change in a world I cannot control."
+                            </p>
+                            <div class="quote-box key-quote">
+                                <p class="quote-text">
+                                    Left to my own devices, I often need rescuing. I'm hopeless in this greater world without someone interceding. And we find out that the lot of any one of us in life is dependent on who we allow to be the shepherd.
+                                </p>
+                                <p class="quote-author">— Pastor Eric</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="accordion-item">
-                    <button class="accordion-header">
-                        <span><span class="emoji">✝️</span> The Good Shepherd in Sheep's Clothing</span>
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🔊 Listening to the Right Voice</span>
                         <span class="accordion-icon">▼</span>
-                    </button>
+                    </div>
                     <div class="accordion-content">
-                        <p style="margin-bottom: 1rem;">
-                            Jesus warned of "wolves in sheep's clothing"—people who look like they're among you but whose intention is evil. But Jesus Himself is the opposite: <strong>the Shepherd in sheep's clothing</strong>.
-                        </p>
-                        <p style="margin-bottom: 1rem;">
-                            He is the Good Shepherd who laid down His life, who when the wolves came after the sheep, took the attack on Himself. He died in place of the other sheep. In His three decades of life, He was always the sheep who listened to the Good Shepherd (the Father), showing us what obedience, faithfulness, trust, and faith look like.
-                        </p>
-                        <div class="quote-box">
-                            <p class="quote-text">
-                                He is the shepherd in sheep's clothing. He was the sheep who died in our place, and He was the sheep who showed us what obedience and faithfulness and trust and faith looked like by listening to His Father.
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                The imagery of the Good Shepherd finding His lost sheep is beautiful—the shepherd joyfully carries the lamb on his shoulders back home. But what the image doesn't show is what happened minutes before: the sheep running away, panicking, not recognizing that the shepherd is the best thing for it.
                             </p>
-                            <p class="quote-author">— Pastor Eric</p>
+                            <p style="margin-bottom: 1rem;">
+                                Sometimes shepherds have to tackle sheep and bind their legs to rescue them. Even when a good God comes after us, we panic, fearing we might lose what we're chasing, not knowing enough to recognize the shepherd's swift movements are intended for our good.
+                            </p>
+                            <p style="margin-bottom: 1rem;">
+                                We can listen to a million different voices: accomplishment, achievement, production, mattering, security, being right. But Jesus calls us by name—and when He does, everything changes:
+                            </p>
+                            <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
+                                <li style="margin-bottom: 0.5rem;"><strong>Saul, Saul</strong> — why are you persecuting me?</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Martha, Martha</strong> — there's one thing that matters</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Mary</strong> — at the empty tomb, one word and she sees Him</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Lazarus</strong> — called out of death itself</li>
+                            </ul>
+                            <p>
+                                The Good Shepherd calls His sheep by name because He knows them, loves them, and is trying to rescue them. When we listen to His voice above all others, it changes everything.
+                            </p>
                         </div>
-                        <p style="margin-bottom: 1rem;">
-                            Revelation beautifully captures this dual nature: "There is a lamb in the midst of the throne, He will be their shepherd, and He will guide them to springs of living water, and God will wipe away every tear from their eyes."
-                        </p>
-                        <p>
-                            It's freeing to admit we don't have it all together, that we can't control everything, that we make decisions out of fear. We're not made to be in control. There is One who is, who loves us, who died for us—and that's the Good Shepherd.
-                        </p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>✝️ The Good Shepherd in Sheep's Clothing</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p style="margin-bottom: 1rem;">
+                                Jesus warned of "wolves in sheep's clothing"—people who look like they're among you but whose intention is evil. But Jesus Himself is the opposite: <strong>the Shepherd in sheep's clothing</strong>.
+                            </p>
+                            <p style="margin-bottom: 1rem;">
+                                He is the Good Shepherd who laid down His life, who when the wolves came after the sheep, took the attack on Himself. He died in place of the other sheep. In His three decades of life, He was always the sheep who listened to the Good Shepherd (the Father), showing us what obedience, faithfulness, trust, and faith look like.
+                            </p>
+                            <div class="quote-box key-quote">
+                                <p class="quote-text">
+                                    He is the shepherd in sheep's clothing. He was the sheep who died in our place, and He was the sheep who showed us what obedience and faithfulness and trust and faith looked like by listening to His Father.
+                                </p>
+                                <p class="quote-author">— Pastor Eric</p>
+                            </div>
+                            <p style="margin-bottom: 1rem;">
+                                Revelation beautifully captures this dual nature: "There is a lamb in the midst of the throne, He will be their shepherd, and He will guide them to springs of living water, and God will wipe away every tear from their eyes."
+                            </p>
+                            <p>
+                                It's freeing to admit we don't have it all together, that we can't control everything, that we make decisions out of fear. We're not made to be in control. There is One who is, who loves us, who died for us—and that's the Good Shepherd.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Bible Verses Tab -->
-        <section class="tab-content" id="verses">
-            <div class="content-wrapper">
-                <h2 class="section-title">Bible Verses</h2>
+        <section id="verses" class="content-section">
+            <div class="container content-wrapper">
+                <h2 class="section-header section-title">Bible Verses</h2>
 
                 <div class="verse-card">
                     <div class="verse-reference">John 10:11-18 (NIV)</div>
@@ -770,14 +307,14 @@
         </section>
 
         <!-- The Shepherd Tab -->
-        <section class="tab-content" id="shepherd">
-            <div class="content-wrapper">
-                <h2 class="section-title">The Life Without Lack</h2>
-                <p style="margin-bottom: 2rem; font-size: 1.125rem; color: var(--shepherd-earth);">
+        <section id="shepherd" class="content-section">
+            <div class="container content-wrapper">
+                <h2 class="section-header section-title">The Life Without Lack</h2>
+                <p style="margin-bottom: 2rem; font-size: 1.125rem;">
                     Dallas Willard's reflections on Psalm 23 reveal what it means to live under the care of the Good Shepherd.
                 </p>
 
-                <div class="timeline-container">
+                <div class="timeline timeline-container">
                     <div class="timeline-item">
                         <div class="timeline-title">"The Lord is my shepherd"</div>
                         <p>I'm in the care of someone else. I'm not the one in charge. I've taken my kingdom and surrendered it to the kingdom of God. I am living the with-God life.</p>
@@ -844,7 +381,7 @@
                     </div>
                 </div>
 
-                <div class="quote-box" style="margin-top: 3rem;">
+                <div class="quote-box key-quote" style="margin-top: 3rem;">
                     <p class="quote-text">
                         Because of this, we have no reason to be anxious. The world is a perfectly safe place for us to be.
                     </p>
@@ -854,14 +391,12 @@
         </section>
 
         <!-- Application Tab -->
-        <section class="tab-content" id="application">
-            <div class="content-wrapper">
-                <h2 class="section-title">Application</h2>
+        <section id="application" class="content-section">
+            <div class="container content-wrapper">
+                <h2 class="section-header section-title">Application</h2>
 
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">🎯</span> For Those Who Lead
-                    </h3>
+                <div class="content-card application-card">
+                    <h3>🎯 For Those Who Lead</h3>
                     <p style="margin-bottom: 1rem;">
                         God calls us to lead like the Good Shepherd, not like the bad shepherds condemned in Ezekiel 34. Whether you lead a team at work, parent children, guide a care group, or care for aging parents, you are entrusted with "sheep."
                     </p>
@@ -880,15 +415,13 @@
                         <li style="margin-bottom: 0.5rem;">Flee when danger comes</li>
                         <li style="margin-bottom: 0.5rem;">Care more about personal benefit than the flock</li>
                     </ul>
-                    <p style="font-style: italic; color: var(--shepherd-earth);">
+                    <p style="font-style: italic;">
                         Ask yourself: Am I leading with justice, fairness, care, and love in a way that emulates the Good Shepherd? Or am I acting like a hired hand who's in it for personal gain?
                     </p>
                 </div>
 
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">🔊</span> Whose Voice Are You Listening To?
-                    </h3>
+                <div class="content-card application-card">
+                    <h3>🔊 Whose Voice Are You Listening To?</h3>
                     <p style="margin-bottom: 1rem;">
                         We can listen to a million different voices in this world:
                     </p>
@@ -919,10 +452,8 @@
                     </div>
                 </div>
 
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">🐑</span> Embrace Your Identity as a Sheep
-                    </h3>
+                <div class="content-card application-card">
+                    <h3>🐑 Embrace Your Identity as a Sheep</h3>
                     <p style="margin-bottom: 1rem;">
                         It's humbling, but freeing, to admit:
                     </p>
@@ -936,15 +467,13 @@
                     <p style="margin-bottom: 1rem;">
                         But here's the good news: <strong>we're not made to be in control</strong>. There is One who is—who loves us, who died for us, who knows us by name, and who will never abandon us.
                     </p>
-                    <p style="font-style: italic; color: var(--shepherd-earth);">
+                    <p style="font-style: italic;">
                         The lot of any sheep depends on the type of shepherd who owns it. The quality of your life depends on whose voice you're listening to. Will you listen to the Good Shepherd?
                     </p>
                 </div>
 
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">✝️</span> Remember the Shepherd in Sheep's Clothing
-                    </h3>
+                <div class="content-card application-card">
+                    <h3>✝️ Remember the Shepherd in Sheep's Clothing</h3>
                     <p style="margin-bottom: 1rem;">
                         Jesus is not a wolf in sheep's clothing. He is <strong>the Shepherd in sheep's clothing</strong>—the one who:
                     </p>
@@ -958,7 +487,7 @@
                     <p style="margin-bottom: 1rem;">
                         As we approach Easter, remember that this Good Shepherd didn't just talk about laying down His life—He actually did it. And He had the authority to take it up again.
                     </p>
-                    <p style="font-weight: 600; color: var(--shepherd-sage);">
+                    <p style="font-weight: 600;">
                         This is the Shepherd we follow. This is the voice we listen to. This is the One who knows you by name and will never let you go.
                     </p>
                 </div>
@@ -966,21 +495,19 @@
         </section>
 
         <!-- Reflection Tab -->
-        <section class="tab-content" id="reflection">
-            <div class="content-wrapper">
-                <h2 class="section-title">Reflection & Prayer</h2>
+        <section id="reflection" class="content-section">
+            <div class="container content-wrapper">
+                <h2 class="section-header section-title">Reflection & Prayer</h2>
 
-                <div class="quote-box">
+                <div class="quote-box key-quote">
                     <p class="quote-text" style="font-size: 1.25rem;">
                         God, you are our great shepherd. It's incredible to read this psalm from a king in the highest position who rightfully humbles himself and says, "I am but a sheep under the great shepherd."
                     </p>
                     <p class="quote-author">— Pastor Eric's Closing Prayer</p>
                 </div>
 
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">🙏</span> A Prayer to the Good Shepherd
-                    </h3>
+                <div class="content-card application-card">
+                    <h3>🙏 A Prayer to the Good Shepherd</h3>
                     <p style="margin-bottom: 1rem; line-height: 1.8;">
                         <em>God, help us, no matter our position in life, to humble ourselves and put ourselves under the chief shepherd. It is right, it is good to humble ourselves.</em>
                     </p>
@@ -1001,10 +528,8 @@
                     </p>
                 </div>
 
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">💭</span> Personal Reflection Questions
-                    </h3>
+                <div class="content-card application-card">
+                    <h3>💭 Personal Reflection Questions</h3>
                     <div style="background: var(--shepherd-cream); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
                         <p style="font-weight: 600; margin-bottom: 1rem;">About Being Sheep:</p>
                         <ul style="padding-left: 1.5rem;">
@@ -1036,10 +561,8 @@
                     </div>
                 </div>
 
-                <div class="application-card">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--shepherd-sage);">
-                        <span class="emoji">📝</span> This Week's Challenge
-                    </h3>
+                <div class="content-card application-card">
+                    <h3>📝 This Week's Challenge</h3>
                     <p style="margin-bottom: 1rem;">
                         Give yourself a reminder this week to listen to His voice. Pastor Eric mentioned someone made a sheep cookie to remember the Good Shepherd. What reminder will you create?
                     </p>
@@ -1053,12 +576,12 @@
                         <li style="margin-bottom: 0.5rem;">Journaling about which voices you're listening to vs. which you should listen to</li>
                         <li style="margin-bottom: 0.5rem;">Memorizing John 10:14: "I am the good shepherd; I know my sheep and my sheep know me"</li>
                     </ul>
-                    <p style="font-weight: 600; color: var(--shepherd-sage);">
+                    <p style="font-weight: 600;">
                         Believe He is good and follow Him.
                     </p>
                 </div>
 
-                <div class="quote-box" style="margin-top: 2rem;">
+                <div class="quote-box key-quote" style="margin-top: 2rem;">
                     <p class="quote-text">
                         My prayer, my benediction is that you would see the chief shepherd as the good shepherd, that you would hear his voice and you would listen. That you would know whether it comes in your calm or your distress, that it is for your good, that he loves you, that he knows you, and that he has the best for you.
                     </p>
@@ -1069,100 +592,14 @@
     </main>
 
     <!-- Attribution Badge -->
-    <div class="attribution-badge">
-        <div class="attribution-short">ℹ️</div>
+    <div class="attribution attribution-badge" id="attribution">
+        <div class="attribution-short" onclick="toggleAttribution()">ℹ️</div>
         <div class="attribution-full">
-            Generated by LLM with supervision by <a href="../index.html" style="color: var(--shepherd-sage); font-weight: 600; text-decoration: none;">benjaminficusmicrocarpa</a>. 
-            <a href="../license.html" style="color: var(--shepherd-earth); text-decoration: none;">MIT License</a>
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
         </div>
     </div>
 
-    <script>
-        // Carousel functionality
-        const slides = document.querySelectorAll('.carousel-slide');
-        let currentSlide = 0;
-
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-
-        setInterval(nextSlide, 5000);
-
-        // Tabs functionality
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const targetTab = button.getAttribute('data-tab');
-                
-                // Remove active class from all
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                
-                // Add active class to clicked
-                button.classList.add('active');
-                document.getElementById(targetTab).classList.add('active');
-
-                // Smooth scroll to top of content
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-
-        // Accordion functionality
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const isActive = header.classList.contains('active');
-
-                // Toggle current accordion
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-            });
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                const currentIndex = Array.from(tabButtons).findIndex(btn => btn.classList.contains('active'));
-                let newIndex;
-                
-                if (e.key === 'ArrowRight') {
-                    newIndex = (currentIndex + 1) % tabButtons.length;
-                } else {
-                    newIndex = (currentIndex - 1 + tabButtons.length) % tabButtons.length;
-                }
-                
-                tabButtons[newIndex].click();
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Accessibility: Focus management
-        tabButtons.forEach((button, index) => {
-            button.setAttribute('role', 'tab');
-            button.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
-            button.setAttribute('tabindex', index === 0 ? '0' : '-1');
-        });
-
-        tabContents.forEach((content, index) => {
-            content.setAttribute('role', 'tabpanel');
-            content.setAttribute('aria-hidden', index !== 0 ? 'true' : 'false');
-        });
-    </script>
+    <script src="js/iecc-common.js"></script>
 </body>
 </html>

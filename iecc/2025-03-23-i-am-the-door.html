@@ -5,473 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I AM: The Door | Pastor Albert | Island ECC</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --door-brown: #5D4037;
-            --door-gold: #D4AF37;
-            --light-cream: #FAF8F3;
-            --text-primary: #2C1810;
-            --text-secondary: #6B5B4F;
-            --accent-burgundy: #8B3A3A;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--light-cream);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Crimson Pro', serif;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .header-container {
-            position: relative;
-            height: 75vh;
-            min-height: 500px;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--door-brown) 0%, #3E2723 100%);
-        }
-
-        .door-pattern {
-            position: absolute;
-            inset: 0;
-            opacity: 0.15;
-            background-image: 
-                repeating-linear-gradient(90deg, transparent, transparent 100px, var(--door-gold) 100px, var(--door-gold) 102px),
-                repeating-linear-gradient(0deg, transparent, transparent 100px, var(--door-gold) 100px, var(--door-gold) 102px);
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 10;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            color: white;
-        }
-
-        .door-frame {
-            width: 200px;
-            height: 300px;
-            border: 4px solid var(--door-gold);
-            border-radius: 12px 12px 0 0;
-            position: relative;
-            margin-bottom: 2rem;
-            background: linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
-            animation: doorGlow 3s ease-in-out infinite;
-        }
-
-        .door-knob {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            width: 12px;
-            height: 12px;
-            background: var(--door-gold);
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-        }
-
-        @keyframes doorGlow {
-            0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
-            50% { box-shadow: 0 0 50px rgba(212, 175, 55, 0.6); }
-        }
-
-        .header-title {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .header-meta {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 0.875rem 2rem;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .btn-primary {
-            background: var(--door-gold);
-            color: var(--door-brown);
-        }
-
-        .btn-primary:hover {
-            background: #C19B2E;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border-color: rgba(255,255,255,0.5);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: white;
-        }
-
-        .sticky-tabs {
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .tab-container {
-            display: flex;
-            overflow-x: auto;
-            border-bottom: 2px solid #E0D5C7;
-            scrollbar-width: none;
-        }
-
-        .tab-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            white-space: nowrap;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        .tab:hover {
-            background: rgba(93, 64, 55, 0.05);
-            color: var(--door-brown);
-        }
-
-        .tab.active {
-            border-bottom-color: var(--door-gold);
-            color: var(--door-brown);
-            background: rgba(212, 175, 55, 0.05);
-        }
-
-        .tab-content {
-            display: none;
-            padding: 3rem 1.5rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .verse-card {
-            background: white;
-            border-left: 4px solid var(--door-gold);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .verse-reference {
-            font-family: 'Crimson Pro', serif;
-            font-weight: 600;
-            color: var(--accent-burgundy);
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-        }
-
-        .verse-text {
-            font-style: italic;
-            line-height: 1.8;
-            color: var(--text-primary);
-        }
-
-        .accordion-item {
-            border: 1px solid #E0D5C7;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            background: white;
-        }
-
-        .accordion-header {
-            padding: 1.25rem 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--door-brown);
-            transition: background 0.3s ease;
-        }
-
-        .accordion-header:hover {
-            background: rgba(93, 64, 55, 0.03);
-        }
-
-        .accordion-icon {
-            transition: transform 0.3s ease;
-            font-size: 1.2rem;
-        }
-
-        .accordion-item.active .accordion-icon {
-            transform: rotate(180deg);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .accordion-item.active .accordion-content {
-            max-height: 3000px;
-        }
-
-        .accordion-body {
-            padding: 1.5rem;
-            border-top: 1px solid #E0D5C7;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, var(--door-gold), var(--accent-burgundy));
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding-left: 1.5rem;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2.25rem;
-            top: 0.5rem;
-            width: 12px;
-            height: 12px;
-            background: var(--door-gold);
-            border: 3px solid white;
-            border-radius: 50%;
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
-        }
-
-        .timeline-title {
-            font-family: 'Crimson Pro', serif;
-            font-weight: 600;
-            font-size: 1.3rem;
-            color: var(--door-brown);
-            margin-bottom: 0.5rem;
-        }
-
-        .quote-box {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(139, 58, 58, 0.05));
-            border-left: 4px solid var(--accent-burgundy);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 8px 8px 0;
-            font-style: italic;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .attribution-badge {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .badge-short {
-            width: 50px;
-            height: 50px;
-            background: var(--door-brown);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-
-        .badge-short:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        .badge-full {
-            display: none;
-            background: white;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            max-width: 300px;
-            font-size: 0.875rem;
-            line-height: 1.6;
-        }
-
-        .badge-full a {
-            color: var(--accent-burgundy);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .badge-full a:hover {
-            text-decoration: underline;
-        }
-
-        .attribution-badge:hover .badge-short {
-            display: none;
-        }
-
-        .attribution-badge:hover .badge-full {
-            display: block;
-        }
-
-        .section-heading {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--door-brown);
-            border-bottom: 2px solid var(--door-gold);
-            padding-bottom: 0.5rem;
-        }
-
-        .emphasis {
-            color: var(--accent-burgundy);
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            .header-container {
-                height: 60vh;
-                min-height: 400px;
-            }
-
-            .door-frame {
-                width: 150px;
-                height: 225px;
-            }
-
-            .header-title {
-                font-size: 2rem;
-            }
-
-            .btn-group {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .attribution-badge {
-                position: relative;
-                bottom: auto;
-                right: auto;
-                margin: 2rem auto;
-                max-width: 90%;
-            }
-
-            .badge-short {
-                display: none;
-            }
-
-            .badge-full {
-                display: block;
-            }
-
-            .timeline {
-                padding-left: 1.5rem;
-            }
-        }
-
-        @media print {
-            .header-container, .sticky-tabs, .attribution-badge, .btn-group {
-                display: none;
-            }
-
-            .tab-content {
-                display: block !important;
-                page-break-inside: avoid;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iecc-base.css">
+    <link rel="stylesheet" href="css/i-am.css">
 </head>
-<body>
-    <header class="header-container">
+<body class="theme-door" data-sermon-date="2025-03-23">
+    <header class="hero">
         <div class="door-pattern"></div>
-        <div class="header-content">
+        <div class="hero-content">
             <div class="door-frame">
                 <div class="door-knob"></div>
             </div>
-            <h1 class="header-title">I AM: The Door 🚪</h1>
-            <div class="header-meta">
-                23 Mar 2025 • Pastor Albert • Island ECC
+            <h1 class="hero-title">I AM: The Door 🚪</h1>
+            <p class="hero-subtitle">23 Mar 2025 • Pastor Albert • Island ECC</p>
+            <div class="sermon-tags-container" id="sermon-tags">
+                <!-- Tags dynamically loaded -->
             </div>
             <div class="btn-group">
                 <a href="https://www.youtube.com/watch?v=0oF4EoY2oRs" class="btn btn-primary" target="_blank">
@@ -484,483 +34,447 @@
         </div>
     </header>
 
-    <nav class="sticky-tabs">
-        <div class="tab-container">
-            <div class="tab active" data-tab="overview">📖 Overview</div>
-            <div class="tab" data-tab="sermon">✨ Main Sermon</div>
-            <div class="tab" data-tab="verses">📜 Bible Verses</div>
-            <div class="tab" data-tab="doors">🚪 Doors in Scripture</div>
-            <div class="tab" data-tab="application">💡 Application</div>
-            <div class="tab" data-tab="reflection">🙏 Reflection</div>
+    <nav class="tabs-container sticky-tabs">
+        <div class="tabs tab-container">
+            <button class="tab active" data-tab="overview">📖 Overview</button>
+            <button class="tab" data-tab="sermon">✨ Main Sermon</button>
+            <button class="tab" data-tab="verses">📜 Bible Verses</button>
+            <button class="tab" data-tab="doors">🚪 Doors in Scripture</button>
+            <button class="tab" data-tab="application">💡 Application</button>
+            <button class="tab" data-tab="reflection">🙏 Reflection</button>
         </div>
     </nav>
 
     <main>
-        <div class="tab-content active" id="overview">
-            <h2 class="section-heading">Overview</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
-                Jesus declared, <span class="emphasis">"I am the door."</span> This powerful metaphor reveals that Jesus is the exclusive gateway to God and to a life of true meaning and abundance. Through the story of a man born blind and Jesus' confrontation with the Pharisees, we discover what it means to enter through the door that is Christ.
-            </p>
+        <section id="overview" class="content-section active">
+            <div class="container">
+                <h2 class="section-header">Overview</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                    Jesus declared, <span class="emphasis">"I am the door."</span> This powerful metaphor reveals that Jesus is the exclusive gateway to God and to a life of true meaning and abundance. Through the story of a man born blind and Jesus' confrontation with the Pharisees, we discover what it means to enter through the door that is Christ.
+                </p>
 
-            <div class="verse-card">
-                <div class="verse-reference">John 10:9 (NIV)</div>
-                <div class="verse-text">
-                    "I am the gate; whoever enters through me will be saved. They will come in and go out, and find pasture."
+                <div class="verse-card">
+                    <div class="verse-reference">John 10:9 (NIV)</div>
+                    <div class="verse-text">
+                        "I am the gate; whoever enters through me will be saved. They will come in and go out, and find pasture."
+                    </div>
                 </div>
+
+                <h3 style="font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem;">Key Themes 🔑</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #E0D5C7;">🔹 <strong>Jesus as the Exclusive Door:</strong> He is the only way to God and salvation</li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #E0D5C7;">🔹 <strong>Protection and Provision:</strong> The shepherd lies at the entrance to protect his sheep</li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #E0D5C7;">🔹 <strong>Breaking Shame and Condemnation:</strong> "Neither this man nor his parents sinned"</li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #E0D5C7;">🔹 <strong>Recognizing the Shepherd's Voice:</strong> Knowing God through regular exposure to His Word</li>
+                    <li style="padding: 0.75rem 0;">🔹 <strong>The Open Door of Invitation:</strong> Jesus stands knocking, waiting for us to open</li>
+                </ul>
             </div>
+        </section>
 
-            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--door-brown);">Key Themes 🔑</h3>
-            <ul style="list-style: none; padding: 0;">
-                <li style="padding: 0.75rem 0; border-bottom: 1px solid #E0D5C7;">🔹 <strong>Jesus as the Exclusive Door:</strong> He is the only way to God and salvation</li>
-                <li style="padding: 0.75rem 0; border-bottom: 1px solid #E0D5C7;">🔹 <strong>Protection and Provision:</strong> The shepherd lies at the entrance to protect his sheep</li>
-                <li style="padding: 0.75rem 0; border-bottom: 1px solid #E0D5C7;">🔹 <strong>Breaking Shame and Condemnation:</strong> "Neither this man nor his parents sinned"</li>
-                <li style="padding: 0.75rem 0; border-bottom: 1px solid #E0D5C7;">🔹 <strong>Recognizing the Shepherd's Voice:</strong> Knowing God through regular exposure to His Word</li>
-                <li style="padding: 0.75rem 0;">🔹 <strong>The Open Door of Invitation:</strong> Jesus stands knocking, waiting for us to open</li>
-            </ul>
-        </div>
+        <section id="sermon" class="content-section">
+            <div class="container">
+                <h2 class="section-header">Main Sermon</h2>
 
-        <div class="tab-content" id="sermon">
-            <h2 class="section-heading">Main Sermon</h2>
-
-            <div class="accordion-item active">
-                <div class="accordion-header">
-                    <span>🌟 Introduction: The Mystery of Doors</span>
-                    <span class="accordion-icon">▼</span>
+                <div class="accordion-item active">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🌟 Introduction: The Mystery of Doors</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Pastor Albert begins by sharing his love for Scotland and the excitement of entering old church doors and castle doors—never knowing what lies beyond. Sometimes a door leads to ruins, sometimes to magnificent mosaics or historic tombs. A door in China led to what he thought was a tea house but turned out to be someone's home!</p>
+                            <p style="margin-top: 1rem;">Doors are fascinating because they lead us somewhere—and Jesus uses this everyday image to teach us something profound about himself: <span class="emphasis">"I am the door."</span></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p>Pastor Albert begins by sharing his love for Scotland and the excitement of entering old church doors and castle doors—never knowing what lies beyond. Sometimes a door leads to ruins, sometimes to magnificent mosaics or historic tombs. A door in China led to what he thought was a tea house but turned out to be someone's home!</p>
-                        <p style="margin-top: 1rem;">Doors are fascinating because they lead us somewhere—and Jesus uses this everyday image to teach us something profound about himself: <span class="emphasis">"I am the door."</span></p>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>👁️ The Man Born Blind: Breaking Shame</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>In John 9, Jesus encounters a man born blind. The disciples ask a shocking question: "Rabbi, who sinned, this man or his parents, that he was born blind?"</p>
+                            
+                            <div class="quote-box">
+                                "In Jesus' day, there was a belief that if something bad happened to you or your family, it must be a consequence of somebody's sin—either your own or your parents'."
+                            </div>
+
+                            <p>This meant the man lived under <span class="emphasis">two layers of suffering</span>:</p>
+                            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                                <li>The physical disability itself</li>
+                                <li>The shame and condemnation—believing it was punishment for sin</li>
+                            </ul>
+
+                            <p style="margin-top: 1rem;">But Jesus breaks this chain of condemnation with powerful words:</p>
+
+                            <div class="verse-card" style="margin: 1.5rem 0;">
+                                <div class="verse-reference">John 9:3 (NIV)</div>
+                                <div class="verse-text">
+                                    "Neither this man nor his parents sinned," said Jesus, "but this happened so that the works of God might be displayed in him."
+                                </div>
+                            </div>
+
+                            <p><strong>For those carrying guilt:</strong> Jesus says to you today—<span class="emphasis">it's not your fault.</span> Break the chain of shame and self-condemnation. Turn your eyes to Jesus, let Him smile at you, let Him embrace you.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🩹 The Messy Process of Healing</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Jesus heals the man in an unusual way—He spits on the ground, makes mud, and puts it on the man's eyes. Then He tells him to wash in the Pool of Siloam.</p>
+
+                            <div class="quote-box">
+                                "All healings are messy. Imagine a broken bone needing surgery—both the surgery and recovery are messy. If you go to a counselor and open up, it's messy. If you need to reconcile with someone who betrayed you—it's beyond messy."
+                            </div>
+
+                            <p style="margin-top: 1rem;">If you're in a healing process right now, expect the messiness. It's the process you must go through. But the result? The man "came home seeing."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>⚖️ The Pharisees: Gatekeepers or Obstacles?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Instead of celebration, the Pharisees interrogate the healed man because Jesus healed on the Sabbath. They believed they were the gatekeepers of God's truth, the "door" through which people must pass to know God.</p>
+
+                            <div class="quote-box">
+                                "The Pharisees considered themselves God's representatives, gatekeepers of God's truth. They thought they were the door to God: 'If you want to know God, come through us.'"
+                            </div>
+
+                            <p style="margin-top: 1rem;">But the healed man gives a simple, profound testimony:</p>
+
+                            <div class="verse-card" style="margin: 1.5rem 0;">
+                                <div class="verse-reference">John 9:25 (NIV)</div>
+                                <div class="verse-text">
+                                    "Whether he is a sinner or not, I don't know. One thing I do know. I was blind but now I see!"
+                                </div>
+                            </div>
+
+                            <p><em>(This became the famous lyric in "Amazing Grace")</em></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🐑 The Sheep Pen Metaphor</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>Jesus then tells a parable about sheep, shepherds, and gates. In ancient times, there were two types of sheep pens:</p>
+
+                            <h4 style="font-weight: 600; margin: 1.5rem 0 0.75rem;">Type 1: Public Sheep Pen (Urban Setting)</h4>
+                            <p>Multiple shepherds use one common pen with a gatekeeper. Each morning, shepherds come and call their sheep by name. The sheep recognize their shepherd's voice and follow him out.</p>
+
+                            <div class="verse-card" style="margin: 1.5rem 0;">
+                                <div class="verse-reference">John 10:3-4 (NIV)</div>
+                                <div class="verse-text">
+                                    "The gatekeeper opens the gate for him, and the sheep listen to his voice. He calls his own sheep by name and leads them out. When he has brought out all his own, he goes on ahead of them, and his sheep follow him because they know his voice."
+                                </div>
+                            </div>
+
+                            <p style="margin-top: 1rem;"><strong>Application:</strong> How do you recognize God's voice? By hearing it often and frequently. This is why we must read the Bible regularly—to familiarize ourselves with His voice.</p>
+
+                            <h4 style="font-weight: 600; margin: 1.5rem 0 0.75rem;">Type 2: Stone Sheep Pen (Rural Setting)</h4>
+                            <p>In rural areas, a shepherd has his own stone pen with no gate and no gatekeeper. How does he protect the sheep from lions, bears, and wolves?</p>
+
+                            <div class="quote-box">
+                                "The shepherd sleeps at the entrance. He literally lays down his life at the doorway. The shepherd IS the gate."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🚪 "I Am the Door"</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="verse-card" style="margin-bottom: 1.5rem;">
+                                <div class="verse-reference">John 10:7, 9-10 (NIV)</div>
+                                <div class="verse-text">
+                                    "Therefore Jesus said again, 'Very truly I tell you, I am the gate for the sheep... I am the gate; whoever enters through me will be saved. They will come in and go out, and find pasture. The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full.'"
+                                </div>
+                            </div>
+
+                            <p><strong>Jesus is saying:</strong></p>
+                            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                                <li>I am <span class="emphasis">THE</span> door—not <em>a</em> door. He is exclusive.</li>
+                                <li>I am the only door to God</li>
+                                <li>I am the only door to salvation</li>
+                                <li>Whoever enters through me will be <span class="emphasis">saved</span></li>
+                                <li>They will find <span class="emphasis">protection</span> (come in)</li>
+                                <li>They will find <span class="emphasis">provision</span> (go out and find pasture)</li>
+                            </ul>
+
+                            <div class="quote-box" style="margin-top: 1.5rem;">
+                                "Whatever is going on in your life, I am here to protect you. If there are wild animals coming to attack, I am here. If someone has to be hurt, it will be me. If someone has to die, it will be me. Because I lay down my life at the entrance for you."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>✝️ The Cross: The Door Wide Open</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>This shepherd metaphor points directly to the cross. Jesus didn't just talk about laying down His life—He did it. On the cross, Jesus became the door through which we can enter into relationship with God.</p>
+                            
+                            <p style="margin-top: 1rem;">The door that was closed in Genesis (when Adam and Eve were driven from Eden) is now <span class="emphasis">wide open</span> through Christ.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span>👁️ The Man Born Blind: Breaking Shame</span>
-                    <span class="accordion-icon">▼</span>
+        <section id="verses" class="content-section">
+            <div class="container">
+                <h2 class="section-header">Key Bible Verses</h2>
+
+                <div class="verse-card">
+                    <div class="verse-reference">John 10:7 (NIV)</div>
+                    <div class="verse-text">
+                        Therefore Jesus said again, "Very truly I tell you, I am the gate for the sheep."
+                    </div>
                 </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p>In John 9, Jesus encounters a man born blind. The disciples ask a shocking question: "Rabbi, who sinned, this man or his parents, that he was born blind?"</p>
+
+                <div class="verse-card">
+                    <div class="verse-reference">John 10:9-10 (NIV)</div>
+                    <div class="verse-text">
+                        I am the gate; whoever enters through me will be saved. They will come in and go out, and find pasture. The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full.
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">John 9:3 (NIV)</div>
+                    <div class="verse-text">
+                        "Neither this man nor his parents sinned," said Jesus, "but this happened so that the works of God might be displayed in him."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">John 10:3-4 (NIV)</div>
+                    <div class="verse-text">
+                        The gatekeeper opens the gate for him, and the sheep listen to his voice. He calls his own sheep by name and leads them out. When he has brought out all his own, he goes on ahead of them, and his sheep follow him because they know his voice.
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">John 9:25 (NIV)</div>
+                    <div class="verse-text">
+                        He replied, "Whether he is a sinner or not, I don't know. One thing I do know. I was blind but now I see!"
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Revelation 3:20 (NIV)</div>
+                    <div class="verse-text">
+                        Here I am! I stand at the door and knock. If anyone hears my voice and opens the door, I will come in and eat with that person, and they with me.
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Romans 8:28 (NIV)</div>
+                    <div class="verse-text">
+                        And we know that in all things God works for the good of those who love him, who have been called according to his purpose.
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <div class="verse-reference">Ezekiel 34 (NIV - excerpt)</div>
+                    <div class="verse-text">
+                        [God rebukes the shepherds of Israel] "Woe to you shepherds of Israel who only take care of yourselves! Should not shepherds take care of the flock?... You have not strengthened the weak or healed the sick or bound up the injured..."
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="doors" class="content-section">
+            <div class="container">
+                <h2 class="section-header">Biblical Doors: Genesis to Revelation</h2>
+                <p style="margin-bottom: 2rem;">Pastor Albert takes us on a journey through Scripture, showing how the metaphor of "the door" appears throughout the Bible.</p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-title">🌳 Genesis 3 – The Door of Mercy</div>
+                        <p>After Adam and Eve sinned, God drove them from the Garden of Eden and placed a cherubim with a flaming sword to block the way to the tree of life.</p>
+                        <div class="quote-box" style="margin-top: 1rem;">
+                            "Many think this is the door of punishment. But it's actually the door of mercy. God prevented them from eating from the tree of life and living eternally in their sinful state, separated from Him forever."
+                        </div>
+                        <p style="margin-top: 1rem;"><strong>Lesson:</strong> Sometimes God closes doors behind us not because He doesn't love us, but because He loves us too much. He redirects us to where He can reveal Himself.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">🩸 Exodus 12 – The Door of Deliverance</div>
+                        <p>God commanded the Israelites to kill a lamb and paint its blood on their door frames. When the angel of death passed over Egypt, it would "pass over" any house marked with blood.</p>
+                        <div class="verse-card" style="margin: 1rem 0;">
+                            <div class="verse-reference">Exodus 12:7, 13 (NIV)</div>
+                            <div class="verse-text">
+                                "Then they are to take some of the blood and put it on the sides and tops of the doorframes... The blood will be a sign for you on the houses where you are, and when I see the blood, I will pass over you."
+                            </div>
+                        </div>
+                        <p><strong>The Lamb → The Blood → The Door → Deliverance</strong></p>
+                        <p style="margin-top: 0.5rem;">This is the Passover, which points forward to Christ—the Lamb of God whose blood delivers us from death.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">✝️ John 10 – The Door of Salvation</div>
+                        <p>Jesus declares, "I am the door." He is the only way to God, the only way to salvation, the only way to abundant life.</p>
+                        <p style="margin-top: 0.5rem;"><span class="emphasis">Exclusive claim:</span> Not <em>a</em> door, but <em>THE</em> door.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">🚪 Revelation 3:20 – The Door of Invitation</div>
+                        <div class="verse-card" style="margin-bottom: 1rem;">
+                            <div class="verse-reference">Revelation 3:20 (NIV)</div>
+                            <div class="verse-text">
+                                "Here I am! I stand at the door and knock. If anyone hears my voice and opens the door, I will come in and eat with that person, and they with me."
+                            </div>
+                        </div>
+                        <p><strong>Important context:</strong> This verse is written to <em>Christians</em> in the church of Laodicea—believers who had become lukewarm and pushed Jesus to the margins of their lives.</p>
                         
-                        <div class="quote-box">
-                            "In Jesus' day, there was a belief that if something bad happened to you or your family, it must be a consequence of somebody's sin—either your own or your parents'."
+                        <div class="quote-box" style="margin: 1rem 0;">
+                            "Notice—there is no doorknob on the outside. The only way to open the door is from the inside. God will not violate your decision."
                         </div>
 
-                        <p>This meant the man lived under <span class="emphasis">two layers of suffering</span>:</p>
-                        <ul style="margin: 1rem 0; padding-left: 2rem;">
-                            <li>The physical disability itself</li>
-                            <li>The shame and condemnation—believing it was punishment for sin</li>
-                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Application for Christians:</strong> Before every meeting, every difficult conversation, every challenge—invite Jesus in. "Jesus, will you please come with me?" Make room for Him.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Application for non-believers:</strong> Jesus is knocking on your door today. Will you open it?</p>
+                    </div>
 
-                        <p style="margin-top: 1rem;">But Jesus breaks this chain of condemnation with powerful words:</p>
-
-                        <div class="verse-card" style="margin: 1.5rem 0;">
-                            <div class="verse-reference">John 9:3 (NIV)</div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">🙌 Revelation 4 – The Door of Divine Worship</div>
+                        <p>In the future, we will see a door opened in heaven. When we pass through, we will see God on His throne, surrounded by angels, cherubim, elders—all worshiping Him.</p>
+                        <div class="verse-card" style="margin-top: 1rem;">
+                            <div class="verse-reference">Revelation 4:1 (NIV)</div>
                             <div class="verse-text">
-                                "Neither this man nor his parents sinned," said Jesus, "but this happened so that the works of God might be displayed in him."
+                                "After this I looked, and there before me was a door standing open in heaven."
                             </div>
                         </div>
-
-                        <p><strong>For those carrying guilt:</strong> Jesus says to you today—<span class="emphasis">it's not your fault.</span> Break the chain of shame and self-condemnation. Turn your eyes to Jesus, let Him smile at you, let Him embrace you.</p>
+                        <p style="margin-top: 1rem;"><span class="emphasis">This is where we are going.</span></p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span>🩹 The Messy Process of Healing</span>
-                    <span class="accordion-icon">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p>Jesus heals the man in an unusual way—He spits on the ground, makes mud, and puts it on the man's eyes. Then He tells him to wash in the Pool of Siloam.</p>
+        <section id="application" class="content-section">
+            <div class="container">
+                <h2 class="section-header">Personal Application</h2>
 
-                        <div class="quote-box">
-                            "All healings are messy. Imagine a broken bone needing surgery—both the surgery and recovery are messy. If you go to a counselor and open up, it's messy. If you need to reconcile with someone who betrayed you—it's beyond messy."
-                        </div>
-
-                        <p style="margin-top: 1rem;">If you're in a healing process right now, expect the messiness. It's the process you must go through. But the result? The man "came home seeing."</p>
+                <div class="content-card">
+                    <h3>For Those Carrying Shame 💔</h3>
+                    <div class="quote-box">
+                        "For many years you are condemning yourself. You feel like you are the reason why you and your family is suffering. I want you to hear Jesus' word: Neither this man nor his parents sinned. It's not your fault."
                     </div>
+                    <p style="margin-top: 1rem;"><strong>Action Step:</strong> Today, break the chain of shame and self-condemnation. Turn your eyes away from yourself and back to Jesus. Let Him smile at you. Let Him embrace you.</p>
                 </div>
-            </div>
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span>⚖️ The Pharisees: Gatekeepers or Obstacles?</span>
-                    <span class="accordion-icon">▼</span>
+                <div class="content-card">
+                    <h3>For Those in the Healing Process 🩹</h3>
+                    <p>Expect the messiness. All healing—physical, emotional, relational—is messy. But stay in the process. The blind man washed in the Pool of Siloam and came home seeing.</p>
                 </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p>Instead of celebration, the Pharisees interrogate the healed man because Jesus healed on the Sabbath. They believed they were the gatekeepers of God's truth, the "door" through which people must pass to know God.</p>
 
-                        <div class="quote-box">
-                            "The Pharisees considered themselves God's representatives, gatekeepers of God's truth. They thought they were the door to God: 'If you want to know God, come through us.'"
-                        </div>
-
-                        <p style="margin-top: 1rem;">But the healed man gives a simple, profound testimony:</p>
-
-                        <div class="verse-card" style="margin: 1.5rem 0;">
-                            <div class="verse-reference">John 9:25 (NIV)</div>
-                            <div class="verse-text">
-                                "Whether he is a sinner or not, I don't know. One thing I do know. I was blind but now I see!"
-                            </div>
-                        </div>
-
-                        <p><em>(This became the famous lyric in "Amazing Grace")</em></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span>🐑 The Sheep Pen Metaphor</span>
-                    <span class="accordion-icon">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p>Jesus then tells a parable about sheep, shepherds, and gates. In ancient times, there were two types of sheep pens:</p>
-
-                        <h4 style="font-weight: 600; margin: 1.5rem 0 0.75rem; color: var(--accent-burgundy);">Type 1: Public Sheep Pen (Urban Setting)</h4>
-                        <p>Multiple shepherds use one common pen with a gatekeeper. Each morning, shepherds come and call their sheep by name. The sheep recognize their shepherd's voice and follow him out.</p>
-
-                        <div class="verse-card" style="margin: 1.5rem 0;">
-                            <div class="verse-reference">John 10:3-4 (NIV)</div>
-                            <div class="verse-text">
-                                "The gatekeeper opens the gate for him, and the sheep listen to his voice. He calls his own sheep by name and leads them out. When he has brought out all his own, he goes on ahead of them, and his sheep follow him because they know his voice."
-                            </div>
-                        </div>
-
-                        <p style="margin-top: 1rem;"><strong>Application:</strong> How do you recognize God's voice? By hearing it often and frequently. This is why we must read the Bible regularly—to familiarize ourselves with His voice.</p>
-
-                        <h4 style="font-weight: 600; margin: 1.5rem 0 0.75rem; color: var(--accent-burgundy);">Type 2: Stone Sheep Pen (Rural Setting)</h4>
-                        <p>In rural areas, a shepherd has his own stone pen with no gate and no gatekeeper. How does he protect the sheep from lions, bears, and wolves?</p>
-
-                        <div class="quote-box">
-                            "The shepherd sleeps at the entrance. He literally lays down his life at the doorway. The shepherd IS the gate."
+                <div class="content-card">
+                    <h3>Learning to Recognize God's Voice 🎧</h3>
+                    <div class="verse-card">
+                        <div class="verse-reference">John 10:27 (NIV)</div>
+                        <div class="verse-text">
+                            "My sheep listen to my voice; I know them, and they follow me."
                         </div>
                     </div>
+                    <p style="margin-top: 1rem;"><strong>How?</strong> The sheep recognize the shepherd's voice because they hear it every single day. If you want to recognize Jesus' voice:</p>
+                    <ul style="margin: 1rem 0; padding-left: 2rem;">
+                        <li>Read the Bible regularly</li>
+                        <li>Spend time in worship</li>
+                        <li>Fellowship with other believers</li>
+                        <li><span class="emphasis">Increase your exposure to God</span> (Pastor Kevin's challenge from last week)</li>
+                    </ul>
                 </div>
-            </div>
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span>🚪 "I Am the Door"</span>
-                    <span class="accordion-icon">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <div class="verse-card" style="margin-bottom: 1.5rem;">
-                            <div class="verse-reference">John 10:7, 9-10 (NIV)</div>
-                            <div class="verse-text">
-                                "Therefore Jesus said again, 'Very truly I tell you, I am the gate for the sheep... I am the gate; whoever enters through me will be saved. They will come in and go out, and find pasture. The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full.'"
-                            </div>
-                        </div>
-
-                        <p><strong>Jesus is saying:</strong></p>
-                        <ul style="margin: 1rem 0; padding-left: 2rem;">
-                            <li>I am <span class="emphasis">THE</span> door—not <em>a</em> door. He is exclusive.</li>
-                            <li>I am the only door to God</li>
-                            <li>I am the only door to salvation</li>
-                            <li>Whoever enters through me will be <span class="emphasis">saved</span></li>
-                            <li>They will find <span class="emphasis">protection</span> (come in)</li>
-                            <li>They will find <span class="emphasis">provision</span> (go out and find pasture)</li>
-                        </ul>
-
-                        <div class="quote-box" style="margin-top: 1.5rem;">
-                            "Whatever is going on in your life, I am here to protect you. If there are wild animals coming to attack, I am here. If someone has to be hurt, it will be me. If someone has to die, it will be me. Because I lay down my life at the entrance for you."
-                        </div>
+                <div class="content-card">
+                    <h3>Making Room for Jesus 🙏</h3>
+                    <div class="quote-box">
+                        "Anytime I go to a meeting or need to deal with something difficult, I will say, 'Jesus, will you please come with me?' I make room for Jesus."
                     </div>
+                    <p style="margin-top: 1rem;"><strong>Practice this:</strong> Before your next challenge, conversation, or decision, pause and invite Jesus in. Don't keep Him standing outside the door of that area of your life.</p>
                 </div>
-            </div>
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span>✝️ The Cross: The Door Wide Open</span>
-                    <span class="accordion-icon">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p>This shepherd metaphor points directly to the cross. Jesus didn't just talk about laying down His life—He did it. On the cross, Jesus became the door through which we can enter into relationship with God.</p>
-                        
-                        <p style="margin-top: 1rem;">The door that was closed in Genesis (when Adam and Eve were driven from Eden) is now <span class="emphasis">wide open</span> through Christ.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-content" id="verses">
-            <h2 class="section-heading">Key Bible Verses</h2>
-
-            <div class="verse-card">
-                <div class="verse-reference">John 10:7 (NIV)</div>
-                <div class="verse-text">
-                    Therefore Jesus said again, "Very truly I tell you, I am the gate for the sheep."
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <div class="verse-reference">John 10:9-10 (NIV)</div>
-                <div class="verse-text">
-                    I am the gate; whoever enters through me will be saved. They will come in and go out, and find pasture. The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full.
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <div class="verse-reference">John 9:3 (NIV)</div>
-                <div class="verse-text">
-                    "Neither this man nor his parents sinned," said Jesus, "but this happened so that the works of God might be displayed in him."
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <div class="verse-reference">John 10:3-4 (NIV)</div>
-                <div class="verse-text">
-                    The gatekeeper opens the gate for him, and the sheep listen to his voice. He calls his own sheep by name and leads them out. When he has brought out all his own, he goes on ahead of them, and his sheep follow him because they know his voice.
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <div class="verse-reference">John 9:25 (NIV)</div>
-                <div class="verse-text">
-                    He replied, "Whether he is a sinner or not, I don't know. One thing I do know. I was blind but now I see!"
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <div class="verse-reference">Revelation 3:20 (NIV)</div>
-                <div class="verse-text">
-                    Here I am! I stand at the door and knock. If anyone hears my voice and opens the door, I will come in and eat with that person, and they with me.
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <div class="verse-reference">Romans 8:28 (NIV)</div>
-                <div class="verse-text">
-                    And we know that in all things God works for the good of those who love him, who have been called according to his purpose.
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <div class="verse-reference">Ezekiel 34 (NIV - excerpt)</div>
-                <div class="verse-text">
-                    [God rebukes the shepherds of Israel] "Woe to you shepherds of Israel who only take care of yourselves! Should not shepherds take care of the flock?... You have not strengthened the weak or healed the sick or bound up the injured..."
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-content" id="doors">
-            <h2 class="section-heading">Biblical Doors: Genesis to Revelation</h2>
-            <p style="margin-bottom: 2rem;">Pastor Albert takes us on a journey through Scripture, showing how the metaphor of "the door" appears throughout the Bible.</p>
-
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-title">🌳 Genesis 3 – The Door of Mercy</div>
-                    <p>After Adam and Eve sinned, God drove them from the Garden of Eden and placed a cherubim with a flaming sword to block the way to the tree of life.</p>
+                <div class="content-card">
+                    <h3>For Those Outside the Door 🚪</h3>
+                    <p>Jesus stands at the door of your heart and knocks. The doorknob is only on the inside—He will not force His way in. But He invites you:</p>
                     <div class="quote-box" style="margin-top: 1rem;">
-                        "Many think this is the door of punishment. But it's actually the door of mercy. God prevented them from eating from the tree of life and living eternally in their sinful state, separated from Him forever."
+                        "I am the door. Whoever enters through me will be saved. They will come in and go out and find pasture. I have come that they may have life, and have it to the full."
                     </div>
-                    <p style="margin-top: 1rem;"><strong>Lesson:</strong> Sometimes God closes doors behind us not because He doesn't love us, but because He loves us too much. He redirects us to where He can reveal Himself.</p>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-title">🩸 Exodus 12 – The Door of Deliverance</div>
-                    <p>God commanded the Israelites to kill a lamb and paint its blood on their door frames. When the angel of death passed over Egypt, it would "pass over" any house marked with blood.</p>
-                    <div class="verse-card" style="margin: 1rem 0;">
-                        <div class="verse-reference">Exodus 12:7, 13 (NIV)</div>
-                        <div class="verse-text">
-                            "Then they are to take some of the blood and put it on the sides and tops of the doorframes... The blood will be a sign for you on the houses where you are, and when I see the blood, I will pass over you."
-                        </div>
-                    </div>
-                    <p><strong>The Lamb → The Blood → The Door → Deliverance</strong></p>
-                    <p style="margin-top: 0.5rem;">This is the Passover, which points forward to Christ—the Lamb of God whose blood delivers us from death.</p>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-title">✝️ John 10 – The Door of Salvation</div>
-                    <p>Jesus declares, "I am the door." He is the only way to God, the only way to salvation, the only way to abundant life.</p>
-                    <p style="margin-top: 0.5rem;"><span class="emphasis">Exclusive claim:</span> Not <em>a</em> door, but <em>THE</em> door.</p>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-title">🚪 Revelation 3:20 – The Door of Invitation</div>
-                    <div class="verse-card" style="margin-bottom: 1rem;">
-                        <div class="verse-reference">Revelation 3:20 (NIV)</div>
-                        <div class="verse-text">
-                            "Here I am! I stand at the door and knock. If anyone hears my voice and opens the door, I will come in and eat with that person, and they with me."
-                        </div>
-                    </div>
-                    <p><strong>Important context:</strong> This verse is written to <em>Christians</em> in the church of Laodicea—believers who had become lukewarm and pushed Jesus to the margins of their lives.</p>
-                    
-                    <div class="quote-box" style="margin: 1rem 0;">
-                        "Notice—there is no doorknob on the outside. The only way to open the door is from the inside. God will not violate your decision."
-                    </div>
-
-                    <p style="margin-top: 1rem;"><strong>Application for Christians:</strong> Before every meeting, every difficult conversation, every challenge—invite Jesus in. "Jesus, will you please come with me?" Make room for Him.</p>
-                    <p style="margin-top: 0.5rem;"><strong>Application for non-believers:</strong> Jesus is knocking on your door today. Will you open it?</p>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-title">🙌 Revelation 4 – The Door of Divine Worship</div>
-                    <p>In the future, we will see a door opened in heaven. When we pass through, we will see God on His throne, surrounded by angels, cherubim, elders—all worshiping Him.</p>
-                    <div class="verse-card" style="margin-top: 1rem;">
-                        <div class="verse-reference">Revelation 4:1 (NIV)</div>
-                        <div class="verse-text">
-                            "After this I looked, and there before me was a door standing open in heaven."
-                        </div>
-                    </div>
-                    <p style="margin-top: 1rem;"><span class="emphasis">This is where we are going.</span></p>
+                    <p style="margin-top: 1rem;"><span class="emphasis">Will you open the door today?</span></p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="tab-content" id="application">
-            <h2 class="section-heading">Personal Application</h2>
+        <section id="reflection" class="content-section">
+            <div class="container">
+                <h2 class="section-header">Reflection Questions</h2>
 
-            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; margin-bottom: 1rem; color: var(--door-brown);">For Those Carrying Shame 💔</h3>
-            <div class="quote-box">
-                "For many years you are condemning yourself. You feel like you are the reason why you and your family is suffering. I want you to hear Jesus' word: Neither this man nor his parents sinned. It's not your fault."
-            </div>
-            <p style="margin-top: 1rem;"><strong>Action Step:</strong> Today, break the chain of shame and self-condemnation. Turn your eyes away from yourself and back to Jesus. Let Him smile at you. Let Him embrace you.</p>
+                <div class="content-card">
+                    <h3>1. Breaking Condemnation 💭</h3>
+                    <p>Are you carrying shame or condemnation about something in your life or family? Have you believed it's "your fault"?</p>
+                    <p style="margin-top: 0.75rem; font-style: italic;">How does Jesus' statement "neither this man nor his parents sinned" speak to your situation?</p>
+                </div>
 
-            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--door-brown);">For Those in the Healing Process 🩹</h3>
-            <p>Expect the messiness. All healing—physical, emotional, relational—is messy. But stay in the process. The blind man washed in the Pool of Siloam and came home seeing.</p>
+                <div class="content-card">
+                    <h3>2. Recognizing His Voice 🎧</h3>
+                    <p>How often do you "hear" God's voice through Scripture, worship, and fellowship?</p>
+                    <p style="margin-top: 0.75rem; font-style: italic;">What practical step can you take this week to increase your exposure to God?</p>
+                </div>
 
-            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--door-brown);">Learning to Recognize God's Voice 🎧</h3>
-            <div class="verse-card">
-                <div class="verse-reference">John 10:27 (NIV)</div>
-                <div class="verse-text">
-                    "My sheep listen to my voice; I know them, and they follow me."
+                <div class="content-card">
+                    <h3>3. Jesus at the Door 🚪</h3>
+                    <p>Where in your life have you kept Jesus outside the door? What areas have you not invited Him into?</p>
+                    <p style="margin-top: 0.75rem; font-style: italic;">What would it look like to open that door today?</p>
+                </div>
+
+                <div class="content-card">
+                    <h3>4. Protected and Provided For 🐑</h3>
+                    <p>Jesus says through Him we find both protection (come in) and provision (go out and find pasture).</p>
+                    <p style="margin-top: 0.75rem; font-style: italic;">In what ways have you experienced Jesus' protection and provision in your life?</p>
+                </div>
+
+                <div class="content-card">
+                    <h3>5. Life to the Full 🌟</h3>
+                    <p>Jesus came so we can have life "to the full" or "abundantly."</p>
+                    <p style="margin-top: 0.75rem; font-style: italic;">What does abundant life in Christ look like for you? How is it different from the life the "thief" offers (stealing, killing, destroying)?</p>
+                </div>
+
+                <div class="key-quote" style="margin-top: 2rem;">
+                    <p><strong>Final Question:</strong> Jesus is standing at your door today. Would you like to invite Him in?</p>
                 </div>
             </div>
-            <p style="margin-top: 1rem;"><strong>How?</strong> The sheep recognize the shepherd's voice because they hear it every single day. If you want to recognize Jesus' voice:</p>
-            <ul style="margin: 1rem 0; padding-left: 2rem;">
-                <li>Read the Bible regularly</li>
-                <li>Spend time in worship</li>
-                <li>Fellowship with other believers</li>
-                <li><span class="emphasis">Increase your exposure to God</span> (Pastor Kevin's challenge from last week)</li>
-            </ul>
-
-            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--door-brown);">Making Room for Jesus 🙏</h3>
-            <div class="quote-box">
-                "Anytime I go to a meeting or need to deal with something difficult, I will say, 'Jesus, will you please come with me?' I make room for Jesus."
-            </div>
-            <p style="margin-top: 1rem;"><strong>Practice this:</strong> Before your next challenge, conversation, or decision, pause and invite Jesus in. Don't keep Him standing outside the door of that area of your life.</p>
-
-            <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--door-brown);">For Those Outside the Door 🚪</h3>
-            <p>Jesus stands at the door of your heart and knocks. The doorknob is only on the inside—He will not force His way in. But He invites you:</p>
-            <div class="quote-box" style="margin-top: 1rem;">
-                "I am the door. Whoever enters through me will be saved. They will come in and go out and find pasture. I have come that they may have life, and have it to the full."
-            </div>
-            <p style="margin-top: 1rem;"><span class="emphasis">Will you open the door today?</span></p>
-        </div>
-
-        <div class="tab-content" id="reflection">
-            <h2 class="section-heading">Reflection Questions</h2>
-
-            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 1.5rem;">
-                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.3rem; margin-bottom: 1rem; color: var(--accent-burgundy);">1. Breaking Condemnation 💭</h3>
-                <p>Are you carrying shame or condemnation about something in your life or family? Have you believed it's "your fault"?</p>
-                <p style="margin-top: 0.75rem; font-style: italic;">How does Jesus' statement "neither this man nor his parents sinned" speak to your situation?</p>
-            </div>
-
-            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 1.5rem;">
-                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.3rem; margin-bottom: 1rem; color: var(--accent-burgundy);">2. Recognizing His Voice 🎧</h3>
-                <p>How often do you "hear" God's voice through Scripture, worship, and fellowship?</p>
-                <p style="margin-top: 0.75rem; font-style: italic;">What practical step can you take this week to increase your exposure to God?</p>
-            </div>
-
-            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 1.5rem;">
-                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.3rem; margin-bottom: 1rem; color: var(--accent-burgundy);">3. Jesus at the Door 🚪</h3>
-                <p>Where in your life have you kept Jesus outside the door? What areas have you not invited Him into?</p>
-                <p style="margin-top: 0.75rem; font-style: italic;">What would it look like to open that door today?</p>
-            </div>
-
-            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 1.5rem;">
-                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.3rem; margin-bottom: 1rem; color: var(--accent-burgundy);">4. Protected and Provided For 🐑</h3>
-                <p>Jesus says through Him we find both protection (come in) and provision (go out and find pasture).</p>
-                <p style="margin-top: 0.75rem; font-style: italic;">In what ways have you experienced Jesus' protection and provision in your life?</p>
-            </div>
-
-            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 1.5rem;">
-                <h3 style="font-family: 'Crimson Pro', serif; font-size: 1.3rem; margin-bottom: 1rem; color: var(--accent-burgundy);">5. Life to the Full 🌟</h3>
-                <p>Jesus came so we can have life "to the full" or "abundantly."</p>
-                <p style="margin-top: 0.75rem; font-style: italic;">What does abundant life in Christ look like for you? How is it different from the life the "thief" offers (stealing, killing, destroying)?</p>
-            </div>
-
-            <div class="quote-box" style="margin-top: 2rem; background: linear-gradient(135deg, rgba(93, 64, 55, 0.1), rgba(212, 175, 55, 0.1));">
-                <strong>Final Question:</strong> Jesus is standing at your door today. Would you like to invite Him in?
-            </div>
-        </div>
+        </section>
     </main>
 
-    <div class="attribution-badge">
-        <div class="badge-short">ℹ️</div>
-        <div class="badge-full">
-            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. <a href="../license.html">MIT License</a>
+    <div class="attribution" id="attribution">
+        <div class="attribution-short" onclick="toggleAttribution()">ℹ️</div>
+        <div class="attribution-full">
+            Generated by LLM with supervision by <a href="../index.html">benjaminficusmicrocarpa</a>. 
+            <a href="../license.html">MIT License</a>
         </div>
     </div>
 
-    <script>
-        // Tab switching
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const targetId = tab.getAttribute('data-tab');
-                
-                tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(tc => tc.classList.remove('active'));
-                
-                tab.classList.add('active');
-                document.getElementById(targetId).classList.add('active');
-                
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-
-        // Accordion functionality
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-        
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const accordionItem = header.parentElement;
-                const isActive = accordionItem.classList.contains('active');
-                
-                // Close all accordions in the same container
-                const container = accordionItem.parentElement;
-                container.querySelectorAll('.accordion-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Toggle current accordion
-                if (!isActive) {
-                    accordionItem.classList.add('active');
-                }
-            });
-        });
-
-        // Keyboard navigation for accessibility
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.accordion-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-            }
-        });
-
-        // Add focus styles for keyboard navigation
-        tabs.forEach((tab, index) => {
-            tab.setAttribute('tabindex', '0');
-            tab.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    tab.click();
-                }
-            });
-        });
-    </script>
+    <script src="js/iecc-common.js"></script>
 </body>
 </html>

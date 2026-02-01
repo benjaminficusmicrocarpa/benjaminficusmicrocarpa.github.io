@@ -1,0 +1,1301 @@
+/* I Am Series Theme
+ * For sermons: I Am The Vine, I Am The Door, I Am The Good Shepherd, I Am The Light, etc.
+ * 
+ * Theme variations:
+ * - Default (.theme-vine or no class): Green/purple for The Vine
+ * - .theme-light: Gold/amber for Light of the World
+ * - .theme-door: Brown/gold for The Door
+ * - .theme-shepherd: Sage/pastoral for Good Shepherd
+ */
+
+:root {
+    /* Default Vine Theme */
+    --vine-green: #2d5016;
+    --leaf-green: #4a7c2f;
+    --berry-purple: #6b4c7a;
+    --earth-brown: #8b6f47;
+    --cream: #f5f1e8;
+    --bark-dark: #1a1a1a;
+    
+    /* Light of the World Theme Colors */
+    --light-gold: #FFB84D;
+    --light-amber: #F59E0B;
+    --light-dark-bg: #0A0A0F;
+    --light-card-bg: #1A1A24;
+    --light-text: #F5F5F7;
+    --light-muted: #A8A8B0;
+    --light-glow: rgba(255, 184, 77, 0.15);
+    
+    /* The Door Theme Colors */
+    --door-brown: #5D4037;
+    --door-gold: #D4AF37;
+    --door-cream: #FAF8F3;
+    --door-text: #2C1810;
+    --door-muted: #6B5B4F;
+    --door-burgundy: #8B3A3A;
+    
+    /* Good Shepherd Theme Colors */
+    --shepherd-sage: #6B8E6F;
+    --shepherd-cream: #F5F1E8;
+    --shepherd-earth: #8B7355;
+    --shepherd-sky: #A8C5D1;
+    --shepherd-deep: #2C3E3A;
+    --shepherd-gold: #C9A961;
+}
+
+/* Override base variables for I Am series */
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--bark-dark);
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Crimson Pro', serif;
+}
+
+/* Header with Image Carousel */
+.header-vine {
+    position: relative;
+    min-height: 85vh;
+    overflow: hidden;
+}
+
+.carousel-container {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.carousel-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    background-size: cover;
+    background-position: center;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.carousel-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(45, 80, 22, 0.82) 0%, rgba(74, 124, 47, 0.72) 50%, rgba(107, 76, 122, 0.65) 100%);
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 15;
+}
+
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.carousel-indicator:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.carousel-indicator.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+.header-content {
+    position: relative;
+    z-index: 10;
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--cream);
+}
+
+.vine-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Sticky Tab Navigation - I Am specific */
+.sticky-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-bottom: 2px solid var(--leaf-green);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.tab-button {
+    padding: 1rem 1.5rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--vine-green);
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    font-size: 0.95rem;
+}
+
+.tab-button:hover {
+    background: rgba(74, 124, 47, 0.05);
+}
+
+.tab-button.active {
+    border-bottom-color: var(--berry-purple);
+    color: var(--berry-purple);
+    font-weight: 600;
+}
+
+/* Organic Card Design */
+.content-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    margin: 2rem auto;
+    max-width: 900px;
+    box-shadow: 0 4px 20px rgba(45, 80, 22, 0.08);
+    border: 1px solid rgba(74, 124, 47, 0.1);
+}
+
+/* Accordion for Sermon Sections - I Am specific */
+.accordion-item {
+    border: 1px solid rgba(74, 124, 47, 0.2);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.accordion-header {
+    padding: 1.5rem;
+    cursor: pointer;
+    background: linear-gradient(to right, rgba(74, 124, 47, 0.12), rgba(74, 124, 47, 0.05));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--vine-green);
+    transition: background 0.3s ease;
+}
+
+.accordion-header:hover {
+    background: rgba(74, 124, 47, 0.15);
+}
+
+.accordion-icon {
+    transition: transform 0.3s ease;
+    color: var(--berry-purple);
+}
+
+.accordion-item.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    background: white;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 5000px;
+}
+
+.accordion-body {
+    padding: 1.5rem;
+    line-height: 1.8;
+    background: white;
+}
+
+/* Default Vine theme: ensure text is visible on white/cream (override iecc-base.css --text-muted / --text-light) */
+.content-card p,
+.content-card li,
+.content-card ul,
+.content-card ol {
+    color: var(--bark-dark);
+}
+
+.accordion-body,
+.accordion-content,
+.accordion-body p,
+.accordion-body li,
+.accordion-body ul,
+.accordion-body ol {
+    color: var(--bark-dark);
+}
+
+.masonry-item,
+.masonry-item p {
+    color: var(--bark-dark);
+}
+
+/* Tooltip and attribution on white need dark text */
+.tooltip-content,
+.tooltip-content p,
+.tooltip-content li {
+    color: var(--bark-dark);
+}
+
+.attribution-full {
+    color: var(--bark-dark);
+}
+
+/* Masonry Grid for Bible Verses */
+.masonry-grid {
+    column-count: 1;
+    column-gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .masonry-grid {
+        column-count: 2;
+    }
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border-left: 4px solid var(--berry-purple);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Floating Tooltip */
+.tooltip-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 200;
+}
+
+.tooltip-trigger {
+    background: var(--berry-purple);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 12px rgba(107, 76, 122, 0.3);
+    transition: all 0.3s ease;
+}
+
+.tooltip-trigger:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(107, 76, 122, 0.4);
+}
+
+.tooltip-content {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+}
+
+.tooltip-content.active {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Attribution Badge */
+.attribution-badge {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 150;
+    transition: all 0.3s ease;
+}
+
+.attribution-short {
+    background: var(--earth-brown);
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.attribution-full {
+    display: none;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    font-size: 0.875rem;
+    max-width: 300px;
+    border: 1px solid var(--earth-brown);
+}
+
+.attribution-badge:hover .attribution-short {
+    transform: translateX(-10px);
+    opacity: 0;
+}
+
+.attribution-badge:hover .attribution-full {
+    display: block;
+    animation: slideLeft 0.3s ease;
+}
+
+@keyframes slideLeft {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Button Styles */
+.btn-primary {
+    background: var(--berry-purple);
+    color: white;
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background: var(--vine-green);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(107, 76, 122, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--vine-green);
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    border: 2px solid var(--vine-green);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background: var(--vine-green);
+    color: white;
+}
+
+/* Scripture Styling */
+.scripture-ref {
+    font-weight: 600;
+    color: var(--berry-purple);
+    margin-bottom: 0.5rem;
+}
+
+blockquote {
+    border-left: 4px solid var(--leaf-green);
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: var(--vine-green);
+    margin: 1.5rem 0;
+}
+
+/* Tags Section - I Am specific colors */
+.sermon-tag.series {
+    background: rgba(74, 124, 47, 0.2);
+    color: #a8d08a;
+    border-color: rgba(74, 124, 47, 0.4);
+}
+
+.sermon-tag.series:hover {
+    background: rgba(74, 124, 47, 0.3);
+    border-color: var(--leaf-green);
+}
+
+.sermon-tag.theme {
+    background: rgba(107, 76, 122, 0.2);
+    color: #c9a8d9;
+    border-color: rgba(107, 76, 122, 0.4);
+}
+
+.sermon-tag.theme:hover {
+    background: rgba(107, 76, 122, 0.3);
+    border-color: var(--berry-purple);
+}
+
+.sermon-tag.topic {
+    background: rgba(139, 111, 71, 0.2);
+    color: #d4b896;
+    border-color: rgba(139, 111, 71, 0.4);
+}
+
+.sermon-tag.topic:hover {
+    background: rgba(139, 111, 71, 0.3);
+    border-color: var(--earth-brown);
+}
+
+.sermon-tag.scripture {
+    background: rgba(45, 80, 22, 0.2);
+    color: #8fb86f;
+    border-color: rgba(45, 80, 22, 0.4);
+}
+
+.sermon-tag.scripture:hover {
+    background: rgba(45, 80, 22, 0.3);
+    border-color: var(--vine-green);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-vine {
+        min-height: 75vh;
+    }
+
+    .carousel-indicators {
+        bottom: 15px;
+        gap: 8px;
+    }
+
+    .carousel-indicator {
+        width: 10px;
+        height: 10px;
+    }
+
+    .header-content {
+        padding: 4rem 1.5rem;
+    }
+
+    .content-card {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+        border-radius: 16px;
+    }
+
+    .tab-button {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .tooltip-container {
+        position: static;
+        margin: 1rem;
+    }
+
+    .tooltip-content {
+        position: static;
+        width: 100%;
+    }
+
+    .attribution-badge {
+        position: static;
+        margin: 2rem auto;
+        text-align: center;
+    }
+
+    .attribution-badge:hover .attribution-short {
+        transform: none;
+        opacity: 1;
+    }
+
+    .attribution-full {
+        display: block;
+        margin-top: 1rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sticky-tabs, .tooltip-container, .attribution-badge, .btn-primary, .btn-secondary, .carousel-indicators {
+        display: none !important;
+    }
+
+    .header-vine {
+        min-height: auto;
+        background: var(--vine-green) !important;
+    }
+
+    .carousel-container {
+        display: none !important;
+    }
+
+    .tab-content {
+        display: block !important;
+    }
+
+    .accordion-content {
+        max-height: none !important;
+    }
+
+    body {
+        background: white;
+    }
+}
+
+/* Accessibility */
+*:focus {
+    outline: 3px solid var(--berry-purple);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ==========================================
+   THEME: Light of the World (.theme-light)
+   Dark background with starfield, gold/amber glow
+   ========================================== */
+.theme-light {
+    background: var(--light-dark-bg);
+    color: var(--light-text);
+}
+
+.theme-light h1, .theme-light h2, .theme-light h3, .theme-light h4 {
+    font-family: 'Cinzel', 'Crimson Pro', serif;
+}
+
+/* Starfield Background */
+.theme-light .starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.theme-light .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Glow Effects */
+.theme-light .glow-text {
+    text-shadow: 0 0 20px rgba(255, 184, 77, 0.5),
+                 0 0 40px rgba(255, 184, 77, 0.3);
+}
+
+.theme-light .glow-box {
+    box-shadow: 0 0 30px var(--light-glow),
+                inset 0 0 20px rgba(255, 184, 77, 0.05);
+}
+
+/* Hero for Light theme */
+.theme-light .hero,
+.theme-light .header-vine {
+    background: linear-gradient(135deg, #0A0A0F 0%, #1A1A24 50%, #0A0A0F 100%);
+}
+
+.theme-light .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--light-glow) 0%, transparent 70%);
+    animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+    50% { transform: scale(1.1) rotate(180deg); opacity: 0.6; }
+}
+
+.theme-light .hero h1 {
+    background: linear-gradient(135deg, var(--light-gold) 0%, var(--light-amber) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Tabs for Light theme */
+.theme-light .tabs-container,
+.theme-light .sticky-tabs {
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 184, 77, 0.2);
+}
+
+.theme-light .tab,
+.theme-light .tab-button {
+    color: var(--light-muted);
+    border-bottom-color: transparent;
+}
+
+.theme-light .tab:hover,
+.theme-light .tab-button:hover {
+    color: var(--light-gold);
+    background: rgba(255, 184, 77, 0.05);
+}
+
+.theme-light .tab.active,
+.theme-light .tab-button.active {
+    color: var(--light-gold);
+    border-bottom-color: var(--light-gold);
+    background: rgba(255, 184, 77, 0.1);
+}
+
+/* Content cards for Light theme */
+.theme-light .content-card,
+.theme-light .card {
+    background: var(--light-card-bg);
+    border-left-color: var(--light-gold);
+    border-color: rgba(255, 184, 77, 0.2);
+}
+
+.theme-light .content-card h2,
+.theme-light .content-card h3 {
+    color: var(--light-gold);
+}
+
+/* Verse cards for Light theme */
+.theme-light .verse-card {
+    background: var(--light-card-bg);
+    border-left-color: var(--light-gold);
+}
+
+.theme-light .verse-reference {
+    color: var(--light-gold);
+}
+
+.theme-light .verse-text {
+    color: var(--light-text);
+    opacity: 0.9;
+}
+
+/* Accordion for Light theme */
+.theme-light .accordion-item {
+    background: var(--light-card-bg);
+    border-color: rgba(255, 184, 77, 0.2);
+}
+
+.theme-light .accordion-header {
+    color: var(--light-gold);
+}
+
+.theme-light .accordion-header:hover {
+    background: rgba(255, 184, 77, 0.05);
+}
+
+.theme-light .accordion-header h3,
+.theme-light .accordion-header h4 {
+    color: var(--light-gold);
+}
+
+.theme-light .accordion-icon {
+    color: var(--light-gold);
+}
+
+.theme-light .accordion-body,
+.theme-light .accordion-content {
+    color: var(--light-text);
+}
+
+.theme-light .accordion-body p,
+.theme-light .accordion-body li,
+.theme-light .accordion-body ul,
+.theme-light .accordion-body ol {
+    color: var(--light-text);
+}
+
+/* Timeline for Light theme */
+.theme-light .timeline::before {
+    background: linear-gradient(to bottom, var(--light-gold), var(--light-amber));
+}
+
+.theme-light .timeline-marker::before,
+.theme-light .timeline-item::before {
+    background: var(--light-gold);
+    box-shadow: 0 0 20px var(--light-gold);
+}
+
+/* Buttons for Light theme */
+.theme-light .btn-primary {
+    background: linear-gradient(135deg, var(--light-gold), var(--light-amber));
+    color: var(--light-dark-bg);
+}
+
+.theme-light .btn-primary:hover {
+    box-shadow: 0 10px 30px rgba(255, 184, 77, 0.4);
+}
+
+.theme-light .btn-secondary {
+    color: var(--light-gold);
+    border-color: var(--light-gold);
+}
+
+.theme-light .btn-secondary:hover {
+    background: rgba(255, 184, 77, 0.1);
+}
+
+/* Attribution for Light theme */
+.theme-light .attribution-badge,
+.theme-light .attribution {
+    background: var(--light-card-bg);
+}
+
+.theme-light .attribution-short {
+    background: var(--light-card-bg);
+    border-color: var(--light-gold);
+}
+
+.theme-light .attribution-full {
+    background: var(--light-card-bg);
+    border-color: var(--light-gold);
+}
+
+.theme-light .attribution a {
+    color: var(--light-gold);
+}
+
+/* Tags for Light theme */
+.theme-light .sermon-tag.series {
+    background: rgba(255, 184, 77, 0.2);
+    color: #FFD699;
+    border-color: rgba(255, 184, 77, 0.4);
+}
+
+.theme-light .sermon-tag.theme {
+    background: rgba(245, 158, 11, 0.2);
+    color: #FFC966;
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+/* ==========================================
+   THEME: The Door (.theme-door)
+   Warm browns, wood aesthetics
+   ========================================== */
+.theme-door {
+    background: var(--door-cream);
+    color: var(--door-text);
+}
+
+.theme-door h1, .theme-door h2, .theme-door h3, .theme-door h4 {
+    font-family: 'Crimson Pro', serif;
+    font-weight: 700;
+}
+
+/* Header for Door theme */
+.theme-door .header-vine,
+.theme-door .hero {
+    background: linear-gradient(135deg, var(--door-brown) 0%, #3E2723 100%);
+    color: white;
+}
+
+.theme-door .door-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    background-image: 
+        repeating-linear-gradient(90deg, transparent, transparent 100px, var(--door-gold) 100px, var(--door-gold) 102px),
+        repeating-linear-gradient(0deg, transparent, transparent 100px, var(--door-gold) 100px, var(--door-gold) 102px);
+}
+
+.theme-door .door-frame {
+    width: 200px;
+    height: 300px;
+    border: 4px solid var(--door-gold);
+    border-radius: 12px 12px 0 0;
+    position: relative;
+    margin-bottom: 2rem;
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+    animation: doorGlow 3s ease-in-out infinite;
+}
+
+.theme-door .door-knob {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background: var(--door-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+@keyframes doorGlow {
+    0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
+    50% { box-shadow: 0 0 50px rgba(212, 175, 55, 0.6); }
+}
+
+/* Tabs for Door theme */
+.theme-door .sticky-tabs {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.theme-door .tabs-container,
+.theme-door .tab-container {
+    border-bottom: 2px solid #E0D5C7;
+}
+
+.theme-door .tab,
+.theme-door .tab-button {
+    color: var(--door-muted);
+    border-bottom-color: transparent;
+}
+
+.theme-door .tab:hover,
+.theme-door .tab-button:hover {
+    background: rgba(93, 64, 55, 0.05);
+    color: var(--door-brown);
+}
+
+.theme-door .tab.active,
+.theme-door .tab-button.active {
+    border-bottom-color: var(--door-gold);
+    color: var(--door-brown);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+/* Content cards for Door theme */
+.theme-door .content-card,
+.theme-door .card {
+    background: white;
+    border-left-color: var(--door-gold);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.theme-door .content-card h2,
+.theme-door .content-card h3 {
+    color: var(--door-brown);
+}
+
+.theme-door .content-card p,
+.theme-door .content-card li {
+    color: var(--door-text);
+}
+
+/* Verse cards for Door theme */
+.theme-door .verse-card {
+    background: white;
+    border-left-color: var(--door-gold);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.theme-door .verse-reference {
+    color: var(--door-burgundy);
+}
+
+.theme-door .verse-text {
+    color: var(--door-text);
+}
+
+/* Accordion for Door theme */
+.theme-door .accordion-item {
+    background: white;
+    border-color: #E0D5C7;
+}
+
+.theme-door .accordion-header {
+    color: var(--door-brown);
+}
+
+.theme-door .accordion-header:hover {
+    background: rgba(93, 64, 55, 0.03);
+}
+
+.theme-door .accordion-body,
+.theme-door .accordion-content {
+    color: var(--door-text);
+}
+
+.theme-door .accordion-body p,
+.theme-door .accordion-body li,
+.theme-door .accordion-body ul,
+.theme-door .accordion-body ol {
+    color: var(--door-text);
+}
+
+/* Timeline for Door theme */
+.theme-door .timeline::before {
+    background: linear-gradient(to bottom, var(--door-gold), var(--door-burgundy));
+}
+
+.theme-door .timeline-item::before {
+    background: var(--door-gold);
+    border-color: white;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.theme-door .timeline-title {
+    color: var(--door-brown);
+}
+
+.theme-door .timeline-item p,
+.theme-door .timeline-content p {
+    color: var(--door-text);
+}
+
+/* Quote box for Door theme */
+.theme-door .quote-box,
+.theme-door .key-quote {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(139, 58, 58, 0.05));
+    border-left-color: var(--door-burgundy);
+    color: var(--door-text);
+}
+
+.theme-door .quote-box p,
+.theme-door .key-quote p {
+    color: var(--door-text);
+}
+
+/* Buttons for Door theme */
+.theme-door .btn-primary {
+    background: var(--door-gold);
+    color: var(--door-brown);
+}
+
+.theme-door .btn-primary:hover {
+    background: #C19B2E;
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+}
+
+.theme-door .btn-secondary {
+    color: white;
+    border-color: rgba(255,255,255,0.5);
+}
+
+.theme-door .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: white;
+}
+
+/* Attribution for Door theme */
+.theme-door .attribution-badge .badge-short,
+.theme-door .attribution-short {
+    background: var(--door-brown);
+    color: white;
+}
+
+.theme-door .attribution-badge .badge-full,
+.theme-door .attribution-full {
+    background: white;
+}
+
+.theme-door .attribution a {
+    color: var(--door-burgundy);
+}
+
+/* Tags for Door theme */
+.theme-door .sermon-tag.series {
+    background: rgba(93, 64, 55, 0.2);
+    color: #a87d5a;
+    border-color: rgba(93, 64, 55, 0.4);
+}
+
+.theme-door .sermon-tag.theme {
+    background: rgba(139, 58, 58, 0.2);
+    color: #c48a8a;
+    border-color: rgba(139, 58, 58, 0.4);
+}
+
+/* Emphasis for Door theme */
+.theme-door .emphasis {
+    color: var(--door-burgundy);
+    font-weight: 600;
+}
+
+/* ==========================================
+   THEME: Good Shepherd (.theme-shepherd)
+   Pastoral greens, earthy sage/cream
+   ========================================== */
+.theme-shepherd {
+    background: var(--shepherd-cream);
+    color: var(--shepherd-deep);
+}
+
+.theme-shepherd h1, .theme-shepherd h2, .theme-shepherd h3, .theme-shepherd h4 {
+    font-family: 'Crimson Pro', serif;
+    font-weight: 700;
+}
+
+/* Header/Hero for Shepherd theme */
+.theme-shepherd .header-vine,
+.theme-shepherd .hero {
+    min-height: 85vh;
+}
+
+.theme-shepherd .carousel-slide::after {
+    background: linear-gradient(135deg, rgba(43,62,58,0.85) 0%, rgba(107,142,111,0.75) 50%, rgba(168,197,209,0.65) 100%);
+}
+
+.theme-shepherd .header-icon {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Tabs for Shepherd theme */
+.theme-shepherd .sticky-tabs {
+    background: white;
+    border-bottom: 2px solid var(--shepherd-sage);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.theme-shepherd .tab,
+.theme-shepherd .tab-button {
+    color: var(--shepherd-deep);
+}
+
+.theme-shepherd .tab:hover,
+.theme-shepherd .tab-button:hover {
+    background: var(--shepherd-cream);
+    color: var(--shepherd-sage);
+}
+
+.theme-shepherd .tab.active,
+.theme-shepherd .tab-button.active {
+    border-bottom-color: var(--shepherd-sage);
+    color: var(--shepherd-sage);
+    font-weight: 600;
+}
+
+/* Section titles for Shepherd theme */
+.theme-shepherd .section-title,
+.theme-shepherd .section-header {
+    color: var(--shepherd-sage);
+}
+
+.theme-shepherd .section-title::after {
+    background: var(--shepherd-gold);
+}
+
+/* Content cards for Shepherd theme */
+.theme-shepherd .content-card,
+.theme-shepherd .card,
+.theme-shepherd .application-card {
+    background: white;
+    border-left-color: var(--shepherd-sage);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.theme-shepherd .content-card h2,
+.theme-shepherd .content-card h3 {
+    color: var(--shepherd-sage);
+}
+
+.theme-shepherd .content-card p,
+.theme-shepherd .content-card li {
+    color: var(--shepherd-deep);
+}
+
+/* Verse cards for Shepherd theme */
+.theme-shepherd .verse-card {
+    background: white;
+    border-left-color: var(--shepherd-sage);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.theme-shepherd .verse-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(107,142,111,0.15);
+}
+
+.theme-shepherd .verse-reference {
+    color: var(--shepherd-sage);
+}
+
+.theme-shepherd .verse-text {
+    color: var(--shepherd-deep);
+}
+
+/* Accordion for Shepherd theme */
+.theme-shepherd .accordion-item {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.theme-shepherd .accordion-header {
+    color: var(--shepherd-deep);
+}
+
+.theme-shepherd .accordion-header:hover {
+    background: var(--shepherd-cream);
+}
+
+.theme-shepherd .accordion-icon {
+    color: var(--shepherd-sage);
+}
+
+.theme-shepherd .accordion-body,
+.theme-shepherd .accordion-content {
+    color: var(--shepherd-deep);
+}
+
+.theme-shepherd .accordion-body p,
+.theme-shepherd .accordion-body li,
+.theme-shepherd .accordion-body ul,
+.theme-shepherd .accordion-body ol {
+    color: var(--shepherd-deep);
+}
+
+/* Quote box for Shepherd theme */
+.theme-shepherd .quote-box,
+.theme-shepherd .key-quote {
+    background: linear-gradient(135deg, var(--shepherd-sage) 0%, var(--shepherd-sky) 100%);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(107,142,111,0.2);
+}
+
+.theme-shepherd .quote-box::before {
+    content: '"';
+    font-size: 4rem;
+    font-family: 'Crimson Pro', serif;
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    opacity: 0.3;
+}
+
+/* Timeline for Shepherd theme */
+.theme-shepherd .timeline::before,
+.theme-shepherd .timeline-container::before {
+    background: var(--shepherd-sage);
+}
+
+.theme-shepherd .timeline-item::before {
+    background: var(--shepherd-gold);
+    border-color: white;
+    box-shadow: 0 0 0 3px var(--shepherd-sage);
+}
+
+.theme-shepherd .timeline-title {
+    color: var(--shepherd-sage);
+}
+
+.theme-shepherd .timeline-item p,
+.theme-shepherd .timeline-content p {
+    color: var(--shepherd-deep);
+}
+
+/* Buttons for Shepherd theme */
+.theme-shepherd .btn-primary {
+    background: white;
+    color: var(--shepherd-deep);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.theme-shepherd .btn-primary:hover {
+    box-shadow: 0 6px 30px rgba(0,0,0,0.25);
+}
+
+.theme-shepherd .btn-ghost,
+.theme-shepherd .btn-secondary {
+    background: transparent;
+    color: white;
+    border-color: white;
+}
+
+.theme-shepherd .btn-ghost:hover,
+.theme-shepherd .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Application cards for Shepherd theme */
+.theme-shepherd .application-card {
+    border-top: 3px solid var(--shepherd-gold);
+}
+
+/* Attribution for Shepherd theme */
+.theme-shepherd .attribution-short {
+    background: var(--shepherd-sage);
+    color: white;
+}
+
+.theme-shepherd .attribution-full {
+    background: white;
+    color: var(--shepherd-deep);
+}
+
+.theme-shepherd .attribution a {
+    color: var(--shepherd-sage);
+}
+
+/* Tags for Shepherd theme */
+.theme-shepherd .sermon-tag.series {
+    background: rgba(107, 142, 111, 0.2);
+    color: #8fb96f;
+    border-color: rgba(107, 142, 111, 0.4);
+}
+
+.theme-shepherd .sermon-tag.theme {
+    background: rgba(168, 197, 209, 0.2);
+    color: #7eb3c4;
+    border-color: rgba(168, 197, 209, 0.4);
+}
+
+/* Responsive for all themes */
+@media (max-width: 768px) {
+    .theme-light .hero,
+    .theme-door .hero,
+    .theme-shepherd .hero {
+        height: 70vh;
+        min-height: 400px;
+    }
+    
+    .theme-door .door-frame {
+        width: 150px;
+        height: 225px;
+    }
+}

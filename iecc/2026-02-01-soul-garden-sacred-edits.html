@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Garden: Sacred Edits | Island ECC</title>
+    <meta name="description" content="Sometimes less is more. Learn to make sacred edits in your spiritual life—throwing off hindrances and sin to run the race with perseverance, fixing your eyes on Jesus.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iecc-base.css">
+    <link rel="stylesheet" href="css/soul-garden.css">
+    <style>
+        /* Theme-specific overrides for Soul Garden Part 4 - Sacred Edits theme */
+        :root {
+            --primary: #4a5b3c;
+            --primary-dark: #2d3a24;
+            --accent: #8b6f47;
+            --accent-light: #b89968;
+            --wine: #6b2c3e;
+            --earth: #8a7355;
+            --bg-dark: #1a1f16;
+            --bg-card: #242b1f;
+            --text-light: #f4f1ea;
+            --text-muted: #a8a095;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Hero with Ken Burns */
+        .hero-header {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .slideshow-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 2.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            animation: kenBurns 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes kenBurns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        .slideshow-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slideshow-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(26,31,22,0.3) 0%, 
+                rgba(26,31,22,0.7) 50%,
+                rgba(26,31,22,0.9) 100%);
+            z-index: 1;
+        }
+
+        /* Animated Editing Icon */
+        .edit-animation {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 120px;
+            height: 120px;
+            opacity: 0.15;
+            z-index: 2;
+            animation: floatEdit 6s ease-in-out infinite;
+        }
+
+        @keyframes floatEdit {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 91, 60, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 91, 60, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(244, 241, 234, 0.1);
+            color: var(--text-light);
+            border: 2px solid rgba(244, 241, 234, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(244, 241, 234, 0.2);
+            border-color: rgba(244, 241, 234, 0.5);
+        }
+
+        /* Sticky Navigation Tabs */
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 31, 22, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(244, 241, 234, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1.25rem 2rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+
+        .tab:hover {
+            color: var(--text-light);
+            background: rgba(74, 91, 60, 0.1);
+        }
+
+        .tab.active {
+            color: var(--accent-light);
+            border-bottom-color: var(--accent-light);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: block;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--accent);
+        }
+
+        .content-card h2 {
+            color: var(--accent-light);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-card h3 {
+            color: var(--accent-light);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            opacity: 0.95;
+        }
+
+        .content-card ul, .content-card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        /* Bible Verses Card */
+        .verse-card {
+            background: linear-gradient(135deg, rgba(74, 91, 60, 0.15) 0%, rgba(139, 111, 71, 0.15) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            font-family: 'Lora', serif;
+        }
+
+        .verse-ref {
+            color: var(--accent-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .verse-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        /* Accordion */
+        .accordion-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(244, 241, 234, 0.1);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(74, 91, 60, 0.1);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.25rem;
+            color: var(--accent);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent) 0%, var(--primary) 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.625rem;
+            top: 0.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--bg-dark);
+            box-shadow: 0 0 0 3px var(--accent);
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(107, 44, 62, 0.2) 0%, rgba(139, 111, 71, 0.2) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-light);
+            font-size: 1.1rem;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            position: relative;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: rgba(139, 111, 71, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .quote-text {
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quote-attribution {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Application Cards */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--accent);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(139, 111, 71, 0.3);
+        }
+
+        .app-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-card-title {
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Layers Grid */
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .layer-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .layer-card:hover {
+            transform: translateX(5px);
+        }
+
+        .layer-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            opacity: 0.5;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .layer-title {
+            font-size: 1.25rem;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Reflection Questions */
+        .reflection-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .reflection-list li {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--wine);
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .reflection-list li::before {
+            content: '🌱';
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        /* Attribution Badge */
+        .attribution-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(26, 31, 22, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            border: 1px solid rgba(244, 241, 234, 0.2);
+            max-width: 300px;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .attribution-badge:hover {
+            transform: translateX(-5px);
+        }
+
+        .attribution-badge a {
+            color: var(--accent-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .attribution-badge a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* Tags Section */
+        .sermon-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .sermon-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .sermon-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .sermon-tag.series {
+            background: rgba(139, 111, 71, 0.2);
+            color: var(--accent-light);
+            border-color: rgba(139, 111, 71, 0.4);
+        }
+
+        .sermon-tag.series:hover {
+            background: rgba(139, 111, 71, 0.3);
+            border-color: var(--accent);
+        }
+
+        .sermon-tag.theme {
+            background: rgba(107, 44, 62, 0.2);
+            color: #e8a5b8;
+            border-color: rgba(107, 44, 62, 0.4);
+        }
+
+        .sermon-tag.theme:hover {
+            background: rgba(107, 44, 62, 0.3);
+            border-color: var(--wine);
+        }
+
+        .sermon-tag.topic {
+            background: rgba(74, 91, 60, 0.2);
+            color: #a8c48a;
+            border-color: rgba(74, 91, 60, 0.4);
+        }
+
+        .sermon-tag.topic:hover {
+            background: rgba(74, 91, 60, 0.3);
+            border-color: var(--primary);
+        }
+
+        .sermon-tag.scripture {
+            background: rgba(138, 115, 85, 0.2);
+            color: #d4c4a8;
+            border-color: rgba(138, 115, 85, 0.4);
+        }
+
+        .sermon-tag.scripture:hover {
+            background: rgba(138, 115, 85, 0.3);
+            border-color: var(--earth);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .tabs {
+                justify-content: flex-start;
+            }
+
+            .tab {
+                padding: 1rem 1.5rem;
+            }
+
+            .content-card {
+                padding: 1.5rem;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .layers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .attribution-badge {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin: 2rem 1rem;
+                max-width: 100%;
+            }
+
+            .edit-animation {
+                width: 80px;
+                height: 80px;
+                top: 5%;
+                right: 5%;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .tabs-container, .hero-buttons, .attribution-badge {
+                display: none;
+            }
+
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .content-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+
+        /* Accessibility */
+        .tab:focus,
+        .btn:focus,
+        .accordion-header:focus {
+            outline: 3px solid var(--accent-light);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body data-sermon-date="2026-02-01">
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <!-- Image Slideshow -->
+        <div class="slideshow-container">
+            <div class="slideshow-slide active" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1920&q=80')"></div>
+        </div>
+
+        <!-- Animated Editing Icon -->
+        <svg class="edit-animation" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M70 15 L85 30 L35 80 L15 85 L20 65 Z" stroke="var(--accent-light)" stroke-width="3" fill="none"/>
+            <path d="M60 25 L75 40" stroke="var(--accent-light)" stroke-width="2"/>
+            <circle cx="17" cy="83" r="4" fill="var(--accent)" opacity="0.5"/>
+        </svg>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1 class="hero-title">✏️🌿 Soul Garden:<br>Sacred Edits</h1>
+            <p class="hero-subtitle">"Let us throw off everything that hinders and the sin that so easily entangles."</p>
+            <div class="hero-meta">
+                📅 01 Feb 2026 | 🎤 Pastor Brett | 🏝️ Island ECC
+            </div>
+            <div class="sermon-tags-container" id="sermon-tags">
+                <!-- Tags will be dynamically loaded -->
+            </div>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=Wu6ybqDAH9U" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation Tabs -->
+    <nav class="tabs-container" role="navigation" aria-label="Sermon sections">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview" role="tab" aria-selected="true">📋 Overview</div>
+            <div class="tab" data-tab="sermon" role="tab" aria-selected="false">📖 Main Sermon</div>
+            <div class="tab" data-tab="verses" role="tab" aria-selected="false">✝️ Bible Verses</div>
+            <div class="tab" data-tab="layers" role="tab" aria-selected="false">📊 Four Layers of Sin</div>
+            <div class="tab" data-tab="application" role="tab" aria-selected="false">🎯 Application</div>
+            <div class="tab" data-tab="reflection" role="tab" aria-selected="false">💭 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Overview Tab -->
+        <section id="overview" class="tab-content active">
+            <div class="content-card">
+                <h2>📋 Sermon Overview</h2>
+                <p><strong>Central Theme:</strong> Sometimes less is more. God calls us to make sacred edits in our spiritual life—throwing off both hindrances and sin so we can run the race marked out for us with perseverance, fixing our eyes on Jesus.</p>
+                
+                <div class="highlight-box">
+                    <strong>Key Insight:</strong> The prescription for spiritual health isn't just about avoiding sin—it's about evaluating everything in your life by a new criterion: "Is it helpful? Is it beneficial to my walk with God?"
+                </div>
+
+                <h3>📖 Key Passage</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 12:1-2 (NIV)</span>
+                    <div class="verse-text">
+                        "Therefore, since we are surrounded by such a great cloud of witnesses, let us throw off everything that hinders and the sin that so easily entangles. And let us run with perseverance the race marked out for us, fixing our eyes on Jesus, the pioneer and perfecter of faith."
+                    </div>
+                </div>
+
+                <h3>🎯 Two Categories to Edit</h3>
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-card-icon">⚖️</div>
+                        <h4 class="app-card-title">1. Everything That Hinders</h4>
+                        <p>Things that aren't necessarily sin, but don't help you spiritually. Activities, relationships, or commitments that take your energy away from what matters most.</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-card-icon">🔗</div>
+                        <h4 class="app-card-title">2. Sin That Entangles</h4>
+                        <p>The four layers of sin—from obvious gross sins to hidden attachments that become idols in our lives. Each layer requires deeper self-examination.</p>
+                    </div>
+                </div>
+
+                <h3>🌟 Main Takeaways</h3>
+                <ol>
+                    <li><strong>Edit ruthlessly</strong> - Just as jockeys maintain strict weight limits, we should evaluate what "weight" we carry spiritually</li>
+                    <li><strong>Not just "is it allowed?" but "is it helpful?"</strong> - Use a higher criterion for what stays in your life</li>
+                    <li><strong>Sin goes deeper than behavior</strong> - It includes motives, omissions, relational patterns, and attachments</li>
+                    <li><strong>Don't just manage sin—fix your eyes on Jesus</strong> - A moral life without Christ becomes exhausting and empty</li>
+                    <li><strong>Consider Him</strong> - Think about, ponder, reflect, and ruminate on Jesus so you don't grow weary</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Main Sermon Tab -->
+        <section id="sermon" class="tab-content">
+            <div class="content-card">
+                <h2>📖 The Message: Sacred Edits</h2>
+                
+                <h3>📜 Context: The Book of Hebrews</h3>
+                <p>The author of Hebrews wrote to Jewish Christians who had gotten off track. Though they acknowledged salvation by grace through faith, they had started reverting to Old Testament Jewish laws—perhaps thinking it was "too good to be true" that faith alone saves, or wanting to cover all their bases.</p>
+
+                <div class="highlight-box">
+                    <strong>The Author's Warning:</strong> When you add to what Christ has done, you are effectively saying what Christ has done is not enough.
+                </div>
+
+                <p>Hebrews 11 is called the "Hall of Faith"—a celebration of Old Testament saints who lived by faith. Then chapter 12 begins with "Therefore..."—in light of these witnesses, here's what we should do.</p>
+
+                <h3>🏇 The Jockey Illustration</h3>
+                <p>Professional jockeys face strict weight requirements: minimum 115 pounds, maximum 135 pounds. The more weight on the horse, the slower they go. There's even a special "retching bin" in locker rooms for jockeys who need to make weight—not from nerves, but from the pressure to be as light as possible.</p>
+
+                <p><strong>The spiritual parallel:</strong> The author tells us to throw off things that hinder us—spiritual weight that slows us down.</p>
+
+                <h3>✂️ The Sacred Edit</h3>
+                <p>Chinese New Year involves cleaning and getting rid of old stuff to make room for the new. Pastor Brett shared his own closet purge—two trash bags of clothes, including "motivational shirts" he hoped to fit into again someday.</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">Marie Kondo says "if it doesn't bring you joy, get rid of it." That doesn't work for me because everything brings me joy!</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+
+                <p>But the spiritual question isn't just "does this bring joy?" or even "is this allowed?" Paul writes:</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 1 Corinthians 10:23 (paraphrase)</span>
+                    <div class="verse-text">
+                        "All things are permitted for me, but not all things are useful."
+                    </div>
+                </div>
+
+                <p><strong>The criterion:</strong> Is it helpful? Is it beneficial to my spiritual life?</p>
+            </div>
+
+            <div class="content-card">
+                <h2>🔍 Understanding Sin More Deeply</h2>
+                
+                <p>Beyond the hindrances, the author specifically mentions "the sin that so easily entangles." In the Greek, there's no "the"—it's simply "sin" as a broad category.</p>
+
+                <p>Sin is a word we don't even like to talk about outside church. In Chinese translations, it's often rendered as "crime"—leading some to think "I'm not a criminal, so I don't need a savior." But sin simply means <strong>to miss the mark, to be imperfect, to fall short</strong> of what God has called us to do and be.</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Genesis 4:7 (NIV)</span>
+                    <div class="verse-text">
+                        "[God said to Cain] Sin is crouching at your door; it desires to have you, but you must rule over it."
+                    </div>
+                </div>
+
+                <p>Sin is personified as an animal crouching, wanting to master us. We're warned that it's ever a temptation, but we're also told <strong>we must rule over it</strong>. And we can't rule over what we don't understand.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>👁️ Fixing Your Eyes on Jesus</h2>
+                
+                <p>After all this instruction about getting rid of sin, the author says something crucial: <strong>it's not enough just to manage sin.</strong></p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 12:2-3 (NIV)</span>
+                    <div class="verse-text">
+                        "...fixing our eyes on Jesus, the pioneer and perfecter of faith. For the joy set before him he endured the cross, scorning its shame, and sat down at the right hand of the throne of God. Consider him who endured such opposition from sinners, so that you will not grow weary and lose heart."
+                    </div>
+                </div>
+
+                <h3>🌊 Peter Walking on Water</h3>
+                <p>In Matthew's gospel, Peter actually walked on water—but not for long. Why did he sink?</p>
+
+                <div class="highlight-box">
+                    <strong>"When he saw the wind, he was afraid."</strong> Peter was doing fine when he fixed his eyes on Jesus. But then he noticed the storm around him and began to sink.
+                </div>
+
+                <p>Life is full of "wind"—circumstances that bring fear, erode faith, and trigger our need to control. We need to keep coming back, fixing our eyes on Jesus again and again.</p>
+
+                <h3>⚠️ The Danger of Mere Moralism</h3>
+                <ul>
+                    <li><strong>A moral life can still be empty</strong> - If you just manage sin without fixing your eyes on Jesus, you become an "automated robot trying to do good"</li>
+                    <li><strong>It becomes exhausting</strong> - You'll grow weary and tired of trying to do the right thing for the right reasons</li>
+                    <li><strong>The solution:</strong> Replace sin-fixation with Jesus-fixation. "Consider him"—think about, ponder, reflect, ruminate on Jesus</li>
+                </ul>
+
+                <div class="quote-block">
+                    <p class="quote-text">If you just manage your sin, you'll grow weary and lose heart. If you just try to change your behavior and be a good Christian, you'll grow weary and you'll lose heart. So you have to bring Jesus in and decide: I will fixate on him.</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bible Verses Tab -->
+        <section id="verses" class="tab-content">
+            <div class="content-card">
+                <h2>✝️ Key Scripture Passages</h2>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 12:1-2 (NIV)</span>
+                    <div class="verse-text">
+                        "Therefore, since we are surrounded by such a great cloud of witnesses, let us throw off everything that hinders and the sin that so easily entangles. And let us run with perseverance the race marked out for us, fixing our eyes on Jesus, the pioneer and perfecter of faith."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 12:3 (NIV)</span>
+                    <div class="verse-text">
+                        "Consider him who endured such opposition from sinners, so that you will not grow weary and lose heart."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 1 Corinthians 6:12 (NIV)</span>
+                    <div class="verse-text">
+                        "'I have the right to do anything,' you say—but not everything is beneficial. 'I have the right to do anything'—but I will not be mastered by anything."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Genesis 4:7 (NIV)</span>
+                    <div class="verse-text">
+                        "If you do what is right, will you not be accepted? But if you do not do what is right, sin is crouching at your door; it desires to have you, but you must rule over it."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Psalm 119:133 (NIV)</span>
+                    <div class="verse-text">
+                        "Direct my footsteps according to your word; let no sin rule over me."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Galatians 5:19-21 (NIV) - Gross Sins</span>
+                    <div class="verse-text">
+                        "The acts of the flesh are obvious: sexual immorality, impurity and debauchery; idolatry and witchcraft; hatred, discord, jealousy, fits of rage, selfish ambition, dissensions, factions and envy; drunkenness, orgies, and the like."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Ephesians 4:26 (NIV)</span>
+                    <div class="verse-text">
+                        "In your anger do not sin: Do not let the sun go down while you are still angry."
+                    </div>
+                </div>
+
+                <h3>🔍 Additional References</h3>
+                <ul>
+                    <li><strong>Matthew 14:22-33</strong> - Peter walking on water (focused on Jesus, then saw the wind)</li>
+                    <li><strong>Genesis 4:1-12</strong> - Cain and Abel, God's warning about sin</li>
+                    <li><strong>Matthew 1:21</strong> - "He will save his people from their sins"</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Four Layers of Sin Tab -->
+        <section id="layers" class="tab-content">
+            <div class="content-card">
+                <h2>📊 Four Layers of Sin</h2>
+                <p>Based on the work of Robert Mulholland, Pastor Brett outlined four progressively deeper layers of sin that require increasingly careful self-examination.</p>
+
+                <div class="layers-grid">
+                    <div class="layer-card">
+                        <div class="layer-number">1</div>
+                        <div class="layer-title">Gross Sin</div>
+                        <p>"Gross" as in big, obvious sins. These are what come to mind when we hear "sin"—sexual immorality, idolatry, sorcery, drunkenness. Usually the first things cleaned up when we come to faith.</p>
+                    </div>
+                    <div class="layer-card">
+                        <div class="layer-number">2</div>
+                        <div class="layer-title">Conscious Sin</div>
+                        <p>Sins we're aware of but choose to do anyway. Often "respectable sins" that Christians tolerate: gossip, materialism, crude behavior, unforgiveness. We give each other a pass on these.</p>
+                    </div>
+                    <div class="layer-card">
+                        <div class="layer-number">3</div>
+                        <div class="layer-title">Unconscious Sin</div>
+                        <p>Sins we may not be overtly aware of: wrong motives (doing right things for wrong reasons), sins of omission (not praying, not caring for the poor), dysfunctional relational patterns.</p>
+                    </div>
+                    <div class="layer-card">
+                        <div class="layer-number">4</div>
+                        <div class="layer-title">Attachments (Idols)</div>
+                        <p>Good things made ultimate. Career, family, health, reputation—things that aren't bad, but we've exalted them to be more important than God. If removed, our peace would be destroyed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>😤 Example: Anger Through All Four Layers</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-title">Level 1: Gross Sin</div>
+                        <p><strong>Murder</strong> - The extreme version of anger. Obviously wrong. Don't do it.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">Level 2: Conscious Sin</div>
+                        <p><strong>Yelling and name-calling</strong> - "You idiot! You stupid fool!" You have control, but you choose to express anger in harmful ways. You know it's wrong, but you do it anyway.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">Level 3: Unconscious Sin</div>
+                        <p><strong>Passive-aggressive behavior, contempt, silent treatment</strong> - "What's wrong?" "Nothing, I'm fine." It's anger, but sophisticated and cloaked. Not overtly sinful, but punitive and undealt with.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-title">Level 4: Attachments</div>
+                        <p><strong>Secondary discouragement</strong> - Example: Your daughter fails a test, and your own sense of well-being is disrupted. You've married your happiness to her performance. Her failure affects your peace because you've exalted this relationship beyond God.</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>The Litmus Test:</strong> If something was removed from your life, could you still be at peace? If any person, achievement, or possession must be present for you to have peace, that thing has become more important to you than God Himself.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>💡 Personal Story: The Beggar</h2>
+                
+                <p>Pastor Brett shared his commitment to give to every homeless person he sees, without evaluating their "worthiness":</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">I was walking across the overpass into Exchange Square. It was crowded, lunchtime. I saw a homeless guy, pulled out some money, dropped it in his bag, gave him a blessing, and went on my way. And then I had this thought: "There's people here that probably go to church. I hope somebody saw me."</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+
+                <p><strong>The realization:</strong> Doing a good thing (giving money), but with a wrong motive (wanting earthly credit). This is Level 3—unconscious sin. The action was right, but the heart revealed a deeper issue.</p>
+
+                <div class="highlight-box">
+                    <strong>The Progression:</strong> Cleaning up gross sins → addressing conscious sins → examining unconscious motives → surrendering attachments. This is the healthy progression of Christian growth—but it can become dangerous if it becomes mere behavior modification without fixating on Jesus.
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Tab -->
+        <section id="application" class="tab-content">
+            <div class="content-card">
+                <h2>🎯 Practical Application</h2>
+
+                <h3>✂️ Make Sacred Edits</h3>
+                <p>Go beyond asking "Is this allowed?" to "Is this helpful for my spiritual life?"</p>
+
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-card-icon">📱</div>
+                        <h4 class="app-card-title">Digital Life</h4>
+                        <p>Audit your phone apps. Do you really need that loyalty app for a free bubble tea you'll never redeem? What apps drain your time or attention from what matters?</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-card-icon">📅</div>
+                        <h4 class="app-card-title">Schedule</h4>
+                        <p>What commitments look good on paper but leave you spiritually depleted? What activities, even good ones, are crowding out time with God?</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-card-icon">🤝</div>
+                        <h4 class="app-card-title">Relationships</h4>
+                        <p>Are there relationships that consistently pull you away from Christ? Or relationships you've been neglecting that would help you grow?</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-card-icon">🪞</div>
+                        <h4 class="app-card-title">Self-Image</h4>
+                        <p>What do you hold onto as "motivational" that's really just denial? What "shirts" are you keeping that no longer fit who God is calling you to be?</p>
+                    </div>
+                </div>
+
+                <h3>🔬 Examine All Four Layers</h3>
+                <ol>
+                    <li><strong>Gross sins</strong> - What obvious sins need to go? Don't assume these are all dealt with.</li>
+                    <li><strong>Conscious sins</strong> - What "respectable" sins do you tolerate? Gossip, materialism, withholding forgiveness?</li>
+                    <li><strong>Unconscious sins</strong> - What are your motives? What do you fail to do? How do others experience you in relationships?</li>
+                    <li><strong>Attachments</strong> - What good things have become ultimate? What would destroy your peace if removed?</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h2>👁️ Fix Your Eyes on Jesus</h2>
+                
+                <p>The danger of self-examination without Jesus-fixation:</p>
+                <ul>
+                    <li>You become hyper-scrutinizing and paranoid</li>
+                    <li>You live in fearful self-criticism</li>
+                    <li>You get exhausted trying to do the right thing for the right reasons</li>
+                    <li>Your spiritual life becomes dry and eventually dies</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>The Solution:</strong> "Consider him who endured such opposition from sinners, so that you will not grow weary and lose heart." Consider means to think about, ponder, reflect, ruminate—keep coming back to Jesus.
+                </div>
+
+                <h3>✅ Practical Steps</h3>
+                <ol>
+                    <li><strong>Intake God's Word regularly</strong> - The psalmist says it directs our footsteps and keeps sin from ruling over us</li>
+                    <li><strong>When you feel the "wind," refocus</strong> - Like Peter, acknowledge when circumstances are distracting you, and look back to Jesus</li>
+                    <li><strong>Don't confuse behavior modification with transformation</strong> - Real change comes from abiding in Christ, not just cleaning up actions</li>
+                    <li><strong>Run with perseverance</strong> - It's a marathon, not a sprint. The race is "marked out for us"—God has a specific path for you</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h2>📋 Summary: The Two-Part Prescription</h2>
+                
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-card-icon">➖</div>
+                        <h4 class="app-card-title">Part 1: Throw Off</h4>
+                        <ul>
+                            <li>Everything that hinders (not just sin)</li>
+                            <li>The sin that entangles (all four layers)</li>
+                            <li>Use the criterion: "Is it helpful?"</li>
+                        </ul>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-card-icon">➕</div>
+                        <h4 class="app-card-title">Part 2: Fix Your Eyes</h4>
+                        <ul>
+                            <li>On Jesus, the pioneer and perfecter</li>
+                            <li>Consider Him so you don't grow weary</li>
+                            <li>Run with perseverance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="quote-block">
+                    <p class="quote-text">You are to be the result of getting rid of sin is freedom, not bondage. So don't let an overly critical self or an overactive self-conscience lead you to a place of further bondage.</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reflection Tab -->
+        <section id="reflection" class="tab-content">
+            <div class="content-card">
+                <h2>💭 Reflection Questions</h2>
+                
+                <p>These questions are drawn from the sermon and YouTube description. Take time to thoughtfully consider them, perhaps journaling your responses or discussing with your care group.</p>
+
+                <ul class="reflection-list">
+                    <li>
+                        <strong>What are some examples of "hindrances" that prevent your maximum experience of God?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">These aren't necessarily sins—they're activities, relationships, commitments, or habits that don't help you spiritually. What would you put in the "trash bag" of your spiritual life?</p>
+                    </li>
+
+                    <li>
+                        <strong>In the discussion of layers of sin, what might God be exposing in your life for deeper healing?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Is there a motivation or attachment that might be good in itself, but plays too big a part in your life? What good things have become ultimate things?</p>
+                    </li>
+
+                    <li>
+                        <strong>Which of the four layers of sin is most challenging for you right now?</strong>
+                        <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem;">
+                            <li>Gross sin (obvious sins)</li>
+                            <li>Conscious sin (respectable sins you tolerate)</li>
+                            <li>Unconscious sin (motives, omissions, relational patterns)</li>
+                            <li>Attachments (good things made ultimate)</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>Think of something you do regularly that is "good"—what is your motive for doing it?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Like Pastor Brett giving to the beggar and hoping someone saw, are there times when you do the right thing for the wrong reason?</p>
+                    </li>
+
+                    <li>
+                        <strong>What would destroy your peace if it were removed from your life?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Your career? A relationship? Your health? Your reputation? Your children's success? If you can't be at peace without it, it may have become an idol.</p>
+                    </li>
+
+                    <li>
+                        <strong>When you face storms in life, do you tend to focus on the wind or on Jesus?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Peter walked on water when focused on Jesus, but sank when he saw the wind. What "wind" in your life tends to pull your eyes away from Christ?</p>
+                    </li>
+
+                    <li>
+                        <strong>Has your pursuit of holiness ever become exhausting or legalistic?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Are you managing sin or fixating on Jesus? The goal is freedom, not bondage. How can you shift from behavior modification to genuine transformation through abiding in Christ?</p>
+                    </li>
+
+                    <li>
+                        <strong>What is one specific "sacred edit" you can make this week?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Using the criterion "is it helpful for my spiritual life?"—what one thing can you remove, reduce, or release to make more room for Christ?</p>
+                    </li>
+                </ul>
+
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>Prayer Focus:</strong> Ask God to reveal the hindrances and sins in your life—including the deeper layers you may not be aware of. Pray for the wisdom to make sacred edits and the discipline to keep your eyes fixed on Jesus as you run the race set before you.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Attribution Badge -->
+    <aside class="attribution-badge" role="contentinfo">
+        <p style="font-size: 0.9rem; margin-bottom: 0.5rem; line-height: 1.5;">
+            Generated by LLM with supervision and polishing by 
+            <a href="../index.html" target="_blank" rel="noopener noreferrer">benjaminficusmicrocarpa</a>
+        </p>
+        <p style="font-size: 0.8rem;">
+            <a href="../license.html" target="_blank" rel="noopener noreferrer" style="color: var(--wine);">Released under the MIT License</a>
+        </p>
+    </aside>
+
+    <script>
+        // Image Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slideshow-slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 7000);
+
+        // Tab switching with URL hash navigation
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.tab-content');
+
+        function switchToTab(targetId) {
+            // Remove active class from all tabs and sections
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            sections.forEach(s => s.classList.remove('active'));
+            
+            // Add active class to target tab and section
+            const targetTab = document.querySelector(`.tab[data-tab="${targetId}"]`);
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetTab && targetSection) {
+                targetTab.classList.add('active');
+                targetTab.setAttribute('aria-selected', 'true');
+                targetSection.classList.add('active');
+                
+                // Scroll to top of content
+                window.scrollTo({
+                    top: document.querySelector('.tabs-container').offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Handle tab clicks
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tab');
+                
+                // Update URL hash
+                window.location.hash = targetId;
+                
+                // Switch to the tab
+                switchToTab(targetId);
+            });
+        });
+
+        // Handle hash changes (back/forward navigation)
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                switchToTab(hash);
+            }
+        });
+
+        // On page load, check if there's a hash and switch to that tab
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                switchToTab(hash);
+            }
+        });
+
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all accordion items
+            document.querySelectorAll('.accordion-item').forEach(accItem => {
+                accItem.classList.remove('active');
+            });
+
+            // If it wasn't active, open it
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Keyboard navigation for tabs
+        document.querySelector('.tabs').addEventListener('keydown', (e) => {
+            const tabsArray = Array.from(document.querySelectorAll('.tab'));
+            const currentIndex = tabsArray.findIndex(tab => tab.classList.contains('active'));
+            
+            let nextIndex;
+            if (e.key === 'ArrowRight') {
+                nextIndex = (currentIndex + 1) % tabsArray.length;
+            } else if (e.key === 'ArrowLeft') {
+                nextIndex = (currentIndex - 1 + tabsArray.length) % tabsArray.length;
+            } else {
+                return;
+            }
+            
+            tabsArray[nextIndex].click();
+            tabsArray[nextIndex].focus();
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Load and display tags
+        async function loadSermonTags() {
+            try {
+                const response = await fetch('sermons_data.json');
+                const data = await response.json();
+                
+                // Find this sermon by date
+                const sermon = data.sermons.find(s => s.date === '2026-02-01');
+                if (!sermon) return;
+                
+                const tagsContainer = document.getElementById('sermon-tags');
+                const tagCategories = data.tagCategories;
+                
+                // Create a map of all tags for quick lookup
+                const allTags = {};
+                Object.values(tagCategories).flat().forEach(tag => {
+                    allTags[tag.id] = tag;
+                });
+                
+                // Generate tag links
+                const tagLinks = sermon.tags.map(tagId => {
+                    const tagInfo = allTags[tagId];
+                    if (!tagInfo) return '';
+                    
+                    // Determine tag type
+                    let tagType = 'topic';
+                    if (tagCategories.series?.find(t => t.id === tagId)) tagType = 'series';
+                    else if (tagCategories.themes?.find(t => t.id === tagId)) tagType = 'theme';
+                    else if (tagCategories.topics?.find(t => t.id === tagId)) tagType = 'topic';
+                    else if (tagCategories.scriptures?.find(t => t.id === tagId)) tagType = 'scripture';
+                    
+                    // Create link to index.html with tag filter
+                    const tagUrl = `index.html?tags=${encodeURIComponent(tagId)}`;
+                    
+                    return `<a href="${tagUrl}" class="sermon-tag ${tagType}" title="Filter sermons by ${tagInfo.label}">
+                        ${tagInfo.emoji} ${tagInfo.label}
+                    </a>`;
+                }).filter(html => html).join('');
+                
+                tagsContainer.innerHTML = tagLinks;
+                
+            } catch (error) {
+                console.error('Failed to load sermon tags:', error);
+            }
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSermonTags();
+        });
+    </script>
+    <script src="js/iecc-common.js"></script>
+</body>
+</html>

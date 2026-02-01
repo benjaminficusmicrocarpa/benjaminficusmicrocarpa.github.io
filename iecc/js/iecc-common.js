@@ -93,6 +93,11 @@ function initAccordions() {
     const accordionHeaders = document.querySelectorAll('.accordion-header');
     
     accordionHeaders.forEach(header => {
+        // Skip headers that already have inline onclick handlers to prevent double-firing
+        if (header.hasAttribute('onclick')) {
+            return;
+        }
+        
         header.addEventListener('click', () => {
             const item = header.parentElement;
             const wasActive = item.classList.contains('active');

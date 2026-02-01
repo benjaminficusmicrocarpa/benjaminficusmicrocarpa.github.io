@@ -8,573 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --vine-green: #2d5016;
-            --leaf-green: #4a7c2f;
-            --berry-purple: #6b4c7a;
-            --earth-brown: #8b6f47;
-            --cream: #f5f1e8;
-            --bark-dark: #1a1a1a;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--cream);
-            color: var(--bark-dark);
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Crimson Pro', serif;
-        }
-
-        /* Header with Image Carousel */
-        .header-vine {
-            position: relative;
-            min-height: 85vh;
-            overflow: hidden;
-        }
-
-        .carousel-container {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-
-        .carousel-slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-        }
-
-        .carousel-slide::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(45, 80, 22, 0.82) 0%, rgba(74, 124, 47, 0.72) 50%, rgba(107, 76, 122, 0.65) 100%);
-        }
-
-        .carousel-indicators {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 15;
-        }
-
-        .carousel-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-        }
-
-        .carousel-indicator:hover {
-            background: rgba(255, 255, 255, 0.6);
-        }
-
-        .carousel-indicator.active {
-            background: white;
-            transform: scale(1.2);
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 10;
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-            color: var(--cream);
-        }
-
-        .vine-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Sticky Tab Navigation */
-        .sticky-tabs {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: white;
-            border-bottom: 2px solid var(--leaf-green);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .tab-button {
-            padding: 1rem 1.5rem;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--vine-green);
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            font-size: 0.95rem;
-        }
-
-        .tab-button:hover {
-            background: rgba(74, 124, 47, 0.05);
-        }
-
-        .tab-button.active {
-            border-bottom-color: var(--berry-purple);
-            color: var(--berry-purple);
-            font-weight: 600;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Organic Card Design */
-        .content-card {
-            background: white;
-            border-radius: 24px;
-            padding: 3rem 2.5rem;
-            margin: 2rem auto;
-            max-width: 900px;
-            box-shadow: 0 4px 20px rgba(45, 80, 22, 0.08);
-            border: 1px solid rgba(74, 124, 47, 0.1);
-        }
-
-        /* Accordion for Sermon Sections */
-        .accordion-item {
-            border: 1px solid rgba(74, 124, 47, 0.2);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .accordion-header {
-            padding: 1.5rem;
-            cursor: pointer;
-            background: linear-gradient(to right, rgba(74, 124, 47, 0.05), transparent);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--vine-green);
-            transition: background 0.3s ease;
-        }
-
-        .accordion-header:hover {
-            background: rgba(74, 124, 47, 0.1);
-        }
-
-        .accordion-icon {
-            transition: transform 0.3s ease;
-        }
-
-        .accordion-item.active .accordion-icon {
-            transform: rotate(180deg);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .accordion-item.active .accordion-content {
-            max-height: 5000px;
-        }
-
-        .accordion-body {
-            padding: 1.5rem;
-            line-height: 1.8;
-        }
-
-        /* Masonry Grid for Bible Verses */
-        .masonry-grid {
-            column-count: 1;
-            column-gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .masonry-grid {
-                column-count: 2;
-            }
-        }
-
-        .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 1.5rem;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 16px;
-            border-left: 4px solid var(--berry-purple);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        /* Floating Tooltip */
-        .tooltip-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 200;
-        }
-
-        .tooltip-trigger {
-            background: var(--berry-purple);
-            color: white;
-            border: none;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 12px rgba(107, 76, 122, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .tooltip-trigger:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(107, 76, 122, 0.4);
-        }
-
-        .tooltip-content {
-            position: absolute;
-            top: 60px;
-            right: 0;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            width: 300px;
-            max-height: 400px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .tooltip-content.active {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Attribution Badge */
-        .attribution-badge {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 150;
-            transition: all 0.3s ease;
-        }
-
-        .attribution-short {
-            background: var(--earth-brown);
-            color: white;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-
-        .attribution-full {
-            display: none;
-            background: white;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            font-size: 0.875rem;
-            max-width: 300px;
-            border: 1px solid var(--earth-brown);
-        }
-
-        .attribution-badge:hover .attribution-short {
-            transform: translateX(-10px);
-            opacity: 0;
-        }
-
-        .attribution-badge:hover .attribution-full {
-            display: block;
-            animation: slideLeft 0.3s ease;
-        }
-
-        @keyframes slideLeft {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* Button Styles */
-        .btn-primary {
-            background: var(--berry-purple);
-            color: white;
-            padding: 0.875rem 2rem;
-            border-radius: 50px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-        }
-
-        .btn-primary:hover {
-            background: var(--vine-green);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(107, 76, 122, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--vine-green);
-            padding: 0.875rem 2rem;
-            border-radius: 50px;
-            border: 2px solid var(--vine-green);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-        }
-
-        .btn-secondary:hover {
-            background: var(--vine-green);
-            color: white;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-vine {
-                min-height: 75vh;
-            }
-
-            .carousel-indicators {
-                bottom: 15px;
-                gap: 8px;
-            }
-
-            .carousel-indicator {
-                width: 10px;
-                height: 10px;
-            }
-
-            .header-content {
-                padding: 4rem 1.5rem;
-            }
-
-            .content-card {
-                padding: 2rem 1.5rem;
-                margin: 1rem;
-                border-radius: 16px;
-            }
-
-            .tab-button {
-                padding: 0.75rem 1rem;
-                font-size: 0.875rem;
-            }
-
-            .tooltip-container {
-                position: static;
-                margin: 1rem;
-            }
-
-            .tooltip-content {
-                position: static;
-                width: 100%;
-            }
-
-            .attribution-badge {
-                position: static;
-                margin: 2rem auto;
-                text-align: center;
-            }
-
-            .attribution-badge:hover .attribution-short {
-                transform: none;
-                opacity: 1;
-            }
-
-            .attribution-full {
-                display: block;
-                margin-top: 1rem;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            .sticky-tabs, .tooltip-container, .attribution-badge, .btn-primary, .btn-secondary, .carousel-indicators {
-                display: none !important;
-            }
-
-            .header-vine {
-                min-height: auto;
-                background: var(--vine-green) !important;
-            }
-
-            .carousel-container {
-                display: none !important;
-            }
-
-            .tab-content {
-                display: block !important;
-            }
-
-            .accordion-content {
-                max-height: none !important;
-            }
-
-            body {
-                background: white;
-            }
-        }
-
-        /* Accessibility */
-        *:focus {
-            outline: 3px solid var(--berry-purple);
-            outline-offset: 2px;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* Scripture Styling */
-        .scripture-ref {
-            font-weight: 600;
-            color: var(--berry-purple);
-            margin-bottom: 0.5rem;
-        }
-
-        blockquote {
-            border-left: 4px solid var(--leaf-green);
-            padding-left: 1.5rem;
-            font-style: italic;
-            color: var(--vine-green);
-            margin: 1.5rem 0;
-        }
-
-        /* Tags Section */
-        .sermon-tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-            margin: 1.5rem 0;
-        }
-
-        .sermon-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .sermon-tag:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .sermon-tag.series {
-            background: rgba(74, 124, 47, 0.2);
-            color: #a8d08a;
-            border-color: rgba(74, 124, 47, 0.4);
-        }
-
-        .sermon-tag.series:hover {
-            background: rgba(74, 124, 47, 0.3);
-            border-color: var(--leaf-green);
-        }
-
-        .sermon-tag.theme {
-            background: rgba(107, 76, 122, 0.2);
-            color: #c9a8d9;
-            border-color: rgba(107, 76, 122, 0.4);
-        }
-
-        .sermon-tag.theme:hover {
-            background: rgba(107, 76, 122, 0.3);
-            border-color: var(--berry-purple);
-        }
-
-        .sermon-tag.topic {
-            background: rgba(139, 111, 71, 0.2);
-            color: #d4b896;
-            border-color: rgba(139, 111, 71, 0.4);
-        }
-
-        .sermon-tag.topic:hover {
-            background: rgba(139, 111, 71, 0.3);
-            border-color: var(--earth-brown);
-        }
-
-        .sermon-tag.scripture {
-            background: rgba(45, 80, 22, 0.2);
-            color: #8fb86f;
-            border-color: rgba(45, 80, 22, 0.4);
-        }
-
-        .sermon-tag.scripture:hover {
-            background: rgba(45, 80, 22, 0.3);
-            border-color: var(--vine-green);
-        }
-    </style>
+    <link rel="stylesheet" href="css/iecc-base.css">
+    <link rel="stylesheet" href="css/i-am.css">
 </head>
-<body>
+<body data-sermon-date="2025-04-06">
     <!-- Header with Image Carousel -->
     <header class="header-vine">
         <div class="carousel-container" id="carousel">
@@ -1959,197 +1396,72 @@
         </div>
     </div>
 
+    <script src="js/iecc-common.js"></script>
     <script>
-        // Tab switching with URL hash navigation
-        const tabs = document.querySelectorAll('.tab-button[data-tab]');
-        const sections = document.querySelectorAll('.tab-content');
-
-        function switchToTab(targetId) {
-            // Remove active class from all tabs and sections
-            tabs.forEach(t => t.classList.remove('active'));
-            sections.forEach(s => s.classList.remove('active'));
-            
-            // Add active class to target tab and section
-            const targetTab = document.querySelector(`.tab-button[data-tab="${targetId}"]`);
-            const targetSection = document.getElementById(targetId);
-            
-            if (targetTab && targetSection) {
-                targetTab.classList.add('active');
-                targetSection.classList.add('active');
-                
-                // Scroll to top of content
-                window.scrollTo({
-                    top: document.querySelector('.sticky-tabs').offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-        }
-
-        // Handle tab clicks
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const targetId = tab.getAttribute('data-tab');
-                
-                // Update URL hash
-                window.location.hash = targetId;
-                
-                // Switch to the tab
-                switchToTab(targetId);
-            });
-        });
-
-        // Handle hash changes (back/forward navigation)
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.slice(1); // Remove the # symbol
-            if (hash) {
-                switchToTab(hash);
-            }
-        });
-
-        // On page load, check if there's a hash and switch to that tab
-        window.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash.slice(1);
-            if (hash) {
-                switchToTab(hash);
-            }
-        });
-
-        // Accordion Toggle
-        function toggleAccordion(header) {
-            const item = header.parentElement;
-            const wasActive = item.classList.contains('active');
-            
-            // Close all accordions
-            document.querySelectorAll('.accordion-item').forEach(i => {
-                i.classList.remove('active');
-            });
-            
-            // Open clicked one if it wasn't active
-            if (!wasActive) {
-                item.classList.add('active');
-            }
-        }
-
-        // Tooltip Toggle
-        document.getElementById('tooltipBtn').addEventListener('click', function() {
-            const content = document.getElementById('tooltipContent');
-            content.classList.toggle('active');
-        });
-
-        // Close tooltip when clicking outside
-        document.addEventListener('click', function(event) {
-            const tooltip = document.getElementById('tooltipContent');
-            const button = document.getElementById('tooltipBtn');
-            
-            if (!button.contains(event.target) && !tooltip.contains(event.target)) {
-                tooltip.classList.remove('active');
-            }
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.getElementById('tooltipContent').classList.remove('active');
-            }
-        });
-
-        // Open first accordion by default
+        // Initialize carousel (uses .carousel-slide instead of .slideshow-slide)
         document.addEventListener('DOMContentLoaded', function() {
-            const firstAccordion = document.querySelector('.accordion-item');
-            if (firstAccordion) {
-                firstAccordion.classList.add('active');
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            if (slides.length === 0) return;
+            
+            let currentSlide = 0;
+            let carouselInterval;
+
+            function goToSlide(index) {
+                slides[currentSlide].classList.remove('active');
+                if (indicators[currentSlide]) indicators[currentSlide].classList.remove('active');
+                currentSlide = index;
+                if (currentSlide >= slides.length) currentSlide = 0;
+                if (currentSlide < 0) currentSlide = slides.length - 1;
+                slides[currentSlide].classList.add('active');
+                if (indicators[currentSlide]) indicators[currentSlide].classList.add('active');
             }
+
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+
+            function startCarousel() {
+                carouselInterval = setInterval(nextSlide, 5000);
+            }
+
+            // Click on indicators to go to specific slide
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    clearInterval(carouselInterval);
+                    goToSlide(index);
+                    startCarousel();
+                });
+            });
+
+            // Start the carousel
+            startCarousel();
         });
 
-        // Image Carousel
-        const slides = document.querySelectorAll('.carousel-slide');
-        const indicators = document.querySelectorAll('.carousel-indicator');
-        let currentSlide = 0;
-        let carouselInterval;
+        // Tooltip Toggle (page-specific)
+        document.addEventListener('DOMContentLoaded', function() {
+            const tooltipBtn = document.getElementById('tooltipBtn');
+            const tooltipContent = document.getElementById('tooltipContent');
+            if (!tooltipBtn || !tooltipContent) return;
+            
+            tooltipBtn.addEventListener('click', function() {
+                tooltipContent.classList.toggle('active');
+            });
 
-        function goToSlide(index) {
-            slides[currentSlide].classList.remove('active');
-            indicators[currentSlide].classList.remove('active');
-            currentSlide = index;
-            if (currentSlide >= slides.length) currentSlide = 0;
-            if (currentSlide < 0) currentSlide = slides.length - 1;
-            slides[currentSlide].classList.add('active');
-            indicators[currentSlide].classList.add('active');
-        }
+            // Close tooltip when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!tooltipBtn.contains(event.target) && !tooltipContent.contains(event.target)) {
+                    tooltipContent.classList.remove('active');
+                }
+            });
 
-        function nextSlide() {
-            goToSlide(currentSlide + 1);
-        }
-
-        // Auto-advance carousel
-        function startCarousel() {
-            carouselInterval = setInterval(nextSlide, 5000);
-        }
-
-        // Click on indicators to go to specific slide
-        indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                clearInterval(carouselInterval);
-                goToSlide(index);
-                startCarousel();
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    tooltipContent.classList.remove('active');
+                }
             });
         });
-
-        // Start the carousel
-        startCarousel();
-
-        // Load and display tags
-        async function loadSermonTags() {
-            try {
-                const response = await fetch('sermons_data.json');
-                const data = await response.json();
-                
-                // Find this sermon by date
-                const sermon = data.sermons.find(s => s.date === '2025-04-06');
-                if (!sermon) return;
-                
-                const tagsContainer = document.getElementById('sermon-tags');
-                const tagCategories = data.tagCategories;
-                
-                // Create a map of all tags for quick lookup
-                const allTags = {};
-                Object.values(tagCategories).flat().forEach(tag => {
-                    allTags[tag.id] = tag;
-                });
-                
-                // Generate tag links
-                const tagLinks = sermon.tags.map(tagId => {
-                    const tagInfo = allTags[tagId];
-                    if (!tagInfo) return '';
-                    
-                    // Determine tag type
-                    let tagType = 'topic';
-                    if (tagCategories.series?.find(t => t.id === tagId)) tagType = 'series';
-                    else if (tagCategories.themes?.find(t => t.id === tagId)) tagType = 'theme';
-                    else if (tagCategories.topics?.find(t => t.id === tagId)) tagType = 'topic';
-                    else if (tagCategories.scriptures?.find(t => t.id === tagId)) tagType = 'scripture';
-                    
-                    // Create link to index.html with tag filter
-                    const tagUrl = `index.html?tags=${encodeURIComponent(tagId)}`;
-                    
-                    return `<a href="${tagUrl}" class="sermon-tag ${tagType}" title="Filter sermons by ${tagInfo.label}">
-                        ${tagInfo.emoji} ${tagInfo.label}
-                    </a>`;
-                }).filter(html => html).join('');
-                
-                tagsContainer.innerHTML = tagLinks;
-                
-            } catch (error) {
-                console.error('Failed to load sermon tags:', error);
-            }
-        }
-        
-        // Load tags when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadSermonTags);
-        } else {
-            loadSermonTags();
-        }
     </script>
 </body>
 </html>
