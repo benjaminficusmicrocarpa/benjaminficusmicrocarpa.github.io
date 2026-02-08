@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Garden: Don't Throw Away Your Confidence | Island ECC</title>
+    <meta name="description" content="Perseverance is increasingly rare in our day. Yet for those who follow Christ, it will be a key component in maintaining a vibrant faith. Don't throw away your confidence—it will be richly rewarded.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iecc-base.css">
+    <link rel="stylesheet" href="css/soul-garden.css">
+    <style>
+        /* Theme-specific overrides for Soul Garden Part 6 - Don't Throw Away Your Confidence */
+        :root {
+            --primary: #4a5b3c;
+            --primary-dark: #2d3a24;
+            --accent: #8b6f47;
+            --accent-light: #b89968;
+            --wine: #6b2c3e;
+            --earth: #8a7355;
+            --bg-dark: #1a1f16;
+            --bg-card: #242b1f;
+            --text-light: #f4f1ea;
+            --text-muted: #a8a095;
+            --perseverance-gold: #c9a84c;
+            --perseverance-glow: rgba(201, 168, 76, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Hero with Ken Burns */
+        .hero-header {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .slideshow-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 2.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            animation: kenBurns 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes kenBurns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        .slideshow-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slideshow-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(26,31,22,0.3) 0%, 
+                rgba(26,31,22,0.7) 50%,
+                rgba(26,31,22,0.9) 100%);
+            z-index: 1;
+        }
+
+        /* Animated Anchor/Shield Icon */
+        .anchor-animation {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 120px;
+            height: 120px;
+            opacity: 0.15;
+            z-index: 2;
+            animation: floatAnchor 6s ease-in-out infinite;
+        }
+
+        @keyframes floatAnchor {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 91, 60, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 91, 60, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(244, 241, 234, 0.1);
+            color: var(--text-light);
+            border: 2px solid rgba(244, 241, 234, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(244, 241, 234, 0.2);
+            border-color: rgba(244, 241, 234, 0.5);
+        }
+
+        /* Sticky Navigation Tabs */
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 31, 22, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(244, 241, 234, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1.25rem 2rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+
+        .tab:hover {
+            color: var(--text-light);
+            background: rgba(74, 91, 60, 0.1);
+        }
+
+        .tab.active {
+            color: var(--accent-light);
+            border-bottom-color: var(--accent-light);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: block;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--accent);
+        }
+
+        .content-card h2 {
+            color: var(--accent-light);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-card h3 {
+            color: var(--accent-light);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            opacity: 0.95;
+        }
+
+        .content-card ul, .content-card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        /* Bible Verses Card */
+        .verse-card {
+            background: linear-gradient(135deg, rgba(74, 91, 60, 0.15) 0%, rgba(139, 111, 71, 0.15) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            font-family: 'Lora', serif;
+        }
+
+        .verse-ref {
+            color: var(--accent-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .verse-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        .verse-context {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-style: normal;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(244, 241, 234, 0.1);
+        }
+
+        /* Accordion */
+        .accordion-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(244, 241, 234, 0.1);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(74, 91, 60, 0.1);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.25rem;
+            color: var(--accent);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent) 0%, var(--primary) 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.625rem;
+            top: 0.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--bg-dark);
+            box-shadow: 0 0 0 3px var(--accent);
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(107, 44, 62, 0.2) 0%, rgba(139, 111, 71, 0.2) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-light);
+            font-size: 1.1rem;
+        }
+
+        /* Perseverance Gold Highlight */
+        .highlight-gold {
+            background: linear-gradient(135deg, var(--perseverance-glow) 0%, rgba(139, 111, 71, 0.15) 100%);
+            border-left: 4px solid var(--perseverance-gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+        }
+
+        .highlight-gold strong {
+            color: var(--perseverance-gold);
+            font-size: 1.1rem;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            position: relative;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: rgba(139, 111, 71, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .quote-block::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .quote-text {
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quote-attribution {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Application Cards */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--accent);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(139, 111, 71, 0.3);
+        }
+
+        .app-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-card-title {
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        /* James Bio Card */
+        .bio-card {
+            background: linear-gradient(135deg, rgba(74, 91, 60, 0.2) 0%, rgba(36, 43, 31, 0.9) 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(184, 153, 104, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bio-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--perseverance-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .bio-card h3 {
+            color: var(--perseverance-gold);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Perseverance Flow */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            background: var(--bg-card);
+            padding: 1.25rem 1.75rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(184, 153, 104, 0.3);
+            min-width: 160px;
+        }
+
+        .flow-step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step-title {
+            font-weight: 600;
+            color: var(--accent-light);
+            font-size: 1rem;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--perseverance-gold);
+            flex-shrink: 0;
+        }
+
+        /* Reflection Questions */
+        .reflection-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .reflection-list li {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--wine);
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .reflection-list li::before {
+            content: '🌱';
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        /* Tags Section */
+        .sermon-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .sermon-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .sermon-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .sermon-tag.series {
+            background: rgba(139, 111, 71, 0.2);
+            color: var(--accent-light);
+            border-color: rgba(139, 111, 71, 0.4);
+        }
+
+        .sermon-tag.series:hover {
+            background: rgba(139, 111, 71, 0.3);
+            border-color: var(--accent);
+        }
+
+        .sermon-tag.theme {
+            background: rgba(107, 44, 62, 0.2);
+            color: #e8a5b8;
+            border-color: rgba(107, 44, 62, 0.4);
+        }
+
+        .sermon-tag.theme:hover {
+            background: rgba(107, 44, 62, 0.3);
+            border-color: var(--wine);
+        }
+
+        .sermon-tag.topic {
+            background: rgba(74, 91, 60, 0.2);
+            color: #a8c48a;
+            border-color: rgba(74, 91, 60, 0.4);
+        }
+
+        .sermon-tag.topic:hover {
+            background: rgba(74, 91, 60, 0.3);
+            border-color: var(--primary);
+        }
+
+        .sermon-tag.scripture {
+            background: rgba(138, 115, 85, 0.2);
+            color: #d4c4a8;
+            border-color: rgba(138, 115, 85, 0.4);
+        }
+
+        .sermon-tag.scripture:hover {
+            background: rgba(138, 115, 85, 0.3);
+            border-color: var(--earth);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .tabs {
+                justify-content: flex-start;
+            }
+
+            .tab {
+                padding: 1rem 1.5rem;
+            }
+
+            .content-card {
+                padding: 1.5rem;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-container {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+
+            .anchor-animation {
+                width: 80px;
+                height: 80px;
+                top: 5%;
+                right: 5%;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .tabs-container, .hero-buttons, .attribution {
+                display: none;
+            }
+
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .content-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+
+        /* Accessibility */
+        .tab:focus,
+        .btn:focus,
+        .accordion-header:focus {
+            outline: 3px solid var(--accent-light);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body data-sermon-date="2026-02-08">
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <!-- Image Slideshow -->
+        <div class="slideshow-container">
+            <div class="slideshow-slide active" style="background-image: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1476820865390-c52aeebb9891?w=1920&q=80')"></div>
+        </div>
+
+        <!-- Animated Anchor Icon -->
+        <svg class="anchor-animation" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="20" r="8" stroke="var(--accent-light)" stroke-width="2.5" fill="none"/>
+            <line x1="50" y1="28" x2="50" y2="85" stroke="var(--accent-light)" stroke-width="2.5"/>
+            <line x1="30" y1="55" x2="70" y2="55" stroke="var(--accent-light)" stroke-width="2.5"/>
+            <path d="M25 80 Q50 95 75 80" stroke="var(--accent-light)" stroke-width="2.5" fill="none"/>
+            <circle cx="25" cy="80" r="4" fill="var(--perseverance-gold)" opacity="0.5"/>
+            <circle cx="75" cy="80" r="4" fill="var(--perseverance-gold)" opacity="0.5"/>
+        </svg>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1 class="hero-title">🌿⚓ Soul Garden:<br>Don't Throw Away Your Confidence</h1>
+            <p class="hero-subtitle">"Do not throw away your confidence; it will be richly rewarded."</p>
+            <div class="hero-meta">
+                📅 08 Feb 2026 | 🎤 Pastor Brett | 🏝️ Island ECC | 🌱 Soul Garden Series (Part 6 — Finale)
+            </div>
+            <div class="sermon-tags-container" id="sermon-tags">
+                <!-- Tags will be dynamically loaded -->
+            </div>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=2FEqb13hT_M" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation Tabs -->
+    <nav class="tabs-container" role="navigation" aria-label="Sermon sections">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview" role="tab" aria-selected="true">📋 Overview</div>
+            <div class="tab" data-tab="sermon" role="tab" aria-selected="false">📖 Main Sermon</div>
+            <div class="tab" data-tab="verses" role="tab" aria-selected="false">✝️ Bible Verses</div>
+            <div class="tab" data-tab="james" role="tab" aria-selected="false">📜 James: Brother of Jesus</div>
+            <div class="tab" data-tab="application" role="tab" aria-selected="false">🎯 Application</div>
+            <div class="tab" data-tab="reflection" role="tab" aria-selected="false">💭 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Overview Tab -->
+        <section id="overview" class="tab-content active">
+            <div class="content-card">
+                <h2>📋 Sermon Overview</h2>
+                <p><strong>Central Theme:</strong> Perseverance is increasingly rare in our day, yet for followers of Christ, it is a key component in maintaining a vibrant faith. When life throws you curveballs, don't throw away your confidence in God—persevere, and you will receive what He has promised.</p>
+                
+                <div class="highlight-gold">
+                    <strong>Key Insight:</strong> The word "perseverance" comes from the Latin <em>per</em> (through) and <em>severe</em>—to go through circumstances that feel severe and painful. Scripture doesn't just say "ja-yo, keep going!" but offers a reward: there's purpose in your pain.
+                </div>
+
+                <h3>📖 Key Passages</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 10:35-36 (NIV)</span>
+                    <div class="verse-text">
+                        "So do not throw away your confidence; it will be richly rewarded. You need to persevere so that when you have done the will of God, you will receive what he has promised."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 James 1:2-5 (NIV)</span>
+                    <div class="verse-text">
+                        "Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds, because you know that the testing of your faith produces perseverance. Let perseverance finish its work so that you may be mature and complete, not lacking anything. If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."
+                    </div>
+                </div>
+
+                <h3>🌟 Main Takeaways</h3>
+                <ol>
+                    <li><strong>Don't throw away your confidence</strong> — Not self-confidence, but your confidence in God. Your faith. Don't abandon it when trials come.</li>
+                    <li><strong>Perseverance is produced through trials</strong> — Trials test the authenticity of your faith and produce the grit you need for the next challenge.</li>
+                    <li><strong>"Consider it pure joy"</strong> — The hardest verse: not that suffering is fun, but that as a Christian you have a supernatural capacity to see purpose in pain.</li>
+                    <li><strong>Trials reveal, not ruin</strong> — They show whether your faith is authentic or just a "vending machine" approach to God.</li>
+                    <li><strong>Let perseverance finish its work</strong> — Don't quit the race early. The thing you want removed is often the thing God wants to use.</li>
+                    <li><strong>When you can't trace His hand, trust His heart</strong> — God is a perfect Father who always desires what is good for His children.</li>
+                    <li><strong>Ask God for wisdom</strong> — He gives generously, without finding fault. You don't need more information; you need divine wisdom.</li>
+                </ol>
+
+                <h3>📐 Sermon Structure</h3>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🍕</div>
+                        <div class="flow-step-title">Pineapple Pizza</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Avoiding what we don't like</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">📖</div>
+                        <div class="flow-step-title">Hard Scriptures</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">You can't cut out what you don't like</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">⚓</div>
+                        <div class="flow-step-title">Perseverance</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Hebrews 10 & James 1</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🙏</div>
+                        <div class="flow-step-title">Ask for Wisdom</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">God gives generously</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Sermon Tab -->
+        <section id="sermon" class="tab-content">
+            <div class="content-card">
+                <h2>📖 The Message: Don't Throw Away Your Confidence</h2>
+                
+                <h3>🍕 The Pineapple Pizza Problem</h3>
+                <p>Hawaiian pizza — that deliciously divisive topic — was actually invented in 1962 by a Greek-Canadian chef in Ontario, not in Hawaii. He simply named it after the pineapple can label. A study of 34,000 people found 54% opposed it, 12% call it their favorite topping, and 24% call it their least favorite. In 2017, the President of Iceland even joked he'd outlaw it — and had to publicly apologize when the backlash got too intense.</p>
+
+                <p>The point? We all have things we like and things we don't. And normally, that's fine — you can pick and choose. But when it comes to Scripture, there are things you may not like that you would be a fool to avoid.</p>
+
+                <div class="highlight-box">
+                    <strong>Thomas Jefferson's Bible:</strong> The third U.S. president famously took scissors to his Bible and cut out the verses he didn't like. You and I probably don't use scissors, but we might just turn the page — looking for something that feels good, a promise we want to claim, while skipping the hard parts.
+                </div>
+
+                <h3>⚠️ Hard Scriptures We'd Rather Avoid</h3>
+                <p>Pastor Brett offered two examples of verses that don't settle well at first glance:</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 6:34</span>
+                    <div class="verse-text">"Do not worry about tomorrow."</div>
+                    <div class="verse-context">Our reaction: "Easy for you to say, Jesus. Do you know my tomorrow?" And He says: "Yes." But it feels dismissive, superficial, trite — until we realize He has the authority to say it and back it up.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Colossians 3:13</span>
+                    <div class="verse-text">"Forgive as the Lord forgave you."</div>
+                    <div class="verse-context">We're willing to receive total forgiveness from God, but extending that level to others? When withholding forgiveness gives us a sense of superiority and power? That's a harder pill to swallow.</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>⚓ Don't Throw Away Your Confidence</h2>
+                
+                <p>"Above all else, guard your heart" — the theme of this Soul Garden series. One way to guard your heart is to be guided by wisdom greater than yourself. As smart and educated as you may be, there is still a whole lot you do not know. God's wisdom is greater than yours.</p>
+
+                <h3>❓ The Big Question</h3>
+                <p><strong>What do you do when there's nothing you can do?</strong> When circumstances come that throw you for a loop — relationship breakdowns, job losses, financial pressure, health crises — things beyond your control that leave you asking, "What do I do when I don't know what to do?"</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 10:35-36 (NIV)</span>
+                    <div class="verse-text">
+                        "So do not throw away your confidence; it will be richly rewarded. You need to persevere so that when you have done the will of God, you will receive what he has promised."
+                    </div>
+                </div>
+
+                <div class="highlight-gold">
+                    <strong>What is this "confidence"?</strong> Not self-confidence. Not self-esteem. Not your own accolades. It's your confidence in God — your faith. Your belief in a God who is in control and always has been.
+                </div>
+
+                <h3>💡 The Word "Persevere"</h3>
+                <p>The English word comes from Latin: <strong><em>per</em></strong> (through) + <strong><em>severe</em></strong> (harsh, painful). To persevere is literally to go through circumstances that feel severe. Scripture doesn't just offer a cheerful "keep going!" — it offers a reward:</p>
+                <ul>
+                    <li>There's <strong>purpose in your pain</strong></li>
+                    <li>There's <strong>something waiting</strong> that will make it worthwhile</li>
+                    <li>Should you persevere, you will look back and say, <em>"Oh, I see. I understand now what you were doing, God."</em></li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>🌟 James on Trials and Perseverance</h2>
+
+                <h3>⏰ "Whenever" — Not "If"</h3>
+                <p>James doesn't say <em>if</em> you face trials, but <em>whenever</em>. It's a matter of when, not if. The Greek word for "face" carries an element of surprise — like being ambushed by a thief. When you are surprised by a phone call, a conversation, an email, a stock market crash — something that disrupts your peace and you didn't see coming.</p>
+
+                <h3>🤔 "Consider It" — Stop and Reframe</h3>
+                <p>Without a pause, our natural response to a trial is a defense strategy — research, networking, action plans. But James says: before you start your action plan, <strong>consider</strong>. Think about what God is doing. Why has this happened? What might God be teaching my soul?</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds.</p>
+                    <p class="quote-attribution">— James 1:2</p>
+                </div>
+
+                <p>"Consider it what? <strong>Pure joy?!</strong>" This is the pineapple pizza of Scripture. We want to argue: "Are you kidding me? That's irrational. You're out of touch. You're hyper-spiritual. You're in denial." And yet James says it to those who have a faith in Christ — those who have a supernatural capacity to see beyond the natural.</p>
+
+                <h3>🔥 "Because You Know" — You're Already Informed</h3>
+                <p>When faced with difficulty, we think we need something new — more information, a new doctor, a new strategy. James says: <strong>you already know</strong>. Because of your faith, you're already informed about who God is, who you are, and the expectations you can have in this life.</p>
+
+                <h3>⚡ Testing Produces Perseverance</h3>
+                <p>The "testing of your faith" does two things:</p>
+                <ol>
+                    <li><strong>Proves it is authentic</strong> — Like a lighter test on a leather wallet in Shenzhen. It's easy to believe in a faith that is only lollipops and sunshine. Trials settle out whether you're really in it.</li>
+                    <li><strong>Produces perseverance</strong> — Spiritual grit that builds inside you. You're going to need it, because another trial is coming.</li>
+                </ol>
+
+                <div class="highlight-gold">
+                    <strong>"Let perseverance finish its work"</strong> — Don't quit the race. Don't throw in the towel. The thing you want removed is often the thing God wants to use. It grabs your heart, brings the tears, keeps you awake at night. And God says: "Trust me. I know what to do."
+                </div>
+
+                <h3>🏆 The Result: Mature and Complete</h3>
+                <p>We think we lack — "if only I had this, if only you'd remove that." But persevering in faith takes you to a place of maturity where you recognize: <strong>"I have all that I need. God is sufficient. He is enough."</strong></p>
+
+                <h3>🙏 Ask for Wisdom</h3>
+                <p>James catches us right where we are. In the midst of crying out to God for relief, what we really need is <strong>wisdom</strong>. An admission of the gap between your finite wisdom and God's infinite wisdom is a great starting point.</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 James 1:5 (NIV)</span>
+                    <div class="verse-text">
+                        "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."
+                    </div>
+                </div>
+
+                <p>God doesn't hold back reluctantly. He's not a God who says "just keep praying, I'll see." When you ask, He gives. He <em>wants</em> you to understand His purpose in this world and in your life.</p>
+            </div>
+        </section>
+
+        <!-- Bible Verses Tab -->
+        <section id="verses" class="tab-content">
+            <div class="content-card">
+                <h2>✝️ Key Scripture Passages</h2>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 10:35-36 (NIV)</span>
+                    <div class="verse-text">
+                        "So do not throw away your confidence; it will be richly rewarded. You need to persevere so that when you have done the will of God, you will receive what he has promised."
+                    </div>
+                    <div class="verse-context">The anchor verse of the sermon. Don't throw away your faith — persevere and receive what God has promised.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 James 1:2-4 (NIV)</span>
+                    <div class="verse-text">
+                        "Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds, because you know that the testing of your faith produces perseverance. Let perseverance finish its work so that you may be mature and complete, not lacking anything."
+                    </div>
+                    <div class="verse-context">The "pineapple pizza" verse — hard to accept, impossible to ignore. Trials test authenticity and produce spiritual grit.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 James 1:5 (NIV)</span>
+                    <div class="verse-text">
+                        "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."
+                    </div>
+                    <div class="verse-context">In the midst of trials, what we really need is not more information, but God's wisdom. He gives it freely.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 James 1:1 (NIV)</span>
+                    <div class="verse-text">
+                        "James, a servant of God and of the Lord Jesus Christ, to the twelve tribes scattered among the nations."
+                    </div>
+                    <div class="verse-context">James identifies himself not as "Jesus's brother" but as a humble servant. He recognizes Jesus as Lord.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 6:34 (NIV)</span>
+                    <div class="verse-text">
+                        "Therefore do not worry about tomorrow, for tomorrow will worry about itself. Each day has enough trouble of its own."
+                    </div>
+                    <div class="verse-context">One of the "hard to swallow" scriptures. It feels dismissive, but Jesus has the authority to back it up.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Colossians 3:13 (NIV)</span>
+                    <div class="verse-text">
+                        "Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you."
+                    </div>
+                    <div class="verse-context">Another hard scripture: we're willing to receive God's total forgiveness but reluctant to extend it to others.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 15:26 (NIV)</span>
+                    <div class="verse-text">
+                        "For Macedonia and Achaia were pleased to make a contribution for the poor among the Lord's people in Jerusalem."
+                    </div>
+                    <div class="verse-context">Paul collected offerings from other churches to support the poor Jerusalem church that James led for 30 years.</div>
+                </div>
+
+                <h3>🔍 Additional References</h3>
+                <ul>
+                    <li><strong>Proverbs 4:23</strong> — "Above all else, guard your heart, for everything you do flows from it." (Series theme verse)</li>
+                    <li><strong>Hebrews 11</strong> — The "Hall of Faith" — a celebration of Old Testament saints who lived by faith</li>
+                    <li><strong>Genesis 4:7</strong> — "Sin is crouching at your door" (referenced from previous sermon in series)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- James: Brother of Jesus Tab -->
+        <section id="james" class="tab-content">
+            <div class="content-card">
+                <h2>📜 James: The Brother of Jesus</h2>
+                
+                <p>One of the most fascinating aspects of this sermon is the backstory of James — the man behind the book. Pastor Brett paused to paint a vivid picture of what it must have been like growing up as Jesus's brother.</p>
+
+                <div class="bio-card">
+                    <h3>👤 Who Was James?</h3>
+                    <ul>
+                        <li><strong>Biological brother of Jesus</strong> — Grew up in the same household as the Savior of mankind</li>
+                        <li><strong>Initially a skeptic</strong> — Scripture tells us James didn't believe Jesus was the Son of God growing up</li>
+                        <li><strong>Later became a believer</strong> — Through Jesus's claims, miracles, and especially His resurrection from the dead</li>
+                        <li><strong>Leader of the Jerusalem church for 30 years</strong> — One of the most important early church leaders</li>
+                        <li><strong>Author of the Book of James</strong> — A short, pithy, practical book tucked near the end of the New Testament</li>
+                        <li><strong>Faithful to the end</strong> — Convinced that his brother was God</li>
+                    </ul>
+                </div>
+
+                <div class="quote-block">
+                    <p class="quote-text">Can you imagine? He grew up with the Savior of mankind. With God in the flesh. I wonder what teenager conversations they had. That had to be really annoying — to have a 13-year-old brother who was literally never wrong. I wonder if Jesus ever played that: "You know I'm God, right? You're wrong."</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+
+                <h3>✍️ How James Identifies Himself</h3>
+                <p>When James writes his letter, he says: <em>"James, a servant of God and of the Lord Jesus Christ."</em> He doesn't add in parentheses: <em>"my stupid little brother."</em></p>
+                <p>He recognizes that Jesus is in fact <strong>the Lord</strong>. All the things Jesus said and did — they all line up to the fact that He was sinless. As annoying as it may have been when He was a teenager, James had arrived at a place of <strong>humble confession as an adult</strong>.</p>
+
+                <h3>⛪ The Jerusalem Church</h3>
+                <p>The church James led was not a wealthy, comfortable congregation:</p>
+                <ul>
+                    <li><strong>Mostly Jewish converts</strong> — People who had come out of the Jewish faith</li>
+                    <li><strong>Persecuted and disregarded</strong> — Jews in the community didn't care for their needs since they had "left"</li>
+                    <li><strong>Financially poor</strong> — Relied on other churches throughout the region for support</li>
+                    <li><strong>Supported by Paul's collections</strong> — Paul traveled to other churches saying, "Take up an offering so we can send it to our brothers and sisters in Jerusalem"</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>Why This Matters:</strong> James writes about perseverance and trials with immense credibility. He <em>knew</em> trials. He had believed, he had become a Christian, and it hadn't necessarily gotten easier. He was still poor. Yet he writes with conviction and authority.
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Tab -->
+        <section id="application" class="tab-content">
+            <div class="content-card">
+                <h2>🎯 Practical Application</h2>
+
+                <h3>⚓ When You Don't Know What to Do</h3>
+                <p>Life brings circumstances beyond our control — relationship breakdowns, career upheavals, financial strain, health crises. We're a capable group; we relish solving problems. But some things are beyond our ability to fix.</p>
+
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-card-icon">🛑</div>
+                        <h4 class="app-card-title">Don't Abandon God</h4>
+                        <p>The temptation in severe trials is to either abandon faith altogether or take control from God. Both are throwing away your confidence. Instead, persevere — keep trusting even when you can't see the outcome.</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-card-icon">⏸️</div>
+                        <h4 class="app-card-title">Pause and Consider</h4>
+                        <p>Before launching into your action plan, stop. Think about what God might be doing. Ask: "What might God be teaching me? How can I see His purpose in this?" Don't just react — reflect.</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-card-icon">🔄</div>
+                        <h4 class="app-card-title">Reframe the Trial</h4>
+                        <p>"Consider it pure joy" isn't about pretending. It's about recognizing, as a Christian, that you have a supernatural capacity to see purpose in pain. There is redemptive good alongside the heartache.</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-card-icon">🙏</div>
+                        <h4 class="app-card-title">Ask for Wisdom</h4>
+                        <p>You're smart, degreed, accomplished — but understanding the ways of God goes beyond a textbook or masterclass. Admit the gap between your finite mind and God's infinite wisdom, and ask.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>📋 Don't Throw Away Your Confidence — A Checklist</h2>
+
+                <h3>🚫 What NOT to Do in Trials</h3>
+                <ul>
+                    <li><strong>Don't treat God like a vending machine</strong> — Press C4 and wait for the goodie. He's not Santa Claus.</li>
+                    <li><strong>Don't take scissors to Scripture</strong> — Like Thomas Jefferson, we're tempted to cut out what's hard. But to avoid the full counsel of God is a foolish decision.</li>
+                    <li><strong>Don't let surprise steal your faith</strong> — The Greek word for "face" in James 1:2 carries the idea of being caught off guard, like by a thief. Don't let the shock undo your trust in God.</li>
+                    <li><strong>Don't quit the race early</strong> — "Let perseverance finish its work." The thing you want removed may be the very thing God wants to use.</li>
+                </ul>
+
+                <h3>✅ What TO Do in Trials</h3>
+                <ol>
+                    <li><strong>Remember what you already know</strong> — Your faith already informs you about who God is and who you are. Don't act like you need to start from scratch.</li>
+                    <li><strong>See the macro picture</strong> — We get laser-focused on what's hard. God says: "It's hard, but also know that there is good being accomplished."</li>
+                    <li><strong>Trust His heart when you can't trace His hand</strong> — Like a loving father, God always desires what is good for His children.</li>
+                    <li><strong>Persevere toward maturity</strong> — The goal isn't just survival; it's becoming "mature and complete, not lacking anything."</li>
+                </ol>
+
+                <div class="quote-block">
+                    <p class="quote-text">When you cannot trace His hand, you can trust His heart. This God is good, and like a loving father who always desires what is good for his son, God the perfect Father even more has your good in mind.</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>🔗 The Perseverance Pathway</h2>
+                <p>James outlines a clear progression from trial to maturity:</p>
+
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🌊</div>
+                        <div class="flow-step-title">Trials Come</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">"Whenever you face trials of many kinds"</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🔥</div>
+                        <div class="flow-step-title">Faith Is Tested</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">"The testing of your faith"</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">⚓</div>
+                        <div class="flow-step-title">Perseverance Grows</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">"Produces perseverance"</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🏆</div>
+                        <div class="flow-step-title">Maturity & Completeness</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">"Mature and complete, lacking nothing"</p>
+                    </div>
+                </div>
+
+                <div class="highlight-gold">
+                    <strong>The Promise:</strong> The pathway doesn't just lead to survival — it leads to a place where you recognize, "I have all that I need. God is sufficient. He is enough. He is with me. His voice empathizes with me in the pain. He doesn't abandon me at all."
+                </div>
+            </div>
+        </section>
+
+        <!-- Reflection Tab -->
+        <section id="reflection" class="tab-content">
+            <div class="content-card">
+                <h2>💭 Reflection Questions</h2>
+                
+                <p>These questions are drawn from the sermon and the official YouTube reflection questions. Take time to thoughtfully consider them, perhaps journaling your responses or discussing with your care group.</p>
+
+                <ul class="reflection-list">
+                    <li>
+                        <strong>What is the toughest circumstance in your life right now?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Name it before God. How are you handling it — with faith, with fear, or by trying to take control? What would it look like to persevere rather than abandon or control?</p>
+                    </li>
+
+                    <li>
+                        <strong>In what areas of your life have you shown determination and grit?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Think about career, parenting, school, fitness. How can you apply that same level of perseverance in your walk with God?</p>
+                    </li>
+
+                    <li>
+                        <strong>Are there scriptures or teachings you've been "cutting out" because they're hard to accept?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Like Thomas Jefferson's scissors or the pineapple pizza you'd rather avoid — what parts of God's word have you been turning the page on? "Do not worry about tomorrow." "Forgive as the Lord forgave you." What else?</p>
+                    </li>
+
+                    <li>
+                        <strong>When a trial surprises you, what is your first instinct?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Do you go straight to action mode? Research mode? Panic mode? James says: first, consider — pause and think about what God might be doing before you launch into your solution.</p>
+                    </li>
+
+                    <li>
+                        <strong>Is your faith being tested right now, and what is it revealing?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">Trials reveal whether our faith is authentic or a "vending machine" approach. Are you following Jesus for who He is, or just for the blessings? What is the current testing showing you?</p>
+                    </li>
+
+                    <li>
+                        <strong>Is there a trial in your life where you've been praying for relief, but God may be asking you to let perseverance finish its work?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">The thing you want removed may be the thing God wants to use. Can you see any redemptive purpose in the difficulty you're facing?</p>
+                    </li>
+
+                    <li>
+                        <strong>Where do you need God's wisdom right now?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">He promises to give generously, without finding fault. Have you actually asked? What gap between your understanding and His do you need Him to bridge?</p>
+                    </li>
+
+                    <li>
+                        <strong>"When you cannot trace His hand, you can trust His heart." Do you believe this?</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">In the areas where God's plan is unclear, can you still trust that He is good, that He is a perfect Father, and that He has your good in mind?</p>
+                    </li>
+                </ul>
+
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>Prayer Focus:</strong> Father, we confess that we don't have the wisdom to understand how it all works. In our ignorance, we often protest and abandon you or take control of our lives in ways that are wholly wrong and sometimes even more damaging. Protect us from ourselves and give us the wisdom that the all-knowing God has and freely gives. May we persevere for the glory of Christ. In Jesus' name, Amen.
+                </div>
+
+                <div class="highlight-gold" style="margin-top: 1.5rem;">
+                    <strong>Series Finale Note:</strong> This was the sixth and final sermon in the Soul Garden series. The series explored how to guard our hearts — the inner self, the sacred space where everything flows from. From clearing the ground and uprooting weeds, to nourishing the soil, to persevering through storms — a well-tended garden remains. May your soul overflow with life that reflects the vision of the Gardener. 🌿
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Attribution -->
+    <aside class="attribution" id="attribution" role="contentinfo">
+        <div class="attribution-short" aria-label="Attribution">ℹ️</div>
+        <div class="attribution-full">
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+                Generated by LLM with supervision and polishing by
+                <a href="../index.html" target="_blank" rel="noopener noreferrer">benjaminficusmicrocarpa</a>.
+                <a href="../license.html" target="_blank" rel="noopener noreferrer">MIT License</a>
+            </p>
+        </div>
+    </aside>
+
+    <script>
+        // Image Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slideshow-slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 7000);
+
+        // Tab switching with URL hash navigation
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.tab-content');
+
+        function switchToTab(targetId) {
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            sections.forEach(s => s.classList.remove('active'));
+            
+            const targetTab = document.querySelector(`.tab[data-tab="${targetId}"]`);
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetTab && targetSection) {
+                targetTab.classList.add('active');
+                targetTab.setAttribute('aria-selected', 'true');
+                targetSection.classList.add('active');
+                
+                window.scrollTo({
+                    top: document.querySelector('.tabs-container').offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tab');
+                window.location.hash = targetId;
+                switchToTab(targetId);
+            });
+        });
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                switchToTab(hash);
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                switchToTab(hash);
+            }
+        });
+
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            document.querySelectorAll('.accordion-item').forEach(accItem => {
+                accItem.classList.remove('active');
+            });
+
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Keyboard navigation for tabs
+        document.querySelector('.tabs').addEventListener('keydown', (e) => {
+            const tabsArray = Array.from(document.querySelectorAll('.tab'));
+            const currentIndex = tabsArray.findIndex(tab => tab.classList.contains('active'));
+            
+            let nextIndex;
+            if (e.key === 'ArrowRight') {
+                nextIndex = (currentIndex + 1) % tabsArray.length;
+            } else if (e.key === 'ArrowLeft') {
+                nextIndex = (currentIndex - 1 + tabsArray.length) % tabsArray.length;
+            } else {
+                return;
+            }
+            
+            tabsArray[nextIndex].click();
+            tabsArray[nextIndex].focus();
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Load and display tags
+        async function loadSermonTags() {
+            try {
+                const response = await fetch('sermons_data.json');
+                const data = await response.json();
+                
+                const sermon = data.sermons.find(s => s.date === '2026-02-08');
+                if (!sermon) return;
+                
+                const tagsContainer = document.getElementById('sermon-tags');
+                const tagCategories = data.tagCategories;
+                
+                const allTags = {};
+                Object.values(tagCategories).flat().forEach(tag => {
+                    allTags[tag.id] = tag;
+                });
+                
+                const tagLinks = sermon.tags.map(tagId => {
+                    const tagInfo = allTags[tagId];
+                    if (!tagInfo) return '';
+                    
+                    let tagType = 'topic';
+                    if (tagCategories.series?.find(t => t.id === tagId)) tagType = 'series';
+                    else if (tagCategories.themes?.find(t => t.id === tagId)) tagType = 'theme';
+                    else if (tagCategories.topics?.find(t => t.id === tagId)) tagType = 'topic';
+                    else if (tagCategories.scriptures?.find(t => t.id === tagId)) tagType = 'scripture';
+                    
+                    const tagUrl = `index.html?tags=${encodeURIComponent(tagId)}`;
+                    
+                    return `<a href="${tagUrl}" class="sermon-tag ${tagType}" title="Filter sermons by ${tagInfo.label}">
+                        ${tagInfo.emoji} ${tagInfo.label}
+                    </a>`;
+                }).filter(html => html).join('');
+                
+                tagsContainer.innerHTML = tagLinks;
+                
+            } catch (error) {
+                console.error('Failed to load sermon tags:', error);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSermonTags();
+        });
+    </script>
+    <script src="js/iecc-common.js"></script>
+</body>
+</html>

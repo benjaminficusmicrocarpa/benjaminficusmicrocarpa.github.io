@@ -44,6 +44,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 ### January-February 2026 - Soul Garden Series
 | Date | Sermon | Routing | Tags | External CSS/JS |
 |------|--------|---------|------|-----------------|
+| 2026-02-08 | Don't Throw Away Your Confidence | ✅ | ✅ | ✅ |
 | 2026-02-01 | Sacred Edits | ✅ | ✅ | ✅ |
 | 2026-01-04 | Above All Else | ✅ | ✅ | ✅ |
 | 2026-01-11 | Where Are We Growing? | ✅ | ✅ | ✅ |
@@ -68,7 +69,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 |------|--------|---------|------|-----------------|
 | 2024-10-27 | How We Make Sense of Life | ✅ | ✅ | ✅ |
 
-**Total Fully Implemented: 15 sermons** (with external CSS/JS)
+**Total Fully Implemented: 16 sermons** (with external CSS/JS)
 
 ---
 
@@ -348,9 +349,9 @@ accordionHeaders.forEach(header => {
 
 | Category | Count | Percentage |
 |----------|-------|------------|
-| Fully Implemented (all features) | 15 | 26.3% |
-| Missing All Features | 42 | 73.7% |
-| **Total** | **57** | **100%** |
+| Fully Implemented (all features) | 16 | 27.6% |
+| Missing All Features | 42 | 72.4% |
+| **Total** | **58** | **100%** |
 
 ---
 
@@ -382,7 +383,7 @@ To migrate remaining sermons:
 
 ---
 
-*Last updated: 2026-02-01*
+*Last updated: 2026-02-08*
 *Added 2026-02-01 (Soul Garden: Sacred Edits) - sermon on throwing off hindrances and sin, four layers of sin (Robert Mulholland), fixing eyes on Jesus.*
 *Added "Fixes Required / Applied" section documenting accordion double-handler fix and text colour contrast fixes for I Am series (Light of the World, The Door, Good Shepherd). Added fix (3) for I Am The Vine default theme text colour.*
 *Migrated 2025-04-13 (I Am The Way, The Truth and The Life) and 2025-04-20 (I Am The Resurrection and The Life) to external CSS/JS with tags and routing.*
@@ -390,3 +391,4 @@ To migrate remaining sermons:
 *Added fix (5) for 2025-03-16 (I Am The Light of the World): hidden text colour in Overview and Application cards fixed via HTML inline overrides `color: #e0d6c0`, no CSS change.*
 *Added 2024-10-27 (Rewiring My Worldview: How We Make Sense of Life) with new `css/rewriting-worldview.css` theme file.*
 *Added `key_scriptures.json` (43 key scriptures extracted from all sermon pages) and random scripture display feature in index.html hero header—displays a different scripture on each page load with link to source sermon.*
+*Added 2026-02-08 (Soul Garden: Don't Throw Away Your Confidence) — sermon on perseverance, trials producing maturity, James as brother of Jesus, asking God for wisdom. Series finale.*
