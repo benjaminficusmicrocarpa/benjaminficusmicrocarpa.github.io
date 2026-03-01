@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Way: Ordinary People | Island ECC</title>
+    <meta name="description" content="Fishermen and tax collectors — not exactly the pedigree you'd expect for those who would start a religious movement. But Jesus strategically chose ordinary people to do extraordinary things. Our greatest contribution may be a long line of ordinary displays of faith.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iecc-base.css">
+    <link rel="stylesheet" href="css/the-way.css">
+    <style>
+        .hero-header {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 950px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 12px rgba(0,0,0,0.6);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.2vw, 1.35rem);
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-meta {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--way-rose) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(107, 63, 160, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 63, 160, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(244, 239, 245, 0.1);
+            color: var(--text-light);
+            border: 2px solid rgba(244, 239, 245, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(244, 239, 245, 0.2);
+            border-color: rgba(244, 239, 245, 0.5);
+        }
+
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 21, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(107, 63, 160, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs::-webkit-scrollbar { display: none; }
+
+        .tab {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+
+        .main-content {
+            display: block;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--way-purple);
+        }
+
+        .content-card h2 {
+            color: var(--accent-light);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-card h3 {
+            color: var(--accent-light);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            opacity: 0.95;
+        }
+
+        .content-card ul, .content-card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, rgba(107, 63, 160, 0.12) 0%, rgba(201, 138, 154, 0.1) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            font-family: 'Lora', serif;
+        }
+
+        .verse-ref {
+            color: var(--accent-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .verse-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        .verse-context {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-style: normal;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(244, 239, 245, 0.1);
+        }
+
+        .quote-block {
+            position: relative;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: rgba(107, 63, 160, 0.08);
+            border-radius: 12px;
+            border-left: 4px solid var(--way-rose);
+        }
+
+        .quote-block::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--way-rose);
+            opacity: 0.3;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .quote-text {
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quote-attribution {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(139, 34, 82, 0.15) 0%, rgba(107, 63, 160, 0.12) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-light);
+            font-size: 1.1rem;
+        }
+
+        /* Disciples Grid */
+        .disciples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .disciple-chip {
+            background: rgba(107, 63, 160, 0.1);
+            border: 1px solid rgba(107, 63, 160, 0.25);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .disciple-chip:hover {
+            background: rgba(107, 63, 160, 0.2);
+            border-color: var(--way-purple);
+        }
+
+        .disciple-chip .disciple-name {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .disciple-chip .disciple-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Flow / Steps */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            background: var(--bg-card);
+            padding: 1.25rem 1.75rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(107, 63, 160, 0.25);
+            min-width: 160px;
+        }
+
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .flow-step-title {
+            font-weight: 600;
+            color: var(--accent-light);
+            font-size: 1rem;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--way-rose);
+            flex-shrink: 0;
+        }
+
+        /* App Cards */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--way-purple);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(107, 63, 160, 0.25);
+        }
+
+        .app-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .app-card-title {
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Reflection list */
+        .reflection-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .reflection-list li {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--wine);
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .reflection-list li::before {
+            content: '🛤️';
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Tags container */
+        .sermon-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: auto;
+                min-height: 100svh;
+                overflow: visible;
+                padding: 3rem 0 2rem;
+            }
+
+            .hero-header .slideshow-container { min-height: 100%; }
+            .hero-content { padding: 1.5rem 1.25rem; }
+            .hero-title { font-size: 2rem; margin-bottom: 1rem; }
+            .hero-subtitle { font-size: 0.95rem; margin-bottom: 1rem; }
+            .hero-meta { font-size: 0.85rem; margin-bottom: 0.75rem; }
+            .sermon-tags-container { margin: 1rem 0; gap: 0.4rem; }
+            .hero-buttons { gap: 0.75rem; }
+            .btn { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+            .tabs { justify-content: flex-start; }
+            .tab { padding: 1rem 1.1rem; font-size: 0.85rem; }
+            .main-content { padding: 2rem 1rem; }
+            .content-card { padding: 1.5rem 1.25rem; border-radius: 12px; }
+            .content-card h2 { font-size: 1.5rem; }
+            .content-card h3 { font-size: 1.25rem; }
+            .app-grid { grid-template-columns: 1fr; }
+            .verse-card { padding: 1.25rem; }
+            .quote-block { padding: 1.5rem 1.25rem; }
+            .highlight-box { padding: 1.25rem; }
+            .reflection-list li { padding: 1.25rem 1.25rem 1.25rem 2.75rem; }
+            .flow-container { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+            .flow-step { min-width: unset; width: 100%; }
+            .disciples-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+            .connection-card { padding: 1.5rem 1.25rem; }
+        }
+
+        @media (max-width: 420px) {
+            .hero-header { padding: 2.5rem 0 1.5rem; }
+            .hero-title { font-size: 1.75rem; line-height: 1.25; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
+            .main-content { padding: 1.5rem 0.75rem; }
+            .content-card { padding: 1.25rem 1rem; }
+        }
+
+        /* Print */
+        @media print {
+            .tabs-container, .hero-buttons, .attribution { display: none; }
+            .tab-content { display: block !important; page-break-after: always; }
+            body { background: white; color: black; }
+            .content-card { box-shadow: none; border: 1px solid #ccc; }
+        }
+
+        /* Accessibility */
+        .tab:focus, .btn:focus, .accordion-header:focus {
+            outline: 3px solid var(--accent-light);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body data-sermon-date="2026-03-01">
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="slideshow-container">
+            <div class="slideshow-slide active" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&q=80')"></div>
+        </div>
+
+        <!-- Rose Path Strip -->
+        <div class="way-path-strip"></div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">🛤️ The Way:<br>Ordinary People</h1>
+            <p class="hero-subtitle">"Follow me, and I will make you fishers of men."</p>
+            <div class="hero-meta">
+                📅 01 Mar 2026 | 🎤 Pastor Brett | 🏝️ Island ECC | 🛤️ The Way Series (Lent)
+            </div>
+            <div class="sermon-tags-container" id="sermon-tags"></div>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=SjEnJ8rvwR0" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation Tabs -->
+    <nav class="tabs-container" role="navigation" aria-label="Sermon sections">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview" role="tab" aria-selected="true">📋 Overview</div>
+            <div class="tab" data-tab="sermon" role="tab" aria-selected="false">📖 Main Sermon</div>
+            <div class="tab" data-tab="verses" role="tab" aria-selected="false">✝️ Bible Verses</div>
+            <div class="tab" data-tab="application" role="tab" aria-selected="false">🎯 Application</div>
+            <div class="tab" data-tab="reflection" role="tab" aria-selected="false">💭 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- ===== OVERVIEW TAB ===== -->
+        <section id="overview" class="tab-content active">
+            <div class="content-card">
+                <h2>📋 Sermon Overview</h2>
+                <p><strong>Central Theme:</strong> Jesus strategically chose twelve ordinary, unschooled people — fishermen, a tax collector, a political activist — not the religious elite, not the educated scholars. He created something new from something unremarkable, and He continues to call ordinary people like us to extraordinary purpose: be with Him, be changed by Him, and impact the world for Him.</p>
+
+                <div class="highlight-box">
+                    <strong>Series Opener:</strong> This is the first sermon in "The Way" — a Lent series exploring what it means to follow Jesus as the early church understood it. Before they were called "Christians," believers were known as followers of <em>the Way</em> (Acts 9:2; 24:14), because Jesus declared: "I am <em>the</em> way" (John 14:6).
+                </div>
+
+                <h3>📖 Key Passages</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 3:13-15 (NIV)</span>
+                    <div class="verse-text">
+                        "Jesus went up on a mountainside and called to him those he wanted, and they came to him. He appointed twelve that they might be with him and that he might send them out to preach."
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 John 14:6 (NIV)</span>
+                    <div class="verse-text">
+                        "I am the way and the truth and the life. No one comes to the Father except through me."
+                    </div>
+                </div>
+
+                <h3>🌟 Main Takeaways</h3>
+                <ol>
+                    <li><strong>Jesus chose ordinary people on purpose</strong> — Not by circumstance, but strategically. Fishermen, tax collectors, political activists — nobody with pedigree or theological training.</li>
+                    <li><strong>"Appointed" means "created"</strong> — The Greek word used is the same root as Genesis 1. Jesus was creating something new from twelve, reminiscent of the twelve tribes of Israel.</li>
+                    <li><strong>Our primary calling is to be with Jesus</strong> — Before mission, before service, before preaching. A relational, organic, ongoing connection with God through Christ.</li>
+                    <li><strong>Jesus is relational</strong> — The Trinity itself is community. Revelation 3:20: He doesn't demand performance — He wants to dine with you.</li>
+                    <li><strong>Who you're with determines who you are</strong> — Community shapes character. Jesus calls us to be around people who sharpen us spiritually.</li>
+                    <li><strong>Maturity is measured by love</strong> — Not years, not knowledge, not sacrifice. Do you love God and love people more than you used to?</li>
+                    <li><strong>God uses ordinary for extraordinary</strong> — "Do not despise small beginnings" (Zechariah 4:10). Faithfulness in the small, mundane, unnoticed things is what God calls extraordinary.</li>
+                </ol>
+
+                <h3>📐 Sermon Structure</h3>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🛤️</div>
+                        <div class="flow-step-title">The Way</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Lent series introduction</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🎣</div>
+                        <div class="flow-step-title">12 Ordinary People</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Mark 3 — strategic selection</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">❤️</div>
+                        <div class="flow-step-title">Be With Him</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Relationship, not religion</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🌍</div>
+                        <div class="flow-step-title">Impact Your World</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Ordinary faithfulness</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MAIN SERMON TAB ===== -->
+        <section id="sermon" class="tab-content">
+            <div class="content-card">
+                <h2>📖 Introducing "The Way"</h2>
+
+                <p>The early church wasn't originally called "the church" — it was called <strong>the Way</strong>. This title traces directly to Jesus himself, who provocatively declared in John 14:6: <em>"I am the way and the truth and the life. No one comes to the Father except through me."</em></p>
+
+                <p>This claim is exclusive and radical: not <em>a</em> way, but <em>the</em> way. Not all roads lead to the same mountaintop. Jesus uniquely, because of who He was, the life He led, and most importantly His power over death — His resurrection — positioned Himself as the bridge back to a holy God.</p>
+
+                <p>In Acts, the Apostle Paul refers to the church as "the Way" five times — both as Saul the persecutor and later as Paul the believer. Standing before Festus on trial, he would say: "I am a follower of the Way."</p>
+
+                <div class="highlight-box">
+                    <strong>Lent Series:</strong> For the next six weeks leading up to Easter, this series dives into Scripture to consider what it means to follow the way of Jesus — His life, His ministry, the claims He made, and the uniqueness of the gospel.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>🎣 Jesus Calls the Twelve</h2>
+
+                <h3>Why Jesus Avoided the Crowds</h3>
+                <p>As Jesus began His public ministry around age 30, He healed many people in miraculous ways. Naturally, His reputation grew and massive crowds followed. You'd think this is exactly what a revolutionary leader would want.</p>
+
+                <p>But oddly, Jesus repudiated the crowds. He even had a small boat ready as an escape plan. Why? Because the people were coming for the wrong reason. They sought the <strong>healing</strong> more than the <strong>healer</strong>. The physical had taken over the spiritual.</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">Make no mistake, God cares about your physical well-being. You are created in the image of God with a physical body. But the greater tragedy is when we focus only on the physical at the expense of the spiritual.</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+
+                <p>Jesus' mission was to seek and to save the lost — to make sure people understood their spiritual condition before a holy God. There were only two options: live a perfect life (impossible) or trust in a perfect Savior in Jesus.</p>
+
+                <h3>The Twelve Disciples</h3>
+                <p>So Jesus went up on a mountainside and called to Him those He wanted. Not the theologians, not the educated elite — but ordinary, blue-collar, unschooled people.</p>
+
+                <div class="disciples-grid">
+                    <div class="disciple-chip">
+                        <span class="disciple-name">Peter</span>
+                        <span class="disciple-role">Fisherman</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">James</span>
+                        <span class="disciple-role">Fisherman</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">John</span>
+                        <span class="disciple-role">Fisherman</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">Andrew</span>
+                        <span class="disciple-role">Fisherman</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">Philip</span>
+                        <span class="disciple-role">—</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">Bartholomew</span>
+                        <span class="disciple-role">—</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">Matthew</span>
+                        <span class="disciple-role">Tax Collector</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">Thomas</span>
+                        <span class="disciple-role">—</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">James</span>
+                        <span class="disciple-role">Son of Alphaeus</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">Thaddeus</span>
+                        <span class="disciple-role">—</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">Simon</span>
+                        <span class="disciple-role">Zealot (Political)</span>
+                    </div>
+                    <div class="disciple-chip">
+                        <span class="disciple-name">Judas</span>
+                        <span class="disciple-role">Treasurer</span>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>"Appointed" = "Created":</strong> The Greek word translated "appointed" has this idea of <em>creating</em> something — the same root as the Hebrew word in Genesis when God created the world. Jesus wasn't just choosing; He was creating something new. Twelve apostles, reminiscent of twelve tribes — something familiar, yet entirely new.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>❤️ Our Primary Calling: Be With Him</h2>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 3:14 (NIV)</span>
+                    <div class="verse-text">"He appointed twelve that they might be with him and that he might send them out to preach."</div>
+                    <div class="verse-context">The first description of their calling: not to perform, not to serve — but to <em>be with</em> Jesus.</div>
+                </div>
+
+                <p>Our primary calling is to be with Jesus in a relational, organic, ongoing way. God invites us not to a religion, not to a list of do's and don'ts, not to a lifestyle meant to earn His approval — but into a <strong>relationship</strong>. That is incredibly radical, both in Jesus' day and ours.</p>
+
+                <p>Pastor Brett shared: "I am a Christian, and if somebody asks I say yes. But my preference is to say I'm a <em>follower of Christ</em>. A Christian is simply someone saying, I follow Christ — who He is, what He taught, who He revealed God to be. Not just a historical figure to study, but the revelation of God made known in Jesus that we are invited to have a relationship with."</p>
+
+                <h3>Jesus Is Relational</h3>
+                <p>The whole Godhead — Father, Son, and Holy Spirit — is relational. In Genesis 1, before mankind existed, they have a conversation: <em>"Let <strong>us</strong> make mankind in <strong>our</strong> image."</em> "Us" and "our" — a plurality within the Godhead, community and relationship existing even before creation.</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Revelation 3:20 (NIV)</span>
+                    <div class="verse-text">"Here I am! I stand at the door and knock. If anyone hears my voice and opens the door, I will come in and eat with that person, and they with me."</div>
+                    <div class="verse-context">Not "I will correct their bad behavior." Not "I will demand submission." Jesus says: I will <em>dine</em> with you. Food in every culture is intimate. Think of Chinese New Year — who you eat with matters.</div>
+                </div>
+
+                <h3>Who You're With Determines Who You Are</h3>
+                <p>You become like those you hang out with. Every parent knows this — it's why you ask your eight-year-old about their new friend's family. It's why you choose certain schools. It's why some come to church: "I want my kid to be around good people."</p>
+
+                <p>Jesus says: Be around me. Because my mission is that you would become more like me. That's the invitation into community — small groups, service teams, fellowships — people who know your name and sharpen you spiritually.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>📏 Measuring Christian Maturity</h2>
+
+                <p>How would you measure spiritual maturity? Some might say years, knowledge, sacrifice. But Jesus puts it simply:</p>
+
+                <div class="highlight-box">
+                    <strong>The Litmus Test:</strong> Do you love God? Do you love people? <em>More than you used to.</em>
+                </div>
+
+                <p>It's why worship songs are carefully chosen — to slow our distractions, focus our affections, stir what is true, remind us of God's character. And loving God vertically should always spill into loving people horizontally. If you don't do the vertical, you can't do the horizontal. It's not multiple choice — it's a package.</p>
+
+                <h3>🔄 Being Transformed</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 2 Corinthians 3:18 (NIV)</span>
+                    <div class="verse-text">"And we all, who with unveiled faces contemplate the Lord's glory, are being transformed into his image with ever-increasing glory, which comes from the Lord, who is the Spirit."</div>
+                </div>
+
+                <p>Your purpose, regardless of vocation, is to be made like Christ — an ever-ongoing metamorphosis, changing you from the inside out. The fruit of the Spirit — love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control — God is producing change in all nine areas. You don't get to pick.</p>
+
+                <p>Pastor Brett shared his own transformation: as a kid he went to church twice a year — Mother's Day and Easter — and hated it. He thought, "When I'm old enough, I will never come to this place." Now he loves every expression of church. God changed his heart.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>🌍 Our Mission: Impact the World</h2>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 4:19 (NIV)</span>
+                    <div class="verse-text">"Come, follow me," Jesus said, "and I will send you out to fish for people."</div>
+                    <div class="verse-context">It's a promise and a package. Follow Him, and He <em>will</em> use you. Not optional — it's both invitation and deployment.</div>
+                </div>
+
+                <p>God could have made rocks cry out the gospel. But He chose you over a rock. We are His ambassadors, His mouthpiece — faulty, inconsistent, and flawed as we are. God knows that and still says: "I'm going with you."</p>
+
+                <h3>🌱 The Glory of Small Things</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Zechariah 4:10 (NIV)</span>
+                    <div class="verse-text">"Who dares despise the day of small things, since the seven eyes of the LORD that range throughout the earth will rejoice when they see the chosen capstone in the hand of Zerubbabel?"</div>
+                </div>
+
+                <p>God is in the small things. When you're exhausted but sit down to read a Bible story to your child at night — God sees it and it matters. When you greet the doorman by name and give them a blessing — God sees it. The mundane, the ordinary, the not-applauded activities are where God rushes in and says: <em>"I will use the small things."</em></p>
+
+                <div class="quote-block">
+                    <p class="quote-text">An extraordinary life is obtained by doing ordinary things for God. Nobody wants to be called ordinary — but it might be extraordinary because it was exhibited in ordinary ways over a lifetime, for the glory of God.</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BIBLE VERSES TAB ===== -->
+        <section id="verses" class="tab-content">
+            <div class="content-card">
+                <h2>✝️ Key Scripture Passages</h2>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 John 14:6 (NIV)</span>
+                    <div class="verse-text">"Jesus answered, 'I am the way and the truth and the life. No one comes to the Father except through me.'"</div>
+                    <div class="verse-context">The foundational claim that gave the early church its name — "the Way." Jesus claims exclusivity as the bridge to a holy God.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 3:7-8 (NIV)</span>
+                    <div class="verse-text">"Jesus withdrew with his disciples to the lake, and a large crowd from Galilee followed. When they heard about all he was doing, many people came to him."</div>
+                    <div class="verse-context">The beginning of Jesus' public ministry — crowds following for physical healing, but Jesus seeking to redirect them to spiritual wholeness.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 3:9 (NIV)</span>
+                    <div class="verse-text">"Because of the crowd he told his disciples to have a small boat ready for him, to keep the people from crowding him."</div>
+                    <div class="verse-context">Jesus' "escape plan" — He avoided the crowds because they sought the healing more than the healer.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 3:13-15 (NIV)</span>
+                    <div class="verse-text">"Jesus went up on a mountainside and called to him those he wanted, and they came to him. He appointed twelve that they might be with him and that he might send them out to preach and to have authority to drive out demons."</div>
+                    <div class="verse-context">The primary passage: Jesus strategically calling twelve ordinary people, creating something new — "appointed" sharing the same Greek root as "to create."</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Genesis 1:26 (NIV)</span>
+                    <div class="verse-text">"Then God said, 'Let us make mankind in our image, in our likeness.'"</div>
+                    <div class="verse-context">"Us" and "our" — the plurality within the Godhead, revealing that God is inherently relational. The Trinity in conversation before creation.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Revelation 3:20 (NIV)</span>
+                    <div class="verse-text">"Here I am! I stand at the door and knock. If anyone hears my voice and opens the door, I will come in and eat with that person, and they with me."</div>
+                    <div class="verse-context">Jesus' intimate invitation: not to correct or demand, but to dine — the most relational act across every culture.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 2 Corinthians 3:18 (NIV)</span>
+                    <div class="verse-text">"And we all, who with unveiled faces contemplate the Lord's glory, are being transformed into his image with ever-increasing glory, which comes from the Lord, who is the Spirit."</div>
+                    <div class="verse-context">The ongoing metamorphosis: we are being changed from the inside out, becoming more like Christ with ever-increasing glory.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Galatians 5:22-23 (NIV)</span>
+                    <div class="verse-text">"But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law."</div>
+                    <div class="verse-context">Nine aspects of spiritual fruit. God is producing change in all of them — you don't get to pick and choose.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 4:19 (NIV)</span>
+                    <div class="verse-text">"'Come, follow me,' Jesus said, 'and I will send you out to fish for people.'"</div>
+                    <div class="verse-context">A promise and a package: follow Him (relationship), and He will use you (mission). Both halves are inseparable.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Zechariah 4:10 (NIV)</span>
+                    <div class="verse-text">"Who dares despise the day of small things, since the seven eyes of the LORD that range throughout the earth will rejoice when they see the chosen capstone in the hand of Zerubbabel?"</div>
+                    <div class="verse-context">Small beginnings matter. The ordinary, unnoticed acts of faithfulness — God sees them and rejoices.</div>
+                </div>
+
+                <h3>🔍 Additional References</h3>
+                <ul>
+                    <li><strong>John 15 (NIV)</strong> — "Abide in the vine" — being filled with God's Spirit gives life, energy, conviction, and comfort</li>
+                    <li><strong>Matthew 5:13-16 (NIV)</strong> — Salt and light of the world — referenced in the closing by Byron: "by our works, people will give glory to God our Father"</li>
+                    <li><strong>Acts 9:2; 24:14</strong> — Paul refers to the church as "the Way" — both as persecutor and believer</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===== APPLICATION TAB ===== -->
+        <section id="application" class="tab-content">
+            <div class="content-card">
+                <h2>🎯 Living It Out</h2>
+                <p>This sermon isn't abstract theology — it's a personal invitation. Jesus calls ordinary people into an extraordinary adventure. Here's how to respond this week.</p>
+            </div>
+
+            <div class="app-grid">
+                <div class="app-card">
+                    <div class="app-card-icon">🙏</div>
+                    <div class="app-card-title">Cultivate "With-ness"</div>
+                    <p>Your primary calling is to <em>be with</em> Jesus. Before you serve, before you strategize, before you do — just be. Spend time in prayer, in Scripture, in silence. Practice awareness of His presence throughout your day.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🤝</div>
+                    <div class="app-card-title">Invest in Community</div>
+                    <p>You become like those you're around. Join a small group. Serve on a team. Find people who know your name and who sharpen you spiritually. Don't do the faith journey alone.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">❤️</div>
+                    <div class="app-card-title">Measure by Love</div>
+                    <p>Ask yourself honestly: Do I love God more than I used to? Do I love people more than I used to? Not knowledge, not years — love is the litmus test of maturity.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🌱</div>
+                    <div class="app-card-title">Embrace the Ordinary</div>
+                    <p>Read the bedtime story when you're exhausted. Greet the doorman by name. Show up consistently. The mundane, faithful, unnoticed acts — that's where God does His greatest work.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🗣️</div>
+                    <div class="app-card-title">Speak Up</div>
+                    <p>Your colleagues deserve an informed decision about the gospel. You don't need to be perfect first — be consistent, but speak up. God chose you over a rock.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🔄</div>
+                    <div class="app-card-title">Notice the Change</div>
+                    <p>Look back and take inventory. What has God changed in you? What do you care about now that you didn't before? How do you see people differently? Give thanks for the transformation.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🎯 This Week's Challenge</h3>
+                <p>Identify <strong>one person</strong> in your sphere of influence — a colleague, a neighbor, a family member — whom God has put on your heart. Pray for them daily this week, and look for one ordinary opportunity to show them the love of Christ. Not a grand gesture. Just salt and light.</p>
+            </div>
+        </section>
+
+        <!-- ===== REFLECTION TAB ===== -->
+        <section id="reflection" class="tab-content">
+            <div class="content-card">
+                <h2>💭 Reflection & Discussion</h2>
+
+                <h3>📝 From the Sermon</h3>
+                <ul class="reflection-list">
+                    <li>Jesus' primary calling to each of us is to "be with Him." How would you describe your awareness of the presence of God in your life? What could make it better?</li>
+                    <li>Do you sense you are being used by God to impact your sphere of influence? Who specifically has God put on your heart to intentionally reach out to?</li>
+                </ul>
+
+                <h3>🔍 Going Deeper</h3>
+                <ul class="reflection-list">
+                    <li>Jesus avoided the crowds because they wanted His blessings more than His person. Is there an area where you pursue God's <em>gifts</em> more than God <em>Himself</em>?</li>
+                    <li>The disciples were ordinary — fishermen, a tax collector, a political activist. Does your sense of "ordinariness" (or lack of qualifications) ever hold you back from following God's calling? How does this sermon speak to that?</li>
+                    <li>Pastor Brett said: "The fruit of the Spirit — you don't get to pick. God is producing change in all nine areas." Which fruit feels most challenging for you right now? Which has God been growing in you lately?</li>
+                    <li>"An extraordinary life is obtained by doing ordinary things for God." Can you think of someone whose faithfulness in small things has had an extraordinary impact on you?</li>
+                    <li>Revelation 3:20 pictures Jesus wanting to <em>dine</em> with you — an intimate, relational invitation. How does this image change or deepen your understanding of your relationship with God?</li>
+                </ul>
+
+                <h3>🙏 Prayer Prompts</h3>
+                <ul class="reflection-list">
+                    <li><strong>Gratitude:</strong> Thank God for choosing you — ordinary, flawed, and all. Thank Him for the privilege of being His ambassador.</li>
+                    <li><strong>Awareness:</strong> Ask God to increase your awareness of His presence throughout your daily routine. Pray for eyes to see Him in the ordinary moments.</li>
+                    <li><strong>Transformation:</strong> Ask the Holy Spirit to continue the metamorphosis — to grow the fruit of the Spirit in the areas where you need it most.</li>
+                    <li><strong>Mission:</strong> Pray by name for the people God has placed in your life who don't yet know Him. Ask for ordinary opportunities to be salt and light.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Attribution -->
+    <aside class="attribution" id="attribution" role="contentinfo">
+        <div class="attribution-short" aria-label="Attribution">ℹ️</div>
+        <div class="attribution-full">
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+                Generated by LLM with supervision and polishing by
+                <a href="../index.html" target="_blank" rel="noopener noreferrer">benjaminficusmicrocarpa</a>.
+                <a href="../license.html" target="_blank" rel="noopener noreferrer">MIT License</a>
+            </p>
+        </div>
+    </aside>
+
+    <script src="js/iecc-common.js"></script>
+</body>
+</html>

@@ -17,6 +17,7 @@ This document tracks which sermons have implemented:
 - `css/i-am.css` - Theme styles for I Am series (includes theme variations: `.theme-light`, `.theme-door`, `.theme-shepherd`, default vine)
 - `css/rewriting-worldview.css` - Theme styles for Rewriting My Worldview series (classic theological palette, worldview cards, framework grid)
 - `css/chinese-new-year.css` - Theme styles for Chinese New Year series (festive red & gold palette, horse animation, dual-sermon layout, weight-vs-wind comparison)
+- `css/the-way.css` - Theme styles for The Way series (purple/rose Lent palette, path strip motif, connection cards for cross-references)
 - `js/iecc-common.js` - Common JavaScript functionality (tabs, accordions, slideshows, tag loading)
 - `key_scriptures.json` - Collection of key scriptures from all sermons (used for random scripture display on index page)
 
@@ -42,9 +43,15 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 | 2025-12-21 | Rejoice in Opposition | ✅ | ✅ | ✅ |
 | 2025-12-28 | Rejoice in Anticipation | ✅ | ✅ | ✅ |
 
+### March 2026 - The Way Series
+| Date | Sermon | Routing | Tags | External CSS/JS |
+|------|--------|---------|------|-----------------|
+| 2026-03-01 | The Way: Ordinary People | ✅ | ✅ | ✅ |
+
 ### February 2026 - Chinese New Year Series
 | Date | Sermon | Routing | Tags | External CSS/JS |
 |------|--------|---------|------|-----------------|
+| 2026-02-22 | Racing Through Opposition & New Year, New You | ✅ | ✅ | ✅ |
 | 2026-02-15 | Fuel Our Worship & Weight or Wind | ✅ | ✅ | ✅ |
 
 ### January-February 2026 - Soul Garden Series
@@ -75,7 +82,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 |------|--------|---------|------|-----------------|
 | 2024-10-27 | How We Make Sense of Life | ✅ | ✅ | ✅ |
 
-**Total Fully Implemented: 17 sermons** (with external CSS/JS)
+**Total Fully Implemented: 19 sermons** (with external CSS/JS)
 
 ---
 
@@ -355,9 +362,9 @@ accordionHeaders.forEach(header => {
 
 | Category | Count | Percentage |
 |----------|-------|------------|
-| Fully Implemented (all features) | 17 | 28.8% |
-| Missing All Features | 42 | 71.2% |
-| **Total** | **59** | **100%** |
+| Fully Implemented (all features) | 19 | 31.1% |
+| Missing All Features | 42 | 68.9% |
+| **Total** | **61** | **100%** |
 
 ---
 
@@ -389,7 +396,9 @@ To migrate remaining sermons:
 
 ---
 
-*Last updated: 2026-02-15*
+*Last updated: 2026-03-01*
+*Added 2026-03-01 (The Way: Ordinary People) — first sermon in The Way Lent series with Pastor Brett. Mark 3 — Jesus choosing 12 ordinary disciples, relationship over religion, being transformed into His image, ordinary faithfulness for extraordinary impact. New `css/the-way.css` theme (purple/rose Lent palette, path strip motif, Scripture Connections tab). New series tag: the-way. New scripture tags: mark, zechariah, acts.*
+*Added 2026-02-22 (Chinese New Year: Racing Through Opposition & New Year, New You) — dual-sermon page with Hill Chau (Ezra 4, opposition tactics, identity) and Zelda Cheung (Ezra 5-6, God-people partnership, vessels set apart). Reuses `css/chinese-new-year.css` theme. New scripture tag: timothy.*
 *Added 2026-02-15 (Chinese New Year: Fuel Our Worship & Weight or Wind) — dual-sermon page with Carrie Lo and Pastor Daniel exploring Ezra 1-3. New `css/chinese-new-year.css` theme (red & gold palette, horse animation, weight-vs-wind comparison). New series tag: chinese-new-year. New scripture tag: ezra.*
 *Added 2026-02-01 (Soul Garden: Sacred Edits) - sermon on throwing off hindrances and sin, four layers of sin (Robert Mulholland), fixing eyes on Jesus.*
 *Added "Fixes Required / Applied" section documenting accordion double-handler fix and text colour contrast fixes for I Am series (Light of the World, The Door, Good Shepherd). Added fix (3) for I Am The Vine default theme text colour.*
