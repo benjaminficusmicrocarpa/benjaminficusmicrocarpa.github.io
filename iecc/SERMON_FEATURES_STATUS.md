@@ -46,6 +46,8 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 ### March 2026 - The Way Series
 | Date | Sermon | Routing | Tags | External CSS/JS |
 |------|--------|---------|------|-----------------|
+| 2026-03-15 | The Way: Mercy, Not Sacrifice | ✅ | ✅ | ✅ |
+| 2026-03-08 | The Way: The Temptation of Jesus | ✅ | ✅ | ✅ |
 | 2026-03-01 | The Way: Ordinary People | ✅ | ✅ | ✅ |
 
 ### February 2026 - Chinese New Year Series
@@ -82,7 +84,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 |------|--------|---------|------|-----------------|
 | 2024-10-27 | How We Make Sense of Life | ✅ | ✅ | ✅ |
 
-**Total Fully Implemented: 19 sermons** (with external CSS/JS)
+**Total Fully Implemented: 21 sermons** (with external CSS/JS)
 
 ---
 
@@ -362,9 +364,9 @@ accordionHeaders.forEach(header => {
 
 | Category | Count | Percentage |
 |----------|-------|------------|
-| Fully Implemented (all features) | 19 | 31.1% |
-| Missing All Features | 42 | 68.9% |
-| **Total** | **61** | **100%** |
+| Fully Implemented (all features) | 21 | 33.3% |
+| Missing All Features | 42 | 66.7% |
+| **Total** | **63** | **100%** |
 
 ---
 
@@ -396,7 +398,9 @@ To migrate remaining sermons:
 
 ---
 
-*Last updated: 2026-03-01*
+*Last updated: 2026-03-15*
+*Added 2026-03-15 (The Way: Mercy, Not Sacrifice) — third sermon in The Way Lent series with Pastor Albert. Matthew 9:9-13 — Jesus calling Matthew the tax collector, eating with sinners, "I desire mercy not sacrifice." Doctor vs judge paradigm, grace before truth (John 1:17), chesed as active covenantal love, "who do you bring to your table?" Reuses `css/the-way.css` theme. Custom Historical Context tab for Capernaum, Roman tax system, and Hebrew word study. New scripture tag: hosea.*
+*Added 2026-03-08 (The Way: The Temptation of Jesus) — second sermon in The Way Lent series with Pastor Brett. Matthew 4 — Jesus' three wilderness temptations revealing deeper questions about provision, power, and worship. Three defenses: know your weaknesses, imagine the cost, know your identity. Hypostatic union, church hurt, restraint bias, fixing eyes on Jesus. Reuses `css/the-way.css` theme. New scripture tags used: matthew, hebrews, corinthians, proverbs, john, mark.*
 *Added 2026-03-01 (The Way: Ordinary People) — first sermon in The Way Lent series with Pastor Brett. Mark 3 — Jesus choosing 12 ordinary disciples, relationship over religion, being transformed into His image, ordinary faithfulness for extraordinary impact. New `css/the-way.css` theme (purple/rose Lent palette, path strip motif, Scripture Connections tab). New series tag: the-way. New scripture tags: mark, zechariah, acts.*
 *Added 2026-02-22 (Chinese New Year: Racing Through Opposition & New Year, New You) — dual-sermon page with Hill Chau (Ezra 4, opposition tactics, identity) and Zelda Cheung (Ezra 5-6, God-people partnership, vessels set apart). Reuses `css/chinese-new-year.css` theme. New scripture tag: timothy.*
 *Added 2026-02-15 (Chinese New Year: Fuel Our Worship & Weight or Wind) — dual-sermon page with Carrie Lo and Pastor Daniel exploring Ezra 1-3. New `css/chinese-new-year.css` theme (red & gold palette, horse animation, weight-vs-wind comparison). New series tag: chinese-new-year. New scripture tag: ezra.*

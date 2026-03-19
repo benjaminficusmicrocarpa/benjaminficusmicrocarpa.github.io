@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Way: The Temptation of Jesus | Island ECC</title>
+    <meta name="description" content="Our struggles against temptation are far more sophisticated than simply avoiding 'big' sins. Jesus was tempted in all ways and was without sin. His struggle gives us insight into our own — revealing deeper questions about God's provision, power, and our worship.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iecc-base.css">
+    <link rel="stylesheet" href="css/the-way.css">
+    <style>
+        .hero-header {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 950px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 12px rgba(0,0,0,0.6);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.2vw, 1.35rem);
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-meta {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--way-rose) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(107, 63, 160, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 63, 160, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(244, 239, 245, 0.1);
+            color: var(--text-light);
+            border: 2px solid rgba(244, 239, 245, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(244, 239, 245, 0.2);
+            border-color: rgba(244, 239, 245, 0.5);
+        }
+
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 21, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(107, 63, 160, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs::-webkit-scrollbar { display: none; }
+
+        .tab {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+
+        .main-content {
+            display: block;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--way-purple);
+        }
+
+        .content-card h2 {
+            color: var(--accent-light);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-card h3 {
+            color: var(--accent-light);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            opacity: 0.95;
+        }
+
+        .content-card ul, .content-card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, rgba(107, 63, 160, 0.12) 0%, rgba(201, 138, 154, 0.1) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            font-family: 'Lora', serif;
+        }
+
+        .verse-ref {
+            color: var(--accent-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .verse-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        .verse-context {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-style: normal;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(244, 239, 245, 0.1);
+        }
+
+        .quote-block {
+            position: relative;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: rgba(107, 63, 160, 0.08);
+            border-radius: 12px;
+            border-left: 4px solid var(--way-rose);
+        }
+
+        .quote-block::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--way-rose);
+            opacity: 0.3;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .quote-text {
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quote-attribution {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(139, 34, 82, 0.15) 0%, rgba(107, 63, 160, 0.12) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-light);
+            font-size: 1.1rem;
+        }
+
+        /* Temptation Cards */
+        .temptation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .temptation-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border-top: 4px solid var(--wine);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .temptation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(139, 34, 82, 0.25);
+        }
+
+        .temptation-number {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(107, 63, 160, 0.15);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .temptation-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+        .temptation-title {
+            font-size: 1.2rem;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .temptation-surface {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .temptation-deeper {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(244, 239, 245, 0.1);
+        }
+
+        .temptation-deeper strong { color: var(--way-rose); }
+
+        /* Defeat Steps */
+        .defeat-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .defeat-step {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--way-purple);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .defeat-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(107, 63, 160, 0.25);
+        }
+
+        .defeat-step-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+        .defeat-step-title {
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Flow / Steps */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            background: var(--bg-card);
+            padding: 1.25rem 1.75rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(107, 63, 160, 0.25);
+            min-width: 160px;
+        }
+
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .flow-step-title {
+            font-weight: 600;
+            color: var(--accent-light);
+            font-size: 1rem;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--way-rose);
+            flex-shrink: 0;
+        }
+
+        /* App Cards */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--way-purple);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(107, 63, 160, 0.25);
+        }
+
+        .app-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .app-card-title {
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Reflection list */
+        .reflection-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .reflection-list li {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--wine);
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .reflection-list li::before {
+            content: '🛤️';
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Tags container */
+        .sermon-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: auto;
+                min-height: 100svh;
+                overflow: visible;
+                padding: 3rem 0 2rem;
+            }
+
+            .hero-header .slideshow-container { min-height: 100%; }
+            .hero-content { padding: 1.5rem 1.25rem; }
+            .hero-title { font-size: 2rem; margin-bottom: 1rem; }
+            .hero-subtitle { font-size: 0.95rem; margin-bottom: 1rem; }
+            .hero-meta { font-size: 0.85rem; margin-bottom: 0.75rem; }
+            .sermon-tags-container { margin: 1rem 0; gap: 0.4rem; }
+            .hero-buttons { gap: 0.75rem; }
+            .btn { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+            .tabs { justify-content: flex-start; }
+            .tab { padding: 1rem 1.1rem; font-size: 0.85rem; }
+            .main-content { padding: 2rem 1rem; }
+            .content-card { padding: 1.5rem 1.25rem; border-radius: 12px; }
+            .content-card h2 { font-size: 1.5rem; }
+            .content-card h3 { font-size: 1.25rem; }
+            .app-grid { grid-template-columns: 1fr; }
+            .temptation-grid { grid-template-columns: 1fr; }
+            .defeat-steps { grid-template-columns: 1fr; }
+            .verse-card { padding: 1.25rem; }
+            .quote-block { padding: 1.5rem 1.25rem; }
+            .highlight-box { padding: 1.25rem; }
+            .reflection-list li { padding: 1.25rem 1.25rem 1.25rem 2.75rem; }
+            .flow-container { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+            .flow-step { min-width: unset; width: 100%; }
+        }
+
+        @media (max-width: 420px) {
+            .hero-header { padding: 2.5rem 0 1.5rem; }
+            .hero-title { font-size: 1.75rem; line-height: 1.25; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
+            .main-content { padding: 1.5rem 0.75rem; }
+            .content-card { padding: 1.25rem 1rem; }
+        }
+
+        /* Print */
+        @media print {
+            .tabs-container, .hero-buttons, .attribution { display: none; }
+            .tab-content { display: block !important; page-break-after: always; }
+            body { background: white; color: black; }
+            .content-card { box-shadow: none; border: 1px solid #ccc; }
+        }
+
+        /* Accessibility */
+        .tab:focus, .btn:focus, .accordion-header:focus {
+            outline: 3px solid var(--accent-light);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body data-sermon-date="2026-03-08">
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="slideshow-container">
+            <div class="slideshow-slide active" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1504870712357-65ea720d6078?w=1920&q=80')"></div>
+        </div>
+
+        <!-- Rose Path Strip -->
+        <div class="way-path-strip"></div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">🛤️ The Way:<br>The Temptation of Jesus</h1>
+            <p class="hero-subtitle">"Lead us not into temptation."</p>
+            <div class="hero-meta">
+                📅 08 Mar 2026 | 🎤 Pastor Brett | 🏝️ Island ECC | 🛤️ The Way Series (Lent)
+            </div>
+            <div class="sermon-tags-container" id="sermon-tags"></div>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=BpUL6tNsDYM" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation Tabs -->
+    <nav class="tabs-container" role="navigation" aria-label="Sermon sections">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview" role="tab" aria-selected="true">📋 Overview</div>
+            <div class="tab" data-tab="sermon" role="tab" aria-selected="false">📖 Main Sermon</div>
+            <div class="tab" data-tab="verses" role="tab" aria-selected="false">✝️ Bible Verses</div>
+            <div class="tab" data-tab="application" role="tab" aria-selected="false">🎯 Application</div>
+            <div class="tab" data-tab="reflection" role="tab" aria-selected="false">💭 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- ===== OVERVIEW TAB ===== -->
+        <section id="overview" class="tab-content active">
+            <div class="content-card">
+                <h2>📋 Sermon Overview</h2>
+                <p><strong>Central Theme:</strong> Our struggles against temptation are far more sophisticated than simply avoiding "big" sins. Jesus was tempted in all ways and was without sin. His three temptations in the wilderness reveal deeper questions every human wrestles with: Will God meet my needs? Is God powerful in my circumstances? Will I worship God only when there are rewards? Defeating temptation comes not from deeper resolve, but from fixing our eyes on Jesus and knowing who we are in Him.</p>
+
+                <div class="highlight-box">
+                    <strong>Series Context:</strong> This is the second sermon in "The Way" — a Lent series exploring the life of Jesus as we make our way toward Easter. Jesus himself taught us to pray, "Lead us not into temptation" — and He can speak those words with authority because He endured temptation Himself.
+                </div>
+
+                <h3>📖 Key Passages</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 4:1-4 (NIV)</span>
+                    <div class="verse-text">
+                        "Then Jesus was led by the Spirit into the wilderness to be tempted by the devil. After fasting forty days and forty nights, he was hungry. The tempter came to him and said, 'If you are the Son of God, tell these stones to become bread.' Jesus answered, 'It is written: Man shall not live on bread alone, but on every word that comes from the mouth of God.'"
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 4:15-16 (NIV)</span>
+                    <div class="verse-text">
+                        "For we do not have a high priest who is unable to empathize with our weaknesses, but we have one who has been tempted in every way, just as we are — yet he did not sin. Let us then approach God's throne of grace with confidence."
+                    </div>
+                </div>
+
+                <h3>🌟 Main Takeaways</h3>
+                <ol>
+                    <li><strong>Jesus was fully God and fully man</strong> — The Council of Chalcedon (451 AD) affirmed the hypostatic union. He was hungry, depleted, vulnerable — yet without sin. This means He truly understands our struggles.</li>
+                    <li><strong>Temptation is more subtle than "big sins"</strong> — The enemy's real strategy targets deeper questions: Does God provide? Does God care? Is God enough?</li>
+                    <li><strong>Three temptations, three deeper questions</strong> — Stones to bread (Will God meet my needs?), temple jump (Is God powerful in my circumstances?), kingdoms for worship (Will you worship God only if there are rewards?).</li>
+                    <li><strong>Jesus countered every temptation with Scripture</strong> — He responded to lies with truth, modeling how God's word corrects erroneous thinking.</li>
+                    <li><strong>Know your weaknesses</strong> — Restraint bias makes us think we're stronger than we are. "Let anyone who thinks they stand take heed lest they fall."</li>
+                    <li><strong>Imagine the cost</strong> — Sin always brings death — death of trust, intimacy, relationships. Thinking through consequences cuts temptation short.</li>
+                    <li><strong>Know your identity</strong> — The enemy's first move against Jesus was to undermine His identity: "If you are the Son of God." The greatest defense is knowing who God says you are.</li>
+                </ol>
+
+                <h3>📐 Sermon Structure</h3>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🙏</div>
+                        <div class="flow-step-title">Lead Us Not</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">The Lord's Prayer & temptation</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🏜️</div>
+                        <div class="flow-step-title">3 Temptations</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Matthew 4 — deeper questions</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">⚔️</div>
+                        <div class="flow-step-title">3 Defenses</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Weakness, cost, identity</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">✝️</div>
+                        <div class="flow-step-title">Fix Eyes on Jesus</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Not avoidance — attraction</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MAIN SERMON TAB ===== -->
+        <section id="sermon" class="tab-content">
+            <div class="content-card">
+                <h2>🙏 "Lead Us Not Into Temptation"</h2>
+
+                <p>The followers of Jesus came to Him with a simple question: <em>"Teach us to pray."</em> In response, Jesus gave them the Lord's Prayer — and within it, a line that is as direct as it gets: <strong>"Lead us not into temptation."</strong></p>
+
+                <p>No interpretation needed. No original Greek to decode. The instruction is plain: pray that God would keep you away from temptation. Yet how often do we actually pray this? We tend to pray for provision, direction, answers — but rarely, "God, don't let me get close to temptation today."</p>
+
+                <div class="highlight-box">
+                    <strong>The Paradox:</strong> Jesus teaches us to pray <em>against</em> being led into temptation — yet He Himself was led <em>by the Spirit</em> into the wilderness to be tempted. This is not something for us to model. Jesus is unique. Our role is to pray: "Keep me from it."
+                </div>
+
+                <p>After fasting forty days and forty nights, Matthew records what may be the greatest understatement in the New Testament: <em>"He was hungry."</em> Every word of Scripture is there for a reason. This line isn't just about food — it reveals His state of vulnerability before the temptations came, and it confirms His full humanity.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>⚖️ Fully God and Fully Man</h2>
+
+                <p>Throughout church history, the nature of Jesus has been debated. <strong>Docetism</strong> said Jesus was fully God but not fully human. <strong>Arianism</strong> said He was fully man but not fully God. At the <strong>Council of Chalcedon in 451 AD</strong>, the church affirmed the <em>hypostatic union</em>: Jesus was fully God <em>and</em> fully man — both natures coexisting without diminishment.</p>
+
+                <p>Why does this matter? Because <strong>fully man</strong> means He understands us. He was depleted, vulnerable, hungry. He empathizes — not just sympathizes — with our weakness. And <strong>fully God</strong> means His sacrifice on the cross is sufficient to cover the sins of the entire world. Without both, the gospel doesn't hold.</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 4:15-16 (NIV)</span>
+                    <div class="verse-text">"For we do not have a high priest who is unable to empathize with our weaknesses, but we have one who has been tempted in every way, just as we are — yet he did not sin. Let us then approach God's throne of grace with confidence."</div>
+                    <div class="verse-context">Because Jesus has endured temptation, we can come boldly before God — not with shame, but with confidence that He understands.</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>🏜️ The Three Temptations</h2>
+
+                <p>In Matthew 4, the enemy comes to Jesus at His most depleted — forty days of fasting in the wilderness. Each temptation targets not just a surface-level desire, but a profound question of the soul.</p>
+
+                <div class="temptation-grid">
+                    <div class="temptation-card">
+                        <span class="temptation-number">1</span>
+                        <div class="temptation-icon">🍞</div>
+                        <div class="temptation-title">Stones to Bread</div>
+                        <div class="temptation-surface">"If you are the Son of God, tell these stones to become bread."</div>
+                        <div class="temptation-deeper"><strong>The real question:</strong> Will God meet my needs? Valid needs — not counterfeit, not unholy — but will He provide financially, emotionally, relationally?</div>
+                    </div>
+                    <div class="temptation-card">
+                        <span class="temptation-number">2</span>
+                        <div class="temptation-icon">🏛️</div>
+                        <div class="temptation-title">Throw Yourself Down</div>
+                        <div class="temptation-surface">"If you are the Son of God, throw yourself down. For it is written: He will command his angels concerning you."</div>
+                        <div class="temptation-deeper"><strong>The real question:</strong> Is God powerful in my circumstances? Is He able <em>and</em> willing to enter into my situation, to see me, to care, and to respond?</div>
+                    </div>
+                    <div class="temptation-card">
+                        <span class="temptation-number">3</span>
+                        <div class="temptation-icon">👑</div>
+                        <div class="temptation-title">Bow Down for Kingdoms</div>
+                        <div class="temptation-surface">"All this I will give you, if you will bow down and worship me."</div>
+                        <div class="temptation-deeper"><strong>The real question:</strong> Will you worship God <em>only</em> if there are rewards? Is your commitment contingent? Is there an asterisk by your faith?</div>
+                    </div>
+                </div>
+
+                <h3>🍞 Temptation 1: Will God Meet My Needs?</h3>
+                <p>The enemy goes straight for Jesus' point of weakness — He's starving. "If you are the Son of God, meet a natural need in a supernatural way." This isn't about literal stone-to-bread power for us. It's the question bumbling about within your psyche every single day, whether you articulate it or not: <em>Will God protect me? Will He provide? Will He answer my prayers?</em></p>
+
+                <p>Jesus responds with Scripture: <em>"Man shall not live on bread alone, but on every word that comes from the mouth of God."</em> He anchors His answer in truth that transcends the physical — there is something more sustaining than bread.</p>
+
+                <h3>🏛️ Temptation 2: Is God Powerful in My Circumstances?</h3>
+                <p>Having been defeated once, the enemy gets clever — he uses Scripture against Jesus, quoting God's own word: "He will command his angels concerning you." The devil says: <em>Your God promised this. Test Him. Make Him prove it.</em></p>
+
+                <p>Jesus rightly applies the full counsel of Scripture: <em>"It is also written: Do not put the Lord your God to the test."</em> The enemy took a verse out of context; Jesus put it back.</p>
+
+                <p>The deeper question for us: Is God able <em>and</em> willing? When prayers go unanswered, when circumstances disappoint, the enemy whispers: "Your God doesn't care." But we can counter that whisper by recalling the ways God has intervened, answered, and provided in our past. He knows the number of hairs on your head. If a sparrow falls, He notices. If it's a concern of yours, it's a concern of His.</p>
+
+                <h3>👑 Temptation 3: Will You Worship God Only If There Are Rewards?</h3>
+                <p>The enemy introduces a transactional concept: <em>If you do this, then you will get this.</em> He shows Jesus all the kingdoms of the world and says: "Bow down and this is all yours."</p>
+
+                <p>Jesus responds: <em>"Away from me, Satan! For it is written: Worship the Lord your God, and serve him only."</em> He counters the offer of physical blessing with the reminder that true blessing is spiritual — to worship and serve God alone.</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">Is the quality of your life based on what is seen or what is unseen? We live in a material world. Hong Kong takes it to the next level. But purpose and meaning is found in recognizing that we are souls — there is an unseen side of life.</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 2 Corinthians 4:18 (NIV)</span>
+                    <div class="verse-text">"So we fix our eyes not on what is seen, but on what is unseen, since what is seen is temporary, but what is unseen is eternal."</div>
+                    <div class="verse-context">The gravitational pull of every life is toward the tangible, countable, material. Yet what is eternal is unseen — our connection with God, our identity as souls.</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>⚔️ How to Defeat Temptation</h2>
+                <p>The temptation when talking about temptation is to think only about "big" sins. But the enemy has a plan for every stage, every age, every background — subtle strategies to distract you from devotion to God.</p>
+
+                <div class="defeat-steps">
+                    <div class="defeat-step">
+                        <div class="defeat-step-icon">🔍</div>
+                        <div class="defeat-step-title">1. Know Your Weaknesses</div>
+                        <p>In a world that covers up weakness, you might not even know your own. <strong>Restraint bias</strong> says you think you have greater restraint than you actually do. Scripture says the opposite: <em>"Let anyone who thinks they stand take heed lest they fall"</em> (1 Corinthians 10:12). Err on the side of stepping far back from temptation rather than snuggling up next to it.</p>
+                    </div>
+                    <div class="defeat-step">
+                        <div class="defeat-step-icon">💰</div>
+                        <div class="defeat-step-title">2. Imagine the Cost</div>
+                        <p>If you thought about the actual cost of giving in, it would cut you short. Sin always brings death — death of trust, death of intimacy, death of relationships. <em>"All at once he follows her... he does not know that it will cost him his life"</em> (Proverbs 7:22-23). Sin never stays in a vacuum.</p>
+                    </div>
+                    <div class="defeat-step">
+                        <div class="defeat-step-icon">👤</div>
+                        <div class="defeat-step-title">3. Know Your Identity</div>
+                        <p>At Jesus' baptism (Matthew 3:17), the Father declared: <em>"This is my beloved Son, with whom I am well pleased."</em> Immediately after, the enemy's first move was to attack that identity: <em>"If you are the Son of God..."</em> Jesus didn't need to prove it — the Father already said it. How much of our lives is spent proving things to people when God has already declared who we are?</p>
+                    </div>
+                </div>
+
+                <h3>The Skiing Story</h3>
+                <p>Pastor Brett shared a personal illustration: at a party, three men were discussing skiing trips and fine wine — topics where he felt completely out of his depth. His temptation? To use <em>words</em> — sarcasm, passive-aggressive comments — to elevate himself at their expense. "I didn't go skiing. I was here doing ministry. But how are the Alps?"</p>
+
+                <p>Nobody was trying to make him feel small. But insecurity found the weakness, and his instinct was to use his greatest strength (words) as a weapon. If you don't know your weakness, you'll walk right into the temptation — and then wonder, <em>"How did I get here?"</em></p>
+
+                <h3>Church Hurt</h3>
+                <p>Pastor Brett addressed "church hurt" directly: "If you stick around just a little bit, you're gonna be hurt — because somebody won't remember your name, or our worship will be too loud, or our aircon will be too low." The church is a group of forgiven sinners who try but still miss the mark.</p>
+
+                <p>But here's the plea: take that hurt to God, not away from God. Don't let horizontal disappointment become a conclusion about the vertical. God doesn't hurt you. God doesn't disappoint. And His greatest affection for you is proven once and for all at the cross.</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 John 3:16 (NIV)</span>
+                    <div class="verse-text">"For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."</div>
+                    <div class="verse-context">If you ever question God's love, look at the cross. He proved it, displayed it, once and for all. That proof can carry you through every disappointment.</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>✝️ The Greatest Defense</h2>
+
+                <p>The greatest thing you can do in the struggle against any temptation is not to develop deeper resolve, some kind of perseverance, some determination that "never again." The greatest thing is to <strong>fix your eyes on Jesus</strong>.</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">It's not to avoid negative — not to say "don't sin, don't sin, don't sin" — but to love God, love God, love God. To understand how great His love is for you and to walk in that. It's not just to avoid temptation, but rather to be drawn into the beauty that is Jesus Christ.</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+
+                <p>Yes, avoid temptations. But do so primarily by being swept up in how great God's love is for you. Worship Him alone. Serve Him alone. And watch how beautifully it affects your relationships with everyone around you.</p>
+            </div>
+        </section>
+
+        <!-- ===== BIBLE VERSES TAB ===== -->
+        <section id="verses" class="tab-content">
+            <div class="content-card">
+                <h2>✝️ Key Scripture Passages</h2>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 4:1-4 (NIV)</span>
+                    <div class="verse-text">"Then Jesus was led by the Spirit into the wilderness to be tempted by the devil. After fasting forty days and forty nights, he was hungry. The tempter came to him and said, 'If you are the Son of God, tell these stones to become bread.' Jesus answered, 'It is written: Man shall not live on bread alone, but on every word that comes from the mouth of God.'"</div>
+                    <div class="verse-context">The first temptation: meeting a legitimate need through illegitimate means. Jesus responds with Deuteronomy 8:3 — there is sustenance deeper than bread.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 4:5-7 (NIV)</span>
+                    <div class="verse-text">"Then the devil took him to the holy city and had him stand on the highest point of the temple. 'If you are the Son of God,' he said, 'throw yourself down. For it is written: He will command his angels concerning you, and they will lift you up in their hands, so that you will not strike your foot against a stone.' Jesus answered him, 'It is also written: Do not put the Lord your God to the test.'"</div>
+                    <div class="verse-context">The second temptation: the enemy uses Scripture out of context. Jesus rightly applies the full counsel of God's word (Deuteronomy 6:16).</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 4:8-11 (NIV)</span>
+                    <div class="verse-text">"Again, the devil took him to a very high mountain and showed him all the kingdoms of the world and their splendor. 'All this I will give you,' he said, 'if you will bow down and worship me.' Jesus said to him, 'Away from me, Satan! For it is written: Worship the Lord your God, and serve him only.'"</div>
+                    <div class="verse-context">The third temptation: a transactional offer — material blessing in exchange for worship. Jesus affirms that worship belongs to God alone (Deuteronomy 6:13).</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Hebrews 4:15-16 (NIV)</span>
+                    <div class="verse-text">"For we do not have a high priest who is unable to empathize with our weaknesses, but we have one who has been tempted in every way, just as we are — yet he did not sin. Let us then approach God's throne of grace with confidence, so that we may receive mercy and find grace to help us in our time of need."</div>
+                    <div class="verse-context">Jesus doesn't just sympathize — He empathizes. He has been there. This gives us confidence to approach God boldly.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 6:13 (NIV)</span>
+                    <div class="verse-text">"And lead us not into temptation, but deliver us from the evil one."</div>
+                    <div class="verse-context">From the Lord's Prayer — Jesus' direct instruction: pray that God keeps you away from temptation. How often do we actually pray this?</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Matthew 3:17 (NIV)</span>
+                    <div class="verse-text">"And a voice from heaven said, 'This is my Son, whom I love; with him I am well pleased.'"</div>
+                    <div class="verse-context">Spoken at Jesus' baptism — the event immediately before the temptation. The Father affirms Jesus' identity. The enemy's first move is to attack it: "If you are the Son of God..."</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 John 3:16 (NIV)</span>
+                    <div class="verse-text">"For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."</div>
+                    <div class="verse-context">The ultimate proof of God's love. Whenever we question whether He cares, the cross settles it once and for all.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 2 Corinthians 4:18 (NIV)</span>
+                    <div class="verse-text">"So we fix our eyes not on what is seen, but on what is unseen, since what is seen is temporary, but what is unseen is eternal."</div>
+                    <div class="verse-context">Countering the third temptation's pull toward material reward. What defines us is not the tangible and countable, but the eternal and spiritual.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 8:36 (NIV)</span>
+                    <div class="verse-text">"What good is it for someone to gain the whole world, yet forfeit their soul?"</div>
+                    <div class="verse-context">The material and the spiritual often fight against one another. You can have things — but placing faith, hope, and significance in them is a counterfeit endeavor.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 1 Corinthians 10:12 (NIV)</span>
+                    <div class="verse-text">"So, if you think you are standing firm, be careful that you don't fall!"</div>
+                    <div class="verse-context">The antidote to restraint bias. If you think "it doesn't apply to me" or "I would never do that" — that's the first sign you don't know yourself well enough.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Proverbs 7:22-23 (NIV)</span>
+                    <div class="verse-text">"All at once he followed her like an ox going to the slaughter... little knowing it will cost him his life."</div>
+                    <div class="verse-context">Sin always brings death — death of trust, intimacy, relationships. It may not be immediate, but the cost is always real.</div>
+                </div>
+
+                <h3>🔍 Additional References</h3>
+                <ul>
+                    <li><strong>Deuteronomy 8:3</strong> — "Man shall not live on bread alone" — Jesus' first response to the tempter</li>
+                    <li><strong>Deuteronomy 6:16</strong> — "Do not put the Lord your God to the test" — Jesus' second response</li>
+                    <li><strong>Deuteronomy 6:13</strong> — "Worship the Lord your God, and serve him only" — Jesus' third response</li>
+                    <li><strong>Philippians 2:5-8</strong> — God came in the form of man, humbled Himself (referenced regarding the hypostatic union)</li>
+                    <li><strong>Matthew 10:29-30</strong> — He knows the hairs on your head and when a sparrow falls — God cares about the details</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===== APPLICATION TAB ===== -->
+        <section id="application" class="tab-content">
+            <div class="content-card">
+                <h2>🎯 Defeating Temptation</h2>
+                <p>This sermon isn't just theology — it's a survival guide. The enemy has a plan for every stage of life, every age, every background. Here are three practical defenses, plus the ultimate strategy.</p>
+            </div>
+
+            <div class="app-grid">
+                <div class="app-card">
+                    <div class="app-card-icon">🔍</div>
+                    <div class="app-card-title">Know Your Weaknesses</div>
+                    <p>Stop hiding behind a veneer of strength. Be radically honest about where you're vulnerable. What triggers insecurity in you? What do you reach for when you feel small, tired, or threatened? Write them down. Confide in a trusted friend. The areas you refuse to acknowledge are the areas the enemy will exploit.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">💰</div>
+                    <div class="app-card-title">Imagine the Cost</div>
+                    <p>Before you act, fast-forward the tape. Imagine the apology you'd have to make. The trust you'd break. The relationship you'd damage. Sin never stays in a vacuum — it <em>always</em> brings death in some form. Visualizing the cost is one of the most effective circuit breakers.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">👤</div>
+                    <div class="app-card-title">Know Your Identity</div>
+                    <p>So much temptation is really about trying to <em>create</em> or <em>prove</em> our identity. But God has already spoken. You are His son, His daughter. Christ is enough. You don't need to prove anything to anyone. Let the Father's declaration settle it.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">✝️</div>
+                    <div class="app-card-title">Fix Your Eyes on Jesus</div>
+                    <p>The greatest strategy isn't "don't sin, don't sin, don't sin" — it's "love God, love God, love God." Be so swept up in the beauty and love of Christ that temptation loses its grip. The vertical always transforms the horizontal.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">📖</div>
+                    <div class="app-card-title">Arm Yourself with Scripture</div>
+                    <p>Jesus countered every temptation with "It is written." Have God's word at your disposal — not just memorized, but internalized. When the enemy whispers a lie, answer it with truth. Scripture corrects what is erroneous and anchors what is true.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🤝</div>
+                    <div class="app-card-title">Bring the Hurt to God</div>
+                    <p>When church hurts you — and it will — bring that hurt to God, not away from Him. Don't let horizontal disappointment become a verdict on the vertical. God doesn't disappoint. His love was proven at the cross.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🎯 This Week's Challenge</h3>
+                <p>Identify <strong>one specific weakness</strong> — not a strength-disguised-as-a-weakness, but a real vulnerability. Write it down. Then pray the Lord's Prayer deliberately this week, pausing at "Lead us not into temptation." Ask God specifically to keep you from the situations where that weakness is exploited. And when you feel it pulling, counter it with one truth about who God says you are.</p>
+            </div>
+        </section>
+
+        <!-- ===== REFLECTION TAB ===== -->
+        <section id="reflection" class="tab-content">
+            <div class="content-card">
+                <h2>💭 Reflection & Discussion</h2>
+
+                <h3>📝 From the Sermon</h3>
+                <ul class="reflection-list">
+                    <li>Jesus taught us to pray "Lead us not into temptation." How often do you actually pray this? What would change if you prayed it daily?</li>
+                    <li>Pastor Brett shared his own temptation to use words as a weapon when feeling insecure. What is your equivalent — the strength that becomes your weakness when triggered?</li>
+                </ul>
+
+                <h3>🔍 Going Deeper</h3>
+                <ul class="reflection-list">
+                    <li>The three temptations map to three deeper questions: Will God meet my needs? Is God powerful in my circumstances? Will I worship Him without rewards? Which of these questions resonates most with where you are right now?</li>
+                    <li>"Restraint bias" means we overestimate our ability to resist temptation. Where in your life might you be overconfident about your self-control? What would "stepping far back" look like?</li>
+                    <li>The enemy's first attack on Jesus was against His identity: "If you are the Son of God." Where in your life does the enemy most frequently challenge who God says you are?</li>
+                    <li>Pastor Brett said the greatest defense against temptation is not "don't sin" but "love God." How does this reframe your approach to areas where you struggle?</li>
+                    <li>Is there any hurt — church hurt or otherwise — that you've laid on God that actually belongs in the horizontal realm? How might bringing it to God (instead of away from God) change things?</li>
+                    <li>"Sin always brings death — death of trust, death of intimacy." Can you think of a time when imagining the cost ahead of time stopped you from making a mistake?</li>
+                </ul>
+
+                <h3>🙏 Prayer Prompts</h3>
+                <ul class="reflection-list">
+                    <li><strong>The Lord's Prayer:</strong> Pray Matthew 6:9-13 slowly and deliberately. Pause at each line. Especially linger on "Lead us not into temptation, but deliver us from the evil one."</li>
+                    <li><strong>Self-Awareness:</strong> Ask God to reveal your blind spots — the weaknesses you've covered up or the areas where you think you're stronger than you are.</li>
+                    <li><strong>Identity:</strong> Meditate on what God says about you: beloved, chosen, enough. Ask the Holy Spirit to make these truths louder than the enemy's "If you are..." whispers.</li>
+                    <li><strong>Healing:</strong> If you carry church hurt or disappointment with God, bring it honestly before Him. Ask Him to separate the horizontal from the vertical and to heal what needs healing.</li>
+                    <li><strong>Adoration:</strong> Spend time simply worshipping — not asking, not confessing — just telling God who He is and what He means to you. Let the beauty of Christ crowd out the pull of temptation.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Attribution -->
+    <aside class="attribution" id="attribution" role="contentinfo">
+        <div class="attribution-short" aria-label="Attribution">ℹ️</div>
+        <div class="attribution-full">
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+                Generated by LLM with supervision and polishing by
+                <a href="../index.html" target="_blank" rel="noopener noreferrer">benjaminficusmicrocarpa</a>.
+                <a href="../license.html" target="_blank" rel="noopener noreferrer">MIT License</a>
+            </p>
+        </div>
+    </aside>
+
+    <script src="js/iecc-common.js"></script>
+</body>
+</html>
