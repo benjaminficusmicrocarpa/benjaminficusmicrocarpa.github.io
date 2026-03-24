@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Way: The Upside-Down Kingdom | Island ECC</title>
+    <meta name="description" content="The invitation to follow Jesus involves a complete overhaul of our thinking, values, and behaviours. Through the Beatitudes and the disciples' misguided ambition, Pastor Brett reveals how Jesus redefines greatness — not through power, but through servanthood.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iecc-base.css">
+    <link rel="stylesheet" href="css/the-way.css">
+    <style>
+        .hero-header {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 950px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 12px rgba(0,0,0,0.6);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.2vw, 1.35rem);
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-meta {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--way-rose) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(107, 63, 160, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 63, 160, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(244, 239, 245, 0.1);
+            color: var(--text-light);
+            border: 2px solid rgba(244, 239, 245, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(244, 239, 245, 0.2);
+            border-color: rgba(244, 239, 245, 0.5);
+        }
+
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 21, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(107, 63, 160, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs::-webkit-scrollbar { display: none; }
+
+        .tab {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+
+        .main-content {
+            display: block;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--way-purple);
+        }
+
+        .content-card h2 {
+            color: var(--accent-light);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-card h3 {
+            color: var(--accent-light);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            opacity: 0.95;
+        }
+
+        .content-card ul, .content-card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, rgba(107, 63, 160, 0.12) 0%, rgba(201, 138, 154, 0.1) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            font-family: 'Lora', serif;
+        }
+
+        .verse-ref {
+            color: var(--accent-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .verse-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        .verse-context {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-style: normal;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(244, 239, 245, 0.1);
+        }
+
+        .quote-block {
+            position: relative;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: rgba(107, 63, 160, 0.08);
+            border-radius: 12px;
+            border-left: 4px solid var(--way-rose);
+        }
+
+        .quote-block::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--way-rose);
+            opacity: 0.3;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .quote-text {
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quote-attribution {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(139, 34, 82, 0.15) 0%, rgba(107, 63, 160, 0.12) 100%);
+            border-left: 4px solid var(--wine);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-light);
+            font-size: 1.1rem;
+        }
+
+        /* Kingdom Contrast Grid */
+        .kingdom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin: 2rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(107, 63, 160, 0.2);
+        }
+
+        .kingdom-header {
+            padding: 1.25rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .kingdom-header.world {
+            background: rgba(220, 80, 80, 0.15);
+            color: #e8a0a0;
+            border-bottom: 3px solid rgba(220, 80, 80, 0.4);
+        }
+
+        .kingdom-header.kingdom {
+            background: rgba(107, 63, 160, 0.15);
+            color: var(--accent-light);
+            border-bottom: 3px solid rgba(107, 63, 160, 0.4);
+        }
+
+        .kingdom-row {
+            display: contents;
+        }
+
+        .kingdom-cell {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(244, 239, 245, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .kingdom-cell.world-cell {
+            background: rgba(220, 80, 80, 0.04);
+        }
+
+        .kingdom-cell.kingdom-cell-bg {
+            background: rgba(107, 63, 160, 0.04);
+        }
+
+        .kingdom-cell .cell-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+        .kingdom-cell .cell-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kingdom-cell .cell-label {
+            font-weight: 600;
+            color: var(--accent-light);
+            font-size: 1.05rem;
+        }
+
+        .kingdom-cell .cell-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Flip Cards for Woe vs Blessed */
+        .beatitude-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .beatitude-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .beatitude-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(107, 63, 160, 0.25);
+        }
+
+        .beatitude-woe {
+            padding: 1.25rem;
+            background: rgba(220, 80, 80, 0.08);
+            border-bottom: 2px solid rgba(220, 80, 80, 0.2);
+        }
+
+        .beatitude-woe .woe-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #dc5050;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .beatitude-woe .woe-text {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .beatitude-blessed {
+            padding: 1.25rem;
+            background: rgba(107, 63, 160, 0.06);
+        }
+
+        .beatitude-blessed .blessed-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--way-purple);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .beatitude-blessed .blessed-text {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .beatitude-meaning {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid rgba(244, 239, 245, 0.06);
+        }
+
+        .beatitude-meaning .meaning-world,
+        .beatitude-meaning .meaning-kingdom {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .meaning-world { color: #dc8080; }
+        .meaning-kingdom { color: var(--accent-light); }
+
+        /* Flow Steps */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            background: var(--bg-card);
+            padding: 1.25rem 1.75rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(107, 63, 160, 0.25);
+            min-width: 160px;
+        }
+
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .flow-step-title {
+            font-weight: 600;
+            color: var(--accent-light);
+            font-size: 1rem;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--way-rose);
+            flex-shrink: 0;
+        }
+
+        /* App Cards */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--way-purple);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(107, 63, 160, 0.25);
+        }
+
+        .app-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .app-card-title {
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Reflection list */
+        .reflection-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .reflection-list li {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--wine);
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .reflection-list li::before {
+            content: '🛤️';
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Tags container */
+        .sermon-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: auto;
+                min-height: 100svh;
+                overflow: visible;
+                padding: 3rem 0 2rem;
+            }
+
+            .hero-header .slideshow-container { min-height: 100%; }
+            .hero-content { padding: 1.5rem 1.25rem; }
+            .hero-title { font-size: 2rem; margin-bottom: 1rem; }
+            .hero-subtitle { font-size: 0.95rem; margin-bottom: 1rem; }
+            .hero-meta { font-size: 0.85rem; margin-bottom: 0.75rem; }
+            .sermon-tags-container { margin: 1rem 0; gap: 0.4rem; }
+            .hero-buttons { gap: 0.75rem; }
+            .btn { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+            .tabs { justify-content: flex-start; }
+            .tab { padding: 1rem 1.1rem; font-size: 0.85rem; }
+            .main-content { padding: 2rem 1rem; }
+            .content-card { padding: 1.5rem 1.25rem; border-radius: 12px; }
+            .content-card h2 { font-size: 1.5rem; }
+            .content-card h3 { font-size: 1.25rem; }
+            .app-grid { grid-template-columns: 1fr; }
+            .beatitude-grid { grid-template-columns: 1fr; }
+            .kingdom-grid { grid-template-columns: 1fr; }
+            .kingdom-header.world { border-bottom: none; border-right: none; }
+            .verse-card { padding: 1.25rem; }
+            .quote-block { padding: 1.5rem 1.25rem; }
+            .highlight-box { padding: 1.25rem; }
+            .reflection-list li { padding: 1.25rem 1.25rem 1.25rem 2.75rem; }
+            .flow-container { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+            .flow-step { min-width: unset; width: 100%; }
+        }
+
+        @media (max-width: 420px) {
+            .hero-header { padding: 2.5rem 0 1.5rem; }
+            .hero-title { font-size: 1.75rem; line-height: 1.25; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
+            .main-content { padding: 1.5rem 0.75rem; }
+            .content-card { padding: 1.25rem 1rem; }
+        }
+
+        /* Print */
+        @media print {
+            .tabs-container, .hero-buttons, .attribution { display: none; }
+            .tab-content { display: block !important; page-break-after: always; }
+            body { background: white; color: black; }
+            .content-card { box-shadow: none; border: 1px solid #ccc; }
+        }
+
+        /* Accessibility */
+        .tab:focus, .btn:focus, .accordion-header:focus {
+            outline: 3px solid var(--accent-light);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body data-sermon-date="2026-03-22">
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="slideshow-container">
+            <div class="slideshow-slide active" style="background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1920&q=80')"></div>
+        </div>
+
+        <!-- Rose Path Strip -->
+        <div class="way-path-strip"></div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">🛤️ The Way:<br>The Upside-Down Kingdom</h1>
+            <p class="hero-subtitle">"Whoever wants to become great among you must be your servant." — Mark 10:43</p>
+            <div class="hero-meta">
+                📅 22 Mar 2026 | 🎤 Pastor Brett | 🏝️ Island ECC | 🛤️ The Way Series (Lent)
+            </div>
+            <div class="sermon-tags-container" id="sermon-tags"></div>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=WRtMn6WILvk" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Navigation Tabs -->
+    <nav class="tabs-container" role="navigation" aria-label="Sermon sections">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview" role="tab" aria-selected="true">📋 Overview</div>
+            <div class="tab" data-tab="sermon" role="tab" aria-selected="false">📖 Main Sermon</div>
+            <div class="tab" data-tab="verses" role="tab" aria-selected="false">✝️ Bible Verses</div>
+            <div class="tab" data-tab="contrast" role="tab" aria-selected="false">⚖️ Kingdom Contrast</div>
+            <div class="tab" data-tab="application" role="tab" aria-selected="false">🎯 Application</div>
+            <div class="tab" data-tab="reflection" role="tab" aria-selected="false">💭 Reflection</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- ===== OVERVIEW TAB ===== -->
+        <section id="overview" class="tab-content active">
+            <div class="content-card">
+                <h2>📋 Sermon Overview</h2>
+                <p><strong>Central Theme:</strong> The invitation to follow Jesus involves a complete overhaul of our thinking, values, and behaviours. It's counterintuitive and seems risky. Through the disciples' misguided ambition and Luke's Beatitudes, Pastor Brett reveals how Jesus redefines greatness — not through power, comfort, success, and recognition, but through servanthood, sacrifice, endurance, and faithfulness. This upside-down kingdom is not a burden; it is the path to freedom.</p>
+
+                <div class="highlight-box">
+                    <strong>Series Context:</strong> This is the fourth sermon in "The Way" — a Lent series tracing the life and teaching of Jesus as we prepare for Easter. Week 1: Jesus called ordinary people. Week 2: His temptation in the wilderness. Week 3: Mercy, not sacrifice. This week: the upside-down kingdom — how Jesus redefines greatness and calls us to a counter-cultural life.
+                </div>
+
+                <h3>📖 Key Passages</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 10:42-45 (NIV)</span>
+                    <div class="verse-text">
+                        "Jesus called them together and said, 'You know that those who are regarded as rulers of the Gentiles lord it over them, and their high officials exercise authority over them. Not so with you. Instead, whoever wants to become great among you must be your servant, and whoever wants to be first must be slave of all. For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many.'"
+                    </div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Luke 6:20-23 (NIV)</span>
+                    <div class="verse-text">
+                        "Blessed are you who are poor, for yours is the kingdom of God. Blessed are you who hunger now, for you will be satisfied. Blessed are you who weep now, for you will laugh. Blessed are you when people hate you, when they exclude you and insult you and reject your name as evil, because of the Son of Man."
+                    </div>
+                </div>
+
+                <h3>🌟 Main Takeaways</h3>
+                <ol>
+                    <li><strong>The early church "turned the world upside down"</strong> — Paul and Silas were described as disruptive to the status quo. Following Jesus is not a moral upgrade; it's a complete life reversal.</li>
+                    <li><strong>Even the disciples misunderstood greatness</strong> — James and John asked for the top seats in the kingdom. The other ten were indignant — not because the request was wrong, but because they wanted those seats too.</li>
+                    <li><strong>Jesus redefines greatness as servanthood</strong> — "Whoever wants to become great among you must be your servant." It's an entirely different org chart.</li>
+                    <li><strong>A new covenant, a new command, a new movement</strong> — Jesus ushered in grace over law, love over transaction, and the church as a counter-cultural community.</li>
+                    <li><strong>The Beatitudes contrast two kingdoms</strong> — Woe to those who live for power, comfort, success, and recognition. Blessed are those who embrace weakness, sacrifice, grief, and rejection for Christ.</li>
+                    <li><strong>The danger of "now"</strong> — Three of the four "woes" emphasise the present: "already received," "well fed now," "laugh now." Building your life on what is temporary leads to regret.</li>
+                    <li><strong>Jesus is not just an example — He equips</strong> — If Jesus is only an example, His commands become a crushing burden. But He dwells in us, giving new capacity, new motivation, new strength.</li>
+                </ol>
+
+                <h3>📐 Sermon Structure</h3>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🔄</div>
+                        <div class="flow-step-title">Turning the World Upside Down</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Acts 17 — the early church label</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">👑</div>
+                        <div class="flow-step-title">Greatness Redefined</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Mark 10 — servant, not ruler</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">⚖️</div>
+                        <div class="flow-step-title">Woe vs Blessed</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Luke 6 — the Beatitudes</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🕊️</div>
+                        <div class="flow-step-title">Freedom in Christ</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Power to live upside-down</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MAIN SERMON TAB ===== -->
+        <section id="sermon" class="tab-content">
+            <div class="content-card">
+                <h2>🔄 Turning the World Upside Down</h2>
+
+                <p>Before they were called Christians, followers of Jesus were known as <strong>people of the way</strong> — drawing from Jesus' claim: <em>"I am the way, the truth, and the life. No one comes to the Father except through me."</em> That radical, exclusive claim provided the moniker for the early church.</p>
+
+                <p>Paul and Silas arrived in Thessalonica and spent three Sabbaths reasoning with people in the synagogues about who Jesus was and why He came. Some immediately converted. Others were outraged — this was disruptive to their spiritual and political expectations.</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Acts 17:6 (ESV)</span>
+                    <div class="verse-text">"These men who have turned the world upside down have come here also."</div>
+                    <div class="verse-context">This label — "turning the world upside down" — was meant as an accusation. But it's an apt description of what Jesus desires for every one of us.</div>
+                </div>
+
+                <p>What Jesus desires is not simply a moral upgrade. Not just some theological enlightenment. He wants to <strong>turn your life upside down</strong> — your loves, passions, desires, priorities, all driven by the world and the flesh, completely inverted. If you've been a Christian for some time, you should be able to look back and see an almost <em>unrecognisable</em> version of yourself.</p>
+
+                <h3>⚡ Radical Statements from Jesus</h3>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 John 12:25 (NIV)</span>
+                    <div class="verse-text">"Anyone who loves their life will lose it, while anyone who hates their life in this world will keep it for eternal life."</div>
+                    <div class="verse-context">A call to "hate your life" — not about hating your job or circumstances, but disowning the values this world sets in place for you to pursue.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Luke 6:35 (NIV)</span>
+                    <div class="verse-text">"But love your enemies, do good to them, and lend to them without expecting to get anything back."</div>
+                    <div class="verse-context">So radical. "I don't even really pray for my enemies. You want me to love them? Give money to them and walk away from it?" Jesus goes to extreme measures to get our attention.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Colossians 1:13 (NIV)</span>
+                    <div class="verse-text">"For he has rescued us from the dominion of darkness and brought us into the kingdom of the Son he loves."</div>
+                    <div class="verse-context">There are only two kingdoms. Conversion to faith is a transfer from the world's way of thinking, valuing, acting, and prioritising to a completely new approach to life.</div>
+                </div>
+
+                <p>This kind of faith is not a minor change. Not Judaism 2.0. Jesus came to fulfil the law and usher in an entirely new way of thinking. His words are radical, intimidating. They cause us to shrink back. <em>"You want me to forgive 70 times seven? Just on and on? That's unnatural."</em> Exactly. It's supernatural.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>👑 James, John, and the Redefinition of Greatness</h2>
+
+                <p>Among the twelve disciples, there was an inner circle — <strong>Peter, James, and John</strong> — who got extra access to Jesus: hearing Him pray, watching Him live, observing His ministry up close. And yet, having seen all this, James and John came to Jesus with a remarkable request:</p>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 10:35-37 (NIV)</span>
+                    <div class="verse-text">"Then James and John, the sons of Zebedee, came to him. 'Teacher,' they said, 'we want you to do for us whatever we ask.' 'What do you want me to do for you?' he asked. They replied, 'Let one of us sit at your right and the other at your left in your glory.'"</div>
+                    <div class="verse-context">They'd had a pre-meeting before the meeting. They wanted the vice-president positions in Jesus' kingdom — still thinking of it as a political power structure.</div>
+                </div>
+
+                <p>It's easy to look back and think, <em>"Are you kidding me?"</em> But how do <strong>we</strong> treat Jesus? Most of our prayers are probably more about how He can meet our immediate needs than about intercession for others or worship for who He is. We often treat Him like a genie or a Santa Claus. James and John were just the ones with the courage to say it.</p>
+
+                <p>Jesus responded with remarkable patience: <em>"You don't even know what you're asking."</em> He asked if they could drink the cup He would drink — metaphorically speaking of His suffering and death. They overestimated their commitment: <em>"Oh yes, we can."</em> Of course, they would later abandon Him.</p>
+
+                <h3>😤 The Indignation of the Ten</h3>
+                <p>The other ten disciples overheard and became <strong>indignant</strong>. But notice: they weren't offended that James and John asked the <em>wrong</em> thing. They were offended that they tried to get a step <em>above</em> them. <em>"You're leaving us out? You think you're better than us?"</em> It reveals that none of the disciples truly understood Jesus' new kingdom.</p>
+
+                <h3>🔄 "Not So with You"</h3>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 10:42-45 (NIV)</span>
+                    <div class="verse-text">"Jesus called them together and said, 'You know that those who are regarded as rulers of the Gentiles lord it over them, and their high officials exercise authority over them. Not so with you. Instead, whoever wants to become great among you must be your servant, and whoever wants to be first must be slave of all. For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many.'"</div>
+                    <div class="verse-context">Three words that change everything: "Not so with you." Jesus redefines greatness from the top of the org chart to the bottom — from being served to serving.</div>
+                </div>
+
+                <p><strong>Servant and slave.</strong> That's not what they aspired to. They wanted to <em>have</em> servants and slaves. But Jesus says greatness is defined in an entirely different way. It is possible to be great in the world's eyes but not in God's. And it is possible to be great in God's eyes but not the world's.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>📜 New Covenant, New Command, New Movement</h2>
+
+                <h3>✝️ A New Covenant</h3>
+                <p>Jesus' death and resurrection ushered in a <strong>new covenant</strong> — a new connection with God. It would no longer be about fastidiously adhering to Old Testament laws. It would be about understanding <strong>grace</strong>: a concept that doesn't make sense in a worldly view. The world is transactional — you study hard, you get good grades; you work hard, you get a promotion. But grace is not transactional. You get what you don't deserve. You are extended mercy instead.</p>
+
+                <h3>❤️ A New Command</h3>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 12:30-31 (NIV)</span>
+                    <div class="verse-text">"Love the Lord your God with all your heart and with all your soul and with all your mind and with all your strength... Love your neighbour as yourself."</div>
+                    <div class="verse-context">A new capacity and desire to express love to God with every fibre of your being, and having sensed God's love for you, to love all people — above you, beside you, below you.</div>
+                </div>
+
+                <p>Not just the lovable. Not just those who can love you back or do you a favour. <strong>All people.</strong> Everyone created in the image of God, with intrinsic value. God calls His church to be the practical expression of that love — emotionally, practically, everywhere, without limits.</p>
+
+                <h3>⛪ A New Movement</h3>
+                <p>This new command ushered in a new movement: <strong>the church</strong> — the <em>ecclesia</em>, the "called-out ones." People extricated from the world, gathering together around a common calling, living in a counter-cultural way. For 2,000-plus years, big churches, small churches, cathedrals, home churches, many languages — it may look different, but the message is the same: <em>We believe in Jesus and all that He said and claimed.</em></p>
+            </div>
+
+            <div class="content-card">
+                <h2>⚖️ The Beatitudes: Woe vs. Blessed</h2>
+
+                <p>Perhaps Jesus' most famous sermon is the Beatitudes — recorded in a longer version in Matthew 5 and a shorter version in <strong>Luke 6</strong>. (Jesus repeated His sermons — Pastor Brett took great heart from this.) In Luke's account, Jesus makes direct comparisons between a worldly life and this other kingdom, this upside-down success.</p>
+
+                <h3>⚠️ The Woes: Warning Against Worldly Values</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Luke 6:24-26 (NIV)</span>
+                    <div class="verse-text">"But woe to you who are rich, for you have already received your comfort. Woe to you who are well fed now, for you will go hungry. Woe to you who laugh now, for you will mourn and weep. Woe to you when everyone speaks well of you, for that is how their ancestors treated the false prophets."</div>
+                    <div class="verse-context">Jesus is not judging — He is pleading. "I have pity on you if you embrace simply the values of the world. Don't do it." He is preventing regret.</div>
+                </div>
+
+                <p>And lest anyone in the room say <em>"Oh, that's not me"</em> — we are all rich. We sit in air conditioning. We're about to go eat lunch. We are in the top five per cent of global wealth. Jesus says: be careful. These are all normal things to pursue. He's not against you doing well. His warning is: <strong>if this is what you live for, you'll be disappointed.</strong></p>
+
+                <p>Note the emphasis on <strong>"now"</strong>: <em>"You have already received your comfort. You are well fed now. You who laugh now."</em> There's an over-emphasis on the present, with no regard for God's master plan over all of eternity. Our 80-ish years are a tiny dot on the line of eternity — and we lose focus thinking this dot is all that matters.</p>
+
+                <div class="highlight-box">
+                    <strong>The Greek word for "laugh" (γελάω / gelaō):</strong> It carries the nuance of <em>gloating</em> — relishing in your own victory at the expense of others. Your political party wins and you rub it in. You win a competition and mock the loser. Not simple joy, but self-congratulatory triumph.
+                </div>
+
+                <h3>✨ The Blessings: The Upside-Down Kingdom</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Luke 6:20-23 (NIV)</span>
+                    <div class="verse-text">"Looking at his disciples, he said: 'Blessed are you who are poor, for yours is the kingdom of God. Blessed are you who hunger now, for you will be satisfied. Blessed are you who weep now, for you will laugh. Blessed are you when people hate you, when they exclude you and insult you and reject your name as evil, because of the Son of Man.'"</div>
+                    <div class="verse-context">All the things we work hard to avoid — poverty, hunger, grief, exclusion — and Jesus says there is blessing in them. The upside-down kingdom.</div>
+                </div>
+
+                <p>Who wants grief? Insult? Exclusion from the party? Poverty? And yet Jesus says there's blessing in these things you work so hard to avoid.</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">In the life of God's people, it will be seen, first of all, as a remarkable reversal of values. The people of God will prize what the world finds pitiable and suspect what the world finds desirable.</p>
+                </div>
+
+                <p>This doesn't mean you pursue grief or poverty. You don't throw away your money to be poor. But to <strong>prize</strong> sacrifice, to value humility, to see the presence of God rushing in during suffering — that is the mark of the upside-down kingdom. To be "poor in spirit" (as Matthew will tell us) is to have a humble disposition toward God: <em>"God, I bring you nothing. I have nothing to offer. And yet you love me still."</em></p>
+            </div>
+
+            <div class="content-card">
+                <h2>⚡ Where the Power Comes From</h2>
+
+                <p>In both Matthew and Luke, Jesus was on a mountainside — where revolutionaries would hide to escape authorities. But He came down to the people. And Luke tells us:</p>
+
+                <div class="highlight-box">
+                    <strong>Luke 6:19:</strong> <em>"The people all tried to touch him, because power was coming from him and healing them all."</em> — People were touching His robe and being healed. A watershed moment where Jesus' public ministry took off. Power was emanating from Him, as if to say: <strong>from this point on, there is a new kingdom.</strong>
+                </div>
+
+                <h3>🤔 Is Jesus Only an Example?</h3>
+                <p>Is Jesus an example to follow? Seems like an easy answer. But if He is <strong>only</strong> an example, He will be a burden to you — because you won't be able to do it. You won't forgive your enemies over and over. You won't love those who don't love you back. You won't absorb insult without being riled up. At some point you'll either check out (<em>"This Christian life is unattainable"</em>) or fake it and feel like an imposter.</p>
+
+                <p>Jesus is not only your example. It is through <strong>Christ dwelling in you</strong> — the one who transferred you from the kingdom of darkness to the kingdom of light — that you receive a new capacity, a new source of strength, a new grounding, a new motivation. He never asks you to do something He doesn't also <strong>equip</strong> you to do.</p>
+
+                <h3>🕊️ Freedom, Not Burden</h3>
+                <p>The invitation is to live according to the freedom God offers, <strong>with eternity in view</strong>. You may not get the respect you deserve in this life. That person may never apologise. But there's a God in heaven who sees every infraction, balances the scales, and meets out judgment — and you can leave room for Him.</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">I got unfair treatment by God — I got heaven and I didn't deserve it. I like when it works in that direction. And so you can endure, you can persevere, you can be gracious, kind, generous, encouraging — even if it's not reciprocated.</p>
+                    <p class="quote-attribution">— Pastor Brett</p>
+                </div>
+
+                <p>You can live above the comparison trap. You can live beyond the transactional world. You can come before God with open hands. It's an upside-down way of living, and it doesn't come natural — you have to re-correct yourself often. <strong>But there is freedom there.</strong></p>
+            </div>
+        </section>
+
+        <!-- ===== BIBLE VERSES TAB ===== -->
+        <section id="verses" class="tab-content">
+            <div class="content-card">
+                <h2>✝️ Key Scripture Passages</h2>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Acts 17:6 (ESV)</span>
+                    <div class="verse-text">"These men who have turned the world upside down have come here also."</div>
+                    <div class="verse-context">The description given to Paul, Silas, and early Christians in Thessalonica — meant as an accusation, but an apt description of the faith. Jesus desires to turn your life upside down.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 John 14:6 (NIV)</span>
+                    <div class="verse-text">"Jesus answered, 'I am the way and the truth and the life. No one comes to the Father except through me.'"</div>
+                    <div class="verse-context">The radical, exclusive claim that gave the early church their name: "people of the way." The foundation of this entire sermon series.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 John 12:25 (NIV)</span>
+                    <div class="verse-text">"Anyone who loves their life will lose it, while anyone who hates their life in this world will keep it for eternal life."</div>
+                    <div class="verse-context">A call not to hate your circumstances, but to disown the value system the world has set for you. A separation from worldly priorities.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Luke 6:35 (NIV)</span>
+                    <div class="verse-text">"But love your enemies, do good to them, and lend to them without expecting to get anything back. Then your reward will be great, and you will be children of the Most High, because he is kind to the ungrateful and wicked."</div>
+                    <div class="verse-context">One of Jesus' most radical commands — love, do good, and give even to those who oppose you. Counter-cultural in every era.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Colossians 1:13 (NIV)</span>
+                    <div class="verse-text">"For he has rescued us from the dominion of darkness and brought us into the kingdom of the Son he loves."</div>
+                    <div class="verse-context">Only two kingdoms exist. Conversion is a transfer from one to the other — from the world's way of thinking, valuing, and acting to an entirely new approach to life.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 10:35-37 (NIV)</span>
+                    <div class="verse-text">"Then James and John, the sons of Zebedee, came to him. 'Teacher,' they said, 'we want you to do for us whatever we ask.' 'What do you want me to do for you?' he asked. They replied, 'Let one of us sit at your right and the other at your left in your glory.'"</div>
+                    <div class="verse-context">The disciples' misguided ambition — still thinking of Jesus' kingdom in political, power-based terms. They wanted to be vice-presidents in an org chart.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 10:42-45 (NIV)</span>
+                    <div class="verse-text">"Jesus called them together and said, 'You know that those who are regarded as rulers of the Gentiles lord it over them, and their high officials exercise authority over them. Not so with you. Instead, whoever wants to become great among you must be your servant, and whoever wants to be first must be slave of all. For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many.'"</div>
+                    <div class="verse-context">The definitive statement on kingdom greatness. Three words change everything: "Not so with you." Greatness = servanthood. First = slave of all.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Luke 6:24-26 (NIV)</span>
+                    <div class="verse-text">"But woe to you who are rich, for you have already received your comfort. Woe to you who are well fed now, for you will go hungry. Woe to you who laugh now, for you will mourn and weep. Woe to you when everyone speaks well of you, for that is how their ancestors treated the false prophets."</div>
+                    <div class="verse-context">The "woes" — not judgment but a pleading warning. If you build your life on power, comfort, success, and recognition, enjoy it while it lasts. It will fade like a mirage.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Luke 6:20-23 (NIV)</span>
+                    <div class="verse-text">"Looking at his disciples, he said: 'Blessed are you who are poor, for yours is the kingdom of God. Blessed are you who hunger now, for you will be satisfied. Blessed are you who weep now, for you will laugh. Blessed are you when people hate you, when they exclude you and insult you and reject your name as evil, because of the Son of Man.'"</div>
+                    <div class="verse-context">The blessings — the upside-down kingdom. All the things we work to avoid carry blessing in God's economy. Not that we pursue suffering, but that God meets us in it.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Mark 12:30-31 (NIV)</span>
+                    <div class="verse-text">"'Love the Lord your God with all your heart and with all your soul and with all your mind and with all your strength.' The second is this: 'Love your neighbour as yourself.' There is no commandment greater than these."</div>
+                    <div class="verse-context">The new command — a new capacity to love God with every fibre of your being, and from that overflow, to love all people without limits.</div>
+                </div>
+
+                <h3>🔍 Additional References</h3>
+                <ul>
+                    <li><strong>Colossians 1:16</strong> — "For in him all things were created" — read during the worship introduction</li>
+                    <li><strong>Psalm 111:10</strong> — "The fear of the Lord is the beginning of wisdom" — referenced in the worship prayer</li>
+                    <li><strong>Matthew 5</strong> — The longer version of the Beatitudes</li>
+                    <li><strong>Luke 6:19</strong> — "Power was coming from him and healing them all" — referenced in the sermon's discussion of where the power comes from</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===== KINGDOM CONTRAST TAB ===== -->
+        <section id="contrast" class="tab-content">
+            <div class="content-card">
+                <h2>⚖️ Kingdom Contrast: Two Ways of Living</h2>
+                <p>Pastor Brett broadened the terms Jesus used in the Beatitudes to reveal two fundamentally different approaches to life. These aren't just theological categories — they describe the daily choices every person makes about what to pursue and what to value.</p>
+            </div>
+
+            <div class="content-card">
+                <h3>📊 The World's Values vs. The Kingdom's Values</h3>
+
+                <div class="kingdom-grid">
+                    <div class="kingdom-header world">⚠️ Woe — The World's Way</div>
+                    <div class="kingdom-header kingdom">✨ Blessed — The Kingdom Way</div>
+
+                    <div class="kingdom-cell world-cell">
+                        <div class="cell-icon">💰</div>
+                        <div class="cell-content">
+                            <span class="cell-label">Rich → Power</span>
+                            <span class="cell-desc">Money = influence = power. Climbing the org chart. Being in charge.</span>
+                        </div>
+                    </div>
+                    <div class="kingdom-cell kingdom-cell-bg">
+                        <div class="cell-icon">🤲</div>
+                        <div class="cell-content">
+                            <span class="cell-label">Poor → Weakness / Humility</span>
+                            <span class="cell-desc">"Poor in spirit" — coming to God empty-handed: "I have nothing to offer, yet you love me."</span>
+                        </div>
+                    </div>
+
+                    <div class="kingdom-cell world-cell">
+                        <div class="cell-icon">🍽️</div>
+                        <div class="cell-content">
+                            <span class="cell-label">Well-Fed → Comfort</span>
+                            <span class="cell-desc">Not worried about the next meal. Life is secure and predictable.</span>
+                        </div>
+                    </div>
+                    <div class="kingdom-cell kingdom-cell-bg">
+                        <div class="cell-icon">🔥</div>
+                        <div class="cell-content">
+                            <span class="cell-label">Hungry → Sacrifice</span>
+                            <span class="cell-desc">Willing sacrifice — seeing value in giving up comfort for something greater.</span>
+                        </div>
+                    </div>
+
+                    <div class="kingdom-cell world-cell">
+                        <div class="cell-icon">😏</div>
+                        <div class="cell-content">
+                            <span class="cell-label">Laughing → Success / Gloating</span>
+                            <span class="cell-desc">Relishing your wins. Gloating over those who lost. Self-congratulatory triumph.</span>
+                        </div>
+                    </div>
+                    <div class="kingdom-cell kingdom-cell-bg">
+                        <div class="cell-icon">😢</div>
+                        <div class="cell-content">
+                            <span class="cell-label">Weeping → Grief / Endurance</span>
+                            <span class="cell-desc">God doesn't promise pain-free life. But He is present in suffering, and His presence proves His character.</span>
+                        </div>
+                    </div>
+
+                    <div class="kingdom-cell world-cell">
+                        <div class="cell-icon">👏</div>
+                        <div class="cell-content">
+                            <span class="cell-label">Spoken Well Of → Recognition</span>
+                            <span class="cell-desc">Being noticed, applauded, awarded. Others acknowledge your accomplishments.</span>
+                        </div>
+                    </div>
+                    <div class="kingdom-cell kingdom-cell-bg">
+                        <div class="cell-icon">🚫</div>
+                        <div class="cell-content">
+                            <span class="cell-label">Hated / Excluded → Rejection for Christ</span>
+                            <span class="cell-desc">When faith has a social cost — when others distance themselves because of your values.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>⏳ The Danger of "Now"</h3>
+                <p>In three of the four woes, Jesus emphasises the present tense:</p>
+                <ol>
+                    <li><em>"You have <strong>already</strong> received your comfort"</em></li>
+                    <li><em>"You are well fed <strong>now</strong>"</em></li>
+                    <li><em>"You who laugh <strong>now</strong>"</em></li>
+                </ol>
+                <p>The danger is an <strong>over-emphasis on the present</strong> — what you can see, touch, and count — with no regard for God's master plan over all of eternity. Our lives, however long, represent a tiny dot on the line of eternity. And yet we work and grind and amass, trying to prove to the world that we matter.</p>
+
+                <div class="highlight-box">
+                    <strong>The mirage analogy:</strong> Remember that thing you really wanted to buy? You thought about it, saved for it, finally got it. How long before the newness wore off? Worldly satisfaction is like a mirage — it appears to be water on the horizon, but the closer you get, the further it moves. You never find the satisfaction you thought you would.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🔄 The Beatitude Pairs</h3>
+                <p>Each woe has a corresponding blessing — an alternative that Jesus offers:</p>
+
+                <div class="beatitude-grid">
+                    <div class="beatitude-card">
+                        <div class="beatitude-woe">
+                            <div class="woe-label">⚠️ Woe</div>
+                            <div class="woe-text">"Woe to you who are rich, for you have already received your comfort."</div>
+                        </div>
+                        <div class="beatitude-blessed">
+                            <div class="blessed-label">✨ Blessed</div>
+                            <div class="blessed-text">"Blessed are you who are poor, for yours is the kingdom of God."</div>
+                        </div>
+                        <div class="beatitude-meaning">
+                            <div class="meaning-world">❌ Power, influence, top of the org chart</div>
+                            <div class="meaning-kingdom">✅ Humility before God — "I bring nothing"</div>
+                        </div>
+                    </div>
+
+                    <div class="beatitude-card">
+                        <div class="beatitude-woe">
+                            <div class="woe-label">⚠️ Woe</div>
+                            <div class="woe-text">"Woe to you who are well fed now, for you will go hungry."</div>
+                        </div>
+                        <div class="beatitude-blessed">
+                            <div class="blessed-label">✨ Blessed</div>
+                            <div class="blessed-text">"Blessed are you who hunger now, for you will be satisfied."</div>
+                        </div>
+                        <div class="beatitude-meaning">
+                            <div class="meaning-world">❌ Comfort, security, no sacrifice needed</div>
+                            <div class="meaning-kingdom">✅ Willing sacrifice — giving up comfort for God's purposes</div>
+                        </div>
+                    </div>
+
+                    <div class="beatitude-card">
+                        <div class="beatitude-woe">
+                            <div class="woe-label">⚠️ Woe</div>
+                            <div class="woe-text">"Woe to you who laugh now, for you will mourn and weep."</div>
+                        </div>
+                        <div class="beatitude-blessed">
+                            <div class="blessed-label">✨ Blessed</div>
+                            <div class="blessed-text">"Blessed are you who weep now, for you will laugh."</div>
+                        </div>
+                        <div class="beatitude-meaning">
+                            <div class="meaning-world">❌ Gloating over success at others' expense</div>
+                            <div class="meaning-kingdom">✅ Finding God present in grief — His presence proves His character</div>
+                        </div>
+                    </div>
+
+                    <div class="beatitude-card">
+                        <div class="beatitude-woe">
+                            <div class="woe-label">⚠️ Woe</div>
+                            <div class="woe-text">"Woe to you when everyone speaks well of you."</div>
+                        </div>
+                        <div class="beatitude-blessed">
+                            <div class="blessed-label">✨ Blessed</div>
+                            <div class="blessed-text">"Blessed are you when people hate you, exclude you, insult you, and reject your name as evil."</div>
+                        </div>
+                        <div class="beatitude-meaning">
+                            <div class="meaning-world">❌ Recognition, applause, universal approval</div>
+                            <div class="meaning-kingdom">✅ Faithfulness to Christ even when it costs you socially</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🔑 The Key Distinction</h3>
+                <p>Jesus is <strong>not against you doing well</strong>. He's not against being powerful, comfortable, successful, or having a good reputation. His warning is this: <em>If this is what you live for, you'll be disappointed.</em> If this is what you build your life around, you will eventually regret it.</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">You climbed that ladder of success, only to find it was leaning against the wrong wall.</p>
+                    <p class="quote-attribution">— A common saying referenced by Pastor Brett</p>
+                </div>
+
+                <p>The alternative? Live according to the freedom God offers, <strong>with eternity in view</strong>. This is not all there is. And in that perspective, you find the power to endure, forgive, be generous, and live above the comparison trap.</p>
+            </div>
+        </section>
+
+        <!-- ===== APPLICATION TAB ===== -->
+        <section id="application" class="tab-content">
+            <div class="content-card">
+                <h2>🎯 Living in the Upside-Down Kingdom</h2>
+                <p>Jesus doesn't just describe a counter-cultural reality — He invites you into it. And He doesn't leave you to figure it out on your own. Through His Spirit dwelling in you, He provides the power to live this way. Here are practical steps for embracing the upside-down kingdom.</p>
+            </div>
+
+            <div class="app-grid">
+                <div class="app-card">
+                    <div class="app-card-icon">🔄</div>
+                    <div class="app-card-title">Audit Your Definition of Greatness</div>
+                    <p>How do you define success? Is it titles, income, recognition, followers? Jesus says greatness is serving others. This week, ask: <em>Where am I climbing a ladder that's leaning against the wrong wall?</em></p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🤲</div>
+                    <div class="app-card-title">Come to God Empty-Handed</div>
+                    <p>To be "poor in spirit" is to approach God without a résumé. Not "God, here's what I bring to the partnership," but "God, I have nothing to offer. It is by your grace alone." Practise this posture in prayer this week.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">⏳</div>
+                    <div class="app-card-title">Think Beyond "Now"</div>
+                    <p>The world screams: grab it now, enjoy it now, prove yourself now. Jesus says: think in terms of eternity. When you're tempted to chase the immediate, ask: <em>Will this matter in light of eternity?</em></p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🕊️</div>
+                    <div class="app-card-title">Leave Room for God</div>
+                    <p>That person who hurt you may never apologise. Instead of demanding justice yourself, leave room for a God who sees every infraction and balances the scales. You can endure because you already received the ultimate unfair treatment — heaven, undeserved.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">💪</div>
+                    <div class="app-card-title">Lean on Christ's Power, Not Your Own</div>
+                    <p>If following Jesus feels impossible, it's because it is — on your own. He's not just an example; He equips. Ask the Holy Spirit for the power to forgive, love, and serve in ways that go beyond your natural ability.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🪞</div>
+                    <div class="app-card-title">Identify Your "James and John" Moments</div>
+                    <p>Where do you treat Jesus like a genie — handing Him a wish list instead of worshipping Him for who He is? Shift your prayers from "here's what I need" to "here's who you are" — and watch your perspective change.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🎯 This Week's Challenge</h3>
+                <p>Choose <strong>one area</strong> where your life looks too similar to the world's values — power, comfort, success, or recognition. Identify one concrete step to live counter-culturally in that area this week. It might be serving someone below you on the org chart, sacrificing comfort for someone else's benefit, celebrating someone else's success instead of comparing, or standing firm in your faith even when it's socially costly. Write it down. Pray over it. And then do it — not in your own strength, but leaning on Christ's power in you.</p>
+            </div>
+        </section>
+
+        <!-- ===== REFLECTION TAB ===== -->
+        <section id="reflection" class="tab-content">
+            <div class="content-card">
+                <h2>💭 Reflection & Discussion</h2>
+
+                <h3>📝 From the Sermon</h3>
+                <ul class="reflection-list">
+                    <li>What does "upside-down" living look like in your life? How do you embrace a life that is counter-cultural to the values of our world?</li>
+                    <li>Where does your life look too similar to the world's values? What changes might God be asking you to adopt in your life?</li>
+                </ul>
+
+                <h3>🔍 Going Deeper</h3>
+                <ul class="reflection-list">
+                    <li>James and John wanted the top seats in the kingdom, and the other ten were jealous. In what ways do you find yourself competing for position, recognition, or status — even within church or Christian community?</li>
+                    <li>Jesus said "Not so with you." Where in your life do you need to hear those words? Where have you adopted the world's approach to power and authority instead of Jesus' model of servanthood?</li>
+                    <li>Pastor Brett said the world is <strong>transactional</strong> — you get what you deserve. Grace is the opposite. Where do you struggle to receive grace (from God or others)? Where do you struggle to extend it?</li>
+                    <li>Of the four categories — power, comfort, success, recognition — which one is your strongest pull? Which "woe" hit closest to home? Why?</li>
+                    <li>Jesus warned against the danger of "now" — building your life on what's temporary. What are you investing in right now that has eternal significance? What are you investing in that doesn't?</li>
+                    <li>If Jesus is only an example, His commands become a crushing burden. How have you experienced this tension? What does it look like to lean on His power instead of your own effort?</li>
+                    <li>Pastor Brett described "poor in spirit" as coming to God with open, empty hands — versus "middle class in spirit," where you see it as a divine teamwork. Which posture do you tend toward? Why?</li>
+                    <li>The quote said: "The people of God will prize what the world finds pitiable and suspect what the world finds desirable." What does the world find pitiable that you've begun to prize? What does the world desire that you're beginning to suspect?</li>
+                </ul>
+
+                <h3>🙏 Prayer Prompts</h3>
+                <ul class="reflection-list">
+                    <li><strong>For an Upside-Down Heart:</strong> Ask God to turn your values right-side up — to prize humility, sacrifice, endurance, and faithfulness over power, comfort, success, and recognition.</li>
+                    <li><strong>For Freedom from "Now":</strong> Pray for an eternal perspective. Ask God to loosen your grip on temporary things and fix your eyes on what lasts.</li>
+                    <li><strong>For Christ's Power:</strong> Confess the areas where you've been trying to follow Jesus in your own strength. Ask the Holy Spirit to fill you with His power to forgive, love, serve, and endure.</li>
+                    <li><strong>For a Servant's Heart:</strong> Pray for the grace to see greatness the way Jesus sees it — not through climbing up, but through bending down. Ask for opportunities to serve this week.</li>
+                    <li><strong>For Open Hands:</strong> Come to God empty-handed in prayer. No résumé, no bargaining, no list of accomplishments. Just: "God, I bring you nothing. And yet you love me still."</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Attribution -->
+    <aside class="attribution" id="attribution" role="contentinfo">
+        <div class="attribution-short" aria-label="Attribution">ℹ️</div>
+        <div class="attribution-full">
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+                Generated by LLM with supervision and polishing by
+                <a href="../index.html" target="_blank" rel="noopener noreferrer">benjaminficusmicrocarpa</a>.
+                <a href="../license.html" target="_blank" rel="noopener noreferrer">MIT License</a>
+            </p>
+        </div>
+    </aside>
+
+    <script src="js/iecc-common.js"></script>
+</body>
+</html>
