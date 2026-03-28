@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>John 15 — The True Vine | Scripture Mind Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #1a2332;
+            --deep-red: #8b2635;
+            --gold: #d4af37;
+            --cream: #faf8f3;
+            --warm-gray: #5a5a5a;
+            --light-gold: #f4e8c1;
+
+            --cat-center: #d4af37;
+            --cat-vine: #4a7c59;
+            --cat-fruit: #e07b39;
+            --cat-abide: #3b6fa0;
+            --cat-judgment: #8b2635;
+            --cat-love: #c2558a;
+            --cat-hatred: #6b4c8a;
+            --cat-comforter: #2a8a8a;
+            --cat-scripture: #7a6e5d;
+            --cat-insight: #5c7a3d;
+
+            --panel-width: 420px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--navy);
+            color: var(--cream);
+            overflow: hidden;
+            height: 100dvh;
+            width: 100vw;
+            position: relative;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Crimson Pro', serif; }
+
+        /* ── Top Bar ── */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, var(--navy) 0%, #1f2b3d 100%);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            gap: 8px;
+            backdrop-filter: blur(12px);
+        }
+
+        .top-bar-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gold);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        .top-bar-subtitle {
+            font-size: 0.8rem;
+            color: rgba(250, 248, 243, 0.6);
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .top-bar-subtitle { display: inline; }
+        }
+
+        .top-bar-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .btn-icon {
+            width: 38px; height: 38px;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .btn-icon:hover, .btn-icon:active {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+        }
+
+        .btn-icon.active {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        /* ── SVG Canvas ── */
+        #graph-container {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+        }
+
+        #graph-container svg {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+
+        #graph-container svg:active { cursor: grabbing; }
+
+        /* ── Legend ── */
+        .legend {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            z-index: 90;
+            background: rgba(26, 35, 50, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
+            padding: 14px 16px;
+            max-width: 260px;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .legend.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px);
+        }
+
+        .legend h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 3px 0;
+            font-size: 0.82rem;
+            color: rgba(250, 248, 243, 0.8);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ── Detail Panel ── */
+        .panel-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .panel-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .detail-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(var(--panel-width), 100vw);
+            height: 100dvh;
+            z-index: 210;
+            background: var(--cream);
+            color: var(--navy);
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .detail-panel.open {
+            transform: translateX(0);
+        }
+
+        .panel-header {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            padding: 20px 20px 16px;
+            border-bottom: 1px solid rgba(26, 35, 50, 0.1);
+            background: var(--cream);
+        }
+
+        .panel-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 36px; height: 36px;
+            border: none;
+            background: rgba(26, 35, 50, 0.08);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--navy);
+            transition: background 0.2s;
+        }
+
+        .panel-close:hover { background: rgba(26, 35, 50, 0.15); }
+
+        .panel-category {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .panel-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.25;
+            padding-right: 40px;
+        }
+
+        .panel-verse-ref {
+            font-size: 0.9rem;
+            color: var(--warm-gray);
+            margin-top: 4px;
+        }
+
+        .panel-body {
+            padding: 20px;
+        }
+
+        .panel-section {
+            margin-bottom: 24px;
+        }
+
+        .panel-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--deep-red);
+            margin-bottom: 8px;
+        }
+
+        .panel-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .panel-text em {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.02rem;
+            color: var(--deep-red);
+        }
+
+        .scripture-quote {
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 3px solid var(--gold);
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 0 6px 6px 0;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .scripture-quote .ref {
+            display: block;
+            margin-top: 6px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .scripture-version {
+            display: inline-block;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 1px 6px;
+            border-radius: 3px;
+            margin-bottom: 4px;
+        }
+
+        .scripture-version.kjv {
+            background: rgba(139, 38, 53, 0.12);
+            color: var(--deep-red);
+        }
+
+        .scripture-version.niv {
+            background: rgba(59, 111, 160, 0.12);
+            color: var(--cat-abide);
+        }
+
+        .scripture-quote + .scripture-quote {
+            margin-top: 6px;
+        }
+
+        .connected-nodes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .connected-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid rgba(26, 35, 50, 0.15);
+            background: rgba(26, 35, 50, 0.04);
+            color: var(--navy);
+            transition: all 0.2s;
+        }
+
+        .connected-chip:hover {
+            background: rgba(26, 35, 50, 0.1);
+        }
+
+        .connected-chip .chip-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+        }
+
+        /* ── Help Modal ── */
+        .help-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .help-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .help-card {
+            background: var(--cream);
+            color: var(--navy);
+            border-radius: 16px;
+            padding: 32px 28px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .help-card h2 {
+            font-size: 1.5rem;
+            color: var(--deep-red);
+            margin-bottom: 16px;
+        }
+
+        .help-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            text-align: left;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .help-item-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .help-close {
+            margin-top: 20px;
+            padding: 10px 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--deep-red);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .help-close:hover { background: #a02e40; }
+
+        /* ── Filter Bar ── */
+        .filter-bar {
+            position: fixed;
+            top: 58px;
+            left: 0; right: 0;
+            z-index: 95;
+            display: flex;
+            gap: 6px;
+            padding: 8px 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            background: rgba(26, 35, 50, 0.88);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            scrollbar-width: none;
+        }
+
+        .filter-bar::-webkit-scrollbar { display: none; }
+
+        .filter-btn {
+            flex-shrink: 0;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(250, 248, 243, 0.15);
+            background: transparent;
+            color: rgba(250, 248, 243, 0.7);
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(250, 248, 243, 0.35);
+            color: var(--cream);
+        }
+
+        .filter-btn.active {
+            background: var(--gold);
+            color: var(--navy);
+            border-color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ── Tooltip ── */
+        .tooltip {
+            position: fixed;
+            z-index: 150;
+            pointer-events: none;
+            background: rgba(26, 35, 50, 0.95);
+            color: var(--cream);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            max-width: 220px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            opacity: 0;
+            transition: opacity 0.15s;
+            line-height: 1.4;
+        }
+
+        .tooltip.show { opacity: 1; }
+        .tooltip .tt-label { font-weight: 600; color: var(--gold); }
+        .tooltip .tt-verse { font-size: 0.75rem; opacity: 0.7; }
+
+        /* ── Attribution ── */
+        .attribution {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            z-index: 90;
+            font-size: 0.7rem;
+            color: rgba(250, 248, 243, 0.3);
+            text-align: right;
+            max-width: 200px;
+            line-height: 1.4;
+        }
+
+        .attribution a {
+            color: rgba(212, 175, 55, 0.5);
+            text-decoration: none;
+        }
+
+        .attribution a:hover { color: var(--gold); }
+
+        @media (max-width: 640px) {
+            .legend { bottom: 10px; left: 10px; padding: 10px 12px; max-width: 200px; }
+            .legend-item { font-size: 0.75rem; }
+            .attribution { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+    <div style="min-width:0">
+        <div class="top-bar-title">John 15 — The True Vine</div>
+        <span class="top-bar-subtitle">Scripture Mind Map &middot; Matthew Henry Commentary</span>
+    </div>
+    <div class="top-bar-actions">
+        <button class="btn-icon" id="btn-recenter" title="Recenter">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg>
+        </button>
+        <button class="btn-icon" id="btn-legend" title="Toggle legend">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </button>
+        <button class="btn-icon" id="btn-help" title="Help">?</button>
+        <a class="btn-icon" href="index.html" title="Back" style="text-decoration:none">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+        </a>
+    </div>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar" id="filter-bar">
+    <button class="filter-btn active" data-cat="all">All</button>
+    <button class="filter-btn" data-cat="vine">The Vine</button>
+    <button class="filter-btn" data-cat="fruit">Fruit</button>
+    <button class="filter-btn" data-cat="abide">Abide</button>
+    <button class="filter-btn" data-cat="judgment">Judgment</button>
+    <button class="filter-btn" data-cat="love">Love</button>
+    <button class="filter-btn" data-cat="hatred">Hatred</button>
+    <button class="filter-btn" data-cat="comforter">Comforter</button>
+    <button class="filter-btn" data-cat="scripture">Scriptures</button>
+</div>
+
+<!-- Graph -->
+<div id="graph-container"></div>
+
+<!-- Legend -->
+<div class="legend" id="legend">
+    <h4>Categories</h4>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--cat-center)"></span> John 15 (Centre)</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--cat-vine)"></span> The Vine &amp; Branches</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--cat-fruit)"></span> Fruit &amp; Pruning</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--cat-abide)"></span> Abiding &amp; Prayer</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--cat-judgment)"></span> Judgment</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--cat-love)"></span> Love</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--cat-hatred)"></span> Hatred</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--cat-comforter)"></span> The Comforter</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--cat-scripture)"></span> Cross-Reference</div>
+</div>
+
+<!-- Tooltip -->
+<div class="tooltip" id="tooltip"></div>
+
+<!-- Detail Panel -->
+<div class="panel-overlay" id="panel-overlay"></div>
+<div class="detail-panel" id="detail-panel">
+    <div class="panel-header">
+        <button class="panel-close" id="panel-close">&times;</button>
+        <div class="panel-category" id="panel-cat"></div>
+        <h2 class="panel-title" id="panel-title"></h2>
+        <div class="panel-verse-ref" id="panel-verse"></div>
+    </div>
+    <div class="panel-body" id="panel-body"></div>
+</div>
+
+<!-- Help Modal -->
+<div class="help-overlay" id="help-overlay">
+    <div class="help-card">
+        <h2>How to Use This Map</h2>
+        <div class="help-item">
+            <span class="help-item-icon">👆</span>
+            <span><strong>Tap a node</strong> to open its detail panel with scripture insights and cross-references.</span>
+        </div>
+        <div class="help-item">
+            <span class="help-item-icon">🔍</span>
+            <span><strong>Pinch or scroll</strong> to zoom in and out. <strong>Drag</strong> the canvas to pan around.</span>
+        </div>
+        <div class="help-item">
+            <span class="help-item-icon">🏷️</span>
+            <span>Use the <strong>filter bar</strong> at the top to focus on a specific theme category.</span>
+        </div>
+        <div class="help-item">
+            <span class="help-item-icon">✋</span>
+            <span><strong>Drag nodes</strong> to rearrange them. They will settle into position when released.</span>
+        </div>
+        <button class="help-close" id="help-close">Got it</button>
+    </div>
+</div>
+
+<!-- Attribution -->
+<div class="attribution">
+    Commentary: Matthew Henry<br>
+    <a href="index.html">benjaminficusmicrocarpa</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script>
+(function () {
+"use strict";
+
+// ─────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────
+
+const CATEGORIES = {
+    center:    { color: "#d4af37", label: "John 15" },
+    vine:      { color: "#4a7c59", label: "The Vine" },
+    fruit:     { color: "#e07b39", label: "Fruit" },
+    abide:     { color: "#3b6fa0", label: "Abide" },
+    judgment:  { color: "#8b2635", label: "Judgment" },
+    love:      { color: "#c2558a", label: "Love" },
+    hatred:    { color: "#6b4c8a", label: "Hatred" },
+    comforter: { color: "#2a8a8a", label: "Comforter" },
+    scripture: { color: "#7a6e5d", label: "Scripture" },
+};
+
+const rawNodes = [
+    // ── CENTRE ──
+    {
+        id: "john15", label: "John 15", category: "center", tier: 0,
+        verse: "John 15:1-8",
+        kjv: "I am the true vine, and my Father is the husbandman. Every branch in me that beareth not fruit he taketh away: and every branch that beareth fruit, he purgeth it, that it may bring forth more fruit.",
+        niv: "I am the true vine, and my Father is the gardener. He cuts off every branch in me that bears no fruit, while every branch that does bear fruit he prunes so that it will be even more fruitful.",
+        insight: "Christ\u2019s farewell discourse the night before his crucifixion. He teaches three vital truths: the necessity of abiding in him (the Vine), the command to love one another, and a warning about the world\u2019s hatred \u2014 all sealed with the promise of the Comforter.",
+        commentary: "It is generally agreed that Christ\u2019s discourse in this and the next chapter was at the close of the last supper, the night in which he was betrayed. Now that he was about to leave them: (I) They would be tempted to leave him; (II) They would be tempted to grow strange one to another; (III) They would be tempted to shrink from their apostleship.",
+    },
+
+    // ── VINE CLUSTER ──
+    {
+        id: "true-vine", label: "Christ the True Vine", category: "vine", tier: 1,
+        verse: "John 15:1",
+        kjv: "I am the true vine, and my Father is the husbandman.",
+        niv: "I am the true vine, and my Father is the gardener.",
+        insight: "Jesus declares \u2018I am the true vine\u2019 \u2014 an instance of his humility, comparing himself to a lowly plant. Yet the vine is a spreading plant (salvation to the ends of the earth), and its fruit honours God and cheers man.",
+        commentary: "The vine has an unsightly unpromising outside; and Christ had no form nor comeliness. The vine is a spreading plant, and Christ will be known as salvation to the ends of the earth. He is the true vine, as truth is opposed to pretence and counterfeit \u2014 he is really a fruitful plant, a plant of renown.",
+    },
+    {
+        id: "branches", label: "Believers as Branches", category: "vine", tier: 1,
+        verse: "John 15:5",
+        kjv: "I am the vine, ye are the branches: He that abideth in me, and I in him, the same bringeth forth much fruit: for without me ye can do nothing.",
+        niv: "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing.",
+        insight: "Believers are living branches drawing life from Christ the root. Though spread across the world, they are united in him. Branches cannot stand alone \u2014 they depend entirely on the vine for sap and strength.",
+        commentary: "The root is unseen, and our life is hid with Christ; the root bears the tree, diffuses sap to it, and is all in all to its flourishing and fruitfulness. The branches of the vine are many, some on one side, others on the other side; yet, meeting in the root, are all but one vine.",
+    },
+    {
+        id: "husbandman", label: "The Father: Husbandman", category: "vine", tier: 1,
+        verse: "John 15:1",
+        kjv: "I am the true vine, and my Father is the husbandman.",
+        niv: "I am the true vine, and my Father is the gardener.",
+        insight: "God the Father tends his vineyard with infinite wisdom and care \u2014 planting, watering, pruning, and watching over every branch. Never was any husbandman so wise, so watchful, about his vineyard as God is about his church.",
+        commentary: "Though the earth is the Lord\u2019s, it yields him no fruit unless he work it. God has not only a propriety in, but a care of, the vine and all the branches. He hath planted, and watered, and gives the increase; for we are God\u2019s husbandry.",
+    },
+
+    // ── FRUIT CLUSTER ──
+    {
+        id: "bearing-fruit", label: "Bearing Fruit", category: "fruit", tier: 1,
+        verse: "John 15:4\u20135",
+        kjv: "Abide in me, and I in you. As the branch cannot bear fruit of itself, except it abide in the vine; no more can ye, except ye abide in me. I am the vine, ye are the branches: He that abideth in me, and I in him, the same bringeth forth much fruit: for without me ye can do nothing.",
+        niv: "Remain in me, as I also remain in you. No branch can bear fruit by itself; it must remain in the vine. Neither can you bear fruit unless you remain in me. I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing.",
+        insight: "From a vine we look for grapes, and from a Christian we look for Christianity \u2014 a Christian temper, a Christian life, Christian devotions. We must honour God, do good, and exemplify the power of our faith.",
+        commentary: "From a vine we look for grapes, and from a Christian we look for Christianity; this is the fruit, a Christian temper and disposition, a Christian life and conversation, Christian devotions and Christian designs. We must honour God, and do good, and exemplify the purity and power of the religion we profess.",
+    },
+    {
+        id: "pruning", label: "Pruning & Purging", category: "fruit", tier: 1,
+        verse: "John 15:2",
+        kjv: "Every branch in me that beareth not fruit he taketh away: and every branch that beareth fruit, he purgeth it, that it may bring forth more fruit.",
+        niv: "He cuts off every branch in me that bears no fruit, while every branch that does bear fruit he prunes so that it will be even more fruitful.",
+        insight: "Even fruitful branches need pruning \u2014 the removal of what is superfluous and luxuriant. God purges through his word, Spirit, and providence. Further fruitfulness is the blessed reward of forward fruitfulness.",
+        commentary: "Even fruitful branches, in order to their further fruitfulness, have need of purging or pruning \u2014 he taketh away that which is superfluous and luxuriant, which hinders its growth and fruitfulness. The best have that in them which is peccant, some notions, passions, or humours, that want to be purged away.",
+    },
+    {
+        id: "clean-by-word", label: "Clean Through the Word", category: "fruit", tier: 2,
+        verse: "John 15:3",
+        kjv: "Now ye are clean through the word which I have spoken unto you.",
+        niv: "You are already clean because of the word I have spoken to you.",
+        insight: "Christ declares \u2018Now you are clean through the word.\u2019 The word of Christ has cleansing virtue \u2014 it works grace and works out corruption, cleansing as fire cleanses gold from dross.",
+        commentary: "There is a cleansing virtue in that word, as it works grace, and works out corruption. It cleanses as fire cleanses the gold from its dross, and as physic cleanses the body from its disease. We then evidence that we are cleansed by the word when we bring forth fruit unto holiness.",
+    },
+    {
+        id: "glorify-father", label: "Father Glorified by Fruit", category: "fruit", tier: 2,
+        verse: "John 15:8",
+        kjv: "Herein is my Father glorified, that ye bear much fruit; so shall ye be my disciples.",
+        niv: "This is to my Father\u2019s glory, that you bear much fruit, showing yourselves to be my disciples.",
+        insight: "When we bear much fruit, the Father is glorified and we prove ourselves Christ\u2019s disciples indeed \u2014 not merely in name. The more fruit we bring forth, the more he is glorified.",
+        commentary: "The fruitfulness of all Christians, in a lower or narrower sphere, is to the glory of God. By the eminent good works of Christians many are brought to glorify our Father who is in heaven. So shall we be Christ\u2019s disciples indeed, approving ourselves so.",
+    },
+
+    // ── ABIDE CLUSTER ──
+    {
+        id: "abide-in-christ", label: "Abide in Christ", category: "abide", tier: 1,
+        verse: "John 15:4",
+        kjv: "Abide in me, and I in you. As the branch cannot bear fruit of itself, except it abide in the vine; no more can ye, except ye abide in me.",
+        niv: "Remain in me, as I also remain in you. No branch can bear fruit by itself; it must remain in the vine. Neither can you bear fruit unless you remain in me.",
+        insight: "The great duty: constantly keep up dependence upon Christ and communion with him. \u2018Abide in me by faith, and I in you by my Spirit.\u2019 The branch abides in the vine and the sap abides in the branch \u2014 constant communication.",
+        commentary: "It is the great concern of all Christ\u2019s disciples constantly to keep up a dependence upon Christ and communion with him, habitually to adhere to him, and actually to derive supplies from him. \u2018Abide in me, by faith; and I in you, by my Spirit.\u2019",
+    },
+    {
+        id: "without-me-nothing", label: "Without Me, Nothing", category: "abide", tier: 2,
+        verse: "John 15:5",
+        kjv: "I am the vine, ye are the branches: He that abideth in me, and I in him, the same bringeth forth much fruit: for without me ye can do nothing.",
+        niv: "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing.",
+        insight: "Christ\u2019s absolute statement: \u2018Without me you can do nothing\u2019 \u2014 not only nothing great, but nothing at all. We depend on Christ not only as the vine upon the wall for support, but as the branch on the root for sap.",
+        commentary: "Without me you can do nothing: not only no great thing, heal the sick, or raise the dead, but nothing. We have as necessary and constant a dependence upon the grace of the Mediator for all the actions of the spiritual and divine life as we have upon the providence of the Creator for all the actions of the natural life.",
+    },
+    {
+        id: "prayer-promise", label: "Ask What You Will", category: "abide", tier: 1,
+        verse: "John 15:7",
+        kjv: "If ye abide in me, and my words abide in you, ye shall ask what ye will, and it shall be done unto you.",
+        niv: "If you remain in me and my words remain in you, ask whatever you wish, and it will be done for you.",
+        insight: "A breathtaking promise: if Christ\u2019s words abide in us, we may ask whatever we will and it shall be done. The promises of Scripture, when turned into prayers, cannot fail. Union is maintained by the Word; communion is maintained by prayer.",
+        commentary: "Those that abide in Christ as their heart\u2019s delight shall have, through Christ, their heart\u2019s desire. If we abide in Christ, and his word in us, we shall not ask any thing but what is proper to be done for us. The promises abiding in us lie ready to be turned into prayers; and the prayers so regulated cannot but speed.",
+    },
+
+    // ── JUDGMENT CLUSTER ──
+    {
+        id: "unfruitful-doom", label: "Doom of the Unfruitful", category: "judgment", tier: 1,
+        verse: "John 15:2, 6",
+        kjv: "Every branch in me that beareth not fruit he taketh away. ... If a man abide not in me, he is cast forth as a branch, and is withered; and men gather them, and cast them into the fire, and they are burned.",
+        niv: "He cuts off every branch in me that bears no fruit. ... If you do not remain in me, you are like a branch that is thrown away and withers; such branches are picked up, thrown into the fire and burned.",
+        insight: "Branches that bear no fruit are taken away. Many pass for branches in Christ who are only tied by the thread of outward profession. From those without real union, even what they seemed to have will be taken away.",
+        commentary: "There are many who pass for branches in Christ who yet do not bear fruit. Were they really united to Christ by faith, they would bear fruit; but being only tied to him by the thread of an outward profession, though they seem to be branches, they will soon be seen to be dry ones.",
+    },
+    {
+        id: "withered-cast-fire", label: "Withered & Cast into Fire", category: "judgment", tier: 2,
+        verse: "John 15:6",
+        kjv: "If a man abide not in me, he is cast forth as a branch, and is withered; and men gather them, and cast them into the fire, and they are burned.",
+        niv: "If you do not remain in me, you are like a branch that is thrown away and withers; such branches are picked up, thrown into the fire and burned.",
+        insight: "Those who leave Christ are cast forth, wither, are gathered, and burned \u2014 a fearful five-stage descent. Apostates are \u2018twice dead.\u2019 This terrible warning shows the eternal consequence of abandoning union with Christ.",
+        commentary: "They are cast forth as dry and withered branches. Those that abide not in Christ, though they may flourish awhile in a plausible profession, yet in a little time wither and come to nothing. Their parts and gifts wither; their zeal and devotion wither; their hopes and comforts wither. Fire is the fittest place for withered branches.",
+    },
+
+    // ── LOVE CLUSTER ──
+    {
+        id: "love-command", label: "Love One Another", category: "love", tier: 1,
+        verse: "John 15:12\u201313",
+        kjv: "This is my commandment, That ye love one another, as I have loved you. Greater love hath no man than this, that a man lay down his life for his friends.",
+        niv: "My command is this: Love each other as I have loved you. Greater love has no one than this: to lay down one\u2019s life for one\u2019s friends.",
+        insight: "As the Father loved Christ, so Christ loves his disciples \u2014 and commands them to continue in that same love toward one another. \u2018Greater love has no one than this: to lay down one\u2019s life for one\u2019s friends.\u2019 They were tempted to grow strange to one another; love was the remedy.",
+        commentary: "They would be tempted to grow strange one to another; and therefore he presses it upon them to love one another, and to keep up that communion when he was gone which had hitherto been their comfort.",
+    },
+    {
+        id: "friends-of-christ", label: "Friends, Not Servants", category: "love", tier: 2,
+        verse: "John 15:14\u201315",
+        kjv: "Ye are my friends, if ye do whatsoever I command you. Henceforth I call you not servants; for the servant knoweth not what his lord doeth: but I have called you friends; for all things that I have heard of my Father I have made known unto you.",
+        niv: "You are my friends if you do what I command. I no longer call you servants, because a servant does not know his master\u2019s business. Instead, I have called you friends, for everything that I learned from my Father I have made known to you.",
+        insight: "Christ elevates his disciples from servants to friends \u2014 sharing with them everything the Father has made known to him. A servant merely obeys; a friend is trusted with the master\u2019s purposes.",
+    },
+    {
+        id: "chosen-by-christ", label: "You Did Not Choose Me", category: "love", tier: 2,
+        verse: "John 15:16",
+        kjv: "Ye have not chosen me, but I have chosen you, and ordained you, that ye should go and bring forth fruit, and that your fruit should remain: that whatsoever ye shall ask of the Father in my name, he may give it you.",
+        niv: "You did not choose me, but I chose you and appointed you so that you should go and bear fruit\u2014fruit that will last\u2014and so that whatever you ask in my name the Father will give you.",
+        insight: "The initiative in salvation is entirely Christ\u2019s: \u2018You did not choose me, but I chose you and appointed you so that you should go and bear fruit \u2014 fruit that will last.\u2019 Election leads to mission and enduring fruitfulness.",
+    },
+
+    // ── HATRED CLUSTER ──
+    {
+        id: "world-hatred", label: "The World\u2019s Hatred", category: "hatred", tier: 1,
+        verse: "John 15:18\u201319",
+        kjv: "If the world hate you, ye know that it hated me before it hated you. If ye were of the world, the world would love his own: but because ye are not of the world, but I have chosen you out of the world, therefore the world hateth you.",
+        niv: "If the world hates you, keep in mind that it hated me first. If you belonged to the world, it would love you as its own. As it is, you do not belong to the world, but I have chosen you out of the world. That is why the world hates you.",
+        insight: "Christ warns that the world will hate his followers, because it first hated him. Disciples are not above their master. This hatred is irrational \u2014 \u2018They hated me without a cause\u2019 \u2014 yet serves to prove believers belong to Christ, not to the world.",
+        commentary: "They would be tempted to shrink from their apostleship when they met with hardships; and therefore he prepared them to bear the shock of the world\u2019s ill will.",
+    },
+    {
+        id: "not-of-world", label: "Not of This World", category: "hatred", tier: 2,
+        verse: "John 15:19",
+        kjv: "If ye were of the world, the world would love his own: but because ye are not of the world, but I have chosen you out of the world, therefore the world hateth you.",
+        niv: "If you belonged to the world, it would love you as its own. As it is, you do not belong to the world, but I have chosen you out of the world. That is why the world hates you.",
+        insight: "\u2018If you were of the world, the world would love its own. Yet because you are not of the world \u2014 I chose you out of it \u2014 therefore the world hates you.\u2019 Belonging to Christ means no longer belonging to the world\u2019s system.",
+    },
+    {
+        id: "sin-no-excuse", label: "Sin Without Excuse", category: "hatred", tier: 2,
+        verse: "John 15:22, 24",
+        kjv: "If I had not come and spoken unto them, they had not had sin: but now they have no cloke for their sin. ... If I had not done among them the works which none other man did, they had not had sin: but now have they both seen and hated both me and my Father.",
+        niv: "If I had not come and spoken to them, they would not be guilty of sin. Now, however, they have no excuse for their sin. ... If I had not done among them the works no one else did, they would not be guilty of sin. As it is, they have seen, and yet they have hated both me and my Father.",
+        insight: "Christ\u2019s words and works leave the world without excuse. Had he not come and spoken, they would not have sin; but now they have both seen and hated both him and his Father.",
+    },
+
+    // ── COMFORTER CLUSTER ──
+    {
+        id: "comforter-promise", label: "The Comforter Sent", category: "comforter", tier: 1,
+        verse: "John 15:26\u201327",
+        kjv: "But when the Comforter is come, whom I will send unto you from the Father, even the Spirit of truth, which proceedeth from the Father, he shall testify of me: And ye also shall bear witness, because ye have been with me from the beginning.",
+        niv: "When the Advocate comes, whom I will send to you from the Father\u2014the Spirit of truth who goes out from the Father\u2014he will testify about me. And you also must testify, for you have been with me from the beginning.",
+        insight: "The Spirit of truth, proceeding from the Father, will testify about Christ. And the apostles too shall bear witness, because they have been with him from the beginning. The Comforter empowers testimony in the face of the world\u2019s hatred.",
+    },
+    {
+        id: "spirit-of-truth", label: "Spirit of Truth", category: "comforter", tier: 2,
+        verse: "John 15:26",
+        kjv: "But when the Comforter is come, whom I will send unto you from the Father, even the Spirit of truth, which proceedeth from the Father, he shall testify of me:",
+        niv: "When the Advocate comes, whom I will send to you from the Father\u2014the Spirit of truth who goes out from the Father\u2014he will testify about me.",
+        insight: "The Holy Spirit is called the Spirit of truth \u2014 he guides into all truth, convicts the world of sin, and bears witness to Christ. He proceeds from the Father and is sent by the Son.",
+    },
+
+    // ── CROSS-REFERENCE SCRIPTURES ──
+    {
+        id: "ps-80-8", label: "Psalm 80:8", category: "scripture", tier: 3,
+        verse: "Psalm 80:8",
+        insight: "Israel as God\u2019s vine \u2014 the Old Testament type of which Christ is the antitype. God brought his people out of Egypt and planted them in the promised land, just as the Father planted the true vine.",
+        kjv: "Thou hast brought a vine out of Egypt: thou hast cast out the heathen, and planted it.",
+        niv: "You transplanted a vine from Egypt; you drove out the nations and planted it.",
+    },
+    {
+        id: "isa-53-2", label: "Isaiah 53:2", category: "scripture", tier: 3,
+        verse: "Isaiah 53:2",
+        insight: "The vine has an unsightly, unpromising outside \u2014 and Christ \u2018had no form nor comeliness\u2019 that we should desire him. The glory of the vine is in its fruit, not its appearance.",
+        kjv: "For he shall grow up before him as a tender plant, and as a root out of a dry ground: he hath no form nor comeliness; and when we shall see him, there is no beauty that we should desire him.",
+        niv: "He grew up before him like a tender shoot, and like a root out of dry ground. He had no beauty or majesty to attract us to him, nothing in his appearance that we should desire him.",
+    },
+    {
+        id: "gen-49-11", label: "Genesis 49:11", category: "scripture", tier: 3,
+        verse: "Genesis 49:11",
+        insight: "Judah\u2019s vine, enriched with the blood of the grape \u2014 a messianic prophecy typifying Christ, the Lion of Judah, whose blood brings the richest blessing.",
+        kjv: "Binding his foal unto the vine, and his ass\u2019s colt unto the choice vine; he washed his garments in wine, and his clothes in the blood of grapes:",
+        niv: "He will tether his donkey to a vine, his colt to the choicest branch; he will wash his garments in wine, his robes in the blood of grapes.",
+    },
+    {
+        id: "gen-49-22", label: "Genesis 49:22", category: "scripture", tier: 3,
+        verse: "Genesis 49:22",
+        insight: "Joseph\u2019s vine \u2018whose branches run over the wall\u2019 \u2014 a picture of abundant, overflowing fruitfulness that cannot be contained, typifying Christ\u2019s boundless reach.",
+        kjv: "Joseph is a fruitful bough, even a fruitful bough by a well; whose branches run over the wall:",
+        niv: "Joseph is a fruitful vine, a fruitful vine near a spring, whose branches climb over a wall.",
+    },
+    {
+        id: "1ki-4-25", label: "1 Kings 4:25", category: "scripture", tier: 3,
+        verse: "1 Kings 4:25",
+        insight: "Under Solomon\u2019s reign, Israel dwelt safely, \u2018each under his own vine.\u2019 The true vine, Christ, provides ultimate safety and rest for his people.",
+        kjv: "And Judah and Israel dwelt safely, every man under his vine and under his fig tree, from Dan even to Beersheba, all the days of Solomon.",
+        niv: "During Solomon\u2019s lifetime Judah and Israel, from Dan to Beersheba, lived in safety, everyone under their own vine and under their own fig tree.",
+    },
+    {
+        id: "rom-11-18", label: "Romans 11:18", category: "scripture", tier: 3,
+        verse: "Romans 11:18",
+        insight: "\u2018You do not support the root, but the root supports you.\u2019 Believers contribute nothing to the vine \u2014 the vine contributes everything to them.",
+        kjv: "Boast not against the branches. But if thou boast, thou bearest not the root, but the root thee.",
+        niv: "Do not consider yourself to be superior to those other branches. If you do, consider this: you do not support the root, but the root supports you.",
+    },
+    {
+        id: "eze-15-2", label: "Ezekiel 15:2\u20134", category: "scripture", tier: 3,
+        verse: "Ezekiel 15:2\u20134",
+        insight: "Wood of the vine is useless for any purpose except burning \u2014 branches severed from Christ have no alternative destiny. There is no neutral ground: fruit or fire.",
+        kjv: "Son of man, What is the vine tree more than any tree, or than a branch which is among the trees of the forest? Shall wood be taken thereof to do any work? or will men take a pin of it to hang any vessel thereon?",
+        niv: "Son of man, how is the wood of a vine different from that of a branch from any of the trees in the forest? Is wood ever taken from it to make anything useful? Do they make pegs from it to hang things on?",
+    },
+    {
+        id: "1co-3-9", label: "1 Corinthians 3:9", category: "scripture", tier: 3,
+        verse: "1 Corinthians 3:9",
+        insight: "\u2018You are God\u2019s field, God\u2019s building.\u2019 The Father as husbandman works his vineyard \u2014 planting, watering, giving the increase.",
+        kjv: "For we are labourers together with God: ye are God\u2019s husbandry, ye are God\u2019s building.",
+        niv: "For we are co-workers in God\u2019s service; you are God\u2019s field, God\u2019s building.",
+    },
+    {
+        id: "isa-5-1-2", label: "Isaiah 5:1\u20132", category: "scripture", tier: 3,
+        verse: "Isaiah 5:1\u20132",
+        insight: "The song of the vineyard \u2014 God did everything for his vineyard, yet it yielded only wild grapes. A warning: privilege does not guarantee fruitfulness.",
+        kjv: "Now will I sing to my wellbeloved a song of my beloved touching his vineyard. My wellbeloved hath a vineyard in a very fruitful hill: And he fenced it, and gathered out the stones thereof, and planted it with the choicest vine, and built a tower in the midst of it, and also made a winepress therein: and he looked that it should bring forth grapes, and it brought forth wild grapes.",
+        niv: "I will sing for the one I love a song about his vineyard: My loved one had a vineyard on a fertile hillside. He dug it up and cleared it of stones and planted it with the choicest vines. He built a watchtower in it and cut out a winepress as well. Then he looked for a crop of good grapes, but it yielded only bad fruit.",
+    },
+    {
+        id: "jdg-9-13", label: "Judges 9:13", category: "scripture", tier: 3,
+        verse: "Judges 9:13",
+        insight: "The vine\u2019s fruit \u2018cheers both God and man.\u2019 Christ\u2019s mediation brings joy to the Father and to humanity \u2014 better than gold.",
+        kjv: "And the vine said unto them, Should I leave my wine, which cheereth God and man, and go to be promoted over the trees?",
+        niv: "But the vine answered, \u2018Should I give up my wine, which cheers both gods and humans, to hold sway over the trees?\u2019",
+    },
+    {
+        id: "2co-3-5", label: "2 Corinthians 3:5", category: "scripture", tier: 3,
+        verse: "2 Corinthians 3:5",
+        insight: "\u2018Not that we are sufficient of ourselves\u2019 \u2014 apart from Christ\u2019s merit we cannot be justified; apart from his Spirit we cannot be sanctified. Total dependence.",
+        kjv: "Not that we are sufficient of ourselves to think any thing as of ourselves; but our sufficiency is of God;",
+        niv: "Not that we are competent in ourselves to claim anything for ourselves, but our competence comes from God.",
+    },
+    {
+        id: "rom-10-6-8", label: "Romans 10:8", category: "scripture", tier: 3,
+        verse: "Romans 10:8",
+        insight: "Christ is set before us and offered to us in the word. Where the word of Christ dwells richly, there Christ dwells. The word is the means of union.",
+        kjv: "But what saith it? The word is nigh thee, even in thy mouth, and in thy heart: that is, the word of faith, which we preach;",
+        niv: "But what does it say? \u201cThe word is near you; it is in your mouth and in your heart,\u201d that is, the message concerning faith that we proclaim:",
+    },
+    {
+        id: "lev-19-23-24", label: "Leviticus 19:23\u201324", category: "scripture", tier: 3,
+        verse: "Leviticus 19:23\u201324",
+        insight: "Fruit is unclean for three years, then holy to the Lord in the fourth. The disciples had been three years under Christ\u2019s instruction \u2014 \u2018Now you are clean.\u2019 A beautiful allusion to the law of first-fruits.",
+        kjv: "And when ye shall come into the land, and shall have planted all manner of trees for food, then ye shall count the fruit thereof as uncircumcised: three years shall it be as uncircumcised unto you: it shall not be eaten of. But in the fourth year all the fruit thereof shall be holy to praise the Lord withal.",
+        niv: "When you enter the land and plant any kind of fruit tree, regard its fruit as forbidden. For three years you are to consider it forbidden; it must not be eaten. In the fourth year all its fruit will be holy, an offering of praise to the LORD.",
+    },
+    {
+        id: "lu-8-18", label: "Luke 8:18", category: "scripture", tier: 3,
+        verse: "Luke 8:18",
+        insight: "\u2018From him who has not, even what he seems to have will be taken away.\u2019 The unfruitful lose even the appearance of spiritual life \u2014 a solemn warning against empty profession.",
+        kjv: "Take heed therefore how ye hear: for whosoever hath, to him shall be given; and whosoever hath not, from him shall be taken even that which he seemeth to have.",
+        niv: "Therefore consider carefully how you listen. Whoever has will be given more; whoever does not have, even what they think they have will be taken from them.",
+    },
+    {
+        id: "hos-10-1", label: "Hosea 10:1", category: "scripture", tier: 3,
+        verse: "Hosea 10:1",
+        insight: "Israel was an \u2018empty vine\u2019 bringing forth fruit unto itself \u2014 fruitfulness not in Christ is no fruitfulness at all. Self-serving religion is barren.",
+        kjv: "Israel is an empty vine, he bringeth forth fruit unto himself: according to the multitude of his fruit he hath increased the altars; according to the goodness of his land they have made goodly images.",
+        niv: "Israel was a spreading vine; he brought forth fruit for himself. As his fruit increased, he built more altars; as his land prospered, he adorned his sacred stones.",
+    },
+    {
+        id: "job-8-11-13", label: "Job 8:11\u201313", category: "scripture", tier: 3,
+        verse: "Job 8:11\u201313",
+        insight: "Plants without water wither first \u2014 hypocrites, cut off from the living water of Christ, cannot sustain their profession. \u2018Such is the destiny of all who forget God.\u2019",
+        kjv: "Can the rush grow up without mire? can the flag grow without water? Whilst it is yet in his greenness, and not cut down, it withereth before any other herb. So are the paths of all that forget God; and the hypocrite\u2019s hope shall perish:",
+        niv: "Can papyrus grow tall where there is no marsh? Can reeds thrive without water? While still growing and uncut, they wither more quickly than grass. Such is the destiny of all who forget God; so perishes the hope of the godless.",
+    },
+    {
+        id: "jude-12", label: "Jude 12", category: "scripture", tier: 3,
+        verse: "Jude 12",
+        insight: "Apostates are \u2018twice dead, pulled up by the roots\u2019 \u2014 autumn trees without fruit. When John 15:6 says they are cast out and burned, it speaks as if they were twice damned.",
+        kjv: "These are spots in your feasts of charity, when they feast with you, feeding themselves without fear: clouds they are without water, carried about of winds; trees whose fruit withereth, without fruit, twice dead, plucked up by the roots;",
+        niv: "These people are blemishes at your love feasts, eating with you without the slightest qualm\u2014shepherds who feed only themselves. They are clouds without rain, blown along by the wind; autumn trees, without fruit and uprooted\u2014twice dead.",
+    },
+    {
+        id: "jer-13-11", label: "Jeremiah 13:11", category: "scripture", tier: 3,
+        verse: "Jeremiah 13:11",
+        insight: "God intended Israel to be \u2018for a name, and for a praise, and for a glory.\u2019 Fruitful disciples become ornaments of Christ \u2014 evidencing and adorning their discipleship.",
+        kjv: "For as the girdle cleaveth to the loins of a man, so have I caused to cleave unto me the whole house of Israel and the whole house of Judah, saith the Lord; that they might be unto me for a people, and for a name, and for a praise, and for a glory: but they would not hear.",
+        niv: "For as a belt is bound around the waist, so I bound all the people of Israel and all the people of Judah to me,\u2019 declares the LORD, \u2018to be my people for my renown and praise and honor. But they have not listened.\u2019",
+    },
+    {
+        id: "jn-17-17", label: "John 17:17", category: "scripture", tier: 3,
+        verse: "John 17:17",
+        insight: "Jesus prays: \u2018Sanctify them by the truth; your word is truth.\u2019 The cleansing power of the word (John 15:3) is grounded in Christ\u2019s high-priestly prayer for his disciples.",
+        kjv: "Sanctify them through thy truth: thy word is truth.",
+        niv: "Sanctify them by the truth; your word is truth.",
+    },
+    {
+        id: "acts-15-9", label: "Acts 15:9", category: "scripture", tier: 3,
+        verse: "Acts 15:9",
+        insight: "God \u2018purified their hearts by faith.\u2019 The faith by which the disciples received Christ\u2019s word purified their hearts \u2014 connecting the vine-cleansing imagery to the reality of sanctification by faith.",
+        kjv: "And put no difference between us and them, purifying their hearts by faith.",
+        niv: "He did not discriminate between us and them, for he purified their hearts by faith.",
+    },
+];
+
+const rawLinks = [
+    // Centre → main themes
+    { source: "john15", target: "true-vine" },
+    { source: "john15", target: "branches" },
+    { source: "john15", target: "husbandman" },
+    { source: "john15", target: "bearing-fruit" },
+    { source: "john15", target: "pruning" },
+    { source: "john15", target: "abide-in-christ" },
+    { source: "john15", target: "prayer-promise" },
+    { source: "john15", target: "unfruitful-doom" },
+    { source: "john15", target: "love-command" },
+    { source: "john15", target: "world-hatred" },
+    { source: "john15", target: "comforter-promise" },
+
+    // Vine cross-refs
+    { source: "true-vine", target: "ps-80-8" },
+    { source: "true-vine", target: "isa-53-2" },
+    { source: "true-vine", target: "gen-49-11" },
+    { source: "true-vine", target: "gen-49-22" },
+    { source: "true-vine", target: "1ki-4-25" },
+    { source: "true-vine", target: "jdg-9-13" },
+
+    // Branches cross-refs
+    { source: "branches", target: "rom-11-18" },
+    { source: "branches", target: "eze-15-2" },
+
+    // Husbandman cross-refs
+    { source: "husbandman", target: "1co-3-9" },
+    { source: "husbandman", target: "isa-5-1-2" },
+
+    // Fruit subtopics
+    { source: "bearing-fruit", target: "glorify-father" },
+    { source: "bearing-fruit", target: "isa-5-1-2" },
+    { source: "glorify-father", target: "jer-13-11" },
+
+    // Pruning subtopics
+    { source: "pruning", target: "clean-by-word" },
+    { source: "clean-by-word", target: "jn-17-17" },
+    { source: "clean-by-word", target: "acts-15-9" },
+    { source: "clean-by-word", target: "lev-19-23-24" },
+
+    // Abide subtopics
+    { source: "abide-in-christ", target: "without-me-nothing" },
+    { source: "abide-in-christ", target: "prayer-promise" },
+    { source: "without-me-nothing", target: "2co-3-5" },
+    { source: "prayer-promise", target: "rom-10-6-8" },
+
+    // Judgment subtopics
+    { source: "unfruitful-doom", target: "withered-cast-fire" },
+    { source: "unfruitful-doom", target: "lu-8-18" },
+    { source: "unfruitful-doom", target: "hos-10-1" },
+    { source: "withered-cast-fire", target: "eze-15-2" },
+    { source: "withered-cast-fire", target: "job-8-11-13" },
+    { source: "withered-cast-fire", target: "jude-12" },
+
+    // Love subtopics
+    { source: "love-command", target: "friends-of-christ" },
+    { source: "love-command", target: "chosen-by-christ" },
+    { source: "chosen-by-christ", target: "bearing-fruit" },
+
+    // Hatred subtopics
+    { source: "world-hatred", target: "not-of-world" },
+    { source: "world-hatred", target: "sin-no-excuse" },
+
+    // Comforter subtopics
+    { source: "comforter-promise", target: "spirit-of-truth" },
+
+    // Cross-category connections (deeper insights)
+    { source: "abide-in-christ", target: "bearing-fruit" },
+    { source: "abide-in-christ", target: "true-vine" },
+    { source: "pruning", target: "husbandman" },
+    { source: "world-hatred", target: "comforter-promise" },
+    { source: "love-command", target: "abide-in-christ" },
+];
+
+// ─────────────────────────────────────────
+//  SETUP
+// ─────────────────────────────────────────
+
+const isMobile = window.innerWidth < 640;
+
+function nodeRadius(d) {
+    if (d.tier === 0) return isMobile ? 34 : 42;
+    if (d.tier === 1) return isMobile ? 20 : 26;
+    if (d.tier === 2) return isMobile ? 15 : 20;
+    return isMobile ? 12 : 16;
+}
+
+function fontSize(d) {
+    if (d.tier === 0) return isMobile ? 11 : 13;
+    if (d.tier === 1) return isMobile ? 8.5 : 10.5;
+    if (d.tier === 2) return isMobile ? 7.5 : 9;
+    return isMobile ? 7 : 8;
+}
+
+function linkDistance(link) {
+    const s = link.source.tier ?? link.source;
+    const t = link.target.tier ?? link.target;
+    const maxTier = Math.max(typeof s === 'number' ? s : 1, typeof t === 'number' ? t : 1);
+    if (maxTier <= 1) return isMobile ? 100 : 140;
+    if (maxTier === 2) return isMobile ? 70 : 100;
+    return isMobile ? 55 : 80;
+}
+
+let nodes = rawNodes.map(d => ({ ...d }));
+let links = rawLinks.map(d => ({ ...d }));
+
+const container = document.getElementById("graph-container");
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+const svg = d3.select(container).append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+const defs = svg.append("defs");
+
+// Glow filter
+const filter = defs.append("filter").attr("id", "glow");
+filter.append("feGaussianBlur").attr("stdDeviation", "3").attr("result", "coloredBlur");
+const feMerge = filter.append("feMerge");
+feMerge.append("feMergeNode").attr("in", "coloredBlur");
+feMerge.append("feMergeNode").attr("in", "SourceGraphic");
+
+const g = svg.append("g");
+
+const zoom = d3.zoom()
+    .scaleExtent([0.2, 4])
+    .on("zoom", (event) => g.attr("transform", event.transform));
+
+svg.call(zoom);
+
+// Links
+const linkG = g.append("g").attr("class", "links");
+let linkElements = linkG.selectAll("line")
+    .data(links)
+    .join("line")
+    .attr("stroke", "rgba(212, 175, 55, 0.12)")
+    .attr("stroke-width", 1);
+
+// Nodes group
+const nodeG = g.append("g").attr("class", "nodes");
+let nodeElements = nodeG.selectAll("g")
+    .data(nodes, d => d.id)
+    .join("g")
+    .attr("cursor", "pointer")
+    .call(d3.drag()
+        .on("start", dragStart)
+        .on("drag", dragging)
+        .on("end", dragEnd)
+    )
+    .on("click", (event, d) => {
+        event.stopPropagation();
+        openPanel(d);
+    });
+
+// Circle
+nodeElements.append("circle")
+    .attr("r", d => nodeRadius(d))
+    .attr("fill", d => CATEGORIES[d.category]?.color || "#888")
+    .attr("fill-opacity", 0.18)
+    .attr("stroke", d => CATEGORIES[d.category]?.color || "#888")
+    .attr("stroke-width", d => d.tier === 0 ? 2.5 : 1.5)
+    .attr("stroke-opacity", 0.7);
+
+// Inner glow circle for center
+nodeElements.filter(d => d.tier === 0).select("circle")
+    .attr("filter", "url(#glow)");
+
+// Label
+nodeElements.each(function (d) {
+    const el = d3.select(this);
+    const r = nodeRadius(d);
+    const fs = fontSize(d);
+    const words = d.label.split(/\s+/);
+    const maxCharsPerLine = d.tier === 0 ? 10 : d.tier <= 2 ? 10 : 8;
+    const textLines = [];
+    let currentLine = "";
+    words.forEach(w => {
+        if ((currentLine + " " + w).trim().length > maxCharsPerLine && currentLine) {
+            textLines.push(currentLine.trim());
+            currentLine = w;
+        } else {
+            currentLine = (currentLine + " " + w).trim();
+        }
+    });
+    if (currentLine) textLines.push(currentLine.trim());
+
+    const text = el.append("text")
+        .attr("text-anchor", "middle")
+        .attr("fill", "#faf8f3")
+        .attr("font-size", fs)
+        .attr("font-weight", d.tier <= 1 ? 600 : 500)
+        .attr("pointer-events", "none")
+        .attr("dy", -(textLines.length - 1) * fs * 0.55);
+
+    textLines.forEach((line, i) => {
+        text.append("tspan")
+            .attr("x", 0)
+            .attr("dy", i === 0 ? 0 : fs * 1.15)
+            .text(line);
+    });
+});
+
+// Hover tooltips (desktop only)
+if (!("ontouchstart" in window)) {
+    const tooltip = document.getElementById("tooltip");
+    nodeElements
+        .on("mouseenter", (event, d) => {
+            tooltip.innerHTML = `<span class="tt-label">${d.label}</span>` +
+                (d.verse ? `<br><span class="tt-verse">${d.verse}</span>` : "");
+            tooltip.classList.add("show");
+        })
+        .on("mousemove", (event) => {
+            tooltip.style.left = (event.clientX + 14) + "px";
+            tooltip.style.top = (event.clientY - 10) + "px";
+        })
+        .on("mouseleave", () => tooltip.classList.remove("show"));
+}
+
+// ─────────────────────────────────────────
+//  SIMULATION
+// ─────────────────────────────────────────
+
+const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(linkDistance).strength(0.6))
+    .force("charge", d3.forceManyBody().strength(d => d.tier === 0 ? -600 : d.tier === 1 ? -300 : -150))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collision", d3.forceCollide().radius(d => nodeRadius(d) + (isMobile ? 12 : 18)))
+    .force("x", d3.forceX(width / 2).strength(0.04))
+    .force("y", d3.forceY(height / 2).strength(0.04))
+    .alphaDecay(0.02)
+    .on("tick", ticked);
+
+function ticked() {
+    linkElements
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+
+    nodeElements.attr("transform", d => `translate(${d.x},${d.y})`);
+}
+
+function dragStart(event, d) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+}
+
+function dragging(event, d) {
+    d.fx = event.x;
+    d.fy = event.y;
+}
+
+function dragEnd(event, d) {
+    if (!event.active) simulation.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
+}
+
+// Fit to screen after stabilisation
+setTimeout(() => {
+    fitToScreen();
+}, 2000);
+
+function fitToScreen() {
+    const bounds = g.node().getBBox();
+    if (bounds.width === 0) return;
+    const padding = 80;
+    const topOffset = 100;
+    const dx = bounds.width + padding * 2;
+    const dy = bounds.height + padding * 2;
+    const x = bounds.x - padding;
+    const y = bounds.y - padding;
+    const scale = Math.min(width / dx, (height - topOffset) / dy, 1.8);
+    const tx = width / 2 - (x + dx / 2) * scale;
+    const ty = (height + topOffset) / 2 - (y + dy / 2) * scale;
+    svg.transition().duration(750)
+        .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+}
+
+// ─────────────────────────────────────────
+//  PANEL
+// ─────────────────────────────────────────
+
+const panelOverlay = document.getElementById("panel-overlay");
+const detailPanel = document.getElementById("detail-panel");
+const panelTitle = document.getElementById("panel-title");
+const panelCat = document.getElementById("panel-cat");
+const panelVerse = document.getElementById("panel-verse");
+const panelBody = document.getElementById("panel-body");
+
+function openPanel(d) {
+    const cat = CATEGORIES[d.category] || { color: "#888", label: "Other" };
+    panelCat.textContent = cat.label;
+    panelCat.style.background = cat.color;
+    panelTitle.textContent = d.label;
+    panelVerse.textContent = d.verse || "";
+
+    let html = "";
+
+    if (d.insight) {
+        html += `<div class="panel-section">
+            <div class="panel-section-title">Key Insight</div>
+            <p class="panel-text">${d.insight}</p>
+        </div>`;
+    }
+
+    if (d.kjv || d.niv) {
+        html += `<div class="panel-section">
+            <div class="panel-section-title">Scripture Text</div>`;
+        if (d.kjv) {
+            html += `<div class="scripture-quote"><span class="scripture-version kjv">KJV</span><br>${d.kjv}<span class="ref">\u2014 ${d.verse}</span></div>`;
+        }
+        if (d.niv) {
+            html += `<div class="scripture-quote"><span class="scripture-version niv">NIV</span><br>${d.niv}<span class="ref">\u2014 ${d.verse}</span></div>`;
+        }
+        html += `</div>`;
+    }
+
+    if (d.commentary) {
+        html += `<div class="panel-section">
+            <div class="panel-section-title">Matthew Henry's Commentary</div>
+            <p class="panel-text"><em>${d.commentary}</em></p>
+        </div>`;
+    }
+
+    // Connected nodes
+    const connected = [];
+    links.forEach(l => {
+        const sid = typeof l.source === "object" ? l.source.id : l.source;
+        const tid = typeof l.target === "object" ? l.target.id : l.target;
+        if (sid === d.id) {
+            const n = nodes.find(nd => nd.id === tid);
+            if (n) connected.push(n);
+        } else if (tid === d.id) {
+            const n = nodes.find(nd => nd.id === sid);
+            if (n) connected.push(n);
+        }
+    });
+
+    if (connected.length > 0) {
+        html += `<div class="panel-section">
+            <div class="panel-section-title">Connected To</div>
+            <div class="connected-nodes">
+                ${connected.map(c => {
+                    const cc = CATEGORIES[c.category] || { color: "#888" };
+                    return `<span class="connected-chip" data-id="${c.id}">
+                        <span class="chip-dot" style="background:${cc.color}"></span>
+                        ${c.label}
+                    </span>`;
+                }).join("")}
+            </div>
+        </div>`;
+    }
+
+    panelBody.innerHTML = html;
+
+    // chip clicks
+    panelBody.querySelectorAll(".connected-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+            const targetNode = nodes.find(n => n.id === chip.dataset.id);
+            if (targetNode) openPanel(targetNode);
+        });
+    });
+
+    // highlight node and connections
+    highlightNode(d);
+
+    panelOverlay.classList.add("open");
+    detailPanel.classList.add("open");
+    detailPanel.scrollTop = 0;
+}
+
+function closePanel() {
+    panelOverlay.classList.remove("open");
+    detailPanel.classList.remove("open");
+    clearHighlight();
+}
+
+panelOverlay.addEventListener("click", closePanel);
+document.getElementById("panel-close").addEventListener("click", closePanel);
+
+function highlightNode(d) {
+    const connectedIds = new Set([d.id]);
+    links.forEach(l => {
+        const sid = typeof l.source === "object" ? l.source.id : l.source;
+        const tid = typeof l.target === "object" ? l.target.id : l.target;
+        if (sid === d.id) connectedIds.add(tid);
+        if (tid === d.id) connectedIds.add(sid);
+    });
+
+    nodeElements.select("circle")
+        .transition().duration(300)
+        .attr("fill-opacity", nd => connectedIds.has(nd.id) ? 0.35 : 0.05)
+        .attr("stroke-opacity", nd => connectedIds.has(nd.id) ? 1 : 0.15);
+
+    nodeElements.select("text")
+        .transition().duration(300)
+        .attr("fill-opacity", nd => connectedIds.has(nd.id) ? 1 : 0.2);
+
+    linkElements
+        .transition().duration(300)
+        .attr("stroke", l => {
+            const sid = typeof l.source === "object" ? l.source.id : l.source;
+            const tid = typeof l.target === "object" ? l.target.id : l.target;
+            if (sid === d.id || tid === d.id) return "rgba(212, 175, 55, 0.5)";
+            return "rgba(212, 175, 55, 0.03)";
+        })
+        .attr("stroke-width", l => {
+            const sid = typeof l.source === "object" ? l.source.id : l.source;
+            const tid = typeof l.target === "object" ? l.target.id : l.target;
+            return (sid === d.id || tid === d.id) ? 2 : 0.5;
+        });
+}
+
+function clearHighlight() {
+    nodeElements.select("circle")
+        .transition().duration(400)
+        .attr("fill-opacity", 0.18)
+        .attr("stroke-opacity", 0.7);
+
+    nodeElements.select("text")
+        .transition().duration(400)
+        .attr("fill-opacity", 1);
+
+    linkElements
+        .transition().duration(400)
+        .attr("stroke", "rgba(212, 175, 55, 0.12)")
+        .attr("stroke-width", 1);
+}
+
+// ─────────────────────────────────────────
+//  FILTER
+// ─────────────────────────────────────────
+
+let activeFilter = "all";
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeFilter = btn.dataset.cat;
+        applyFilter();
+    });
+});
+
+function applyFilter() {
+    if (activeFilter === "all") {
+        nodeElements.transition().duration(400)
+            .attr("opacity", 1);
+        nodeElements.select("circle")
+            .transition().duration(400)
+            .attr("fill-opacity", 0.18)
+            .attr("stroke-opacity", 0.7);
+        nodeElements.select("text")
+            .transition().duration(400)
+            .attr("fill-opacity", 1);
+        linkElements.transition().duration(400)
+            .attr("stroke", "rgba(212, 175, 55, 0.12)")
+            .attr("stroke-width", 1);
+        return;
+    }
+
+    // Build set of visible node IDs: those matching the filter + their direct connections
+    const matchIds = new Set();
+    nodes.forEach(n => {
+        if (n.category === activeFilter) matchIds.add(n.id);
+    });
+    // Always show center
+    matchIds.add("john15");
+
+    const visibleIds = new Set(matchIds);
+    links.forEach(l => {
+        const sid = typeof l.source === "object" ? l.source.id : l.source;
+        const tid = typeof l.target === "object" ? l.target.id : l.target;
+        if (matchIds.has(sid)) visibleIds.add(tid);
+        if (matchIds.has(tid)) visibleIds.add(sid);
+    });
+
+    nodeElements.transition().duration(400)
+        .attr("opacity", d => visibleIds.has(d.id) ? 1 : 0.08);
+
+    linkElements.transition().duration(400)
+        .attr("stroke", l => {
+            const sid = typeof l.source === "object" ? l.source.id : l.source;
+            const tid = typeof l.target === "object" ? l.target.id : l.target;
+            if (matchIds.has(sid) || matchIds.has(tid)) return "rgba(212, 175, 55, 0.3)";
+            return "rgba(212, 175, 55, 0.02)";
+        })
+        .attr("stroke-width", l => {
+            const sid = typeof l.source === "object" ? l.source.id : l.source;
+            const tid = typeof l.target === "object" ? l.target.id : l.target;
+            return (matchIds.has(sid) || matchIds.has(tid)) ? 1.5 : 0.5;
+        });
+}
+
+// ─────────────────────────────────────────
+//  CONTROLS
+// ─────────────────────────────────────────
+
+document.getElementById("btn-recenter").addEventListener("click", fitToScreen);
+
+const legend = document.getElementById("legend");
+let legendVisible = !isMobile;
+if (isMobile) legend.classList.add("hidden");
+document.getElementById("btn-legend").addEventListener("click", () => {
+    legendVisible = !legendVisible;
+    legend.classList.toggle("hidden", !legendVisible);
+    document.getElementById("btn-legend").classList.toggle("active", legendVisible);
+});
+
+// Help
+const helpOverlay = document.getElementById("help-overlay");
+const firstVisit = !localStorage.getItem("john15_visited");
+if (firstVisit) {
+    helpOverlay.classList.add("open");
+    localStorage.setItem("john15_visited", "1");
+}
+
+document.getElementById("btn-help").addEventListener("click", () => helpOverlay.classList.add("open"));
+document.getElementById("help-close").addEventListener("click", () => helpOverlay.classList.remove("open"));
+helpOverlay.addEventListener("click", (e) => {
+    if (e.target === helpOverlay) helpOverlay.classList.remove("open");
+});
+
+// ESC key
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        closePanel();
+        helpOverlay.classList.remove("open");
+    }
+});
+
+// Resize
+window.addEventListener("resize", () => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    svg.attr("width", w).attr("height", h);
+    simulation.force("center", d3.forceCenter(w / 2, h / 2));
+    simulation.force("x", d3.forceX(w / 2).strength(0.04));
+    simulation.force("y", d3.forceY(h / 2).strength(0.04));
+    simulation.alpha(0.3).restart();
+    setTimeout(fitToScreen, 1500);
+});
+
+})();
+</script>
+</body>
+</html>
