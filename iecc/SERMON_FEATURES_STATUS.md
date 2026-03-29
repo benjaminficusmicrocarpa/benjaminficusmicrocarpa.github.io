@@ -46,6 +46,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 ### March 2026 - The Way Series
 | Date | Sermon | Routing | Tags | External CSS/JS |
 |------|--------|---------|------|-----------------|
+| 2026-03-29 | The Way: Triumphal Entry? | ✅ | ✅ | ✅ |
 | 2026-03-22 | The Way: The Upside-Down Kingdom | ✅ | ✅ | ✅ |
 | 2026-03-15 | The Way: Mercy, Not Sacrifice | ✅ | ✅ | ✅ |
 | 2026-03-08 | The Way: The Temptation of Jesus | ✅ | ✅ | ✅ |
@@ -85,7 +86,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 |------|--------|---------|------|-----------------|
 | 2024-10-27 | How We Make Sense of Life | ✅ | ✅ | ✅ |
 
-**Total Fully Implemented: 22 sermons** (with external CSS/JS)
+**Total Fully Implemented: 23 sermons** (with external CSS/JS)
 
 ---
 
@@ -365,9 +366,9 @@ accordionHeaders.forEach(header => {
 
 | Category | Count | Percentage |
 |----------|-------|------------|
-| Fully Implemented (all features) | 22 | 34.4% |
-| Missing All Features | 42 | 65.6% |
-| **Total** | **64** | **100%** |
+| Fully Implemented (all features) | 23 | 35.4% |
+| Missing All Features | 42 | 64.6% |
+| **Total** | **65** | **100%** |
 
 ---
 
@@ -399,7 +400,8 @@ To migrate remaining sermons:
 
 ---
 
-*Last updated: 2026-03-22*
+*Last updated: 2026-03-29*
+*Added 2026-03-29 (The Way: Triumphal Entry?) — fifth sermon in The Way Lent/Palm Sunday series with Pastor Kevin. Luke 19:28-44, Zechariah 9:9, James 2:17, Philippians 2:7-8 — Jesus weeps over Jerusalem's willful blindness; crowds vs Pharisees both reject him; donkey as peace symbol (shalom); willful blindness defined; dying to self as the solution; salvation by grace through faith; rope analogy; Steve Cuss quote. Reuses `css/the-way.css` theme. Custom Historical Context tab for donkey symbolism in Israelite kings, Zechariah 9 scholarly debate, Fall of Jerusalem AD 70 timeline. New scripture tag: philippians.*
 *Added 2026-03-22 (The Way: The Upside-Down Kingdom) — fourth sermon in The Way Lent series with Pastor Brett. Luke 6:20-26 (Beatitudes) and Mark 10:35-45 (James & John's request) — Jesus redefines greatness as servanthood, contrasts worldly values (power, comfort, success, recognition) with kingdom values (humility, sacrifice, grief/endurance, rejection for Christ). New covenant/command/movement, the danger of "now", Jesus as more than example — He equips. Reuses `css/the-way.css` theme. Custom Kingdom Contrast tab with visual Woe vs Blessed comparison and broadened-terms grid. New scripture tag: colossians.*
 *Added 2026-03-15 (The Way: Mercy, Not Sacrifice) — third sermon in The Way Lent series with Pastor Albert. Matthew 9:9-13 — Jesus calling Matthew the tax collector, eating with sinners, "I desire mercy not sacrifice." Doctor vs judge paradigm, grace before truth (John 1:17), chesed as active covenantal love, "who do you bring to your table?" Reuses `css/the-way.css` theme. Custom Historical Context tab for Capernaum, Roman tax system, and Hebrew word study. New scripture tag: hosea.*
 *Added 2026-03-08 (The Way: The Temptation of Jesus) — second sermon in The Way Lent series with Pastor Brett. Matthew 4 — Jesus' three wilderness temptations revealing deeper questions about provision, power, and worship. Three defenses: know your weaknesses, imagine the cost, know your identity. Hypostatic union, church hurt, restraint bias, fixing eyes on Jesus. Reuses `css/the-way.css` theme. New scripture tags used: matthew, hebrews, corinthians, proverbs, john, mark.*
