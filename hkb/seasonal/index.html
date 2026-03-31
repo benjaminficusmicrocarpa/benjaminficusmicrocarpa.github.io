@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="hkb-base" content="..">
+    <title>Seasonal Blooms | Hong Kong Botanica</title>
+    <link rel="icon" href="../hkb.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/hkb.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['Roboto', 'Noto Sans TC', 'sans-serif'], serif: ['Playfair Display', 'Noto Serif TC', 'serif'] },
+                colors: { botanical: { light: '#82c07b', DEFAULT: '#4a8244', dark: '#2d5229', accent: '#d4af37' } }
+            }}
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-gray-800 font-sans antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center gap-2.5 text-botanical-dark font-serif font-bold text-xl sm:text-2xl tracking-tight">
+                        <img src="../hkb.svg" alt="HKB" class="h-9 w-9">
+                        <span class="lang-en">Hong Kong Botanica</span>
+                        <span class="lang-zh hidden">香港草木誌</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm lg:text-base">
+                    <a href="../index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Home</span>
+                        <span class="lang-zh hidden">首頁</span>
+                    </a>
+                    <a href="../species/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Species Directory</span>
+                        <span class="lang-zh hidden">物種目錄</span>
+                    </a>
+                    <a href="../families/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Families & Genera</span>
+                        <span class="lang-zh hidden">科屬分類</span>
+                    </a>
+                    <a href="index.html" class="text-botanical font-bold border-b-2 border-botanical pb-0.5 transition">
+                        <span class="lang-en">Seasonal Blooms</span>
+                        <span class="lang-zh hidden">當季開花</span>
+                    </a>
+                    <a href="../about/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">About</span>
+                        <span class="lang-zh hidden">關於本庫</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4 text-stone-500">
+                    <a href="../search/index.html" class="hover:text-botanical transition"><i class="fa-solid fa-search text-lg"></i></a>
+                    <button onclick="toggleLanguage()" class="hover:text-botanical transition font-bold text-sm px-2 py-1 rounded border border-stone-200 hover:border-botanical">
+                        <span class="lang-en">中</span>
+                        <span class="lang-zh hidden">EN</span>
+                    </button>
+                    <button onclick="openMobileNav()" class="md:hidden hover:text-botanical transition"><i class="fa-solid fa-bars text-xl"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE DRAWER -->
+    <div id="mobileOverlay" class="mobile-nav-overlay" onclick="closeMobileNav()"></div>
+    <div id="mobileDrawer" class="mobile-nav-drawer">
+        <div class="p-5 border-b border-stone-100 flex justify-between items-center">
+            <span class="font-serif font-bold text-lg text-botanical-dark">
+                <span class="lang-en">Menu</span><span class="lang-zh hidden">選單</span>
+            </span>
+            <button onclick="closeMobileNav()" class="text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="p-5 space-y-1">
+            <a href="../index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-house w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Home</span><span class="lang-zh hidden">首頁</span>
+            </a>
+            <a href="../species/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-leaf w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Species Directory</span><span class="lang-zh hidden">物種目錄</span>
+            </a>
+            <a href="../families/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-sitemap w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Families & Genera</span><span class="lang-zh hidden">科屬分類</span>
+            </a>
+            <a href="index.html" class="block px-4 py-3 rounded-lg bg-botanical/10 text-botanical font-medium transition">
+                <i class="fa-solid fa-sun w-6 text-center mr-2"></i>
+                <span class="lang-en">Seasonal Blooms</span><span class="lang-zh hidden">當季開花</span>
+            </a>
+            <a href="../about/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-circle-info w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span>
+            </a>
+            <a href="../search/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-search w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Search</span><span class="lang-zh hidden">搜尋</span>
+            </a>
+        </div>
+        <div class="p-5 border-t border-stone-100">
+            <button onclick="toggleLanguage()" class="w-full px-4 py-3 rounded-lg border border-stone-200 text-stone-600 font-medium hover:border-botanical hover:text-botanical transition">
+                <span class="lang-en">切換中文</span><span class="lang-zh hidden">Switch to English</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <header class="relative bg-gradient-to-br from-emerald-50 via-lime-50 to-amber-50 py-16 md:py-24 border-b border-stone-200">
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cpath d=&quot;M30 5 C25 15 15 25 5 30 C15 35 25 45 30 55 C35 45 45 35 55 30 C45 25 35 15 30 5Z&quot; fill=&quot;%234a8244&quot;/%3E%3C/svg%3E'); background-size: 60px 60px;"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <nav class="breadcrumb mb-8">
+                <a href="../index.html"><span class="lang-en">Home</span><span class="lang-zh hidden">首頁</span></a>
+                <span class="separator"><i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                <span class="text-stone-900 font-medium"><span class="lang-en">Seasonal Blooms</span><span class="lang-zh hidden">當季開花</span></span>
+            </nav>
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 bg-botanical/10 text-botanical text-sm font-bold px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase">
+                    <i class="fa-solid fa-sun"></i>
+                    <span class="lang-en">March 三月</span>
+                    <span class="lang-zh hidden">三月 March</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-stone-900 leading-tight mb-4">
+                    <span class="lang-en">What's Blooming in Hong Kong?</span>
+                    <span class="lang-zh hidden">香港正在開什麼花？</span>
+                </h1>
+                <p class="text-lg md:text-xl text-stone-600 font-light leading-relaxed max-w-2xl">
+                    <span class="lang-en">Explore flowering phenology across the seasons. Hong Kong's subtropical climate sustains year-round blooming, with peak diversity from March through May when hillsides erupt in colour.</span>
+                    <span class="lang-zh hidden">探索香港四季的開花物候。香港的亞熱帶氣候維持全年開花，三月至五月物種多樣性達到高峰，漫山遍野繁花盛開。</span>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- MONTH SELECTOR -->
+        <section class="bg-white border-b border-stone-200 py-6 sticky top-16 z-40 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center gap-3 overflow-x-auto pb-2 -mb-2 scrollbar-hide" id="monthSelector">
+                    <button class="filter-pill whitespace-nowrap" data-month="1">
+                        <span class="lang-en">Jan</span><span class="lang-zh hidden">一月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="2">
+                        <span class="lang-en">Feb</span><span class="lang-zh hidden">二月</span>
+                    </button>
+                    <button class="filter-pill active whitespace-nowrap" data-month="3">
+                        <span class="lang-en">Mar</span><span class="lang-zh hidden">三月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="4">
+                        <span class="lang-en">Apr</span><span class="lang-zh hidden">四月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="5">
+                        <span class="lang-en">May</span><span class="lang-zh hidden">五月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="6">
+                        <span class="lang-en">Jun</span><span class="lang-zh hidden">六月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="7">
+                        <span class="lang-en">Jul</span><span class="lang-zh hidden">七月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="8">
+                        <span class="lang-en">Aug</span><span class="lang-zh hidden">八月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="9">
+                        <span class="lang-en">Sep</span><span class="lang-zh hidden">九月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="10">
+                        <span class="lang-en">Oct</span><span class="lang-zh hidden">十月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="11">
+                        <span class="lang-en">Nov</span><span class="lang-zh hidden">十一月</span>
+                    </button>
+                    <button class="filter-pill whitespace-nowrap" data-month="12">
+                        <span class="lang-en">Dec</span><span class="lang-zh hidden">十二月</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MONTHLY OVERVIEW CHART -->
+        <section class="py-16 bg-stone-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl md:text-3xl font-serif font-bold text-stone-900 mb-2">
+                        <span class="lang-en">Monthly Flowering Species Count</span>
+                        <span class="lang-zh hidden">每月開花物種數量</span>
+                    </h2>
+                    <p class="text-stone-500">
+                        <span class="lang-en">Approximate number of species in flower each month across Hong Kong.</span>
+                        <span class="lang-zh hidden">香港每月大約有多少物種正在開花。</span>
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl border border-stone-200 p-6 md:p-8 shadow-sm">
+                    <div class="flex items-end justify-between gap-1.5 sm:gap-3 h-64" id="monthlyChart">
+                        <!-- Bars rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOOMING SPECIES SECTION -->
+        <section class="py-16 bg-white border-t border-stone-100" id="bloomingSection">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-4">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-stone-900" id="bloomingTitle">
+                            <span class="lang-en">Blooming in March</span>
+                            <span class="lang-zh hidden">三月盛開</span>
+                        </h2>
+                        <p class="text-stone-500 mt-1" id="bloomingSubtitle">
+                            <span class="lang-en">12 featured species currently in flower.</span>
+                            <span class="lang-zh hidden">12 種精選的當季開花物種。</span>
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-stone-500">
+                        <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-botanical inline-block"></span> <span class="lang-en">Flowering</span><span class="lang-zh hidden">花期</span></span>
+                        <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-stone-300 inline-block"></span> <span class="lang-en">Dormant</span><span class="lang-zh hidden">休眠</span></span>
+                    </div>
+                </div>
+
+                <!-- March species grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5" id="marchGrid">
+
+                    <!-- 1. Rhododendron simsii -->
+                    <a href="../species/rhododendron-simsii.html" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-rose-300 to-pink-500 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-flower-tulip text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Rhododendron simsii</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Red Azalea</span><span class="lang-zh hidden">映山紅</span> · Ericaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-seedling text-[8px]"></i> Shrub</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="2-4"></div>
+                        </div>
+                    </a>
+
+                    <!-- 2. Mucuna birdwoodiana -->
+                    <a href="../species/mucuna-birdwoodiana.html" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-lime-200 to-emerald-400 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-leaf text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Mucuna birdwoodiana</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Birdwood's Mucuna</span><span class="lang-zh hidden">禾雀花</span> · Fabaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-vine text-[8px]"></i> Climber</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="3-4"></div>
+                        </div>
+                    </a>
+
+                    <!-- 3. Bombax ceiba -->
+                    <a href="#" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-red-400 to-orange-500 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-tree text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Bombax ceiba</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Red Kapok Tree</span><span class="lang-zh hidden">木棉</span> · Bombacaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-tree text-[8px]"></i> Tree</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="3-4"></div>
+                        </div>
+                    </a>
+
+                    <!-- 4. Bauhinia blakeana -->
+                    <a href="../species/bauhinia-blakeana.html" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-purple-300 to-fuchsia-500 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-spa text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Bauhinia blakeana</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Hong Kong Orchid Tree</span><span class="lang-zh hidden">洋紫荊</span> · Caesalpiniaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-tree text-[8px]"></i> Tree</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="10-4"></div>
+                        </div>
+                    </a>
+
+                    <!-- 5. Bougainvillea -->
+                    <a href="#" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-pink-400 to-rose-600 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-leaf text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Bougainvillea</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Bougainvillea</span><span class="lang-zh hidden">簕杜鵑</span> · Nyctaginaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-vine text-[8px]"></i> Climber/Shrub</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="3-11"></div>
+                        </div>
+                    </a>
+
+                    <!-- 6. Fortunella margarita -->
+                    <a href="#" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-yellow-300 to-orange-400 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-lemon text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Fortunella margarita</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Oval Kumquat</span><span class="lang-zh hidden">山小橘</span> · Rutaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-seedling text-[8px]"></i> Shrub</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="3-5"></div>
+                        </div>
+                    </a>
+
+                    <!-- 7. Illicium dunnianum -->
+                    <a href="#" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-red-300 to-rose-500 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-star text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Illicium dunnianum</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Dunn's Star-anise</span><span class="lang-zh hidden">紅花八角</span> · Illiciaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-seedling text-[8px]"></i> Shrub</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="3-5"></div>
+                        </div>
+                    </a>
+
+                    <!-- 8. Thuja orientalis -->
+                    <a href="#" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-green-300 to-teal-500 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-tree text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Thuja orientalis</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Chinese Arborvitae</span><span class="lang-zh hidden">扁柏</span> · Cupressaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-tree text-[8px]"></i> Tree</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="3-4"></div>
+                        </div>
+                    </a>
+
+                    <!-- 9. Terminalia mantaly -->
+                    <a href="#" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-emerald-200 to-green-500 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-pagelines text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Terminalia mantaly</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Indian Almond</span><span class="lang-zh hidden">小葉欖仁</span> · Combretaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-tree text-[8px]"></i> Tree</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="3-4"></div>
+                        </div>
+                    </a>
+
+                    <!-- 10. Plumeria pudica -->
+                    <a href="#" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-amber-100 to-yellow-300 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-spa text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Plumeria pudica</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">White Frangipani</span><span class="lang-zh hidden">匙葉雞蛋花</span> · Apocynaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-tree text-[8px]"></i> Tree</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="3-10"></div>
+                        </div>
+                    </a>
+
+                    <!-- 11. Bauhinia corymbosa -->
+                    <a href="#" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-violet-300 to-purple-500 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-clover text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Bauhinia corymbosa</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Camel's Foot</span><span class="lang-zh hidden">首冠藤</span> · Caesalpiniaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-vine text-[8px]"></i> Climber</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="4-6"></div>
+                        </div>
+                    </a>
+
+                    <!-- 12. Solanum jasminoides -->
+                    <a href="#" class="flex bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-botanical/30 transition-all duration-300 group">
+                        <div class="w-32 sm:w-36 flex-shrink-0 bg-gradient-to-br from-sky-200 to-indigo-400 flex items-center justify-center text-white/60">
+                            <i class="fa-solid fa-leaf text-4xl opacity-50" style="font-size:2rem"></i>
+                        </div>
+                        <div class="p-4 flex-grow min-w-0">
+                            <h4 class="font-serif font-bold text-stone-900 italic text-sm group-hover:text-botanical transition truncate">Solanum jasminoides</h4>
+                            <p class="text-stone-500 text-xs mt-0.5">
+                                <span class="lang-en">Potato Vine</span><span class="lang-zh hidden">花葉蔓花茄子</span> · Solanaceae
+                            </p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="attr-pill growth-form text-[10px] py-0.5 px-2"><i class="fa-solid fa-vine text-[8px]"></i> Climber</span>
+                            </div>
+                            <div class="mt-2 phenology-mini flex gap-px" data-flower="3-11"></div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Coming soon placeholder for other months -->
+                <div class="hidden py-16 text-center" id="comingSoon">
+                    <div class="w-20 h-20 mx-auto bg-stone-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-hourglass-half text-3xl text-stone-400"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-stone-700 mb-2" id="comingSoonTitle">
+                        <span class="lang-en">Species blooming in January — coming soon</span>
+                        <span class="lang-zh hidden">一月開花物種 — 即將推出</span>
+                    </h3>
+                    <p class="text-stone-500 max-w-md mx-auto">
+                        <span class="lang-en">We're compiling phenological data for this month. Check back soon, or explore the March collection above.</span>
+                        <span class="lang-zh hidden">我們正在整理本月的物候數據，請稍後再來，或先瀏覽三月的精選植物。</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEASONAL CALENDAR -->
+        <section class="py-16 bg-stone-100 border-t border-stone-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-3xl font-serif font-bold text-stone-900 mb-2">
+                        <span class="lang-en">Seasonal Phenology Calendar</span>
+                        <span class="lang-zh hidden">四季物候日曆</span>
+                    </h2>
+                    <p class="text-stone-500">
+                        <span class="lang-en">A year-round overview of Hong Kong's flowering patterns, shaped by the subtropical monsoon climate.</span>
+                        <span class="lang-zh hidden">香港全年開花規律概覽，受亞熱帶季風氣候影響。</span>
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <!-- Spring -->
+                    <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                        <div class="h-2 bg-gradient-to-r from-emerald-400 to-lime-400"></div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-11 h-11 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-seedling text-lg"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif font-bold text-stone-900 text-lg">
+                                        <span class="lang-en">Spring</span><span class="lang-zh hidden">春季</span>
+                                    </h3>
+                                    <p class="text-xs text-stone-400">
+                                        <span class="lang-en">Mar – May · 三月至五月</span>
+                                        <span class="lang-zh hidden">三月至五月 · Mar – May</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-600 mb-4 leading-relaxed">
+                                <span class="lang-en">Peak diversity. Hillsides ablaze with rhododendrons and kapok. Bauhinias in full bloom across urban parks.</span>
+                                <span class="lang-zh hidden">物種多樣性高峰。山坡上杜鵑花和木棉怒放，紫荊花在城市公園中盛開。</span>
+                            </p>
+                            <div class="space-y-1.5 text-xs text-stone-500">
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> <em>Rhododendron</em> spp.</div>
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> <em>Bauhinia blakeana</em></div>
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> <em>Bombax ceiba</em></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summer -->
+                    <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                        <div class="h-2 bg-gradient-to-r from-amber-400 to-orange-400"></div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-11 h-11 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-sun text-lg"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif font-bold text-stone-900 text-lg">
+                                        <span class="lang-en">Summer</span><span class="lang-zh hidden">夏季</span>
+                                    </h3>
+                                    <p class="text-xs text-stone-400">
+                                        <span class="lang-en">Jun – Aug · 六月至八月</span>
+                                        <span class="lang-zh hidden">六月至八月 · Jun – Aug</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-600 mb-4 leading-relaxed">
+                                <span class="lang-en">Tropical species peak during monsoon rains. Lotus ponds are at their finest; crape myrtles line the streets.</span>
+                                <span class="lang-zh hidden">熱帶物種在季風雨季達到高峰。蓮花池最為壯觀，紫薇花開滿街道。</span>
+                            </p>
+                            <div class="space-y-1.5 text-xs text-stone-500">
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <em>Nelumbo nucifera</em></div>
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <em>Lagerstroemia</em> spp.</div>
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <em>Delonix regia</em></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Autumn -->
+                    <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                        <div class="h-2 bg-gradient-to-r from-orange-400 to-red-400"></div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-11 h-11 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-leaf text-lg"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif font-bold text-stone-900 text-lg">
+                                        <span class="lang-en">Autumn</span><span class="lang-zh hidden">秋季</span>
+                                    </h3>
+                                    <p class="text-xs text-stone-400">
+                                        <span class="lang-en">Sep – Nov · 九月至十一月</span>
+                                        <span class="lang-zh hidden">九月至十一月 · Sep – Nov</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-600 mb-4 leading-relaxed">
+                                <span class="lang-en">Late bloomers and fragrant species. Sweet osmanthus fills the air; chrysanthemums add autumn colour.</span>
+                                <span class="lang-zh hidden">晚開花及芬芳物種。桂花香氣四溢，菊花增添秋色。</span>
+                            </p>
+                            <div class="space-y-1.5 text-xs text-stone-500">
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span> <em>Osmanthus fragrans</em></div>
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span> <em>Chrysanthemum</em> spp.</div>
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span> <em>Liriope</em> spp.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Winter -->
+                    <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                        <div class="h-2 bg-gradient-to-r from-sky-400 to-blue-400"></div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-11 h-11 bg-sky-50 text-sky-600 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-snowflake text-lg"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif font-bold text-stone-900 text-lg">
+                                        <span class="lang-en">Winter</span><span class="lang-zh hidden">冬季</span>
+                                    </h3>
+                                    <p class="text-xs text-stone-400">
+                                        <span class="lang-en">Dec – Feb · 十二月至二月</span>
+                                        <span class="lang-zh hidden">十二月至二月 · Dec – Feb</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-600 mb-4 leading-relaxed">
+                                <span class="lang-en">Camellias emerge in the cool season. Bauhinia blakeana continues its extended bloom into the new year.</span>
+                                <span class="lang-zh hidden">山茶花在涼季盛開，洋紫荊延續至新年仍繼續綻放。</span>
+                            </p>
+                            <div class="space-y-1.5 text-xs text-stone-500">
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span> <em>Camellia</em> spp.</div>
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span> <em>Bauhinia blakeana</em></div>
+                                <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span> <em>Prunus</em> spp.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS -->
+        <section class="py-14 bg-botanical-dark text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-16 text-center">
+                    <div>
+                        <div class="text-4xl md:text-5xl font-serif font-bold text-botanical-accent">1,988</div>
+                        <p class="text-stone-300 mt-1 text-sm">
+                            <span class="lang-en">species flower in spring</span>
+                            <span class="lang-zh hidden">物種在春季開花</span>
+                        </p>
+                    </div>
+                    <div class="hidden md:block w-px h-14 bg-white/20"></div>
+                    <div>
+                        <div class="text-4xl md:text-5xl font-serif font-bold text-botanical-accent">580</div>
+                        <p class="text-stone-300 mt-1 text-sm">
+                            <span class="lang-en">species bloom in March alone</span>
+                            <span class="lang-zh hidden">物種單在三月開花</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-900 text-stone-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3 text-white">
+                <img src="../hkb.svg" alt="" class="h-8 w-8 opacity-80">
+                <span class="font-serif font-bold text-xl">
+                    <span class="lang-en">Hong Kong Botanica</span><span class="lang-zh hidden">香港草木誌</span>
+                </span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
+                <a href="../species/index.html" class="hover:text-white transition"><span class="lang-en">Species List</span><span class="lang-zh hidden">物種名錄</span></a>
+                <a href="../families/index.html" class="hover:text-white transition"><span class="lang-en">Taxonomy Guide</span><span class="lang-zh hidden">分類指南</span></a>
+                <a href="../about/index.html" class="hover:text-white transition"><span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span></a>
+                <a href="../search/index.html" class="hover:text-white transition"><span class="lang-en">Search</span><span class="lang-zh hidden">搜尋</span></a>
+            </div>
+            <div class="text-sm text-stone-500 text-center md:text-right">
+                <span class="lang-en">&copy; 2026 Hong Kong Botanica. All rights reserved.</span>
+                <span class="lang-zh hidden">&copy; 2026 香港草木誌。保留所有權利。</span><br>
+                <span class="text-xs"><span class="lang-en">Images are for educational purposes.</span><span class="lang-zh hidden">圖片僅供教育用途。</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/hkb.js"></script>
+    <script>
+    (function() {
+        const monthData = {
+            counts: [180,220,580,650,720,680,620,590,510,440,320,210],
+            namesEn: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+            namesZh: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+            shortEn: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+            shortZh: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+        };
+
+        let activeMonth = 3;
+        const maxCount = Math.max(...monthData.counts);
+
+        function renderChart() {
+            const chart = document.getElementById('monthlyChart');
+            if (!chart) return;
+            chart.innerHTML = monthData.counts.map((count, i) => {
+                const m = i + 1;
+                const pct = Math.round((count / maxCount) * 100);
+                const isActive = m === activeMonth;
+                return `
+                    <div class="flex-1 flex flex-col items-center gap-2 group cursor-pointer" data-chart-month="${m}">
+                        <span class="text-xs font-bold ${isActive ? 'text-botanical-dark' : 'text-stone-400'} opacity-0 group-hover:opacity-100 transition">${count}</span>
+                        <div class="w-full rounded-t-md transition-all duration-300 ${isActive ? 'bg-botanical shadow-md' : 'bg-stone-300 hover:bg-stone-400'}"
+                             style="height: ${pct}%"></div>
+                        <span class="text-[10px] sm:text-xs font-medium ${isActive ? 'text-botanical-dark font-bold' : 'text-stone-500'}">
+                            <span class="lang-en">${monthData.shortEn[i]}</span><span class="lang-zh hidden">${monthData.shortZh[i]}</span>
+                        </span>
+                    </div>`;
+            }).join('');
+
+            chart.querySelectorAll('[data-chart-month]').forEach(bar => {
+                bar.addEventListener('click', () => selectMonth(parseInt(bar.dataset.chartMonth)));
+            });
+        }
+
+        function selectMonth(m) {
+            activeMonth = m;
+
+            document.querySelectorAll('#monthSelector .filter-pill').forEach(pill => {
+                pill.classList.toggle('active', parseInt(pill.dataset.month) === m);
+            });
+
+            renderChart();
+
+            const titleEl = document.getElementById('bloomingTitle');
+            const subtitleEl = document.getElementById('bloomingSubtitle');
+            const marchGrid = document.getElementById('marchGrid');
+            const comingSoon = document.getElementById('comingSoon');
+            const comingSoonTitle = document.getElementById('comingSoonTitle');
+
+            if (m === 3) {
+                marchGrid.classList.remove('hidden');
+                comingSoon.classList.add('hidden');
+                titleEl.innerHTML = `<span class="lang-en">Blooming in March</span><span class="lang-zh hidden">三月盛開</span>`;
+                subtitleEl.innerHTML = `<span class="lang-en">12 featured species currently in flower.</span><span class="lang-zh hidden">12 種精選的當季開花物種。</span>`;
+            } else {
+                marchGrid.classList.add('hidden');
+                comingSoon.classList.remove('hidden');
+                const nameEn = monthData.namesEn[m - 1];
+                const nameZh = monthData.namesZh[m - 1];
+                titleEl.innerHTML = `<span class="lang-en">Blooming in ${nameEn}</span><span class="lang-zh hidden">${nameZh}盛開</span>`;
+                subtitleEl.innerHTML = `<span class="lang-en">Approximately ${monthData.counts[m - 1]} species in flower.</span><span class="lang-zh hidden">大約 ${monthData.counts[m - 1]} 種開花物種。</span>`;
+                comingSoonTitle.innerHTML = `<span class="lang-en">Species blooming in ${nameEn} — coming soon</span><span class="lang-zh hidden">${nameZh}開花物種 — 即將推出</span>`;
+            }
+
+            if (typeof applyLanguage === 'function') applyLanguage();
+        }
+
+        function renderMiniPhenology() {
+            document.querySelectorAll('.phenology-mini').forEach(el => {
+                const months = parseMonths(el.dataset.flower);
+                const labels = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+                let html = '';
+                for (let m = 1; m <= 12; m++) {
+                    const on = months.includes(m);
+                    html += `<div class="flex-1 h-1.5 rounded-sm ${on ? 'bg-botanical' : 'bg-stone-200'}" title="${labels[m-1]}"></div>`;
+                }
+                el.innerHTML = html;
+            });
+        }
+
+        document.querySelectorAll('#monthSelector .filter-pill').forEach(pill => {
+            pill.addEventListener('click', () => selectMonth(parseInt(pill.dataset.month)));
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderChart();
+            renderMiniPhenology();
+        });
+    })();
+    </script>
+</body>
+</html>

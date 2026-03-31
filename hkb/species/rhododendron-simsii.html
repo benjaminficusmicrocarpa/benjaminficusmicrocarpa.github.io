@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="hkb-base" content="..">
+    <title>Rhododendron simsii | Hong Kong Botanica</title>
+    <link rel="icon" href="../hkb.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/hkb.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['Roboto', 'Noto Sans TC', 'sans-serif'], serif: ['Playfair Display', 'Noto Serif TC', 'serif'] },
+                colors: { botanical: { light: '#82c07b', DEFAULT: '#4a8244', dark: '#2d5229', accent: '#d4af37' } }
+            }}
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-gray-800 font-sans antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center gap-2.5 text-botanical-dark font-serif font-bold text-xl sm:text-2xl tracking-tight">
+                        <img src="../hkb.svg" alt="HKB" class="h-9 w-9">
+                        <span class="lang-en">Hong Kong Botanica</span>
+                        <span class="lang-zh hidden">香港草木誌</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm lg:text-base">
+                    <a href="../species/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Species Directory</span>
+                        <span class="lang-zh hidden">物種目錄</span>
+                    </a>
+                    <a href="../families/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Families & Genera</span>
+                        <span class="lang-zh hidden">科屬分類</span>
+                    </a>
+                    <a href="../seasonal/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Seasonal Blooms</span>
+                        <span class="lang-zh hidden">當季開花</span>
+                    </a>
+                    <a href="../about/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">About</span>
+                        <span class="lang-zh hidden">關於本庫</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4 text-stone-500">
+                    <a href="../search/index.html" class="hover:text-botanical transition"><i class="fa-solid fa-search text-lg"></i></a>
+                    <button onclick="toggleLanguage()" class="hover:text-botanical transition font-bold text-sm px-2 py-1 rounded border border-stone-200 hover:border-botanical">
+                        <span class="lang-en">中</span>
+                        <span class="lang-zh hidden">EN</span>
+                    </button>
+                    <button onclick="openMobileNav()" class="md:hidden hover:text-botanical transition"><i class="fa-solid fa-bars text-xl"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE DRAWER -->
+    <div id="mobileOverlay" class="mobile-nav-overlay" onclick="closeMobileNav()"></div>
+    <div id="mobileDrawer" class="mobile-nav-drawer">
+        <div class="p-5 border-b border-stone-100 flex justify-between items-center">
+            <span class="font-serif font-bold text-lg text-botanical-dark">
+                <span class="lang-en">Menu</span><span class="lang-zh hidden">選單</span>
+            </span>
+            <button onclick="closeMobileNav()" class="text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="p-5 space-y-1">
+            <a href="../species/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-leaf w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Species Directory</span><span class="lang-zh hidden">物種目錄</span>
+            </a>
+            <a href="../families/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-sitemap w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Families & Genera</span><span class="lang-zh hidden">科屬分類</span>
+            </a>
+            <a href="../seasonal/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-sun w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Seasonal Blooms</span><span class="lang-zh hidden">當季開花</span>
+            </a>
+            <a href="../about/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-circle-info w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span>
+            </a>
+            <a href="../search/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-search w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Search</span><span class="lang-zh hidden">搜尋</span>
+            </a>
+        </div>
+        <div class="p-5 border-t border-stone-100">
+            <button onclick="toggleLanguage()" class="w-full px-4 py-3 rounded-lg border border-stone-200 text-stone-600 font-medium hover:border-botanical hover:text-botanical transition">
+                <span class="lang-en">切換中文</span><span class="lang-zh hidden">Switch to English</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <header class="species-hero bg-cover bg-center"
+            style="background-image: linear-gradient(135deg, rgba(139,30,63,0.7), rgba(180,60,60,0.5), rgba(60,20,20,0.85)), url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+            <div class="flex flex-col gap-3">
+                <div class="flex items-center gap-3">
+                    <span class="bg-emerald-600/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide">
+                        <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                    </span>
+                    <span class="bg-white/20 backdrop-blur text-white text-xs font-medium px-3 py-1 rounded-full">Ericaceae</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white italic drop-shadow-lg">
+                    Rhododendron simsii
+                </h1>
+                <p class="text-xl md:text-2xl text-white/90 font-light">
+                    <span class="lang-en">Red Azalea</span>
+                    <span class="lang-zh hidden">映山紅 · 紅杜鵑</span>
+                </p>
+                <p class="text-lg text-white/70 font-serif">
+                    <span class="lang-en">Planch.</span>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main class="animate-in">
+
+        <!-- BREADCRUMB -->
+        <section class="bg-white border-b border-stone-200 py-4">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <nav class="breadcrumb">
+                    <a href="../index.html"><i class="fa-solid fa-house text-xs"></i> <span class="lang-en">Home</span><span class="lang-zh hidden">首頁</span></a>
+                    <span class="separator"><i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                    <a href="index.html"><span class="lang-en">Species Directory</span><span class="lang-zh hidden">物種目錄</span></a>
+                    <span class="separator"><i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                    <span class="text-stone-900 font-medium italic">Rhododendron simsii</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- CONTENT -->
+        <section class="py-10 md:py-14">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+
+                    <!-- LEFT COLUMN -->
+                    <div class="w-full lg:w-[60%] space-y-8">
+
+                        <!-- Taxonomy Card -->
+                        <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 bg-stone-50 border-b border-stone-200">
+                                <h2 class="font-serif font-bold text-lg text-stone-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-sitemap text-botanical"></i>
+                                    <span class="lang-en">Taxonomic Classification</span>
+                                    <span class="lang-zh hidden">分類學分類</span>
+                                </h2>
+                            </div>
+                            <div class="p-6">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-stone-100">
+                                            <td class="py-2.5 pr-4 text-stone-500 font-medium w-32"><span class="lang-en">Kingdom</span><span class="lang-zh hidden">界</span></td>
+                                            <td class="py-2.5 text-stone-800">Plantae</td>
+                                        </tr>
+                                        <tr class="border-b border-stone-100">
+                                            <td class="py-2.5 pr-4 text-stone-500 font-medium"><span class="lang-en">Division</span><span class="lang-zh hidden">門</span></td>
+                                            <td class="py-2.5 text-stone-800">Magnoliophyta</td>
+                                        </tr>
+                                        <tr class="border-b border-stone-100">
+                                            <td class="py-2.5 pr-4 text-stone-500 font-medium"><span class="lang-en">Class</span><span class="lang-zh hidden">綱</span></td>
+                                            <td class="py-2.5 text-stone-800">Magnoliopsida</td>
+                                        </tr>
+                                        <tr class="border-b border-stone-100">
+                                            <td class="py-2.5 pr-4 text-stone-500 font-medium"><span class="lang-en">Order</span><span class="lang-zh hidden">目</span></td>
+                                            <td class="py-2.5 text-stone-800">Ericales</td>
+                                        </tr>
+                                        <tr class="border-b border-stone-100">
+                                            <td class="py-2.5 pr-4 text-stone-500 font-medium"><span class="lang-en">Family</span><span class="lang-zh hidden">科</span></td>
+                                            <td class="py-2.5 text-stone-800 font-medium">Ericaceae</td>
+                                        </tr>
+                                        <tr class="border-b border-stone-100">
+                                            <td class="py-2.5 pr-4 text-stone-500 font-medium"><span class="lang-en">Genus</span><span class="lang-zh hidden">屬</span></td>
+                                            <td class="py-2.5 text-stone-800 italic">Rhododendron</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2.5 pr-4 text-stone-500 font-medium"><span class="lang-en">Species</span><span class="lang-zh hidden">種</span></td>
+                                            <td class="py-2.5 text-stone-800 italic">R. simsii</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 bg-stone-50 border-b border-stone-200">
+                                <h2 class="font-serif font-bold text-lg text-stone-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-book-open text-botanical"></i>
+                                    <span class="lang-en">Morphological Description</span>
+                                    <span class="lang-zh hidden">形態描述</span>
+                                </h2>
+                            </div>
+                            <div class="p-6 space-y-4 text-stone-700 leading-relaxed">
+                                <p>
+                                    A spectacular semi-evergreen to evergreen shrub, 1–3 m tall, with elliptic to obovate leaves 2–6 cm long, densely covered with appressed brown hairs on both surfaces when young, becoming glabrescent above with age. The leaf margins are entire, and the petioles are 3–6 mm long, clothed in strigose hairs.
+                                </p>
+                                <p>
+                                    Flowers are funnel-shaped, 3–6 cm across, typically bright red to deep pink (occasionally pale pink or white in cultivated forms), appearing in clusters of 2–6 at branch tips. The corolla is broadly funnel-shaped with five spreading lobes, often spotted with darker markings on the upper lobe. Stamens 10, exserted; ovary densely strigose. Capsule ovoid, 8–12 mm long, covered with appressed brown hairs, splitting into five valves at maturity.
+                                </p>
+                                <p>
+                                    Found abundantly on acidic hillsides and open shrubland from 200–900 m elevation across Hong Kong, particularly prominent on Ma On Shan, Tai Mo Shan, and Sunset Peak during February to April. This species is one of the most iconic wildflowers of the Hong Kong spring and is the progenitor of many ornamental azalea cultivars grown worldwide.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Distribution & Habitat -->
+                        <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 bg-stone-50 border-b border-stone-200">
+                                <h2 class="font-serif font-bold text-lg text-stone-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-map-location-dot text-botanical"></i>
+                                    <span class="lang-en">Distribution & Habitat</span>
+                                    <span class="lang-zh hidden">分佈與生境</span>
+                                </h2>
+                            </div>
+                            <div class="p-6 space-y-4 text-stone-700 leading-relaxed">
+                                <p>
+                                    <em>Rhododendron simsii</em> is widely distributed across East Asia, from eastern Myanmar through southern and central China to Taiwan and Japan. In Hong Kong, it is one of the most commonly encountered native shrubs on upland acidic hillsides, typically found on well-drained, nutrient-poor, granitic or volcanic soils.
+                                </p>
+                                <p>
+                                    Key populations occur along the ridgelines and upper slopes of <strong>Ma On Shan</strong> (馬鞍山), the flanks of <strong>Tai Mo Shan</strong> (大帽山), the summit plateau of <strong>Sunset Peak</strong> (大東山) on Lantau, and the exposed slopes above <strong>Sai Kung</strong> (西貢). It is a characteristic component of the <em>Rhodomyrtus–Baeckea</em> shrubland community that dominates fire-maintained hillsides between 300 and 800 m altitude.
+                                </p>
+                                <p>
+                                    The species favours acidic soils (pH 4.5–5.5) and tolerates moderate drought once established, though it thrives in the misty, humid conditions typical of Hong Kong's upland environments during the cooler months.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- References -->
+                        <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 bg-stone-50 border-b border-stone-200">
+                                <h2 class="font-serif font-bold text-lg text-stone-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-bookmark text-botanical"></i>
+                                    <span class="lang-en">References</span>
+                                    <span class="lang-zh hidden">參考文獻</span>
+                                </h2>
+                            </div>
+                            <div class="p-6">
+                                <ol class="list-decimal list-inside space-y-3 text-sm text-stone-600 leading-relaxed">
+                                    <li>Corlett, R.T. et al. (2000). <em>Flora of Hong Kong</em>, Vol. 2, pp. 34–36. Agriculture, Fisheries and Conservation Department, Hong Kong.</li>
+                                    <li>Hu, Q.M. (2003). <em>Ericaceae</em>. In: Wu, Z.Y. & Raven, P.H. (eds.), <em>Flora of China</em>, Vol. 14, pp. 260–455. Science Press, Beijing & Missouri Botanical Garden Press, St. Louis.</li>
+                                    <li>Kadoorie Farm and Botanic Garden (2003). <em>Report of Rapid Biodiversity Assessments at Tai Mo Shan and Surrounds, New Territories, Hong Kong SAR</em>. KFBG Technical Report No. 6.</li>
+                                    <li>POWO (2024). <em>Plants of the World Online</em>. Royal Botanic Gardens, Kew. <span class="text-botanical">powo.science.kew.org</span></li>
+                                    <li>Xia, N.H. (2005). <em>A taxonomic revision of Rhododendron section Tsutsusi (Ericaceae)</em>. Acta Phytotaxonomica Sinica 43(5): 387–419.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN (SIDEBAR) -->
+                    <div class="w-full lg:w-[40%] space-y-6">
+
+                        <!-- Quick Facts Card -->
+                        <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 bg-botanical-dark text-white">
+                                <h2 class="font-serif font-bold text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                    <span class="lang-en">Quick Facts</span>
+                                    <span class="lang-zh hidden">速覽</span>
+                                </h2>
+                            </div>
+                            <div class="p-6 space-y-5">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-seedling"></i></div>
+                                    <div>
+                                        <div class="text-xs text-stone-400 font-semibold uppercase tracking-wider"><span class="lang-en">Growth Form</span><span class="lang-zh hidden">生長形態</span></div>
+                                        <div class="text-stone-800 font-medium">Shrub (semi-evergreen, 1–3 m)</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-flower-tulip"></i></div>
+                                    <div class="w-full">
+                                        <div class="text-xs text-stone-400 font-semibold uppercase tracking-wider mb-1.5"><span class="lang-en">Flowering Period</span><span class="lang-zh hidden">花期</span></div>
+                                        <div class="text-stone-800 font-medium text-sm mb-2">February – April</div>
+                                        <div id="phenology-rhododendron"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-sun"></i></div>
+                                    <div>
+                                        <div class="text-xs text-stone-400 font-semibold uppercase tracking-wider"><span class="lang-en">Light</span><span class="lang-zh hidden">光照</span></div>
+                                        <div class="text-stone-800 font-medium">Full Sun, Semi-shade</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-droplet"></i></div>
+                                    <div>
+                                        <div class="text-xs text-stone-400 font-semibold uppercase tracking-wider"><span class="lang-en">Water</span><span class="lang-zh hidden">水分</span></div>
+                                        <div class="text-stone-800 font-medium">Moist soil</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-red-50 text-red-600 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-temperature-half"></i></div>
+                                    <div>
+                                        <div class="text-xs text-stone-400 font-semibold uppercase tracking-wider"><span class="lang-en">Temperature</span><span class="lang-zh hidden">溫度</span></div>
+                                        <div class="text-stone-800 font-medium">Warm</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-yellow-50 text-yellow-700 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-skull-crossbones"></i></div>
+                                    <div>
+                                        <div class="text-xs text-stone-400 font-semibold uppercase tracking-wider"><span class="lang-en">Toxicity</span><span class="lang-zh hidden">毒性</span></div>
+                                        <div class="text-stone-800 font-medium">Mildly toxic <span class="text-xs text-stone-400">(grayanotoxins in leaves & nectar)</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Attribute Pills -->
+                        <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 bg-stone-50 border-b border-stone-200">
+                                <h2 class="font-serif font-bold text-lg text-stone-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-tags text-botanical"></i>
+                                    <span class="lang-en">Attributes</span>
+                                    <span class="lang-zh hidden">屬性標籤</span>
+                                </h2>
+                            </div>
+                            <div class="p-6 flex flex-wrap gap-2">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-seedling text-[10px]"></i> Shrub</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-cloud-sun text-[10px]"></i> Semi-shade</span>
+                                <span class="attr-pill water"><i class="fa-solid fa-droplet text-[10px]"></i> Moist Soil</span>
+                                <span class="attr-pill temperature"><i class="fa-solid fa-temperature-half text-[10px]"></i> Warm</span>
+                                <span class="attr-pill caution"><i class="fa-solid fa-skull-crossbones text-[10px]"></i> Toxic (mildly)</span>
+                                <span class="attr-pill habitat"><i class="fa-solid fa-mountain text-[10px]"></i> Hillside Shrubland</span>
+                                <span class="attr-pill soil"><i class="fa-solid fa-flask text-[10px]"></i> Acidic Soil</span>
+                            </div>
+                        </div>
+
+                        <!-- Names Card -->
+                        <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 bg-stone-50 border-b border-stone-200">
+                                <h2 class="font-serif font-bold text-lg text-stone-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-language text-botanical"></i>
+                                    <span class="lang-en">Names</span>
+                                    <span class="lang-zh hidden">名稱</span>
+                                </h2>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <div>
+                                    <div class="text-xs text-stone-400 font-semibold uppercase tracking-wider mb-1">Scientific Name</div>
+                                    <div class="text-stone-900 font-serif italic text-lg">Rhododendron simsii <span class="not-italic text-stone-500 text-sm">Planch.</span></div>
+                                </div>
+                                <div class="border-t border-stone-100 pt-4">
+                                    <div class="text-xs text-stone-400 font-semibold uppercase tracking-wider mb-1.5">中文名 Chinese Names</div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-stone-100 text-stone-700 px-3 py-1 rounded-full text-sm font-medium">映山紅</span>
+                                        <span class="bg-stone-100 text-stone-700 px-3 py-1 rounded-full text-sm font-medium">紅杜鵑</span>
+                                    </div>
+                                </div>
+                                <div class="border-t border-stone-100 pt-4">
+                                    <div class="text-xs text-stone-400 font-semibold uppercase tracking-wider mb-1.5">English Names</div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-stone-100 text-stone-700 px-3 py-1 rounded-full text-sm font-medium">Red Azalea</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Related Species -->
+                        <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 bg-stone-50 border-b border-stone-200">
+                                <h2 class="font-serif font-bold text-lg text-stone-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-code-branch text-botanical"></i>
+                                    <span class="lang-en">Related Species</span>
+                                    <span class="lang-zh hidden">近緣物種</span>
+                                </h2>
+                            </div>
+                            <div class="divide-y divide-stone-100">
+                                <a href="#" class="flex items-center gap-4 px-6 py-4 hover:bg-stone-50 transition group">
+                                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-200 to-rose-100 flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-seedling text-pink-400"></i>
+                                    </div>
+                                    <div class="flex-grow min-w-0">
+                                        <div class="font-serif font-bold text-stone-900 italic group-hover:text-botanical transition truncate">Rhododendron farrerae</div>
+                                        <div class="text-sm text-stone-500"><span class="lang-en">Farrer's Rhododendron</span><span class="lang-zh hidden">丁香杜鵑</span> · Ericaceae</div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-stone-300 text-xs"></i>
+                                </a>
+                                <a href="#" class="flex items-center gap-4 px-6 py-4 hover:bg-stone-50 transition group">
+                                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-200 to-violet-100 flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-seedling text-purple-400"></i>
+                                    </div>
+                                    <div class="flex-grow min-w-0">
+                                        <div class="font-serif font-bold text-stone-900 italic group-hover:text-botanical transition truncate">Rhododendron championiae</div>
+                                        <div class="text-sm text-stone-500"><span class="lang-en">Champion's Rhododendron</span><span class="lang-zh hidden">張氏杜鵑</span> · Ericaceae</div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-stone-300 text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-900 text-stone-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3 text-white">
+                <img src="../hkb.svg" alt="" class="h-8 w-8 opacity-80">
+                <span class="font-serif font-bold text-xl">
+                    <span class="lang-en">Hong Kong Botanica</span><span class="lang-zh hidden">香港草木誌</span>
+                </span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
+                <a href="../species/index.html" class="hover:text-white transition"><span class="lang-en">Species List</span><span class="lang-zh hidden">物種名錄</span></a>
+                <a href="../families/index.html" class="hover:text-white transition"><span class="lang-en">Taxonomy Guide</span><span class="lang-zh hidden">分類指南</span></a>
+                <a href="../about/index.html" class="hover:text-white transition"><span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span></a>
+                <a href="../search/index.html" class="hover:text-white transition"><span class="lang-en">Search</span><span class="lang-zh hidden">搜尋</span></a>
+            </div>
+            <div class="text-sm text-stone-500 text-center md:text-right">
+                <span class="lang-en">&copy; 2026 Hong Kong Botanica. All rights reserved.</span>
+                <span class="lang-zh hidden">&copy; 2026 香港草木誌。保留所有權利。</span><br>
+                <span class="text-xs"><span class="lang-en">Images are for educational purposes.</span><span class="lang-zh hidden">圖片僅供教育用途。</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/hkb.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const el = document.getElementById('phenology-rhododendron');
+        if (el) renderPhenologyBar('2-4', '', el);
+    });
+    </script>
+</body>
+</html>

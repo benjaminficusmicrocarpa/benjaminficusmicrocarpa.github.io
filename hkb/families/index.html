@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="hkb-base" content="..">
+    <title>Families & Genera | Hong Kong Botanica</title>
+    <link rel="icon" href="../hkb.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/hkb.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['Roboto', 'Noto Sans TC', 'sans-serif'], serif: ['Playfair Display', 'Noto Serif TC', 'serif'] },
+                colors: { botanical: { light: '#82c07b', DEFAULT: '#4a8244', dark: '#2d5229', accent: '#d4af37' } }
+            }}
+        }
+    </script>
+    <style>
+        .alpha-link { transition: all 0.15s; }
+        .alpha-link:hover:not(.disabled) { background: #4a8244; color: white; }
+        .alpha-link.active { background: #4a8244; color: white; font-weight: 600; }
+        .alpha-link.disabled { color: #d6d3d1; cursor: default; pointer-events: none; }
+        .genus-pill { display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 0.75rem; font-style: italic; background: #f5f5f4; color: #57534e; border: 1px solid #e7e5e4; transition: all 0.15s; }
+        .genus-pill:hover { border-color: #4a8244; color: #4a8244; }
+        .system-btn { padding: 8px 20px; border-radius: 9999px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; border: 1.5px solid #d6d3d1; background: white; color: #57534e; transition: all 0.15s; }
+        .system-btn:hover { border-color: #4a8244; color: #4a8244; }
+        .system-btn.active { background: #4a8244; color: white; border-color: #4a8244; }
+    </style>
+</head>
+<body class="bg-stone-50 text-gray-800 font-sans antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center gap-2.5 text-botanical-dark font-serif font-bold text-xl sm:text-2xl tracking-tight">
+                        <img src="../hkb.svg" alt="HKB" class="h-9 w-9">
+                        <span class="lang-en">Hong Kong Botanica</span>
+                        <span class="lang-zh hidden">香港草木誌</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm lg:text-base">
+                    <a href="../index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Home</span>
+                        <span class="lang-zh hidden">主頁</span>
+                    </a>
+                    <a href="../species/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Species Directory</span>
+                        <span class="lang-zh hidden">物種目錄</span>
+                    </a>
+                    <a href="index.html" class="text-botanical font-bold border-b-2 border-botanical pb-0.5 transition">
+                        <span class="lang-en">Families & Genera</span>
+                        <span class="lang-zh hidden">科屬分類</span>
+                    </a>
+                    <a href="../seasonal/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Seasonal Blooms</span>
+                        <span class="lang-zh hidden">當季開花</span>
+                    </a>
+                    <a href="../about/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">About</span>
+                        <span class="lang-zh hidden">關於本庫</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4 text-stone-500">
+                    <a href="../search/index.html" class="hover:text-botanical transition"><i class="fa-solid fa-search text-lg"></i></a>
+                    <button onclick="toggleLanguage()" class="hover:text-botanical transition font-bold text-sm px-2 py-1 rounded border border-stone-200 hover:border-botanical">
+                        <span class="lang-en">中</span>
+                        <span class="lang-zh hidden">EN</span>
+                    </button>
+                    <button onclick="openMobileNav()" class="md:hidden hover:text-botanical transition"><i class="fa-solid fa-bars text-xl"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE DRAWER -->
+    <div id="mobileOverlay" class="mobile-nav-overlay" onclick="closeMobileNav()"></div>
+    <div id="mobileDrawer" class="mobile-nav-drawer">
+        <div class="p-5 border-b border-stone-100 flex justify-between items-center">
+            <span class="font-serif font-bold text-lg text-botanical-dark">
+                <span class="lang-en">Menu</span><span class="lang-zh hidden">選單</span>
+            </span>
+            <button onclick="closeMobileNav()" class="text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="p-5 space-y-1">
+            <a href="../index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-house w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Home</span><span class="lang-zh hidden">主頁</span>
+            </a>
+            <a href="../species/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-leaf w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Species Directory</span><span class="lang-zh hidden">物種目錄</span>
+            </a>
+            <a href="index.html" class="block px-4 py-3 rounded-lg bg-botanical/10 text-botanical font-bold transition">
+                <i class="fa-solid fa-sitemap w-6 text-center mr-2 text-botanical"></i>
+                <span class="lang-en">Families & Genera</span><span class="lang-zh hidden">科屬分類</span>
+            </a>
+            <a href="../seasonal/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-sun w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Seasonal Blooms</span><span class="lang-zh hidden">當季開花</span>
+            </a>
+            <a href="../about/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-circle-info w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span>
+            </a>
+            <a href="../search/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-search w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Search</span><span class="lang-zh hidden">搜尋</span>
+            </a>
+        </div>
+        <div class="p-5 border-t border-stone-100">
+            <button onclick="toggleLanguage()" class="w-full px-4 py-3 rounded-lg border border-stone-200 text-stone-600 font-medium hover:border-botanical hover:text-botanical transition">
+                <span class="lang-en">切換中文</span><span class="lang-zh hidden">Switch to English</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- PAGE HEADER -->
+    <header class="bg-white border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <nav class="breadcrumb mb-6">
+                <a href="../index.html"><span class="lang-en">Home</span><span class="lang-zh hidden">主頁</span></a>
+                <span class="separator"><i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                <span class="text-stone-900 font-medium"><span class="lang-en">Families & Genera</span><span class="lang-zh hidden">科屬分類</span></span>
+            </nav>
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-serif font-bold text-stone-900 leading-tight">
+                        <span class="lang-en">Families & Genera</span>
+                        <span class="lang-zh hidden">科與屬分類索引</span>
+                    </h1>
+                    <p class="text-stone-500 mt-2 text-lg max-w-2xl">
+                        <span class="lang-en">Browse all plant families and their constituent genera documented in the Hong Kong Botanica database, organized alphabetically.</span>
+                        <span class="lang-zh hidden">按字母順序瀏覽香港草木誌資料庫中記錄的所有植物科及其組成屬。</span>
+                    </p>
+                </div>
+                <div class="flex-shrink-0">
+                    <a href="../search/index.html" class="inline-flex items-center gap-2 bg-white text-stone-600 border border-stone-300 font-medium px-5 py-2.5 rounded-lg hover:bg-stone-50 hover:border-botanical hover:text-botanical transition shadow-sm text-sm">
+                        <i class="fa-solid fa-search"></i>
+                        <span class="lang-en">Search families</span><span class="lang-zh hidden">搜尋科名</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- STATS BAR -->
+        <section class="bg-white border-b border-stone-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-center">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-10 h-10 bg-botanical/10 text-botanical rounded-full flex items-center justify-center"><i class="fa-solid fa-sitemap text-base"></i></div>
+                        <div>
+                            <span class="text-2xl font-serif font-bold text-stone-800">220</span>
+                            <span class="text-sm text-stone-500 ml-1 font-medium"><span class="lang-en">Families</span><span class="lang-zh hidden">科</span></span>
+                        </div>
+                    </div>
+                    <span class="hidden sm:block text-stone-300 text-xl">&middot;</span>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center"><i class="fa-solid fa-code-branch text-base"></i></div>
+                        <div>
+                            <span class="text-2xl font-serif font-bold text-stone-800">1,240+</span>
+                            <span class="text-sm text-stone-500 ml-1 font-medium"><span class="lang-en">Genera</span><span class="lang-zh hidden">屬</span></span>
+                        </div>
+                    </div>
+                    <span class="hidden sm:block text-stone-300 text-xl">&middot;</span>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center"><i class="fa-solid fa-leaf text-base"></i></div>
+                        <div>
+                            <span class="text-2xl font-serif font-bold text-stone-800">3,534</span>
+                            <span class="text-sm text-stone-500 ml-1 font-medium"><span class="lang-en">Species</span><span class="lang-zh hidden">種</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAXONOMY SYSTEM TOGGLE + ALPHABET BAR -->
+        <section class="sticky top-16 z-40 bg-stone-50 border-b border-stone-200 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
+                <!-- System Toggle -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <span class="text-xs font-bold text-stone-400 uppercase tracking-wider mr-1">
+                        <span class="lang-en">Classification System</span><span class="lang-zh hidden">分類系統</span>
+                    </span>
+                    <button class="system-btn active" id="btnAPG" onclick="setSystem('apg')">
+                        <i class="fa-solid fa-dna mr-1.5 text-xs"></i> APG IV
+                    </button>
+                    <button class="system-btn" id="btnCronquist" onclick="setSystem('cronquist')">
+                        <i class="fa-solid fa-book mr-1.5 text-xs"></i> Cronquist
+                    </button>
+                </div>
+                <!-- Alphabet Quick-Jump -->
+                <div class="flex flex-wrap gap-1" id="alphaBar">
+                </div>
+            </div>
+        </section>
+
+        <!-- FAMILY CARDS BY LETTER -->
+        <section class="py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+
+                <!-- A -->
+                <div id="letter-A" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">A</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">8 <span class="lang-en">families</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Acanthaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Acanthaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 92 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        32 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Herbaceous plants and shrubs, commonly known as the acanthus family. Many ornamental species with tubular flowers.</span>
+                                <span class="lang-zh hidden">草本植物和灌木，俗稱爵床科。許多觀賞種具管狀花。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Acanthus</span>
+                                <span class="genus-pill">Andrographis</span>
+                                <span class="genus-pill">Barleria</span>
+                                <span class="genus-pill">Crossandra</span>
+                                <span class="genus-pill">Justicia</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Agavaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Agavaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 60 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        8 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Rosette-forming plants with sword-shaped leaves, many drought-tolerant.</span>
+                                <span class="lang-zh hidden">具劍形葉的蓮座狀植物，許多耐旱。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Agave</span>
+                                <span class="genus-pill">Cordyline</span>
+                                <span class="genus-pill">Dracaena</span>
+                                <span class="genus-pill">Sansevieria</span>
+                                <span class="genus-pill">Yucca</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Anacardiaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Anacardiaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 20 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        9 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Cashew family. Trees and shrubs, many with resinous bark. Includes mangoes, cashews, and sumac.</span>
+                                <span class="lang-zh hidden">漆樹科。喬木和灌木，許多具樹脂。包括芒果、腰果和鹽膚木。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Mangifera</span>
+                                <span class="genus-pill">Rhus</span>
+                                <span class="genus-pill">Toxicodendron</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Apocynaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Apocynaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 64 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        24 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Dogbane family. Many with milky latex, showy flowers. Includes frangipanis.</span>
+                                <span class="lang-zh hidden">夾竹桃科。許多具乳白色乳液及豔麗花朵，包括雞蛋花。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Adenium</span>
+                                <span class="genus-pill">Allamanda</span>
+                                <span class="genus-pill">Catharanthus</span>
+                                <span class="genus-pill">Nerium</span>
+                                <span class="genus-pill">Plumeria</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Araceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Araceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 71 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        23 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Aroid family. Tropical herbs with distinctive spathe-and-spadix inflorescences.</span>
+                                <span class="lang-zh hidden">天南星科。熱帶草本植物，具獨特的佛焰苞和肉穗花序。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Aglaonema</span>
+                                <span class="genus-pill">Alocasia</span>
+                                <span class="genus-pill">Monstera</span>
+                                <span class="genus-pill">Philodendron</span>
+                                <span class="genus-pill">Spathiphyllum</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Arecaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Arecaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 54 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        18 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">The palm family. Iconic tropical monocots with unbranched trunks and compound leaves.</span>
+                                <span class="lang-zh hidden">棕櫚科。標誌性的熱帶單子葉植物，具不分枝的樹幹和複葉。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Areca</span>
+                                <span class="genus-pill">Caryota</span>
+                                <span class="genus-pill">Livistona</span>
+                                <span class="genus-pill">Phoenix</span>
+                                <span class="genus-pill">Rhapis</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Asclepiadaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Asclepiadaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 83 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        29 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Milkweed family. Succulents, vines, and herbs with complex pollination mechanisms.</span>
+                                <span class="lang-zh hidden">蘿藦科。多肉植物、藤本和草本，具複雜的授粉機制。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Asclepias</span>
+                                <span class="genus-pill">Ceropegia</span>
+                                <span class="genus-pill">Dischidia</span>
+                                <span class="genus-pill">Hoya</span>
+                                <span class="genus-pill">Stapelia</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Asteraceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Asteraceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 122 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        68 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Daisy/sunflower family. Largest family by genus count in the database.</span>
+                                <span class="lang-zh hidden">菊科/向日葵科。數據庫中按屬數計最大的科。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Achillea</span>
+                                <span class="genus-pill">Bidens</span>
+                                <span class="genus-pill">Chrysanthemum</span>
+                                <span class="genus-pill">Helianthus</span>
+                                <span class="genus-pill">Vernonia</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- B -->
+                <div id="letter-B" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">B</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">2 <span class="lang-en">families</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Bombacaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Bombacaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 12 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        5 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Tropical trees with large flowers, includes kapok.</span>
+                                <span class="lang-zh hidden">熱帶喬木，花大型，包括木棉。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Bombax</span>
+                                <span class="genus-pill">Ceiba</span>
+                                <span class="genus-pill">Pachira</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Bromeliaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Bromeliaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 99 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        13 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Mostly epiphytic rosette plants from the Americas.</span>
+                                <span class="lang-zh hidden">主要來自美洲的附生蓮座狀植物。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Aechmea</span>
+                                <span class="genus-pill">Ananas</span>
+                                <span class="genus-pill">Billbergia</span>
+                                <span class="genus-pill">Tillandsia</span>
+                                <span class="genus-pill">Vriesea</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- C -->
+                <div id="letter-C" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">C</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">5 <span class="lang-en">families</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Cactaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Cactaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 182 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        49 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Second largest family in the database. Succulent stem plants from the Americas.</span>
+                                <span class="lang-zh hidden">數據庫中第二大科。來自美洲的肉質莖植物。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Cereus</span>
+                                <span class="genus-pill">Echinocactus</span>
+                                <span class="genus-pill">Mammillaria</span>
+                                <span class="genus-pill">Opuntia</span>
+                                <span class="genus-pill">Rhipsalis</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Caesalpiniaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Caesalpiniaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 45 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        15 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Subdivision of legumes. Many tropical flowering trees.</span>
+                                <span class="lang-zh hidden">豆科的一個亞科。許多熱帶花木。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Bauhinia</span>
+                                <span class="genus-pill">Cassia</span>
+                                <span class="genus-pill">Delonix</span>
+                                <span class="genus-pill">Senna</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Combretaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Combretaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 18 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        6 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Tropical trees and climbers. Includes Indian almond and combretum.</span>
+                                <span class="lang-zh hidden">熱帶喬木和攀緣植物。包括欖仁和風車子。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Combretum</span>
+                                <span class="genus-pill">Quisqualis</span>
+                                <span class="genus-pill">Terminalia</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Crassulaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Crassulaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 56 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        12 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Stonecrop family. Succulents with fleshy leaves, popular in cultivation.</span>
+                                <span class="lang-zh hidden">景天科。具肉質葉的多肉植物，廣泛栽培。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Crassula</span>
+                                <span class="genus-pill">Echeveria</span>
+                                <span class="genus-pill">Kalanchoe</span>
+                                <span class="genus-pill">Sedum</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Cupressaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Cupressaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 15 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        7 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Cypress family. Coniferous trees and shrubs with scale-like or awl-shaped leaves.</span>
+                                <span class="lang-zh hidden">柏科。具鱗狀或錐形葉的針葉喬木和灌木。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Chamaecyparis</span>
+                                <span class="genus-pill">Juniperus</span>
+                                <span class="genus-pill">Thuja</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- E -->
+                <div id="letter-E" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">E</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">2 <span class="lang-en">families</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Ericaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Ericaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 28 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        8 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Heath family. Acidic-soil lovers including rhododendrons and blueberries.</span>
+                                <span class="lang-zh hidden">杜鵑花科。喜酸性土壤的植物，包括杜鵑花和藍莓。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Pieris</span>
+                                <span class="genus-pill">Rhododendron</span>
+                                <span class="genus-pill">Vaccinium</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Euphorbiaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Euphorbiaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 133 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        27 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Spurge family. Hugely diverse, many with toxic latex.</span>
+                                <span class="lang-zh hidden">大戟科。極為多樣，許多含有毒乳液。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Acalypha</span>
+                                <span class="genus-pill">Codiaeum</span>
+                                <span class="genus-pill">Euphorbia</span>
+                                <span class="genus-pill">Jatropha</span>
+                                <span class="genus-pill">Ricinus</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- F -->
+                <div id="letter-F" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">F</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">1 <span class="lang-en">family</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Fabaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Fabaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 112 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        57 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Legume family. Nitrogen-fixing plants of enormous ecological and economic importance.</span>
+                                <span class="lang-zh hidden">豆科。固氮植物，具有巨大的生態和經濟重要性。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Acacia</span>
+                                <span class="genus-pill">Desmodium</span>
+                                <span class="genus-pill">Erythrina</span>
+                                <span class="genus-pill">Mucuna</span>
+                                <span class="genus-pill">Vigna</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- L -->
+                <div id="letter-L" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">L</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">2 <span class="lang-en">families</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Lamiaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Lamiaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 95 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        35 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Mint/sage family. Aromatic herbs and shrubs with square stems and opposite leaves.</span>
+                                <span class="lang-zh hidden">唇形科。芳香草本和灌木，具方形莖和對生葉。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Clerodendrum</span>
+                                <span class="genus-pill">Coleus</span>
+                                <span class="genus-pill">Ocimum</span>
+                                <span class="genus-pill">Salvia</span>
+                                <span class="genus-pill">Vitex</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Liliaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Liliaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 154 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        60 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Lily family. Third largest in the database. Bulbous and rhizomatous monocots.</span>
+                                <span class="lang-zh hidden">百合科。數據庫中第三大科。具鱗莖和根莖的單子葉植物。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Aloe</span>
+                                <span class="genus-pill">Asparagus</span>
+                                <span class="genus-pill">Hemerocallis</span>
+                                <span class="genus-pill">Lilium</span>
+                                <span class="genus-pill">Ophiopogon</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- M -->
+                <div id="letter-M" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">M</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">3 <span class="lang-en">families</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Malvaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Malvaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 49 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        14 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Mallow family. Showy flowers with fused stamen columns. Includes hibiscus.</span>
+                                <span class="lang-zh hidden">錦葵科。花朵豔麗，雄蕊柱合生。包括木槿。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Abutilon</span>
+                                <span class="genus-pill">Gossypium</span>
+                                <span class="genus-pill">Hibiscus</span>
+                                <span class="genus-pill">Malvaviscus</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Moraceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Moraceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 55 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        10 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Fig and mulberry family. Trees with milky latex, many ecologically critical.</span>
+                                <span class="lang-zh hidden">桑科。具乳白色乳液的喬木，許多在生態上極為重要。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Artocarpus</span>
+                                <span class="genus-pill">Broussonetia</span>
+                                <span class="genus-pill">Ficus</span>
+                                <span class="genus-pill">Morus</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Myrtaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Myrtaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 38 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        11 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Myrtle family. Aromatic trees and shrubs with oil glands in leaves.</span>
+                                <span class="lang-zh hidden">桃金娘科。芳香喬木和灌木，葉片具油腺。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Callistemon</span>
+                                <span class="genus-pill">Eucalyptus</span>
+                                <span class="genus-pill">Melaleuca</span>
+                                <span class="genus-pill">Syzygium</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- N -->
+                <div id="letter-N" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">N</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">1 <span class="lang-en">family</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Nyctaginaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Nyctaginaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 14 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        4 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Four o'clock family. Colourful bracts often mistaken for petals.</span>
+                                <span class="lang-zh hidden">紫茉莉科。色彩鮮豔的苞片常被誤認為花瓣。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Bougainvillea</span>
+                                <span class="genus-pill">Mirabilis</span>
+                                <span class="genus-pill">Pisonia</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- O -->
+                <div id="letter-O" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">O</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">1 <span class="lang-en">family</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Orchidaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-botanical-accent text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-lg">
+                                <span class="lang-en">Largest Family</span><span class="lang-zh hidden">最大科</span>
+                            </div>
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Orchidaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0 mt-4">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 304 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        92 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Largest family in the database. Extraordinary diversity of epiphytic and terrestrial orchids.</span>
+                                <span class="lang-zh hidden">數據庫中最大的科。附生和地生蘭花的驚人多樣性。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Bulbophyllum</span>
+                                <span class="genus-pill">Dendrobium</span>
+                                <span class="genus-pill">Oncidium</span>
+                                <span class="genus-pill">Phalaenopsis</span>
+                                <span class="genus-pill">Vanda</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- R -->
+                <div id="letter-R" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">R</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">2 <span class="lang-en">families</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Rubiaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Rubiaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 53 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        22 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Coffee family. Opposite leaves with interpetiolar stipules. Includes gardenias.</span>
+                                <span class="lang-zh hidden">茜草科。對生葉具托葉間托葉。包括梔子花。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Coffea</span>
+                                <span class="genus-pill">Gardenia</span>
+                                <span class="genus-pill">Ixora</span>
+                                <span class="genus-pill">Mussaenda</span>
+                                <span class="genus-pill">Psychotria</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                        <!-- Rutaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Rutaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 32 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        12 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Citrus family. Aromatic trees and shrubs with oil-dotted leaves.</span>
+                                <span class="lang-zh hidden">芸香科。芳香喬木和灌木，葉片有油點。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Citrus</span>
+                                <span class="genus-pill">Fortunella</span>
+                                <span class="genus-pill">Murraya</span>
+                                <span class="genus-pill">Zanthoxylum</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- S -->
+                <div id="letter-S" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">S</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">1 <span class="lang-en">family</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Solanaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Solanaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 65 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        23 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Nightshade family. Includes ornamentals and food plants, many with alkaloids.</span>
+                                <span class="lang-zh hidden">茄科。包括觀賞植物和食用植物，許多含生物鹼。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Brugmansia</span>
+                                <span class="genus-pill">Capsicum</span>
+                                <span class="genus-pill">Cestrum</span>
+                                <span class="genus-pill">Datura</span>
+                                <span class="genus-pill">Solanum</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- T -->
+                <div id="letter-T" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">T</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">1 <span class="lang-en">family</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Theaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Theaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 22 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        5 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Tea family. Native to East Asia. Economically important for tea and ornamental camellias.</span>
+                                <span class="lang-zh hidden">山茶科。原產東亞。茶葉和觀賞山茶花具有重要經濟價值。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Camellia</span>
+                                <span class="genus-pill">Eurya</span>
+                                <span class="genus-pill">Gordonia</span>
+                                <span class="genus-pill">Schima</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Z -->
+                <div id="letter-Z" class="scroll-mt-40">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl font-serif font-bold text-botanical">Z</span>
+                        <div class="flex-1 h-px bg-stone-200"></div>
+                        <span class="text-sm text-stone-400 font-medium">1 <span class="lang-en">family</span><span class="lang-zh hidden">科</span></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Zingiberaceae -->
+                        <div class="family-card bg-white rounded-xl border border-stone-200 p-6 shadow-sm hover:shadow-md">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-serif font-bold text-xl text-stone-900">
+                                    <a href="#" class="hover:text-botanical transition">Zingiberaceae</a>
+                                </h3>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <span class="inline-flex items-center gap-1 text-xs font-bold bg-botanical/10 text-botanical px-2.5 py-1 rounded-full">
+                                        <i class="fa-solid fa-leaf text-[10px]"></i> 42 <span class="lang-en">spp.</span><span class="lang-zh hidden">種</span>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 text-xs font-medium bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">
+                                        14 <span class="lang-en">genera</span><span class="lang-zh hidden">屬</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-500 mb-3 leading-relaxed">
+                                <span class="lang-en">Ginger family. Aromatic tropical herbs with rhizomes. Important spices and ornamentals.</span>
+                                <span class="lang-zh hidden">薑科。具根莖的芳香熱帶草本植物。重要的香料和觀賞植物。</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                <span class="genus-pill">Alpinia</span>
+                                <span class="genus-pill">Curcuma</span>
+                                <span class="genus-pill">Hedychium</span>
+                                <span class="genus-pill">Zingiber</span>
+                            </div>
+                            <a href="#" class="text-sm text-botanical font-medium hover:text-botanical-dark transition group">
+                                <span class="lang-en">View all species</span><span class="lang-zh hidden">查看所有物種</span>
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BACK TO TOP -->
+        <div class="text-center py-10 bg-stone-50">
+            <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="inline-flex items-center gap-2 text-stone-400 hover:text-botanical transition text-sm font-medium">
+                <i class="fa-solid fa-arrow-up"></i>
+                <span class="lang-en">Back to top</span><span class="lang-zh hidden">返回頂部</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-900 text-stone-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3 text-white">
+                <img src="../hkb.svg" alt="" class="h-8 w-8 opacity-80">
+                <span class="font-serif font-bold text-xl">
+                    <span class="lang-en">Hong Kong Botanica</span><span class="lang-zh hidden">香港草木誌</span>
+                </span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
+                <a href="../species/index.html" class="hover:text-white transition"><span class="lang-en">Species List</span><span class="lang-zh hidden">物種名錄</span></a>
+                <a href="index.html" class="hover:text-white transition"><span class="lang-en">Taxonomy Guide</span><span class="lang-zh hidden">分類指南</span></a>
+                <a href="../about/index.html" class="hover:text-white transition"><span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span></a>
+                <a href="../search/index.html" class="hover:text-white transition"><span class="lang-en">Search</span><span class="lang-zh hidden">搜尋</span></a>
+            </div>
+            <div class="text-sm text-stone-500 text-center md:text-right">
+                <span class="lang-en">&copy; 2026 Hong Kong Botanica. All rights reserved.</span>
+                <span class="lang-zh hidden">&copy; 2026 香港草木誌。保留所有權利。</span><br>
+                <span class="text-xs"><span class="lang-en">Images are for educational purposes.</span><span class="lang-zh hidden">圖片僅供教育用途。</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/hkb.js"></script>
+    <script>
+        const activeLetters = ['A','B','C','E','F','L','M','N','O','R','S','T','Z'];
+
+        function buildAlphaBar() {
+            const bar = document.getElementById('alphaBar');
+            if (!bar) return;
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            bar.innerHTML = letters.map(l => {
+                const isActive = activeLetters.includes(l);
+                return `<a href="#letter-${l}" class="alpha-link inline-flex items-center justify-center w-8 h-8 rounded text-sm font-medium ${isActive ? 'bg-white border border-stone-200 text-stone-700 shadow-sm' : 'disabled'}">${l}</a>`;
+            }).join('');
+        }
+
+        function setSystem(sys) {
+            const apg = document.getElementById('btnAPG');
+            const crn = document.getElementById('btnCronquist');
+            if (sys === 'apg') {
+                apg.classList.add('active');
+                crn.classList.remove('active');
+            } else {
+                crn.classList.add('active');
+                apg.classList.remove('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', buildAlphaBar);
+    </script>
+</body>
+</html>

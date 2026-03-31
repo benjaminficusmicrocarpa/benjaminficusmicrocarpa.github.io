@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="hkb-base" content="..">
+    <title>Species Directory | Hong Kong Botanica</title>
+    <link rel="icon" href="../hkb.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/hkb.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['Roboto', 'Noto Sans TC', 'sans-serif'], serif: ['Playfair Display', 'Noto Serif TC', 'serif'] },
+                colors: { botanical: { light: '#82c07b', DEFAULT: '#4a8244', dark: '#2d5229', accent: '#d4af37' } }
+            }}
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-gray-800 font-sans antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center gap-2.5 text-botanical-dark font-serif font-bold text-xl sm:text-2xl tracking-tight">
+                        <img src="../hkb.svg" alt="HKB" class="h-9 w-9">
+                        <span class="lang-en">Hong Kong Botanica</span>
+                        <span class="lang-zh hidden">香港草木誌</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm lg:text-base">
+                    <a href="index.html" class="text-botanical font-medium transition border-b-2 border-botanical pb-0.5">
+                        <span class="lang-en">Species Directory</span>
+                        <span class="lang-zh hidden">物種目錄</span>
+                    </a>
+                    <a href="../families/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Families & Genera</span>
+                        <span class="lang-zh hidden">科屬分類</span>
+                    </a>
+                    <a href="../seasonal/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">Seasonal Blooms</span>
+                        <span class="lang-zh hidden">當季開花</span>
+                    </a>
+                    <a href="../about/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                        <span class="lang-en">About</span>
+                        <span class="lang-zh hidden">關於本庫</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4 text-stone-500">
+                    <a href="../search/index.html" class="hover:text-botanical transition"><i class="fa-solid fa-search text-lg"></i></a>
+                    <button onclick="toggleLanguage()" class="hover:text-botanical transition font-bold text-sm px-2 py-1 rounded border border-stone-200 hover:border-botanical">
+                        <span class="lang-en">中</span>
+                        <span class="lang-zh hidden">EN</span>
+                    </button>
+                    <button onclick="openMobileNav()" class="md:hidden hover:text-botanical transition"><i class="fa-solid fa-bars text-xl"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE DRAWER -->
+    <div id="mobileOverlay" class="mobile-nav-overlay" onclick="closeMobileNav()"></div>
+    <div id="mobileDrawer" class="mobile-nav-drawer">
+        <div class="p-5 border-b border-stone-100 flex justify-between items-center">
+            <span class="font-serif font-bold text-lg text-botanical-dark">
+                <span class="lang-en">Menu</span><span class="lang-zh hidden">選單</span>
+            </span>
+            <button onclick="closeMobileNav()" class="text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="p-5 space-y-1">
+            <a href="index.html" class="block px-4 py-3 rounded-lg bg-botanical/10 text-botanical font-medium transition">
+                <i class="fa-solid fa-leaf w-6 text-center mr-2"></i>
+                <span class="lang-en">Species Directory</span><span class="lang-zh hidden">物種目錄</span>
+            </a>
+            <a href="../families/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-sitemap w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Families & Genera</span><span class="lang-zh hidden">科屬分類</span>
+            </a>
+            <a href="../seasonal/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-sun w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Seasonal Blooms</span><span class="lang-zh hidden">當季開花</span>
+            </a>
+            <a href="../about/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-circle-info w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span>
+            </a>
+            <a href="../search/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+                <i class="fa-solid fa-search w-6 text-center mr-2 text-stone-400"></i>
+                <span class="lang-en">Search</span><span class="lang-zh hidden">搜尋</span>
+            </a>
+        </div>
+        <div class="p-5 border-t border-stone-100">
+            <button onclick="toggleLanguage()" class="w-full px-4 py-3 rounded-lg border border-stone-200 text-stone-600 font-medium hover:border-botanical hover:text-botanical transition">
+                <span class="lang-en">切換中文</span><span class="lang-zh hidden">Switch to English</span>
+            </button>
+        </div>
+    </div>
+
+    <main class="animate-in">
+
+        <!-- PAGE HEADER -->
+        <section class="bg-white border-b border-stone-200 py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <nav class="breadcrumb mb-4">
+                    <a href="../index.html"><i class="fa-solid fa-house text-xs"></i> <span class="lang-en">Home</span><span class="lang-zh hidden">首頁</span></a>
+                    <span class="separator"><i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                    <span class="text-stone-900 font-medium"><span class="lang-en">Species Directory</span><span class="lang-zh hidden">物種目錄</span></span>
+                </nav>
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-serif font-bold text-stone-900">
+                            <span class="lang-en">Species Directory</span>
+                            <span class="lang-zh hidden">物種目錄</span>
+                        </h1>
+                        <p class="text-stone-500 mt-2 text-lg">
+                            <span class="lang-en">Browse all documented vascular plant species in Hong Kong.</span>
+                            <span class="lang-zh hidden">瀏覽所有已記錄的香港維管束植物物種。</span>
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-stone-500">
+                        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full font-medium">
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                            <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full font-medium">
+                            <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                            <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEARCH & FILTERS -->
+        <section class="bg-white border-b border-stone-100 py-5 shadow-sm sticky top-16 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row lg:items-center gap-4">
+                    <!-- Search input -->
+                    <div class="relative flex-grow max-w-xl">
+                        <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-stone-400"></i>
+                        <input type="text" id="speciesSearch"
+                               data-placeholder-en="Search species, family, or common name…"
+                               data-placeholder-zh="搜尋物種、科名或俗名…"
+                               placeholder="Search species, family, or common name…"
+                               class="w-full pl-11 pr-4 py-2.5 rounded-lg border border-stone-300 focus:border-botanical focus:ring-2 focus:ring-botanical/20 outline-none text-sm transition">
+                    </div>
+
+                    <!-- Filter pills -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-xs text-stone-400 font-semibold uppercase tracking-wider mr-1">
+                            <span class="lang-en">Form:</span><span class="lang-zh hidden">形態:</span>
+                        </span>
+                        <button class="filter-pill active" data-filter="all">
+                            <span class="lang-en">All</span><span class="lang-zh hidden">全部</span>
+                        </button>
+                        <button class="filter-pill" data-filter="tree">
+                            <i class="fa-solid fa-tree text-[10px]"></i>
+                            <span class="lang-en">Trees</span><span class="lang-zh hidden">喬木</span>
+                        </button>
+                        <button class="filter-pill" data-filter="shrub">
+                            <i class="fa-solid fa-seedling text-[10px]"></i>
+                            <span class="lang-en">Shrubs</span><span class="lang-zh hidden">灌木</span>
+                        </button>
+                        <button class="filter-pill" data-filter="herb">
+                            <i class="fa-solid fa-spa text-[10px]"></i>
+                            <span class="lang-en">Herbs</span><span class="lang-zh hidden">草本</span>
+                        </button>
+                        <button class="filter-pill" data-filter="climber">
+                            <i class="fa-solid fa-vine text-[10px]"></i>
+                            <span class="lang-en">Climbers</span><span class="lang-zh hidden">攀緣</span>
+                        </button>
+                    </div>
+
+                    <!-- Sort dropdown -->
+                    <div class="flex items-center gap-2 ml-auto">
+                        <label for="sortSelect" class="text-xs text-stone-400 font-semibold uppercase tracking-wider whitespace-nowrap">
+                            <span class="lang-en">Sort:</span><span class="lang-zh hidden">排序:</span>
+                        </label>
+                        <select id="sortSelect" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white focus:border-botanical focus:ring-2 focus:ring-botanical/20 outline-none transition cursor-pointer">
+                            <option value="az">A → Z</option>
+                            <option value="za">Z → A</option>
+                            <option value="family">Family</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <section class="bg-stone-100/60 border-b border-stone-200 py-3">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-2 text-sm text-stone-500">
+                <div>
+                    <span class="lang-en">Showing <strong class="text-stone-700">24</strong> of <strong class="text-stone-700">3,534</strong> species</span>
+                    <span class="lang-zh hidden">顯示 <strong class="text-stone-700">3,534</strong> 種物種中的 <strong class="text-stone-700">24</strong> 種</span>
+                    <span class="text-stone-300 mx-2">|</span>
+                    <span class="lang-en">Page <strong class="text-stone-700">1</strong> of <strong class="text-stone-700">148</strong></span>
+                    <span class="lang-zh hidden">第 <strong class="text-stone-700">1</strong> 頁，共 <strong class="text-stone-700">148</strong> 頁</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="inline-flex items-center gap-1 text-stone-400 hover:text-botanical transition" title="Grid view">
+                        <i class="fa-solid fa-grid-2 text-botanical"></i>
+                    </button>
+                    <button class="inline-flex items-center gap-1 text-stone-400 hover:text-botanical transition" title="List view">
+                        <i class="fa-solid fa-list"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPECIES GRID -->
+        <section class="py-8 md:py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="speciesGrid">
+
+                    <!-- 1. Ficus microcarpa -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="moraceae" data-name="ficus microcarpa">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-emerald-300 via-green-200 to-lime-100 flex items-center justify-center">
+                                <i class="fa-solid fa-tree text-5xl text-emerald-400/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Moraceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Ficus microcarpa</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Chinese Banyan</span><span class="lang-zh hidden">細葉榕</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill water"><i class="fa-solid fa-droplet text-[10px]"></i> Moderate</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="5-12"></div>
+                        </div>
+                    </article>
+
+                    <!-- 2. Bauhinia blakeana -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="caesalpiniaceae" data-name="bauhinia blakeana">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-fuchsia-200 via-pink-100 to-rose-50 flex items-center justify-center">
+                                <i class="fa-solid fa-fan text-5xl text-fuchsia-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Caesalpiniaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="bauhinia-blakeana.html" class="hover:text-botanical transition">Bauhinia blakeana</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Hong Kong Orchid Tree</span><span class="lang-zh hidden">洋紫荊</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill soil"><i class="fa-solid fa-shield-halved text-[10px]"></i> Anti-pollution</span>
+                                <span class="attr-pill temperature"><i class="fa-solid fa-fire text-[10px]"></i> Heat Tolerant</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="10-4"></div>
+                        </div>
+                    </article>
+
+                    <!-- 3. Rhododendron simsii -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="shrub" data-family="ericaceae" data-name="rhododendron simsii">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-red-200 via-rose-100 to-pink-50 flex items-center justify-center">
+                                <i class="fa-solid fa-seedling text-5xl text-red-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Ericaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="rhododendron-simsii.html" class="hover:text-botanical transition">Rhododendron simsii</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Red Azalea</span><span class="lang-zh hidden">映山紅</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-seedling text-[10px]"></i> Shrub</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill caution"><i class="fa-solid fa-skull-crossbones text-[10px]"></i> Toxic</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="2-4"></div>
+                        </div>
+                    </article>
+
+                    <!-- 4. Bombax ceiba -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="bombacaceae" data-name="bombax ceiba">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-orange-200 via-amber-100 to-yellow-50 flex items-center justify-center">
+                                <i class="fa-solid fa-fire-flame-curved text-5xl text-orange-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Bombacaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Bombax ceiba</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Red Kapok Tree</span><span class="lang-zh hidden">木棉</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill temperature"><i class="fa-solid fa-fire text-[10px]"></i> Heat Tolerant</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-4"></div>
+                        </div>
+                    </article>
+
+                    <!-- 5. Hibiscus rosa-sinensis -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="shrub" data-family="malvaceae" data-name="hibiscus rosa-sinensis">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-rose-300 via-red-100 to-orange-50 flex items-center justify-center">
+                                <i class="fa-solid fa-sun text-5xl text-rose-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Malvaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Hibiscus rosa-sinensis</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Chinese Hibiscus</span><span class="lang-zh hidden">朱槿</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-seedling text-[10px]"></i> Shrub</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill water"><i class="fa-solid fa-droplet text-[10px]"></i> Moist</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="1-12"></div>
+                        </div>
+                    </article>
+
+                    <!-- 6. Plumeria acutifolia -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="apocynaceae" data-name="plumeria acutifolia">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-yellow-100 via-amber-50 to-white flex items-center justify-center">
+                                <i class="fa-solid fa-star text-5xl text-yellow-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Apocynaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Plumeria acutifolia</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Frangipani</span><span class="lang-zh hidden">雞蛋花</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill temperature"><i class="fa-solid fa-fire text-[10px]"></i> Heat Tolerant</span>
+                                <span class="attr-pill caution"><i class="fa-solid fa-skull-crossbones text-[10px]"></i> Toxic</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="5-12"></div>
+                        </div>
+                    </article>
+
+                    <!-- 7. Mucuna birdwoodiana -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="climber" data-family="fabaceae" data-name="mucuna birdwoodiana">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-teal-200 via-emerald-100 to-green-50 flex items-center justify-center">
+                                <i class="fa-solid fa-vine text-5xl text-teal-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Fabaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="mucuna-birdwoodiana.html" class="hover:text-botanical transition">Mucuna birdwoodiana</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Birdwood's Mucuna</span><span class="lang-zh hidden">禾雀花</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-vine text-[10px]"></i> Climber</span>
+                                <span class="attr-pill temperature"><i class="fa-solid fa-snowflake text-[10px]"></i> Cold Hardy</span>
+                                <span class="attr-pill soil"><i class="fa-solid fa-mountain text-[10px]"></i> Barren Tolerant</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-4"></div>
+                        </div>
+                    </article>
+
+                    <!-- 8. Delonix regia -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="caesalpiniaceae" data-name="delonix regia">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-red-300 via-orange-200 to-amber-100 flex items-center justify-center">
+                                <i class="fa-solid fa-fire text-5xl text-red-300/40"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Caesalpiniaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Delonix regia</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Flame of the Forest</span><span class="lang-zh hidden">鳳凰木</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill temperature"><i class="fa-solid fa-fire text-[10px]"></i> Heat Tolerant</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-10"></div>
+                        </div>
+                    </article>
+
+                    <!-- 9. Alangium chinense -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="alangiaceae" data-name="alangium chinense">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-green-200 via-emerald-100 to-teal-50 flex items-center justify-center">
+                                <i class="fa-solid fa-leaf text-5xl text-green-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Alangiaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Alangium chinense</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Chinese Alangium</span><span class="lang-zh hidden">八角楓</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-cloud-sun text-[10px]"></i> Partial Shade</span>
+                                <span class="attr-pill caution"><i class="fa-solid fa-skull-crossbones text-[10px]"></i> Toxic</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="5"></div>
+                        </div>
+                    </article>
+
+                    <!-- 10. Bougainvillea -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="climber" data-family="nyctaginaceae" data-name="bougainvillea">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-purple-300 via-fuchsia-200 to-pink-100 flex items-center justify-center">
+                                <i class="fa-solid fa-burst text-5xl text-purple-300/40"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Nyctaginaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Bougainvillea</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Bougainvillea</span><span class="lang-zh hidden">簕杜鵑</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-vine text-[10px]"></i> Climber/Shrub</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill temperature"><i class="fa-solid fa-fire text-[10px]"></i> Heat Tolerant</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-11"></div>
+                        </div>
+                    </article>
+
+                    <!-- 11. Alpinia zerumbet -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="herb" data-family="zingiberaceae" data-name="alpinia zerumbet">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-lime-200 via-green-100 to-emerald-50 flex items-center justify-center">
+                                <i class="fa-solid fa-spa text-5xl text-lime-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Zingiberaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Alpinia zerumbet</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Shell Ginger</span><span class="lang-zh hidden">大草蔻</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-spa text-[10px]"></i> Herb</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-cloud-sun text-[10px]"></i> Partial Shade</span>
+                                <span class="attr-pill water"><i class="fa-solid fa-droplet text-[10px]"></i> Moist</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="4-6"></div>
+                        </div>
+                    </article>
+
+                    <!-- 12. Thuja orientalis -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="cupressaceae" data-name="thuja orientalis">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-green-300 via-emerald-200 to-teal-100 flex items-center justify-center">
+                                <i class="fa-solid fa-tree text-5xl text-green-400/40"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Cupressaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Thuja orientalis</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Chinese Arborvitae</span><span class="lang-zh hidden">扁柏</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree/Shrub</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill soil"><i class="fa-solid fa-mountain text-[10px]"></i> Well-drained</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-4"></div>
+                        </div>
+                    </article>
+
+                    <!-- 13. Camellia amplexicaulis -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="theaceae" data-name="camellia amplexicaulis">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-rose-200 via-pink-100 to-red-50 flex items-center justify-center">
+                                <i class="fa-solid fa-circle text-5xl text-rose-300/40"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Theaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Camellia amplexicaulis</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Amplexicaul Camellia</span><span class="lang-zh hidden">越南抱莖茶</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-cloud-sun text-[10px]"></i> Partial Shade</span>
+                                <span class="attr-pill water"><i class="fa-solid fa-droplet text-[10px]"></i> Moist</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="12-3"></div>
+                        </div>
+                    </article>
+
+                    <!-- 14. Fortunella margarita -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="shrub" data-family="rutaceae" data-name="fortunella margarita">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-amber-200 via-yellow-100 to-lime-50 flex items-center justify-center">
+                                <i class="fa-solid fa-lemon text-5xl text-amber-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Rutaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Fortunella margarita</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Oval Kumquat</span><span class="lang-zh hidden">山小橘</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-seedling text-[10px]"></i> Shrub</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill soil"><i class="fa-solid fa-mountain text-[10px]"></i> Well-drained</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-5"></div>
+                        </div>
+                    </article>
+
+                    <!-- 15. Terminalia mantaly -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="combretaceae" data-name="terminalia mantaly">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-emerald-200 via-green-100 to-lime-50 flex items-center justify-center">
+                                <i class="fa-solid fa-leaf text-5xl text-emerald-300/60"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Combretaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Terminalia mantaly</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Indian Almond</span><span class="lang-zh hidden">小葉欖仁</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill soil"><i class="fa-solid fa-shield-halved text-[10px]"></i> Anti-pollution</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-4"></div>
+                        </div>
+                    </article>
+
+                    <!-- 16. Vernicia montana -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="euphorbiaceae" data-name="vernicia montana">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-stone-200 via-green-100 to-emerald-50 flex items-center justify-center">
+                                <i class="fa-solid fa-pagelines text-5xl text-stone-300/60"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Euphorbiaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Vernicia montana</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Mo-oil Tree</span><span class="lang-zh hidden">千年桐</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill caution"><i class="fa-solid fa-skull-crossbones text-[10px]"></i> Toxic</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="4-5"></div>
+                        </div>
+                    </article>
+
+                    <!-- 17. Syzygium paniculatum -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="shrub" data-family="myrtaceae" data-name="syzygium paniculatum">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-green-200 via-lime-100 to-yellow-50 flex items-center justify-center">
+                                <i class="fa-solid fa-seedling text-5xl text-green-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Myrtaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Syzygium paniculatum</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Brush Cherry</span><span class="lang-zh hidden">小彈珠</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-seedling text-[10px]"></i> Shrub</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill water"><i class="fa-solid fa-droplet text-[10px]"></i> Moderate</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="4-12"></div>
+                        </div>
+                    </article>
+
+                    <!-- 18. Allium schoenoprasum -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="herb" data-family="liliaceae" data-name="allium schoenoprasum">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-violet-200 via-purple-100 to-fuchsia-50 flex items-center justify-center">
+                                <i class="fa-solid fa-spa text-5xl text-violet-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Liliaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Allium schoenoprasum</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Chives</span><span class="lang-zh hidden">香葱</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-spa text-[10px]"></i> Herb</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill soil"><i class="fa-solid fa-mountain text-[10px]"></i> Well-drained</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-5"></div>
+                        </div>
+                    </article>
+
+                    <!-- 19. Solanum jasminoides -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="climber" data-family="solanaceae" data-name="solanum jasminoides">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-sky-200 via-blue-100 to-indigo-50 flex items-center justify-center">
+                                <i class="fa-solid fa-vine text-5xl text-sky-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Exotic</span><span class="lang-zh hidden">外來</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Solanaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Solanum jasminoides</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Potato Vine</span><span class="lang-zh hidden">花葉蔓花茄子</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-vine text-[10px]"></i> Climber</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill caution"><i class="fa-solid fa-skull-crossbones text-[10px]"></i> Toxic</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-11"></div>
+                        </div>
+                    </article>
+
+                    <!-- 20. Illicium dunnianum -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="shrub" data-family="illiciaceae" data-name="illicium dunnianum">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-red-200 via-rose-100 to-stone-50 flex items-center justify-center">
+                                <i class="fa-solid fa-star-of-life text-5xl text-red-300/40"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Illiciaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Illicium dunnianum</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Dunn's Star-anise</span><span class="lang-zh hidden">紅花八角</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-seedling text-[10px]"></i> Shrub</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-cloud-sun text-[10px]"></i> Partial Shade</span>
+                                <span class="attr-pill habitat"><i class="fa-solid fa-mountain text-[10px]"></i> Montane</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="3-5"></div>
+                        </div>
+                    </article>
+
+                    <!-- 21. Choerospondias axillaris -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="anacardiaceae" data-name="choerospondias axillaris">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-yellow-200 via-orange-100 to-amber-50 flex items-center justify-center">
+                                <i class="fa-solid fa-tree text-5xl text-yellow-300/40"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Anacardiaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Choerospondias axillaris</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Hog Plum</span><span class="lang-zh hidden">五眼果</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill water"><i class="fa-solid fa-droplet text-[10px]"></i> Moderate</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="4-5"></div>
+                        </div>
+                    </article>
+
+                    <!-- 22. Cratoxylum cochinchinense -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="tree" data-family="guttiferae" data-name="cratoxylum cochinchinense">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-pink-200 via-rose-100 to-orange-50 flex items-center justify-center">
+                                <i class="fa-solid fa-leaf text-5xl text-pink-300/40"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Guttiferae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Cratoxylum cochinchinense</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Yellow Cow Wood</span><span class="lang-zh hidden">黃牛木</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-tree text-[10px]"></i> Tree/Shrub</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-sun text-[10px]"></i> Full Sun</span>
+                                <span class="attr-pill soil"><i class="fa-solid fa-mountain text-[10px]"></i> Acidic Soil</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="4"></div>
+                        </div>
+                    </article>
+
+                    <!-- 23. Eulophia graminea -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="herb" data-family="orchidaceae" data-name="eulophia graminea">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-emerald-200 via-teal-100 to-cyan-50 flex items-center justify-center">
+                                <i class="fa-solid fa-spa text-5xl text-emerald-300/50"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Orchidaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Eulophia graminea</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Grass Eulophia</span><span class="lang-zh hidden">禾芋蘭</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-spa text-[10px]"></i> Herb</span>
+                                <span class="attr-pill light"><i class="fa-solid fa-cloud-sun text-[10px]"></i> Partial Shade</span>
+                                <span class="attr-pill water"><i class="fa-solid fa-droplet text-[10px]"></i> Moist</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="4-7"></div>
+                        </div>
+                    </article>
+
+                    <!-- 24. Alpinia zerumbet (duplicate as per spec) -->
+                    <article class="plant-card bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden hover:shadow-xl group" data-form="herb" data-family="zingiberaceae" data-name="alpinia zerumbet 2">
+                        <div class="relative">
+                            <div class="h-52 bg-gradient-to-br from-lime-300 via-emerald-100 to-green-50 flex items-center justify-center">
+                                <i class="fa-solid fa-spa text-5xl text-lime-400/40"></i>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full tracking-wide">
+                                <span class="lang-en">Native</span><span class="lang-zh hidden">原生</span>
+                            </span>
+                            <span class="absolute top-3 right-3 bg-black/50 backdrop-blur text-white text-[11px] px-2 py-0.5 rounded-full">Zingiberaceae</span>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="font-serif font-bold text-lg text-stone-900 italic mb-0.5 leading-snug">
+                                <a href="#" class="hover:text-botanical transition">Alpinia zerumbet</a>
+                            </h4>
+                            <p class="text-stone-500 text-sm font-medium mb-3">
+                                <span class="lang-en">Shell Ginger</span><span class="lang-zh hidden">艷山薑</span>
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="attr-pill growth-form"><i class="fa-solid fa-spa text-[10px]"></i> Herb</span>
+                                <span class="attr-pill water"><i class="fa-solid fa-droplet text-[10px]"></i> Moist</span>
+                                <span class="attr-pill temperature"><i class="fa-solid fa-snowflake text-[10px]"></i> Cold Hardy</span>
+                            </div>
+                            <div class="phenology-mini" data-flower="4-6"></div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGINATION -->
+        <section class="pb-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <nav class="flex items-center justify-center gap-1.5" aria-label="Pagination">
+                    <a href="#" class="px-3 py-2 rounded-lg text-stone-400 hover:bg-stone-100 transition text-sm font-medium">
+                        <i class="fa-solid fa-chevron-left text-xs mr-1"></i>
+                        <span class="lang-en">Prev</span><span class="lang-zh hidden">上一頁</span>
+                    </a>
+                    <a href="#" class="px-3.5 py-2 rounded-lg bg-botanical text-white text-sm font-bold shadow-sm">1</a>
+                    <a href="#" class="px-3.5 py-2 rounded-lg text-stone-600 hover:bg-stone-100 transition text-sm font-medium">2</a>
+                    <a href="#" class="px-3.5 py-2 rounded-lg text-stone-600 hover:bg-stone-100 transition text-sm font-medium">3</a>
+                    <a href="#" class="px-3.5 py-2 rounded-lg text-stone-600 hover:bg-stone-100 transition text-sm font-medium">4</a>
+                    <a href="#" class="px-3.5 py-2 rounded-lg text-stone-600 hover:bg-stone-100 transition text-sm font-medium">5</a>
+                    <span class="px-2 py-2 text-stone-400 text-sm">…</span>
+                    <a href="#" class="px-3.5 py-2 rounded-lg text-stone-600 hover:bg-stone-100 transition text-sm font-medium">148</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-stone-600 hover:bg-stone-100 transition text-sm font-medium">
+                        <span class="lang-en">Next</span><span class="lang-zh hidden">下一頁</span>
+                        <i class="fa-solid fa-chevron-right text-xs ml-1"></i>
+                    </a>
+                </nav>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-900 text-stone-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3 text-white">
+                <img src="../hkb.svg" alt="" class="h-8 w-8 opacity-80">
+                <span class="font-serif font-bold text-xl">
+                    <span class="lang-en">Hong Kong Botanica</span><span class="lang-zh hidden">香港草木誌</span>
+                </span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
+                <a href="index.html" class="hover:text-white transition"><span class="lang-en">Species List</span><span class="lang-zh hidden">物種名錄</span></a>
+                <a href="../families/index.html" class="hover:text-white transition"><span class="lang-en">Taxonomy Guide</span><span class="lang-zh hidden">分類指南</span></a>
+                <a href="../about/index.html" class="hover:text-white transition"><span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span></a>
+                <a href="../search/index.html" class="hover:text-white transition"><span class="lang-en">Search</span><span class="lang-zh hidden">搜尋</span></a>
+            </div>
+            <div class="text-sm text-stone-500 text-center md:text-right">
+                <span class="lang-en">&copy; 2026 Hong Kong Botanica. All rights reserved.</span>
+                <span class="lang-zh hidden">&copy; 2026 香港草木誌。保留所有權利。</span><br>
+                <span class="text-xs"><span class="lang-en">Images are for educational purposes.</span><span class="lang-zh hidden">圖片僅供教育用途。</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/hkb.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.phenology-mini').forEach(el => {
+            renderPhenologyBar(el.dataset.flower, el.dataset.fruit || '', el);
+        });
+
+        const pills = document.querySelectorAll('.filter-pill[data-filter]');
+        const cards = document.querySelectorAll('#speciesGrid .plant-card');
+
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                pills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                const filter = pill.dataset.filter;
+                cards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = '';
+                    } else {
+                        const form = card.dataset.form || '';
+                        card.style.display = form.includes(filter) ? '' : 'none';
+                    }
+                });
+            });
+        });
+
+        const searchInput = document.getElementById('speciesSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const q = searchInput.value.toLowerCase().trim();
+                cards.forEach(card => {
+                    const text = (card.dataset.name + ' ' + card.dataset.family + ' ' + card.textContent).toLowerCase();
+                    card.style.display = text.includes(q) ? '' : 'none';
+                });
+            });
+        }
+
+        const sortSelect = document.getElementById('sortSelect');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', () => {
+                const grid = document.getElementById('speciesGrid');
+                const sorted = [...cards].sort((a, b) => {
+                    if (sortSelect.value === 'az') return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+                    if (sortSelect.value === 'za') return (b.dataset.name || '').localeCompare(a.dataset.name || '');
+                    return (a.dataset.family || '').localeCompare(b.dataset.family || '');
+                });
+                sorted.forEach(c => grid.appendChild(c));
+            });
+        }
+    });
+    </script>
+</body>
+</html>
