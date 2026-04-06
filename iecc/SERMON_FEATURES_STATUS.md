@@ -18,6 +18,7 @@ This document tracks which sermons have implemented:
 - `css/rewriting-worldview.css` - Theme styles for Rewriting My Worldview series (classic theological palette, worldview cards, framework grid)
 - `css/chinese-new-year.css` - Theme styles for Chinese New Year series (festive red & gold palette, horse animation, dual-sermon layout, weight-vs-wind comparison)
 - `css/the-way.css` - Theme styles for The Way series (purple/rose Lent palette, path strip motif, connection cards for cross-references)
+- `css/easter.css` - Theme styles for Easter (midnight-to-dawn palette, sunrise gold accents, response cards, evidence grid)
 - `js/iecc-common.js` - Common JavaScript functionality (tabs, accordions, slideshows, tag loading)
 - `key_scriptures.json` - Collection of key scriptures from all sermons (used for random scripture display on index page)
 
@@ -42,6 +43,11 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 | 2025-12-14 | Choosing Joy in the Struggle | ✅ | ✅ | ✅ |
 | 2025-12-21 | Rejoice in Opposition | ✅ | ✅ | ✅ |
 | 2025-12-28 | Rejoice in Anticipation | ✅ | ✅ | ✅ |
+
+### April 2026 - Easter
+| Date | Sermon | Routing | Tags | External CSS/JS |
+|------|--------|---------|------|-----------------|
+| 2026-04-05 | Easter Sunday: Proof of Life | ✅ | ✅ | ✅ |
 
 ### March 2026 - The Way Series
 | Date | Sermon | Routing | Tags | External CSS/JS |
@@ -86,7 +92,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 |------|--------|---------|------|-----------------|
 | 2024-10-27 | How We Make Sense of Life | ✅ | ✅ | ✅ |
 
-**Total Fully Implemented: 23 sermons** (with external CSS/JS)
+**Total Fully Implemented: 24 sermons** (with external CSS/JS)
 
 ---
 
@@ -366,9 +372,9 @@ accordionHeaders.forEach(header => {
 
 | Category | Count | Percentage |
 |----------|-------|------------|
-| Fully Implemented (all features) | 23 | 35.4% |
-| Missing All Features | 42 | 64.6% |
-| **Total** | **65** | **100%** |
+| Fully Implemented (all features) | 24 | 36.4% |
+| Missing All Features | 42 | 63.6% |
+| **Total** | **66** | **100%** |
 
 ---
 
@@ -400,7 +406,8 @@ To migrate remaining sermons:
 
 ---
 
-*Last updated: 2026-03-29*
+*Last updated: 2026-04-05*
+*Added 2026-04-05 (Easter Sunday: Proof of Life) — standalone Easter sermon with Pastor Brett. Acts 17:16-31 (Paul at Mars Hill), John 20:19, Luke 24:6-8,11, Romans 1:20, 1 Corinthians 15:6 — the resurrection as proof of a personal God; fearful disciples transformed into bold martyrs; Paul at Athens reasoning with the intelligentsia; the "Unknown God" altar; God as giver not taker; three responses (sneered, curious, believed); the resurrection demonstrates God's love and makes a personal difference. New `css/easter.css` theme (midnight-to-dawn palette, sunrise gold accents, response cards, evidence grid). Custom Historical Evidence tab covering transformation of the disciples, Paul's conversion, Athens context, and six lines of evidence for the resurrection. New series tag: easter.*
 *Added 2026-03-29 (The Way: Triumphal Entry?) — fifth sermon in The Way Lent/Palm Sunday series with Pastor Kevin. Luke 19:28-44, Zechariah 9:9, James 2:17, Philippians 2:7-8 — Jesus weeps over Jerusalem's willful blindness; crowds vs Pharisees both reject him; donkey as peace symbol (shalom); willful blindness defined; dying to self as the solution; salvation by grace through faith; rope analogy; Steve Cuss quote. Reuses `css/the-way.css` theme. Custom Historical Context tab for donkey symbolism in Israelite kings, Zechariah 9 scholarly debate, Fall of Jerusalem AD 70 timeline. New scripture tag: philippians.*
 *Added 2026-03-22 (The Way: The Upside-Down Kingdom) — fourth sermon in The Way Lent series with Pastor Brett. Luke 6:20-26 (Beatitudes) and Mark 10:35-45 (James & John's request) — Jesus redefines greatness as servanthood, contrasts worldly values (power, comfort, success, recognition) with kingdom values (humility, sacrifice, grief/endurance, rejection for Christ). New covenant/command/movement, the danger of "now", Jesus as more than example — He equips. Reuses `css/the-way.css` theme. Custom Kingdom Contrast tab with visual Woe vs Blessed comparison and broadened-terms grid. New scripture tag: colossians.*
 *Added 2026-03-15 (The Way: Mercy, Not Sacrifice) — third sermon in The Way Lent series with Pastor Albert. Matthew 9:9-13 — Jesus calling Matthew the tax collector, eating with sinners, "I desire mercy not sacrifice." Doctor vs judge paradigm, grace before truth (John 1:17), chesed as active covenantal love, "who do you bring to your table?" Reuses `css/the-way.css` theme. Custom Historical Context tab for Capernaum, Roman tax system, and Hebrew word study. New scripture tag: hosea.*
