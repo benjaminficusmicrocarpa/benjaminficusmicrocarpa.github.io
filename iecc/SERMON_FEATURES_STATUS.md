@@ -19,6 +19,7 @@ This document tracks which sermons have implemented:
 - `css/chinese-new-year.css` - Theme styles for Chinese New Year series (festive red & gold palette, horse animation, dual-sermon layout, weight-vs-wind comparison)
 - `css/the-way.css` - Theme styles for The Way series (purple/rose Lent palette, path strip motif, connection cards for cross-references)
 - `css/easter.css` - Theme styles for Easter (midnight-to-dawn palette, sunrise gold accents, response cards, evidence grid)
+- `css/romans-8.css` - Theme styles for Romans 8 series (deep crimson & warm gold palette, contrast cards for law-vs-grace comparisons)
 - `js/iecc-common.js` - Common JavaScript functionality (tabs, accordions, slideshows, tag loading)
 - `key_scriptures.json` - Collection of key scriptures from all sermons (used for random scripture display on index page)
 
@@ -44,9 +45,10 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 | 2025-12-21 | Rejoice in Opposition | ✅ | ✅ | ✅ |
 | 2025-12-28 | Rejoice in Anticipation | ✅ | ✅ | ✅ |
 
-### April 2026 - Easter
+### April 2026 - Easter / Romans 8 Series
 | Date | Sermon | Routing | Tags | External CSS/JS |
 |------|--------|---------|------|-----------------|
+| 2026-04-12 | Romans 8: No Condemnation | ✅ | ✅ | ✅ |
 | 2026-04-05 | Easter Sunday: Proof of Life | ✅ | ✅ | ✅ |
 
 ### March 2026 - The Way Series
@@ -92,7 +94,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 |------|--------|---------|------|-----------------|
 | 2024-10-27 | How We Make Sense of Life | ✅ | ✅ | ✅ |
 
-**Total Fully Implemented: 24 sermons** (with external CSS/JS)
+**Total Fully Implemented: 25 sermons** (with external CSS/JS)
 
 ---
 
@@ -372,9 +374,9 @@ accordionHeaders.forEach(header => {
 
 | Category | Count | Percentage |
 |----------|-------|------------|
-| Fully Implemented (all features) | 24 | 36.4% |
-| Missing All Features | 42 | 63.6% |
-| **Total** | **66** | **100%** |
+| Fully Implemented (all features) | 25 | 37.3% |
+| Missing All Features | 42 | 62.7% |
+| **Total** | **67** | **100%** |
 
 ---
 
@@ -406,7 +408,8 @@ To migrate remaining sermons:
 
 ---
 
-*Last updated: 2026-04-05*
+*Last updated: 2026-04-12*
+*Added 2026-04-12 (Romans 8: No Condemnation) — first sermon in the Romans 8 series (7 weeks) with Pastor Brett. Romans 8:1-4, Romans 7:15,24, Revelation 12:10, John 8:7-11, Micah 7:18-19, Jeremiah 31:34, Romans 8:26-27, Psalms 145:10-11 — "no condemnation" declaration; Paul's honest struggle; the accuser's two-pronged strategy; law reveals guilt but cannot produce righteousness; Jewish neighbour and Sabbath lights; driving school certificates as condemnation analogy; the woman caught in adultery (progressive vs religious vs Jesus' approach); the king who took the lashes for his daughter; God's justice and love meet at the cross. New `css/romans-8.css` theme (deep crimson & warm gold palette, contrast cards). Custom "Law vs Grace" tab covering what the law can/cannot do, the driving certificate analogy unpacked, and the king parable explained. New series tag: romans-8. New scripture tags: micah, jeremiah.*
 *Added 2026-04-05 (Easter Sunday: Proof of Life) — standalone Easter sermon with Pastor Brett. Acts 17:16-31 (Paul at Mars Hill), John 20:19, Luke 24:6-8,11, Romans 1:20, 1 Corinthians 15:6 — the resurrection as proof of a personal God; fearful disciples transformed into bold martyrs; Paul at Athens reasoning with the intelligentsia; the "Unknown God" altar; God as giver not taker; three responses (sneered, curious, believed); the resurrection demonstrates God's love and makes a personal difference. New `css/easter.css` theme (midnight-to-dawn palette, sunrise gold accents, response cards, evidence grid). Custom Historical Evidence tab covering transformation of the disciples, Paul's conversion, Athens context, and six lines of evidence for the resurrection. New series tag: easter.*
 *Added 2026-03-29 (The Way: Triumphal Entry?) — fifth sermon in The Way Lent/Palm Sunday series with Pastor Kevin. Luke 19:28-44, Zechariah 9:9, James 2:17, Philippians 2:7-8 — Jesus weeps over Jerusalem's willful blindness; crowds vs Pharisees both reject him; donkey as peace symbol (shalom); willful blindness defined; dying to self as the solution; salvation by grace through faith; rope analogy; Steve Cuss quote. Reuses `css/the-way.css` theme. Custom Historical Context tab for donkey symbolism in Israelite kings, Zechariah 9 scholarly debate, Fall of Jerusalem AD 70 timeline. New scripture tag: philippians.*
 *Added 2026-03-22 (The Way: The Upside-Down Kingdom) — fourth sermon in The Way Lent series with Pastor Brett. Luke 6:20-26 (Beatitudes) and Mark 10:35-45 (James & John's request) — Jesus redefines greatness as servanthood, contrasts worldly values (power, comfort, success, recognition) with kingdom values (humility, sacrifice, grief/endurance, rejection for Christ). New covenant/command/movement, the danger of "now", Jesus as more than example — He equips. Reuses `css/the-way.css` theme. Custom Kingdom Contrast tab with visual Woe vs Blessed comparison and broadened-terms grid. New scripture tag: colossians.*
