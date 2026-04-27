@@ -6,7 +6,7 @@ This document tracks which sermons have implemented:
 3. **External CSS/JS** - Separated stylesheets and scripts for maintainability
 
 ## Index Page Features
-- **Random Scripture Display** - Hero header shows a random key scripture from `key_scriptures.json` on each page load, with link to source sermon (43 scriptures total)
+- **Random Scripture Display** - Hero header shows a random key scripture from `key_scriptures.json` on each page load, with link to source sermon (51 scriptures total)
 
 ## CSS/JS Architecture
 
@@ -48,6 +48,8 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 ### April 2026 - Easter / Romans 8 Series
 | Date | Sermon | Routing | Tags | External CSS/JS |
 |------|--------|---------|------|-----------------|
+| 2026-04-26 | Romans 8: Adopted by God | ✅ | ✅ | ✅ |
+| 2026-04-19 | Romans 8: Governed by the Spirit | ✅ | ✅ | ✅ |
 | 2026-04-12 | Romans 8: No Condemnation | ✅ | ✅ | ✅ |
 | 2026-04-05 | Easter Sunday: Proof of Life | ✅ | ✅ | ✅ |
 
@@ -94,7 +96,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 |------|--------|---------|------|-----------------|
 | 2024-10-27 | How We Make Sense of Life | ✅ | ✅ | ✅ |
 
-**Total Fully Implemented: 25 sermons** (with external CSS/JS)
+**Total Fully Implemented: 27 sermons** (with external CSS/JS)
 
 ---
 
@@ -168,7 +170,7 @@ All other sermons are missing HTML routing for tabs, tags in the hero header, an
 ### November 2024
 - `2024-11-17-rewriting-my-worldview-finding-purpose-in-singleness-marriage-and-parenting.html`
 
-**Total Missing: 42 sermons** ❌
+**Total Missing: 41 sermons** ❌
 
 ---
 
@@ -212,7 +214,7 @@ loadSermonTags('YYYY-MM-DD'); // Pass the sermon date
 
 ### Random Scripture Display (Index Page)
 The index page hero header displays a random key scripture that changes on each page load/refresh:
-- Scriptures are stored in `key_scriptures.json` (43 scriptures total)
+- Scriptures are stored in `key_scriptures.json` (47 scriptures total)
 - Each scripture links to its source sermon page
 - Styled to blend with the purple/indigo gradient hero theme
 
@@ -374,9 +376,9 @@ accordionHeaders.forEach(header => {
 
 | Category | Count | Percentage |
 |----------|-------|------------|
-| Fully Implemented (all features) | 25 | 37.3% |
-| Missing All Features | 42 | 62.7% |
-| **Total** | **67** | **100%** |
+| Fully Implemented (all features) | 27 | 39.7% |
+| Missing All Features | 41 | 60.3% |
+| **Total** | **68** | **100%** |
 
 ---
 
@@ -408,7 +410,9 @@ To migrate remaining sermons:
 
 ---
 
-*Last updated: 2026-04-12*
+*Last updated: 2026-04-26*
+*Added 2026-04-26 (Romans 8: Adopted by God) — third sermon in the Romans 8 series with Pastor Brett. Romans 8:14–17; Galatians 5:16–18; 1 John 1:9; John 8:42–44; Hebrews 4:16; Zephaniah 3:17 — adoption as a completed declaration that changes identity and future; image of God vs child of God distinction; five signs of being a child of God (confess sin easily, live in freedom not fear, value intimacy with God, know the benefit package, bring pain to God); adoption courtroom story, Juneteenth freedom illustration, Caesar Augustus as adopted heir, airport lounge benefits, and C. S. Lewis pain quote. Reuses `css/romans-8.css`. Custom **Five Signs** tab. `sermons_data.json` adds `zephaniah` scripture tag. `key_scriptures.json` +4 entries (Rom 8:14–15, Rom 8:16–17, 1 John 1:9, Gal 5:16).*
+*Added 2026-04-19 (Romans 8: Governed by the Spirit) — second sermon in the Romans 8 series with Pastor Kevin. Romans 8:5–13; Ephesians 6:12 — flesh as disordered desire (misplaced priorities, disproportionate obsessions); mind set on flesh vs Spirit; death as spiritual deadening and chaos; realm of the flesh vs struggling with the flesh in you; indwelling Spirit and resurrection hope; obligation to put misdeeds to death by the Spirit; dedication and discipline; Sabbath / busyness / validation root example; embassy and Wi‑Fi analogies; autoimmune transplant closing story. Reuses `css/romans-8.css`. Custom **Two Realms** tab (struggling believer vs realm of the flesh vs realm of the Spirit). `key_scriptures.json` +4 entries (Rom 8:5–6, 8:9, 8:12–13, Eph 6:12).*
 *Added 2026-04-12 (Romans 8: No Condemnation) — first sermon in the Romans 8 series (7 weeks) with Pastor Brett. Romans 8:1-4, Romans 7:15,24, Revelation 12:10, John 8:7-11, Micah 7:18-19, Jeremiah 31:34, Romans 8:26-27, Psalms 145:10-11 — "no condemnation" declaration; Paul's honest struggle; the accuser's two-pronged strategy; law reveals guilt but cannot produce righteousness; Jewish neighbour and Sabbath lights; driving school certificates as condemnation analogy; the woman caught in adultery (progressive vs religious vs Jesus' approach); the king who took the lashes for his daughter; God's justice and love meet at the cross. New `css/romans-8.css` theme (deep crimson & warm gold palette, contrast cards). Custom "Law vs Grace" tab covering what the law can/cannot do, the driving certificate analogy unpacked, and the king parable explained. New series tag: romans-8. New scripture tags: micah, jeremiah.*
 *Added 2026-04-05 (Easter Sunday: Proof of Life) — standalone Easter sermon with Pastor Brett. Acts 17:16-31 (Paul at Mars Hill), John 20:19, Luke 24:6-8,11, Romans 1:20, 1 Corinthians 15:6 — the resurrection as proof of a personal God; fearful disciples transformed into bold martyrs; Paul at Athens reasoning with the intelligentsia; the "Unknown God" altar; God as giver not taker; three responses (sneered, curious, believed); the resurrection demonstrates God's love and makes a personal difference. New `css/easter.css` theme (midnight-to-dawn palette, sunrise gold accents, response cards, evidence grid). Custom Historical Evidence tab covering transformation of the disciples, Paul's conversion, Athens context, and six lines of evidence for the resurrection. New series tag: easter.*
 *Added 2026-03-29 (The Way: Triumphal Entry?) — fifth sermon in The Way Lent/Palm Sunday series with Pastor Kevin. Luke 19:28-44, Zechariah 9:9, James 2:17, Philippians 2:7-8 — Jesus weeps over Jerusalem's willful blindness; crowds vs Pharisees both reject him; donkey as peace symbol (shalom); willful blindness defined; dying to self as the solution; salvation by grace through faith; rope analogy; Steve Cuss quote. Reuses `css/the-way.css` theme. Custom Historical Context tab for donkey symbolism in Israelite kings, Zechariah 9 scholarly debate, Fall of Jerusalem AD 70 timeline. New scripture tag: philippians.*
