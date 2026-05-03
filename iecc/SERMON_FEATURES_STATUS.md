@@ -45,9 +45,10 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 | 2025-12-21 | Rejoice in Opposition | ✅ | ✅ | ✅ |
 | 2025-12-28 | Rejoice in Anticipation | ✅ | ✅ | ✅ |
 
-### April 2026 - Easter / Romans 8 Series
+### April-May 2026 - Easter / Romans 8 Series
 | Date | Sermon | Routing | Tags | External CSS/JS |
 |------|--------|---------|------|-----------------|
+| 2026-05-03 | Romans 8: Liberated from Bondage | ✅ | ✅ | ✅ |
 | 2026-04-26 | Romans 8: Adopted by God | ✅ | ✅ | ✅ |
 | 2026-04-19 | Romans 8: Governed by the Spirit | ✅ | ✅ | ✅ |
 | 2026-04-12 | Romans 8: No Condemnation | ✅ | ✅ | ✅ |
@@ -96,7 +97,7 @@ These sermons have HTML routing for tabs, tags in the hero header, and use exter
 |------|--------|---------|------|-----------------|
 | 2024-10-27 | How We Make Sense of Life | ✅ | ✅ | ✅ |
 
-**Total Fully Implemented: 27 sermons** (with external CSS/JS)
+**Total Fully Implemented: 28 sermons** (with external CSS/JS)
 
 ---
 
@@ -376,9 +377,9 @@ accordionHeaders.forEach(header => {
 
 | Category | Count | Percentage |
 |----------|-------|------------|
-| Fully Implemented (all features) | 27 | 39.7% |
-| Missing All Features | 41 | 60.3% |
-| **Total** | **68** | **100%** |
+| Fully Implemented (all features) | 28 | 40.6% |
+| Missing All Features | 41 | 59.4% |
+| **Total** | **69** | **100%** |
 
 ---
 
@@ -410,7 +411,8 @@ To migrate remaining sermons:
 
 ---
 
-*Last updated: 2026-04-26*
+*Last updated: 2026-05-03*
+*Added 2026-05-03 (Romans 8: Liberated from Bondage) — fourth sermon in the Romans 8 series with Pastor Kevin. Romans 8:18–27; Genesis 3:17–19; Psalm 96:6–8; Galatians 2:20 — creation groaning under the curse, cosmic redemption when the children of God are revealed, the Stockdale Paradox (circumstantial hope vs ultimate hope), Jonathan Edwards quote on nature groaning, the Spirit's constant intercession through wordless groans, Tim Keller quote on God answering prayers, Pastor Kevin's personal story of prayer shifting from a corner office to young-adult ministry in Hong Kong. Reuses `css/romans-8.css`. Custom **Two Helps** tab (hope of redemption + prayer of the Spirit). `sermons_data.json` adds new sermon entry. `key_scriptures.json` +4 entries (Rom 8:18, 8:21, 8:24–25, 8:26–27).*
 *Added 2026-04-26 (Romans 8: Adopted by God) — third sermon in the Romans 8 series with Pastor Brett. Romans 8:14–17; Galatians 5:16–18; 1 John 1:9; John 8:42–44; Hebrews 4:16; Zephaniah 3:17 — adoption as a completed declaration that changes identity and future; image of God vs child of God distinction; five signs of being a child of God (confess sin easily, live in freedom not fear, value intimacy with God, know the benefit package, bring pain to God); adoption courtroom story, Juneteenth freedom illustration, Caesar Augustus as adopted heir, airport lounge benefits, and C. S. Lewis pain quote. Reuses `css/romans-8.css`. Custom **Five Signs** tab. `sermons_data.json` adds `zephaniah` scripture tag. `key_scriptures.json` +4 entries (Rom 8:14–15, Rom 8:16–17, 1 John 1:9, Gal 5:16).*
 *Added 2026-04-19 (Romans 8: Governed by the Spirit) — second sermon in the Romans 8 series with Pastor Kevin. Romans 8:5–13; Ephesians 6:12 — flesh as disordered desire (misplaced priorities, disproportionate obsessions); mind set on flesh vs Spirit; death as spiritual deadening and chaos; realm of the flesh vs struggling with the flesh in you; indwelling Spirit and resurrection hope; obligation to put misdeeds to death by the Spirit; dedication and discipline; Sabbath / busyness / validation root example; embassy and Wi‑Fi analogies; autoimmune transplant closing story. Reuses `css/romans-8.css`. Custom **Two Realms** tab (struggling believer vs realm of the flesh vs realm of the Spirit). `key_scriptures.json` +4 entries (Rom 8:5–6, 8:9, 8:12–13, Eph 6:12).*
 *Added 2026-04-12 (Romans 8: No Condemnation) — first sermon in the Romans 8 series (7 weeks) with Pastor Brett. Romans 8:1-4, Romans 7:15,24, Revelation 12:10, John 8:7-11, Micah 7:18-19, Jeremiah 31:34, Romans 8:26-27, Psalms 145:10-11 — "no condemnation" declaration; Paul's honest struggle; the accuser's two-pronged strategy; law reveals guilt but cannot produce righteousness; Jewish neighbour and Sabbath lights; driving school certificates as condemnation analogy; the woman caught in adultery (progressive vs religious vs Jesus' approach); the king who took the lashes for his daughter; God's justice and love meet at the cross. New `css/romans-8.css` theme (deep crimson & warm gold palette, contrast cards). Custom "Law vs Grace" tab covering what the law can/cannot do, the driving certificate analogy unpacked, and the king parable explained. New series tag: romans-8. New scripture tags: micah, jeremiah.*

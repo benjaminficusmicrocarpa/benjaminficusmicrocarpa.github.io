@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romans 8: Liberated from Bondage | Island ECC</title>
+    <meta name="description" content="Week 4 of the Romans 8 series: Pastor Kevin unpacks Romans 8:18-27 — the hope of cosmic redemption, creation groaning under the curse, the Stockdale Paradox, and the Holy Spirit's constant intercession through our wordless groans.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iecc-base.css">
+    <link rel="stylesheet" href="css/romans-8.css">
+    <style>
+        .hero-header {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 950px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 12px rgba(0,0,0,0.6);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.2vw, 1.35rem);
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-meta {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--romans-gold) 0%, var(--romans-warm) 100%);
+            color: #1a0a0e;
+            box-shadow: 0 4px 15px rgba(212, 160, 80, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 160, 80, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(245, 237, 232, 0.1);
+            color: var(--text-light);
+            border: 2px solid rgba(245, 237, 232, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(245, 237, 232, 0.2);
+            border-color: rgba(245, 237, 232, 0.5);
+        }
+
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(18, 10, 14, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(107, 26, 42, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs::-webkit-scrollbar { display: none; }
+
+        .tab {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+
+        .main-content {
+            display: block;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--primary-light);
+        }
+
+        .content-card h2 {
+            color: var(--accent-light);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-card h3 {
+            color: var(--accent-light);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            opacity: 0.95;
+        }
+
+        .content-card ul, .content-card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, rgba(107, 26, 42, 0.15) 0%, rgba(212, 160, 80, 0.08) 100%);
+            border-left: 4px solid var(--romans-gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            font-family: 'Lora', serif;
+        }
+
+        .verse-ref {
+            color: var(--accent-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .verse-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        .verse-context {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-style: normal;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(245, 237, 232, 0.1);
+        }
+
+        .quote-block {
+            position: relative;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: rgba(107, 26, 42, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid var(--romans-gold);
+        }
+
+        .quote-block::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--romans-gold);
+            opacity: 0.3;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .quote-text {
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quote-attribution {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(139, 32, 64, 0.12) 0%, rgba(107, 26, 42, 0.1) 100%);
+            border-left: 4px solid var(--romans-warm);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-light);
+            font-size: 1.1rem;
+        }
+
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            background: var(--bg-card);
+            padding: 1.25rem 1.75rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(107, 26, 42, 0.25);
+            min-width: 160px;
+        }
+
+        .flow-step-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .flow-step-title {
+            font-weight: 600;
+            color: var(--accent-light);
+            font-size: 1rem;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--romans-gold);
+            flex-shrink: 0;
+        }
+
+        .two-helps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .help-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border-top: 4px solid var(--romans-gold);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .help-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(212, 160, 80, 0.2);
+        }
+
+        .help-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .help-card h3 {
+            color: var(--accent-light);
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--romans-gold);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(212, 160, 80, 0.2);
+        }
+
+        .app-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .app-card-title {
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        .reflection-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .reflection-list li {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--romans-gold);
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .reflection-list li::before {
+            content: '⚖️';
+            position: absolute;
+            left: 1rem;
+            top: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .sermon-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        @media (max-width: 768px) {
+            .hero-header {
+                height: auto;
+                min-height: 100svh;
+                overflow: visible;
+                padding: 3rem 0 2rem;
+            }
+            .hero-header .slideshow-container { min-height: 100%; }
+            .hero-content { padding: 1.5rem 1.25rem; }
+            .hero-title { font-size: 2rem; margin-bottom: 1rem; }
+            .hero-subtitle { font-size: 0.95rem; margin-bottom: 1rem; }
+            .hero-meta { font-size: 0.85rem; margin-bottom: 0.75rem; }
+            .sermon-tags-container { margin: 1rem 0; gap: 0.4rem; }
+            .hero-buttons { gap: 0.75rem; }
+            .btn { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+            .tabs { justify-content: flex-start; }
+            .tab { padding: 1rem 1.1rem; font-size: 0.85rem; }
+            .main-content { padding: 2rem 1rem; }
+            .content-card { padding: 1.5rem 1.25rem; border-radius: 12px; }
+            .content-card h2 { font-size: 1.5rem; }
+            .content-card h3 { font-size: 1.25rem; }
+            .app-grid { grid-template-columns: 1fr; }
+            .two-helps-grid { grid-template-columns: 1fr; }
+            .verse-card { padding: 1.25rem; }
+            .quote-block { padding: 1.5rem 1.25rem; }
+            .highlight-box { padding: 1.25rem; }
+            .reflection-list li { padding: 1.25rem 1.25rem 1.25rem 2.75rem; }
+            .flow-container { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+            .flow-step { min-width: unset; width: 100%; }
+        }
+
+        @media (max-width: 420px) {
+            .hero-header { padding: 2.5rem 0 1.5rem; }
+            .hero-title { font-size: 1.75rem; line-height: 1.25; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
+            .main-content { padding: 1.5rem 0.75rem; }
+            .content-card { padding: 1.25rem 1rem; }
+        }
+
+        @media print {
+            .tabs-container, .hero-buttons, .attribution { display: none; }
+            .tab-content { display: block !important; page-break-after: always; }
+            body { background: white; color: black; }
+            .content-card { box-shadow: none; border: 1px solid #ccc; }
+        }
+
+        .tab:focus, .btn:focus {
+            outline: 3px solid var(--accent-light);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body data-sermon-date="2026-05-03">
+    <header class="hero-header">
+        <div class="slideshow-container">
+            <div class="slideshow-slide active" style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1920&q=80')"></div>
+            <div class="slideshow-slide" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80')"></div>
+        </div>
+
+        <div class="romans-accent-strip"></div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">🕊️ Romans 8:<br>Liberated from Bondage</h1>
+            <p class="hero-subtitle">"The Spirit himself intercedes for us through wordless groans." — Romans 8:26 (NIV)</p>
+            <div class="hero-meta">
+                📅 03 May 2026 | 🎤 Pastor Kevin | 🏝️ Island ECC | 📖 Romans 8 Series (Week 4 of 7)
+            </div>
+            <div class="sermon-tags-container" id="sermon-tags"></div>
+            <div class="hero-buttons">
+                <a href="https://www.youtube.com/watch?v=oBjF2OL5-18" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    ▶️ Watch Original Sermon
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    📚 View All Sermons
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="tabs-container" role="navigation" aria-label="Sermon sections">
+        <div class="tabs">
+            <div class="tab active" data-tab="overview" role="tab" aria-selected="true">📋 Overview</div>
+            <div class="tab" data-tab="sermon" role="tab" aria-selected="false">📖 Main Sermon</div>
+            <div class="tab" data-tab="verses" role="tab" aria-selected="false">✝️ Bible Verses</div>
+            <div class="tab" data-tab="helps" role="tab" aria-selected="false">🕊️ Two Helps</div>
+            <div class="tab" data-tab="application" role="tab" aria-selected="false">🎯 Application</div>
+            <div class="tab" data-tab="reflection" role="tab" aria-selected="false">💭 Reflection</div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+
+        <section id="overview" class="tab-content active">
+            <div class="content-card">
+                <h2>📋 Sermon Overview</h2>
+                <p><strong>Central Theme:</strong> God's help in suffering is not limited to immediate circumstantial rescue. Romans 8:18-27 gives believers two durable tools: a hope anchored in the final redemption of all creation, and the constant intercession of the Holy Spirit who prays when we cannot.</p>
+
+                <div class="highlight-box">
+                    <strong>Series context:</strong> Week 4 of seven in Romans 8. Week 1 declared <em>no condemnation</em>, Week 2 taught life <em>governed by the Spirit</em>, Week 3 showed believers are <em>adopted by God</em>. This sermon asks: how do adopted children endure present suffering while waiting for future glory?
+                </div>
+
+                <h3>📖 Key Passages</h3>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:18-21 (NIV)</span>
+                    <div class="verse-text">"I consider that our present sufferings are not worth comparing with the glory that will be revealed in us. For the creation waits in eager expectation for the children of God to be revealed... the creation itself will be liberated from its bondage to decay and brought into the freedom and glory of the children of God."</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:26-27 (NIV)</span>
+                    <div class="verse-text">"In the same way, the Spirit helps us in our weakness. We do not know what we ought to pray for, but the Spirit himself intercedes for us through wordless groans. And he who searches our hearts knows the mind of the Spirit, because the Spirit intercedes for God's people in accordance with the will of God."</div>
+                </div>
+
+                <h3>🌟 Main Takeaways</h3>
+                <ol>
+                    <li><strong>Present suffering is real</strong> — Paul does not deny pain, weakness, sickness, hardship, or frustration.</li>
+                    <li><strong>Christian hope is larger than escape</strong> — the hope of Romans 8 is the redemption of humanity and creation itself, not merely circumstantial relief.</li>
+                    <li><strong>Creation groans because of the curse</strong> — nature is not merely scenery; it waits for the revealing of the children of God.</li>
+                    <li><strong>False hopes break hearts</strong> — hope fixed only on a job, healing, marriage, or deadline cannot bear the full weight of suffering (the Stockdale Paradox).</li>
+                    <li><strong>The Spirit prays for believers</strong> — even when pain is too deep for words, the Holy Spirit intercedes according to God's will.</li>
+                    <li><strong>The Spirit redirects desire</strong> — over time, his intercession reshapes our prayers toward God's deeper purposes and ultimate redemption.</li>
+                </ol>
+
+                <h3>📐 Sermon Structure</h3>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🛟</div>
+                        <div class="flow-step-title">The longing for rescue</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Dunkirk and the desire for miracles</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">⭐</div>
+                        <div class="flow-step-title">Hope of redemption</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Creation groans, curses lifted</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🙏</div>
+                        <div class="flow-step-title">Prayer of the Spirit</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Intercession through wordless groans</p>
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <div class="flow-step-icon">🔄</div>
+                        <div class="flow-step-title">Transformed prayers</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">From office to people, from self to kingdom</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sermon" class="tab-content">
+            <div class="content-card">
+                <h2>🛟 Why We Long for Rescue</h2>
+                <p>Pastor Kevin opened with the miracle of Dunkirk. In May 1940, 400,000 British soldiers were trapped at the coast of a small French town, surrounded on all sides by German tanks, the sea at their back, with no real way to defend themselves. The King of England called for a nationwide prayer: "Let us with one heart and one soul, humbly yet confidently, come before the Lord and present our case before him."</p>
+                <p>Four miracles followed: Hitler inexplicably halted his attack for three days; a massive storm grounded German aircraft; the English Channel became unusually calm for nearly a week; and over 850 civilian boats — fishing vessels, private yachts — crossed to ferry soldiers home. Over 338,000 soldiers were rescued from almost certain defeat.</p>
+                <p>The story names a familiar human desire. When we are cornered by sickness, job loss, or hardship, we long for God to intervene and change the circumstance. Romans 8 does speak of God's help — but it presents a help that is constant even when circumstances do not immediately change.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>⭐ Hope Bigger Than Circumstances</h2>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:18 (NIV)</span>
+                    <div class="verse-text">"I consider that our present sufferings are not worth comparing with the glory that will be revealed in us."</div>
+                </div>
+                <p>Paul writes to Roman believers who knew poverty, sickness, social pressure, and the ordinary fragility of ancient life. Many lived at or below subsistence levels. High infant mortality, low life expectancy, fatal diseases — these were their daily realities. Paul does not minimize their present sufferings, but he places them beside a coming glory so large that comparison fails.</p>
+                <p>This glory is not merely private relief. Paul says creation itself waits in eager expectation for the children of God to be revealed. The hope is cosmic: because human sin brought the curse upon the ground (Genesis 3), the redemption of humanity signals the redemption of the entire world.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>🌍 Creation Groaning</h2>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:19-22 (NIV)</span>
+                    <div class="verse-text">"For the creation waits in eager expectation for the children of God to be revealed. For creation was subjected to frustration, not by its own choice, but by the will of the one who subjected it, in hope that the creation itself will be liberated from its bondage to decay... We know that the whole creation has been groaning as in the pains of childbirth right up to the present time."</div>
+                </div>
+                <p>Who cursed the world? God did — as an act of justice, not evil, in response to the fall. Three curses followed: upon the serpent, upon the woman (pain in childbirth, relational distortion), and upon the ground (thorns, thistles, and death). All of creation was subjected to frustration because of human sin.</p>
+                <p>The Greek word for "groaning" describes an intense cry of pain — and in ancient literature, often a death cry. Paul's allusion to childbirth is not merely metaphorical: in ancient Rome, many mothers did not survive delivery. Nature is crying a death cry because of us.</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">Were it not for the sovereign pleasure of God, the earth would not bear you one moment, for you are a burden to it. The sun does not willingly shine upon you to give you light to serve sin and Satan. The earth does not willingly yield her increase to satisfy your lusts... God's creatures are good and were made for men to serve God with, and do not willingly subserve to any other purpose, and groan when they are abused to purposes so directly contrary to their nature and end.</p>
+                    <p class="quote-attribution">— Jonathan Edwards, <em>Sinners in the Hands of an Angry God</em> (1741)</p>
+                </div>
+
+                <p>Pastor Kevin noted how even natural disasters find some of their origin in human sin — overuse and abuse of resources wrecks havoc on ecosystems and changes weather patterns. Nature is groaning because of the pain we put it through. The only hope for nature is that humanity would be redeemed.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>⏳ The Redemption of Our Bodies</h2>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:23-25 (NIV)</span>
+                    <div class="verse-text">"Not only so, but we ourselves, who have the firstfruits of the Spirit, groan inwardly as we wait eagerly for our adoption to sonship, the redemption of our bodies. For in this hope we were saved. But hope that is seen is no hope at all. Who hopes for what they already have? But if we hope for what we do not yet have, we wait for it patiently."</div>
+                </div>
+                <p>Believers already have the firstfruits of the Spirit — adoption has begun — but the full redemption of their bodies remains future. When bodies no longer decay and die, it signals that the curse of death has been lifted. And when that curse is lifted, so too all the other curses: on the animal kingdom, on childbirth, on the ground.</p>
+                <p>The physical resurrection of our bodies is the first domino in the cosmic restoration of all things.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>⚠️ The Stockdale Paradox</h2>
+                <p>What we hope for matters. Pastor Kevin introduced the Stockdale Paradox, named after Admiral James Stockdale, a prisoner of war for seven years in Vietnam who was tortured daily but survived.</p>
+                <p>When asked about the soldiers who did not survive, Stockdale said:</p>
+                <div class="quote-block">
+                    <p class="quote-text">They were the optimists. They were the ones who said, "We're going to be out by Christmas." And Christmas would come and Christmas would go. Then they'd say, "We're going to be out by Easter." And Easter would come and Easter would go. And then Thanksgiving, and then it would be Christmas again. And they died of a broken heart.</p>
+                    <p class="quote-attribution">— Admiral James Stockdale</p>
+                </div>
+                <p>Those who endured held an unwavering faith that they would prevail in the end, while simultaneously confronting the brutal reality of their situation. Romans 8 presents the same paradox: if you keep hoping only for circumstantial deliverance — a job by Christmas, a marriage by Easter, healing by Thanksgiving — you risk dying of a broken heart. The hope that actually sustains is the hope of final, eternal, cosmic redemption.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>🙏 The Prayer of the Spirit</h2>
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:26-27 (NIV)</span>
+                    <div class="verse-text">"In the same way, the Spirit helps us in our weakness. We do not know what we ought to pray for, but the Spirit himself intercedes for us through wordless groans. And he who searches our hearts knows the mind of the Spirit, because the Spirit intercedes for God's people in accordance with the will of God."</div>
+                </div>
+                <p>The Holy Spirit who resides in believers prays for them constantly. The phrase "wordless groans" can be read two ways: (1) the Spirit prays with incomprehensible words, which is the basis for some charismatic traditions of speaking in tongues; or (2) the Spirit understands the wordless groans that <em>we</em> have — the pain too deep to articulate — and gives them full expression before the Father. The Greek is ambiguous enough for both readings.</p>
+                <p>Either way, the Spirit always prays in accordance with the will of God. If any groaning on our heart is contrary to God's will, the Spirit will not pray for it.</p>
+
+                <div class="quote-block">
+                    <p class="quote-text">God will either give us what we ask or give us what we would have asked if we knew everything he knew.</p>
+                    <p class="quote-attribution">— Tim Keller</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>🔄 Transformed Prayers — Pastor Kevin's Story</h2>
+                <p>Pastor Kevin shared how the Spirit's intercession gradually reshaped his own prayers over several years:</p>
+                <ol>
+                    <li><strong>The office prayer (2015-2017):</strong> Working at Arapahoe Road Baptist Church in Dallas, he walked past a beautiful corner office every day to reach his tiny cubicle. For four years, his prayer was to get that office — to become the youth pastor.</li>
+                    <li><strong>The Asia prayer (2017):</strong> After visiting his brother in Japan at Christmas and feeling the absence of Jesus, he suddenly felt a passion for Asia he never expected. His prayer shifted: "Lord, if at all possible, can you make it so that I can minister in Asia?"</li>
+                    <li><strong>The international community prayer (2018):</strong> Realizing he was terrible with languages — fifteen years in Hong Kong without speaking Cantonese — the only way he could be effective was among the international community. His prayer narrowed: "Lord, let me minister to the international community in Asia."</li>
+                    <li><strong>The Hong Kong prayer (2019):</strong> After a painful four-hour conversation walking away from the corner-office path, Pastor Brett emailed the very next morning asking if he was interested in a pastoral role. His prayer shifted again: "Lord, could I minister to the international community in Hong Kong?"</li>
+                    <li><strong>The young adults prayer (2019):</strong> During the summer of 2019, scrolling through headlines about Hong Kong's young people, he felt a specific stirring. His prayer became: "Lord, could I minister to the young adult population in the English-speaking community in Hong Kong?" The offer that came was exactly that: Pastor of Young Adult Ministry.</li>
+                </ol>
+                <p>"I have an office now," Pastor Kevin said. "But actually tomorrow I'll have to vacate it for our growing staff team. I don't even care. Because I have a heart for people, for you, a love for you."</p>
+                <p>This is the power of the Spirit's intercession: he changes the content of our prayers and the content of our desires, redirecting our hope from small circumstantial wishes to the ultimate hope of redemption.</p>
+            </div>
+        </section>
+
+        <section id="verses" class="tab-content">
+            <div class="content-card">
+                <h2>✝️ Scripture in This Sermon</h2>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:18 (NIV)</span>
+                    <div class="verse-text">"I consider that our present sufferings are not worth comparing with the glory that will be revealed in us."</div>
+                    <div class="verse-context">The sermon's anchor verse: present pain is real but dwarfed by coming glory.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:19 (NIV)</span>
+                    <div class="verse-text">"For the creation waits in eager expectation for the children of God to be revealed."</div>
+                    <div class="verse-context">Not just personal hope — the entire created order longs for humanity's redemption.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:20-21 (NIV)</span>
+                    <div class="verse-text">"For creation was subjected to frustration, not by its own choice, but by the will of the one who subjected it, in hope that the creation itself will be liberated from its bondage to decay and brought into the freedom and glory of the children of God."</div>
+                    <div class="verse-context">God cursed the ground after the fall as an act of justice; creation's liberation is tied to humanity's full redemption.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:22-23 (NIV)</span>
+                    <div class="verse-text">"We know that the whole creation has been groaning as in the pains of childbirth right up to the present time. Not only so, but we ourselves, who have the firstfruits of the Spirit, groan inwardly as we wait eagerly for our adoption to sonship, the redemption of our bodies."</div>
+                    <div class="verse-context">"Groaning" in Greek describes both intense pain and a death cry. Believers already have the Spirit's firstfruits but still await bodily resurrection.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:24-25 (NIV)</span>
+                    <div class="verse-text">"For in this hope we were saved. But hope that is seen is no hope at all. Who hopes for what they already have? But if we hope for what we do not yet have, we wait for it patiently."</div>
+                    <div class="verse-context">Christian hope is patient endurance, not circumstantial optimism.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Romans 8:26-27 (NIV)</span>
+                    <div class="verse-text">"In the same way, the Spirit helps us in our weakness. We do not know what we ought to pray for, but the Spirit himself intercedes for us through wordless groans. And he who searches our hearts knows the mind of the Spirit, because the Spirit intercedes for God's people in accordance with the will of God."</div>
+                    <div class="verse-context">The second tool God gives: the Spirit prays perfectly on our behalf, always aligned with the Father's will.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Genesis 3:17-19 (NIV)</span>
+                    <div class="verse-text">"Cursed is the ground because of you; through painful toil you will eat food from it all the days of your life. It will produce thorns and thistles for you... for dust you are and to dust you will return."</div>
+                    <div class="verse-context">The original curse upon the ground: the backdrop for understanding creation's bondage to decay.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Psalm 96:6-8 (NIV)</span>
+                    <div class="verse-text">"Splendor and majesty are before him; strength and beauty are in his sanctuary. Ascribe to the LORD the glory due his name."</div>
+                    <div class="verse-context">Read during worship as a call to remember God's greatness regardless of circumstances.</div>
+                </div>
+
+                <div class="verse-card">
+                    <span class="verse-ref">📖 Galatians 2:20 (NIV)</span>
+                    <div class="verse-text">"I have been crucified with Christ and I no longer live, but Christ lives in me. And the life I now live in the body, I live by faith in the Son of God, who loved me and gave himself for me."</div>
+                    <div class="verse-context">Referenced during worship as the theme for the opening song "Yet Not I But Through Christ In Me."</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="helps" class="tab-content">
+            <div class="content-card">
+                <h2>🕊️ Two Helps God Gives</h2>
+                <p>Romans 8:18-27 presents two primary tools God gives to help believers endure suffering. Neither is about changing circumstances on demand — both are constant, consistent, and always available.</p>
+            </div>
+
+            <div class="two-helps-grid">
+                <div class="help-card">
+                    <div class="help-card-icon">⭐</div>
+                    <h3>1. The Hope of Redemption</h3>
+                    <p style="color: var(--text-light); font-size: 0.95rem;"><strong>What it is:</strong> The hope that all creation — every person, animal, mountain, valley, nation — will be liberated from bondage to decay when God's children are fully revealed.</p>
+                    <p style="color: var(--text-light); font-size: 0.95rem;"><strong>Why it matters:</strong> Circumstantial hopes (job by Christmas, healing by Easter) break the heart when they fail. The Stockdale Paradox shows that only an unwavering hope in the ultimate outcome sustains people through prolonged suffering.</p>
+                    <p style="color: var(--text-light); font-size: 0.95rem;"><strong>What it produces:</strong> Patient endurance, an expanded time horizon, freedom from despair when immediate relief does not come.</p>
+                </div>
+
+                <div class="help-card">
+                    <div class="help-card-icon">🙏</div>
+                    <h3>2. The Prayer of the Spirit</h3>
+                    <p style="color: var(--text-light); font-size: 0.95rem;"><strong>What it is:</strong> The Holy Spirit intercedes for believers constantly, articulating the groans of our hearts that we ourselves cannot put into words, always in accordance with God's will.</p>
+                    <p style="color: var(--text-light); font-size: 0.95rem;"><strong>Why it matters:</strong> God always answers the Spirit's prayers, because the Spirit always prays according to the Father's will. Tim Keller says God gives what we ask or what we would have asked if we knew everything he knew.</p>
+                    <p style="color: var(--text-light); font-size: 0.95rem;"><strong>What it produces:</strong> Transformed desires, redirected hope, prayers that shift from circumstantial wishes to kingdom purposes — as Pastor Kevin's personal story illustrates.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🔄 How the Two Helps Work Together</h3>
+                <p>The Spirit's intercession does not merely sustain us through suffering — it actively cultivates the hope of redemption within us. As the Spirit prays 24/7, our hope for the eternal redemption of the world grows stronger. The result is a "holy yearning" for God's kingdom to be present, an eager expectation for the completion of our adoption through the resurrection of our bodies.</p>
+
+                <div class="highlight-box">
+                    <strong>Practical check:</strong> If you want to know how the Holy Spirit is praying for you right now, pay attention to how you are changing. Take inventory, take stock, reflect on how you are changing. That is how you will know the types of prayers the Holy Spirit is praying for you.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>⚠️ What These Helps Are Not</h3>
+                <ul>
+                    <li>They are <strong>not</strong> a guarantee that every circumstance will be resolved on our timetable.</li>
+                    <li>They are <strong>not</strong> a reason to stop praying specific prayers — we still bring our needs to God.</li>
+                    <li>They are <strong>not</strong> escapism or denial of present pain — Paul says "present sufferings" are real.</li>
+                    <li>They <strong>are</strong> a constant, consistent help that does not depend on whether we are having a good day or a bad day.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="application" class="tab-content">
+            <div class="content-card">
+                <h2>🎯 Living Liberated This Week</h2>
+                <p>Application flows from the two helps: anchor your hope in God's final redemption, and trust the Spirit's ongoing intercession to reshape your desires from the inside out.</p>
+            </div>
+
+            <div class="app-grid">
+                <div class="app-card">
+                    <div class="app-card-icon">⭐</div>
+                    <div class="app-card-title">Audit Your Hopes</div>
+                    <p>Write down what you are currently hoping for. Ask: is this a circumstantial hope or an eternal one? Circumstantial hopes are legitimate prayers, but they cannot bear the full weight of your endurance. Place them inside the larger hope of redemption.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">⏳</div>
+                    <div class="app-card-title">Expand Your Time Horizon</div>
+                    <p>Like planting an olive tree that takes seven to ten years to bear fruit, invest in something whose results you may never see. Give, serve, mentor, or build with eternity in view rather than immediate gratification.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🙏</div>
+                    <div class="app-card-title">Pray With Honesty</div>
+                    <p>Bring your wordless groans to God — the pain you cannot articulate, the confusion you cannot resolve. Trust that the Spirit is translating those groans into perfect prayers before the Father.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🔍</div>
+                    <div class="app-card-title">Notice How You Are Changing</div>
+                    <p>Take inventory this week: where have your desires shifted? What do you care about now that you did not care about a year ago? This is evidence of the Spirit's intercession at work.</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🌍</div>
+                    <div class="app-card-title">Let Suffering Evoke Longing</div>
+                    <p>When you see atrocities, wars, natural disasters, or personal sin — let it stir longing for the ultimate redemption rather than despair. Use global suffering as a prompt to pray: "Come, Lord Jesus."</p>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-card-icon">🤲</div>
+                    <div class="app-card-title">Surrender a Specific Prayer</div>
+                    <p>Name one prayer you have been holding tightly. Tell God: "I trust the Spirit to pray for me on this. Give me what I ask, or what I would ask if I knew everything you know."</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="reflection" class="tab-content">
+            <div class="content-card">
+                <h2>💭 Reflection & Discussion</h2>
+
+                <h3>📝 From the service</h3>
+                <ul class="reflection-list">
+                    <li>In what areas of your life are you clinging to a "false hope" that might not align with your current reality?</li>
+                    <li>If the Spirit is interceding for you right now, what hidden burdens or desires might he be bringing before the Father that you have not yet acknowledged yourself?</li>
+                </ul>
+
+                <h3>🔍 Going deeper</h3>
+                <ul class="reflection-list">
+                    <li>How does the Stockdale Paradox challenge your current prayer life? Are you hoping for circumstantial deliverance or ultimate redemption?</li>
+                    <li>Jonathan Edwards describes creation groaning because humans use it for sinful ends. How does that picture change the way you think about stewardship and the natural world?</li>
+                    <li>Pastor Kevin's prayers shifted from an office to a people over several years. Where do you see evidence that the Spirit has been reshaping your desires without you realizing it?</li>
+                    <li>Paul says "hope that is seen is no hope at all." What does patient endurance look like practically in the situation you are facing right now?</li>
+                    <li>How does knowing the Spirit prays "in accordance with the will of God" comfort you when your own prayers feel inadequate or confused?</li>
+                    <li>The sermon says the physical resurrection of our bodies is the first sign that all curses are lifted. How does that connect to the way you think about your body, aging, and mortality?</li>
+                </ul>
+
+                <h3>🙏 Prayer prompts</h3>
+                <ul class="reflection-list">
+                    <li><strong>For hope:</strong> Father, anchor my hope not in circumstances but in the coming redemption of all things. Help me wait patiently.</li>
+                    <li><strong>For honesty:</strong> Holy Spirit, I bring you the groans I cannot put into words. Translate them before the Father according to his will.</li>
+                    <li><strong>For surrender:</strong> God, I release the timelines I have set. Give me what I ask or what I would ask if I knew everything you know.</li>
+                    <li><strong>For creation:</strong> Lord, help me see the groaning world as you see it — longing for the day when every curse is lifted and everything is made new.</li>
+                    <li><strong>For transformation:</strong> Spirit, continue to reshape my prayers and desires. I want to want what you want.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <aside class="attribution" id="attribution" role="contentinfo">
+        <div class="attribution-short" aria-label="Attribution">ℹ️</div>
+        <div class="attribution-full">
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted);">
+                Generated by LLM with supervision and polishing by
+                <a href="../index.html" target="_blank" rel="noopener noreferrer">benjaminficusmicrocarpa</a>.
+                <a href="../license.html" target="_blank" rel="noopener noreferrer">MIT License</a>
+            </p>
+        </div>
+    </aside>
+
+    <script src="js/iecc-common.js"></script>
+</body>
+</html>
