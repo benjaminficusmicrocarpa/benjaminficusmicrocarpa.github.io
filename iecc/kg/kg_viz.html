@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IECC Sermon–Concept Graph</title>
+  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #1a2332;
+      --text: #e7e9ea;
+      --muted: #8b98a5;
+      --sermon: #1d9bf0;
+      --concept: #7856ff;
+      --border: #38444d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 0.75rem 1rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1.25rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem 1rem;
+      font-size: 0.85rem;
+    }
+    .controls label {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--muted);
+    }
+    input[type="number"] {
+      width: 4.5rem;
+      padding: 0.25rem 0.4rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+    }
+    button, .toggle {
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      border: none;
+      background: var(--sermon);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    button:hover, .toggle:hover { filter: brightness(1.08); }
+    .toggle { background: var(--border); user-select: none; }
+    .toggle.on { background: var(--concept); }
+    .meta {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    #graph {
+      flex: 1;
+      min-height: 320px;
+    }
+    .legend {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .legend span::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 0.35rem;
+      vertical-align: middle;
+    }
+    .legend .sermon::before { background: var(--sermon); }
+    .legend .concept::before { background: var(--concept); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sermon ↔ concept graph</h1>
+    <div class="controls">
+      <label>Top concepts <input type="number" id="topN" value="180" min="20" max="3000" step="10"></label>
+      <label>Min edge weight <input type="number" id="minW" value="1" min="1" max="20" step="1"></label>
+      <span class="toggle" id="scaleNodes" title="Scale node size with zoom">Node scale</span>
+      <span class="toggle" id="scaleFont" title="Scale font size with zoom">Font scale</span>
+      <button type="button" id="apply">Apply</button>
+    </div>
+    <div class="legend">
+      <span class="sermon">Sermon</span>
+      <span class="concept">Concept</span>
+    </div>
+    <div class="meta" id="meta">Loading…</div>
+  </header>
+  <div id="graph"></div>
+
+  <script>
+    const DATA_URL = "kg_graph.json";
+
+    let raw = null;
+    let network = null;
+    let scaleNodes = false;
+    let scaleFont = false;
+
+    const colors = {
+      sermon: { background: "#1d9bf0", border: "#0d7abf", highlight: "#4eb8ff" },
+      concept: { background: "#7856ff", border: "#5a3fd9", highlight: "#9d7fff" },
+    };
+
+    function buildFiltered(topN, minW) {
+      const conceptNodes = raw.nodes.filter(n => n.group === "concept");
+      const sermonNodes = raw.nodes.filter(n => n.group === "sermon");
+
+      const ranked = [...conceptNodes].sort((a, b) => (b.value || 0) - (a.value || 0));
+      const keepConceptIds = new Set(ranked.slice(0, topN).map(n => n.id));
+
+      const keepSermonIds = new Set();
+      const edges = [];
+      for (const e of raw.edges) {
+        if (e.value < minW) continue;
+        if (!keepConceptIds.has(e.to)) continue;
+        keepSermonIds.add(e.from);
+        edges.push({
+          from: e.from,
+          to: e.to,
+          value: e.value,
+          width: Math.min(8, 1 + Math.log2(e.value + 1)),
+        });
+      }
+
+      const visNodes = [];
+      for (const n of sermonNodes) {
+        if (!keepSermonIds.has(n.id)) continue;
+        visNodes.push({
+          id: n.id,
+          label: n.label.length > 28 ? n.label.slice(0, 26) + "…" : n.label,
+          title: n.title,
+          group: "sermon",
+          color: colors.sermon,
+          font: { color: "#fff", size: 11 },
+          margin: 8,
+          borderWidth: 2,
+        });
+      }
+      for (const n of conceptNodes) {
+        if (!keepConceptIds.has(n.id)) continue;
+        const size = 10 + Math.min(24, Math.log2((n.value || 1) + 1) * 5);
+        visNodes.push({
+          id: n.id,
+          label: n.label,
+          title: n.title + " · mentions: " + (n.value || 0),
+          group: "concept",
+          color: colors.concept,
+          font: { color: "#fff", size: 10 },
+          margin: 6,
+          size,
+        });
+      }
+
+      return { nodes: visNodes, edges };
+    }
+
+    let baseNodeSizes = {};
+    let baseFontSizes = {};
+
+    function render(topN, minW) {
+      const { nodes, edges } = buildFiltered(topN, minW);
+
+      baseNodeSizes = {};
+      baseFontSizes = {};
+      for (const n of nodes) {
+        baseNodeSizes[n.id] = n.size || 16;
+        baseFontSizes[n.id] = n.font?.size || 11;
+      }
+
+      const data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+
+      const container = document.getElementById("graph");
+      const opts = {
+        nodes: {
+          shape: "dot",
+          scaling: { min: 8, max: 36 },
+        },
+        edges: {
+          color: { color: "rgba(139,152,165,0.35)", highlight: "rgba(29,155,240,0.6)" },
+          smooth: { type: "continuous" },
+        },
+        physics: {
+          stabilization: { iterations: 200, updateInterval: 25 },
+          barnesHut: {
+            gravitationalConstant: -3500,
+            springConstant: 0.02,
+            springLength: 120,
+            damping: 0.3,
+          },
+        },
+        interaction: { hover: true, tooltipDelay: 120, dragNodes: true },
+      };
+
+      if (network) network.destroy();
+      network = new vis.Network(container, data, opts);
+
+      document.getElementById("meta").textContent = "Stabilizing…";
+      network.once("stabilizationIterationsDone", () => {
+        network.setOptions({ physics: false });
+        document.getElementById("meta").textContent =
+          nodes.length + " nodes · " + edges.length + " edges (full corpus: " +
+          raw.sermon_count + " sermons · " + raw.concept_count + " concepts)";
+      });
+
+      network.on("dragEnd", () => {
+        network.setOptions({ physics: false });
+      });
+
+      network.on("zoom", applyZoomScaling);
+    }
+
+    function applyZoomScaling() {
+      if (!network) return;
+      const scale = network.getScale();
+      const nodeDS = network.body.data.nodes;
+      const updates = [];
+      const ids = nodeDS.getIds();
+      for (const id of ids) {
+        const upd = { id };
+        let changed = false;
+        if (scaleNodes) {
+          upd.size = (baseNodeSizes[id] || 16) * Math.max(0.3, Math.min(3, scale));
+          changed = true;
+        }
+        if (scaleFont) {
+          upd.font = { size: (baseFontSizes[id] || 11) * Math.max(0.3, Math.min(3, scale)) };
+          changed = true;
+        }
+        if (changed) updates.push(upd);
+      }
+      if (updates.length) nodeDS.update(updates);
+    }
+
+    function resetScaling() {
+      if (!network) return;
+      const nodeDS = network.body.data.nodes;
+      const updates = [];
+      for (const id of nodeDS.getIds()) {
+        updates.push({
+          id,
+          size: baseNodeSizes[id] || 16,
+          font: { size: baseFontSizes[id] || 11 },
+        });
+      }
+      if (updates.length) nodeDS.update(updates);
+    }
+
+    function getParams() {
+      const url = new URL(location.href);
+      return {
+        topN: +(url.searchParams.get("top") || document.getElementById("topN").value) || 180,
+        minW: +(url.searchParams.get("minw") || document.getElementById("minW").value) || 1,
+        sn: url.searchParams.get("sn") === "1",
+        sf: url.searchParams.get("sf") === "1",
+      };
+    }
+
+    function pushParams(topN, minW) {
+      const url = new URL(location.href);
+      url.searchParams.set("top", topN);
+      url.searchParams.set("minw", minW);
+      if (scaleNodes) url.searchParams.set("sn", "1"); else url.searchParams.delete("sn");
+      if (scaleFont) url.searchParams.set("sf", "1"); else url.searchParams.delete("sf");
+      history.replaceState(null, "", url);
+    }
+
+    function syncToggleUI() {
+      const snEl = document.getElementById("scaleNodes");
+      const sfEl = document.getElementById("scaleFont");
+      snEl.classList.toggle("on", scaleNodes);
+      sfEl.classList.toggle("on", scaleFont);
+      snEl.textContent = scaleNodes ? "Node scale ✓" : "Node scale";
+      sfEl.textContent = scaleFont ? "Font scale ✓" : "Font scale";
+    }
+
+    async function init() {
+      const res = await fetch(DATA_URL);
+      if (!res.ok) throw new Error("Cannot load " + DATA_URL);
+      raw = await res.json();
+
+      const { topN, minW, sn, sf } = getParams();
+      document.getElementById("topN").value = topN;
+      document.getElementById("minW").value = minW;
+      scaleNodes = sn;
+      scaleFont = sf;
+      syncToggleUI();
+
+      document.getElementById("scaleNodes").addEventListener("click", () => {
+        scaleNodes = !scaleNodes;
+        syncToggleUI();
+        pushParams(+document.getElementById("topN").value, +document.getElementById("minW").value);
+        if (!scaleNodes && !scaleFont) resetScaling();
+        else applyZoomScaling();
+      });
+
+      document.getElementById("scaleFont").addEventListener("click", () => {
+        scaleFont = !scaleFont;
+        syncToggleUI();
+        pushParams(+document.getElementById("topN").value, +document.getElementById("minW").value);
+        if (!scaleNodes && !scaleFont) resetScaling();
+        else applyZoomScaling();
+      });
+
+      document.getElementById("apply").addEventListener("click", () => {
+        const topN = +document.getElementById("topN").value || 180;
+        const minW = +document.getElementById("minW").value || 1;
+        pushParams(topN, minW);
+        render(topN, minW);
+      });
+
+      render(topN, minW);
+    }
+
+    init().catch(err => {
+      document.getElementById("meta").textContent = "Error: " + err.message;
+    });
+  </script>
+</body>
+</html>
