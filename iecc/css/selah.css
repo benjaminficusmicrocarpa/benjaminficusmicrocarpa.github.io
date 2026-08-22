@@ -1,0 +1,365 @@
+/* Selah Series Theme — Cave of Adullam
+ * Pause, praise, and the fear of the Lord.
+ * Limestone dark, torch-gold shaft of light, cave-mouth hero.
+ */
+
+:root {
+    --primary: #3a2e24;
+    --primary-light: #5a4a3a;
+    --primary-dark: #1a1510;
+    --accent: #d4a05a;
+    --accent-light: #efd3a0;
+    --accent-warm: #c47a3a;
+    --wine: #7a3a2a;
+    --earth: #8a7355;
+    --bg-dark: #0e0b09;
+    --bg-card: #1a1510;
+    --bg-panel: #241c16;
+    --text-light: #f3ead8;
+    --text-muted: #b5a48c;
+    --selah-gold: #d4a05a;
+    --selah-ember: #c45a2a;
+    --selah-limestone: #c4b49a;
+    --selah-cream: #f3ead8;
+    --selah-glow: rgba(212, 160, 90, 0.16);
+}
+
+h1, .hero-title {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+h2, h3, h4,
+.content-card h2,
+.content-card h3 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+/* Base hides .main-content; keep the page visible */
+.main-content {
+    display: block;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Hero — cave mouth / shaft of light */
+.hero-cave {
+    background:
+        radial-gradient(ellipse 55% 42% at 50% -8%, rgba(243, 234, 216, 0.28) 0%, transparent 58%),
+        radial-gradient(ellipse 32% 22% at 50% 6%, rgba(212, 160, 90, 0.22) 0%, transparent 52%),
+        radial-gradient(ellipse 90% 70% at 50% 115%, #0e0b09 30%, transparent 72%),
+        linear-gradient(180deg, #1c1610 0%, #0e0b09 100%);
+}
+
+.hero-cave .slideshow-container {
+    display: none;
+}
+
+.hero-cave-mouth {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    width: min(520px, 78vw);
+    height: min(280px, 38vh);
+    transform: translateX(-50%);
+    border-radius: 50% 50% 46% 46%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(243, 234, 216, 0.18) 0%, transparent 70%);
+    box-shadow:
+        0 0 80px rgba(212, 160, 90, 0.12),
+        inset 0 20px 60px rgba(212, 160, 90, 0.08);
+    z-index: 1;
+    pointer-events: none;
+    animation: caveGlow 6s ease-in-out infinite;
+}
+
+.hero-ember {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    width: min(280px, 50vw);
+    height: 8px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, var(--selah-ember), var(--selah-gold), var(--selah-ember), transparent);
+    opacity: 0.55;
+    filter: blur(6px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+@keyframes caveGlow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.selah-mark {
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: var(--selah-gold);
+    margin-bottom: 1rem;
+}
+
+.hero-title {
+    color: var(--selah-cream);
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+}
+
+.hero-subtitle {
+    color: var(--selah-limestone);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+}
+
+.hero-meta {
+    color: var(--text-muted);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.875rem 2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--selah-gold) 0%, var(--accent-warm) 100%);
+    color: #0e0b09;
+    box-shadow: 0 4px 18px rgba(212, 160, 90, 0.28);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(212, 160, 90, 0.42);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--selah-cream);
+    border: 2px solid rgba(243, 234, 216, 0.28);
+}
+
+.btn-secondary:hover {
+    background: rgba(243, 234, 216, 0.08);
+    border-color: rgba(243, 234, 216, 0.5);
+}
+
+.tabs-container {
+    background: rgba(14, 11, 9, 0.96);
+    border-bottom: 1px solid rgba(212, 160, 90, 0.22);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.tab.active,
+.tab-button.active {
+    color: var(--selah-gold);
+    border-bottom-color: var(--selah-gold);
+}
+
+.content-card {
+    border-left-color: var(--selah-gold);
+    background: var(--bg-card);
+}
+
+.verse-card {
+    background: linear-gradient(135deg, rgba(58, 46, 36, 0.55) 0%, rgba(212, 160, 90, 0.08) 100%);
+    border: 1px solid rgba(212, 160, 90, 0.22);
+    border-left: 4px solid var(--selah-gold);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 12px;
+}
+
+.verse-ref {
+    color: var(--selah-gold);
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.verse-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--selah-cream);
+}
+
+.verse-context {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(196, 180, 154, 0.18);
+    font-style: normal;
+    font-family: Inter, sans-serif;
+}
+
+.highlight-box {
+    background: linear-gradient(135deg, rgba(196, 90, 42, 0.12) 0%, rgba(212, 160, 90, 0.08) 100%);
+    border-left-color: var(--selah-ember);
+}
+
+.author-quote {
+    border-left: 4px solid var(--selah-gold);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    background: rgba(212, 160, 90, 0.06);
+    border-radius: 0 12px 12px 0;
+}
+
+.author-quote .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.8;
+    color: var(--selah-cream);
+}
+
+.author-quote .quote-author {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--selah-gold);
+    font-style: normal;
+    font-family: Inter, sans-serif;
+}
+
+.series-roadmap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+.roadmap-week {
+    flex: 1;
+    min-width: 110px;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    border-radius: 8px;
+    background: var(--bg-panel);
+    border: 1px solid rgba(212, 160, 90, 0.22);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.roadmap-week.active {
+    border-color: var(--selah-gold);
+    color: var(--selah-cream);
+    background: rgba(212, 160, 90, 0.12);
+}
+
+.roadmap-week strong {
+    display: block;
+    color: var(--selah-gold);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+}
+
+.flow-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 2rem 0;
+}
+
+.flow-step {
+    background: var(--bg-panel);
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid rgba(212, 160, 90, 0.28);
+    min-width: 120px;
+}
+
+.flow-step-icon { font-size: 1.75rem; margin-bottom: 0.35rem; }
+
+.flow-step-title {
+    font-weight: 600;
+    color: var(--accent-light);
+    font-size: 0.95rem;
+}
+
+.flow-arrow {
+    color: var(--selah-gold);
+    font-size: 1.25rem;
+}
+
+.practice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.practice-card {
+    background: var(--bg-panel);
+    border-radius: 12px;
+    padding: 1.75rem;
+    border-top: 4px solid var(--selah-gold);
+}
+
+.practice-card h3 {
+    margin-top: 0.25rem;
+    color: var(--accent-light);
+}
+
+.practice-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--selah-gold);
+}
+
+.app-card {
+    border-top-color: var(--selah-gold);
+    background: var(--bg-panel);
+}
+
+.reflection-list li::before {
+    content: '🕯️';
+}
+
+.timeline-item::before {
+    content: '🪨';
+}
+
+.attribution-short::after {
+    content: none;
+}
+
+@media (max-width: 768px) {
+    .hero-title { font-size: 2rem; }
+    .main-content { padding: 1.5rem 0.75rem; }
+    .content-card { padding: 1.25rem 1rem; }
+    .series-roadmap .roadmap-week { min-width: calc(50% - 0.5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-cave-mouth { animation: none; }
+}

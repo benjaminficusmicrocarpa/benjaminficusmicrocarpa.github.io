@@ -1,7 +1,8 @@
 """
-Build a compact graph JSON for kg_viz.html from sermon_concepts.json + normalized_concepts.json.
+Build a compact graph JSON for kg_viz.html from sermon_concepts.json +
+normalized_concepts.json + concept_categories.json.
 
-Nodes: sermons + canonical concepts
+Nodes: sermons + canonical concepts (with category)
 Edges: sermon --[weight]--> concept (aggregated mention counts)
 """
 
@@ -12,6 +13,7 @@ from pathlib import Path
 KG = Path(__file__).resolve().parent
 CONCEPTS = KG / "sermon_concepts.json"
 NORM = KG / "normalized_concepts.json"
+CATEGORIES = KG / "concept_categories.json"
 OUT = KG / "kg_graph.json"
 
 
@@ -19,6 +21,16 @@ def main():
     with open(NORM) as f:
         norm_data = json.load(f)
     cmap = norm_data["concept_map"]
+
+    cat_map = {}
+    cat_file = CATEGORIES
+    if cat_file.exists():
+        with open(cat_file) as f:
+            cat_data = json.load(f)
+        cat_map = cat_data.get("categories", {})
+        print(f"Loaded {len(cat_map)} concept categories")
+    else:
+        print("Warning: concept_categories.json not found — no categories on nodes")
 
     with open(CONCEPTS) as f:
         ser_data = json.load(f)
@@ -57,13 +69,16 @@ def main():
 
     for canon in sorted(concept_totals.keys()):
         cid = concept_ids[canon]
-        nodes.append({
+        node = {
             "id": cid,
             "label": canon[:40] + ("…" if len(canon) > 40 else ""),
             "group": "concept",
             "title": canon,
             "value": concept_totals[canon],
-        })
+        }
+        if canon in cat_map:
+            node["category"] = cat_map[canon]
+        nodes.append(node)
 
     edges = []
     for s in ser_data["sermons"]:
@@ -75,11 +90,14 @@ def main():
                 "value": w,
             })
 
+    taxonomy = cat_data.get("taxonomy", []) if cat_map else []
+
     out = {
         "generated": "build_kg_graph.py",
         "sermon_count": len(ser_data["sermons"]),
         "concept_count": len(concept_ids),
         "edge_count": len(edges),
+        "taxonomy": taxonomy,
         "nodes": nodes,
         "edges": edges,
     }

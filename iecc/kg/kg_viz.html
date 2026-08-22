@@ -84,7 +84,8 @@
     }
     .legend {
       display: flex;
-      gap: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
       font-size: 0.75rem;
       color: var(--muted);
     }
@@ -98,7 +99,13 @@
       vertical-align: middle;
     }
     .legend .sermon::before { background: var(--sermon); }
-    .legend .concept::before { background: var(--concept); }
+    .legend .god_christ_spirit::before { background: #e6b422; }
+    .legend .sin_salvation::before { background: #e05555; }
+    .legend .church_mission::before { background: #3dba6f; }
+    .legend .cultural_engagement::before { background: #e08840; }
+    .legend .spiritual_practices::before { background: #9b6dd7; }
+    .legend .biblical_narrative::before { background: #4a9fd6; }
+    .legend .cat_other::before { background: #7a8a9a; }
   </style>
 </head>
 <body>
@@ -113,7 +120,13 @@
     </div>
     <div class="legend">
       <span class="sermon">Sermon</span>
-      <span class="concept">Concept</span>
+      <span class="god_christ_spirit">God / Christ / Spirit</span>
+      <span class="sin_salvation">Sin &amp; Salvation</span>
+      <span class="church_mission">Church &amp; Mission</span>
+      <span class="cultural_engagement">Cultural Engagement</span>
+      <span class="spiritual_practices">Spiritual Practices</span>
+      <span class="biblical_narrative">Biblical Narrative</span>
+      <span class="cat_other">Other</span>
     </div>
     <div class="meta" id="meta">Loading…</div>
   </header>
@@ -130,6 +143,16 @@
     const colors = {
       sermon: { background: "#1d9bf0", border: "#0d7abf", highlight: "#4eb8ff" },
       concept: { background: "#7856ff", border: "#5a3fd9", highlight: "#9d7fff" },
+    };
+
+    const categoryColors = {
+      god_christ_spirit:   { background: "#e6b422", border: "#c49a1c", highlight: "#f0cc55" },
+      sin_salvation:       { background: "#e05555", border: "#b83e3e", highlight: "#f07878" },
+      church_mission:      { background: "#3dba6f", border: "#2e9457", highlight: "#66d18f" },
+      cultural_engagement: { background: "#e08840", border: "#b86c30", highlight: "#f0a868" },
+      spiritual_practices: { background: "#9b6dd7", border: "#7d52b5", highlight: "#b890e8" },
+      biblical_narrative:  { background: "#4a9fd6", border: "#3580b0", highlight: "#70b8e8" },
+      other:               { background: "#7a8a9a", border: "#5d6d7d", highlight: "#99a8b8" },
     };
 
     function buildFiltered(topN, minW) {
@@ -170,12 +193,15 @@
       for (const n of conceptNodes) {
         if (!keepConceptIds.has(n.id)) continue;
         const size = 10 + Math.min(24, Math.log2((n.value || 1) + 1) * 5);
+        const cat = n.category || "other";
+        const catLabel = cat.replace(/_/g, " ");
+        const nodeColor = categoryColors[cat] || categoryColors.other;
         visNodes.push({
           id: n.id,
           label: n.label,
-          title: n.title + " · mentions: " + (n.value || 0),
+          title: n.title + " · " + catLabel + " · mentions: " + (n.value || 0),
           group: "concept",
-          color: colors.concept,
+          color: nodeColor,
           font: { color: "#fff", size: 10 },
           margin: 6,
           size,
