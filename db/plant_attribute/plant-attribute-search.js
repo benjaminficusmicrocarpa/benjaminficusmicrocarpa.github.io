@@ -125,6 +125,15 @@ class FuzzySearchEngine {
     }
 
     /**
+     * Chinese + English index names as one searchable string
+     */
+    getCommonNamesString(plant) {
+        const zh = Array.isArray(plant.chinese_names) ? plant.chinese_names.join(' ') : '';
+        const en = Array.isArray(plant.english_names) ? plant.english_names.join(' ') : '';
+        return `${zh} ${en}`.trim();
+    }
+
+    /**
      * Calculate comprehensive fuzzy score for a plant
      */
     calculateFuzzyScore(plant, query) {
@@ -135,7 +144,10 @@ class FuzzySearchEngine {
         
         // Extract and normalize plant data
         const plantNameNorm = this.normalizeString(plant.plant_name);
-        const familyNorm = this.normalizeString(plant.family);
+        const familyNorm = this.normalizeString(
+            `${plant.family || ''} ${plant.family_zh || ''}`
+        );
+        const commonNamesNorm = this.normalizeString(this.getCommonNamesString(plant));
         
         // Get all attribute values as a searchable string
         const attributesString = this.getAttributesAsString(plant);
@@ -145,21 +157,25 @@ class FuzzySearchEngine {
         const scores = {
             // Exact substring matches (highest priority)
             plantNameExact: plantNameNorm.includes(queryNorm) ? 1.0 : 0,
+            commonNamesExact: commonNamesNorm.includes(queryNorm) ? 1.0 : 0,
             familyExact: familyNorm.includes(queryNorm) ? 1.0 : 0,
             attributesExact: attributesNorm.includes(queryNorm) ? 1.0 : 0,
             
             // Prefix matches (high priority)
             plantNamePrefix: plantNameNorm.startsWith(queryNorm) ? 1.0 : 0,
+            commonNamesPrefix: commonNamesNorm.startsWith(queryNorm) ? 1.0 : 0,
             familyPrefix: familyNorm.startsWith(queryNorm) ? 1.0 : 0,
             attributesPrefix: attributesNorm.startsWith(queryNorm) ? 1.0 : 0,
             
             // Fuzzy string similarity (full string)
             plantNameFuzzy: this.calculateSimilarity(plantNameNorm, queryNorm),
+            commonNamesFuzzy: this.calculateSimilarity(commonNamesNorm, queryNorm),
             familyFuzzy: this.calculateSimilarity(familyNorm, queryNorm),
             attributesFuzzy: this.calculateSimilarity(attributesNorm, queryNorm),
             
             // Word-level fuzzy similarity (matches individual words)
             plantNameWordFuzzy: this.calculateWordLevelSimilarity(plantNameNorm, queryNorm),
+            commonNamesWordFuzzy: this.calculateWordLevelSimilarity(commonNamesNorm, queryNorm),
             familyWordFuzzy: this.calculateWordLevelSimilarity(familyNorm, queryNorm),
             attributesWordFuzzy: this.calculateWordLevelSimilarity(attributesNorm, queryNorm)
         };
@@ -168,9 +184,13 @@ class FuzzySearchEngine {
         // Use the maximum of full string similarity and word-level similarity
         const plantNameScore = Math.max(
             scores.plantNameExact + this.options.exactMatchBonus,
+            scores.commonNamesExact + this.options.exactMatchBonus,
             scores.plantNamePrefix + this.options.prefixBonus,
+            scores.commonNamesPrefix + this.options.prefixBonus,
             scores.plantNameFuzzy,
-            scores.plantNameWordFuzzy // Add word-level matching
+            scores.commonNamesFuzzy,
+            scores.plantNameWordFuzzy,
+            scores.commonNamesWordFuzzy
         );
         
         const familyScore = Math.max(
@@ -255,18 +275,25 @@ class FuzzySearchEngine {
     
         plants.forEach(plant => {
             const plantNameNorm = this.normalizeString(plant.plant_name);
-            const familyNorm = this.normalizeString(plant.family);
+            const familyNorm = this.normalizeString(`${plant.family || ''} ${plant.family_zh || ''}`);
+            const commonNamesNorm = this.normalizeString(this.getCommonNamesString(plant));
+            const commonNameList = [
+                ...(Array.isArray(plant.chinese_names) ? plant.chinese_names : []),
+                ...(Array.isArray(plant.english_names) ? plant.english_names : [])
+            ].map(n => this.normalizeString(n));
             const attributesString = this.getAttributesAsString(plant);
             const attributesNorm = this.normalizeString(attributesString);
             
             // Tokenize for word-level checking
             const plantNameTokens = this.tokenize(plantNameNorm);
             const familyTokens = this.tokenize(familyNorm);
+            const commonTokens = this.tokenize(commonNamesNorm);
             const queryTokens = this.tokenize(queryNorm);
     
-            // Check for exact full matches
+            // Check for exact full matches (latin, family, or a single common name)
             if (plantNameNorm === queryNorm || 
                 familyNorm === queryNorm || 
+                commonNameList.includes(queryNorm) ||
                 attributesNorm === queryNorm) {
                 exactFullMatches.push(plant);
                 return;
@@ -276,20 +303,21 @@ class FuzzySearchEngine {
             const isPartialExact = 
                 plantNameNorm.includes(queryNorm) || 
                 familyNorm.includes(queryNorm) || 
+                commonNamesNorm.includes(queryNorm) ||
                 attributesNorm.includes(queryNorm) ||
                 plantNameNorm.startsWith(queryNorm) || 
                 familyNorm.startsWith(queryNorm) || 
+                commonNamesNorm.startsWith(queryNorm) ||
                 attributesNorm.startsWith(queryNorm) ||
-                // Word-level substring matching (e.g., query word matches any plant name word)
                 queryTokens.some(qToken => 
                     plantNameTokens.some(pToken => pToken.includes(qToken) || qToken.includes(pToken)) ||
-                    familyTokens.some(fToken => fToken.includes(qToken) || qToken.includes(fToken))
+                    familyTokens.some(fToken => fToken.includes(qToken) || qToken.includes(fToken)) ||
+                    commonTokens.some(cToken => cToken.includes(qToken) || qToken.includes(cToken))
                 );
     
             if (isPartialExact) {
                 partialExactMatches.push(plant);
             } else {
-                // Calculate fuzzy score for non-exact matches
                 const score = this.calculateFuzzyScore(plant, query);
                 if (score >= this.options.minSimilarity) {
                     fuzzyMatches.push({ plant: plant, score: score });
@@ -337,16 +365,24 @@ class FuzzySearchEngine {
         // Limit results and add relevance indicators
         return results.slice(0, this.options.maxResults).map(plant => {
             const plantNameNorm = this.normalizeString(plant.plant_name);
-            const familyNorm = this.normalizeString(plant.family);
+            const familyNorm = this.normalizeString(`${plant.family || ''} ${plant.family_zh || ''}`);
+            const commonNamesNorm = this.normalizeString(this.getCommonNamesString(plant));
+            const commonNameList = [
+                ...(Array.isArray(plant.chinese_names) ? plant.chinese_names : []),
+                ...(Array.isArray(plant.english_names) ? plant.english_names : [])
+            ].map(n => this.normalizeString(n));
             const attributesString = this.getAttributesAsString(plant);
             const attributesNorm = this.normalizeString(attributesString);
             
             let relevanceIndicator = 'medium';
+            const matchedCommon = commonNameList.find(n => n === queryNorm || n.includes(queryNorm));
             
             if (plantNameNorm === queryNorm || familyNorm === queryNorm || 
+                commonNameList.includes(queryNorm) ||
                 attributesNorm === queryNorm) {
                 relevanceIndicator = 'exact';
             } else if (plantNameNorm.includes(queryNorm) || familyNorm.includes(queryNorm) || 
+                       commonNamesNorm.includes(queryNorm) ||
                        attributesNorm.includes(queryNorm) ||
                        plantNameNorm.startsWith(queryNorm) || familyNorm.startsWith(queryNorm) || 
                        attributesNorm.startsWith(queryNorm)) {
@@ -355,7 +391,9 @@ class FuzzySearchEngine {
             
             return {
                 plant: plant,
-                highlightedPlantName: plant.plant_name,
+                highlightedPlantName: matchedCommon && plantNameNorm !== queryNorm
+                    ? `${plant.plant_name} (${matchedCommon})`
+                    : plant.plant_name,
                 relevanceIndicator: relevanceIndicator
             };
         });
@@ -813,8 +851,11 @@ class PlantAttributeSearchManager {
             const otherAttributes = this.getOtherAttributes(plant);
             
             row.innerHTML = `
-                <td><span class="latin-name">${plant.plant_name}</span></td>
-                <td>${plant.family}</td>
+                <td>
+                    <span class="latin-name">${plant.plant_name}</span>
+                    ${this.formatCommonNames(plant)}
+                </td>
+                <td>${this.formatFamily(plant)}</td>
                 <td><div class="attribute-display">${growthForm}</div></td>
                 <td><div class="attribute-display">${lightReqs}</div></td>
                 <td><div class="attribute-display">${waterReqs}</div></td>
@@ -827,6 +868,31 @@ class PlantAttributeSearchManager {
             
             tbody.appendChild(row);
         });
+    }
+
+    escapeHtml(s) {
+        return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    formatFamily(plant) {
+        const lat = this.escapeHtml(plant.family || '');
+        const zh = plant.family_zh ? this.escapeHtml(plant.family_zh) : '';
+        if (!zh) return lat;
+        return `${lat} <span class="family-zh">${zh}</span>`;
+    }
+
+    formatCommonNames(plant) {
+        const zh = Array.isArray(plant.chinese_names) ? plant.chinese_names : [];
+        const en = Array.isArray(plant.english_names) ? plant.english_names : [];
+        const names = [...zh, ...en].filter(Boolean);
+        if (names.length === 0) return '';
+        const shown = names.slice(0, 4).map(n => this.escapeHtml(n));
+        const extra = names.length > 4 ? ` +${names.length - 4}` : '';
+        return `<div class="common-names">${shown.join(' · ')}${extra}</div>`;
     }
 
     /**

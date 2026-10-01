@@ -131,8 +131,12 @@ class ModalManager {
 
         // Update basic information
         this.updateDetail('modalPlantName', plant.plant_name);
-        this.updateDetail('modalFamily', plant.family);
+        this.updateDetail('modalFamily', plant.family_zh ? `${plant.family} ${plant.family_zh}` : (plant.family || ''));
         this.updateDetail('modalBook', `Book ${plant.book}, Page ${plant.page_start}${plant.page_end ? '-' + plant.page_end : ''}`);
+        const zh = Array.isArray(plant.chinese_names) ? plant.chinese_names.join('、') : '';
+        const en = Array.isArray(plant.english_names) ? plant.english_names.join(', ') : '';
+        this.updateDetail('modalChineseNames', zh || '—');
+        this.updateDetail('modalEnglishNames', en || '—');
         this.updateDetail('modalFlowering', plant.flowering_months || 'Not specified');
         this.updateDetail('modalFruiting', plant.fruiting_months || 'Not specified');
 
