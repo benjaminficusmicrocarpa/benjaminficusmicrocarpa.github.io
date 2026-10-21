@@ -69,6 +69,20 @@ function hkbCard(icon, titleHtml, bodyHtml) {
     </div>`;
 }
 
+function hkbClassSystem(order) {
+    const ppg = new Set([
+        "Lycopodiales", "Selaginellales", "Equisetales", "Ophioglossales", "Psilotales",
+        "Marattiales", "Osmundales", "Hymenophyllales", "Gleicheniales", "Schizaeales",
+        "Salviniales", "Cyatheales", "Polypodiales"
+    ]);
+    const gymnosperm = new Set([
+        "Cycadales", "Ginkgoales", "Pinales", "Araucariales", "Cupressales", "Gnetales"
+    ]);
+    if (ppg.has(order)) return { en: "PPG I", zh: "PPG I" };
+    if (gymnosperm.has(order)) return { en: "Christenhusz et al.", zh: "Christenhusz 等" };
+    return { en: "APG IV", zh: "APG IV" };
+}
+
 function hkbRenderPage(page) {
     document.title = `${page.sci} · BLP ${page.blp} | Hong Kong Botanica`;
     const hero = document.getElementById("speciesHero");
@@ -93,6 +107,7 @@ function hkbRenderPage(page) {
     document.getElementById("speciesCrumb").innerHTML = `<span class="text-stone-900 font-medium italic">${hkbPageEsc(page.sci)}</span>
         <span class="blp-badge blp-badge-ink">BLP ${hkbPageEsc(page.blp)}</span>`;
 
+    const taxSystem = hkbClassSystem(page.order);
     const taxRows = [
         ["Order", "目", page.order, false],
         ["Family", "科", page.family, false],
@@ -129,7 +144,7 @@ function hkbRenderPage(page) {
     const chips = (names) => (names || []).map((name) => `<span class="bg-stone-100 text-stone-700 px-3 py-1 rounded-full text-sm font-medium">${hkbPageEsc(name)}</span>`).join("");
 
     document.getElementById("speciesColumns").innerHTML = `<div class="w-full lg:w-[60%] space-y-8">
-        ${hkbCard("fa-solid fa-sitemap", hkbPair("Taxonomic classification", "分類"), `<table class="w-full text-sm"><tbody>${taxRows}</tbody></table>`)}
+        ${hkbCard("fa-solid fa-sitemap", hkbPair(`Taxonomic classification (${taxSystem.en})`, `分類（${taxSystem.zh}）`), `<table class="w-full text-sm"><tbody>${taxRows}</tbody></table>`)}
         ${hkbCard("fa-solid fa-seedling", hkbPair("Plant morphology", "植物形態"), `<div class="space-y-6 text-stone-700 leading-relaxed text-sm">${morph}</div>`)}
         ${hkbCard("fa-solid fa-leaf", hkbPair("Ecology", "生態"), ecology)}
         ${hkbCard("fa-solid fa-camera", hkbPair("Representative photographs", "代表照片"), `<div id="photoMount"></div>`)}
