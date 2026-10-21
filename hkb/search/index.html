@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+        const q = new URLSearchParams(location.search).get("q");
+        location.replace("../species/index.html" + (q ? "?q=" + encodeURIComponent(q) : ""));
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="hkb-base" content="..">
     <title>Search | Hong Kong Botanica</title>
@@ -41,11 +45,7 @@
                         <span class="lang-en">Families & Genera</span>
                         <span class="lang-zh hidden">科屬分類</span>
                     </a>
-                    <a href="../seasonal/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
-                        <span class="lang-en">Seasonal Blooms</span>
-                        <span class="lang-zh hidden">當季開花</span>
-                    </a>
-                    <a href="../about/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
+                    <a style="display:none" href="../about/index.html" class="text-stone-600 hover:text-botanical font-medium transition">
                         <span class="lang-en">About</span>
                         <span class="lang-zh hidden">關於本庫</span>
                     </a>
@@ -80,11 +80,7 @@
                 <i class="fa-solid fa-sitemap w-6 text-center mr-2 text-stone-400"></i>
                 <span class="lang-en">Families & Genera</span><span class="lang-zh hidden">科屬分類</span>
             </a>
-            <a href="../seasonal/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
-                <i class="fa-solid fa-sun w-6 text-center mr-2 text-stone-400"></i>
-                <span class="lang-en">Seasonal Blooms</span><span class="lang-zh hidden">當季開花</span>
-            </a>
-            <a href="../about/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
+            <a style="display:none" href="../about/index.html" class="block px-4 py-3 rounded-lg text-stone-700 hover:bg-botanical/10 hover:text-botanical font-medium transition">
                 <i class="fa-solid fa-circle-info w-6 text-center mr-2 text-stone-400"></i>
                 <span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span>
             </a>
@@ -114,8 +110,8 @@
                     <span class="lang-zh hidden">搜尋草木誌</span>
                 </h1>
                 <p class="text-stone-500 text-base md:text-lg mb-10">
-                    <span class="lang-en">Search 3,534 species by scientific name, common name, or family</span>
-                    <span class="lang-zh hidden">透過學名、俗名或科名搜尋 3,534 個物種</span>
+                    <span class="lang-en">Search <span id="searchSpeciesCount">4,141</span> species by scientific name, common name, or family</span>
+                    <span class="lang-zh hidden">透過學名、俗名或科名搜尋 <span id="searchSpeciesCountZh">4,141</span> 個物種</span>
                 </p>
 
                 <div class="relative max-w-2xl mx-auto">
@@ -282,7 +278,7 @@
             <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
                 <a href="../species/index.html" class="hover:text-white transition"><span class="lang-en">Species List</span><span class="lang-zh hidden">物種名錄</span></a>
                 <a href="../families/index.html" class="hover:text-white transition"><span class="lang-en">Taxonomy Guide</span><span class="lang-zh hidden">分類指南</span></a>
-                <a href="../about/index.html" class="hover:text-white transition"><span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span></a>
+                <a style="display:none" href="../about/index.html" class="hover:text-white transition"><span class="lang-en">About</span><span class="lang-zh hidden">關於本庫</span></a>
                 <a href="../search/index.html" class="hover:text-white transition"><span class="lang-en">Search</span><span class="lang-zh hidden">搜尋</span></a>
             </div>
             <div class="text-sm text-stone-500 text-center md:text-right">
@@ -540,6 +536,16 @@
     }
     </style>
 
-    <script src="../js/hkb.js"></script>
+    <script src="../js/hkb.js?v=3"></script>
+    <script src="../js/taxa.js"></script>
+    <script>
+    hkbLoadTaxa().then((data) => {
+        const n = hkbFormatCount(data.n_species);
+        const en = document.getElementById("searchSpeciesCount");
+        const zh = document.getElementById("searchSpeciesCountZh");
+        if (en) en.textContent = n;
+        if (zh) zh.textContent = n;
+    });
+    </script>
 </body>
 </html>

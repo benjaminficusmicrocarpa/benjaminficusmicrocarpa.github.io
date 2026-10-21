@@ -24,10 +24,27 @@ function applyLanguage() {
     });
 }
 
+function hkbWriteLanguageParam() {
+    const url = new URL(location.href);
+    url.searchParams.set("language", currentLang === "zh" ? "zh" : "en");
+    const next = url.pathname + url.search + url.hash;
+    if (next !== location.pathname + location.search + location.hash) {
+        history.replaceState(null, "", next);
+    }
+}
+
 function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'zh' : 'en';
     localStorage.setItem('hkb-lang', currentLang);
     applyLanguage();
+    hkbWriteLanguageParam();
+    document.querySelectorAll('a[href*="detail.html"]').forEach((a) => {
+        const href = a.getAttribute("href");
+        if (!href || href.startsWith("#")) return;
+        const url = new URL(href, location.href);
+        url.searchParams.set("language", currentLang);
+        a.setAttribute("href", href.split("?")[0] + "?" + url.searchParams.toString());
+    });
 }
 
 // Mobile nav
@@ -71,6 +88,13 @@ function parseMonths(str) {
     return [Number(str)];
 }
 
+function hkbPhotoUrl(imageId, variant) {
+    const id = String(imageId || "");
+    if (!id) return "";
+    const kind = variant || "public";
+    return "https://imagedelivery.net/w8B9Irt4MxIF11C23YczhQ/" + encodeURIComponent(id) + "/" + kind;
+}
+
 function renderPhenologyBar(flowerMonths, fruitMonths, container) {
     const labels = ['J','F','M','A','M','J','J','A','S','O','N','D'];
     const fm = parseMonths(flowerMonths);
@@ -94,6 +118,7 @@ function renderPhenologyBar(flowerMonths, fruitMonths, container) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    hkbWriteLanguageParam();
     applyLanguage();
 
     document.querySelectorAll('.search-form').forEach(form => {
